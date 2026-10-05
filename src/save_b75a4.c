@@ -27,66 +27,66 @@
 
 void InputRecorderRecordFrame(void)
 {
-    s32 i;
+    s32 player;
     u16 key;
     s8 count;
     u16 pos;
-    for (i = 0; i < gPlayerCount; i++)
+    for (player = 0; player < gPlayerCount; player++)
     {
-        if (gInputRecorderNextPos[i] >= gInputRecorderEndPos[i])
+        if (gInputRecorderNextPos[player] >= gInputRecorderEndPos[player])
         {
             gInputRecorderRunning = 0;
             return;
         }
-        key = gPlayerHeldKeys[i] & 0x3FF;
-        count = gInputRecorderEntryFrames[i];
-        pos = gInputRecorderCurPos[i];
-        if (gInputRecorderKeys[i] != key)
+        key = gPlayerHeldKeys[player] & 0x3FF;
+        count = gInputRecorderEntryFrames[player];
+        pos = gInputRecorderCurPos[player];
+        if (gInputRecorderKeys[player] != key)
         {
             count = 1;
-            gInputRecorderKeys[i] = key;
-            gInputRecorderCurPos[i] = gInputRecorderNextPos[i];
-            gInputRecorderNextPos[i] += gPlayerCount;
-            pos = gInputRecorderCurPos[i];
+            gInputRecorderKeys[player] = key;
+            gInputRecorderCurPos[player] = gInputRecorderNextPos[player];
+            gInputRecorderNextPos[player] += gPlayerCount;
+            pos = gInputRecorderCurPos[player];
         }
         else if (++count == 63)
         {
-            gInputRecorderKeys[i] = 0xFFFF;
+            gInputRecorderKeys[player] = 0xFFFF;
         }
-        gInputRecorderEntryFrames[i] = count;
-        gInputRecordingPtr->unk12C[pos] = key | (count << 10);
-        WriteInputRecordingEntry((u8 *)&gInputRecordingPtr->unk12C[pos], pos);
+        gInputRecorderEntryFrames[player] = count;
+        gInputRecordingPtr->keyLog[pos] = key | (count << 10);
+        WriteInputRecordingEntry((u8 *)&gInputRecordingPtr->keyLog[pos], pos);
     }
 }
 
 void InputRecorderPlayFrame(void)
 {
-    s32 i;
+    s32 player;
     s32 j;
     u16 key;
-    for (i = 0; i < gPlayerCount; i++)
+    for (player = 0; player < gPlayerCount; player++)
     {
-        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
-        if (gInputRecorderNextPos[i] >= gInputRecorderEndPos[i])
+        gPlayerHeldKeys[player] = gPlayerPressedKeys[player] = 0;
+        if (gInputRecorderNextPos[player] >= gInputRecorderEndPos[player])
         {
             gInputRecorderRunning = 0;
             return;
         }
-        if ((s8)--gInputRecorderEntryFrames[i] <= 0)
+        if ((s8)--gInputRecorderEntryFrames[player] <= 0)
         {
-            gInputRecorderCurPos[i] = gInputRecorderNextPos[i];
-            gInputRecorderNextPos[i] += gPlayerCount;
-            key = gInputRecordingPtr->unk12C[gInputRecorderCurPos[i]] & 0x3FF;
-            gInputRecorderEntryFrames[i] = gInputRecordingPtr->unk12C[gInputRecorderCurPos[i]] >> 10;
+            gInputRecorderCurPos[player] = gInputRecorderNextPos[player];
+            gInputRecorderNextPos[player] += gPlayerCount;
+            key = gInputRecordingPtr->keyLog[gInputRecorderCurPos[player]] & 0x3FF;
+            gInputRecorderEntryFrames[player] = gInputRecordingPtr->keyLog[gInputRecorderCurPos[player]] >> 10;
             if (key == 0x3FF)
             {
                 for (j = 0; j < gPlayerCount; j++)
                     gInputRecorderNextPos[j] = gInputRecorderEndPos[j];
                 return;
             }
-            gPlayerPressedKeys[i] = key & ~gInputRecorderKeys[i];
-            gInputRecorderKeys[i] = key;
+            gPlayerPressedKeys[player] = key & ~gInputRecorderKeys[player];
+            gInputRecorderKeys[player] = key;
         }
-        gPlayerHeldKeys[i] = gInputRecorderKeys[i];
+        gPlayerHeldKeys[player] = gInputRecorderKeys[player];
     }
 }

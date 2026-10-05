@@ -21,7 +21,7 @@
  * PlayerState.unk42 bit 9 and stops; every pass counts Task.unk28.  Its
  * handler PlayerActionBackdropUpdate re-binds state 2 when PlayerState.attachedCount is set, runs
  * the hit test TaskBreakFirstBlock(gUnk_0873CC64) in state 1 (which spawns
- * CreateBlockStar's object and marks PlayerState.unk09) and, in state 2,
+ * CreateBlockStar's object and marks PlayerState.catchKind) and, in state 2,
  * requests action 53, 8 or 1 once the swing is over.  PlayerActionThrow
  * (action 31, mode 10; the twin of M10's PlayerActionInhale) clears the three
  * records gUnk_02007E90[player][] (and gUnk_02007CF4[player] in link
@@ -46,7 +46,7 @@ void PlayerActionBackdrop(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 10;
-    gCurTask->updateState = 27;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_BACKDROP;
     if (gCurTask->player->prevMode != 10)
     {
         gCurTask->playerActionDone28 = 0;
@@ -55,7 +55,7 @@ void PlayerActionBackdrop(void)
         {
             struct PlayerState *p = gCurTask->player;
 
-            p->unk09 = 0;
+            p->catchKind = 0;
             p->heldCount = 0;
             p->attachedCount = 0;
         }
@@ -74,7 +74,7 @@ void PlayerActionBackdrop(void)
         gCurTask->variant = 1;
     case 1:
         PlaySfxIfLocalPlayer(200, gCurTask->player->playerIndex);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 6, 260);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SKID_DUST, 260);
         PlayerSetMotionXPreset(11, 6);
         for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 3; gCurTask->playerLoopCount++)
         {
@@ -88,7 +88,7 @@ void PlayerActionBackdrop(void)
         if ((s8)gCurTask->player->attachedCount == 0)
         {
             if (gCurTask->onGround & 1)
-                CreatePlayerEffect(gCurTask->player->playerIndex, 4, 0);
+                CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_IMPACT_STAR, 0);
             else if (!(gCurTask->waterFlags & 1))
                 PlayerSetMotionYPreset(2);
             else
@@ -160,20 +160,20 @@ void PlayerActionBackdropUpdate(void)
             t->variant = 2;
             TaskSetEntry(PlayerActionBackdrop, gCurTaskIdx);
         }
-        else if (t->player->unk09 == 0)
+        else if (t->player->catchKind == 0)
         {
             if (TaskBreakFirstBlock((struct HitBoxSet *)gUnk_0873CC64, t->player->playerIndex) != 0)
             {
-                CreateBlockStar(gBrokenBlockX[0] + 8, gBrokenBlockY[0] + 8, gCurTaskIdx, 4, 3);
-                gCurTask->player->unk09 = 2;
+                CreateBlockStar(gBrokenBlockX[0] + 8, gBrokenBlockY[0] + 8, gCurTaskIdx, HIT_KIND_GRAB, HIT_EFFECT_BACKDROP);
+                gCurTask->player->catchKind = 2;
             }
             u = gCurTask;
-            if (u->player->unk09 == 0)
+            if (u->player->catchKind == 0)
             {
                 if (gTerrainResult.unk0 != 0)
                 {
                     RequestScreenShake(1);
-                    gCurTask->player->requestedAction = 18;
+                    gCurTask->player->requestedAction = PLAYER_ACTION_RECOIL;
                 }
                 else
                 {
@@ -187,11 +187,11 @@ void PlayerActionBackdropUpdate(void)
         {
             p = t->player;
             if ((s8)p->heldCount != 0)
-                p->requestedAction = 53;
+                p->requestedAction = PLAYER_ACTION_BACKDROP_HOLD;
             else if (!(t->onGround & 1))
-                p->requestedAction = 8;
+                p->requestedAction = PLAYER_ACTION_HIGH_FALL;
             else
-                p->requestedAction = 1;
+                p->requestedAction = PLAYER_ACTION_STAND;
         }
         if (gTerrainResult.unk0 != 0)
             PlayerStopAxes(1);
@@ -202,14 +202,14 @@ void PlayerActionBackdropUpdate(void)
             {
                 PlayerSetWaterMotionY();
                 if ((s8)gCurTask->player->attachedCount == 0)
-                    gCurTask->player->requestedAction = 23;
+                    gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
             }
             else if (PlayerCheckLanding() != 0)
             {
                 struct Task *v = gCurTask;
 
                 if (!(v->waterFlags & 1) && (v->velY & 0xFFFF0000))
-                    CreatePlayerEffect(v->player->playerIndex, 4, 0);
+                    CreatePlayerEffect(v->player->playerIndex, PLAYER_EFFECT_VARIANT_IMPACT_STAR, 0);
                 PlayerStopAxes(2);
             }
         }
@@ -231,24 +231,24 @@ void PlayerActionThrow(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 10;
-    gCurTask->updateState = 28;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_THROW;
     t = gCurTask;
     if (t->player->prevMode != 10)
     {
-        t->unk30 = 0;
+        t->playerThrowCaught = 0;
         t->variant = 0;
     }
     u = gCurTask;
     switch (u->variant)
     {
     case 0:
-        u->unk28 = 1;
-        u->unk2C = 30;
+        u->playerCatchBlockDelay = 1;
+        u->playerThrowGrabTimer = 30;
         u->player->unk16 = 0;
         {
             struct PlayerState *p = gCurTask->player;
 
-            p->unk09 = 0;
+            p->catchKind = 0;
             p->heldCount = 0;
             p->attachedCount = 0;
         }
@@ -257,11 +257,11 @@ void PlayerActionThrow(void)
         gUnk_03001F2C = 0;
         do
         {
-            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk00 = 0;
-            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk04 = 0;
-            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk08 = 0;
-            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk0C = 1;
-            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk0D = 0;
+            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].offsetX = 0;
+            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].offsetY = 0;
+            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].velX = 0;
+            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].frameTimer = 1;
+            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].frame = 0;
             gUnk_03001F2C++;
         } while (gUnk_03001F2C <= 2);
         gCurTask->variant = 1;
@@ -304,7 +304,7 @@ void PlayerActionThrow(void)
         }
         else
         {
-            PlaySfxIfLocalPlayer(201, gCurTask->player->playerIndex);
+            PlaySfxIfLocalPlayer(SE_THROW_GRAB, gCurTask->player->playerIndex);
             SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
             gCurTask->player->unk42 |= 0x200;
             TaskSetFrame(0xF73);

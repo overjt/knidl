@@ -11,14 +11,14 @@ struct GfxHeader;
 
 struct HudBar
 {
-    /*0x00*/ u8 unk0;
+    /*0x00*/ u8 state;
     /*0x01*/ u8 unk1;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ s16 unk4;
-    /*0x06*/ s16 unk6;
+    /*0x02*/ s16 targetValue;
+    /*0x04*/ s16 shownValue;
+    /*0x06*/ s16 stepTimer;
 };
 
-struct Unk020060A0
+struct RoomObjectGfxSlot
 {
     /*0x00*/ s8 unk0;
     /*0x01*/ s8 paletteBank;
@@ -50,7 +50,7 @@ extern u8 gHudMode;
 extern s32 gPlayerScores[]; /* score per player */
 extern u8 gHudShowsClock;
 extern u16 gHudClock[]; /* clock (four fields) */
-extern struct Unk020060A0 gRoomObjectGfxSlots[];
+extern struct RoomObjectGfxSlot gRoomObjectGfxSlots[];
 extern s8 gRoomObjectGfxSlotIds[];
 extern s8 gHudAbilityPanelActive;
 extern s8 gHudAbilityPanelState;
@@ -124,7 +124,7 @@ void HudAnimateHpBar(s32 from, s32 to, s32 i);
 s32 HudStartHpBarFill(s32 from, s32 to);
 void HudSetHpBar(s32 x, s32 i);
 void HudResetHpBar(s32 i);
-void sub_0800aaac(s32 i);
+void HudStopHpBarAnim(s32 i);
 
 /* src/hud_0aad0.c */
 void HudUpdateClock(void);
@@ -202,12 +202,12 @@ void EnergyDrinkHeal(void);
 s32 AbilityStarBounceOffFloor(void);
 s32 AbilityStarEnterWater(void);
 s32 AbilityStarBounceOffWall(void);
-s32 sub_080b442c(void);
-void sub_080b447c(void);
-void sub_080b44f0(void);
+s32 AbilityStarHitCeiling(void);
+void AbilityStarInit(void);
+void AbilityStarAdvanceFrame(void);
 s32 AbilityStarCheckPlayerFar(void);
 s32 sub_080b45c0(void);
-void sub_080b460c(void);
+void TaskBounceOffCameraBounds(void);
 void AbilityStarCheckExpire(void);
 void Task_AbilityStar(void);
 void AbilityStarUpdate(void);

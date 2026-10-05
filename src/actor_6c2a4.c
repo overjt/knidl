@@ -67,8 +67,8 @@ void ActorAttachedBackdropBounceOff(void)
     if (w < 0)
         w = -w;
     t->velY = -w;
-    t->hitKind = 0;
-    gCurTask->u80.attackAbility = 0;
+    t->hitKind = HIT_KIND_NONE;
+    gCurTask->u80.attackAbility = ABILITY_NORMAL;
     TaskYieldTrampoline(12);
     gCurTask->actorBounceEnded = 1;
     TaskSleepForever();
@@ -99,7 +99,7 @@ void ActorAttachedPullIn(void)
         TaskYieldTrampoline(1);
     }
     sub_0806bc9c();
-    ActorSetState(5);
+    ActorSetState(ACTOR_ATTACHED_STATE_THROW_HELD);
     TaskSleepForever();
 }
 
@@ -112,7 +112,7 @@ void ActorAttachedPullInLateUpdate(void)
     t = gCurTask;
     if (t->actorMouthFull == 1)
         ActorAttachedDie();
-    else if (t->state != 4)
+    else if (t->state != ACTOR_ATTACHED_STATE_PULL_IN)
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
     ActorAttachedCheckScreenAttack();
 }
@@ -142,7 +142,7 @@ void ActorAttachedThrowHeldUpdate(void)
     ActorAttachedRestorePalette();
     ActorAttachedThrowHeldFollowCarrier();
     t = gCurTask;
-    if (t->actorKind == 1)
+    if (t->actorKind == ACTOR_KIND_MID_BOSS)
         RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F86C);
     else
         RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F858);
@@ -177,35 +177,35 @@ void ActorAttachedThrowFlight(void)
     TaskSetMotionXFacing(gUnk_0873EAC0[i].unk00, 0x5A5A5A5A);
     v = gCurTask;
     v->velY = gUnk_0873EAC0[i].unk04;
-    v->hitKind = 0;
-    gCurTask->u80.attackAbility = 0;
+    v->hitKind = HIT_KIND_NONE;
+    gCurTask->u80.attackAbility = ABILITY_NORMAL;
     w = gCurTask;
     w->unk46 = 0;
     w->unk34 = 0;
     w->unk20 = 0;
-    if (w->actorKind != 1)
+    if (w->actorKind != ACTOR_KIND_MID_BOSS)
     {
         while (1)
         {
         gCurTask->spriteFlags |= 0x8000;
-        CreateChildTaskHere(158, 0);
+        CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
         gCurTask->frame = 2;
         TaskYieldTrampoline(4);
         gCurTask->spriteFlags &= 0x7FFF;
-        CreateChildTaskHere(158, 0);
+        CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
         TaskYieldTrampoline(4);
         gCurTask->spriteFlags &= 0x7FFF;
-        CreateChildTaskHere(158, 0);
+        CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
         gCurTask->frame = 3;
         TaskYieldTrampoline(4);
         gCurTask->spriteFlags |= 0x8000;
-        CreateChildTaskHere(158, 0);
+        CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
         TaskYieldTrampoline(4);
         }
     }
     while (1)
     {
-        CreateChildTaskHere(158, 0);
+        CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
         TaskYieldTrampoline(4);
     }
 }
@@ -218,7 +218,7 @@ void ActorAttachedThrowFlightUpdate(void)
 
     t = gCurTask;
     t->health = 127;
-    if (t->actorKind == 1)
+    if (t->actorKind == ACTOR_KIND_MID_BOSS)
         TaskBreakBlocks(gUnk_0873F8DC, t->parent);
     else
         TaskBreakBlocks(gUnk_0873F8CC, t->parent);
@@ -236,7 +236,7 @@ void ActorAttachedThrowFlightUpdate(void)
         PlaySfx(237);
         RequestScreenShake(2);
         gCurTask->lateUpdateCallback = 0;
-        ActorSetState(7);
+        ActorSetState(ACTOR_ATTACHED_STATE_THROW_BOUNCE_OFF);
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
     }
     else
@@ -249,13 +249,13 @@ void ActorAttachedThrowFlightUpdate(void)
             gCurTask->accelY = 0x1000;
         }
         v = gCurTask;
-        if (v->actorKind != 1)
+        if (v->actorKind != ACTOR_KIND_MID_BOSS)
         {
             v->pixelX += gUnk_0873EAF0[v->actorThrowWobbleStep * 2];
             v->pixelY += (&gUnk_0873EAF0[1])[v->actorThrowWobbleStep * 2];
             v->actorThrowWobbleStep = (v->actorThrowWobbleStep + 1) & 15;
         }
-        if (v->actorKind == 1)
+        if (v->actorKind == ACTOR_KIND_MID_BOSS)
             RegisterCollider((u8)gCurTaskIdx, gCurTask->pixelX,
                          gCurTask->pixelY, gUnk_0873F86C);
         else
@@ -286,7 +286,7 @@ void ActorAttachedThrowFlightLateUpdate(void)
         t = gCurTask;
         dx = t->posX >> 16;
         dy = t->posY >> 16;
-        if (t->actorKind == 1)
+        if (t->actorKind == ACTOR_KIND_MID_BOSS)
             k = 8;
         else
             k = 0;
@@ -400,8 +400,8 @@ void ActorAttachedThrowBounceOff(void)
         TaskSetMotionY(0xFFFE0000, 0x4000, 0x20000);
         break;
     }
-    gCurTask->hitKind = 0;
-    gCurTask->u80.attackAbility = 0;
+    gCurTask->hitKind = HIT_KIND_NONE;
+    gCurTask->u80.attackAbility = ABILITY_NORMAL;
     TaskYieldTrampoline(12);
     gCurTask->actorBounceEnded = 1;
     TaskSleepForever();
@@ -446,20 +446,20 @@ void Task_ActorSplash(void)
 s16 CreateStarFlash(u8 kind, s32 dx, s32 dy)
 {
     struct Task *t;
-    s32 i;
+    s32 starFlashSlot;
     u16 r;
 
     switch (kind)
     {
     case 0:
-        r = CreateChildTaskAtOffsetFacing(141, (s16)dx, (s16)dy, 0);
+        r = CreateChildTaskAtOffsetFacing(TASK_STAR_FLASH, (s16)dx, (s16)dy, 0);
         break;
     case 1:
-        i = CreateChildTaskHere(142, 0);
-        r = i;
-        if ((s16)i != -1)
+        starFlashSlot = CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
+        r = starFlashSlot;
+        if ((s16)starFlashSlot != -1)
         {
-            t = &gTasks[(s16)i];
+            t = &gTasks[(s16)starFlashSlot];
             t->starFlashOnParentOffsetX = gCurTask->facing * dx;
             t->starFlashOnParentOffsetY = dy;
         }
@@ -534,14 +534,14 @@ void StarFlashFollowParent(void)
 s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d)
 {
     struct Task *p;
-    s32 i;
+    s32 dustTrailSlot;
     u16 r;
 
-    i = CreateChildTaskAtOffsetFacing(143, (s16)c, (s16)d, 0);
-    r = i;
-    if ((s16)i != -1)
+    dustTrailSlot = CreateChildTaskAtOffsetFacing(TASK_DUST_TRAIL, (s16)c, (s16)d, 0);
+    r = dustTrailSlot;
+    if ((s16)dustTrailSlot != -1)
     {
-        p = &gTasks[(s16)i];
+        p = &gTasks[(s16)dustTrailSlot];
         p->dustTrailPuffCount = vx;
         if (flag == 0)
         {
@@ -562,5 +562,5 @@ s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d)
 
 void CreateDustPuff(void)
 {
-    CreateChildTaskHere(144, 0);
+    CreateChildTaskHere(TASK_DUST_PUFF, 0);
 }

@@ -36,8 +36,8 @@ extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
 extern void ActorSetHitReactions(u32 v);
 extern void ActorSetAttackBox(u32 v);
-extern void sub_080639f0(struct ActorAux *v);
-extern void sub_08063a00(u32 v);
+extern void ActorSetAux(struct ActorAux *v);
+extern void ActorSetExtraAttackBox(u32 v);
 extern s32 TaskGetDxTo(u32 i);
 extern s32 TaskIsInRectSlot(struct Rect *r, u32 i);
 extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
@@ -133,7 +133,7 @@ void Task_MetaKnightMask(void)
     do
     {
         t = gCurTask;
-        v = CreateChildTask(187, t->pixelX, t->pixelY, t->tileWord);
+        v = CreateChildTask(TASK_META_KNIGHT_MASK_HALF, t->pixelX, t->pixelY, t->tileWord);
         gTasks[v].metaKnightMaskHalfSide = (s16)gCurTask->metaKnightMaskHalfCount;
         gCurTask->metaKnightMaskHalfCount++;
     } while ((s16)gCurTask->metaKnightMaskHalfCount <= 1);
@@ -243,8 +243,8 @@ void KrackoJrInit(void)
     t->unk30 = 0;
     t->krackoJrStepTimer = 0;
     gUnk_02007D00[0] = 1;
-    gCurTask->krackoOrbsSlot = CreateChildTaskHere(195, 1);
-    ActorSetState(0);
+    gCurTask->krackoOrbsSlot = CreateChildTaskHere(TASK_KRACKO_JR_ORBS, 1);
+    ActorSetState(KRACKO_JR_STATE_0);
     CallTableEntry(gCurTask->state, 2, gKrackoJrStates);
 }
 
@@ -257,14 +257,14 @@ void KrackoJrUpdate(void)
 {
     KrackoLookAtNearestPlayer();
     CallTableEntry(gCurTask->updateState, 2, gKrackoJrStateUpdates);
-    if (gCurTask->updateState == 0)
+    if (gCurTask->updateState == KRACKO_JR_STATE_0)
         ActorCheckHits();
     ActorReactToHit();
 }
 
 void KrackoJrState0(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = KRACKO_JR_STATE_0;
     for (;;)
     {
         do
@@ -371,7 +371,7 @@ void KrackoJrState0Update(void)
     if (gViewRect[2] <= 0x16F)
     {
         TaskStop();
-        ActorSetState(1);
+        ActorSetState(KRACKO_JR_STATE_TRANSFORM);
         TaskSetEntry(KrackoJrEnterState, gCurTaskIdx);
         return;
     }
@@ -678,7 +678,7 @@ void KrackoJrTransform(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = KRACKO_JR_STATE_TRANSFORM;
     t = gCurTask;
     t->velY = 0;
     t->accelY = -0x2000;

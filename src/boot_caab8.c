@@ -41,7 +41,7 @@ s32 PlaySfx(s32 id);
    once it leaves the screen. */
 void BootLogoUpdateObjects(void)
 {
-    struct M38LogoObj *obj = gUnk_02030000;
+    struct BootLogoObject *obj = gUnk_02030000;
     s32 i;
     s16 *p = 0;
     s16 mask = 0;

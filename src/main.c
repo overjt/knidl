@@ -23,125 +23,125 @@
 
 void AgbMain(void)
 {
-    s32 i;
+    s32 player;
 
-    gGameState = 0;
+    gGameState = GAME_STATE_RESET;
     InitSaveSlots();
     while (1) {
         switch (gGameState) {
-        case 0:
-            sub_0800b44c();
-            gGameState = 1;
+        case GAME_STATE_RESET:
+            ResetGameSession();
+            gGameState = GAME_STATE_BOOT_LOGO;
             break;
-        case 1:
+        case GAME_STATE_BOOT_LOGO:
             if (gWarmBoot == 0)
                 BootLogoMain();
-            gGameState = 3;
+            gGameState = GAME_STATE_TITLE;
             break;
-        case 3:
+        case GAME_STATE_TITLE:
             TitleMain();
-            gGameState = 4;
-            gPrevGameState = 3;
+            gGameState = GAME_STATE_MAIN_MENU;
+            gPrevGameState = GAME_STATE_TITLE;
             break;
-        case 4:
+        case GAME_STATE_MAIN_MENU:
             MainMenuMain();
             ResetScoresAndMaxHealth();
             ResetPlayerRecords();
             break;
-        case 7:
+        case GAME_STATE_CUTSCENE:
             if (gCutscenePending != 0)
                 CutsceneMain();
             gCutscenePending = 0;
             gGameState = gPrevGameState;
             break;
-        case 5:
+        case GAME_STATE_HUB:
             if (gCutscenePending != 0) {
-                gPrevGameState = 5;
-                gGameState = 7;
+                gPrevGameState = GAME_STATE_HUB;
+                gGameState = GAME_STATE_CUTSCENE;
             } else {
-                sub_0800b5dc();
-                while (gGameState == 5) {
-                    sub_0800b5dc();
+                HubResetPlayers();
+                while (gGameState == GAME_STATE_HUB) {
+                    HubResetPlayers();
                     HubMain();
                 }
             }
             break;
-        case 6:
+        case GAME_STATE_STAGE_START:
             if (gCutscenePending != 0) {
-                gPrevGameState = 6;
-                gGameState = 7;
+                gPrevGameState = GAME_STATE_STAGE_START;
+                gGameState = GAME_STATE_CUTSCENE;
             } else {
-                sub_0800b628();
-                gGameState = 8;
+                ResetTasksAndPlayers();
+                gGameState = GAME_STATE_STAGE;
             }
             break;
-        case 8:
-            while (gGameState == 8)
+        case GAME_STATE_STAGE:
+            while (gGameState == GAME_STATE_STAGE)
                 StageMain();
-            gPrevGameState = 8;
+            gPrevGameState = GAME_STATE_STAGE;
             break;
-        case 9:
-            while (gGameState == 9)
+        case GAME_STATE_BIG_SWITCH_VIEW:
+            while (gGameState == GAME_STATE_BIG_SWITCH_VIEW)
                 BigSwitchViewMain();
             break;
-        case 10:
+        case GAME_STATE_GOAL_GAME:
             if (gMetaKnightmareMode == 0)
                 GoalGameMain();
             else
-                sub_0800b628();
-            gGameState = 5;
+                ResetTasksAndPlayers();
+            gGameState = GAME_STATE_HUB;
             break;
-        case 13:
+        case GAME_STATE_EXTRA_MODE_TITLE:
             ExtraModeTitleMain();
             break;
-        case 19:
-            while (gGameState == 19)
+        case GAME_STATE_ARENA:
+            while (gGameState == GAME_STATE_ARENA)
                 StageMain();
             break;
-        case 18:
-            while (gGameState == 18)
+        case GAME_STATE_MUSEUM:
+            while (gGameState == GAME_STATE_MUSEUM)
                 StageMain();
             break;
-        case 17:
-            while (gGameState == 17)
+        case GAME_STATE_WARP_STAR_STATION:
+            while (gGameState == GAME_STATE_WARP_STAR_STATION)
                 StageMain();
             break;
-        case 22:
+        case GAME_STATE_GAME_OVER:
             GameOverMain();
             break;
-        case 14:
-        case 15:
-        case 16:
+        case GAME_STATE_QUICK_DRAW:
+        case GAME_STATE_BOMB_RALLY:
+        case GAME_STATE_AIR_GRIND:
             SubGameMain();
             break;
-        case 20:
-            for (i = 0; i < 4; i++) {
-                gPlayerLives[i] = 1;
-                gPlayerHealth[i] = 0;
+        case GAME_STATE_BOSS_ENDURANCE:
+            for (player = 0; player < 4; player++) {
+                gPlayerLives[player] = 1;
+                gPlayerHealth[player] = 0;
             }
             ResetPlayTime();
-            sub_08022f50();
-            while (gGameState == 20)
+            BossEnduranceSetStart();
+            while (gGameState == GAME_STATE_BOSS_ENDURANCE)
                 BossEnduranceMain();
-            gPrevGameState = 20;
+            gPrevGameState = GAME_STATE_BOSS_ENDURANCE;
             break;
-        case 21:
+        case GAME_STATE_META_KNIGHTMARE:
             ResetScoresAndMaxHealth();
             gCutscenePending = 1;
-            gGameState = 5;
+            gGameState = GAME_STATE_HUB;
             break;
-        case 11:
+        case GAME_STATE_ENDING:
             EndingMain();
-            gGameState = 12;
+            gGameState = GAME_STATE_CREDITS;
             break;
-        case 12:
-            if (gMetaKnightmareMode != 1 && gPrevGameState != 20)
+        case GAME_STATE_CREDITS:
+            if (gMetaKnightmareMode != 1 && gPrevGameState != GAME_STATE_BOSS_ENDURANCE)
                 CreditsMain();
             FinalResultsScreen();
-            gGameState = 0;
+            gGameState = GAME_STATE_RESET;
             break;
         case 2:
-            gGameState = 3;
+            gGameState = GAME_STATE_TITLE;
             break;
         }
     }

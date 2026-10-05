@@ -19,14 +19,14 @@ gLinkSessionMode = 0x02000004
 gNextActorSerial = 0x02000008
 	.global	gObjTileCursor
 gObjTileCursor = 0x0200000C
-	.global	gUnk_02000010
-gUnk_02000010 = 0x02000010
+	.global	gLifeRequestShownLives
+gLifeRequestShownLives = 0x02000010
 	.global	gModeListExtraRows
 gModeListExtraRows = 0x02000018
 	.global	gHubUnlockSource
 gHubUnlockSource = 0x0200001C
-	.global	gUnk_02000020
-gUnk_02000020 = 0x02000020
+	.global	gRoomPlayerMode
+gRoomPlayerMode = 0x02000020
 	.global	gBlockAnimHookId
 gBlockAnimHookId = 0x02000024
 	.global	gEndingLocalPlayer
@@ -77,8 +77,8 @@ gDoorStates = 0x02004B90
 gBossHitStunFlashPalette = 0x02004C90
 	.global	gEndingPlayerCount
 gEndingPlayerCount = 0x02004C94
-	.global	gUnk_02004C98
-gUnk_02004C98 = 0x02004C98
+	.global	gWarpStarStationDirection
+gWarpStarStationDirection = 0x02004C98
 	.global	gBg1MetatileMap
 gBg1MetatileMap = 0x02004CA0
 	.global	gPlayerHitBoxSets
@@ -103,8 +103,8 @@ gBg3MapShape = 0x020055B0
 gBlockAnimClipRect = 0x020055B8
 	.global	gWarpStarRideSlot
 gWarpStarRideSlot = 0x020055C0
-	.global	gUnk_020055C4
-gUnk_020055C4 = 0x020055C4
+	.global	gPlayerOrderShuffleCount
+gPlayerOrderShuffleCount = 0x020055C4
 	.global	gRoomBgmStarted
 gRoomBgmStarted = 0x020055C8
 	.global	gExtraModeTitleSeen
@@ -157,8 +157,8 @@ gUnk_02006098 = 0x02006098
 gRoomObjectGfxSlots = 0x020060A0
 	.global	gBlockCursorIndex
 gBlockCursorIndex = 0x020060C8
-	.global	gUnk_020060CC
-gUnk_020060CC = 0x020060CC
+	.global	gStageClearDanceBgmPlayed
+gStageClearDanceBgmPlayed = 0x020060CC
 	.global	gMenuScreen
 gMenuScreen = 0x020060D0
 	.global	gPlayerBodyBoxes
@@ -213,8 +213,8 @@ gBombRallySeats = 0x02006A10
 gUnk_02006A14 = 0x02006A14
 	.global	gDoorObjectTasks
 gDoorObjectTasks = 0x02006A20
-	.global	gUnk_02006A80
-gUnk_02006A80 = 0x02006A80
+	.global	gPlayerHitBoxLists
+gPlayerHitBoxLists = 0x02006A80
 	.global	gHubRoomMapBuffer
 gHubRoomMapBuffer = 0x02006AA0
 	.global	gGameOverDone
@@ -285,18 +285,18 @@ gWarpStarStationDoorRevealed = 0x02007FC4
 gUnk_02007FC8 = 0x02007FC8
 	.global	gUnk_02007FCC
 gUnk_02007FCC = 0x02007FCC
-	.global	gUnk_02007FD0
-gUnk_02007FD0 = 0x02007FD0
+	.global	gBlockAnimScratchRecord
+gBlockAnimScratchRecord = 0x02007FD0
 	.global	gUnk_02007FF0
 gUnk_02007FF0 = 0x02007FF0
-	.global	gUnk_02007FF8
-gUnk_02007FF8 = 0x02007FF8
+	.global	gContinueStage
+gContinueStage = 0x02007FF8
 	.global	gBigSwitchReturnLevel
 gBigSwitchReturnLevel = 0x02008000
 	.global	gSavedPlayerAbilities
 gSavedPlayerAbilities = 0x02008008
-	.global	gUnk_02008010
-gUnk_02008010 = 0x02008010
+	.global	gDanceId
+gDanceId = 0x02008010
 	.global	gHudHpBarTasks
 gHudHpBarTasks = 0x02008014
 	.global	gEndingSceneActive
@@ -351,8 +351,8 @@ gHudHpBarFilled = 0x0200AFF8
 gScreenAttackTasks = 0x0200B000
 	.global	gHudShowsHpBar
 gHudShowsHpBar = 0x0200B028
-	.global	gUnk_0200B02C
-gUnk_0200B02C = 0x0200B02C
+	.global	gWarpStarStationDest
+gWarpStarStationDest = 0x0200B02C
 	.global	gMidBossDropsIn
 gMidBossDropsIn = 0x0200B030
 	.global	gEntryDoorIndex
@@ -799,8 +799,8 @@ gDigits = 0x03001F08
 gUnk_03001F10 = 0x03001F10
 	.global	gBossEnduranceBestTime
 gBossEnduranceBestTime = 0x03001F18
-	.global	gUnk_03001F20
-gUnk_03001F20 = 0x03001F20
+	.global	gCurStage
+gCurStage = 0x03001F20
 	.global	gUnk_03001F24
 gUnk_03001F24 = 0x03001F24
 	.global	gUnk_03001F2C

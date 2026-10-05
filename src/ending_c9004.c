@@ -15,15 +15,15 @@
  *   Task_EndingStarRodReturn   the body: variant 0 loads the graphics (EndingStarRodReturnLoadGraphics) and
  *       spawns variants 1, 3, 6, 7, 8 and 11 from the list gEndingStarRodReturnObjectVariants
  *       (CreateEndingStarRodReturnObjects); variants 1-11 run gEndingStarRodReturnVariants[Task.variant].
- *   sub_080c9114 / sub_080c9418   variant 1, a sprite that falls in, then
+ *   EndingStarRodReturnStarRod / EndingStarRodReturnStarRodDraw   variant 1, a sprite that falls in, then
  *       rides the BG3 layer and flashes its palette.
  *   sub_080c9d10   variant 2, a 22-frame animation played six times.
- *   sub_080c94cc / sub_080c972c / sub_080c97a0   variant 3, which spawns its
+ *   EndingStarRodReturnWarpStar / EndingStarRodReturnWarpStarUpdate / EndingStarRodReturnWarpStarDraw   variant 3, which spawns its
  *       variant-5 companion, crosses the screen twice leaving variant-4
  *       tasks behind, fades the music out and ends the scene (clearing
  *       gEndingSceneActive).
- *   sub_080c9884, sub_080c98d8 / sub_080c9974   variants 4 and 5.
- *   sub_080ca71c, sub_080ca830, sub_080ca8f0   variants 6-8, scripted
+ *   sub_080c9884, EndingStarRodReturnKirby / EndingStarRodReturnKirbyDraw   variants 4 and 5.
+ *   EndingStarRodReturnFountainJet, sub_080ca830, sub_080ca8f0   variants 6-8, scripted
  *       sprites drawn by M05's sub_0801a3e4.
  *   sub_080c9e8c   variant 9, eleven sprites bursting out of one point.
  *   sub_080ca344 / sub_080ca570 / sub_080ca640   variant 10, sixteen falling
@@ -95,24 +95,24 @@ void EndingStarRodReturnLoadGraphics(void)
 void CreateEndingStarRodReturnObjects(void)
 {
     s32 i;
-    s32 id;
+    s32 starRodReturnSlot;
     s32 v;
     struct Task *t;
 
     for (i = 0; v = gEndingStarRodReturnObjectVariants[i], (s16)gEndingStarRodReturnObjectVariants[i] <= 11; i++) {
-        id = TaskCreateFrom(101, 32);
-        if (id == -1)
+        starRodReturnSlot = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32);
+        if (starRodReturnSlot == -1)
             for (;;)
                 ;
-        t = &gTasks[id];
+        t = &gTasks[starRodReturnSlot];
         t->variant = v;
     }
 }
 
 /* Task type #101 variant 1: a sprite at the camera's (120, -24) that falls
    in, plays a 16-frame animation twice, then pins itself to the BG3 layer
-   (sub_080c9418) and flashes its palette ever faster. */
-void sub_080c9114(void)
+   (EndingStarRodReturnStarRodDraw) and flashes its palette ever faster. */
+void EndingStarRodReturnStarRod(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
@@ -164,7 +164,7 @@ void sub_080c9114(void)
     TaskYieldTrampoline(3);
     TaskStop();
     PlaySfx(238);
-    gCurTask->drawCallback = (u32)sub_080c9418;
+    gCurTask->drawCallback = (u32)EndingStarRodReturnStarRodDraw;
     gCurTask->posX = (gCurTask->pixelX - gSpriteCameraX + (gBg3ScrollX >> 16)) << 16;
     gCurTask->posY = (gCurTask->pixelY - gSpriteCameraY + (gBg3ScrollY >> 16)) << 16;
     gCurTask->endingStarRodReturnLoopCount = 0;
@@ -202,7 +202,7 @@ void sub_080c9114(void)
     TaskSleepForever();
 }
 
-void sub_080c9418(void)
+void EndingStarRodReturnStarRodDraw(void)
 {
     struct Task *t;
     u32 *g;
@@ -224,19 +224,19 @@ void sub_080c9418(void)
 
 /* Task type #101 variant 3: spawns its variant-5 companion (which follows
    it), flies across the screen twice leaving a trail of variant-4 tasks
-   (sub_080c972c while Task.unk28 is set), then fades the music out
-   (sub_080c97a0) and clears gEndingSceneActive. */
-void sub_080c94cc(void)
+   (EndingStarRodReturnWarpStarUpdate while Task.unk28 is set), then fades the music out
+   (EndingStarRodReturnWarpStarDraw) and clears gEndingSceneActive. */
+void EndingStarRodReturnWarpStar(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_080c97a0;
+    gCurTask->drawCallback = (u32)EndingStarRodReturnWarpStarDraw;
     gCurTask->layer = 8;
     gCurTask->frameTable = gUnk_0875585C;
     gCurTask->tileWord = 0x8810;
-    gCurTask->updateCallback = (u32)sub_080c972c;
+    gCurTask->updateCallback = (u32)EndingStarRodReturnWarpStarUpdate;
     gCurTask->endingStarRodReturnBgmVolume = 255;
     gCurTask->endingStarRodReturnBgmFadeStep = 0;
-    gCurTask->endingStarRodReturnChildSlot = TaskCreateFrom(101, 32);
+    gCurTask->endingStarRodReturnChildSlot = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32);
     gTasks[gCurTask->endingStarRodReturnChildSlot].variant = 5;
     gTasks[gCurTask->endingStarRodReturnChildSlot].parent = gCurTaskIdx;
     TaskStop();
@@ -303,14 +303,14 @@ void sub_080c94cc(void)
 
 /* Task type #101 variant 3's per-frame callback: while Task.unk28 is set,
    spawn a variant-4 task at this task's position every third frame. */
-void sub_080c972c(void)
+void EndingStarRodReturnWarpStarUpdate(void)
 {
     s32 id;
     struct Task *t;
 
     if (gCurTask->endingStarRodReturnTrailOn != 0) {
         if (--gCurTask->endingStarRodReturnTrailTimer <= 0) {
-            id = TaskCreateFrom(101, 32);
+            id = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32);
             t = &gTasks[id];
             t->variant = 4;
             t->pixelX = gCurTask->pixelX;
@@ -326,7 +326,7 @@ void sub_080c972c(void)
 /* Task type #101 variant 3's draw callback: cycle the frame offset through
    gUnk_08757432[6], draw, and fade the music out by Task.unk24 per frame
    (volume in Task.unk34). */
-void sub_080c97a0(void)
+void EndingStarRodReturnWarpStarDraw(void)
 {
     s16 off;
 
@@ -366,12 +366,12 @@ void sub_080c9884(void)
 }
 
 /* Task type #101 variant 5: a sprite drawn at another task's position
-   (sub_080c9974), flipped after 863 frames, then looping a 4-frame
+   (EndingStarRodReturnKirbyDraw), flipped after 863 frames, then looping a 4-frame
    animation. */
-void sub_080c98d8(void)
+void EndingStarRodReturnKirby(void)
 {
     gCurTask->moveCallback = 0;
-    gCurTask->drawCallback = (u32)sub_080c9974;
+    gCurTask->drawCallback = (u32)EndingStarRodReturnKirbyDraw;
     gCurTask->layer = 7;
     gCurTask->frameTable = gUnk_0875585C;
     gCurTask->tileWord = 0x8810;
@@ -395,7 +395,7 @@ void sub_080c98d8(void)
     }
 }
 
-void sub_080c9974(void)
+void EndingStarRodReturnKirbyDraw(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
@@ -443,14 +443,14 @@ void sub_080c9a28(void)
     } while ((s16)gCurTask->endingStarRodReturnLoopCount <= 15);
     TaskYieldTrampoline(68);
     TaskYieldTrampoline(80);
-    gCurTask->endingStarRodReturnChildSlot = TaskCreateFrom(101, 32);
+    gCurTask->endingStarRodReturnChildSlot = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32);
     gTasks[gCurTask->endingStarRodReturnChildSlot].variant = 2;
     TaskYieldTrampoline(60);
     TaskYieldTrampoline(60);
     TaskYieldTrampoline(30);
     gCurTask->endingStarRodReturnLoopCount = 0;
     do {
-        gCurTask->endingStarRodReturnChildSlot = TaskCreateFrom(101, 32);
+        gCurTask->endingStarRodReturnChildSlot = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32);
         gTasks[gCurTask->endingStarRodReturnChildSlot].variant = 9;
         gTasks[gCurTask->endingStarRodReturnChildSlot].endingStarRodReturnIndex = gCurTask->endingStarRodReturnLoopCount;
         gCurTask->endingStarRodReturnLoopCount++;
@@ -476,7 +476,7 @@ void sub_080c9a28(void)
     TaskYieldTrampoline(120);
     gCurTask->endingStarRodReturnLoopCount = 0;
     do {
-        gCurTask->endingStarRodReturnChildSlot = TaskCreateFrom(101, 32);
+        gCurTask->endingStarRodReturnChildSlot = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32);
         gTasks[gCurTask->endingStarRodReturnChildSlot].variant = 10;
         gTasks[gCurTask->endingStarRodReturnChildSlot].endingStarRodReturnIndex = gCurTask->endingStarRodReturnLoopCount;
         gCurTask->endingStarRodReturnLoopCount++;
@@ -924,7 +924,7 @@ void sub_080ca640(void)
 }
 
 /* Task type #101 variant 6. */
-void sub_080ca71c(void)
+void EndingStarRodReturnFountainJet(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)sub_0801a3e4;

@@ -31,15 +31,15 @@ void PlayerActionIce(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 41;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_ICE;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
             struct Task *u;
             t->variant = 0;
             u = gCurTask;
-            u->unk28 = 15;
-            u->u80.attackAbility = 13;
+            u->playerAttackHoldTimer = 15;
+            u->u80.attackAbility = ABILITY_ICE;
         }
     }
     switch (gCurTask->variant) {
@@ -62,13 +62,13 @@ void PlayerActionIce(void)
         {
             struct PlayerState *p = gCurTask->player;
             if ((p->unk42 & 128) == 0)
-                PlayerStartSfx(140, p->playerIndex);
+                PlayerStartSfx(SE_ICE_ATTACK, p->playerIndex);
         }
-        CreatePlayerObject(gCurTask->player->playerIndex, 7, 0);
-        CreatePlayerObject(gCurTask->player->playerIndex, 7, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 40, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 40, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 40, 2);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_ICE_BREATH, 0);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_ICE_BREATH, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_ICE_BREATH_CLOUD, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_ICE_BREATH_CLOUD, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_ICE_BREATH_CLOUD, 2);
         CreatePlayerEffect(gCurTask->player->playerIndex, 28, 4);
         while (1) {
             TaskSetFrame(0x9FA);
@@ -99,14 +99,14 @@ void PlayerActionIceUpdate(void)
     case 0:
         break;
     case 1:
-        if (t->unk28 == 0) {
+        if (t->playerAttackHoldTimer == 0) {
             u16 *p = (u16 *)gLatchedHeldKeys;
             if ((p[t->player->playerIndex] & 2) == 0) {
                 t->variant = 2;
                 TaskSetEntry(PlayerActionIce, gCurTaskIdx);
             }
         } else {
-            t->unk28--;
+            t->playerAttackHoldTimer--;
         }
         break;
     case 2:
@@ -122,15 +122,15 @@ void PlayerActionFreeze(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 42;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_FREEZE;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
             struct Task *u;
             t->variant = 0;
             u = gCurTask;
-            u->unk28 = 15;
-            u->u80.attackAbility = 14;
+            u->playerAttackHoldTimer = 15;
+            u->u80.attackAbility = ABILITY_FREEZE;
         }
     }
     switch (gCurTask->variant) {
@@ -140,11 +140,11 @@ void PlayerActionFreeze(void)
         gCurTask->variant = 1;
         /* fallthrough */
     case 1:
-        CreatePlayerEffect(gCurTask->player->playerIndex, 41, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 41, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 41, 2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 41, 3);
-        PlayerStartSfx(141, gCurTask->player->playerIndex);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FREEZE_AURA, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FREEZE_AURA, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FREEZE_AURA, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FREEZE_AURA, 3);
+        PlayerStartSfx(SE_FREEZE_ATTACK, gCurTask->player->playerIndex);
         while (1) {
             TaskSetFrame(0xA86);
             TaskYieldTrampoline(1);
@@ -172,13 +172,13 @@ void PlayerActionFreezeUpdate(void)
     case 0:
         break;
     case 1:
-        if (t->unk28 == 0) {
+        if (t->playerAttackHoldTimer == 0) {
             if ((gLatchedHeldKeys[t->player->playerIndex] & 2) == 0) {
                 t->variant = 2;
                 TaskSetEntry(PlayerActionFreeze, gCurTaskIdx);
             }
         } else {
-            t->unk28--;
+            t->playerAttackHoldTimer--;
         }
         RegisterCollider((u8)gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                      gUnk_0873C214);

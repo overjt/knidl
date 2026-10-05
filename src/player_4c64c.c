@@ -34,7 +34,7 @@ void PlayerActionThrowHold(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 51;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_THROW_HOLD;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
@@ -42,7 +42,7 @@ void PlayerActionThrowHold(void)
             t->variant = 3;
             u = gCurTask;
             u->player->unk14 = 120;
-            u->u80.attackAbility = 23;
+            u->u80.attackAbility = ABILITY_THROW;
         }
     }
     while (1) {
@@ -73,11 +73,11 @@ void PlayerActionThrowHold(void)
             gCurTask->frame++;
             TaskYieldTrampoline(2);
             if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 64)
-                gCurTask->unk28 = 0;
+                gCurTask->playerThrowDir = 0;
             else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128)
-                gCurTask->unk28 = 2;
+                gCurTask->playerThrowDir = 2;
             else
-                gCurTask->unk28 = 1;
+                gCurTask->playerThrowDir = 1;
             gCurTask->variant = 4;
             /* fallthrough */
         case 4:
@@ -96,7 +96,7 @@ void PlayerActionThrowHold(void)
                 TaskYieldTrampoline(1);
             }
         done:
-            gCurTask->variant = gCurTask->unk28;
+            gCurTask->variant = gCurTask->playerThrowDir;
             break;
         case 5:
             gCurTask->player->unk42 &= 0xFDFF;
@@ -184,24 +184,24 @@ void PlayerActionThrowHoldUpdate(void)
         PlayerTurnToHeldDirection();
         if (PlayerHasCrossedWaterSurface(0) != 0) {
             PlayerSetWaterMotionY();
-            gCurTask->player->requestedAction = 23;
+            gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
             break;
         }
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 64)
-            gCurTask->unk28 = 0;
+            gCurTask->playerThrowDir = 0;
         else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128)
-            gCurTask->unk28 = 2;
+            gCurTask->playerThrowDir = 2;
         else
-            gCurTask->unk28 = 1;
+            gCurTask->playerThrowDir = 1;
         {
             struct Task *v = gCurTask;
             switch (v->playerThrowHoldFramePhase) {
             case 0:
             case 1:
-                if (v->unk28 == 0) {
+                if (v->playerThrowDir == 0) {
                     v->player->unk16 = 6;
                     TaskSetFrame(0xF7A);
-                } else if (v->unk28 == 2) {
+                } else if (v->playerThrowDir == 2) {
                     v->player->unk16 = 11;
                     TaskSetFrame(0xF82);
                 } else {
@@ -211,10 +211,10 @@ void PlayerActionThrowHoldUpdate(void)
                 break;
             case 2:
             case 3:
-                if (v->unk28 == 0) {
+                if (v->playerThrowDir == 0) {
                     v->player->unk16 = 7;
                     TaskSetFrame(0xF7B);
-                } else if (v->unk28 == 2) {
+                } else if (v->playerThrowDir == 2) {
                     v->player->unk16 = 12;
                     TaskSetFrame(0xF83);
                 } else {
@@ -249,7 +249,7 @@ void PlayerActionThrowHoldUpdate(void)
     }
     PlayerStopAtCeilingAndWall();
     if (PlayerHasCrossedWaterSurface(0) != 0) {
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
         gCurTask->player->unk16 = 255;
         SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     } else if (!(gCurTask->onGround & 1)) {

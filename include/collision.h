@@ -2,6 +2,7 @@
 #define GUARD_COLLISION_H
 
 #include "gba/types.h"
+#include "constants/hits.h"
 
 /* collision.h: the RAM cells and ROM tables of the box-vs-terrain collision
    engine, the actor-vs-collider hit tests (M06) and the map queries (M07). 
@@ -22,16 +23,16 @@ struct AttackBox
     /*0x03*/ s8 top;
     /*0x04*/ s8 right;
     /*0x05*/ s8 bottom;
-    /*0x06*/ u8 unk06;
+    /*0x06*/ u8 playerHitMode;
     /*0x07*/ u8 unk07;
     /*0x08*/ u8 damage;
     /*0x09*/ u8 hitEffect;
     /*0x0A*/ u16 unk0A;
     /*0x0C*/ u16 unk0C;
-    /*0x0E*/ u16 unk0E;
+    /*0x0E*/ u16 class10ImmuneMask;
     /*0x10*/ u16 unk10;
     /*0x12*/ u16 unk12;
-    /*0x14*/ u32 unk14;
+    /*0x14*/ u32 class20ImmuneMask;
     /*0x18*/ u16 unk18;
     /*0x1A*/ u16 unk1A;
 };
@@ -49,7 +50,7 @@ struct BodyBox
     /*0x05*/ s8 bottom;
     /*0x06*/ u8 unk06;
     /*0x07*/ u8 unk07;
-    /*0x08*/ u8 unk08;
+    /*0x08*/ u8 classKind;
     /*0x09*/ u8 unk09;
     /*0x0A*/ u8 unk0A;
     /*0x0B*/ u8 unk0B;
@@ -71,7 +72,7 @@ struct Collider
 
 /* The probe result block, filled by the terrain probes and mirrored into
    gTerrainResult by TerrainProbeEnd. */
-struct Unk03005530
+struct TerrainProbeResult
 {
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 ceilingHits;
@@ -94,7 +95,7 @@ struct Unk03005530
 /* gTerrainResult: M06's collision result block; M09 reads unk8 with ldrsh.
    A 16-bit test of unk0/unk1 together is `*(u16 *)&gTerrainResult`
    (M12's PlayerActionBurningUpdate). */
-struct Unk03005550
+struct TerrainResult
 {
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 ceilingHits;
@@ -161,9 +162,9 @@ extern s32 gTerrainVelY; /* Task.velY */
 extern s16 gTerrainPrevX; /* actor x (room-relative) */
 extern s16 gTerrainBoxLeft; /* box left offset */
 extern s16 gTerrainPrevY; /* actor y (room-relative) */
-extern struct Unk03005530 gTerrainProbeResult;
+extern struct TerrainProbeResult gTerrainProbeResult;
 extern u16 gTerrainClampedTopY;
-extern struct Unk03005550 gTerrainResult;
+extern struct TerrainResult gTerrainResult;
 extern s16 gTerrainProbeX; /* probe x */
 extern u8 gTerrainFacing; /* Task.facing */
 extern u8 gTerrainBoundsClamp;

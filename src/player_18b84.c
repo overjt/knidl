@@ -8,7 +8,7 @@
 
 s32 PlaySfx(s32 id);
 
-void sub_08018b84(void)
+void CutsceneFountainKingDededeUpdate(void)
 {
     struct Task *t;
     s32 v;
@@ -25,7 +25,7 @@ void sub_08018b84(void)
         t->cutsceneActorSfxTimer = 0;
 }
 
-void CutsceneActorScript53(void)
+void CutsceneFountainActorScript53(void)
 {
     struct Task *t;
     struct Task *u;
@@ -83,7 +83,7 @@ void CutsceneActorScript53(void)
     }
 }
 
-void CutsceneActorScript54(void)
+void CutsceneFountainActorScript54(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;

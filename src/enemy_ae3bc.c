@@ -36,8 +36,8 @@ extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
 extern void ActorSetHitReactions(u32 v);
 extern void ActorSetAttackBox(u32 v);
-extern void sub_080639f0(struct ActorAux *v);
-extern void sub_08063a00(u32 v);
+extern void ActorSetAux(struct ActorAux *v);
+extern void ActorSetExtraAttackBox(u32 v);
 extern s32 TaskGetDxTo(u32 i);
 extern s32 TaskIsInRectSlot(struct Rect *r, u32 i);
 extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
@@ -83,7 +83,7 @@ void Task_NightmarePowerOrb(void)
     z = 0;
     *b42 = 11;
     ActorInitBossGfx(0);
-    sub_080b05e8();
+    NightmarePowerOrbIntro();
     u = *c;
     u->updateCallback = (u32)NightmarePowerOrbUpdate;
     sub_080ae4c4();
@@ -94,24 +94,24 @@ void Task_NightmarePowerOrb(void)
     v->nightmarePowerOrbLoopCount = z;
     do
     {
-        sub_080ae548();
-        sub_080ae548();
-        sub_080ae628();
-        sub_080ae628();
-        sub_080ae79c();
-        sub_080ae628();
-        sub_080ae628();
+        NightmarePowerOrbHover();
+        NightmarePowerOrbHover();
+        NightmarePowerOrbFigureEight();
+        NightmarePowerOrbFigureEight();
+        NightmarePowerOrbShootFourStars();
+        NightmarePowerOrbFigureEight();
+        NightmarePowerOrbFigureEight();
         NightmarePowerOrbShoot();
-        sub_080ae548();
-        sub_080ae548();
-        sub_080ae79c();
-        sub_080ae628();
-        sub_080ae628();
+        NightmarePowerOrbHover();
+        NightmarePowerOrbHover();
+        NightmarePowerOrbShootFourStars();
+        NightmarePowerOrbFigureEight();
+        NightmarePowerOrbFigureEight();
         NightmarePowerOrbDash();
         u2 = gCurTask;
         u2->nightmarePowerOrbLoopCount++;
     } while ((s16)u2->nightmarePowerOrbLoopCount <= 1);
-    sub_080aeef8();
+    NightmarePowerOrbFlyAway();
     sub_080aef30();
 }
 
@@ -131,7 +131,7 @@ void NightmarePowerOrbUpdate(void)
     {
         ActorCheckHitsWithExtraBox();
         ActorReactToHit();
-        sub_080af1d4();
+        NightmarePowerOrbShowHurtFrames();
         if (gUnk_02007D00[3] > 0)
             gUnk_02007D00[3]--;
     }
@@ -150,7 +150,7 @@ void sub_080ae4c4(void)
     q = (u16 *)gUnk_082FEFF4;
     RequestCopy(4, ((u32 *)q)[3], OBJ_VRAM0 + 0x2000, q[1] << 5);
     RequestCopy(2, ((u32 *)q)[2], IWRAM_START + 0x15B0, q[0] << 5);
-    sub_08063a00((u32)gUnk_0874B450);
+    ActorSetExtraAttackBox((u32)gUnk_0874B450);
     c = &gCurTask;
     t = *c;
     t->u8C.actor->animScript = 0;
@@ -173,7 +173,7 @@ void sub_080ae4c4(void)
     t2->nightmarePowerOrbMaxHealth = w;
 }
 
-void sub_080ae548(void)
+void NightmarePowerOrbHover(void)
 {
     struct Task **c;
     s32 z;
@@ -237,7 +237,7 @@ void sub_080ae548(void)
     TaskStop();
 }
 
-void sub_080ae628(void)
+void NightmarePowerOrbFigureEight(void)
 {
     struct Task **c;
     s32 z;
@@ -362,7 +362,7 @@ void sub_080ae628(void)
     TaskStop();
 }
 
-void sub_080ae79c(void)
+void NightmarePowerOrbShootFourStars(void)
 {
     ActorSetState(2);
     NightmarePowerOrbStartAnim((u32)gUnk_0874AEAC);
@@ -785,7 +785,7 @@ s32 NightmarePowerOrbPickDashLane(void)
     return 0;
 }
 
-void sub_080aeef8(void)
+void NightmarePowerOrbFlyAway(void)
 {
     struct Task **c;
     struct Task *u;
@@ -911,7 +911,7 @@ top:
     }
 }
 
-s32 sub_080af100(void)
+s32 NightmarePowerOrbGetAnimDelay(void)
 {
     return ((s16)(u16)gCurTask->health >> 3) + 1;
 }
@@ -974,7 +974,7 @@ void sub_080af1c8(void)
     NightmarePowerOrbTickAnim();
 }
 
-void sub_080af1d4(void)
+void NightmarePowerOrbShowHurtFrames(void)
 {
     s32 *p;
     s32 v;
@@ -997,7 +997,7 @@ void CreateNightmarePowerOrbStar(u8 a)
     if (gUnk_02007D00[0] == 0)
     {
         sp.subtype = 32;
-        sp.taskType = 135;
+        sp.taskType = TASK_NIGHTMARE_POWER_ORB_STAR;
         sp.variant = a;
         sp.spawnArg = gCurTask->actorSpawnArg;
         sp.tileWord = 0xA110;
@@ -1038,7 +1038,7 @@ void NightmarePowerOrbDefeat(void)
     BossDefeatExplode();
     u = *c;
     CreateNextRoomWarpStar(u->pixelX, u->pixelY);
-    sub_080aeef8();
+    NightmarePowerOrbFlyAway();
     (*c)->updateCallback = (u32)sub_080aef50;
     sub_080b09ac();
 }
@@ -1141,18 +1141,18 @@ void NightmarePowerOrbStarVariant0(void)
     sub_080af7d4();
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(211, t2->posX >> 16, t2->posY >> 16, 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL_UP, t2->posX >> 16, t2->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(4);
     t4 = *c;
-    w3 = CreateChildTaskAt(212, t4->posX >> 16, t4->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL_DOWN, t4->posX >> 16, t4->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w3;
     TaskYieldTrampoline(2);
     t6 = *c;
-    w4 = CreateChildTaskAt(210, t6->posX >> 16, t6->posY >> 16, 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t6->posX >> 16, t6->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(2);
     goto top;
@@ -1212,18 +1212,18 @@ void NightmarePowerOrbStarVariant1(void)
     sub_080af7d4();
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(211, t2->posX >> 16, t2->posY >> 16, 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL_UP, t2->posX >> 16, t2->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(4);
     t4 = *c;
-    w3 = CreateChildTaskAt(212, t4->posX >> 16, t4->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL_DOWN, t4->posX >> 16, t4->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w3;
     TaskYieldTrampoline(2);
     t6 = *c;
-    w4 = CreateChildTaskAt(210, t6->posX >> 16, t6->posY >> 16, 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t6->posX >> 16, t6->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(2);
     goto top;
@@ -1283,18 +1283,18 @@ void NightmarePowerOrbStarVariant2(void)
     sub_080af7d4();
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(211, t2->posX >> 16, t2->posY >> 16, 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL_UP, t2->posX >> 16, t2->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(4);
     t4 = *c;
-    w3 = CreateChildTaskAt(212, t4->posX >> 16, t4->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL_DOWN, t4->posX >> 16, t4->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w3;
     TaskYieldTrampoline(2);
     t6 = *c;
-    w4 = CreateChildTaskAt(210, t6->posX >> 16, t6->posY >> 16, 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t6->posX >> 16, t6->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(2);
     goto top;
@@ -1354,18 +1354,18 @@ void NightmarePowerOrbStarVariant3(void)
     sub_080af7d4();
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(211, t2->posX >> 16, t2->posY >> 16, 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL_UP, t2->posX >> 16, t2->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(4);
     t4 = *c;
-    w3 = CreateChildTaskAt(212, t4->posX >> 16, t4->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL_DOWN, t4->posX >> 16, t4->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w3;
     TaskYieldTrampoline(2);
     t6 = *c;
-    w4 = CreateChildTaskAt(210, t6->posX >> 16, t6->posY >> 16, 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t6->posX >> 16, t6->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(2);
     goto top;
@@ -1465,17 +1465,17 @@ void NightmarePowerOrbStarVariant5(void)
     u1->velX = 0xFFFC0000;
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(210, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
-    w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
     t4->nightmarePowerOrbStarTrailSlot = w3;
-    w4 = CreateChildTaskAt(210, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
@@ -1505,17 +1505,17 @@ void NightmarePowerOrbStarVariant6(void)
     u1->velY = 0xFFFE4CCD;
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(210, (s16)((t2->posX >> 16) + 1), (s16)((t2->posY >> 16) - 1), 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, (s16)((t2->posX >> 16) + 1), (s16)((t2->posY >> 16) - 1), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
-    w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
     t4->nightmarePowerOrbStarTrailSlot = w3;
-    w4 = CreateChildTaskAt(210, (s16)((t4->posX >> 16) - 1), (s16)((t4->posY >> 16) + 1), 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, (s16)((t4->posX >> 16) - 1), (s16)((t4->posY >> 16) + 1), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
@@ -1544,17 +1544,17 @@ void NightmarePowerOrbStarVariant7(void)
     u1->velX = 0xFFFD0000;
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(210, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
-    w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
     t4->nightmarePowerOrbStarTrailSlot = w3;
-    w4 = CreateChildTaskAt(210, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
@@ -1584,17 +1584,17 @@ void NightmarePowerOrbStarVariant8(void)
     u1->velY = 0x0001B333;
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(210, (s16)((t2->posX >> 16) - 1), (s16)((t2->posY >> 16) - 1), 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, (s16)((t2->posX >> 16) - 1), (s16)((t2->posY >> 16) - 1), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
-    w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
     t4->nightmarePowerOrbStarTrailSlot = w3;
-    w4 = CreateChildTaskAt(210, (s16)((t4->posX >> 16) + 1), (s16)((t4->posY >> 16) + 1), 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, (s16)((t4->posX >> 16) + 1), (s16)((t4->posY >> 16) + 1), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
@@ -1629,17 +1629,17 @@ void NightmarePowerOrbStarVariant9(void)
     u2->velY = 0;
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(210, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
-    w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
     t4->nightmarePowerOrbStarTrailSlot = w3;
-    w4 = CreateChildTaskAt(210, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
@@ -1674,17 +1674,17 @@ void NightmarePowerOrbStarVariant10(void)
     u2->velY = 0;
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(210, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
-    w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
     t4->nightmarePowerOrbStarTrailSlot = w3;
-    w4 = CreateChildTaskAt(210, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
@@ -1707,7 +1707,7 @@ void NightmarePowerOrbStarVariant11(void)
     u1->velX = 0xFFFA0000;
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w;
     TaskYieldTrampoline(16);
     goto top;
@@ -2019,7 +2019,7 @@ void sub_080b0570(void)
     t->pixelY = (y >> 16) + (u16)tt2->pixelY;
 }
 
-void sub_080b05e8(void)
+void NightmarePowerOrbIntro(void)
 {
     struct Task **c;
     s32 *p;
@@ -2069,8 +2069,8 @@ void sub_080b05e8(void)
     u->u8C.actor->animScript = (struct AnimCmd *)z;
     p[6] = z;
     p[7] = 3;
-    TaskCreatePausedInScreenAttack(80, 32);
-    (*c)->updateCallback = (u32)sub_080b07d8;
+    TaskCreatePausedInScreenAttack(TASK_NIGHTMARE_POWER_ORB_INTRO_SCROLL, 32);
+    (*c)->updateCallback = (u32)NightmarePowerOrbIntroUpdate;
     TaskYieldTrampoline(65);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B240);
     u2 = *c;
@@ -2094,7 +2094,7 @@ void sub_080b05e8(void)
     u6 = *c;
     u6->velY = z;
     TaskYieldTrampoline(16);
-    CreateChildTaskHere(220, 1);
+    CreateChildTaskHere(TASK_NIGHTMARE_POWER_ORB_STREAK, 1);
     PlaySfx(0x241);
     r2 = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B254);
     u7 = *c;
@@ -2161,7 +2161,7 @@ void sub_080b05e8(void)
     TaskYieldTrampoline(18);
 }
 
-void sub_080b07d8(void)
+void NightmarePowerOrbIntroUpdate(void)
 {
     struct Task **c;
     struct Task *u;
@@ -2190,7 +2190,7 @@ void Task_NightmarePowerOrbIntroScroll(void)
 
     c = &gCurTask;
     u = *c;
-    u->updateCallback = (u32)sub_080b08a0;
+    u->updateCallback = (u32)NightmarePowerOrbIntroScrollUpdate;
     u->nightmarePowerOrbIntroScrollSpeed = -4;
     TaskYieldTrampoline(143);
     u2 = *c;
@@ -2208,7 +2208,7 @@ void Task_NightmarePowerOrbIntroScroll(void)
     TaskExitTrampoline();
 }
 
-void sub_080b08a0(void)
+void NightmarePowerOrbIntroScrollUpdate(void)
 {
     s32 *p;
 
@@ -2620,7 +2620,7 @@ void PaintRollerPaintingCloud(void)
     {
         PlaySfx(0x222);
         sp.subtype = 15;
-        sp.taskType = 117;
+        sp.taskType = TASK_PAINT_ROLLER_LIGHTNING;
         sp.variant = gCurTask->variant;
         sp.spawnArg = gCurTask->actorSpawnArg;
         sp.checkTerrain = 1;
@@ -2804,28 +2804,28 @@ void PaintRollerPaintingPickSubject(void)
     switch (gUnk_030023B4)
     {
     case 0:
-        ActorSetState(0);
+        ActorSetState(PAINT_ROLLER_PAINTING_STATE_CAR);
         break;
     case 1:
-        ActorSetState(1);
+        ActorSetState(PAINT_ROLLER_PAINTING_STATE_KIRBY);
         break;
     case 2:
-        ActorSetState(2);
+        ActorSetState(PAINT_ROLLER_PAINTING_STATE_WADDLE_DEE);
         break;
     case 3:
-        ActorSetState(3);
+        ActorSetState(PAINT_ROLLER_PAINTING_STATE_MIKE);
         break;
     case 4:
-        ActorSetState(4);
+        ActorSetState(PAINT_ROLLER_PAINTING_STATE_BASEBALL);
         break;
     case 5:
-        ActorSetState(5);
+        ActorSetState(PAINT_ROLLER_PAINTING_STATE_BOMB);
         break;
     case 6:
-        ActorSetState(6);
+        ActorSetState(PAINT_ROLLER_PAINTING_STATE_CLOUD);
         break;
     case 7:
-        ActorSetState(7);
+        ActorSetState(PAINT_ROLLER_PAINTING_STATE_PARASOL);
         break;
     }
     gUnk_02007D00[3] = ((s16 *)gUnk_02007D00)[7] + (gUnk_030023B4 << 16);
@@ -3024,7 +3024,7 @@ void HeavyMoleArmEnterState(void)
 
 void HeavyMoleArmState0(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = HEAVY_MOLE_ARM_STATE_0;
     if (gCurTask->heavyMoleArmSpinLevel >> 16 > 2)
         gCurTask->heavyMoleArmSpinLevel = (gCurTask->heavyMoleArmSpinLevel & 0xFFFF) + (128 << 10);
     gUnk_030023D4 = 0;
@@ -3101,7 +3101,7 @@ void HeavyMoleArmState0Update(void)
     if (gCurTask->heavyMoleArmStateTimer == 0)
     {
         gCurTask->heavyMoleArmStateTimer = gUnk_0874B82E[gUnk_02007D00[3]];
-        ActorSetState(1);
+        ActorSetState(HEAVY_MOLE_ARM_STATE_1);
         TaskSetEntry(HeavyMoleArmEnterState, gCurTaskIdx);
     }
 }
@@ -3128,7 +3128,7 @@ void HeavyMoleArmState1(void)
     s32 x2;
 
     t = gCurTask;
-    t->updateState = 1;
+    t->updateState = HEAVY_MOLE_ARM_STATE_1;
     u = gCurTask;
     k = u->facing;
     if (k == -1)
@@ -3284,7 +3284,7 @@ void HeavyMoleArmState2(void)
     u5 = *c2;
     u5->heavyMoleArmSwingStep = 0;
     TaskYieldTrampoline(2);
-    ActorSetState(0);
+    ActorSetState(HEAVY_MOLE_ARM_STATE_0);
     TaskSleepForever();
 }
 
@@ -3293,7 +3293,7 @@ void HeavyMoleArmState2Update(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->state != 2)
+    if (t->state != HEAVY_MOLE_ARM_STATE_2)
     {
         TaskSetEntry(HeavyMoleArmEnterState, gCurTaskIdx);
         return;
@@ -3361,7 +3361,7 @@ void HeavyMoleArmState3(void)
     u5 = *c2;
     u5->heavyMoleArmSwingStep = 0;
     TaskYieldTrampoline(1);
-    ActorSetState(0);
+    ActorSetState(HEAVY_MOLE_ARM_STATE_0);
     TaskSleepForever();
 }
 
@@ -3370,7 +3370,7 @@ void HeavyMoleArmState3Update(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->state != 3)
+    if (t->state != HEAVY_MOLE_ARM_STATE_3)
     {
         TaskSetEntry(HeavyMoleArmEnterState, gCurTaskIdx);
         return;
@@ -3462,7 +3462,7 @@ void HeavyMoleArmState5(void)
 
     t = gCurTask;
     z = 0;
-    t->updateState = 5;
+    t->updateState = HEAVY_MOLE_ARM_STATE_5;
     t2 = gCurTask;
     t2->heavyMoleArmPathStep = 11;
     t2->heavyMoleArmAngleIndex = z;
@@ -3483,7 +3483,7 @@ loop:
     u2 = gCurTask;
     u2->posX = 0;
     u2->posY = 0;
-    ActorSetState(0);
+    ActorSetState(HEAVY_MOLE_ARM_STATE_0);
     TaskSleepForever();
 }
 
@@ -3495,7 +3495,7 @@ void HeavyMoleArmState5Update(void)
     vu16 *pm;
 
     c = &gCurTask;
-    if (gCurTask->state != 5)
+    if (gCurTask->state != HEAVY_MOLE_ARM_STATE_5)
         TaskSetEntry(HeavyMoleArmEnterState, gCurTaskIdx);
     pm = (vu16 *)&gFrameCount;
     if (*pm & 1)
@@ -3514,7 +3514,7 @@ void HeavyMoleArmState4(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 4;
+    gCurTask->updateState = HEAVY_MOLE_ARM_STATE_4;
     t = gCurTask;
     t->heavyMoleArmPathStep = 24;
     t->heavyMoleArmTimeLimit = gUnk_0874B8C4[gUnk_02007D00[3]];
@@ -3527,7 +3527,7 @@ void HeavyMoleArmState4(void)
             gCurTask->heavyMoleArmBaseFrame = gUnk_0874B8F8[gCurTask->heavyMoleArmPathStep];
         TaskYieldTrampoline(gUnk_0874B928[gCurTask->heavyMoleArmPathStep]);
     } while (gCurTask->heavyMoleArmPathStep > 0);
-    ActorSetState(0);
+    ActorSetState(HEAVY_MOLE_ARM_STATE_0);
     TaskSleepForever();
 }
 
@@ -3542,7 +3542,7 @@ void HeavyMoleArmState4Update(void)
     t = *c;
     t->heavyMoleArmTimeLimit--;
     if (t->heavyMoleArmTimeLimit < 0)
-        ActorSetState(0);
+        ActorSetState(HEAVY_MOLE_ARM_STATE_0);
     t3 = *c;
     if (t3->state != 4)
     {
@@ -3845,20 +3845,20 @@ void WhispyWoodsPickAttack(void)
         {
             ta = gCurTask;
             ta->whispyWoodsAttackPhase = 1;
-            ActorSetState(2);
+            ActorSetState(WHISPY_WOODS_STATE_BLOW_FOUR_PUFFS);
         }
         else
         {
             tb = gCurTask;
             tb->whispyWoodsAttackPhase = 2;
-            ActorSetState(3);
+            ActorSetState(WHISPY_WOODS_STATE_DROP_APPLES);
         }
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
         break;
     case 1:
         tc = *c2;
         tc->whispyWoodsAttackPhase = 2;
-        ActorSetState(3);
+        ActorSetState(WHISPY_WOODS_STATE_DROP_APPLES);
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
         break;
     case 2:
@@ -3866,20 +3866,20 @@ void WhispyWoodsPickAttack(void)
         {
             td = gCurTask;
             td->whispyWoodsAttackPhase = 3;
-            ActorSetState(3);
+            ActorSetState(WHISPY_WOODS_STATE_DROP_APPLES);
         }
         else
         {
             te = gCurTask;
             te->whispyWoodsAttackPhase = 0;
-            ActorSetState(1);
+            ActorSetState(WHISPY_WOODS_STATE_BLOW_TWO_PUFFS);
         }
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
         break;
     case 3:
         tf = *c2;
         tf->whispyWoodsAttackPhase = 0;
-        ActorSetState(1);
+        ActorSetState(WHISPY_WOODS_STATE_BLOW_TWO_PUFFS);
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
         break;
     case 4:
@@ -3887,13 +3887,13 @@ void WhispyWoodsPickAttack(void)
         {
             tg = gCurTask;
             tg->whispyWoodsAttackPhase = 1;
-            ActorSetState(2);
+            ActorSetState(WHISPY_WOODS_STATE_BLOW_FOUR_PUFFS);
         }
         else
         {
             th = gCurTask;
             th->whispyWoodsAttackPhase = 2;
-            ActorSetState(3);
+            ActorSetState(WHISPY_WOODS_STATE_DROP_APPLES);
         }
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
         break;
@@ -3907,8 +3907,8 @@ void CreateWhispyWoodsAirPuff(void)
 
     PlaySfx(0x223);
     sp.subtype = 23;
-    sp.taskType = 126;
-    sp.variant = 0;
+    sp.taskType = TASK_WHISPY_WOODS_AIR_PUFF;
+    sp.variant = WHISPY_WOODS_AIR_PUFF_VARIANT_INIT;
     sp.spawnArg = 0;
     z = 0;
     sp.x = 24;
@@ -3924,15 +3924,15 @@ void CreateWhispyWoodsApple(void)
     s32 z;
 
     sp.subtype = 22;
-    sp.taskType = 125;
-    sp.variant = 0;
+    sp.taskType = TASK_WHISPY_WOODS_APPLE;
+    sp.variant = WHISPY_WOODS_APPLE_VARIANT_INIT;
     sp.spawnArg = 0;
     sp.x = (u8)sub_080b2804();
     z = 0;
     sp.y = 224;
     sp.tileWord = ActorGetTileWordPalOffset(1);
     sp.checkTerrain = z;
-    CreateChildTask(170, sp.x, sp.y, 0);
+    CreateChildTask(TASK_WHISPY_WOODS_LEAVES, sp.x, sp.y, 0);
     CreateActorFromDesc(&sp, 1);
 }
 
@@ -4132,7 +4132,7 @@ void WhispyWoodsWaitUpdate(void)
         WhispyWoodsPickAttack();
 }
 
-void WhispyWoodsState1(void)
+void WhispyWoodsBlowTwoPuffs(void)
 {
     struct Task **c;
     struct Task *t;
@@ -4147,7 +4147,7 @@ void WhispyWoodsState1(void)
 
     t = gCurTask;
     z = 0;
-    t->updateState = 1;
+    t->updateState = WHISPY_WOODS_STATE_BLOW_TWO_PUFFS;
     t2 = gCurTask;
     t2->whispyWoodsLoopCount = z;
     c = &gCurTask;
@@ -4179,17 +4179,17 @@ void WhispyWoodsState1(void)
     u = gCurTask;
     u->frame--;
     TaskYieldTrampoline(2);
-    ActorSetState(0);
+    ActorSetState(WHISPY_WOODS_STATE_WAIT);
     TaskSleepForever();
 }
 
-void WhispyWoodsState1Update(void)
+void WhispyWoodsBlowTwoPuffsUpdate(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != WHISPY_WOODS_STATE_BLOW_TWO_PUFFS)
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
 }
 
-void WhispyWoodsState2(void)
+void WhispyWoodsBlowFourPuffs(void)
 {
     struct Task **c;
     struct Task *t;
@@ -4204,7 +4204,7 @@ void WhispyWoodsState2(void)
 
     t = gCurTask;
     z = 0;
-    t->updateState = 2;
+    t->updateState = WHISPY_WOODS_STATE_BLOW_FOUR_PUFFS;
     t2 = gCurTask;
     t2->whispyWoodsLoopCount = z;
     c = &gCurTask;
@@ -4236,13 +4236,13 @@ void WhispyWoodsState2(void)
     u = gCurTask;
     u->frame--;
     TaskYieldTrampoline(2);
-    ActorSetState(0);
+    ActorSetState(WHISPY_WOODS_STATE_WAIT);
     TaskSleepForever();
 }
 
-void WhispyWoodsState2Update(void)
+void WhispyWoodsBlowFourPuffsUpdate(void)
 {
-    if (gCurTask->state != 2)
+    if (gCurTask->state != WHISPY_WOODS_STATE_BLOW_FOUR_PUFFS)
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
 }
 
@@ -4260,7 +4260,7 @@ void WhispyWoodsDropApples(void)
 
     t = gCurTask;
     z = 0;
-    t->updateState = 3;
+    t->updateState = WHISPY_WOODS_STATE_DROP_APPLES;
     t2 = gCurTask;
     t2->whispyWoodsAppleTimer = 150;
     t2->whispyWoodsLoopCount = z;
@@ -4286,7 +4286,7 @@ void WhispyWoodsDropApples(void)
         q5 = *c;
         q5->whispyWoodsLoopCount++;
     } while ((s16)q5->whispyWoodsLoopCount <= 2);
-    ActorSetState(0);
+    ActorSetState(WHISPY_WOODS_STATE_WAIT);
     TaskSleepForever();
 }
 
@@ -4308,11 +4308,11 @@ void WhispyWoodsDropApplesUpdate(void)
         CreateWhispyWoodsApple();
         break;
     }
-    if (gCurTask->state != 3)
+    if (gCurTask->state != WHISPY_WOODS_STATE_DROP_APPLES)
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
 }
 
-void sub_080b2dd4(void)
+void WhispyWoodsDefeatedInit(void)
 {
     struct Task **c;
     struct Task *t;
@@ -4321,7 +4321,7 @@ void sub_080b2dd4(void)
 
     c = &gCurTask;
     t = *c;
-    t->updateCallback = (u32)sub_080b2e20;
+    t->updateCallback = (u32)WhispyWoodsDefeatedUpdate;
     t->moveCallback = (u32)ActorMove;
     t->layer = 11;
     u = *c;
@@ -4329,17 +4329,17 @@ void sub_080b2dd4(void)
     u->facing = 255;
     ActorSetState(0);
     u2 = *c;
-    CallTableEntry(u2->state, 1, gUnk_0874C150);
+    CallTableEntry(u2->state, 1, gWhispyWoodsDefeatedStates);
 }
 
-void sub_080b2e20(void)
+void WhispyWoodsDefeatedUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_0874C154);
+    CallTableEntry(gCurTask->updateState, 1, gWhispyWoodsDefeatedStateUpdates);
 }
 
-void sub_080b2e3c(void)
+void WhispyWoodsDefeatedEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_0874C150);
+    CallTableEntry(gCurTask->state, 1, gWhispyWoodsDefeatedStates);
 }
 
 void sub_080b2e58(void)
@@ -4410,7 +4410,7 @@ s32 sub_080b2f38(void)
     {
         t->whispyWoodsAppleFirstFall = z;
         t->whispyWoodsAppleFloorY = t->pixelY;
-        ActorSetState(1);
+        ActorSetState(WHISPY_WOODS_APPLE_STATE_1);
         TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
         return 1;
     }

@@ -27,7 +27,7 @@ void LoadAbilityTiles(void)
     u8 *vram = gObjVram + ((gCurTask->tileWord & 0x7FF) << 5);
 
     switch (gCurTask->player->ability) {
-    case 0:
+    case ABILITY_NORMAL:
         RequestCopy(1, gUnk_081AC378, vram + 0x180, 128);
         RequestCopy(1, gUnk_081AC378 + 128, vram + 0x580, 128);
         RequestCopy(1, gUnk_081AC378 + 256, vram + 0x980, 128);
@@ -35,83 +35,83 @@ void LoadAbilityTiles(void)
         RequestCopy(2, gUnk_081AC358,
                      gObjPalette + (((gCurTask->tileWord >> 12) + 1) << 5), 32);
         break;
-    case 1:
+    case ABILITY_FIRE:
         RequestCopy(1, gUnk_081BBD70, vram + 0x180, 128);
         RequestCopy(1, gUnk_081BBD70 + 128, vram + 0x580, 128);
         RequestCopy(1, gUnk_081BBD70 + 256, vram + 0x980, 128);
         RequestCopy(1, gUnk_081BBD70 + 384, vram + 0xD80, 128);
         break;
-    case 3:
+    case ABILITY_CUTTER:
         RequestCopy(1, gUnk_081BFE38, vram + 0x100, 256);
         RequestCopy(1, gUnk_081BFE38 + 256, vram + 0x500, 256);
         RequestCopy(1, gUnk_081BFE38 + 512, vram + 0x900, 256);
         RequestCopy(1, gUnk_081BFE38 + 768, vram + 0xD00, 256);
         break;
-    case 5:
+    case ABILITY_BURNING:
         RequestCopy(1, gUnk_081CC328, vram + 0x100, 256);
         RequestCopy(1, gUnk_081CC328 + 256, vram + 0x500, 256);
         RequestCopy(1, gUnk_081CC328 + 512, vram + 0x900, 256);
         RequestCopy(1, gUnk_081CC328 + 768, vram + 0xD00, 256);
         break;
-    case 6:
+    case ABILITY_LASER:
         RequestCopy(1, gUnk_081CF260, vram + 0x180, 128);
         RequestCopy(1, gUnk_081CF260 + 128, vram + 0x580, 128);
         RequestCopy(1, gUnk_081CF260 + 256, vram + 0x980, 128);
         RequestCopy(1, gUnk_081CF260 + 384, vram + 0xD80, 128);
         break;
-    case 8:
+    case ABILITY_WHEEL:
         RequestCopy(1, gUnk_081D5B04, vram + 0x100, 256);
         RequestCopy(1, gUnk_081D5B04 + 256, vram + 0x500, 256);
         RequestCopy(1, gUnk_081D5B04 + 512, vram + 0x900, 256);
         RequestCopy(1, gUnk_081D5B04 + 768, vram + 0xD00, 256);
         break;
-    case 9:
+    case ABILITY_HAMMER:
         RequestCopy(1, gUnk_081DCDFC, vram + 0x180, 128);
         RequestCopy(1, gUnk_081DCDFC + 128, vram + 0x580, 128);
         RequestCopy(1, gUnk_081DCDFC + 256, vram + 0x980, 128);
         RequestCopy(1, gUnk_081DCDFC + 384, vram + 0xD80, 128);
         break;
-    case 10:
+    case ABILITY_PARASOL:
         RequestCopy(1, gUnk_081E1D0C, vram + 0x180, 128);
         RequestCopy(1, gUnk_081E1D0C + 128, vram + 0x580, 128);
         RequestCopy(1, gUnk_081E1D0C + 256, vram + 0x980, 128);
         RequestCopy(1, gUnk_081E1D0C + 384, vram + 0xD80, 128);
         break;
-    case 11:
+    case ABILITY_SLEEP:
         RequestCopy(1, gUnk_081E43B4, vram + 0x100, 64);
         RequestCopy(1, gUnk_081E43B4 + 64, vram + 0x500, 64);
         break;
-    case 13:
+    case ABILITY_ICE:
         RequestCopy(1, gUnk_081EFD60, vram + 0x100, 128);
         RequestCopy(1, gUnk_081EFD60 + 128, vram + 0x500, 128);
         RequestCopy(1, gUnk_081EFD60 + 256, vram + 0x900, 128);
         RequestCopy(1, gUnk_081EFD60 + 384, vram + 0xD00, 128);
         break;
-    case 14:
+    case ABILITY_FREEZE:
         RequestCopy(1, gUnk_081F1AE0, vram + 0x180, 128);
         RequestCopy(1, gUnk_081F1AE0 + 128, vram + 0x580, 128);
         RequestCopy(1, gUnk_081F1AE0 + 256, vram + 0x980, 128);
         RequestCopy(1, gUnk_081F1AE0 + 384, vram + 0xD80, 128);
         break;
-    case 16:
+    case ABILITY_BEAM:
         RequestCopy(1, gUnk_081F6CEC, vram + 0x100, 256);
         RequestCopy(1, gUnk_081F6CEC + 256, vram + 0x500, 256);
         RequestCopy(1, gUnk_081F6CEC + 512, vram + 0x900, 256);
         RequestCopy(1, gUnk_081F6CEC + 768, vram + 0xD00, 256);
         break;
-    case 19:
+    case ABILITY_TORNADO:
         RequestCopy(1, gUnk_08200D08, vram + 0x100, 256);
         RequestCopy(1, gUnk_08200D08 + 256, vram + 0x500, 256);
         RequestCopy(1, gUnk_08200D08 + 512, vram + 0x900, 256);
         RequestCopy(1, gUnk_08200D08 + 768, vram + 0xD00, 256);
         break;
-    case 20:
+    case ABILITY_CRASH:
         RequestCopy(1, gUnk_082036D8, vram + 0x100, 192);
         RequestCopy(1, gUnk_082036D8 + 192, vram + 0x500, 192);
         RequestCopy(1, gUnk_082036D8 + 384, vram + 0x900, 192);
         RequestCopy(1, gUnk_082036D8 + 576, vram + 0xD00, 192);
         break;
-    case 24:
+    case ABILITY_UFO:
         RequestCopy(1, gUnk_082181F0, vram + 0x100, 256);
         RequestCopy(1, gUnk_082181F0 + 256, vram + 0x500, 256);
         RequestCopy(1, gUnk_082181F0 + 512, vram + 0x900, 256);
@@ -125,7 +125,7 @@ void PlayerLoadSparkTiles(void)
     struct Task *t = gCurTask;
     u32 off = (t->tileWord & 0x7FF) << 5;
 
-    if (t->player->ability == 2) {
+    if (t->player->ability == ABILITY_SPARK) {
         u8 *src = gUnk_081BE45C;
         RequestCopy(1, src, (void *)(off + (OBJ_VRAM0 + 0x100)), 128);
         RequestCopy(1, src + 128, (void *)(off + (OBJ_VRAM0 + 0x500)), 128);

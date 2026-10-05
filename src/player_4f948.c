@@ -34,17 +34,17 @@ void PlayerActionStarRod(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 53;
-    gCurTask->u80.attackAbility = 25;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_STAR_ROD;
+    gCurTask->u80.attackAbility = ABILITY_STAR_ROD;
     {
         struct Task *t = gCurTask;
         t->playerActionDone = 0;
-        t->unk2C = -1;
-        gPlayerBodyBoxes[t->player->playerIndex] = *(struct M11R20 *)gUnk_0873C2C8;
+        t->playerAttackStep = -1;
+        gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C2C8;
     }
     {
         struct Task *t = gCurTask;
-        t->unk28 = 0;
+        t->playerAttackCutIn = 0;
         PlaySfxIfLocalPlayer(155, (u16)t->player->playerIndex);
     }
     TaskSetFrame(0x1026);
@@ -55,17 +55,17 @@ void PlayerActionStarRod(void)
     TaskYieldTrampoline(1);
     TaskSetFrame(0x102A);
     TaskYieldTrampoline(1);
-    CreatePlayerObjectLowSlot(gCurTask->player->playerIndex, 11, 0);
+    CreatePlayerObjectLowSlot(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_STAR_ROD_SHOT, 0);
     for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
     {
         struct Task *t = gCurTask;
-        t->unk2C++;
+        t->playerAttackStep++;
         t->frame++;
         TaskYieldTrampoline(1);
     }
     {
         struct Task *t = gCurTask;
-        t->unk2C = -1;
+        t->playerAttackStep = -1;
         t->frame++;
     }
     TaskYieldTrampoline(1);
@@ -77,7 +77,7 @@ void PlayerActionStarRod(void)
     TaskYieldTrampoline(1);
     {
         struct Task *t = gCurTask;
-        t->unk28++;
+        t->playerAttackCutIn++;
         t->frame++;
     }
     TaskYieldTrampoline(1);
@@ -97,7 +97,7 @@ void PlayerActionStarRodUpdate(void)
     }
     else
     {
-        if (t->unk28 != 0)
+        if (t->playerAttackCutIn != 0)
         {
             if (gLatchedPressedKeys[t->player->playerIndex] & 2)
             {
@@ -106,14 +106,14 @@ void PlayerActionStarRodUpdate(void)
             else if ((t->onGround & 1) && (gLatchedHeldKeys[t->player->playerIndex] & 0x30))
             {
                 PlayerTurnToHeldDirection();
-                gCurTask->player->requestedAction = 2;
+                gCurTask->player->requestedAction = PLAYER_ACTION_WALK;
             }
         }
         {
             struct Task *u = gCurTask;
-            if (u->unk2C != -1)
+            if (u->playerAttackStep != -1)
             {
-                LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C2DC + u->unk2C * 8);
+                LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C2DC + u->playerAttackStep * 8);
                 RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                              &gPlayerBodyBoxes[gCurTask->player->playerIndex]);
             }
@@ -126,38 +126,38 @@ void PlayerActionStarRodJump(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 54;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_STAR_ROD_JUMP;
     gCurTask->variant = 0;
     gCurTask->player->unk14 = 23;
     PlayerSetMotionYPreset(0);
-    PlaySfxIfLocalPlayer(100, (u16)gCurTask->player->playerIndex);
+    PlaySfxIfLocalPlayer(SE_JUMP, (u16)gCurTask->player->playerIndex);
     {
         struct Task *t = gCurTask;
-        t->unk2C = t->facing;
-        t->u80.attackAbility = 25;
+        t->playerStarRodJumpFacing = t->facing;
+        t->u80.attackAbility = ABILITY_STAR_ROD;
     }
     {
         struct Task *t = gCurTask;
-        t->unk28 = -1;
-        gPlayerBodyBoxes[t->player->playerIndex] = *(struct M11R20 *)gUnk_0873C304;
+        t->playerAttackStep28 = -1;
+        gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C304;
     }
     while (1)
     {
         {
             struct Task *t = gCurTask;
-            t->unk28++;
+            t->playerAttackStep28++;
             PlaySfxIfLocalPlayer(0x11D, (u16)t->player->playerIndex);
         }
         TaskSetFrame(0xFE5);
         TaskYieldTrampoline(1);
-        for (gCurTask->unk6E = 0; gCurTask->unk6E <= 6; gCurTask->unk6E++)
+        for (gCurTask->playerLoopCount6E = 0; gCurTask->playerLoopCount6E <= 6; gCurTask->playerLoopCount6E++)
         {
             struct Task *t = gCurTask;
-            t->unk28++;
+            t->playerAttackStep28++;
             t->frame++;
             TaskYieldTrampoline(1);
         }
-        gCurTask->unk28 = -1;
+        gCurTask->playerAttackStep28 = -1;
     }
 }
 
@@ -189,9 +189,9 @@ void PlayerActionStarRodJumpUpdate(void)
     if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 0x30)
     {
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 0x10)
-            gCurTask->unk2C = 1;
+            gCurTask->playerStarRodJumpFacing = 1;
         else
-            gCurTask->unk2C = -1;
+            gCurTask->playerStarRodJumpFacing = -1;
     }
     if (PlayerCheckFloat() == 0)
     {
@@ -201,19 +201,19 @@ void PlayerActionStarRodJumpUpdate(void)
             {
                 PlayerCheckBump();
                 PlayerRequestLocomotion();
-                gCurTask->facing = gCurTask->unk2C;
+                gCurTask->facing = gCurTask->playerStarRodJumpFacing;
             }
         }
         else
         {
-            gCurTask->facing = gCurTask->unk2C;
+            gCurTask->facing = gCurTask->playerStarRodJumpFacing;
         }
     }
     {
         struct Task *u = gCurTask;
-        if (u->unk28 != -1)
+        if (u->playerAttackStep28 != -1)
         {
-            LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C318 + u->unk28 * 8);
+            LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C318 + u->playerAttackStep28 * 8);
             RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                          &gPlayerBodyBoxes[gCurTask->player->playerIndex]);
         }
@@ -240,15 +240,15 @@ void PlayerActionStarRodFlight(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 55;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_STAR_ROD_FLIGHT;
     if (gCurTask->player->prevMode != 13)
     {
         gCurTask->player->running = 0;
         gCurTask->player->unk14 = 0;
-        gCurTask->player->unk10 = 0;
+        gCurTask->player->flightCoastTimer = 0;
         PlayerStopAxes(3);
         gCurTask->variant = 0;
-        gCurTask->u80.attackAbility = 0;
+        gCurTask->u80.attackAbility = ABILITY_NORMAL;
         gCurTask->lateUpdateCallback = 0;
         gCurTask->player->bodyBox = 0;
         gCurTask->player->terrainBox = 0;
@@ -296,8 +296,8 @@ void PlayerActionStarRodFlightUpdate(void)
     }
     if (gSpriteCameraY > 888)
     {
-        gCurTask->hitKind = 1;
+        gCurTask->hitKind = HIT_KIND_DEFEAT;
         AddPlayerHealth(-gPlayerHealth[gCurTask->player->playerIndex], gCurTask->player->playerIndex);
-        gCurTask->player->requestedAction = 17;
+        gCurTask->player->requestedAction = PLAYER_ACTION_DIE;
     }
 }

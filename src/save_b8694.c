@@ -17,46 +17,46 @@
 
 void ReceiveLinkSaveSlots(void)
 {
-    s32 i;
-    s32 q;
+    s32 player;
+    s32 level;
     s32 r;
 
-    for (i = 0; i < gPlayerCount; i++)
+    for (player = 0; player < gPlayerCount; player++)
     {
-        switch (gRecvCmds[0][i] & 0xFF)
+        switch (gRecvCmds[0][player] & 0xFF)
         {
         case 0:
             break;
         case 1:
-            gLinkSaveSlots[i].unk06[gExtraMode] = gRecvCmds[1][i] >> 8;
-            gLinkSaveSlots[i].unk08[gExtraMode] = gRecvCmds[1][i];
-            gLinkSaveSlots[i].unk0A[gExtraMode] = gRecvCmds[2][i] >> 8;
-            gLinkSaveSlots[i].unk0C[gExtraMode] = gRecvCmds[2][i];
-            gLinkSaveSlots[i].unk02[gExtraMode] = gRecvCmds[3][i];
+            gLinkSaveSlots[player].curLevel[gExtraMode] = gRecvCmds[1][player] >> 8;
+            gLinkSaveSlots[player].curStage[gExtraMode] = gRecvCmds[1][player];
+            gLinkSaveSlots[player].furthestLevel[gExtraMode] = gRecvCmds[2][player] >> 8;
+            gLinkSaveSlots[player].furthestStage[gExtraMode] = gRecvCmds[2][player];
+            gLinkSaveSlots[player].completionPercent[gExtraMode] = gRecvCmds[3][player];
             break;
         case 2:
-            gLinkSaveSlots[i].unk10[gExtraMode] = (gRecvCmds[1][i] << 16) | gRecvCmds[2][i];
-            gLinkSaveSlots[i].unk00 = gRecvCmds[3][i];
+            gLinkSaveSlots[player].bigSwitchFlags[gExtraMode] = (gRecvCmds[1][player] << 16) | gRecvCmds[2][player];
+            gLinkSaveSlots[player].milestoneFlags = gRecvCmds[3][player];
             break;
         default:
-            q = Div((gRecvCmds[0][i] & 0xFF) - 3, 3);
-            r = Mod((gRecvCmds[0][i] & 0xFF) - 3, 3);
-            if (q <= 7)
+            level = Div((gRecvCmds[0][player] & 0xFF) - 3, 3);
+            r = Mod((gRecvCmds[0][player] & 0xFF) - 3, 3);
+            if (level <= 7)
             {
                 switch (r)
                 {
                 case 0:
-                    gLinkSaveSlots[i].unk18[q][0] = gRecvCmds[1][i];
-                    gLinkSaveSlots[i].unk18[q][1] = gRecvCmds[2][i];
-                    gLinkSaveSlots[i].unk18[q][2] = gRecvCmds[3][i];
+                    gLinkSaveSlots[player].stageClearStatus[level][0] = gRecvCmds[1][player];
+                    gLinkSaveSlots[player].stageClearStatus[level][1] = gRecvCmds[2][player];
+                    gLinkSaveSlots[player].stageClearStatus[level][2] = gRecvCmds[3][player];
                     break;
                 case 1:
-                    gLinkSaveSlots[i].unk18[q][3] = gRecvCmds[1][i];
-                    gLinkSaveSlots[i].unk18[q][4] = gRecvCmds[2][i];
-                    gLinkSaveSlots[i].unk18[q][5] = gRecvCmds[3][i];
+                    gLinkSaveSlots[player].stageClearStatus[level][3] = gRecvCmds[1][player];
+                    gLinkSaveSlots[player].stageClearStatus[level][4] = gRecvCmds[2][player];
+                    gLinkSaveSlots[player].stageClearStatus[level][5] = gRecvCmds[3][player];
                     break;
                 case 2:
-                    gLinkSaveSlots[i].unk18[q][6] = gRecvCmds[1][i];
+                    gLinkSaveSlots[player].stageClearStatus[level][6] = gRecvCmds[1][player];
                     break;
                 }
             }

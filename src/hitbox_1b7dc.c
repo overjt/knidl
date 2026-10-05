@@ -59,13 +59,13 @@ void CalcHitDamageAndDirection(void)
     {
         if (gAttackBox->unk0A & 2)
         {
-            gHitKind = 6;
+            gHitKind = HIT_KIND_NO_DAMAGE;
             gHitEffect = 1;
             gHitHealthLeft = gAttackHealth;
             gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
             return;
         }
-        gHitKind = 1;
+        gHitKind = HIT_KIND_DEFEAT;
         gHitHealthLeft = 0;
     }
     gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
@@ -77,11 +77,11 @@ void CalcHitDamageAndDirection(void)
    the midpoint between the entry and the actor. */
 void HitRecordHitter(void)
 {
-    gHitterColliderClass = gColliderBodyBox->unk08 & 0xF0;
-    gHitterColliderKind = (u32)(gColliderBodyBox->unk08 << 28) >> 28;
+    gHitterColliderClass = gColliderBodyBox->classKind & 0xF0;
+    gHitterColliderKind = (u32)(gColliderBodyBox->classKind << 28) >> 28;
     gHitterSlot = gColliderSlot;
     gUnk_03001F24 = gColliderPlayer;
-    if (gHitKind == 6 || gHitKind == 8)
+    if (gHitKind == HIT_KIND_NO_DAMAGE || gHitKind == HIT_KIND_CATCH)
         gHitTimer = gCurTask->hitTimer;
     else
         gHitTimer = gAttackHitDuration;

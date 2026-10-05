@@ -22,7 +22,7 @@
  * the fixed room gRoomTable[8][7][0] with the player at (136, 928) and
  * BGM 1.  Every loader ends with the per-player loop that refills health,
  * rebuilds the player mask gActivePlayerMask and restarts the player tasks
- * (CreatePlayer and InitPlayerState/sub_0803d1c4). */
+ * (CreatePlayer and InitPlayerState/InitPlayerStateKeepInvincibility). */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
@@ -34,8 +34,8 @@ void LoadHubRoom(void)
     ResetTasksAndOam();
     gInHub = 1;
     gCurLevel = gStageIndex;
-    gUnk_03001F20 = 16;
-    if (gHubUnlockFlags != 0 || gRoomEntryMode == 2)
+    gCurStage = 16;
+    if (gHubUnlockFlags != 0 || gRoomEntryMode == ROOM_ENTRY_WARP_STAR)
         gCameraMode = 4;
     else
         gCameraMode = 0;
@@ -43,7 +43,7 @@ void LoadHubRoom(void)
     CreateRoomTask(1);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gRoomBg3FullShake = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->bg3FullShake;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();
@@ -60,7 +60,7 @@ void LoadHubRoom(void)
     gRoomBgLayout = 0;
     gCurTileDrifts = gTileDrifts;
     *gUnk_02005574 = 0;
-    gUnk_02000020 = 0;
+    gRoomPlayerMode = 0;
     gUnk_0200B078 = 0;
     gHBlankScrollStarted = 0;
     gRoomUpdateFlags = 31;
@@ -82,15 +82,15 @@ void LoadHubRoom(void)
             if (gPlayerHealth[i] == 0)
             {
                 gPlayerHealth[i] = gMaxHealth;
-                gSavedPlayerAbilities[i] = 0;
+                gSavedPlayerAbilities[i] = ABILITY_NORMAL;
                 gSavedPlayerAbilityUses[i] = 0xFFFF;
                 AddPlayerLives(-1, i);
             }
-            if ((s16)gSavedPlayerAbilities[i] != 0)
+            if ((s16)gSavedPlayerAbilities[i] != ABILITY_NORMAL)
             {
                 gPlayerAbilities[i] = gSavedPlayerAbilities[i];
                 gPlayerAbilityUses[i] = gSavedPlayerAbilityUses[i];
-                gSavedPlayerAbilities[i] = 0;
+                gSavedPlayerAbilities[i] = ABILITY_NORMAL;
                 gSavedPlayerAbilityUses[i] = 0xFFFF;
             }
             gActivePlayerMask |= 1 << i;
@@ -103,7 +103,7 @@ void LoadHubRoom(void)
             gPlayerCameraMode[i] = 3;
         }
         CreatePlayer(i);
-        sub_0803d1c4(i);
+        InitPlayerStateKeepInvincibility(i);
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
         gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     }
@@ -142,13 +142,13 @@ void LoadBigSwitchViewRoom(void)
 
     gInHub = 1;
     gCurLevel = gStageIndex;
-    gUnk_03001F20 = 16;
+    gCurStage = 16;
     gCameraMode = 2;
     LoadGfxSet(1);
     CreateRoomTask(2);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gRoomBg3FullShake = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->bg3FullShake;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();
@@ -167,7 +167,7 @@ void LoadBigSwitchViewRoom(void)
     gRoomBgLayout = z;
     gCurTileDrifts = gTileDrifts;
     gUnk_02005574[0] = z;
-    gUnk_02000020 = z;
+    gRoomPlayerMode = z;
     gUnk_0200B078 = z;
     gHBlankScrollStarted = z;
     gRoomUpdateFlags = 3;
@@ -296,7 +296,7 @@ void LoadGoalGameRoom(void)
     CreateRoomTask(4);
     gCurRoomDef = gRoomTable[8][7][0];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gRoomBg3FullShake = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->bg3FullShake;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();
@@ -315,7 +315,7 @@ void LoadGoalGameRoom(void)
     else
         CpuSet(gCurRoomDef->metatileMap, gRoomMapBuffer, (gRoomMetatileCount * 2) & 0x1FFFFF);
     RequestCopy(8, (u32)gCurRoomDef->metatileTiles, (u32)gMetatileTiles, 0);
-    gUnk_02000020 = 0;
+    gRoomPlayerMode = 0;
     gUnk_0200B078 = 0;
     gHBlankScrollStarted = 0;
     gRoomUpdateFlags = 31;
@@ -333,7 +333,7 @@ void LoadGoalGameRoom(void)
     PlayBgm(1);
     gRoomBgLayout = 0;
     gUnk_0200B078 = 0;
-    gUnk_02000020 = 1;
+    gRoomPlayerMode = 1;
     gActivePlayerMask = 0;
     gActivePlayerCount = 0;
     gLivingPlayerCount = 0;
@@ -344,15 +344,15 @@ void LoadGoalGameRoom(void)
             if (gPlayerHealth[i] == 0)
             {
                 gPlayerHealth[i] = gMaxHealth;
-                gSavedPlayerAbilities[i] = 0;
+                gSavedPlayerAbilities[i] = ABILITY_NORMAL;
                 gSavedPlayerAbilityUses[i] = 0xFFFF;
                 AddPlayerLives(-1, i);
             }
-            if ((s16)gSavedPlayerAbilities[i] != 0)
+            if ((s16)gSavedPlayerAbilities[i] != ABILITY_NORMAL)
             {
                 gPlayerAbilities[i] = gSavedPlayerAbilities[i];
                 gPlayerAbilityUses[i] = gSavedPlayerAbilityUses[i];
-                gSavedPlayerAbilities[i] = 0;
+                gSavedPlayerAbilities[i] = ABILITY_NORMAL;
                 gSavedPlayerAbilityUses[i] = 0xFFFF;
             }
             gActivePlayerMask |= 1 << i;

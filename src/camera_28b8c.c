@@ -30,7 +30,7 @@
  * gBg3MapShape from the map size) and InitDoors builds the door
  * objects. */
 
-struct Unk020055D8Entry
+struct RoomObjectEntry
 {
     /*0x00*/ u8 filler0[4];
     /*0x04*/ u16 x;
@@ -44,10 +44,10 @@ void CameraResetRoomView(void)
 {
     s32 x;
     s32 y;
-    s32 i;
+    s32 player;
 
     CalcRoomBounds();
-    if (gCameraMode != 5)
+    if (gCameraMode != CAMERA_MODE_HOLD_ANCHOR)
     {
         if (gInHub != 0 || gPlayerCount == 1)
         {
@@ -118,14 +118,14 @@ void CameraResetRoomView(void)
             y = gRoomBounds[3];
         gCameraBounds[0] = gCameraBounds[1] = x;
         gCameraBounds[2] = gCameraBounds[3] = y;
-        for (i = 0; i < gPlayerCount; i++)
+        for (player = 0; player < gPlayerCount; player++)
         {
-            gPlayerBounds[i].x0 = x - 117;
-            gPlayerBounds[i].x1 = x + 117;
-            gPlayerBounds[i].y0 = y - 76;
-            gPlayerBounds[i].y1 = y + 104;
-            gPlayerCameraPos[i].x = x;
-            gPlayerCameraPos[i].y = y;
+            gPlayerBounds[player].x0 = x - 117;
+            gPlayerBounds[player].x1 = x + 117;
+            gPlayerBounds[player].y0 = y - 76;
+            gPlayerBounds[player].y1 = y + 104;
+            gPlayerCameraPos[player].x = x;
+            gPlayerCameraPos[player].y = y;
         }
         gCameraCenterX = x << 16;
         gCameraCenterY = y << 16;
@@ -167,7 +167,7 @@ void SetRoomEntryPoint(void)
     if (gUnk_0200B038 == 0)
     {
         gUnk_02008054 = gRoomIndex;
-        if (gRoomEntryMode == 2)
+        if (gRoomEntryMode == ROOM_ENTRY_WARP_STAR)
         {
             gUnk_0200AFF4 = gCurRoomDef->entryX;
             gUnk_02008050 = gCurRoomDef->entryY;
@@ -197,7 +197,7 @@ void SetRoomEntryPoint(void)
                 gCameraAnchorY = gRoomBounds[3];
         }
     }
-    else if (gCameraMode == 5)
+    else if (gCameraMode == CAMERA_MODE_HOLD_ANCHOR)
     {
         gCameraAnchorX = gCameraFocusX;
         gCameraAnchorY = gCameraFocusY;

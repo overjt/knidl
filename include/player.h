@@ -2,6 +2,7 @@
 #define GUARD_PLAYER_H
 
 #include "gba/types.h"
+#include "constants/sound.h"
 
 /* player.h: the RAM cells and ROM tables of the player: animation bank and
    collision registry (M05), breakable blocks and the player task (M09), the
@@ -9,7 +10,7 @@
    the type its consumers prove (issue #36 phase 2,
    docs/header-conventions.md). */
 
-struct Unk020061F0;
+struct BreakingBlock;
 
 /* A hit-box set: unk0 & 0x8000 = mirror with the task's facing, unk0 & 0xFFF
    = the attack id passed to CanBreakBlock; unk2/unk3 = (x, y) offset of the
@@ -28,44 +29,44 @@ struct HitBoxSet
    unk08 is the 16.16 y-delta, unk0C a down-counter, unk0D a frame id. */
 struct M04Spark
 {
-    /*0x00*/ s32 unk00;
-    /*0x04*/ s32 unk04;
-    /*0x08*/ s32 unk08;
-    /*0x0C*/ u8 unk0C;
-    /*0x0D*/ u8 unk0D;
+    /*0x00*/ s32 offsetX;
+    /*0x04*/ s32 offsetY;
+    /*0x08*/ s32 velX;
+    /*0x0C*/ u8 frameTimer;
+    /*0x0D*/ u8 frame;
     /*0x0E*/ u16 unk0E;
 };
 
 struct M11Buf { u8 unk00[4]; u8 unk04[4]; };
 
-struct M11R20 { u32 w[5]; };
+struct PlayerBodyBox { u32 w[5]; };
 
 /* M11's per-player records */
-struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
+struct PlayerHitBoxSet { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
 
 /* gUnk_0873B510[]: a palette fade, src/dst palettes and the blend step */
-struct M12Fade
+struct BurningPaletteFade
 {
-    /*0x00*/ u16 *unk0;
-    /*0x04*/ u16 *unk4;
-    /*0x08*/ s32 unk8;
+    /*0x00*/ u16 *src;
+    /*0x04*/ u16 *dst;
+    /*0x08*/ s32 rate;
 };
 
-struct Unk02005E00
+struct LifeRequests
 {
-    /*0x00*/ s32 unk00;
-    /*0x04*/ u8 unk04[4];
-    /*0x08*/ u8 unk08[4];
+    /*0x00*/ s32 timeout;
+    /*0x04*/ u8 requests[4];
+    /*0x08*/ u8 gameOver[4];
 };
 
 /* one step of a player's knock-back script: {dx, dy, flags} with
    flags & 15 = frames to hold, & 64 = mirror dx with the facing,
    & 128 = sound; a zero flags byte ends the script */
-struct Unk0873A994
+struct OffsetScriptRow
 {
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u8 unk4;
+    /*0x00*/ u16 offsetX;
+    /*0x02*/ u16 offsetY;
+    /*0x04*/ u8 flags;
     /*0x05*/ u8 filler5[3];
 };
 
@@ -74,19 +75,19 @@ extern u16 gEndingLocalPlayer;
 extern u8 gBlockCursorPlayer; /*   the player that hit it */
 extern u8 gBlockCursorShake; /*   hit-box id bit 11 */
 extern s16 gBrokenBlockY[]; /*   y (pixels) */
-extern struct M11R8 gPlayerHitBoxSets[];
-extern u8 gUnk_020055C4;
-extern struct Unk02005E00 gLifeRequests;
+extern struct PlayerHitBoxSet gPlayerHitBoxSets[];
+extern u8 gPlayerOrderShuffleCount;
+extern struct LifeRequests gLifeRequests;
 extern u16 gBlockCursorIndex; /*   map index */
-extern struct M11R20 gPlayerBodyBoxes[];
+extern struct PlayerBodyBox gPlayerBodyBoxes[];
 extern u16 gBlockCursorAttack; /*   the block kind (hit-box id low byte) */
 extern s16 gBlockCursorTile; /*   the metatile's collision byte */
 extern u8 gUnk_020061E0;
-extern struct M11Buf gUnk_02006A80[];
+extern struct M11Buf gPlayerHitBoxLists[];
 extern u16 gBlockCursorX; /* the block CanBreakBlock accepted: x */
 extern struct M04Spark gUnk_02007E90[][3];
 extern u16 gUnk_02007F60[];
-extern struct Unk020061F0 gUnk_02007FD0;
+extern struct BreakingBlock gBlockAnimScratchRecord;
 extern u16 gBlockCursorY; /*   y */
 extern u16 gPlayerBubbleTimers[];
 extern u16 gUnk_0200B060[];
@@ -153,7 +154,7 @@ extern void (*gPlayerActions[])(void);
 extern void (*gPlayerActionHandlers[])(void);
 extern s16 gUnk_0873A924[][16];
 extern u32 gUnk_0873A964[];
-extern struct Unk0873A994 *gUnk_0873A994[];
+extern struct OffsetScriptRow *gUnk_0873A994[];
 extern u16 gUnk_0873AEBC[][2];
 extern u16 gUnk_0873AF0C[][2];
 extern s8 gUnk_0873AF20[][2];
@@ -166,7 +167,7 @@ extern u32 gPlayerMotionXPresets[];
 extern u32 gPlayerMotionYPresets[];
 extern void (*gMetaKnightActions[])(void);
 extern void (*gMetaKnightActionHandlers[])(void);
-extern struct M12Fade gUnk_0873B510[];
+extern struct BurningPaletteFade gUnk_0873B510[];
 extern u16 gUnk_0873B534[][32];
 extern u8 gUnk_0873B634[];
 extern s16 gUnk_0873B654[];
@@ -309,7 +310,7 @@ extern u16 gUnk_0873D4BC[][5];
 extern s16 gUnk_0873D5C0[];
 extern s16 gUnk_0873D5CA[][2];
 extern u16 gPlayerDoorAnims[][7];
-extern u16 gUnk_0873D79E[];
+extern u16 gPlayerWaterDoorAnims[];
 extern s16 gUnk_0873D7E4[][3];
 extern s16 gUnk_0873D880[];
 extern u16 gUnk_0873D8B4[];
@@ -355,34 +356,34 @@ extern u8 gUnk_08757368[];
 /* Functions (defined in the files named above each group). */
 
 /* src/player_17668.c */
-void CutsceneActorScript50(void);
-void sub_08018464(void);
-void CutsceneActorScript51(void);
+void CutsceneFountainKirby(void);
+void CutsceneFountainKirbyUpdate(void);
+void CutsceneFountainKingDedede(void);
 
 /* src/player_18b84.c */
-void sub_08018b84(void);
-void CutsceneActorScript53(void);
-void CutsceneActorScript54(void);
+void CutsceneFountainKingDededeUpdate(void);
+void CutsceneFountainActorScript53(void);
+void CutsceneFountainActorScript54(void);
 
 /* src/player_18e14.c */
-void CutsceneActorScript52(void);
+void CutsceneFountainActorScript52(void);
 
 /* src/player_19000.c */
-void CutsceneActorScript55(void);
-void sub_08019590(void);
-void CutsceneActorScript57(void);
-void CutsceneActorScript58(void);
-void CutsceneActorScript59(void);
-void CutsceneActorScript60(void);
-void CutsceneActorScript61(void);
+void CutsceneFountainNightmarePowerOrb(void);
+void CutsceneFountainNightmarePowerOrbUpdate(void);
+void CutsceneFountainStarRod(void);
+void CutsceneFountainJet(void);
+void CutsceneFountainActorScript59(void);
+void CutsceneFountainActorScript60(void);
+void CutsceneFountainActorScript61(void);
 void sub_08019ecc(void);
 
 /* src/player_19eec.c */
-void CutsceneActorScript62(void);
+void CutsceneFountainActorScript62(void);
 
 /* src/player_1a07c.c */
-void CutsceneActorScript56(void);
-void sub_0801a1ec(void);
+void CutsceneFountainActorScript56(void);
+void CutsceneFountainKirbyDraw(void);
 void sub_0801a310(void);
 
 /* src/player_1a3e4.c */
@@ -405,24 +406,24 @@ s32 BreakBlockAtCursor(void);
 
 /* src/block_318b4.c */
 void UpdateBlockAnims(void);
-void FreeBlockAnimAndBlock(struct Unk020061F0 *b);
-void FreeBlockAnim(struct Unk020061F0 *b);
-void BlockAnimWriteAndDrawColumn(struct Unk020061F0 *b, s32 n);
-void BlockAnimWriteColumn(struct Unk020061F0 *b, s32 n);
-void BlockAnimDrawColumn(struct Unk020061F0 *b, s32 n);
-void BlockAnimWriteMetatile(struct Unk020061F0 *b);
-void BlockAnimDrawTiles(struct Unk020061F0 *b);
-void BlockAnimBreakNeighbors(struct Unk020061F0 *b);
+void FreeBlockAnimAndBlock(struct BreakingBlock *b);
+void FreeBlockAnim(struct BreakingBlock *b);
+void BlockAnimWriteAndDrawColumn(struct BreakingBlock *b, s32 n);
+void BlockAnimWriteColumn(struct BreakingBlock *b, s32 n);
+void BlockAnimDrawColumn(struct BreakingBlock *b, s32 n);
+void BlockAnimWriteMetatile(struct BreakingBlock *b);
+void BlockAnimDrawTiles(struct BreakingBlock *b);
+void BlockAnimBreakNeighbors(struct BreakingBlock *b);
 void UpdateBlockAnimsWithEdges(void);
-void BlockAnimWriteMetatileWrapped(struct Unk020061F0 *b);
-void BlockAnimDrawWithEdges(struct Unk020061F0 *b);
+void BlockAnimWriteMetatileWrapped(struct BreakingBlock *b);
+void BlockAnimDrawWithEdges(struct BreakingBlock *b);
 s32 CanBreakBg1Block(s32 x, s32 y);
 s16 BreakBg1BlockAtCursor(void);
 void UpdateBg1BlockAnims(void);
-void FreeBg1BlockAnimAndBlock(struct Unk020061F0 *b);
-void Bg1BlockAnimWriteMetatile(struct Unk020061F0 *b);
-void Bg1BlockAnimDrawTiles(struct Unk020061F0 *b);
-void Bg1BlockAnimBreakNeighbors(struct Unk020061F0 *b);
+void FreeBg1BlockAnimAndBlock(struct BreakingBlock *b);
+void Bg1BlockAnimWriteMetatile(struct BreakingBlock *b);
+void Bg1BlockAnimDrawTiles(struct BreakingBlock *b);
+void Bg1BlockAnimBreakNeighbors(struct BreakingBlock *b);
 
 /* src/player_32688.c */
 void Task_Player(void);
@@ -516,24 +517,24 @@ void sub_0803ccd8(s32 a);
 
 /* src/stage_3cd60.c */
 void PlayerPlayBump(void);
-void sub_0803ce98(void);
+void PlayerUpdateBlink(void);
 s32 sub_0803d010(void);
 void CreatePlayer(s32 a0);
 void InitPlayerState(s32 a0);
-void sub_0803d1c4(s32 a0);
-void sub_0803d2d4(s32 a0);
-void sub_0803d3d4(s32 a0, s32 a1, s32 a2);
+void InitPlayerStateKeepInvincibility(s32 a0);
+void InitPlayerStateKeepMouth(s32 a0);
+void PlayerAccelerateAxis(s32 a0, s32 a1, s32 a2);
 void PlayerMove(void);
 s32 PlayerLoadFrameTilesAndPalette(s32 a0);
-void sub_0803d710(void);
-void sub_0803d7c4(void);
-void sub_0803d824(void);
-s32 sub_0803d870(void);
+void PlayerLoadFramePalette(void);
+void PlayerLoadPlayerPalette(void);
+void PlayerLoadEndingPlayerPalette(void);
+s32 PlayerGetPlayerPaletteOffset(void);
 void sub_0803db74(void);
 void sub_0803ddc0(void);
-void sub_0803dfc8(void);
+void PlayerDrawWorldLoadTilesAndPalette(void);
 void PlayerStopAxes(s32 axes);
-void sub_0803e080(void);
+void PlayerUpdatePaletteFlash(void);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
 void sub_0803e28c(s32 a0);
 void PlayerUpdateInvulnerability(void);
@@ -552,11 +553,11 @@ void PlayerStartOffsetScript(s32 a0);
 void sub_0803e68c(s32 a0);
 s32 PlayerUpdateInvincibility(void);
 void PlayerEndInvincibility(void);
-void sub_0803e8ec(void);
+void PlayerUpdateInvincibleFlash(void);
 s32 sub_0803eaf8(s32 a0);
 void FreePlayerEffectsAndObjects(s8 a0);
-void sub_0803f6e0(void);
-u16 sub_0803f7e0(u16 a0);
+void ShufflePlayerOrder(void);
+u16 PlayerGetWaterDoorAnim(u16 a0);
 void sub_0803f834(u16 a0, void *src);
 void PlayerTurnToHeldDirection(void);
 s32 PlayerGetHeldDirection(void);
@@ -585,7 +586,7 @@ s32 sub_080404e4(void);
 s32 PlayerCheckShareItem(void);
 void PlayerRequestStandOrFall(void);
 void LatchPlayerKeys(void);
-void sub_08040808(s32 a0);
+void CreateLocalPlayerArrow(s32 a0);
 void sub_08040858(s32 a0);
 void PlayerGiveInvincibleCandy(s32 a0);
 void PlayerStartItemShare(s32 a0, u8 a1);
@@ -791,8 +792,8 @@ void PlayerStarRodFlightSteer(void);
 
 /* src/plobj_507bc.c */
 void Task_PlayerObject(void);
-void sub_08050814(void);
-void sub_0805091c(void);
+void PlayerObjectVanish(void);
+void PlayerObjectLaserBeamVanish(void);
 
 /* src/plobj_509ec.c */
 void PlayerObjectAirPuff(void);
@@ -818,13 +819,13 @@ void PlayerObjectLaserBeamUpdate(void);
 void PlayerObjectIceBreath(void);
 void PlayerObjectIceBreathUpdate(void);
 s32 PlayerObjectBeamOrb(void);
-s32 sub_08052b08(void);
-void sub_08052b88(void);
+s32 PlayerObjectBeamOrbUpdate(void);
+void PlayerObjectLightOrb(void);
 
 /* src/plobj_52f6c.c */
-void sub_08052f6c(void);
-void sub_08053380(void);
-void sub_080534d0(void);
+void PlayerObjectUFOShot(void);
+void PlayerObjectUFOShotUpdate(void);
+void PlayerObjectUFOShotLateUpdate(void);
 void PlayerObjectStarRodShot(void);
 void PlayerObjectStarRodShotUpdate(void);
 void PlayerObjectStarRodFlightShot(void);

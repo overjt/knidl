@@ -17,7 +17,7 @@
 extern s16 gMaxHealth;
 extern s16 gPlayerHealth[];
 extern s8 gUnk_02005590[];
-struct Unk020055D8Entry
+struct RoomObjectEntry
 {
     /*0x00*/ s8 kind;
     /*0x01*/ s8 unk1;
@@ -26,13 +26,13 @@ struct Unk020055D8Entry
     /*0x04*/ u16 x;
     /*0x06*/ u16 y;
 };
-struct Unk020055D8
+struct RoomObjectList
 {
     /*0x00*/ s16 count;
     /*0x02*/ s16 sortedByY;
-    /*0x04*/ struct Unk020055D8Entry *entries;
+    /*0x04*/ struct RoomObjectEntry *entries;
 };
-extern struct Unk020055D8 gRoomObjectList;
+extern struct RoomObjectList gRoomObjectList;
 extern u8 gUnk_02005E10[];
 extern u8 gRoomEntryMode;
 extern u32 gUsedRoomObjects[8][8];
@@ -61,7 +61,7 @@ extern s32 gUnk_03002448;
 extern u8 gExtraMode;
 extern s8 gRoomIndex;
 extern s16 gRoomBounds[];
-extern struct Unk03005680 gScrollLock;
+extern struct ScrollLock gScrollLock;
 
 /* External functions */
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
@@ -93,8 +93,8 @@ extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
 extern void ActorSetHitReactions(u32 v);
 extern void ActorSetAttackBox(u32 v);
-extern void sub_080639f0(struct ActorAux *v);
-extern void sub_08063a00(u32 v);
+extern void ActorSetAux(struct ActorAux *v);
+extern void ActorSetExtraAttackBox(u32 v);
 extern s32 TaskGetDxTo(u32 i);
 extern s32 TaskIsInRectSlot(struct Rect *r, u32 i);
 extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
@@ -123,8 +123,8 @@ s32 sub_080b5d84();
 
 void SpawnRoomObjectsOnLoad(void)
 {
-    struct Unk020055D8Entry *e;
-    struct Unk0873EEA0 *d;
+    struct RoomObjectEntry *e;
+    struct RoomObjectGfx *d;
     s32 i;
     s32 r;
 
@@ -146,7 +146,7 @@ void SpawnRoomObjectsOnLoad(void)
         case 7:
             break;
         case 3:
-            r = CreateActorByKind(2, e->unk1, e->unk2, e->unk3, e->x, e->y,
+            r = CreateActorByKind(ACTOR_KIND_BOSS, e->unk1, e->unk2, e->unk3, e->x, e->y,
                              (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
             gHudHpBarTasks[0] = r;
             gHudHpBarCount = gHudHpBarsLeft = 1;
@@ -197,10 +197,10 @@ void SpawnRoomObjectsOnLoad(void)
             case 3:
             }
             if (d != NULL)
-                r = CreateActorByKind(5, gUnk_08756178[e->unk1], gUnk_03001F2C, 0, e->x, e->y,
+                r = CreateActorByKind(ACTOR_KIND_OBJECT, gUnk_08756178[e->unk1], gUnk_03001F2C, 0, e->x, e->y,
                                  (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
             else
-                r = CreateActorByKind(5, gUnk_08756178[e->unk1], gUnk_03001F2C, 0, e->x, e->y, 0);
+                r = CreateActorByKind(ACTOR_KIND_OBJECT, gUnk_08756178[e->unk1], gUnk_03001F2C, 0, e->x, e->y, 0);
             break;
         }
         if (r != -1)
@@ -251,7 +251,7 @@ s32 SpawnRoomObject(s32 i)
         break;
     case 2:
         gMidBossFightState = 1;
-        res5 = CreateActorByKind(1, *(s8 *)(e4 + 1), e4[2], e4[3], *(u16 *)(e4 + 4), *(u16 *)(e4 + 6),
+        res5 = CreateActorByKind(ACTOR_KIND_MID_BOSS, *(s8 *)(e4 + 1), e4[2], e4[3], *(u16 *)(e4 + 4), *(u16 *)(e4 + 6),
             (pw2 = (u8 *)gRoomObjectGfxSlots, (((s32)*(s8 *)((b = (u8 *)((u32)pw2 + ((s32)(s8)*((u8 *)gRoomObjectGfxSlotIds + i6) << 2))) + 1) << 12) | ((*(s16 *)(b + 2) << 1) + 16))));
         break;
     case 4:
@@ -267,7 +267,7 @@ s32 SpawnRoomObject(s32 i)
         w3 &= m;
         if (w3 != 0)
             goto fail;
-        res5 = CreateActorByKind(6, *(s8 *)(e4 + 1), e4[2], 0, *(u16 *)(e4 + 4), *(u16 *)(e4 + 6), w3);
+        res5 = CreateActorByKind(ACTOR_KIND_ITEM, *(s8 *)(e4 + 1), e4[2], 0, *(u16 *)(e4 + 4), *(u16 *)(e4 + 6), w3);
         break;
     case 6:
         if (*(s8 *)(e4 + 1) != 0)

@@ -36,8 +36,8 @@ extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
 extern void ActorSetHitReactions(u32 v);
 extern void ActorSetAttackBox(u32 v);
-extern void sub_080639f0(struct ActorAux *v);
-extern void sub_08063a00(u32 v);
+extern void ActorSetAux(struct ActorAux *v);
+extern void ActorSetExtraAttackBox(u32 v);
 extern s32 TaskGetDxTo(u32 i);
 extern s32 TaskIsInRectSlot(struct Rect *r, u32 i);
 extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
@@ -445,7 +445,7 @@ void Task_KrackoLightningTop(void)
     gCurTask->frame = RandomRange(12);
     gCurTask->pixelX += RandomRange(16) + (u16)(0xFFF8 + gUnk_087491E4[gCurTask->frame]);
     gCurTask->posX = gCurTask->pixelX << 16;
-    gCurTask->krackoLightningTopMiddleSlot = CreateChildTaskAtOffsetFacing(198, gUnk_087491FC[gCurTask->frame], 16, 1);
+    gCurTask->krackoLightningTopMiddleSlot = CreateChildTaskAtOffsetFacing(TASK_KRACKO_LIGHTNING_MIDDLE, gUnk_087491FC[gCurTask->frame], 16, 1);
     gTasks[gCurTask->krackoLightningTopMiddleSlot].parent = gCurTask->parent;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
@@ -462,7 +462,7 @@ void Task_KrackoLightningMiddle(void)
     gCurTask->frame = RandomRange(12);
     gCurTask->pixelX += gUnk_087491E4[gCurTask->frame];
     gCurTask->posX = gCurTask->pixelX << 16;
-    gCurTask->krackoLightningMiddleBottomSlot = CreateChildTaskAtOffsetFacing(199, gUnk_087491FC[gCurTask->frame], 12, 1);
+    gCurTask->krackoLightningMiddleBottomSlot = CreateChildTaskAtOffsetFacing(TASK_KRACKO_LIGHTNING_BOTTOM, gUnk_087491FC[gCurTask->frame], 12, 1);
     gTasks[gCurTask->krackoLightningMiddleBottomSlot].parent = gCurTask->parent;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
@@ -522,13 +522,13 @@ void sub_080a9ea4(void)
         ActorDestroySlot(i);
 }
 
-void sub_080a9ed8(void)
+void NightmareWizardDrawStreamedFrameNearView(void)
 {
     if ((u8)ActorIsInNearView() != 0 && TaskIsOnScreen() != 0)
-        sub_080a9ef4();
+        NightmareWizardDrawStreamedFrame();
 }
 
-void sub_080a9ef4(void)
+void NightmareWizardDrawStreamedFrame(void)
 {
     struct Task *t;
     struct TaskGfx *g;
@@ -601,13 +601,13 @@ void sub_080a9ef4(void)
                  (s16)(gCurTask->pixelY - gViewRect[2]));
 }
 
-void sub_080aa16c(void)
+void NightmareWizardTornadoDrawStreamedFrameNearView(void)
 {
     if ((u8)ActorIsInNearView() != 0 && TaskIsOnScreen() != 0)
-        sub_080aa188();
+        NightmareWizardTornadoDrawStreamedFrame();
 }
 
-void sub_080aa188(void)
+void NightmareWizardTornadoDrawStreamedFrame(void)
 {
     struct Task *t;
     struct TaskGfx *g;
@@ -646,7 +646,7 @@ void Task_NightmareWizard(void)
 
     PlayBgm(34);
     o = &gTasks[TaskFindNearestPlayer()];
-    if (gRoomEntryMode == 2) {
+    if (gRoomEntryMode == ROOM_ENTRY_WARP_STAR) {
         if (o->onGround == 0) {
             do
                 TaskYieldTrampoline(1);
@@ -656,13 +656,13 @@ void Task_NightmareWizard(void)
     ActorInitBossGfx(0);
     sub_08066144();
     gCurTask->moveCallback = (u32)ActorMove;
-    gCurTask->drawCallback = (u32)sub_080a9ed8;
+    gCurTask->drawCallback = (u32)NightmareWizardDrawStreamedFrameNearView;
     gCurTask->layer = 11;
     gCurTask->frameTable = gNightmareWizardFrames;
     gCurTask->u8C.actor->sfxOverride = 0x23E;
     gUnk_02007D00[2] = 0;
     gUnk_02007D00[3] = 1;
     gUnk_02007D00[4] = 0;
-    CreateChildTaskHere(208, 0);
+    CreateChildTaskHere(TASK_NIGHTMARE_WIZARD_HIT_BOX, 0);
     CallTableEntry(gCurTask->variant, 1, gNightmareWizardVariants);
 }

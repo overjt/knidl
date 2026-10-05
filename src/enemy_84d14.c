@@ -60,13 +60,13 @@ void ChillyInit(void)
     {
     case 0:
     case 1:
-        ActorSetState(0);
+        ActorSetState(CHILLY_STATE_0);
         break;
     case 2:
-        ActorSetState(2);
+        ActorSetState(CHILLY_STATE_SLIDE);
         break;
     case 3:
-        ActorSetState(3);
+        ActorSetState(CHILLY_STATE_3);
         break;
     }
     CallTableEntry(gCurTask->state, 5, gChillyStates);
@@ -132,17 +132,17 @@ void ChillyState0(void)
         gCurTask->chillyLoopCount++;
     } while ((s16)gCurTask->chillyLoopCount <= 3);
     gCurTask->facing = -gCurTask->facing;
-    ActorSetState(1);
+    ActorSetState(CHILLY_STATE_WAIT);
     TaskSleepForever();
 }
 
 void ChillyState0Update(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != CHILLY_STATE_0)
         TaskSetEntry(ChillyEnterState, gCurTaskIdx);
 }
 
-void ChillyState1(void)
+void ChillyWait(void)
 {
     s32 a;
     struct Task *u1;
@@ -152,14 +152,14 @@ void ChillyState1(void)
     struct Task *u5;
     struct Task *u6;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = CHILLY_STATE_WAIT;
     while (1)
     {
         a = gCurTask->facing;
         if (a == TaskGetFacingTowardNearestPlayer()
             && abs(TaskGetNearestPlayerDy()) <= 32)
         {
-            ActorSetState(2);
+            ActorSetState(CHILLY_STATE_SLIDE);
             TaskSleepForever();
         }
         gCurTask->facing = -gCurTask->facing;
@@ -186,9 +186,9 @@ void ChillyState1(void)
     }
 }
 
-void ChillyState1Update(void)
+void ChillyWaitUpdate(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != CHILLY_STATE_WAIT)
         TaskSetEntry(ChillyEnterState, gCurTaskIdx);
 }
 
@@ -197,7 +197,7 @@ void ChillySlide(void)
     struct Task *t;
     u16 zero;
 
-    gCurTask->updateState = 2;
+    gCurTask->updateState = CHILLY_STATE_SLIDE;
     t = gCurTask;
     zero = 0;
     if (t->actorSpawnArg == 0)
@@ -273,13 +273,13 @@ void ChillySlide(void)
         } while ((s16)gCurTask->chillyLoopCount <= 2);
     }
     TaskFaceNearestPlayer();
-    ActorSetState(3);
+    ActorSetState(CHILLY_STATE_3);
     TaskSleepForever();
 }
 
 void ChillySlideUpdate(void)
 {
-    if (gCurTask->state != 2)
+    if (gCurTask->state != CHILLY_STATE_SLIDE)
         TaskSetEntry(ChillyEnterState, gCurTaskIdx);
 }
 
@@ -293,7 +293,7 @@ void ChillyState3(void)
 
     t = gCurTask;
     zero1 = 0;
-    t->updateState = 3;
+    t->updateState = CHILLY_STATE_3;
     TaskStop();
     TaskSetFrame(10);
     gCurTask->chillyLoopCount = zero1;
@@ -309,7 +309,7 @@ void ChillyState3(void)
         u->chillyLoopCount++;
     } while ((s16)u->chillyLoopCount <= 14);
     sp.subtype = 2;
-    sp.taskType = 104;
+    sp.taskType = TASK_CHILLY_FREEZE;
     sp.variant = zero2 = 0;
     sp.spawnArg = u->actorSpawnArg;
     sp.checkTerrain = zero2;
@@ -327,13 +327,13 @@ void ChillyState3(void)
         gCurTask->chillyLoopCount++;
     } while ((s16)gCurTask->chillyLoopCount <= 63);
     TaskStop();
-    ActorSetState(0);
+    ActorSetState(CHILLY_STATE_0);
     TaskSleepForever();
 }
 
 void ChillyState3Update(void)
 {
-    if (gCurTask->state != 3)
+    if (gCurTask->state != CHILLY_STATE_3)
         TaskSetEntry(ChillyEnterState, gCurTaskIdx);
 }
 
@@ -341,7 +341,7 @@ void ChillyFall(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 4;
+    gCurTask->updateState = CHILLY_STATE_FALL;
     TaskStop();
     t = gCurTask;
     t->accelY = 0x2500;
@@ -413,7 +413,7 @@ u8 ChillyStartFall(void)
     if (t->variant == 1)
         return 0;
     t->chillySavedState = t->state;
-    ActorSetState(4);
+    ActorSetState(CHILLY_STATE_FALL);
     TaskSetEntry(ChillyEnterState, gCurTaskIdx);
     return 1;
 }
@@ -459,7 +459,7 @@ void WaddleDooWalkInit(void)
     t->updateCallback = (u32)WaddleDooWalkUpdate;
     t->waddleDooPickTimer = 15;
     TaskFaceNearestPlayer();
-    ActorSetState(0);
+    ActorSetState(WADDLE_DOO_WALK_STATE_WALK);
     CallTableEntry(gCurTask->state, 3, gWaddleDooWalkStates);
 }
 
@@ -469,7 +469,7 @@ void WaddleDooWalkEnterState(void)
 
     t = gCurTask;
     t->updateCallback = (u32)WaddleDooWalkUpdate;
-    if (t->state == 0)
+    if (t->state == WADDLE_DOO_WALK_STATE_WALK)
         t->waddleDooPickTimer = 80;
     CallTableEntry(gCurTask->state, 3, gWaddleDooWalkStates);
 }
@@ -492,7 +492,7 @@ void WaddleDooWalk(void)
     struct Task *u6;
     struct Task *u7;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = WADDLE_DOO_WALK_STATE_WALK;
     TaskSetMotionXFacing(gUnk_08742010[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     while (1)
     {
@@ -556,7 +556,7 @@ void WaddleDooWalkJump(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = WADDLE_DOO_WALK_STATE_JUMP;
     gCurTask->onGround = 0;
     TaskSetMotionY(-0x28000, 0x1500, 0x30000);
     TaskSetFrame(7);
@@ -594,7 +594,7 @@ void WaddleDooWalkShoot(void)
 
     t = gCurTask;
     zero = 0;
-    t->updateState = 2;
+    t->updateState = WADDLE_DOO_WALK_STATE_SHOOT;
     TaskStop();
     u = gCurTask;
     u->waddleDooLoopCount = zero;
@@ -615,7 +615,7 @@ void WaddleDooWalkShoot(void)
     while ((s16)gCurTask->waddleDooLoopCount < gUnk_0874202C[gCurTask->actorSpawnArg])
     {
         sp.subtype = 4;
-        sp.taskType = 106;
+        sp.taskType = TASK_WADDLE_DOO_BEAM;
         sp.variant = 0;
         w = gCurTask;
         sp.spawnArg = w->actorSpawnArg;
@@ -633,7 +633,7 @@ void WaddleDooWalkShoot(void)
             TaskSetFrame(12);
         gCurTask->waddleDooLoopCount++;
     }
-    ActorSetState(0);
+    ActorSetState(WADDLE_DOO_WALK_STATE_WALK);
     TaskSleepForever();
 }
 
@@ -642,7 +642,7 @@ void WaddleDooWalkShootUpdate(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->waddleDooAirborne == 0 && t->state != 2)
+    if (t->waddleDooAirborne == 0 && t->state != WADDLE_DOO_WALK_STATE_SHOOT)
         TaskSetEntry(WaddleDooWalkEnterState, gCurTaskIdx);
 }
 
@@ -654,7 +654,7 @@ void ParasolWaddleDooInit(void)
     ActorStartCarryingParasol(gParasolWaddleDooDef);
     gCurTask->waddleDooPickTimer = 15;
     TaskFaceNearestPlayer();
-    ActorSetState(0);
+    ActorSetState(PARASOL_WADDLE_DOO_STATE_WALK);
     CallTableEntry(gCurTask->state, 4, gParasolWaddleDooStates);
 }
 
@@ -664,7 +664,7 @@ void ParasolWaddleDooEnterState(void)
 
     t = gCurTask;
     t->updateCallback = (u32)ParasolWaddleDooUpdate;
-    if (t->state == 0)
+    if (t->state == PARASOL_WADDLE_DOO_STATE_WALK)
         t->waddleDooPickTimer = 80;
     CallTableEntry(gCurTask->state, 4, gParasolWaddleDooStates);
 }
@@ -687,7 +687,7 @@ void ParasolWaddleDooWalk(void)
     struct Task *u6;
     struct Task *u7;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = PARASOL_WADDLE_DOO_STATE_WALK;
     TaskSetMotionXFacing(gUnk_08742010[1], 0x5A5A5A5A);
     while (1)
     {
@@ -751,7 +751,7 @@ void ParasolWaddleDooJump(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = PARASOL_WADDLE_DOO_STATE_JUMP;
     gCurTask->onGround = 0;
     TaskSetMotionY(-0x28000, 0x1500, 0x30000);
     TaskSetFrame(7);
@@ -789,7 +789,7 @@ void ParasolWaddleDooShoot(void)
 
     t = gCurTask;
     zero = 0;
-    t->updateState = 2;
+    t->updateState = PARASOL_WADDLE_DOO_STATE_SHOOT;
     TaskStop();
     u = gCurTask;
     u->waddleDooLoopCount = zero;
@@ -810,7 +810,7 @@ void ParasolWaddleDooShoot(void)
     while ((s16)gCurTask->waddleDooLoopCount < gUnk_0874202C[gCurTask->actorSpawnArg])
     {
         sp.subtype = 4;
-        sp.taskType = 106;
+        sp.taskType = TASK_WADDLE_DOO_BEAM;
         sp.variant = 0;
         sp.spawnArg = 1;
         sp.x = 8;
@@ -828,7 +828,7 @@ void ParasolWaddleDooShoot(void)
             TaskSetFrame(12);
         gCurTask->waddleDooLoopCount++;
     }
-    ActorSetState(0);
+    ActorSetState(PARASOL_WADDLE_DOO_STATE_WALK);
     TaskSleepForever();
 }
 
@@ -837,13 +837,13 @@ void ParasolWaddleDooShootUpdate(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->waddleDooAirborne == 0 && t->state != 2)
+    if (t->waddleDooAirborne == 0 && t->state != PARASOL_WADDLE_DOO_STATE_SHOOT)
         TaskSetEntry(ParasolWaddleDooEnterState, gCurTaskIdx);
 }
 
 void ParasolWaddleDooDrift(void)
 {
-    gCurTask->updateState = 3;
+    gCurTask->updateState = PARASOL_WADDLE_DOO_STATE_DRIFT;
     gCurTask->actorAnimDelay30 = ActorStartAnim(gUnk_08742050);
     TaskStartParasolDrift();
     while (1)
@@ -971,7 +971,7 @@ void WaddleDooShoot(void)
         do
         {
             sp.subtype = 4;
-            sp.taskType = 106;
+            sp.taskType = TASK_WADDLE_DOO_BEAM;
             sp.variant = 0;
             sp.spawnArg = 0;
             sp.x = 8;

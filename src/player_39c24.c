@@ -14,7 +14,7 @@
  * Player action body, part 8: action 21 (PlayerActionExitDoor, 3612 bytes), the
  * walk through a door the player entered with action 20.  It plays the
  * ability's door animations (gPlayerDoorAnims[ability][1..6], or
- * sub_0803f7e0 for the form with Task.waterFlags bit 0 set), moves the player
+ * PlayerGetWaterDoorAnim for the form with Task.waterFlags bit 0 set), moves the player
  * by the door side kept in Task.unk2C, drives the door's M08 stage
  * objects through M07's helpers (CreateEntryDoorOpening ... sub_08026704) and the
  * cameras through CameraStartFollowingPlayer/CameraStartPlayersAtAnchor/ArePlayerCamerasDoneGliding/CameraResumeFollowFocus;
@@ -37,14 +37,14 @@ void PlayerActionExitDoor(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 19;
-    gCurTask->updateState = 19;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_EXIT_DOOR;
     gCurTask->facing = 1;
     gCurTask->frame = 0xFFFF;
     TaskInitWaterFlags();
     sub_08021c74((s8 *)gPlayerDefaultTerrainBox, gCurTaskIdx);
-    if (gUnk_020055C4 == 0)
+    if (gPlayerOrderShuffleCount == 0)
     {
-        sub_0803f6e0();
+        ShufflePlayerOrder();
         if (gPlayerCount > 1 && gEntryDoorEvent == 1)
         {
             for (i = 0; i < gPlayerCount; i++)
@@ -58,7 +58,7 @@ void PlayerActionExitDoor(void)
         struct Task *t = gCurTask;
 
         t->playerActionDone28 = 0;
-        if (t->unk2C == 1 || t->unk2C == 3)
+        if (t->playerEntryOrder == 1 || t->playerEntryOrder == 3)
         {
             t->facing = -1;
             gCurTask->posX = (gCurTask->pixelX - 10) << 16;
@@ -66,7 +66,7 @@ void PlayerActionExitDoor(void)
     }
     while (gFadeSteps != 0)
         TaskYieldTrampoline(1);
-    if (gCurTask->unk2C == 0)
+    if (gCurTask->playerEntryOrder == 0)
         r = CreateEntryDoorOpening();
     TaskYieldTrampoline(4);
     {
@@ -77,7 +77,7 @@ void PlayerActionExitDoor(void)
             t->playerBaseFrame = gPlayerDoorAnims[t->player->ability][1];
             switch (t->player->ability)
             {
-            case 0:
+            case ABILITY_NORMAL:
             default:
                 TaskSetFrame(gCurTask->playerBaseFrame);
                 TaskYieldTrampoline(2);
@@ -88,12 +88,12 @@ void PlayerActionExitDoor(void)
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
                 break;
-            case 1:
-            case 2:
-            case 5:
-            case 19:
-            case 22:
-            case 23:
+            case ABILITY_FIRE:
+            case ABILITY_SPARK:
+            case ABILITY_BURNING:
+            case ABILITY_TORNADO:
+            case ABILITY_BACKDROP:
+            case ABILITY_THROW:
                 TaskSetFrame(gCurTask->playerBaseFrame);
                 TaskYieldTrampoline(2);
                 gCurTask->frame++;
@@ -113,7 +113,7 @@ void PlayerActionExitDoor(void)
         }
         else
         {
-            gCurTask->playerBaseFrame = sub_0803f7e0(1);
+            gCurTask->playerBaseFrame = PlayerGetWaterDoorAnim(1);
             TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
@@ -128,7 +128,7 @@ void PlayerActionExitDoor(void)
     {
     case 0:
     default:
-        switch (gCurTask->unk2C)
+        switch (gCurTask->playerEntryOrder)
         {
         case 0:
         case 2:
@@ -137,7 +137,7 @@ void PlayerActionExitDoor(void)
 
             PlayerSetMotionXPreset(10, 9);
             t = gCurTask;
-            t->velX += t->unk2C << 13;
+            t->velX += t->playerEntryOrder << 13;
             break;
         }
         case 1:
@@ -147,7 +147,7 @@ void PlayerActionExitDoor(void)
 
             PlayerSetMotionXPreset(10, 10);
             t = gCurTask;
-            t->velX -= (t->unk2C - 1) << 13;
+            t->velX -= (t->playerEntryOrder - 1) << 13;
             break;
         }
         }
@@ -157,13 +157,13 @@ void PlayerActionExitDoor(void)
             if (!(t->waterFlags & 1))
                 t->playerBaseFrame = gPlayerDoorAnims[t->player->ability][2];
             else
-                gCurTask->playerBaseFrame = sub_0803f7e0(2);
+                gCurTask->playerBaseFrame = PlayerGetWaterDoorAnim(2);
         }
         TaskSetFrame(gCurTask->playerBaseFrame);
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        if (gCurTask->unk2C == 0)
+        if (gCurTask->playerEntryOrder == 0)
             CloseDoorOpening(r);
         for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
         {
@@ -171,18 +171,18 @@ void PlayerActionExitDoor(void)
             TaskYieldTrampoline(2);
         }
         PlayerStopAxes(1);
-        if (gCurTask->unk2C == 0)
+        if (gCurTask->playerEntryOrder == 0)
         {
             sub_08026584();
-            sub_08040808(gCurTask->player->playerIndex);
+            CreateLocalPlayerArrow(gCurTask->player->playerIndex);
         }
         break;
     case 1:
         for (i = 0; i < gPlayerCount; i++)
             gPlayerStates[i].unk42 |= 64;
-        if (gCurTask->unk2C != 0)
+        if (gCurTask->playerEntryOrder != 0)
         {
-            switch (gCurTask->unk2C)
+            switch (gCurTask->playerEntryOrder)
             {
             case 0:
             case 2:
@@ -192,7 +192,7 @@ void PlayerActionExitDoor(void)
                 gCurTask->facing = 1;
                 PlayerSetMotionXPreset(10, 9);
                 t = gCurTask;
-                t->velX += t->unk2C << 13;
+                t->velX += t->playerEntryOrder << 13;
                 break;
             }
             case 1:
@@ -203,7 +203,7 @@ void PlayerActionExitDoor(void)
                 gCurTask->facing = -1;
                 PlayerSetMotionXPreset(10, 10);
                 t = gCurTask;
-                t->velX -= (t->unk2C - 1) << 13;
+                t->velX -= (t->playerEntryOrder - 1) << 13;
                 break;
             }
             }
@@ -213,7 +213,7 @@ void PlayerActionExitDoor(void)
                 if (!(t->waterFlags & 1))
                     t->playerBaseFrame = gPlayerDoorAnims[t->player->ability][2];
                 else
-                    gCurTask->playerBaseFrame = sub_0803f7e0(2);
+                    gCurTask->playerBaseFrame = PlayerGetWaterDoorAnim(2);
             }
             TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(2);
@@ -232,11 +232,11 @@ void PlayerActionExitDoor(void)
                 }
                 else
                 {
-                    if (t->player->ability == 4)
+                    if (t->player->ability == ABILITY_SWORD)
                         t->playerBaseFrame = 0x4A0;
-                    else if (t->player->ability == 9)
+                    else if (t->player->ability == ABILITY_HAMMER)
                         t->playerBaseFrame = 0x7C1;
-                    else if (t->player->ability == 10)
+                    else if (t->player->ability == ABILITY_PARASOL)
                         t->playerBaseFrame = 0x8C1;
                     else
                         t->playerBaseFrame = 221;
@@ -261,7 +261,7 @@ void PlayerActionExitDoor(void)
                 t->playerBaseFrame = gPlayerDoorAnims[t->player->ability][3];
                 switch (t->player->ability)
                 {
-                case 0:
+                case ABILITY_NORMAL:
                 default:
                     PlayerSetMotionXPreset(10, 11);
                     gCurTask->frame = gCurTask->playerBaseFrame;
@@ -269,12 +269,12 @@ void PlayerActionExitDoor(void)
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
                     break;
-                case 1:
-                case 2:
-                case 5:
-                case 19:
-                case 22:
-                case 23:
+                case ABILITY_FIRE:
+                case ABILITY_SPARK:
+                case ABILITY_BURNING:
+                case ABILITY_TORNADO:
+                case ABILITY_BACKDROP:
+                case ABILITY_THROW:
                     PlayerSetMotionXPreset(10, 12);
                     gCurTask->frame = gCurTask->playerBaseFrame;
                     TaskYieldTrampoline(2);
@@ -290,7 +290,7 @@ void PlayerActionExitDoor(void)
             else
             {
                 PlayerSetMotionXPreset(10, 11);
-                gCurTask->frame = gCurTask->playerBaseFrame = sub_0803f7e0(3);
+                gCurTask->frame = gCurTask->playerBaseFrame = PlayerGetWaterDoorAnim(3);
                 TaskYieldTrampoline(4);
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
@@ -308,7 +308,7 @@ void PlayerActionExitDoor(void)
         else
         {
             PlayerSetMotionYPreset(21);
-            gCurTask->playerBaseFrame = sub_0803f7e0(4);
+            gCurTask->playerBaseFrame = PlayerGetWaterDoorAnim(4);
         }
         gCurTask->frame = gCurTask->playerBaseFrame;
         TaskYieldTrampoline(2);
@@ -348,17 +348,17 @@ void PlayerActionExitDoor(void)
                 t->playerBaseFrame = gPlayerDoorAnims[t->player->ability][5];
                 switch (t->player->ability)
                 {
-                case 0:
+                case ABILITY_NORMAL:
                 default:
                     gCurTask->frame = gCurTask->playerBaseFrame;
                     TaskYieldTrampoline(24);
                     break;
-                case 1:
-                case 2:
-                case 5:
-                case 19:
-                case 22:
-                case 23:
+                case ABILITY_FIRE:
+                case ABILITY_SPARK:
+                case ABILITY_BURNING:
+                case ABILITY_TORNADO:
+                case ABILITY_BACKDROP:
+                case ABILITY_THROW:
                     for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 5; gCurTask->playerLoopCount++)
                     {
                         gCurTask->frame = gCurTask->playerBaseFrame;
@@ -371,7 +371,7 @@ void PlayerActionExitDoor(void)
             }
             else
             {
-                gCurTask->frame = sub_0803f7e0(5);
+                gCurTask->frame = PlayerGetWaterDoorAnim(5);
                 TaskYieldTrampoline(24);
             }
         }
@@ -385,17 +385,17 @@ void PlayerActionExitDoor(void)
             {
                 switch (t->player->ability)
                 {
-                case 0:
+                case ABILITY_NORMAL:
                 default:
                     while (gCameraPanDone == 0)
                         TaskYieldTrampoline(1);
                     break;
-                case 1:
-                case 2:
-                case 5:
-                case 19:
-                case 22:
-                case 23:
+                case ABILITY_FIRE:
+                case ABILITY_SPARK:
+                case ABILITY_BURNING:
+                case ABILITY_TORNADO:
+                case ABILITY_BACKDROP:
+                case ABILITY_THROW:
                     for (;;)
                     {
                         gCurTask->frame = gCurTask->playerBaseFrame;
@@ -437,10 +437,10 @@ void PlayerActionExitDoor(void)
             t->playerBaseFrame = gUnk_0873D3B8[t->player->ability][1];
             switch (t->player->ability)
             {
-            case 0:
-            case 7:
-            case 20:
-            case 21:
+            case ABILITY_NORMAL:
+            case ABILITY_MIKE:
+            case ABILITY_CRASH:
+            case ABILITY_LIGHT:
             {
                 struct Task *u;
 
@@ -456,10 +456,10 @@ void PlayerActionExitDoor(void)
                 }
                 break;
             }
-            case 10:
+            case ABILITY_PARASOL:
                 gCurTask->playerBaseFrame = 0x841;
                 goto anim;
-            case 2:
+            case ABILITY_SPARK:
                 PlayerLoadSparkTiles();
             default:
             anim:
@@ -501,7 +501,7 @@ void PlayerActionExitDoor(void)
         else
         {
             PlayerSetMotionYPreset(21);
-            gCurTask->frame = sub_0803f7e0(6);
+            gCurTask->frame = PlayerGetWaterDoorAnim(6);
             TaskYieldTrampoline(14);
             PlayerSetMotionXPreset(10, 15);
             while (!(gCurTask->onGround & 1))
@@ -519,7 +519,7 @@ void PlayerActionExitDoor(void)
         {
             gPlayerStates[i].unk42 &= 0xFFBF;
             if (gPlayerHealth[i] != 0)
-                sub_08040808(i);
+                CreateLocalPlayerArrow(i);
             if (i != gCurTaskIdx)
                 TaskSetSkipMask(0, i);
         }

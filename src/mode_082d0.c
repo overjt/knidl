@@ -31,21 +31,21 @@ void TaskSleepForever(void);
 
 void CreateExtraModeTitleSprites(void)
 {
-    s32 idx;
-    struct Task *t;
+    s32 titleSpriteSlot;
+    struct Task *titleSprite;
 
     if (gUnk_02006090 <= 2) {
-        idx = TaskCreateFrom(0x109, 32);
-        if (idx != -1) {
-            t = &gTasks[idx];
-            t->parent = gCurTaskIdx;
-            t->variant = 0;
+        titleSpriteSlot = TaskCreateFrom(TASK_EXTRA_MODE_TITLE_SPRITE, 32);
+        if (titleSpriteSlot != -1) {
+            titleSprite = &gTasks[titleSpriteSlot];
+            titleSprite->parent = gCurTaskIdx;
+            titleSprite->variant = 0;
         }
-        idx = TaskCreateFrom(0x109, 32);
-        if (idx != -1) {
-            t = &gTasks[idx];
-            t->parent = gCurTaskIdx;
-            t->variant = 1;
+        titleSpriteSlot = TaskCreateFrom(TASK_EXTRA_MODE_TITLE_SPRITE, 32);
+        if (titleSpriteSlot != -1) {
+            titleSprite = &gTasks[titleSpriteSlot];
+            titleSprite->parent = gCurTaskIdx;
+            titleSprite->variant = 1;
         }
     }
 }
@@ -111,7 +111,7 @@ void ExtraModeTitleLevelBar(void)
 {
     gCurTask->updateState = 1;
     for (;;) {
-        if (gPrevGameState == 4 && gLocalPlayer == 0)
+        if (gPrevGameState == GAME_STATE_MAIN_MENU && gLocalPlayer == 0)
             QueueSprite(8, gUnk_08756054[gSubGameLevel + 4], 0, 0, 120, 144);
         else
             QueueSprite(8, gUnk_08756054[gSubGameLevel + 7], 0, 0, 200, 144);

@@ -8,11 +8,11 @@
  * script.  Set 0 means no BG animation (LoadRoomBgAnims tests it first),
  * so entry 0 is NULL; entry 13 is NULL too, and no room uses it (the 333
  * RoomDefs use sets 0-12).  Not const at the scripts: the lists hold the
- * struct Unk02007D70Cmd * that LoadRoomBgAnims stores in
- * Unk02007D70.script.  Carved by tools/carve_data.py. */
+ * struct BgAnimCmd * that LoadRoomBgAnims stores in
+ * BgAnim.script.  Carved by tools/carve_data.py. */
 
 /* gRoomBgAnimScripts[1] */
-struct Unk02007D70Cmd *const gRoomBgAnimSet1[] = {
+struct BgAnimCmd *const gRoomBgAnimSet1[] = {
     gRoomBgAnimSet1Script0,
     gRoomBgAnimSet1Script1,
     gRoomBgAnimSet1Script2,
@@ -27,25 +27,25 @@ struct Unk02007D70Cmd *const gRoomBgAnimSet1[] = {
 };
 
 /* gRoomBgAnimScripts[2] */
-struct Unk02007D70Cmd *const gRoomBgAnimSet2[] = {
+struct BgAnimCmd *const gRoomBgAnimSet2[] = {
     gRoomBgAnimSet2Script0,
     NULL,
 };
 
 /* gRoomBgAnimScripts[3] */
-struct Unk02007D70Cmd *const gRoomBgAnimSet3[] = {
+struct BgAnimCmd *const gRoomBgAnimSet3[] = {
     gRoomBgAnimSet3Script0,
     NULL,
 };
 
 /* gRoomBgAnimScripts[4] */
-struct Unk02007D70Cmd *const gRoomBgAnimSet4[] = {
+struct BgAnimCmd *const gRoomBgAnimSet4[] = {
     gRoomBgAnimSet4Script0,
     NULL,
 };
 
 /* gRoomBgAnimScripts[5] */
-struct Unk02007D70Cmd *const gRoomBgAnimSet5[] = {
+struct BgAnimCmd *const gRoomBgAnimSet5[] = {
     gRoomBgAnimSet5Script0,
     gRoomBgAnimSet5Script1,
     gRoomBgAnimSet5Script2,
@@ -53,7 +53,7 @@ struct Unk02007D70Cmd *const gRoomBgAnimSet5[] = {
 };
 
 /* gRoomBgAnimScripts[6] */
-struct Unk02007D70Cmd *const gRoomBgAnimSet6[] = {
+struct BgAnimCmd *const gRoomBgAnimSet6[] = {
     gRoomBgAnimSet6Script0,
     gRoomBgAnimSet6Script1,
     gRoomBgAnimSet6Script2,
@@ -61,19 +61,19 @@ struct Unk02007D70Cmd *const gRoomBgAnimSet6[] = {
 };
 
 /* gRoomBgAnimScripts[7] */
-struct Unk02007D70Cmd *const gRoomBgAnimSet7[] = {
+struct BgAnimCmd *const gRoomBgAnimSet7[] = {
     gRoomBgAnimSet7Script0,
     NULL,
 };
 
 /* gRoomBgAnimScripts[8] */
-struct Unk02007D70Cmd *const gRoomBgAnimSet8[] = {
+struct BgAnimCmd *const gRoomBgAnimSet8[] = {
     gRoomBgAnimSet8Script0,
     NULL,
 };
 
 /* gRoomBgAnimScripts[9] */
-struct Unk02007D70Cmd *const gRoomBgAnimSet9[] = {
+struct BgAnimCmd *const gRoomBgAnimSet9[] = {
     gRoomBgAnimSet9Script0,
     gRoomBgAnimSet9Script1,
     gRoomBgAnimSet9Script2,
@@ -81,7 +81,7 @@ struct Unk02007D70Cmd *const gRoomBgAnimSet9[] = {
 };
 
 /* gRoomBgAnimScripts[10] */
-struct Unk02007D70Cmd *const gRoomBgAnimSet10[] = {
+struct BgAnimCmd *const gRoomBgAnimSet10[] = {
     gRoomBgAnimSet10Script0,
     gRoomBgAnimSet10Script1,
     gRoomBgAnimSet10Script2,
@@ -89,19 +89,19 @@ struct Unk02007D70Cmd *const gRoomBgAnimSet10[] = {
 };
 
 /* gRoomBgAnimScripts[11] */
-struct Unk02007D70Cmd *const gRoomBgAnimSet11[] = {
+struct BgAnimCmd *const gRoomBgAnimSet11[] = {
     gRoomBgAnimSet11Script0,
     gRoomBgAnimSet11Script1,
     NULL,
 };
 
 /* gRoomBgAnimScripts[12] */
-struct Unk02007D70Cmd *const gRoomBgAnimSet12[] = {
+struct BgAnimCmd *const gRoomBgAnimSet12[] = {
     gRoomBgAnimSet12Script0,
     NULL,
 };
 
-struct Unk02007D70Cmd *const *const gRoomBgAnimScripts[] = {
+struct BgAnimCmd *const *const gRoomBgAnimScripts[] = {
     NULL,
     gRoomBgAnimSet1,
     gRoomBgAnimSet2,

@@ -15,14 +15,14 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void BlendColors(s32 a, s32 b, s32 c, s32 d, void *e);
 s32 PlaySfx(s32 id);
 
-void CutsceneActorScript55(void)
+void CutsceneFountainNightmarePowerOrb(void)
 {
 
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
     gCurTask->frameTable = gUnk_087553DC;
-    gCurTask->updateCallback = (u32)sub_08019590;
+    gCurTask->updateCallback = (u32)CutsceneFountainNightmarePowerOrbUpdate;
     gCurTask->cutsceneActorPalettePhase = 0;
     gCurTask->tileWord = 0x9210;
     LZ77UnCompWram((const void *)gNightmarePowerOrbGfx[3], (void *)(EWRAM_START + 0x26000));
@@ -250,7 +250,7 @@ void CutsceneActorScript55(void)
     TaskSleepForever();
 }
 
-void sub_08019590(void)
+void CutsceneFountainNightmarePowerOrbUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -261,7 +261,7 @@ void sub_08019590(void)
     gCurTask->cutsceneActorPalettePhase++;
 }
 
-void CutsceneActorScript57(void)
+void CutsceneFountainStarRod(void)
 {
     struct Task *t = gCurTask;
 
@@ -478,7 +478,7 @@ void CutsceneActorScript57(void)
     TaskSleepForever();
 }
 
-void CutsceneActorScript58(void)
+void CutsceneFountainJet(void)
 {
     struct Task *t = gCurTask;
 
@@ -523,7 +523,7 @@ void CutsceneActorScript58(void)
     TaskSleepForever();
 }
 
-void CutsceneActorScript59(void)
+void CutsceneFountainActorScript59(void)
 {
     struct Task *t = gCurTask;
 
@@ -563,7 +563,7 @@ void CutsceneActorScript59(void)
     TaskSleepForever();
 }
 
-void CutsceneActorScript60(void)
+void CutsceneFountainActorScript60(void)
 {
     struct Task *t = gCurTask;
 
@@ -610,7 +610,7 @@ void CutsceneActorScript60(void)
     TaskSleepForever();
 }
 
-void CutsceneActorScript61(void)
+void CutsceneFountainActorScript61(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;

@@ -60,7 +60,7 @@ void PlayerActionDie(void)
     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     PlayerStopAxes(3);
     gCurTask->player->mouthState = 0;
-    SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
+    SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     HoldPlayerCamera(gCurTask->player->playerIndex);
     gCurTask->player->unk16 = 255;
     anim = gUnk_0873D9FA[gCurTask->player->ability];
@@ -77,7 +77,7 @@ void PlayerActionDie(void)
         gCurTask->layer = 4;
         gCurTask->player->invincible = n;
         gCurTask->player->invincibleTimer = n;
-        gCurTask->player->unk1A = gCurTask->player->unk1C = n;
+        gCurTask->player->invincibleFlashTimer = gCurTask->player->invincibleFlashStep = n;
     }
     else
     {
@@ -153,12 +153,12 @@ void PlayerActionDie(void)
         PlaySfxIfLocalPlayer(158, gCurTask->player->playerIndex);
     TaskYieldTrampoline(59);
     gCurTask->variant = 1;
-    gCurTask->player->unk22 = 1;
+    gCurTask->player->paletteFlashMode = 1;
     gCurTask->player->invulnerabilityTimer = 0x8000;
     for (i = 0; i <= 3; i++)
-        CreatePlayerEffect(gCurTask->player->playerIndex, 12, i);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DEATH_STAR_RING, i);
     if (n == 0)
-        PlayBgm(3);
+        PlayBgm(BGM_LOST_LIFE);
     else if (gRoomExitKind != 1)
         PlaySfx(270);
     PlayerSetMotionYPreset(32);
@@ -169,7 +169,7 @@ void PlayerActionDie(void)
         struct Task *x;
 
         if (w->drawCallback != 0)
-            CreatePlayerEffectHighSlot(w->player->playerIndex, 5, 0);
+            CreatePlayerEffectHighSlot(w->player->playerIndex, PLAYER_EFFECT_VARIANT_DEATH_STAR, 0);
         gCurTask->frame = gCurTask->playerBaseFrame;
         TaskYieldTrampoline(1);
         for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 6; gCurTask->playerLoopCount++)
@@ -179,7 +179,7 @@ void PlayerActionDie(void)
         }
         x = gCurTask;
         if (x->drawCallback != 0)
-            CreatePlayerEffectHighSlot(x->player->playerIndex, 5, 0);
+            CreatePlayerEffectHighSlot(x->player->playerIndex, PLAYER_EFFECT_VARIANT_DEATH_STAR, 0);
         for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 7; gCurTask->playerLoopCount++)
         {
             gCurTask->frame--;
@@ -193,7 +193,7 @@ void PlayerActionDie(void)
     t2->lateUpdateCallback = 0;
     if (gLivingPlayerCount == 0)
     {
-        gStageRequest = 6;
+        gStageRequest = STAGE_REQUEST_LOST_LIFE;
         TaskExitTrampoline();
     }
     ReleaseDeadPlayerView(gCurTask->player->playerIndex);
@@ -215,10 +215,10 @@ void sub_080396a4(void)
 
         t->updateCallback = 0;
         t->taskClass = 4;
-        if (gGameState != 20)
+        if (gGameState != GAME_STATE_BOSS_ENDURANCE)
             TaskSetEntry(PlayerLifeRequestInit, gCurTaskIdx);
         else
-            sub_080b9118();
+            PlayerLifeRequestShowGameOver();
         break;
     }
     case 1:
@@ -252,7 +252,7 @@ void sub_080396a4(void)
             }
         }
         if (!(gCurTask->player->unk42 & 32))
-            sub_0803e080();
+            PlayerUpdatePaletteFlash();
         break;
     }
     case 2:
@@ -313,7 +313,7 @@ void PlayerActionEnterDoor(void)
     {
     case 1:
         gCurTask->player->mouthState = 0;
-        CreatePlayerObject(gCurTask->player->playerIndex, 0, 0);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_AIR_PUFF, 0);
         TaskSetFrame(gUnk_0873D7E4[gCurTask->player->ability][2]);
         TaskYieldTrampoline(6);
         gCurTask->frame--;
@@ -328,13 +328,13 @@ void PlayerActionEnterDoor(void)
             gCurTask->frame++;
             TaskYieldTrampoline(1);
             if ((s8)gCurTask->player->attachedCount > 1)
-                CreatePlayerObject(gCurTask->player->playerIndex, 2, 0);
+                CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_SPIT_MULTI_STAR, 0);
             else
-                CreatePlayerObject(gCurTask->player->playerIndex, 1, 0);
+                CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_SPIT_STAR, 0);
             if (gCurTask->onGround & 1)
             {
-                CreatePlayerEffect(gCurTask->player->playerIndex, 2, 0);
-                CreatePlayerEffect(gCurTask->player->playerIndex, 2, 1);
+                CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SPIT_DUST, 0);
+                CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SPIT_DUST, 1);
             }
             gCurTask->frame++;
             TaskYieldTrampoline(4);
@@ -350,9 +350,9 @@ void PlayerActionEnterDoor(void)
         gCurTask->frame--;
         TaskYieldTrampoline(2);
         if ((s8)gCurTask->player->attachedCount > 1)
-            CreatePlayerObject(gCurTask->player->playerIndex, 2, 0);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_SPIT_MULTI_STAR, 0);
         else
-            CreatePlayerObject(gCurTask->player->playerIndex, 1, 0);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_SPIT_STAR, 0);
         gCurTask->frame--;
         TaskYieldTrampoline(2);
         break;
@@ -361,14 +361,14 @@ void PlayerActionEnterDoor(void)
     if (gInHub != 0)
         CreateEntryDoorOpening();
     if (gInHub == 0)
-        PlaySfx(181);
+        PlaySfx(SE_ENTER_DOOR);
     t = gCurTask;
     if (!(t->waterFlags & 1))
     {
         t->playerBaseFrame = gPlayerDoorAnims[t->player->ability][0];
         switch (t->player->ability)
         {
-        case 0:
+        case ABILITY_NORMAL:
         default:
             TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(2);
@@ -378,12 +378,12 @@ void PlayerActionEnterDoor(void)
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             break;
-        case 1:
-        case 2:
-        case 5:
-        case 19:
-        case 22:
-        case 23:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_TORNADO:
+        case ABILITY_BACKDROP:
+        case ABILITY_THROW:
             TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
@@ -401,7 +401,7 @@ void PlayerActionEnterDoor(void)
     }
     else
     {
-        gCurTask->playerBaseFrame = sub_0803f7e0(0);
+        gCurTask->playerBaseFrame = PlayerGetWaterDoorAnim(0);
         TaskSetFrame(gCurTask->playerBaseFrame);
         TaskYieldTrampoline(3);
         gCurTask->frame++;

@@ -12,7 +12,7 @@
  *
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
  * variants 35-39, all spawned by M12's actions (39 also by M11 and M13).
- * Variants 35 (sub_08057ce0, two sub-states), 36 (sub_08057e90) and 39
+ * Variants 35 (PlayerEffectHammerDust, two sub-states), 36 (PlayerEffectParasolSparkle) and 39
  * (sub_08058720) are animations in world space (gUnk_08751D88,
  * gUnk_08751DB0, gUnk_08751E00).  Variant 37 (PlayerEffectMikeAttack) stops other
  * tasks: it fills the 20-slot table gScreenAttackTasks with 0xFFFF, collects the
@@ -24,14 +24,14 @@
  * way.  Its callback PlayerEffectMikeAttackUpdate kills it once the player leaves mode 13
  * and otherwise, while PlayerState.unk16 is set, registers the collider row
  * gUnk_0873C04C (RegisterCollider).  Variant 38 (PlayerEffectSleepBubble) rides on its
- * spawner through four sub-states and draws through M11's sub_0803dfc8;
+ * spawner through four sub-states and draws through M11's PlayerDrawWorldLoadTilesAndPalette;
  * PlayerEffectSleepBubbleUpdate kills it once the player leaves mode 13. */
 
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void LoadBackdropColor(u32 src);
 
-void sub_08057ce0(void)
+void PlayerEffectHammerDust(void)
 {
     struct Task *t;
     struct Task *u;
@@ -96,7 +96,7 @@ void sub_08057ce0(void)
     TaskExitTrampoline();
 }
 
-void sub_08057e90(void)
+void PlayerEffectParasolSparkle(void)
 {
     struct Task *t;
     struct Task *u;
@@ -165,7 +165,7 @@ void PlayerEffectMikeAttack(void)
         t->moveCallback = 0;
         t->drawCallback = 0;
         t->updateCallback = (u32)PlayerEffectMikeAttackUpdate;
-        t->u80.attackAbility = 7;
+        t->u80.attackAbility = ABILITY_MIKE;
         while ((s8)gCurTask->player->unk16 == 0)
             TaskYieldTrampoline(1);
         u = gCurTask;
@@ -181,10 +181,10 @@ void PlayerEffectMikeAttack(void)
             {
                 switch (gTasks[i].actorKind)
                 {
-                case 1:
-                case 2:
-                case 7:
-                case 8:
+                case ACTOR_KIND_MID_BOSS:
+                case ACTOR_KIND_BOSS:
+                case ACTOR_KIND_BOSS_CHILD_TASK:
+                case ACTOR_KIND_MID_BOSS_CHILD_TASK:
                     gScreenAttackTasks[k++] = i;
                     break;
                 }
@@ -204,10 +204,10 @@ void PlayerEffectMikeAttack(void)
             n--;
             switch (gTasks[(s16)gScreenAttackTasks[n]].actorKind)
             {
-            case 1:
-            case 2:
-            case 7:
-            case 8:
+            case ACTOR_KIND_MID_BOSS:
+            case ACTOR_KIND_BOSS:
+            case ACTOR_KIND_BOSS_CHILD_TASK:
+            case ACTOR_KIND_MID_BOSS_CHILD_TASK:
                 TaskSaveSkipMask((s16)gScreenAttackTasks[n]);
                 break;
             default:
@@ -238,7 +238,7 @@ void PlayerEffectMikeAttack(void)
                 gScreenAttackActive = 1;
             switch (gTasks[i].actorKind)
             {
-            case 6:
+            case ACTOR_KIND_ITEM:
                 r = 0;
                 if (gTasks[i].u76.subtype != 5)
                 {
@@ -248,9 +248,9 @@ void PlayerEffectMikeAttack(void)
                     r = 1;
                 }
                 break;
-            case 0:
+            case ACTOR_KIND_ENEMY:
             case 3:
-            case 4:
+            case ACTOR_KIND_CHILD:
             case 9:
                 TaskRestoreSkipMask(i);
                 m++;
@@ -391,7 +391,7 @@ void PlayerEffectSleepBubble(void)
         break;
     case 3:
         t->moveCallback = (u32)TaskMoveRelativeToParent;
-        t->drawCallback = (u32)sub_0803dfc8;
+        t->drawCallback = (u32)PlayerDrawWorldLoadTilesAndPalette;
         t->layer = 8;
         u = gCurTask;
         u->frameTable = gUnk_08751DBC;

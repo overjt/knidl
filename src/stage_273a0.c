@@ -56,8 +56,8 @@ void ReturnToRestartPoint(void)
         gRoomEntryY = (d->unk4 << 4) + 5;
         gRoomEntrySet = 1;
         gEntryDoorEvent = 0;
-        gRoomEntryMode = 1;
-        gGameState = 5;
+        gRoomEntryMode = ROOM_ENTRY_DOOR;
+        gGameState = GAME_STATE_HUB;
     }
     else
     {
@@ -72,7 +72,7 @@ void ReturnToRestartPoint(void)
         gRoomEntryY = gUnk_02008050;
         gRoomEntrySet = 1;
         gEntryDoorEvent = 0;
-        gRoomEntryMode = 0;
+        gRoomEntryMode = ROOM_ENTRY_NORMAL;
     }
 }
 
@@ -195,14 +195,14 @@ s32 ReleaseDeadPlayerView(s32 i)
 {
     if (gPlayerCount > 1 && gActivePlayerMask != 0)
     {
-        if (gCameraMode != 5)
+        if (gCameraMode != CAMERA_MODE_HOLD_ANCHOR)
             gPlayerCameraMode[i] = 2;
         else
             gPlayerCameraMode[i] = 3;
         if (i == gLocalPlayer)
         {
             if (gPlayerLives[i] != 0)
-                HudShowAbilityAnimated(26, gCurTask->player->playerIndex);
+                HudShowAbilityAnimated(ABILITY_PICTURE_WAIT, gCurTask->player->playerIndex);
             else
                 sub_08009e2c(i);
         }
@@ -230,7 +230,7 @@ void CameraStartHoldAnchorAt(s32 x, s32 y)
     if (gInHub != 0)
         gCameraMode = 4;
     else
-        gCameraMode = 5;
+        gCameraMode = CAMERA_MODE_HOLD_ANCHOR;
 }
 
 void CameraStartFollowFocusAt(s32 x, s32 y)
@@ -238,9 +238,9 @@ void CameraStartFollowFocusAt(s32 x, s32 y)
     gCameraFocusX = x;
     gCameraFocusY = y;
     if (gInHub != 0)
-        gCameraMode = 0;
+        gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
     else
-        gCameraMode = 0;
+        gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
     if (gUnk_02007D64 != 2)
     {
         if (gInHub != 0)
@@ -252,20 +252,20 @@ void CameraStartFollowFocusAt(s32 x, s32 y)
 
 void CameraStartFollowingPlayer(s32 a)
 {
-    s32 i;
+    s32 player;
     s32 x;
     s32 y;
 
     if (gPlayerCount == 1)
     {
         gCameraFocusPlayer = gLocalPlayer;
-        gCameraMode = 0;
+        gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
     }
     else
     {
         gCameraFocusPlayer = a;
-        gCameraMode = 1;
-        for (i = 0; i < gPlayerCount; i++)
+        gCameraMode = CAMERA_MODE_FOLLOW_PLAYER;
+        for (player = 0; player < gPlayerCount; player++)
         {
             x = gCameraAnchorX;
             y = gCameraAnchorY;
@@ -277,8 +277,8 @@ void CameraStartFollowingPlayer(s32 a)
                 y = gCameraBounds[2];
             if (gCameraBounds[3] < y)
                 y = gCameraBounds[3];
-            gPlayerCameraPos[i].x = x;
-            gPlayerCameraPos[i].y = y;
+            gPlayerCameraPos[player].x = x;
+            gPlayerCameraPos[player].y = y;
         }
     }
 }
@@ -304,7 +304,7 @@ void CameraStartPlayersAtAnchor(void)
             y = gCameraBounds[3];
         gPlayerCameraPos[gLocalPlayer].x = x;
         gPlayerCameraPos[gLocalPlayer].y = y;
-        gCameraMode = 0;
+        gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
     }
     else
     {
@@ -347,5 +347,5 @@ s32 ArePlayerCamerasDoneGliding(void)
 
 void CameraResumeFollowFocus(void)
 {
-    gCameraMode = 0;
+    gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
 }

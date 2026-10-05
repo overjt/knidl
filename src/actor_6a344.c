@@ -251,7 +251,7 @@ void ActorFreezeIntoIceBlock(void)
     u8 zero;
 
     a = gCurTask->u8C.actor;
-    v = CreateChildTaskHere(171, 0);
+    v = CreateChildTaskHere(TASK_ICE_BLOCK, 0);
     t = gCurTask;
     t->actorIceBlockSlot = v;
     z = 0;
@@ -264,7 +264,7 @@ void ActorFreezeIntoIceBlock(void)
     ActorAttachEffect(3, 0);
     gCurTask->u80.attackAbility = zero;
     gCurTask->onGround = zero;
-    ActorSetState(0);
+    ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_SHAKE);
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     fn = a->teardown;
     ActorLoadDef((u32)&gUnk_0873F6BC);
@@ -275,7 +275,7 @@ void sub_0806a6a0(void)
 {
     if ((u8)(gPlayerStates[gCurTask->actorFreezerPlayer].ability - 13) > 1)
     {
-        ActorSetState(2);
+        ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_2);
         TaskSetEntry(ActorDefeatFrozenEnterState, gCurTaskIdx);
     }
 }
@@ -321,7 +321,7 @@ void sub_0806a6e0(void)
     u = gCurTask;
     u->parent = u->hitterSlot;
     u->player = &gPlayerStates[u->parent];
-    ActorSetState(1);
+    ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_SLIDE);
     TaskSetEntry(ActorDefeatFrozenEnterState, gCurTaskIdx);
 }
 
@@ -351,11 +351,11 @@ void ActorDefeatFrozenUpdate(void)
     CallTableEntry(gCurTask->updateState, 3, gActorDefeatFrozenStateUpdates);
     ActorDefeatFrozenBlink();
     t = gCurTask;
-    if (t->state == 1)
+    if (t->state == ACTOR_DEFEAT_FROZEN_STATE_SLIDE)
     {
-        if ((s8)t->hitKind != 0)
+        if ((s8)t->hitKind != HIT_KIND_NONE)
         {
-            ActorSetState(2);
+            ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_2);
             TaskSetEntry(ActorDefeatFrozenEnterState, gCurTaskIdx);
         }
         else
@@ -371,7 +371,7 @@ void ActorDefeatFrozenUpdate(void)
         if (r == 0)
         {
             gCurTask->hitKind = r;
-            if (gCurTask->state != 2)
+            if (gCurTask->state != ACTOR_DEFEAT_FROZEN_STATE_2)
                 sub_0806a6a0();
         }
         else
@@ -395,7 +395,7 @@ void ActorDefeatFrozenShake(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = ACTOR_DEFEAT_FROZEN_STATE_SHAKE;
     gCurTask->actorLoopCount = 0;
     do
     {
@@ -408,13 +408,13 @@ void ActorDefeatFrozenShake(void)
     } while ((s16)t->actorLoopCount <= 7);
     gCurTask->velY = 0;
     TaskYieldTrampoline(120);
-    ActorSetState(2);
+    ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_2);
     TaskSleepForever();
 }
 
 void ActorDefeatFrozenShakeUpdate(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != ACTOR_DEFEAT_FROZEN_STATE_SHAKE)
         TaskSetEntry(ActorDefeatFrozenEnterState, gCurTaskIdx);
 }
 
@@ -482,7 +482,7 @@ void ActorDefeatExplode(void)
 
     TaskStop();
     t = gCurTask;
-    if (t->actorKind == 0)
+    if (t->actorKind == ACTOR_KIND_ENEMY)
     {
         t->updateCallback = 0;
         TaskSetFrame(0);
@@ -556,7 +556,7 @@ void ActorDefeat2(void)
     u->u80.attackAbility = zb;
     v = gCurTask;
     v->actorExplosionTimer = zero;
-    CreateChildTaskHere(163, 1);
+    CreateChildTaskHere(TASK_EXPLOSION_SCREEN_FLASH, 1);
     RequestScreenShake(2);
     ActorPlaySfx(189, 0);
     PlayExplosionAnim();
@@ -619,7 +619,7 @@ void ActorDefeat4(void)
     s32 zero;
 
     t = gCurTask;
-    if (t->actorKind == 0)
+    if (t->actorKind == ACTOR_KIND_ENEMY)
     {
         t->updateCallback = 0;
         TaskSetFrame(0);

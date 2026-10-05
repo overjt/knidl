@@ -41,7 +41,7 @@ void PlayerActionThrowUpdate(void)
             PlayerSetWaterMotionY();
             if ((s8)gCurTask->player->attachedCount != 0)
                 gCurTask->player->unk16 = 0xFF;
-            gCurTask->player->requestedAction = 23;
+            gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
             break;
         }
         t = gCurTask;
@@ -49,28 +49,28 @@ void PlayerActionThrowUpdate(void)
         {
         case 1:
             p = t->player;
-            if (p->unk09 == 0)
+            if (p->catchKind == 0)
             {
-                if (t->unk28 == 0)
+                if (t->playerCatchBlockDelay == 0)
                 {
                     if (TaskBreakFirstBlock(gUnk_0873CC54, p->playerIndex) != 0)
                     {
-                        CreateBlockStar(gBrokenBlockX[0] + 8, gBrokenBlockY[0] + 8, gCurTaskIdx, 4, 2);
-                        gCurTask->player->unk09 = 2;
+                        CreateBlockStar(gBrokenBlockX[0] + 8, gBrokenBlockY[0] + 8, gCurTaskIdx, HIT_KIND_GRAB, HIT_EFFECT_THROW);
+                        gCurTask->player->catchKind = 2;
                     }
                 }
                 else
                 {
-                    t->unk28--;
+                    t->playerCatchBlockDelay--;
                 }
                 u = gCurTask;
-                if (u->player->unk09 == 0)
+                if (u->player->catchKind == 0)
                     RegisterCollider(gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873BEEC);
             }
             v = gCurTask;
             if ((s8)v->player->attachedCount == 0)
             {
-                if (v->unk2C == 0)
+                if (v->playerThrowGrabTimer == 0)
                 {
                     if (!(gLatchedHeldKeys[v->player->playerIndex] & 2))
                     {
@@ -80,13 +80,13 @@ void PlayerActionThrowUpdate(void)
                 }
                 else
                 {
-                    v->unk2C--;
+                    v->playerThrowGrabTimer--;
                 }
             }
-            else if (v->unk30 == 0)
+            else if (v->playerThrowCaught == 0)
             {
                 PlayerStartOffsetScript(1);
-                gCurTask->unk30++;
+                gCurTask->playerThrowCaught++;
             }
             break;
         case 0:
@@ -95,11 +95,11 @@ void PlayerActionThrowUpdate(void)
         case 3:
             r = t->player;
             if ((s8)r->attachedCount != 0)
-                r->requestedAction = 54;
+                r->requestedAction = PLAYER_ACTION_THROW_HOLD;
             else if (t->onGround & 1)
-                r->requestedAction = 1;
+                r->requestedAction = PLAYER_ACTION_STAND;
             else
-                r->requestedAction = 7;
+                r->requestedAction = PLAYER_ACTION_FALL;
             break;
         }
         break;

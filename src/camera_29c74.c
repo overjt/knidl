@@ -24,7 +24,7 @@
  * of the room's object list gRoomObjectList (sorted along one axis) that
  * lie inside a rectangle, through SpawnRoomObject. */
 
-struct Unk020055D8Entry
+struct RoomObjectEntry
 {
     /*0x00*/ u8 filler0[4];
     /*0x04*/ u16 x;
@@ -129,7 +129,7 @@ void UpdatePlayerGroupCenter(void)
 
 void SetCameraBoundsToGroup(void)
 {
-    s32 y, i;
+    s32 y, player;
 
     gCameraBounds[0] = gPlayerGroupCenter[0] - 80;
     gCameraBounds[1] = gPlayerGroupCenter[0] + 80;
@@ -137,10 +137,10 @@ void SetCameraBoundsToGroup(void)
     if (gUnk_0200B078 == 2)
     {
         y = 0;
-        for (i = 0; i < gPlayerCount; i++)
+        for (player = 0; player < gPlayerCount; player++)
         {
-            if (gPlayerCameraMode[i] != 3 && y < gPlayerCameraPos[i].y)
-                y = gPlayerCameraPos[i].y;
+            if (gPlayerCameraMode[player] != 3 && y < gPlayerCameraPos[player].y)
+                y = gPlayerCameraPos[player].y;
         }
         if (y < gCameraBounds[3])
             gCameraBounds[3] = y;
@@ -405,20 +405,20 @@ void SetPlayerBoundsFromCameraInScrollLock(void)
 
 void SetViewRectToPlayers(void)
 {
-    s32 x0, x1, y0, y1, v, i;
+    s32 x0, x1, y0, y1, v, player;
 
     x0 = gRoomWidth << 4;
     x1 = 0;
     y0 = gRoomHeight << 4;
     y1 = 0;
-    for (i = 0; i < gPlayerCount; i++)
+    for (player = 0; player < gPlayerCount; player++)
     {
-        v = gPlayerCameraPos[i].x;
+        v = gPlayerCameraPos[player].x;
         if (v < x0)
             x0 = v;
         if (x1 < v)
             x1 = v;
-        v = gPlayerCameraPos[i].y;
+        v = gPlayerCameraPos[player].y;
         if (v < y0)
             y0 = v;
         if (y1 < v)
@@ -432,20 +432,20 @@ void SetViewRectToPlayers(void)
 
 void SetViewRectToPlayersInScrollLock(void)
 {
-    s32 x0, x1, y0, y1, v, i;
+    s32 x0, x1, y0, y1, v, player;
 
     x0 = gRoomWidth << 4;
     x1 = 0;
     y0 = gRoomHeight << 4;
     y1 = 0;
-    for (i = 0; i < gPlayerCount; i++)
+    for (player = 0; player < gPlayerCount; player++)
     {
-        v = gPlayerCameraPos[i].x;
+        v = gPlayerCameraPos[player].x;
         if (v < x0)
             x0 = v;
         if (x1 < v)
             x1 = v;
-        v = gPlayerCameraPos[i].y;
+        v = gPlayerCameraPos[player].y;
         if (v < y0)
             y0 = v;
         if (y1 < v)
@@ -544,7 +544,7 @@ void LockPlayersPastScrollLine(void)
 void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1)
 {
     s32 i;
-    struct Unk020055D8Entry *e;
+    struct RoomObjectEntry *e;
 
     if (x0 < 0)
         x0 = 0;

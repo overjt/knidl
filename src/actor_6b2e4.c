@@ -46,7 +46,7 @@ void ActorDrownEnterState(void)
 
 void ActorDrownSink(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = ACTOR_DROWN_STATE_SINK;
     TaskStop();
     TaskSetFrame(*(s16 *)&gCurTask->actorDrownFrame);
     gCurTask->velY = 0x4000;
@@ -59,17 +59,17 @@ void ActorDrownSinkUpdate(void)
 
 void ActorDrownState1(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = ACTOR_DROWN_STATE_1;
     TaskStop();
     TaskSetFrame(*(s16 *)&gCurTask->actorDrownFrame);
     TaskYieldTrampoline(30);
-    ActorSetState(2);
+    ActorSetState(ACTOR_DROWN_STATE_2);
     TaskSleepForever();
 }
 
 void ActorDrownState1Update(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != ACTOR_DROWN_STATE_1)
         TaskSetEntry(ActorDrownEnterState, gCurTaskIdx);
 }
 
@@ -77,7 +77,7 @@ void ActorDrownState2(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 2;
+    gCurTask->updateState = ACTOR_DROWN_STATE_2;
     t = gCurTask;
     t->frameTable = gUnk_0874C9D8;
     t->tileWord = 0;
@@ -152,7 +152,7 @@ void ActorAttachedThrowHeldFollowCarrier(void)
         v->pixelX = v->actorCarriedX;
         v->pixelY = v->actorCarriedY;
         k = *(s16 *)&v->unk70 - 3;
-        if (v->actorKind == 1)
+        if (v->actorKind == ACTOR_KIND_MID_BOSS)
         {
             ActorSetTerrainBox(gUnk_0873F8BC);
             w = gCurTask;
@@ -178,7 +178,7 @@ void ActorAttachedThrowHeldFollowCarrier(void)
                 return;
             }
         }
-        ActorSetState(6);
+        ActorSetState(ACTOR_ATTACHED_STATE_THROW_FLIGHT);
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
         return;
     }
@@ -247,7 +247,7 @@ void ActorAttachedBackdropHeldFollowCarrier(void)
             w = gCurTask;
             w->facing = s->facing;
         }
-        ActorSetState(2);
+        ActorSetState(ACTOR_ATTACHED_STATE_BACKDROP_FLIGHT);
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
         return;
     }
@@ -319,7 +319,7 @@ void ActorAttachedDie(void)
     u16 v;
 
     t = gCurTask;
-    if (t->actorKind == 0)
+    if (t->actorKind == ACTOR_KIND_ENEMY)
     {
         v = t->u76.subtype;
         if (v == 17 || v == 9 || v == 0 || v == 31 || v == 32)
@@ -361,12 +361,12 @@ void sub_0806b95c(void)
     t = gCurTask;
     a = t->u8C.actor;
     p = t->player;
-    if (t->actorKind != 0 || t->u76.subtype != 40)
-        p->unk09 = 1;
+    if (t->actorKind != ACTOR_KIND_ENEMY || t->u76.subtype != 40)
+        p->catchKind = 1;
     u = gCurTask;
     if (u->drawCallback == (u32)ActorDrawWorldInViewOrDestroyWithExtra)
         u->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-    if (gCurTask->actorKind != 1)
+    if (gCurTask->actorKind != ACTOR_KIND_MID_BOSS)
         ActorSetHitReactions(gUnk_0873F92C);
     v = gCurTask;
     c = v->u8C.actor;
@@ -407,7 +407,7 @@ void ActorAttachedReloadPalette(void)
     z = v >> 12;
     if (a->palette != 0)
         LoadActorPaletteVariant(z, t->u76.subtype, a->paletteVariant, a->paletteColorCount, t->actorKind, a->palette);
-    else if (t->actorKind == 0 || t->actorKind == 3)
+    else if (t->actorKind == ACTOR_KIND_ENEMY || t->actorKind == 3)
     {
         m = 0xFFF;
         m &= v;
@@ -463,19 +463,19 @@ s32 ActorAttachToHitter(void)
     ActorAttachedReloadPalette();
     switch (gCurTask->hitEffect)
     {
-    case 1:
+    case HIT_EFFECT_INHALE:
         sub_0806b95c();
-        ActorSetState(0);
+        ActorSetState(ACTOR_ATTACHED_STATE_SWALLOW);
         break;
-    case 2:
+    case HIT_EFFECT_THROW:
         sub_0806b95c();
         ActorInitCarryOffset();
-        ActorSetState(4);
+        ActorSetState(ACTOR_ATTACHED_STATE_PULL_IN);
         break;
-    case 3:
+    case HIT_EFFECT_BACKDROP:
         sub_0806b95c();
         ActorInitCarryOffset();
-        ActorSetState(1);
+        ActorSetState(ACTOR_ATTACHED_STATE_BACKDROP_HELD);
         break;
     }
     TaskSetEntry(ActorAttachedEnterState, gCurTaskIdx);
@@ -529,7 +529,7 @@ void ActorInitCarryOffset(void)
     s16 n;
 
     t = gCurTask;
-    if (t->actorKind == 1)
+    if (t->actorKind == ACTOR_KIND_MID_BOSS)
     {
         n = t->u76.subtype * 2;
         t->actorCarryOffsetX = gUnk_0873E7A4[n];
@@ -592,9 +592,9 @@ void ActorAttachedEnterMouth(void)
     p = t->player;
     if ((s8)a->def->isItem == 1)
     {
-        if (*(s8 *)&p->attachedCount == 1 && t->actorKind == 6 && t->u76.subtype != 0)
+        if (*(s8 *)&p->attachedCount == 1 && t->actorKind == ACTOR_KIND_ITEM && t->u76.subtype != 0)
         {
-            p->unk09 = 3;
+            p->catchKind = 3;
             gCurTask->actorSwallowOrder = *(s8 *)&p->heldCount;
             p->heldCount++;
         }
@@ -610,40 +610,40 @@ void ActorAttachedEnterMouth(void)
         p->mouthState = 1;
     }
     p->ownStarInMouth = 0;
-    if (*(s8 *)&a->ability == 0)
+    if (*(s8 *)&a->ability == ABILITY_NORMAL)
         return;
     u = gCurTask;
-    if (u->actorKind == 6)
+    if (u->actorKind == ACTOR_KIND_ITEM)
     {
         f = u->u76.subtype;
         if (f == 0)
         {
-            p->pendingAbility = u->unk18;
+            p->pendingAbility = u->abilityStarAbility;
             v = gCurTask;
-            p->pendingAbilityUses = v->unk1C;
+            p->pendingAbilityUses = v->abilityStarAbilityUses;
             w = gCurTask;
-            if (w->unk20 == w->parent)
+            if (w->abilityStarOwnerSlot == w->parent)
                 p->ownStarInMouth = 1;
             if (gUnk_0300244C == 0)
                 return;
-            p->unk0A = f;
+            p->abilitySwallowCount = f;
             gUnk_02007CF4[p->playerIndex] = 1;
             return;
         }
     }
     if (gUnk_0300244C == 0 || gUnk_02007CF4[p->playerIndex] != 1)
-        p->unk0A++;
-    if (*(s8 *)&p->pendingAbility != 0)
+        p->abilitySwallowCount++;
+    if (*(s8 *)&p->pendingAbility != ABILITY_NORMAL)
         return;
     p->pendingAbility = a->ability;
     switch ((s8)a->ability)
     {
-    case 7:
+    case ABILITY_MIKE:
         q = 3;
         break;
-    case 11:
-    case 20:
-    case 21:
+    case ABILITY_SLEEP:
+    case ABILITY_CRASH:
+    case ABILITY_LIGHT:
         q = 1;
         break;
     default:
@@ -670,16 +670,16 @@ void sub_0806be4c(u32 i)
         }
         else
         {
-            p->unk0A = 0;
-            p->unk09 = 0;
+            p->abilitySwallowCount = 0;
+            p->catchKind = 0;
             p->heldCount = 0;
             p->attachedCount = 0;
         }
     }
     else
     {
-        p->unk0A = 0;
-        p->unk09 = 0;
+        p->abilitySwallowCount = 0;
+        p->catchKind = 0;
         p->heldCount = 0;
         p->attachedCount = 0;
     }
@@ -701,7 +701,7 @@ u8 ActorAttachedCheckScreenAttack(void)
         t->tileWord = m | t->u8C.actor->savedPaletteBits;
         t->posX = t->pixelX << 16;
         t->posY = t->pixelY << 16;
-        if (t->actorKind != 1 && t->actorKind != 6)
+        if (t->actorKind != ACTOR_KIND_MID_BOSS && t->actorKind != ACTOR_KIND_ITEM)
             ActorSetHitReactions(gUnk_0873F938);
         ActorAttachedDie();
     }
@@ -760,14 +760,14 @@ void ActorAttachedSwallowLateUpdate(void)
     t = gCurTask;
     if (t->actorSwallowed != 0)
     {
-        if (t->actorKind == 0)
+        if (t->actorKind == ACTOR_KIND_ENEMY)
             ActorAwardScore(t->parent, 1 << t->actorSwallowOrder);
         else
             ActorAwardScore(t->parent, 1);
         u = gCurTask;
-        if (u->actorKind != 1)
+        if (u->actorKind != ACTOR_KIND_MID_BOSS)
         {
-            if (u->actorKind == 6)
+            if (u->actorKind == ACTOR_KIND_ITEM)
             {
                 PickupCollect();
                 return;
@@ -795,7 +795,7 @@ void ActorAttachedBackdropHeld(void)
     t->lateUpdateCallback = (u32)ActorAttachedBackdropHeldLateUpdate;
     t->posY = 0;
     t->posX = 0;
-    t->hitKind = 0;
+    t->hitKind = HIT_KIND_NONE;
     u = gCurTask;
     u->actorCarriedX = u->pixelX;
     u->actorCarriedY = u->pixelY;
@@ -819,7 +819,7 @@ void ActorAttachedBackdropHeldUpdate(void)
         ActorAttachedBackdropHeldFollowCarrier();
     ActorAttachedRestorePalette();
     u = gCurTask;
-    if (u->actorKind == 1)
+    if (u->actorKind == ACTOR_KIND_MID_BOSS)
         RegisterCollider((u8)gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873F844);
     else
         RegisterCollider((u8)gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873F830);
@@ -843,8 +843,8 @@ void ActorAttachedBackdropFlight(void)
         ActorSetTerrainBox(gUnk_0873F894);
     TaskSetMotionXFacing(0x38000, 0x5A5A5A5A);
     TaskSetMotionY(0x30000, 0x8000, 0x60000);
-    gCurTask->hitKind = 0;
-    gCurTask->u80.attackAbility = 0;
+    gCurTask->hitKind = HIT_KIND_NONE;
+    gCurTask->u80.attackAbility = ABILITY_NORMAL;
     TaskSleepForever();
 }
 
@@ -864,12 +864,12 @@ void ActorAttachedBackdropFlightUpdate(void)
             gCurTask->actorBounceSurface = 2;
         PlaySfx(179);
         RequestScreenShake(2);
-        ActorSetState(3);
+        ActorSetState(ACTOR_ATTACHED_STATE_BACKDROP_BOUNCE_OFF);
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
         return;
     }
     t = gCurTask;
-    if (t->actorKind == 1)
+    if (t->actorKind == ACTOR_KIND_MID_BOSS)
         RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F844);
     else
         RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F830);

@@ -84,7 +84,7 @@ void SwordAndBladeKnightSlashUpdate(void)
     }
     if (ActorCheckHitsWithBox(gUnk_08741158) != 0)
     {
-        if (gCurTask->hitKind == 6)
+        if (gCurTask->hitKind == HIT_KIND_NO_DAMAGE)
         {
             PlaySfx(243);
             gCurTask->swordAndBladeKnightSlashStruck = v;
@@ -218,7 +218,7 @@ void RockyWalkInit(void)
     gCurTask->updateCallback = (u32)RockyWalkUpdate;
     TaskFaceNearestPlayer();
     gCurTask->rockyLeapTimer = 0;
-    ActorSetState(0);
+    ActorSetState(ROCKY_WALK_STATE_WALK);
     CallTableEntry(gCurTask->state, 5, gRockyWalkStates);
 }
 
@@ -237,7 +237,7 @@ void RockyWalkUpdate(void)
 
 void RockyWalk(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = ROCKY_WALK_STATE_WALK;
     gCurTask->rockyLoopCount = 0;
     do
     {
@@ -273,7 +273,7 @@ void RockyWalk(void)
         TaskYieldTrampoline(8);
     } while ((s16)++gCurTask->rockyLoopCount <= 1);
     gCurTask->velX = 0;
-    ActorSetState(1);
+    ActorSetState(ROCKY_WALK_STATE_1);
     TaskSleepForever();
 }
 
@@ -293,21 +293,21 @@ void RockyWalkState0Update(void)
                 if (RandomRange(gCurTask->unk30) == 0)
                 {
                     TaskFaceToward(gCurTask->rockyPlayerSlot);
-                    ActorSetState(2);
+                    ActorSetState(ROCKY_WALK_STATE_2);
                 }
                 gCurTask->rockyLeapTimer = 60;
             }
         }
     }
-    if (gCurTask->state != 0)
+    if (gCurTask->state != ROCKY_WALK_STATE_WALK)
         TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
 }
 
 void RockyWalkState1(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = ROCKY_WALK_STATE_1;
     sub_0807dd10();
-    ActorSetState(0);
+    ActorSetState(ROCKY_WALK_STATE_WALK);
     TaskSleepForever();
 }
 
@@ -319,14 +319,14 @@ void RockyWalkState1Update(void)
         if (abs(TaskGetDyTo(gCurTask->rockyPlayerSlot)) <= 15)
             TaskFaceToward(gCurTask->rockyPlayerSlot);
     }
-    if (gCurTask->state != 1)
+    if (gCurTask->state != ROCKY_WALK_STATE_1)
         TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
 }
 
 void RockyWalkState2(void)
 {
     gCurTask->onGround = 0;
-    gCurTask->updateState = 2;
+    gCurTask->updateState = ROCKY_WALK_STATE_2;
     TaskSetMotionXFacing(0x18000, 0);
     {
         struct Task *t = gCurTask;
@@ -339,35 +339,35 @@ void RockyWalkState2(void)
     TaskSetFrame(12);
     TaskStop();
     TaskYieldTrampoline(16);
-    ActorSetState(4);
+    ActorSetState(ROCKY_WALK_STATE_4);
     TaskSleepForever();
 }
 
 void RockyWalkState2Update(void)
 {
-    if (gCurTask->state != 2)
+    if (gCurTask->state != ROCKY_WALK_STATE_2)
         TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
 }
 
 void RockyWalkState3(void)
 {
-    gCurTask->updateState = 3;
+    gCurTask->updateState = ROCKY_WALK_STATE_3;
     TaskSetFrame(12);
     TaskStop();
     TaskYieldTrampoline(16);
-    ActorSetState(4);
+    ActorSetState(ROCKY_WALK_STATE_4);
     TaskSleepForever();
 }
 
 void RockyWalkState3Update(void)
 {
-    if (gCurTask->state != 3)
+    if (gCurTask->state != ROCKY_WALK_STATE_3)
         TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
 }
 
 void RockyWalkState4(void)
 {
-    gCurTask->updateState = 4;
+    gCurTask->updateState = ROCKY_WALK_STATE_4;
     gCurTask->velY = 0x80000;
     TaskSetFrame(12);
     TaskSleepForever();
@@ -383,7 +383,7 @@ void RockyIdleInit(void)
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(ROCKY_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gRockyIdleStates);
 }
 
@@ -401,7 +401,7 @@ void RockyIdleUpdate(void)
 
 void RockyIdle(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = ROCKY_IDLE_STATE_IDLE;
     while (1)
         sub_0807dd10();
 }
@@ -415,7 +415,7 @@ void RockyStandInit(void)
     gCurTask->updateCallback = (u32)RockyStandUpdate;
     TaskFaceNearestPlayer();
     gCurTask->rockyLeapTimer = 0;
-    ActorSetState(0);
+    ActorSetState(ROCKY_STAND_STATE_0);
     CallTableEntry(gCurTask->state, 3, gRockyStandStates);
 }
 
@@ -434,7 +434,7 @@ void RockyStandUpdate(void)
 
 void RockyStandState0(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = ROCKY_STAND_STATE_0;
     {
         struct Task *t = gCurTask;
 
@@ -461,33 +461,33 @@ void RockyStandState0(void)
         gCurTask->frame++;
         TaskYieldTrampoline(8);
     } while ((s16)++gCurTask->rockyLoopCount <= 1);
-    ActorSetState(1);
+    ActorSetState(ROCKY_STAND_STATE_1);
     TaskSleepForever();
 }
 
 void RockyStandState0Update(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != ROCKY_STAND_STATE_0)
         TaskSetEntry(RockyStandEnterState, gCurTaskIdx);
 }
 
 void RockyStandState1(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = ROCKY_STAND_STATE_1;
     sub_0807dd10();
-    ActorSetState(0);
+    ActorSetState(ROCKY_STAND_STATE_0);
     TaskSleepForever();
 }
 
 void RockyStandState1Update(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != ROCKY_STAND_STATE_1)
         TaskSetEntry(RockyStandEnterState, gCurTaskIdx);
 }
 
 void RockyStandState2(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = ROCKY_STAND_STATE_2;
     gCurTask->velY = 0x80000;
     TaskSetFrame(12);
     TaskSleepForever();
@@ -572,7 +572,7 @@ s32 RockyHitCeiling(void)
 
     if (gCurTask->variant == 0)
     {
-        ActorSetState(3);
+        ActorSetState(ROCKY_WALK_STATE_3);
         TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
         r = 1;
     }
@@ -614,7 +614,7 @@ void Task_SirKibble(void)
 void SirKibbleStandInit(void)
 {
     gCurTask->updateCallback = (u32)SirKibbleStandUpdate;
-    ActorSetState(0);
+    ActorSetState(SIR_KIBBLE_STAND_STATE_WAIT);
     CallTableEntry(gCurTask->state, 3, gSirKibbleStandStates);
 }
 
@@ -635,7 +635,7 @@ void SirKibbleWait(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = SIR_KIBBLE_STAND_STATE_WAIT;
     t = gCurTask;
     t->sirKibbleStateTimer = gUnk_08741216[t->actorSpawnArg];
     sub_0807e484();
@@ -650,13 +650,13 @@ void SirKibbleWaitUpdate(void)
         if (abs(TaskGetNearestPlayerDx()) <= 63)
         {
             if (RandomRange(gUnk_08741214[gCurTask->actorSpawnArg]) == 0)
-                ActorSetState(2);
+                ActorSetState(SIR_KIBBLE_STAND_STATE_JUMP);
             else
-                ActorSetState(1);
+                ActorSetState(SIR_KIBBLE_STAND_STATE_SHOOT);
         }
         else
         {
-            ActorSetState(1);
+            ActorSetState(SIR_KIBBLE_STAND_STATE_SHOOT);
         }
         gCurTask->velX = 0;
         TaskSetEntry(SirKibbleStandEnterState, gCurTaskIdx);
@@ -666,7 +666,7 @@ void SirKibbleWaitUpdate(void)
 void SirKibbleWalkInit(void)
 {
     gCurTask->updateCallback = (u32)SirKibbleWalkUpdate;
-    ActorSetState(0);
+    ActorSetState(SIR_KIBBLE_WALK_STATE_WALK);
     CallTableEntry(gCurTask->state, 3, gSirKibbleWalkStates);
 }
 
@@ -687,7 +687,7 @@ void SirKibbleWalk(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = SIR_KIBBLE_WALK_STATE_WALK;
     t = gCurTask;
     t->sirKibbleStateTimer = gUnk_08741216[t->actorSpawnArg];
     TaskSetMotionXFacing(gUnk_08741218[t->actorSpawnArg], 0x5A5A5A5A);
@@ -713,13 +713,13 @@ void SirKibbleWalkState0Update(void)
         if (abs(TaskGetNearestPlayerDx()) <= 63)
         {
             if (RandomRange(gUnk_08741214[gCurTask->actorSpawnArg]) == 0)
-                ActorSetState(2);
+                ActorSetState(SIR_KIBBLE_WALK_STATE_JUMP);
             else
-                ActorSetState(1);
+                ActorSetState(SIR_KIBBLE_WALK_STATE_SHOOT);
         }
         else
         {
-            ActorSetState(1);
+            ActorSetState(SIR_KIBBLE_WALK_STATE_SHOOT);
         }
         gCurTask->velX = 0;
         TaskSetEntry(SirKibbleWalkEnterState, gCurTaskIdx);
@@ -741,8 +741,8 @@ void SirKibbleShoot(void)
     gCurTask->frame++;
     TaskYieldTrampoline(4);
     spawn.subtype = 3;
-    spawn.taskType = 105;
-    spawn.variant = 0;
+    spawn.taskType = TASK_SIR_KIBBLE_CUTTER;
+    spawn.variant = SIR_KIBBLE_CUTTER_VARIANT_INIT;
     spawn.spawnArg = 0;
     spawn.x = 16;
     spawn.y = 0;
@@ -809,8 +809,8 @@ void SirKibbleJump(void)
     gCurTask->frame++;
     TaskYieldTrampoline(4);
     spawn.subtype = 3;
-    spawn.taskType = 105;
-    spawn.variant = 0;
+    spawn.taskType = TASK_SIR_KIBBLE_CUTTER;
+    spawn.variant = SIR_KIBBLE_CUTTER_VARIANT_INIT;
     spawn.spawnArg = 1;
     spawn.x = 16;
     spawn.y = 0;
@@ -863,7 +863,7 @@ void SirKibbleIdleInit(void)
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(SIR_KIBBLE_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gSirKibbleIdleStates);
 }
 
@@ -881,7 +881,7 @@ void SirKibbleIdleUpdate(void)
 
 void SirKibbleIdle(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = SIR_KIBBLE_IDLE_STATE_IDLE;
     sub_0807e484();
 }
 
@@ -948,7 +948,7 @@ void CappyCappedInit(void)
 
     t->updateCallback = (u32)CappyCappedUpdate;
     t->frameTable = gCappyFrames;
-    ActorSetState(0);
+    ActorSetState(CAPPY_CAPPED_STATE_HOP);
     CallTableEntry(gCurTask->state, 1, gCappyCappedStates);
 }
 
@@ -965,9 +965,9 @@ void CappyCappedUpdate(void)
     {
         struct Task *t = gCurTask;
 
-        if (t->hitKind == 3)
+        if (t->hitKind == HIT_KIND_INHALE)
         {
-            gCurTask->cappyCaplessSlot = CreateActorByKind(0, 8, 1, 0, t->pixelX, t->pixelY,
+            gCurTask->cappyCaplessSlot = CreateActorByKind(ACTOR_KIND_ENEMY, 8, CAPPY_VARIANT_CAPLESS, 0, t->pixelX, t->pixelY,
                                                 t->tileWord);
             TransferRoomObject(gCurTaskIdx, gCurTask->cappyCaplessSlot);
         }
@@ -977,7 +977,7 @@ void CappyCappedUpdate(void)
 
 void CappyCappedHop(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = CAPPY_CAPPED_STATE_HOP;
     gCurTask->frame = 4;
     while (1)
     {
@@ -1011,7 +1011,7 @@ void CappyCaplessInit(void)
     t->updateCallback = (u32)CappyCaplessUpdate;
     t->frameTable = gCappyCaplessFrames;
     ActorLoadDef(gCappyCaplessDef);
-    ActorSetState(1);
+    ActorSetState(CAPPY_CAPLESS_STATE_JUMP);
     CallTableEntry(gCurTask->state, 2, gCappyCaplessStates);
 }
 
@@ -1024,14 +1024,14 @@ void CappyCaplessUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
         CallTableEntry(gCurTask->updateState, 2, gCappyCaplessStateUpdates);
-    if (gCurTask->updateState != 1)
+    if (gCurTask->updateState != CAPPY_CAPLESS_STATE_JUMP)
         ActorCheckHits();
     ActorReactToHit();
 }
 
 void CappyCaplessHop(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = CAPPY_CAPLESS_STATE_HOP;
     TaskSetFrame(4);
     while (1)
     {
@@ -1064,7 +1064,7 @@ void CappyCaplessHopUpdate(void)
 
 void CappyCaplessJump(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = CAPPY_CAPLESS_STATE_JUMP;
     TaskFaceNearestPlayer();
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(-0x8000, 0);
@@ -1091,7 +1091,7 @@ void CappyCaplessJumpUpdate(void)
 {
     if (gCurTask->onGround != 0)
     {
-        ActorSetState(0);
+        ActorSetState(CAPPY_CAPLESS_STATE_HOP);
         TaskSetEntry(CappyCaplessEnterState, gCurTaskIdx);
     }
 }
@@ -1105,7 +1105,7 @@ void CappyStandInit(void)
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(CAPPY_STAND_STATE_HOP);
     CallTableEntry(gCurTask->state, 1, gCappyStandStates);
 }
 
@@ -1124,7 +1124,7 @@ void CappyStandUpdate(void)
 
 void CappyStandHop(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = CAPPY_STAND_STATE_HOP;
     gCurTask->frame = 4;
     while (1)
     {
@@ -1178,7 +1178,7 @@ void Task_Gordo(void)
 void GordoBobInit(void)
 {
     gCurTask->updateCallback = (u32)GordoBobUpdate;
-    ActorSetState(0);
+    ActorSetState(GORDO_BOB_STATE_BOB);
     CallTableEntry(gCurTask->state, 1, gGordoBobStates);
 }
 
@@ -1191,7 +1191,7 @@ void GordoBobUpdate(void)
 
 void GordoBob(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = GORDO_BOB_STATE_BOB;
     while (1)
     {
         gCurTask->velY = -0x4000;
@@ -1213,7 +1213,7 @@ void GordoBobState0Update(void)
 void GordoBounceVerticalInit(void)
 {
     gCurTask->updateCallback = (u32)GordoBounceVerticalUpdate;
-    ActorSetState(0);
+    ActorSetState(GORDO_BOUNCE_VERTICAL_STATE_BOUNCE_VERTICAL);
     CallTableEntry(gCurTask->state, 1, gGordoBounceVerticalStates);
 }
 
@@ -1233,7 +1233,7 @@ void GordoBounceVerticalUpdate(void)
 
 void GordoBounceVertical(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = GORDO_BOUNCE_VERTICAL_STATE_BOUNCE_VERTICAL;
     {
         struct Task *t = gCurTask;
 
@@ -1260,7 +1260,7 @@ void GordoBounceVerticalState0Update(void)
 void GordoBounceHorizontalInit(void)
 {
     gCurTask->updateCallback = (u32)GordoBounceHorizontalUpdate;
-    ActorSetState(0);
+    ActorSetState(GORDO_BOUNCE_HORIZONTAL_STATE_BOUNCE_HORIZONTAL);
     CallTableEntry(gCurTask->state, 1, gGordoBounceHorizontalStates);
 }
 
@@ -1279,7 +1279,7 @@ void GordoBounceHorizontalUpdate(void)
 
 void GordoBounceHorizontal(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = GORDO_BOUNCE_HORIZONTAL_STATE_BOUNCE_HORIZONTAL;
     {
         struct Task *t = gCurTask;
 
@@ -1306,7 +1306,7 @@ void GordoBounceHorizontalState0Update(void)
 void GordoSweepInit(void)
 {
     gCurTask->updateCallback = (u32)GordoSweepUpdate;
-    ActorSetState(0);
+    ActorSetState(GORDO_SWEEP_STATE_SWEEP);
     CallTableEntry(gCurTask->state, 1, gGordoSweepStates);
 }
 
@@ -1319,7 +1319,7 @@ void GordoSweepUpdate(void)
 
 void GordoSweep(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = GORDO_SWEEP_STATE_SWEEP;
     while (1)
     {
         gCurTask->velY = -0x8000;
@@ -1361,7 +1361,7 @@ void Task_CoolSpook(void)
 void CoolSpookFlyInit(void)
 {
     gCurTask->updateCallback = (u32)CoolSpookFlyUpdate;
-    ActorSetState(0);
+    ActorSetState(COOL_SPOOK_FLY_STATE_FLY);
     CallTableEntry(gCurTask->state, 1, gCoolSpookFlyStates);
 }
 
@@ -1379,7 +1379,7 @@ void CoolSpookFlyUpdate(void)
 
 void CoolSpookFly(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = COOL_SPOOK_FLY_STATE_FLY;
     TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
     sub_0807ef7c();
 }
@@ -1395,7 +1395,7 @@ void CoolSpookBobInit(void)
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(COOL_SPOOK_BOB_STATE_BOB);
     CallTableEntry(gCurTask->state, 1, gCoolSpookBobStates);
 }
 
@@ -1413,7 +1413,7 @@ void CoolSpookBobUpdate(void)
 
 void CoolSpookBob(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = COOL_SPOOK_BOB_STATE_BOB;
     sub_0807ef7c();
 }
 

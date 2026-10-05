@@ -27,11 +27,11 @@
 /* gUnk_02007E90[4][3]: M04's per-player spark records (src/player_10358.c) */
 struct M04Spark
 {
-    /*0x00*/ s32 unk00;
-    /*0x04*/ s32 unk04;
-    /*0x08*/ s32 unk08;
-    /*0x0C*/ u8 unk0C;
-    /*0x0D*/ u8 unk0D;
+    /*0x00*/ s32 offsetX;
+    /*0x04*/ s32 offsetY;
+    /*0x08*/ s32 velX;
+    /*0x0C*/ u8 frameTimer;
+    /*0x0D*/ u8 frame;
     /*0x0E*/ u16 unk0E;
 };
 
@@ -105,7 +105,7 @@ void PlayerActionLadder(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 9;
-    gCurTask->updateState = 12;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_LADDER;
     if (gCurTask->player->prevMode != 9)
     {
         PlayerStopAxes(3);
@@ -124,7 +124,7 @@ void PlayerActionLadder(void)
             h3->variant = 2;
         switch (gCurTask->player->ability)
         {
-        case 0:
+        case ABILITY_NORMAL:
         default:
             h4 = gCurTask;
             if (h4->variant == 1)
@@ -132,10 +132,10 @@ void PlayerActionLadder(void)
             else
                 h4->playerLadderStep = 10;
             break;
-        case 1:
-        case 2:
-        case 5:
-        case 19:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_TORNADO:
             h4 = gCurTask;
             if (h4->variant == 1)
                 h4->playerLadderStep = 0;
@@ -155,7 +155,7 @@ void PlayerActionLadder(void)
         d->playerLadderDir = k;
         switch (d->player->ability)
         {
-        case 0:
+        case ABILITY_NORMAL:
         default:
             for (;;)
             {
@@ -180,10 +180,10 @@ void PlayerActionLadder(void)
                 if (b1->playerLadderStep > 9)
                     b1->playerLadderStep = 0;
             }
-        case 1:
-        case 2:
-        case 5:
-        case 19:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_TORNADO:
             for (;;)
             {
                 if (gCurTask->playerLadderStep == 0 || gCurTask->playerLadderStep == 9)
@@ -215,7 +215,7 @@ void PlayerActionLadder(void)
         PlaySfxIfLocalPlayer(124, c2->player->playerIndex);
         switch (gCurTask->player->ability)
         {
-        case 0:
+        case ABILITY_NORMAL:
         default:
             for (;;)
             {
@@ -238,10 +238,10 @@ void PlayerActionLadder(void)
                 if (b2->playerLadderStep > 13)
                     b2->playerLadderStep = 10;
             }
-        case 1:
-        case 2:
-        case 5:
-        case 19:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_TORNADO:
             for (;;)
             {
                 a4 = gCurTask;
@@ -269,13 +269,13 @@ void PlayerActionLadder(void)
         PlayerStopAxes(2);
         switch (gCurTask->player->ability)
         {
-        case 0:
+        case ABILITY_NORMAL:
         default:
             TaskSleepForever();
-        case 1:
-        case 2:
-        case 5:
-        case 19:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_TORNADO:
             e = gCurTask;
             e->playerLadderFrameOffset = gUnk_0873D908[e->playerLadderStep * 3];
             for (;;)
@@ -317,7 +317,7 @@ void PlayerActionLadderUpdate(void)
         t->frame = gUnk_0873D880[t->player->ability];
         TaskSetEntry(PlayerActionLadder, gCurTaskIdx);
         if (gUnk_0300244C != 0)
-            gCurTask->player->requestedAction = 0;
+            gCurTask->player->requestedAction = PLAYER_ACTION_NONE;
         return;
     }
     t = gCurTask;
@@ -364,7 +364,7 @@ void PlayerActionLadderUpdate(void)
             break;
         switch (t->player->ability)
         {
-        case 0:
+        case ABILITY_NORMAL:
         default:
             th = gCurTask;
             n = th->playerLadderDir;
@@ -398,10 +398,10 @@ void PlayerActionLadderUpdate(void)
                 gCurTask->playerLadderStep = 0;
             }
             goto callit;
-        case 1:
-        case 2:
-        case 5:
-        case 19:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_TORNADO:
             tj = gCurTask;
             m = tj->playerLadderDir;
             if (m == 1)
@@ -429,10 +429,10 @@ void PlayerActionLadderUpdate(void)
                 goto arm3;
             goto callit;
         set5:
-            tg->player->requestedAction = 5;
+            tg->player->requestedAction = PLAYER_ACTION_JUMP;
             return;
         set1:
-            tg->player->requestedAction = 1;
+            tg->player->requestedAction = PLAYER_ACTION_STAND;
             return;
         arm3:
             tj->variant = 2;
@@ -465,7 +465,7 @@ void PlayerActionLadderUpdate(void)
             goto set5;
         if (tg->onGround & 1)
             goto set1;
-        tg->player->requestedAction = 7;
+        tg->player->requestedAction = PLAYER_ACTION_FALL;
     }
 }
 
@@ -476,7 +476,7 @@ void PlayerActionInhale(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 10;
-    gCurTask->updateState = 13;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_INHALE;
     t = gCurTask;
     if (t->player->prevMode != 10)
     {
@@ -487,22 +487,22 @@ void PlayerActionInhale(void)
     switch (u->variant)
     {
     case 0:
-        u->unk28 = 1;
+        u->playerCatchBlockDelay = 1;
         u->playerInhaleHoldTimer = 30;
-        u->unk34 = -1;
+        u->playerInhaleAirColliderTimer = -1;
         {
             struct PlayerState *p = u->player;
 
-            p->unk0A = 0;
-            p->unk09 = 0;
+            p->abilitySwallowCount = 0;
+            p->catchKind = 0;
             p->heldCount = 0;
             p->attachedCount = 0;
         }
         {
             struct PlayerState *p = gCurTask->player;
 
-            p->ability = 0;
-            p->pendingAbility = 0;
+            p->ability = ABILITY_NORMAL;
+            p->pendingAbility = ABILITY_NORMAL;
         }
         {
             struct PlayerState *p = gCurTask->player;
@@ -515,11 +515,11 @@ void PlayerActionInhale(void)
         gUnk_03001F2C = 0;
         do
         {
-            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk00 = 0;
-            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk04 = 0;
-            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk08 = 0;
-            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk0C = 1;
-            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk0D = 0;
+            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].offsetX = 0;
+            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].offsetY = 0;
+            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].velX = 0;
+            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].frameTimer = 1;
+            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].frame = 0;
             gUnk_03001F2C++;
         } while (gUnk_03001F2C <= 2);
         LoadAbilityTiles();
@@ -529,7 +529,7 @@ void PlayerActionInhale(void)
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         PlayerStartSfx(103, gCurTask->player->playerIndex);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 0, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_INHALE_AIR, 0);
         gCurTask->player->unk40 |= 4;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
@@ -560,7 +560,7 @@ void PlayerActionInhale(void)
         {
             struct PlayerState *q = gCurTask->player;
 
-            if ((s8)q->attachedCount == 0 || q->unk09 == 3)
+            if ((s8)q->attachedCount == 0 || q->catchKind == 3)
             {
                 TaskSetFrame(57);
                 TaskYieldTrampoline(2);
@@ -574,8 +574,8 @@ void PlayerActionInhale(void)
                 w = gCurTask;
                 if (w->onGround & 1)
                 {
-                    CreatePlayerEffect(w->player->playerIndex, 1, 0);
-                    CreatePlayerEffect(gCurTask->player->playerIndex, 1, 1);
+                    CreatePlayerEffect(w->player->playerIndex, PLAYER_EFFECT_VARIANT_CATCH_DUST, 0);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_CATCH_DUST, 1);
                 }
                 TaskSetFrame(62);
                 TaskYieldTrampoline(1);
@@ -606,7 +606,7 @@ void PlayerActionInhaleUpdate(void)
             PlayerSetWaterMotionY();
             if ((s8)gCurTask->player->attachedCount == 0)
             {
-                gCurTask->player->requestedAction = 23;
+                gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
                 break;
             }
         }
@@ -616,7 +616,7 @@ void PlayerActionInhaleUpdate(void)
             if ((t->waterFlags & 1) && (s8)t->player->attachedCount == 0)
             {
                 PlayerSetWaterMotionY();
-                gCurTask->player->requestedAction = 23;
+                gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
                 break;
             }
         }
@@ -645,37 +645,37 @@ void PlayerActionInhaleUpdate(void)
                 }
             }
             u = gCurTask;
-            if (u->player->unk09 == 0)
+            if (u->player->catchKind == 0)
             {
-                if (u->unk28 == 0)
+                if (u->playerCatchBlockDelay == 0)
                 {
                     if (TaskBreakFirstBlock(&gUnk_0873CC54, u->player->playerIndex) != 0)
                     {
-                        gCurTask->player->unk09 = 2;
-                        CreateBlockStar(gBrokenBlockX + 8, gBrokenBlockY + 8, gCurTaskIdx, 3, 1);
+                        gCurTask->player->catchKind = 2;
+                        CreateBlockStar(gBrokenBlockX + 8, gBrokenBlockY + 8, gCurTaskIdx, HIT_KIND_INHALE, HIT_EFFECT_INHALE);
                     }
                 }
                 else
                 {
-                    u->unk28--;
+                    u->playerCatchBlockDelay--;
                 }
                 u = gCurTask;
-                if (u->player->unk09 == 0)
+                if (u->player->catchKind == 0)
                     RegisterCollider(gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873BEC4);
             }
-            else if (u->player->unk09 == 1)
+            else if (u->player->catchKind == 1)
             {
-                if (u->unk34 == -1)
+                if (u->playerInhaleAirColliderTimer == -1)
                 {
                     if (!(u->onGround & 1))
-                        u->unk34 = 8;
-                    if (gCurTask->unk34 == -1)
+                        u->playerInhaleAirColliderTimer = 8;
+                    if (gCurTask->playerInhaleAirColliderTimer == -1)
                         goto skip;
                 }
                 u = gCurTask;
-                if (u->unk34 != 0)
+                if (u->playerInhaleAirColliderTimer != 0)
                 {
-                    u->unk34--;
+                    u->playerInhaleAirColliderTimer--;
                     RegisterCollider(gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873BEC4);
                 }
             skip:;
@@ -692,11 +692,11 @@ void PlayerActionInhaleUpdate(void)
             break;
         case 3:
             if (t->waterFlags & 1)
-                t->player->requestedAction = 23;
+                t->player->requestedAction = PLAYER_ACTION_SWIM;
             else if (t->onGround & 1)
-                t->player->requestedAction = 1;
+                t->player->requestedAction = PLAYER_ACTION_STAND;
             else
-                t->player->requestedAction = 7;
+                t->player->requestedAction = PLAYER_ACTION_FALL;
             break;
         }
         break;
@@ -730,7 +730,7 @@ void PlayerActionSpit(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 11;
-    gCurTask->updateState = 14;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_SPIT;
     gCurTask->playerActionDone28 = 0;
     gCurTask->player->mouthState = 0;
     PlayerStartOffsetScript(3);
@@ -738,15 +738,15 @@ void PlayerActionSpit(void)
     TaskYieldTrampoline(1);
     gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->player->pendingAbility = 0;
+    gCurTask->player->pendingAbility = ABILITY_NORMAL;
     if ((s8)gCurTask->player->attachedCount > 1)
-        CreatePlayerObject(gCurTask->player->playerIndex, 2, 0);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_SPIT_MULTI_STAR, 0);
     else
-        CreatePlayerObject(gCurTask->player->playerIndex, 1, 0);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_SPIT_STAR, 0);
     if (gCurTask->onGround & 1)
     {
-        CreatePlayerEffect(gCurTask->player->playerIndex, 2, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 2, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SPIT_DUST, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SPIT_DUST, 1);
     }
     gCurTask->frame++;
     TaskYieldTrampoline(11);
@@ -794,7 +794,7 @@ void PlayerActionSwallow(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 12;
-    gCurTask->updateState = 15;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_SWALLOW;
     gCurTask->playerActionDone28 = 0;
     gCurTask->player->mouthState = 0;
     TaskSetFrame(68);

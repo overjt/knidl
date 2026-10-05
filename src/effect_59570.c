@@ -14,8 +14,8 @@
  * gUnk_0874C828, gUnk_08751F0C); its callbacks are sub_08059aac (the
  * collider rows gUnk_0873C23C and gUnk_0873C250 through RegisterCollider in
  * sub-states 3 and 4) and the draw hook sub_08059b18 (QueueSprite when on
- * screen).  Variant 43 (sub_08059c28) has four sub-states with the draw
- * hooks TaskDrawWorldTilesLoaded and M11's sub_0803dfc8.  Variant 44 (sub_08059d7c)
+ * screen).  Variant 43 (PlayerEffectStonePuff) has four sub-states with the draw
+ * hooks TaskDrawWorldTilesLoaded and M11's PlayerDrawWorldLoadTilesAndPalette.  Variant 44 (sub_08059d7c)
  * selects on the second byte of Task.unk18 (0x100-0x500), queues a VRAM
  * transfer (RequestCopy) and installs sub_0805a320, which kills it when the
  * spawner's Task.variant is 8 or the player is in neither mode 13 nor mode 3. */
@@ -263,7 +263,7 @@ void sub_08059b18(void)
     }
 }
 
-void sub_08059c28(void)
+void PlayerEffectStonePuff(void)
 {
     struct Task *t;
     struct Task *u;
@@ -280,7 +280,7 @@ void sub_08059c28(void)
     switch (u->playerEffectSpawnWord & 15)
     {
     case 0:
-        u->drawCallback = (u32)sub_0803dfc8;
+        u->drawCallback = (u32)PlayerDrawWorldLoadTilesAndPalette;
         u->velX = -0x18000;
         u->velY = -0x18000;
         u->frame = 0;
@@ -324,7 +324,7 @@ void sub_08059d7c(void)
     {
     case 0x100:
         t->moveCallback = (u32)TaskMoveRelativeToParent;
-        t->drawCallback = (u32)sub_0803dfc8;
+        t->drawCallback = (u32)PlayerDrawWorldLoadTilesAndPalette;
         t->updateCallback = (u32)sub_0805a320;
         t->layer = 5;
         {

@@ -12,14 +12,14 @@
  *     types #36/#37: `SwordAndBladeKnightWalkInit`+`SwordAndBladeKnightWalkUpdate`), whose hook
  *     packs Task.pixelY into the low half of Task.unk24 and ORs 0x10000 in
  *     when the four-player flag `gTerrainResult[4]` is out of range;
- *   * the sword knights' remaining states and rows `SwordAndBladeKnightWalkState0`..
+ *   * the sword knights' remaining states and rows `SwordAndBladeKnightWalk`..
  *     `SwordAndBladeKnightStandInit`, which probe for a partner with `TaskIsInRectSlot` over a
  *     stack `struct PointPair`
- *     and reacts through the shared `sub_0807b294` state entry;
+ *     and reacts through the shared `SwordAndBladeKnightPickSlash` state entry;
  *   * Task_UFO's row 0 `UFOInit`+`UFOUpdate` with the
  *     `UFOIsAtTarget` box test (`struct Rect` + GetDistSq) and the
  *     `UFOSetTarget` aim helper that clamps into `0x08740B3C`/`0x08740B60`;
- *   * UFO's state check `UFOState1Update` (gUFOStateUpdates[1]), which walks a
+ *   * UFO's state check `UFOPickMoveUpdate` (gUFOStateUpdates[1]), which walks a
  *     sixteen-entry cue ring through
  *     `UFOPickNextPoint` (`15 & (rand + Task.unk24)`);
  *   * Task_Parasol's row 0 `ParasolRiseInit`+`ParasolRiseUpdate` and its aim
@@ -96,7 +96,7 @@ void ScarfyInit(void)
 void ScarfyUpdate(void)
 {
     CallTableEntry(gCurTask->updateState, 6, gScarfyStateUpdates);
-    if (gTaskSlotTypes[gCurTaskIdx] != -1 && gCurTask->state != 0)
+    if (gTaskSlotTypes[gCurTaskIdx] != -1 && gCurTask->state != SCARFY_STATE_HIDE)
     {
         ActorCheckHits();
         ActorReactToHit();
@@ -111,7 +111,7 @@ void ScarfyEnterState(void)
 
 void ScarfyHover(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = SCARFY_STATE_HOVER;
     sub_0807a8fc();
     sub_0807aa5c();
 }
@@ -123,7 +123,7 @@ void ScarfyHoverUpdate(void)
 
 void ScarfyHide(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = SCARFY_STATE_HIDE;
     TaskStop();
     gCurTask->frame = 0xFFFF;
     TaskSleepForever();
@@ -133,14 +133,14 @@ void ScarfyHideUpdate(void)
 {
     if (TaskIsNearestPlayerWithinX(10) != 0)
     {
-        ActorSetState(1);
+        ActorSetState(SCARFY_STATE_1);
         TaskSetEntry(ScarfyEnterState, gCurTaskIdx);
     }
 }
 
 void ScarfyState1(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = SCARFY_STATE_1;
     gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_08740854);
     sub_0807a968();
     TaskSleepForever();
@@ -151,7 +151,7 @@ void ScarfyState1Update(void)
     gCurTask->actorAnimDelay34 = ActorTickAnimFacingNearestPlayer(gCurTask->actorAnimDelay34);
     if (abs(TaskGetNearestPlayerDy()) <= 4)
     {
-        ActorSetState(2);
+        ActorSetState(SCARFY_STATE_HOVER);
         TaskSetEntry(ScarfyEnterState, gCurTaskIdx);
     }
 }
@@ -161,7 +161,7 @@ void ScarfyTransform(void)
     struct Task *t;
     s32 v;
 
-    gCurTask->updateState = 3;
+    gCurTask->updateState = SCARFY_STATE_TRANSFORM;
     TaskStop();
     gCurTask->frameTable = gScarfyAngryFrames;
     ActorSetHitReactions(gScarfyTransformHitReactions);
@@ -218,7 +218,7 @@ void ScarfyTransform(void)
     gCurTask->frame++;
     TaskYieldTrampoline(12);
     TaskStop();
-    ActorSetState(4);
+    ActorSetState(SCARFY_STATE_CHASE);
     TaskSleepForever();
 }
 
@@ -226,7 +226,7 @@ void ScarfyTransformUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->state != 3)
+    if (t->state != SCARFY_STATE_TRANSFORM)
     {
         TaskSetEntry(ScarfyEnterState, gCurTaskIdx);
     }
@@ -244,7 +244,7 @@ void ScarfyChase(void)
     s32 i;
     s32 j;
 
-    gCurTask->updateState = 4;
+    gCurTask->updateState = SCARFY_STATE_CHASE;
     TaskStop();
     t = gCurTask;
     t->scarfyChaseTimer = gUnk_0874094C[t->actorSpawnArg];
@@ -267,7 +267,7 @@ void ScarfyChaseUpdate(void)
     t->scarfyChaseTimer = n;
     if (n <= 0)
     {
-        ActorSetState(5);
+        ActorSetState(SCARFY_STATE_EXPLODE);
         TaskSetEntry(ScarfyEnterState, gCurTaskIdx);
     }
     else if ((n & 7) == 0)
@@ -278,7 +278,7 @@ void ScarfyChaseUpdate(void)
 
 void ScarfyExplode(void)
 {
-    gCurTask->updateState = 5;
+    gCurTask->updateState = SCARFY_STATE_EXPLODE;
     TaskStop();
     gCurTask->scarfyLoopCount = 0;
     do
@@ -320,7 +320,7 @@ s32 SwordAndBladeKnightStartFall(void)
 {
     if (gCurTask->variant != 0)
         return 0;
-    ActorSetState(7);
+    ActorSetState(SWORD_AND_BLADE_KNIGHT_WALK_STATE_FALL);
     TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
     return 1;
 }
@@ -329,7 +329,7 @@ s32 SwordAndBladeKnightLand(void)
 {
     if (gCurTask->variant != 0)
         return 0;
-    ActorSetState(0);
+    ActorSetState(SWORD_AND_BLADE_KNIGHT_WALK_STATE_0);
     TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
     return 1;
 }
@@ -354,7 +354,7 @@ s32 SwordAndBladeKnightHitWall(void)
     return 0;
 }
 
-void sub_0807b088(void)
+void SwordAndBladeKnightStopAtSlope(void)
 {
     if (gCurTask->velX != 0 && (u8)ActorStepBackFromSlope() != 0)
     {
@@ -363,7 +363,7 @@ void sub_0807b088(void)
     }
 }
 
-void sub_0807b0b4(void)
+void SwordAndBladeKnightStepLunge(void)
 {
     struct Task *t = gCurTask;
 
@@ -378,7 +378,7 @@ void sub_0807b0b4(void)
     }
 }
 
-void sub_0807b0f0(void)
+void SwordAndBladeKnightStartLunge(void)
 {
     struct Task *t = gCurTask;
 
@@ -409,7 +409,7 @@ void sub_0807b144(void)
         gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_0874099C);
 }
 
-void sub_0807b16c(void)
+void SwordAndBladeKnightEndSlashUp(void)
 {
     struct Task *t = gCurTask;
 
@@ -428,7 +428,7 @@ other:
     ActorSetState(4);
 }
 
-void sub_0807b1a8(void)
+void SwordAndBladeKnightEndSlashDown(void)
 {
     struct Task *t = gCurTask;
 
@@ -449,7 +449,7 @@ other:
 
 void CreateSwordAndBladeKnightSlash(void)
 {
-    gCurTask->swordAndBladeKnightSlashSlot = CreateChildTaskHere(173, 1);
+    gCurTask->swordAndBladeKnightSlashSlot = CreateChildTaskHere(TASK_SWORD_AND_BLADE_KNIGHT_SLASH, 1);
 }
 
 void sub_0807b200(void)
@@ -467,13 +467,13 @@ void sub_0807b200(void)
         box.y1 = t->pixelY + 48;
         if (TaskIsInRectSlot(&box, id) != 0)
         {
-            ActorSetState(6);
+            ActorSetState(SWORD_AND_BLADE_KNIGHT_WALK_STATE_6);
             TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
         }
     }
 }
 
-void sub_0807b294(void *fn)
+void SwordAndBladeKnightPickSlash(void *fn)
 {
     struct Actor *a = gCurTask->u8C.actor;
     struct Task *t;
@@ -517,7 +517,7 @@ void SwordAndBladeKnightWalkUpdate(void)
         gCurTask->actorFlatGroundY = (u16)gCurTask->actorFlatGroundY;
     if (v == 0)
     {
-        sub_0807b088();
+        SwordAndBladeKnightStopAtSlope();
         CallTableEntry(gCurTask->updateState, 8, gSwordAndBladeKnightWalkStateUpdates);
     }
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
@@ -533,9 +533,9 @@ void SwordAndBladeKnightWalkEnterState(void)
     CallTableEntry(gCurTask->state, 8, gSwordAndBladeKnightWalkStates);
 }
 
-void SwordAndBladeKnightWalkState0(void)
+void SwordAndBladeKnightWalk(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_WALK_STATE_0;
     TaskStop();
     gCurTask->swordAndBladeKnightStopped = 0;
     TaskFaceNearestPlayer();
@@ -549,7 +549,7 @@ void SwordAndBladeKnightWalkState0Update(void)
     struct Task *t;
 
     if (abs(TaskGetNearestPlayerDx()) <= 63)
-        sub_0807b294(SwordAndBladeKnightWalkEnterState);
+        SwordAndBladeKnightPickSlash(SwordAndBladeKnightWalkEnterState);
     else
         sub_0807b200();
     gCurTask->actorAnimDelay34 = ActorTickAnim(gCurTask->actorAnimDelay34);
@@ -564,24 +564,24 @@ void SwordAndBladeKnightWalkState0Update(void)
 
 void SwordAndBladeKnightWalkState1(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_WALK_STATE_1;
     TaskStop();
     TaskSetFrame(15);
     TaskYieldTrampoline(16);
-    ActorSetState(3);
+    ActorSetState(SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_UP);
     TaskSleepForever();
 }
 
 void SwordAndBladeKnightWalkState1Update(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_WALK_STATE_1)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
 }
 
-void SwordAndBladeKnightWalkState3(void)
+void SwordAndBladeKnightWalkSlashUp(void)
 {
-    gCurTask->updateState = 3;
-    sub_0807b0f0();
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_UP;
+    SwordAndBladeKnightStartLunge();
     gCurTask->frame--;
     TaskYieldTrampoline(2);
     CreateSwordAndBladeKnightSlash();
@@ -593,38 +593,38 @@ void SwordAndBladeKnightWalkState3(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 16;
     TaskYieldTrampoline(8);
-    sub_0807b16c();
+    SwordAndBladeKnightEndSlashUp();
     TaskSleepForever();
 }
 
-void SwordAndBladeKnightWalkState3Update(void)
+void SwordAndBladeKnightWalkSlashUpUpdate(void)
 {
-    if (gCurTask->state != 3)
+    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_UP)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
     else
-        sub_0807b0b4();
+        SwordAndBladeKnightStepLunge();
 }
 
 void SwordAndBladeKnightWalkState2(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_WALK_STATE_2;
     TaskStop();
     TaskSetFrame(16);
     TaskYieldTrampoline(16);
-    ActorSetState(4);
+    ActorSetState(SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_DOWN);
     TaskSleepForever();
 }
 
 void SwordAndBladeKnightWalkState2Update(void)
 {
-    if (gCurTask->state != 2)
+    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_WALK_STATE_2)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
 }
 
-void SwordAndBladeKnightWalkState4(void)
+void SwordAndBladeKnightWalkSlashDown(void)
 {
-    gCurTask->updateState = 4;
-    sub_0807b0f0();
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_DOWN;
+    SwordAndBladeKnightStartLunge();
     gCurTask->frame = 10;
     TaskYieldTrampoline(2);
     CreateSwordAndBladeKnightSlash();
@@ -636,43 +636,43 @@ void SwordAndBladeKnightWalkState4(void)
     TaskYieldTrampoline(2);
     gCurTask->frame++;
     TaskYieldTrampoline(8);
-    sub_0807b1a8();
+    SwordAndBladeKnightEndSlashDown();
     TaskSleepForever();
 }
 
-void SwordAndBladeKnightWalkState4Update(void)
+void SwordAndBladeKnightWalkSlashDownUpdate(void)
 {
-    if (gCurTask->state != 4)
+    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_DOWN)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
     else
-        sub_0807b0b4();
+        SwordAndBladeKnightStepLunge();
 }
 
-void SwordAndBladeKnightWalkState5(void)
+void SwordAndBladeKnightWalkWalkBack(void)
 {
-    gCurTask->updateState = 5;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_WALK_STATE_WALK_BACK;
     TaskStop();
     gCurTask->swordAndBladeKnightStopped = 0;
     TaskFaceNearestPlayer();
     sub_0807b144();
     TaskSetMotionXFacing(-0x8000, 0x5A5A5A5A);
     TaskYieldTrampoline(gCurTask->swordAndBladeKnightBackOffTime);
-    ActorSetState(0);
+    ActorSetState(SWORD_AND_BLADE_KNIGHT_WALK_STATE_0);
     TaskSleepForever();
 }
 
-void SwordAndBladeKnightWalkState5Update(void)
+void SwordAndBladeKnightWalkWalkBackUpdate(void)
 {
     gCurTask->actorAnimDelay34 = ActorTickAnim(gCurTask->actorAnimDelay34);
-    if (gCurTask->state != 5)
+    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_WALK_STATE_WALK_BACK)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
 }
 
 void SwordAndBladeKnightWalkState6(void)
 {
-    gCurTask->updateState = 6;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_WALK_STATE_6;
     TaskStop();
-    sub_0807b0f0();
+    SwordAndBladeKnightStartLunge();
     CreateSwordAndBladeKnightSlash();
     if (RandomRange(4) != 0)
     {
@@ -700,19 +700,19 @@ void SwordAndBladeKnightWalkState6(void)
         gCurTask->frame = 16;
         TaskYieldTrampoline(8);
     }
-    ActorSetState(0);
+    ActorSetState(SWORD_AND_BLADE_KNIGHT_WALK_STATE_0);
     TaskSleepForever();
 }
 
 void SwordAndBladeKnightWalkState6Update(void)
 {
-    if (gCurTask->state != 6)
+    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_WALK_STATE_6)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
 }
 
 void SwordAndBladeKnightWalkFall(void)
 {
-    gCurTask->updateState = 7;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_WALK_STATE_FALL;
     TaskStop();
     TaskSetMotionY(0, 0x1500, 0x30000);
     sub_0807b144();
@@ -729,7 +729,7 @@ void SwordAndBladeKnightIdleInit(void)
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(SWORD_AND_BLADE_KNIGHT_IDLE_STATE_0);
     CallTableEntry(gCurTask->state, 1, gSwordAndBladeKnightIdleStates);
 }
 
@@ -750,7 +750,7 @@ void SwordAndBladeKnightIdleEnterState(void)
 
 void SwordAndBladeKnightIdle(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_IDLE_STATE_0;
     TaskStop();
     gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_087409C0);
     TaskSleepForever();
@@ -781,7 +781,7 @@ void SwordAndBladeKnightStandUpdate(void)
         gCurTask->actorFlatGroundY = (u16)gCurTask->actorFlatGroundY;
     if (v == 0)
     {
-        sub_0807b088();
+        SwordAndBladeKnightStopAtSlope();
         CallTableEntry(gCurTask->updateState, 6, gSwordAndBladeKnightStandStateUpdates);
     }
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
@@ -800,7 +800,7 @@ void SwordAndBladeKnightStandEnterState(void)
 
 void SwordAndBladeKnightStandState0(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_0;
     TaskStop();
     gCurTask->facing = 255;
     gCurTask->swordAndBladeKnightStopped = 0;
@@ -813,7 +813,7 @@ void SwordAndBladeKnightStandState0Update(void)
     struct Task *t;
 
     if (abs(TaskGetNearestPlayerDx()) <= 63)
-        sub_0807b294(SwordAndBladeKnightStandEnterState);
+        SwordAndBladeKnightPickSlash(SwordAndBladeKnightStandEnterState);
     gCurTask->actorAnimDelay34 = ActorTickAnim(gCurTask->actorAnimDelay34);
     t = gCurTask;
     if (t->swordAndBladeKnightWaterChecked == 0)
@@ -826,24 +826,24 @@ void SwordAndBladeKnightStandState0Update(void)
 
 void SwordAndBladeKnightStandState1(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_1;
     TaskStop();
     TaskSetFrame(15);
     TaskYieldTrampoline(16);
-    ActorSetState(3);
+    ActorSetState(SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_UP);
     TaskSleepForever();
 }
 
 void SwordAndBladeKnightStandState1Update(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_STAND_STATE_1)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
-void SwordAndBladeKnightStandState3(void)
+void SwordAndBladeKnightStandSlashUp(void)
 {
-    gCurTask->updateState = 3;
-    sub_0807b0f0();
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_UP;
+    SwordAndBladeKnightStartLunge();
     gCurTask->frame--;
     TaskYieldTrampoline(2);
     CreateSwordAndBladeKnightSlash();
@@ -855,36 +855,36 @@ void SwordAndBladeKnightStandState3(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 16;
     TaskYieldTrampoline(8);
-    sub_0807b16c();
+    SwordAndBladeKnightEndSlashUp();
     TaskSleepForever();
 }
 
-void SwordAndBladeKnightStandState3Update(void)
+void SwordAndBladeKnightStandSlashUpUpdate(void)
 {
-    if (gCurTask->state != 3)
+    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_UP)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
 void SwordAndBladeKnightStandState2(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_2;
     TaskStop();
     TaskSetFrame(16);
     TaskYieldTrampoline(16);
-    ActorSetState(4);
+    ActorSetState(SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_DOWN);
     TaskSleepForever();
 }
 
 void SwordAndBladeKnightStandState2Update(void)
 {
-    if (gCurTask->state != 2)
+    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_STAND_STATE_2)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
-void SwordAndBladeKnightStandState4(void)
+void SwordAndBladeKnightStandSlashDown(void)
 {
-    gCurTask->updateState = 4;
-    sub_0807b0f0();
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_DOWN;
+    SwordAndBladeKnightStartLunge();
     gCurTask->frame = 10;
     TaskYieldTrampoline(2);
     CreateSwordAndBladeKnightSlash();
@@ -896,31 +896,31 @@ void SwordAndBladeKnightStandState4(void)
     TaskYieldTrampoline(2);
     gCurTask->frame++;
     TaskYieldTrampoline(8);
-    sub_0807b1a8();
+    SwordAndBladeKnightEndSlashDown();
     TaskSleepForever();
 }
 
-void SwordAndBladeKnightStandState4Update(void)
+void SwordAndBladeKnightStandSlashDownUpdate(void)
 {
-    if (gCurTask->state != 4)
+    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_DOWN)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
 void SwordAndBladeKnightStandState5(void)
 {
-    gCurTask->updateState = 5;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_5;
     TaskStop();
     gCurTask->swordAndBladeKnightStopped = 0;
     sub_0807b144();
     TaskYieldTrampoline(gCurTask->swordAndBladeKnightBackOffTime);
-    ActorSetState(0);
+    ActorSetState(SWORD_AND_BLADE_KNIGHT_STAND_STATE_0);
     TaskSleepForever();
 }
 
 void SwordAndBladeKnightStandState5Update(void)
 {
     gCurTask->actorAnimDelay34 = ActorTickAnim(gCurTask->actorAnimDelay34);
-    if (gCurTask->state != 5)
+    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_STAND_STATE_5)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
@@ -974,21 +974,21 @@ void NeedlousPickStartState(void)
     t->unk1C = 0;
     t->needlousMoveTimer = 0;
     if (r == 0)
-        ActorSetState(0);
+        ActorSetState(NEEDLOUS_STATE_WALK);
     else
-        ActorSetState(2);
+        ActorSetState(NEEDLOUS_STATE_2);
 }
 
 s32 NeedlousStartFall(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->state == 5)
+    if (t->state == NEEDLOUS_STATE_DASH)
     {
         t->needlousWallTimer = 0;
         TaskSetMotionXFacing(gUnk_08740A90[t->actorSpawnArg], 0x5A5A5A5A);
     }
-    ActorSetState(1);
+    ActorSetState(NEEDLOUS_STATE_FALL);
     TaskSetEntry(NeedlousEnterState, gCurTaskIdx);
     return 1;
 }
@@ -1005,15 +1005,15 @@ s32 NeedlousLand(void)
         ActorSetState(a->prevState);
         break;
     case 2:
-        ActorSetState(3);
+        ActorSetState(NEEDLOUS_STATE_3);
         break;
     case 3:
         if (gUnk_0300244C != 0 && a->animScript == 0)
             gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_08740AAC);
-        ActorSetState(4);
+        ActorSetState(NEEDLOUS_STATE_4);
         break;
     case 4:
-        ActorSetState(5);
+        ActorSetState(NEEDLOUS_STATE_DASH);
         break;
     }
     if (gCurTask->state != st)
@@ -1148,7 +1148,7 @@ void NeedlousEnterState(void)
 
 void NeedlousWalk(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = NEEDLOUS_STATE_WALK;
     TaskStop();
     sub_0807bf0c();
     TaskSleepForever();
@@ -1170,7 +1170,7 @@ void NeedlousWalkUpdate(void)
             return;
 
     reset:
-        ActorSetState(2);
+        ActorSetState(NEEDLOUS_STATE_2);
         TaskSetEntry(NeedlousEnterState, gCurTaskIdx);
         return;
     }
@@ -1183,7 +1183,7 @@ dec:
 
 void NeedlousFall(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = NEEDLOUS_STATE_FALL;
     TaskSetMotionY(0, 0x2500, 0x30000);
     TaskSleepForever();
 }
@@ -1195,7 +1195,7 @@ void NeedlousFallUpdate(void)
 
 void NeedlousState2(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = NEEDLOUS_STATE_2;
     sub_0807bf74();
     TaskSleepForever();
 }
@@ -1207,7 +1207,7 @@ void NeedlousState2Update(void)
 
 void NeedlousState3(void)
 {
-    gCurTask->updateState = 3;
+    gCurTask->updateState = NEEDLOUS_STATE_3;
     sub_0807bfd0();
     TaskSleepForever();
 }
@@ -1219,7 +1219,7 @@ void NeedlousState3Update(void)
 
 void NeedlousState4(void)
 {
-    gCurTask->updateState = 4;
+    gCurTask->updateState = NEEDLOUS_STATE_4;
     sub_0807c000();
     TaskSleepForever();
 }
@@ -1231,7 +1231,7 @@ void NeedlousState4Update(void)
 
 void NeedlousDash(void)
 {
-    gCurTask->updateState = 5;
+    gCurTask->updateState = NEEDLOUS_STATE_DASH;
     sub_0807c030();
     while (1)
     {
@@ -1250,7 +1250,7 @@ void NeedlousDashUpdate(void)
     {
         if (--t->needlousMoveTimer <= 0)
         {
-            ActorSetState(0);
+            ActorSetState(NEEDLOUS_STATE_WALK);
             TaskSetEntry(NeedlousEnterState, gCurTaskIdx);
         }
     }
@@ -1267,7 +1267,7 @@ void NeedlousIdleInit(void)
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(NEEDLOUS_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gNeedlousIdleStates);
 }
 
@@ -1288,7 +1288,7 @@ void NeedlousIdleEnterState(void)
 
 void NeedlousIdle(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = NEEDLOUS_IDLE_STATE_IDLE;
     TaskStop();
     while (1)
     {
@@ -1339,7 +1339,7 @@ void sub_0807c4d4(void)
     struct Task *t;
 
     TaskFaceNearestPlayer();
-    ActorSetState(1);
+    ActorSetState(UFO_STATE_PICK_MOVE);
     t = gCurTask;
     t->ufoZigzagCount = 0;
     t->ufoPointCount = 0;
@@ -1408,8 +1408,8 @@ void CreateUFOLaser(void)
     if (GetShapeAtPixelIgnoringOneWay(t->pixelX + t->facing * 16, t->pixelY) == 0)
     {
         spawn.subtype = 31;
-        spawn.taskType = 134;
-        spawn.variant = 0;
+        spawn.taskType = TASK_UFO_LASER;
+        spawn.variant = UFO_LASER_VARIANT_INIT;
         spawn.spawnArg = 0;
         spawn.x = 8;
         spawn.y = 0;
@@ -1441,9 +1441,9 @@ void UFOEnterState(void)
     CallTableEntry(gCurTask->state, 4, gUFOStates);
 }
 
-void UFOState0(void)
+void UFOZigzag(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = UFO_STATE_ZIGZAG;
     TaskStop();
     gCurTask->ufoLoopCount = 0;
     while ((s16)gCurTask->ufoLoopCount < gCurTask->ufoZigzagCount)
@@ -1468,25 +1468,25 @@ void UFOState0(void)
         TaskYieldTrampoline(8);
         gCurTask->ufoLoopCount++;
     }
-    ActorSetState(1);
+    ActorSetState(UFO_STATE_PICK_MOVE);
     TaskSleepForever();
 }
 
-void UFOState0Update(void)
+void UFOZigzagUpdate(void)
 {
     gCurTask->actorAnimDelay18 = ActorTickAnim(gCurTask->actorAnimDelay18);
-    if (gCurTask->state != 0)
+    if (gCurTask->state != UFO_STATE_ZIGZAG)
         TaskSetEntry(UFOEnterState, gCurTaskIdx);
 }
 
-void UFOState1(void)
+void UFOPickMove(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = UFO_STATE_PICK_MOVE;
     TaskStop();
     TaskSleepForever();
 }
 
-void UFOState1Update(void)
+void UFOPickMoveUpdate(void)
 {
     struct Task *t;
     s32 v;
@@ -1514,19 +1514,19 @@ void UFOState1Update(void)
         }
     }
     UFOSetTarget(v);
-    ActorSetState(2);
+    ActorSetState(UFO_STATE_FLY_TO_TARGET);
     TaskSetEntry(UFOEnterState, gCurTaskIdx);
 }
 
-void UFOState2(void)
+void UFOFlyToTarget(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = UFO_STATE_FLY_TO_TARGET;
     TaskStop();
     UFOSetFlightVelocity();
     TaskSleepForever();
 }
 
-void UFOState2Update(void)
+void UFOFlyToTargetUpdate(void)
 {
     struct Rect box;
 
@@ -1538,7 +1538,7 @@ void UFOState2Update(void)
         if (t->ufoPointCount == 4)
         {
             t->ufoPointCount = 0;
-            ActorSetState(3);
+            ActorSetState(UFO_STATE_SHOOT);
             TaskSetEntry(UFOEnterState, gCurTaskIdx);
         }
         else
@@ -1559,7 +1559,7 @@ void UFOState2Update(void)
                 if (GetShapeAtPixelIgnoringOneWay(u->pixelX + ((s8 *)a->terrainBox)[4], u->pixelY) != 0)
                     gCurTask->ufoZigzagCount = 0;
             }
-            ActorSetState(0);
+            ActorSetState(UFO_STATE_ZIGZAG);
             TaskSetEntry(UFOEnterState, gCurTaskIdx);
         }
     }
@@ -1567,7 +1567,7 @@ void UFOState2Update(void)
 
 void UFOShoot(void)
 {
-    gCurTask->updateState = 3;
+    gCurTask->updateState = UFO_STATE_SHOOT;
     TaskStop();
     TaskFaceNearestPlayer();
     gCurTask->frame = 4;
@@ -1580,13 +1580,13 @@ void UFOShoot(void)
     gCurTask->frame--;
     TaskYieldTrampoline(8);
     TaskYieldTrampoline(20);
-    ActorSetState(1);
+    ActorSetState(UFO_STATE_PICK_MOVE);
     TaskSleepForever();
 }
 
 void UFOShootUpdate(void)
 {
-    if (gCurTask->state != 3)
+    if (gCurTask->state != UFO_STATE_SHOOT)
     {
         gCurTask->actorAnimDelay18 = ActorStartAnimNoFlip(gUnk_08740B08);
         TaskSetEntry(UFOEnterState, gCurTaskIdx);
@@ -1600,7 +1600,7 @@ void UFOIdleInit(void)
     UFOStartPaletteAnim();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(UFO_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gUFOIdleStates);
 }
 
@@ -1621,7 +1621,7 @@ void UFOIdleEnterState(void)
 
 void UFOIdle(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = UFO_IDLE_STATE_IDLE;
     TaskStop();
     while (1)
     {
@@ -1688,7 +1688,7 @@ void ParasolRiseInit(void)
 {
     gCurTask->updateCallback = (u32)ParasolRiseUpdate;
     TaskFaceNearestPlayer();
-    ActorSetState(0);
+    ActorSetState(PARASOL_RISE_STATE_RISE);
     CallTableEntry(gCurTask->state, 1, gParasolRiseStates);
 }
 
@@ -1709,7 +1709,7 @@ void ParasolRiseEnterState(void)
 
 void ParasolRise(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = PARASOL_RISE_STATE_RISE;
     TaskStop();
     sub_0807cbf4();
     gCurTask->velY = -0x10000;
@@ -1734,7 +1734,7 @@ void ParasolChaseInit(void)
 {
     gCurTask->updateCallback = (u32)ParasolChaseUpdate;
     TaskFaceNearestPlayer();
-    ActorSetState(0);
+    ActorSetState(PARASOL_CHASE_STATE_CHASE);
     gCurTask->parasolLifeTimer = 255;
     CallTableEntry(gCurTask->state, 1, gParasolChaseStates);
 }
@@ -1756,7 +1756,7 @@ void ParasolChaseEnterState(void)
 
 void ParasolChase(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = PARASOL_CHASE_STATE_CHASE;
     sub_0807cbf4();
     gCurTask->parasolSteerTimer = 15;
     TaskStop();
@@ -1802,7 +1802,7 @@ void ParasolIdleInit(void)
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(PARASOL_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gParasolIdleStates);
 }
 
@@ -1823,7 +1823,7 @@ void ParasolIdleEnterState(void)
 
 void ParasolIdle(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = PARASOL_IDLE_STATE_IDLE;
     TaskStop();
     while (1)
     {
@@ -1873,7 +1873,7 @@ void PengyIceBreathInit(void)
 {
     gCurTask->updateCallback = (u32)PengyIceBreathUpdate;
     TaskFaceLikeParent();
-    ActorSetState(0);
+    ActorSetState(PENGY_ICE_BREATH_STATE_0);
     CallTableEntry(gCurTask->state, 1, gPengyIceBreathStates);
 }
 
@@ -1896,7 +1896,7 @@ void PengyIceBreathState0(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = PENGY_ICE_BREATH_STATE_0;
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(gUnk_08741094[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     t = gCurTask;
@@ -1931,14 +1931,14 @@ void Task_UFOLaser(void)
 
 s32 UFOLaserReactToDamage(void)
 {
-    ActorSetState(1);
+    ActorSetState(UFO_LASER_STATE_VANISH);
     TaskSetEntry(UFOLaserEnterState, gCurTaskIdx);
     return 1;
 }
 
 s32 UFOLaserReactToDefeat(void)
 {
-    ActorSetState(1);
+    ActorSetState(UFO_LASER_STATE_VANISH);
     TaskSetEntry(UFOLaserEnterState, gCurTaskIdx);
     return 1;
 }
@@ -1947,7 +1947,7 @@ void UFOLaserInit(void)
 {
     gCurTask->updateCallback = (u32)UFOLaserUpdate;
     TaskFaceLikeParent();
-    ActorSetState(0);
+    ActorSetState(UFO_LASER_STATE_0);
     CallTableEntry(gCurTask->state, 2, gUFOLaserStates);
 }
 
@@ -1955,7 +1955,7 @@ void UFOLaserUpdate(void)
 {
     if ((u8)ActorCollideTerrainPointPushOut() != 0)
     {
-        ActorSetState(1);
+        ActorSetState(UFO_LASER_STATE_VANISH);
         TaskSetEntry(UFOLaserEnterState, gCurTaskIdx);
     }
     else
@@ -1976,7 +1976,7 @@ void UFOLaserEnterState(void)
 
 void UFOLaserState0(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = UFO_LASER_STATE_0;
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(0x80000, 0x5A5A5A5A);
     gCurTask->frame = 4;
@@ -1988,7 +1988,7 @@ void UFOLaserState0Update(void)
     if ((u8)(gTerrainResult[4] - 1) <= 3)
     {
         TaskStop();
-        ActorSetState(1);
+        ActorSetState(UFO_LASER_STATE_VANISH);
         TaskSetEntry(UFOLaserEnterState, gCurTaskIdx);
     }
 }

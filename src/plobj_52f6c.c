@@ -10,21 +10,21 @@
 /* plobj_52f6c.c (0x08052F6C-0x08053AF3, issue #90).
  *
  * Task type #6 (the objects the player's actions spawn), variants 10-12,
- * and the two spawners.  sub_08052f6c (variant 10) takes its owner's OAM
+ * and the two spawners.  PlayerObjectUFOShot (variant 10) takes its owner's OAM
  * flags (Task.u8C.parentTask is the spawning task) and runs one of six sub-states
  * Task.unk18 & 15: states 0-2 trace an eight-step path (the 8.8 velocity
  * rows gUnk_0873B8C6[k] and the five-frame animation rows gUnk_0873B88A
- * that gUnk_0873B872[k] picks, callback sub_08052b08) and fall into state
+ * that gUnk_0873B872[k] picks, callback PlayerObjectBeamOrbUpdate) and fall into state
  * 3, which flies in one of four directions gUnk_0873B862[Task.unk28] and
  * emits effect 33 every other frame; states 4 and 5 are a stationary
- * object with two callbacks, sub_08053380 (the hit test, which ends the
- * object through the shared exit sub_08050814 once PlayerState.ability is
- * 0) and sub_080534d0 (a six-step trail drawn with QueueSprite).
+ * object with two callbacks, PlayerObjectUFOShotUpdate (the hit test, which ends the
+ * object through the shared exit PlayerObjectVanish once PlayerState.ability is
+ * 0) and PlayerObjectUFOShotLateUpdate (a six-step trail drawn with QueueSprite).
  * Variants 11 and 12 (PlayerObjectStarRodShot, PlayerObjectStarRodFlightShot) are two projectiles
  * that move 4 pixels a frame in the facing direction (animation table
  * gUnk_0874C4E4, M14's shared callback sub_08050f80); their per-frame
  * callbacks PlayerObjectStarRodShotUpdate and PlayerObjectStarRodFlightShotUpdate register the collider and hand
- * over to sub_08050814 on contact (variant 11 bounces back once on
+ * over to PlayerObjectVanish on contact (variant 11 bounces back once on
  * collision result 6).  CreatePlayerObject and CreatePlayerObjectLowSlot are the spawners
  * the player's actions call (M09-M14): they start a task of type 6 in
  * the slot band of player 0-3 (4-6, 7-9, 10-12, 13-15; CreatePlayerObject
@@ -47,7 +47,7 @@ void TerrainCollideBoxAlongVelocity(const s8 *p);
 void sub_0802205c(s8 *box);
 s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/PlayerObjectAirPuffUpdate.c); landed M09/M12/M13 files spell it u16 */
 
-void sub_08052f6c(void)
+void PlayerObjectUFOShot(void)
 {
     u16 *xs;
     u16 *ys;
@@ -82,7 +82,7 @@ void sub_08052f6c(void)
                 struct Task *u = gCurTask;
                 u->moveCallback = (u32)TaskMoveRelativeToParent;
                 u->drawCallback = (u32)TaskDrawWorld;
-                u->updateCallback = (u32)sub_08052b08;
+                u->updateCallback = (u32)PlayerObjectBeamOrbUpdate;
                 u->layer = 5;
                 u = gCurTask;
                 u->frameTable = gUnk_08751BF4;
@@ -94,7 +94,7 @@ void sub_08052f6c(void)
             {
                 struct Task *u = gCurTask;
                 u->unk2C = 4;
-                u->u80.attackAbility = 16;
+                u->u80.attackAbility = ABILITY_BEAM;
             }
             for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 7; gCurTask->playerObjectLoopCount++)
             {
@@ -153,7 +153,7 @@ void sub_08052f6c(void)
                 }
                 gCurTask->unk2C = 3;
                 sub_0802233c(gUnk_0873CB5C);
-                gCurTask->u80.attackAbility = 6;
+                gCurTask->u80.attackAbility = ABILITY_LASER;
             }
             else
             {
@@ -195,7 +195,7 @@ void sub_08052f6c(void)
         }
             while (1)
             {
-                CreatePlayerEffect(gCurTask->player->playerIndex, 33, gCurTask->unk28);
+                CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_UFO_LASER_TRAIL, gCurTask->unk28);
                 TaskYieldTrampoline(2);
             }
         case 4:
@@ -204,8 +204,8 @@ void sub_08052f6c(void)
             struct Task *u = gCurTask;
             u->moveCallback = (u32)TaskMove;
             u->drawCallback = (u32)TaskDrawWorldInViewOrFree;
-            u->updateCallback = (u32)sub_08053380;
-            u->lateUpdateCallback = (u32)sub_080534d0;
+            u->updateCallback = (u32)PlayerObjectUFOShotUpdate;
+            u->lateUpdateCallback = (u32)PlayerObjectUFOShotLateUpdate;
             u->layer = 7;
         }
             gCurTask->frameTable = gUnk_08751BF4;
@@ -220,7 +220,7 @@ void sub_08052f6c(void)
             {
                 struct Task *u = gCurTask;
                 u->posY = (u->pixelY + 4) << 16;
-                u->u80.attackAbility = 24;
+                u->u80.attackAbility = ABILITY_UFO;
             }
             gCurTask->unk28 = 0;
             TaskSetMotionXFacing(0x60000, 0x5A5A5A5A);
@@ -237,13 +237,13 @@ void sub_08052f6c(void)
     TaskSleepForever();
 }
 
-void sub_08053380(void)
+void PlayerObjectUFOShotUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->player->ability == 0)
+    if (t->player->ability == ABILITY_NORMAL)
     {
-        TaskSetEntry(sub_08050814, gCurTaskIdx);
+        TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
         return;
     }
     switch (t->playerObjectSpawnWord & 15)
@@ -263,7 +263,7 @@ void sub_08053380(void)
         {
             if (gTerrainResult.ceilingHits != 0 || (gCurTask->onGround & 1) || gTerrainResult.unk0 != 0)
                 PlaySfxIfLocalPlayer(125, gCurTask->parent);
-            TaskSetEntry(sub_08050814, gCurTaskIdx);
+            TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
             gCurTask->unk24 = (s32)gUnk_0873BE4C;
         }
         RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873BE4C);
@@ -277,7 +277,7 @@ void sub_08053380(void)
     }
 }
 
-void sub_080534d0(void)
+void PlayerObjectUFOShotLateUpdate(void)
 {
     s32 k = -1;
 
@@ -362,7 +362,7 @@ void PlayerObjectStarRodShotUpdate(void)
     {
     case 1:
     case 2:
-        TaskSetEntry(sub_08050814, gCurTaskIdx);
+        TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
         return;
     default:
         RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873BE74);
@@ -393,7 +393,7 @@ void PlayerObjectStarRodShotUpdate(void)
         if ((t->onGround & 1) || *(u16 *)&gTerrainResult != 0)
         {
             PlaySfxIfLocalPlayer(125, t->parent);
-            TaskSetEntry(sub_08050814, gCurTaskIdx);
+            TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
         }
     }
 }
@@ -444,7 +444,7 @@ void PlayerObjectStarRodFlightShotUpdate(void)
 
     t->health = 127;
     if (t->hitKind != 0)
-        TaskSetEntry(sub_08050814, gCurTaskIdx);
+        TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
     else
         RegisterCollider(gCurTaskIdx, t->pixelX + gSpriteCameraX, t->pixelY + gSpriteCameraY, gUnk_0873BE88);
 }
@@ -464,7 +464,7 @@ s32 CreatePlayerObject(s8 player, u8 variant, s32 arg)
         prio = 13;
     else
         return -1;
-    idx = TaskCreateInRange(6, prio, prio + 2);
+    idx = TaskCreateInRange(TASK_PLAYER_OBJECT, prio, prio + 2);
     if (idx == -1)
     {
         if (player == 0)
@@ -475,9 +475,9 @@ s32 CreatePlayerObject(s8 player, u8 variant, s32 arg)
             prio = 24;
         else if (player == 3)
             prio = 28;
-        idx = TaskCreateInRange(6, prio, prio + 3);
+        idx = TaskCreateInRange(TASK_PLAYER_OBJECT, prio, prio + 3);
         if (idx == -1)
-            idx = TaskCreateInRange(7, 32, 62);
+            idx = TaskCreateInRange(TASK_PLAYER_EFFECT, 32, 62);
     }
     if (idx != -1)
     {
@@ -497,7 +497,7 @@ s32 CreatePlayerObject(s8 player, u8 variant, s32 arg)
 s32 CreatePlayerObjectLowSlot(s8 player, u8 variant, s32 arg)
 {
     s32 prio;
-    s32 idx;
+    s32 playerObjectSlot;
 
     if (player == 0)
         prio = 4;
@@ -509,18 +509,18 @@ s32 CreatePlayerObjectLowSlot(s8 player, u8 variant, s32 arg)
         prio = 13;
     else
         return -1;
-    idx = TaskCreateInRange(6, prio, prio + 2);
-    if (idx != -1)
+    playerObjectSlot = TaskCreateInRange(TASK_PLAYER_OBJECT, prio, prio + 2);
+    if (playerObjectSlot != -1)
     {
-        struct Task *t = &gTasks[idx];
-        t->playerObjectSpawnWord = (variant << 24) | (arg & 0xFFFFFF);
-        t->posX = gCurTask->posX;
-        t->pixelX = gCurTask->pixelX;
-        t->posY = gCurTask->posY;
-        t->pixelY = gCurTask->pixelY;
-        t->facing = gCurTask->facing;
-        t->waterFlags = gCurTask->waterFlags;
-        t->player = gCurTask->player;
+        struct Task *playerObject = &gTasks[playerObjectSlot];
+        playerObject->playerObjectSpawnWord = (variant << 24) | (arg & 0xFFFFFF);
+        playerObject->posX = gCurTask->posX;
+        playerObject->pixelX = gCurTask->pixelX;
+        playerObject->posY = gCurTask->posY;
+        playerObject->pixelY = gCurTask->pixelY;
+        playerObject->facing = gCurTask->facing;
+        playerObject->waterFlags = gCurTask->waterFlags;
+        playerObject->player = gCurTask->player;
     }
-    return idx;
+    return playerObjectSlot;
 }

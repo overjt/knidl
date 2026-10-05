@@ -10,19 +10,19 @@
 void StoreProgressInSaveSlot(s32 a)
 {
     s32 i;
-    s32 j;
+    s32 stage;
 
     gSaveSlots[a].curLevel[gExtraMode] = gCurLevel;
-    gSaveSlots[a].unk18[gExtraMode] = gUnk_03001F20;
+    gSaveSlots[a].curStage[gExtraMode] = gCurStage;
     gSaveSlots[a].furthestLevel[gExtraMode] = gFurthestLevel;
     gSaveSlots[a].furthestStage[gExtraMode] = gFurthestStage;
     gSaveSlots[a].bigSwitchFlags[gExtraMode] = gBigSwitchFlags[0];
     for (i = 0; i <= 7; i++)
     {
-        for (j = 0; j <= 6; j++)
+        for (stage = 0; stage <= 6; stage++)
         {
-            gSaveSlots[a].stageClearStatus[i][j] &= 15 << ((gExtraMode ^ 1) * 4);
-            gSaveSlots[a].stageClearStatus[i][j] |= gStageClearStatus[i][j] << (gExtraMode * 4);
+            gSaveSlots[a].stageClearStatus[i][stage] &= 15 << ((gExtraMode ^ 1) * 4);
+            gSaveSlots[a].stageClearStatus[i][stage] |= gStageClearStatus[i][stage] << (gExtraMode * 4);
         }
     }
     for (i = 0; i <= 3; i++)
@@ -37,12 +37,12 @@ void StoreProgressInSaveSlot(s32 a)
 void StoreProgressInBothHalves(s32 a)
 {
     s32 i;
-    s32 j;
+    s32 stage;
 
     for (i = 0; i <= 1; i++)
     {
         gSaveSlots[a].curLevel[i] = gCurLevel;
-        gSaveSlots[a].unk18[i] = gUnk_03001F20;
+        gSaveSlots[a].curStage[i] = gCurStage;
         gSaveSlots[a].furthestLevel[i] = gFurthestLevel;
         gSaveSlots[a].furthestStage[i] = gFurthestStage;
         gSaveSlots[a].bigSwitchFlags[i] = gBigSwitchFlags[0];
@@ -52,8 +52,8 @@ void StoreProgressInBothHalves(s32 a)
     gSaveSlots[a].milestoneFlags = gMilestoneFlags;
     for (i = 0; i <= 7; i++)
     {
-        for (j = 0; j <= 6; j++)
-            gSaveSlots[a].stageClearStatus[i][j] = (gStageClearStatus[i][j] << 4) | gStageClearStatus[i][j];
+        for (stage = 0; stage <= 6; stage++)
+            gSaveSlots[a].stageClearStatus[i][stage] = (gStageClearStatus[i][stage] << 4) | gStageClearStatus[i][stage];
     }
     for (i = 0; i <= 3; i++)
     {
@@ -64,7 +64,7 @@ void StoreProgressInBothHalves(s32 a)
 void LoadSaveSlot(s32 a)
 {
     s32 i;
-    s32 j;
+    s32 stage;
 
     if (a == -1)
         return;
@@ -72,14 +72,14 @@ void LoadSaveSlot(s32 a)
         a = 3;
     gMilestoneFlags = gSaveSlots[a].milestoneFlags;
     gCurLevel = gSaveSlots[a].curLevel[gExtraMode];
-    gUnk_03001F20 = gSaveSlots[a].unk18[gExtraMode];
+    gCurStage = gSaveSlots[a].curStage[gExtraMode];
     gFurthestLevel = gSaveSlots[a].furthestLevel[gExtraMode];
     gFurthestStage = gSaveSlots[a].furthestStage[gExtraMode];
     gBigSwitchFlags[0] = gSaveSlots[a].bigSwitchFlags[gExtraMode];
     for (i = 0; i <= 7; i++)
     {
-        for (j = 0; j <= 6; j++)
-            gStageClearStatus[i][j] = (gSaveSlots[a].stageClearStatus[i][j] >> (gExtraMode * 4)) & 15;
+        for (stage = 0; stage <= 6; stage++)
+            gStageClearStatus[i][stage] = (gSaveSlots[a].stageClearStatus[i][stage] >> (gExtraMode * 4)) & 15;
     }
     for (i = 0; i <= 3; i++)
     {
@@ -90,40 +90,40 @@ void LoadSaveSlot(s32 a)
 }
 void ResetLevelProgress(void)
 {
-    s32 i;
-    s32 j;
+    s32 level;
+    s32 stage;
 
     gCurLevel = 0;
-    gUnk_03001F20 = 0;
+    gCurStage = 0;
     gFurthestLevel = 0;
     gFurthestStage = 0;
     gBigSwitchFlags[0] = 0;
-    for (i = 0; i <= 7; i++)
+    for (level = 0; level <= 7; level++)
     {
-        for (j = 0; j <= 6; j++)
-            gStageClearStatus[i][j] = 0;
+        for (stage = 0; stage <= 6; stage++)
+            gStageClearStatus[level][stage] = 0;
     }
     CalcCompletionPercent(0);
 }
 void ResetProgress(void)
 {
-    s32 i;
-    s32 j;
+    s32 level;
+    s32 stage;
     u16 *p;
     u16 *q;
 
     gExtraMode = 0;
     gMilestoneFlags = 0;
     gCurLevel = 0;
-    gUnk_03001F20 = 0;
+    gCurStage = 0;
     gFurthestLevel = 0;
     gFurthestStage = 0;
     gBigSwitchFlags[0] = 0;
     gCompletionPercent = 0;
-    for (i = 0; i <= 7; i++)
+    for (level = 0; level <= 7; level++)
     {
-        for (j = 0; j <= 6; j++)
-            gStageClearStatus[i][j] = 0;
+        for (stage = 0; stage <= 6; stage++)
+            gStageClearStatus[level][stage] = 0;
     }
     p = gBossEnduranceBestTime;
     q = gMetaKnightmareBestTime;
@@ -193,7 +193,7 @@ void CopySaveSlotToLinkSlot(void)
     s32 j;
 
     gSaveSlots[3].curLevel[gExtraMode] = gSaveSlots[gCurSaveSlot].curLevel[gExtraMode];
-    gSaveSlots[3].unk18[gExtraMode] = gSaveSlots[gCurSaveSlot].unk18[gExtraMode];
+    gSaveSlots[3].curStage[gExtraMode] = gSaveSlots[gCurSaveSlot].curStage[gExtraMode];
     gSaveSlots[3].furthestLevel[gExtraMode] = gSaveSlots[gCurSaveSlot].furthestLevel[gExtraMode];
     gSaveSlots[3].furthestStage[gExtraMode] = gSaveSlots[gCurSaveSlot].furthestStage[gExtraMode];
     gSaveSlots[3].bigSwitchFlags[gExtraMode] = gSaveSlots[gCurSaveSlot].bigSwitchFlags[gExtraMode];
@@ -222,7 +222,7 @@ void FillSendCmdWithSaveSlot(void)
         break;
     case 1:
         gSendCmd[1] = ((s8)gSaveSlots[gCurSaveSlot].curLevel[gExtraMode] << 8)
-                         | (s8)gSaveSlots[gCurSaveSlot].unk18[gExtraMode];
+                         | (s8)gSaveSlots[gCurSaveSlot].curStage[gExtraMode];
         gSendCmd[2] = ((s8)gSaveSlots[gCurSaveSlot].furthestLevel[gExtraMode] << 8)
                          | (s8)gSaveSlots[gCurSaveSlot].furthestStage[gExtraMode];
         gSendCmd[3] = gSaveSlots[gCurSaveSlot].completionPercent[gExtraMode];

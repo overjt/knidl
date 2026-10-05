@@ -42,7 +42,7 @@ void GameOverMain(void)
     gKeyRepeatDelay = 10;
     gKeyRepeatInterval = 6;
     gGameOverCursor = 0;
-    if (gPrevGameState != 20) {
+    if (gPrevGameState != GAME_STATE_BOSS_ENDURANCE) {
         if (gMetaKnightmareMode == 0)
             GameOverScreen();
         else
@@ -53,12 +53,12 @@ void GameOverMain(void)
     LinkStopKeyExchange();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
-    if (gGameState == 5) {
+    if (gGameState == GAME_STATE_HUB) {
         gCutscenePending = 1;
         ResetPlayerRecords();
-        sub_08022c3c();
-        if (gStageRequest != 1)
-            gGameState = 6;
+        ResetLevelStateForContinue();
+        if (gStageRequest != STAGE_REQUEST_HUB)
+            gGameState = GAME_STATE_STAGE_START;
     } else {
         DisconnectLink();
     }
@@ -84,7 +84,7 @@ void GameOverScreen(void)
     LinkRequestSync();
     LinkSyncRandom();
     LinkStartKeyExchange();
-    PlayBgm(16);
+    PlayBgm(BGM_GAME_OVER);
     ResetFadeAndBlend();
     BeginFastFadeInFromWhite();
     while (gBg2ScrollX != 0) {
@@ -94,13 +94,13 @@ void GameOverScreen(void)
             if (gBg3ScrollX == 180 << 16) {
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1F00;
-                TaskCreateFrom(262, 32);
+                TaskCreateFrom(TASK_GAME_OVER_PALETTE, 32);
             }
         }
         RunLinkFrame();
     }
     for (i = 0; i < 8; i++) {
-        struct Task *t = &gTasks[TaskCreateFrom(260, 32)];
+        struct Task *t = &gTasks[TaskCreateFrom(TASK_GAME_OVER_SPRITE, 32)];
         t->gameOverSpriteIndex = i;
         RunLinkFrames(8);
     }
@@ -132,7 +132,7 @@ void GameOverMetaKnightmareScreen(void)
     LinkStartKeyExchange();
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1D00;
-    PlayBgm(16);
+    PlayBgm(BGM_GAME_OVER);
     ResetFadeAndBlend();
     BeginFastFadeInFromWhite();
     while (gBg2ScrollX != 0) {
@@ -142,18 +142,18 @@ void GameOverMetaKnightmareScreen(void)
             if (gBg3ScrollX == 180 << 16) {
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1F00;
-                TaskCreateFrom(262, 32);
+                TaskCreateFrom(TASK_GAME_OVER_PALETTE, 32);
             }
         }
         GameOverShowClock(1);
     }
     for (i = 0; i < 8; i++) {
-        struct Task *t = &gTasks[TaskCreateFrom(260, 32)];
+        struct Task *t = &gTasks[TaskCreateFrom(TASK_GAME_OVER_SPRITE, 32)];
         t->gameOverSpriteIndex = i;
         GameOverShowClock(8);
     }
     GameOverResetWait();
-    TaskCreateFrom(261, 32);
+    TaskCreateFrom(TASK_GAME_OVER_CURSOR, 32);
     GameOverShowClock(8);
     do {
         GameOverShowClock(1);
@@ -186,7 +186,7 @@ void GameOverBossEnduranceScreen(void)
     DrawClockToBgMap(gHudClock, 22, 18);
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x900;
-    PlayBgm(16);
+    PlayBgm(BGM_GAME_OVER);
     ResetFadeAndBlend();
     BeginFastFadeInFromWhite();
     RunLinkFramesUntilFadeDone();
@@ -206,7 +206,7 @@ void GameOverMoveCursor(void)
 u8 GameOverIsUpDownPressed(void)
 {
     if (gPlayerPressedKeys[0] & 0xC0) {
-        PlaySfx(101);
+        PlaySfx(SE_CURSOR_MOVE);
         return 1;
     }
     return 0;
@@ -218,7 +218,7 @@ u8 GameOverCheckConfirm(void)
 
     for (i = 0; i < gPlayerCount; i++) {
         if (gPlayerPressedKeys[i] & 9) {
-            PlaySfx(102);
+            PlaySfx(SE_CONFIRM);
             gGameOverDone = 1;
             return 1;
         }
@@ -234,10 +234,10 @@ void GameOverCheckTimeout(void)
         GameOverCheckConfirm();
     gGameOverTimer--;
     if (gGameOverDone != 0) {
-        if (gPrevGameState == 20)
-            gGameState = 4;
+        if (gPrevGameState == GAME_STATE_BOSS_ENDURANCE)
+            gGameState = GAME_STATE_MAIN_MENU;
         else
-            gGameState = 1;
+            gGameState = GAME_STATE_BOOT_LOGO;
     }
 }
 
@@ -245,9 +245,9 @@ void GameOverCheckChoice(void)
 {
     if (GameOverCheckConfirm()) {
         if (gGameOverCursor == 0 && gPlayerCount == 1)
-            gGameState = 5;
+            gGameState = GAME_STATE_HUB;
         else
-            gGameState = 1;
+            gGameState = GAME_STATE_BOOT_LOGO;
     }
 }
 
@@ -279,25 +279,25 @@ void GameOverResetWait(void)
 void CreateGameOverObjects(void)
 {
     s32 i;
-    s32 id;
+    s32 gameOverObjectSlot;
     struct Task *t;
 
     if (gPlayerCount == 1) {
-        TaskCreateFrom(261, 32);
+        TaskCreateFrom(TASK_GAME_OVER_CURSOR, 32);
         for (i = 0; i <= 2; i++) {
-            id = TaskCreateFrom(264, 32);
-            if (id != -1) {
-                t = &gTasks[id];
+            gameOverObjectSlot = TaskCreateFrom(TASK_GAME_OVER_OBJECT, 32);
+            if (gameOverObjectSlot != -1) {
+                t = &gTasks[gameOverObjectSlot];
                 t->variant = i;
                 if (i == 0)
-                    gGameOverPlayerTask = id;
+                    gGameOverPlayerTask = gameOverObjectSlot;
             }
         }
     } else {
-        id = TaskCreateFrom(264, 32);
-        if (id != -1) {
-            struct Task *t2 = &gTasks[id];
-            t2->variant = 5;
+        gameOverObjectSlot = TaskCreateFrom(TASK_GAME_OVER_OBJECT, 32);
+        if (gameOverObjectSlot != -1) {
+            struct Task *t2 = &gTasks[gameOverObjectSlot];
+            t2->variant = GAME_OVER_OBJECT_VARIANT_KNOCKED_OUT_PLAYERS;
         }
     }
 }

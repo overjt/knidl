@@ -10,7 +10,7 @@
  *
  * Task types #229-#235 (class 3) and the spawner of #236, in the same
  * spawner / body / callback layout as obj_2eac8.c.  The draw callbacks
- * (sub_0802f718, sub_0802f93c, sub_0802fd98, DoorObjectDraw, sub_0802ff70;
+ * (sub_0802f718, sub_0802f93c, sub_0802fd98, DoorObjectDraw, SubGameDoorSignDrawUsed;
  * several types share the last two) draw the frame Task.frame of the
  * Task.frameTable table through QueueWorldSprite, and a second sprite from
  * Task.unk34 at Task.velX/unk58 where the type has one.  #231
@@ -34,15 +34,15 @@ void Task_StageDoorSign(void)
     u = gCurTask;
     u->tileWord = 0x8800;
     if (u->doorObjectKind == 0)
-        sub_0802f6f4();
+        StageDoorSignShowStill();
     else if (u->stageDoorSignAnimated == 0)
-        sub_0802f6c0();
+        StageDoorSignBlinkDoor();
     else
-        sub_0802f684();
+        StageDoorSignBlinkSignAndDoor();
     TaskExitTrampoline();
 }
 
-void sub_0802f684(void)
+void StageDoorSignBlinkSignAndDoor(void)
 {
     struct Task *t;
     struct Task *u;
@@ -63,7 +63,7 @@ void sub_0802f684(void)
     }
 }
 
-void sub_0802f6c0(void)
+void StageDoorSignBlinkDoor(void)
 {
     struct Task *t;
 
@@ -79,7 +79,7 @@ void sub_0802f6c0(void)
     }
 }
 
-void sub_0802f6f4(void)
+void StageDoorSignShowStill(void)
 {
     struct Task *t;
 
@@ -112,24 +112,24 @@ void sub_0802f718(void)
 
 s32 CreateWarpStarStationDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
-    s32 id;
-    struct Task *t;
+    s32 doorSignSlot;
+    struct Task *doorSign;
 
-    id = TaskCreateInRange(230, 32, 63);
-    if (id != -1)
+    doorSignSlot = TaskCreateInRange(TASK_WARP_STAR_STATION_DOOR_SIGN, 32, 63);
+    if (doorSignSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = x;
-        t->posX = t->pixelX << 16;
-        t->pixelY = y - 28;
-        t->posY = t->pixelY << 16;
-        t->velX = x;
-        t->velY = y;
-        t->unk18 = a;
-        t->doorObjectKind = 1;
-        t->u76.doorIndex = b;
+        doorSign = &gTasks[doorSignSlot];
+        doorSign->pixelX = x;
+        doorSign->posX = doorSign->pixelX << 16;
+        doorSign->pixelY = y - 28;
+        doorSign->posY = doorSign->pixelY << 16;
+        doorSign->velX = x;
+        doorSign->velY = y;
+        doorSign->unk18 = a;
+        doorSign->doorObjectKind = 1;
+        doorSign->u76.doorIndex = b;
     }
-    return id;
+    return doorSignSlot;
 }
 
 void Task_WarpStarStationDoorSign(void)
@@ -147,7 +147,7 @@ void Task_WarpStarStationDoorSign(void)
     u->tileWord = 0x8800;
     u->taskClass = 2;
     v = gCurTask;
-    v->updateCallback = (u32)sub_0802f8c8;
+    v->updateCallback = (u32)WarpStarStationDoorSignUpdate;
     v->frame = 0;
     v->warpStarStationDoorSignTileFrame = 0;
     for (;;)
@@ -163,7 +163,7 @@ void Task_WarpStarStationDoorSign(void)
     }
 }
 
-void sub_0802f8c8(void)
+void WarpStarStationDoorSignUpdate(void)
 {
     u8 *src;
 
@@ -200,22 +200,22 @@ void sub_0802f93c(void)
 
 s32 CreateWarpStarStationDoorSparkle(s32 x, s32 y, s32 a, s32 b)
 {
-    s32 id;
-    struct Task *t;
+    s32 doorSparkleSlot;
+    struct Task *doorSparkle;
 
-    id = TaskCreateInRange(231, 32, 63);
-    if (id != -1)
+    doorSparkleSlot = TaskCreateInRange(TASK_WARP_STAR_STATION_DOOR_SPARKLE, 32, 63);
+    if (doorSparkleSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = x;
-        t->posX = t->pixelX << 16;
-        t->pixelY = y - 28;
-        t->posY = t->pixelY << 16;
-        t->unk24 = a;
-        t->warpStarStationDoorSparkleWaitReveal = b;
+        doorSparkle = &gTasks[doorSparkleSlot];
+        doorSparkle->pixelX = x;
+        doorSparkle->posX = doorSparkle->pixelX << 16;
+        doorSparkle->pixelY = y - 28;
+        doorSparkle->posY = doorSparkle->pixelY << 16;
+        doorSparkle->unk24 = a;
+        doorSparkle->warpStarStationDoorSparkleWaitReveal = b;
         gWarpStarStationDoorRevealed = 0;
     }
-    return id;
+    return doorSparkleSlot;
 }
 
 void Task_WarpStarStationDoorSparkle(void)
@@ -372,24 +372,24 @@ void sub_0802fd98(void)
 
 s32 CreateLevelDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
-    s32 id;
-    struct Task *t;
+    s32 levelDoorSignSlot;
+    struct Task *levelDoorSign;
 
-    id = TaskCreateInRange(232, 32, 63);
-    if (id != -1)
+    levelDoorSignSlot = TaskCreateInRange(TASK_LEVEL_DOOR_SIGN, 32, 63);
+    if (levelDoorSignSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = x;
-        t->posX = t->pixelX << 16;
-        t->pixelY = y - 28;
-        t->posY = t->pixelY << 16;
-        t->velX = x;
-        t->velY = y;
-        t->levelDoorSignFrame = a;
-        t->doorObjectKind = 1;
-        t->u76.doorIndex = b;
+        levelDoorSign = &gTasks[levelDoorSignSlot];
+        levelDoorSign->pixelX = x;
+        levelDoorSign->posX = levelDoorSign->pixelX << 16;
+        levelDoorSign->pixelY = y - 28;
+        levelDoorSign->posY = levelDoorSign->pixelY << 16;
+        levelDoorSign->velX = x;
+        levelDoorSign->velY = y;
+        levelDoorSign->levelDoorSignFrame = a;
+        levelDoorSign->doorObjectKind = 1;
+        levelDoorSign->u76.doorIndex = b;
     }
-    return id;
+    return levelDoorSignSlot;
 }
 
 void Task_LevelDoorSign(void)
@@ -425,7 +425,7 @@ void DoorObjectDraw(void)
     }
 }
 
-void sub_0802ff70(void)
+void SubGameDoorSignDrawUsed(void)
 {
     struct Task *t;
     u32 *tbl;
@@ -441,20 +441,20 @@ void sub_0802ff70(void)
 
 s32 CreateWarpStarStationNumber(s32 a, s32 x, s32 y)
 {
-    s32 id;
-    struct Task *t;
+    s32 stationNumberSlot;
+    struct Task *stationNumber;
 
-    id = TaskCreateInRange(233, 32, 63);
-    if (id != -1)
+    stationNumberSlot = TaskCreateInRange(TASK_WARP_STAR_STATION_NUMBER, 32, 63);
+    if (stationNumberSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = x;
-        t->pixelY = y - 28;
-        t->posX = x << 16;
-        t->posY = (y - 28) << 16;
-        t->warpStarStationNumberFrame = a;
+        stationNumber = &gTasks[stationNumberSlot];
+        stationNumber->pixelX = x;
+        stationNumber->pixelY = y - 28;
+        stationNumber->posX = x << 16;
+        stationNumber->posY = (y - 28) << 16;
+        stationNumber->warpStarStationNumberFrame = a;
     }
-    return id;
+    return stationNumberSlot;
 }
 
 void Task_WarpStarStationNumber(void)
@@ -475,20 +475,20 @@ void Task_WarpStarStationNumber(void)
 
 s32 CreateWarpStarStationLevelSign(s32 a)
 {
-    s32 id;
-    struct Task *t;
+    s32 levelSignSlot;
+    struct Task *levelSign;
 
-    id = TaskCreateInRange(234, 32, 63);
-    if (id != -1)
+    levelSignSlot = TaskCreateInRange(TASK_WARP_STAR_STATION_LEVEL_SIGN, 32, 63);
+    if (levelSignSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = 128;
-        t->pixelY = 420;
-        t->posX = 128 << 16;
-        t->posY = 420 << 16;
-        t->warpStarStationLevelSignFrame = a;
+        levelSign = &gTasks[levelSignSlot];
+        levelSign->pixelX = 128;
+        levelSign->pixelY = 420;
+        levelSign->posX = 128 << 16;
+        levelSign->posY = 420 << 16;
+        levelSign->warpStarStationLevelSignFrame = a;
     }
-    return id;
+    return levelSignSlot;
 }
 
 void Task_WarpStarStationLevelSign(void)
@@ -524,20 +524,20 @@ s32 CreateMuseumAbilitySigns(u8 a)
 
 s32 CreateMuseumAbilitySign(u8 a, s32 b)
 {
-    s32 id;
-    struct Task *t;
+    s32 museumAbilitySignSlot;
+    struct Task *museumAbilitySign;
 
-    id = TaskCreateInRange(235, 32, 63);
-    if (id != -1)
+    museumAbilitySignSlot = TaskCreateInRange(TASK_MUSEUM_ABILITY_SIGN, 32, 63);
+    if (museumAbilitySignSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = gUnk_087328C0[a][b];
-        t->pixelY = 96;
-        t->posX = t->pixelX << 16;
-        t->posY = t->pixelY << 16;
-        t->museumAbilitySignFrame = b;
+        museumAbilitySign = &gTasks[museumAbilitySignSlot];
+        museumAbilitySign->pixelX = gUnk_087328C0[a][b];
+        museumAbilitySign->pixelY = 96;
+        museumAbilitySign->posX = museumAbilitySign->pixelX << 16;
+        museumAbilitySign->posY = museumAbilitySign->pixelY << 16;
+        museumAbilitySign->museumAbilitySignFrame = b;
     }
-    return id;
+    return museumAbilitySignSlot;
 }
 
 void Task_MuseumAbilitySign(void)
@@ -558,19 +558,19 @@ void Task_MuseumAbilitySign(void)
 
 s32 CreateStageEffect(s32 a, s32 x, s32 y)
 {
-    s32 id;
-    struct Task *t;
+    s32 stageEffectSlot;
+    struct Task *stageEffect;
 
-    id = TaskCreateInRange(236, 32, 63);
-    if (id != -1)
+    stageEffectSlot = TaskCreateInRange(TASK_STAGE_EFFECT, 32, 63);
+    if (stageEffectSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = x;
-        t->pixelY = y;
-        t->posX = x << 16;
-        t->posY = y << 16;
-        t->state = a;
-        t->actorKind = 9;
+        stageEffect = &gTasks[stageEffectSlot];
+        stageEffect->pixelX = x;
+        stageEffect->pixelY = y;
+        stageEffect->posX = x << 16;
+        stageEffect->posY = y << 16;
+        stageEffect->state = a;
+        stageEffect->actorKind = 9;
     }
-    return id;
+    return stageEffectSlot;
 }

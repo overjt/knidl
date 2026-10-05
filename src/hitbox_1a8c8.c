@@ -36,16 +36,16 @@ struct AttackBox
     /*0x03*/ s8 top;
     /*0x04*/ s8 right;
     /*0x05*/ s8 bottom;
-    /*0x06*/ u8 unk06;
+    /*0x06*/ u8 playerHitMode;
     /*0x07*/ u8 unk07;
     /*0x08*/ u8 damage;
     /*0x09*/ u8 hitEffect;
     /*0x0A*/ u16 unk0A;
     /*0x0C*/ u16 unk0C;
-    /*0x0E*/ u16 unk0E;
+    /*0x0E*/ u16 class10ImmuneMask;
     /*0x10*/ u16 unk10;
     /*0x12*/ u16 unk12;
-    /*0x14*/ u32 unk14;
+    /*0x14*/ u32 class20ImmuneMask;
     /*0x18*/ u16 unk18;
     /*0x1A*/ u16 unk1A;
 };
@@ -63,7 +63,7 @@ struct BodyBox
     /*0x05*/ s8 bottom;
     /*0x06*/ u8 unk06;
     /*0x07*/ u8 unk07;
-    /*0x08*/ u8 unk08;
+    /*0x08*/ u8 classKind;
     /*0x09*/ u8 unk09;
     /*0x0A*/ u8 unk0A;
     /*0x0B*/ u8 unk0B;
@@ -145,7 +145,7 @@ u8 HitTestPlayerColliders(void)
     s32 i;
     u8 s;
 
-    gHitKind = 0;
+    gHitKind = HIT_KIND_NONE;
     gUnk_03001F24 = 0;
     e = gPlayerColliders;
     for (i = 0; i < gPlayerColliderCount; i++)
@@ -192,7 +192,7 @@ u8 HitTestPlayerColliders(void)
         e++;
         gColliderTop = (gColliderY - (u16)gViewRect[2]) + gColliderBodyBox->top;
         gColliderBottom = (gColliderY - (u16)gViewRect[2]) + gColliderBodyBox->bottom;
-        switch (gAttackBox->unk06 & 7)
+        switch (gAttackBox->playerHitMode & 7)
         {
         case 0:
             ps = gColliderPlayerState;
@@ -213,19 +213,19 @@ u8 HitTestPlayerColliders(void)
                     continue;
                 if (gAttackBox->unk0A & 8)
                 {
-                    gHitKind = 6;
+                    gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 12;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else if (gAttackBox->unk0A & 4)
                 {
-                    gHitKind = 6;
+                    gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 11;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else
                 {
-                    gHitKind = 2;
+                    gHitKind = HIT_KIND_DAMAGE;
                     CalcHitDamageAndDirection();
                     t->u76.unk76 = (t->u76.unk76 & 0x4000) | 1;
                 }
@@ -245,31 +245,31 @@ u8 HitTestPlayerColliders(void)
                     AddPlayerHealth(-gAttackBox->damage, gColliderPlayer);
                     if (gPlayerHealth[gColliderPlayer] <= 0)
                     {
-                        t->hitKind = 1;
+                        t->hitKind = HIT_KIND_DEFEAT;
                         t->hitEffect = gAttackBox->unk1A & 0x300;
                     }
                     else
                     {
-                        t->hitKind = 2;
+                        t->hitKind = HIT_KIND_DAMAGE;
                     }
                 }
                 if (gAttackBox->unk0A & 0x8000)
                     continue;
                 if (gAttackBox->unk0A & 4)
                 {
-                    gHitKind = 6;
+                    gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 11;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else if (gAttackBox->unk0A & 1)
                 {
-                    gHitKind = 6;
+                    gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 1;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else
                 {
-                    gHitKind = 2;
+                    gHitKind = HIT_KIND_DAMAGE;
                     CalcHitDamageAndDirection();
                 }
             }
@@ -279,13 +279,13 @@ u8 HitTestPlayerColliders(void)
                     continue;
                 if (gAttackBox->unk0A & 4)
                 {
-                    gHitKind = 6;
+                    gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 11;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else
                 {
-                    gHitKind = 2;
+                    gHitKind = HIT_KIND_DAMAGE;
                     CalcHitDamageAndDirection();
                 }
             }
@@ -308,12 +308,12 @@ u8 HitTestPlayerColliders(void)
             if (!(gColliderBodyBox->unk0E & 6))
             {
                 ps->hitsThisFrame++;
-                gHitKind = 8;
+                gHitKind = HIT_KIND_CATCH;
                 gHitHealthLeft = gAttackHealth;
                 HitRecordHitter();
                 return 1;
             }
-            gHitKind = 6;
+            gHitKind = HIT_KIND_NO_DAMAGE;
             continue;
         default:
             continue;
@@ -336,14 +336,14 @@ u8 HitTestPlayerColliders(void)
         gHitHealthLeft = gAttackHealth;
         gHitterSlot = gColliderSlot;
         gHitTimer = gAttackHitDuration;
-        if ((gAttackBox->unk06 & 7) == 2)
+        if ((gAttackBox->playerHitMode & 7) == 2)
         {
             gUnk_03001F24 = gColliderPlayer;
             return 1;
         }
         gUnk_03001F24 |= 1 << gColliderPlayer;
     }
-    if ((gAttackBox->unk06 & 7) == 3 && gHitKind == 7)
+    if ((gAttackBox->playerHitMode & 7) == 3 && gHitKind == 7)
         return 1;
     return 0;
 }
@@ -414,7 +414,7 @@ u8 HitTestColliderClass10(void)
             HitRecordHitter();
             return 1;
         }
-        k = (u32)(gColliderBodyBox->unk08 << 28) >> 28;
+        k = (u32)(gColliderBodyBox->classKind << 28) >> 28;
         mask = gColliderClass10KindBits[k] | 0x4000;
         /* the body box's halfword at 0x0E (ldrh) */
         if (!(gColliderBodyBox->unk0E & 0x8000) && !(mask & gAttackBox->unk10))
@@ -422,9 +422,9 @@ u8 HitTestColliderClass10(void)
             t->hitEffect = gAttackBox->hitEffect;
             t->health -= gAttackBox->damage;
             if (t->health <= 0)
-                t->hitKind = 1;
+                t->hitKind = HIT_KIND_DEFEAT;
             else
-                t->hitKind = 2;
+                t->hitKind = HIT_KIND_DAMAGE;
             u = &gTasks[gColliderPlayer];
             if (!(gAttackBox->unk1A & 1))
             {
@@ -432,17 +432,17 @@ u8 HitTestColliderClass10(void)
                 u->u76.unk76 |= gColliderBodyBox->unk10 & 0x3FFF;
             }
         }
-        if (!(gAttackBox->unk0E & 0x8000))
+        if (!(gAttackBox->class10ImmuneMask & 0x8000))
         {
             mask = gColliderClass10KindBits[k];
-            if (!(mask & gAttackBox->unk0E))
+            if (!(mask & gAttackBox->class10ImmuneMask))
             {
-                gHitKind = 2;
+                gHitKind = HIT_KIND_DAMAGE;
                 CalcHitDamageAndDirection();
             }
             else
             {
-                gHitKind = 6;
+                gHitKind = HIT_KIND_NO_DAMAGE;
                 gHitEffect = gUnk_08732218[k];
                 gHitHealthLeft = gAttackHealth;
             }

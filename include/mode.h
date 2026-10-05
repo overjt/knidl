@@ -2,6 +2,7 @@
 #define GUARD_MODE_H
 
 #include "gba/types.h"
+#include "constants/game_states.h"
 
 /* mode.h: the RAM cells and ROM tables of the game-state bodies AgbMain
    dispatches into, the boot/title sequence and the screen loaders (M02).  One
@@ -10,7 +11,7 @@
 
 /* One boot-logo sprite object: a command script (BootLogoUpdateObjects) moving a
    sprite in 24.8 fixed point. */
-struct M38LogoObj
+struct BootLogoObject
 {
     /*0x00*/ s16 *scriptPos;    /* script cursor */
     /*0x04*/ s16 scriptId;     /* script id, -1 = off */
@@ -43,7 +44,7 @@ extern u8 gUnk_02006090;
 extern s8 gBoardedWarpStarSlot;
 extern u8 gUnk_02007FCC;
 extern u32 gUnk_02028000[];
-extern struct M38LogoObj gUnk_02030000[];
+extern struct BootLogoObject gUnk_02030000[];
 
 /* IWRAM */
 extern vu16 gUnk_03000B24;
@@ -178,11 +179,11 @@ void IntroStory(void);
 s32 IntroStoryWait(s32 n);
 
 /* src/mode_0b44c.c */
-void sub_0800b44c(void);
+void ResetGameSession(void);
 void ResetScoresAndMaxHealth(void);
 void ResetPlayerRecords(void);
-void sub_0800b5dc(void);
-void sub_0800b628(void);
+void HubResetPlayers(void);
+void ResetTasksAndPlayers(void);
 void StageInit(void);
 void HubInit(void);
 void BigSwitchViewInit(void);

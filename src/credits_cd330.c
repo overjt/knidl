@@ -89,7 +89,7 @@ void CreditsMain(void)
     for (;;) {
         gInputRecorderDemo = scenes[gUnk_0201C1B0];
         InputRecorderStart();
-        gSavedPlayerAbilities[gLocalPlayer] = 0;
+        gSavedPlayerAbilities[gLocalPlayer] = ABILITY_NORMAL;
         gSavedPlayerAbilityUses[gLocalPlayer] = 0xFFFF;
         CreditsLoadScene();
         gDispCnt &= 0xE0FF;
@@ -161,7 +161,7 @@ void CreditsMain(void)
    the per-scene state M02's stage loaders reset (HubInit's twin). */
 void CreditsLoadScene(void)
 {
-    s32 i;
+    s32 player;
     s8 *b;
     s8 *p;
     s8 zero;
@@ -183,8 +183,8 @@ void CreditsLoadScene(void)
     gScreenAttackActive = 0;
     gRoomExitKind = 0;
     gPauseDisabled = 1;
-    for (i = 0; i < 4; i++)
-        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
+    for (player = 0; player < 4; player++)
+        gPlayerHeldKeys[player] = gPlayerPressedKeys[player] = gLatchedHeldKeys[player] = gLatchedPressedKeys[player] = 0;
 }
 
 /* Start the staff credits' text layer: load its screen, reset the BG0

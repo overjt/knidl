@@ -96,10 +96,10 @@ void HudStartHpBar(s32 max, s32 cur)
         gHudHpBarFilled = 1;
         HudDrawHpBar(32);
         gHudHpBarIndex = 0;
-        gHudHpBars[0].unk0 = 0;
-        gHudHpBars[0].unk4 = gHudHpBarValues[0];
-        gHudHpBars[0].unk2 = gHudHpBarValues[0];
-        gHudHpBars[0].unk6 = 0;
+        gHudHpBars[0].state = 0;
+        gHudHpBars[0].shownValue = gHudHpBarValues[0];
+        gHudHpBars[0].targetValue = gHudHpBarValues[0];
+        gHudHpBars[0].stepTimer = 0;
     } else {
         gHudHpBarMaxHp = max;
         gHudHpBarLength = 32;
@@ -131,10 +131,10 @@ void HudStartTaskHpBar(s32 max, s32 cur)
         HudDrawHpBar(32);
         gHudHpBarIndex = idx;
         p = &gHudHpBars[idx];
-        p->unk0 = 0;
-        p->unk4 = gHudHpBarValues[idx];
-        p->unk2 = gHudHpBarValues[idx];
-        p->unk6 = 0;
+        p->state = 0;
+        p->shownValue = gHudHpBarValues[idx];
+        p->targetValue = gHudHpBarValues[idx];
+        p->stepTimer = 0;
     } else {
         if (gHudHpBarMaxHp == 0) {
             gHudHpBarMaxHp = max;
@@ -235,14 +235,14 @@ void sub_0800a6a4(void)
     if (mode != 0) {
         if (mode == 1) {
             if (gUnk_020055F0[0] == 0) {
-                if (gLifeRequests.unk04[gLocalPlayer] != 0) {
+                if (gLifeRequests.requests[gLocalPlayer] != 0) {
                     gUnk_020055F0[0] = mode;
                     gUnk_020055F0[1] = 0;
                 }
                 if (gUnk_020055F0[0] == 0)
                     goto done;
             }
-            if (gLifeRequests.unk04[gLocalPlayer] == 0) {
+            if (gLifeRequests.requests[gLocalPlayer] == 0) {
                 gUnk_020055F0[0] = 0;
                 row = gInHub ? 2 : 0;
                 HudClearTiles(12, row, 16);
@@ -251,7 +251,7 @@ void sub_0800a6a4(void)
                 if (gUnk_020055F0[1] == 0) {
                     if (gUnk_020055F0[0] == 2) {
                         gUnk_020055F0[0] = 1;
-                        sub_0800b230(gLifeRequests.unk04[gLocalPlayer] >> 4, 1);
+                        sub_0800b230(gLifeRequests.requests[gLocalPlayer] >> 4, 1);
                     } else {
                         gUnk_020055F0[0] = 2;
                         sub_0800b230(gLocalPlayer, 2);
@@ -311,54 +311,54 @@ void HudUpdateHpBars(void)
     if (gHudMode != 0 && gHudShowsHpBar == 1) {
         for (i = 0; i < 2; i++) {
             p = &gHudHpBars[i];
-            switch (p->unk0) {
+            switch (p->state) {
             case 0:
                 break;
             case 1:
-                if (--p->unk6 > 0)
+                if (--p->stepTimer > 0)
                     break;
                 PlaySfx(221);
-                v = p->unk4 + 1;
-                if (v > p->unk2)
-                    v = p->unk2;
+                v = p->shownValue + 1;
+                if (v > p->targetValue)
+                    v = p->targetValue;
                 if (gHudHpBarIndex == i)
-                    HudDrawHpBarChange(p->unk4, v);
-                p->unk4 = v;
-                if (p->unk4 == p->unk2) {
-                    p->unk0 = 0;
+                    HudDrawHpBarChange(p->shownValue, v);
+                p->shownValue = v;
+                if (p->shownValue == p->targetValue) {
+                    p->state = 0;
                     gHudHpBarFilled = 1;
                 } else {
-                    p->unk6 = 4;
+                    p->stepTimer = 4;
                 }
                 break;
             case 2:
-                if (--p->unk6 > 0)
+                if (--p->stepTimer > 0)
                     break;
                 PlaySfx(221);
-                v = p->unk4 + 1;
-                if (v > p->unk2)
-                    v = p->unk2;
+                v = p->shownValue + 1;
+                if (v > p->targetValue)
+                    v = p->targetValue;
                 if (gHudHpBarIndex == i)
-                    HudDrawHpBarChange(p->unk4, v);
-                p->unk4 = v;
-                if (p->unk4 == p->unk2)
-                    p->unk0 = 0;
+                    HudDrawHpBarChange(p->shownValue, v);
+                p->shownValue = v;
+                if (p->shownValue == p->targetValue)
+                    p->state = 0;
                 else
-                    p->unk6 = 4;
+                    p->stepTimer = 4;
                 break;
             case 3:
-                if (--p->unk6 > 0)
+                if (--p->stepTimer > 0)
                     break;
-                v = p->unk4 - 1;
-                if (v < p->unk2)
-                    v = p->unk2;
+                v = p->shownValue - 1;
+                if (v < p->targetValue)
+                    v = p->targetValue;
                 if (gHudHpBarIndex == i)
-                    HudDrawHpBarChange(p->unk4, v);
-                p->unk4 = v;
-                if (p->unk4 == p->unk2)
-                    p->unk0 = 0;
+                    HudDrawHpBarChange(p->shownValue, v);
+                p->shownValue = v;
+                if (p->shownValue == p->targetValue)
+                    p->state = 0;
                 else
-                    p->unk6 = 4;
+                    p->stepTimer = 4;
                 break;
             }
         }
@@ -372,25 +372,25 @@ void HudAnimateHpBar(s32 from, s32 to, s32 i)
 
     if (gHudMode != 0 && gHudShowsHpBar == 1) {
         p = &gHudHpBars[i];
-        if (p->unk0 != 1) {
-            HudDrawHpBar(p->unk4);
-            if (p->unk0 != 0) {
-                d = to - p->unk4;
-                p->unk2 = to;
+        if (p->state != 1) {
+            HudDrawHpBar(p->shownValue);
+            if (p->state != 0) {
+                d = to - p->shownValue;
+                p->targetValue = to;
                 if (d > 0)
-                    p->unk0 = 2;
+                    p->state = 2;
                 else
-                    p->unk0 = 3;
+                    p->state = 3;
             } else {
                 d = to - from;
                 if (d != 0) {
-                    p->unk4 = from;
-                    p->unk2 = to;
-                    p->unk6 = 4;
+                    p->shownValue = from;
+                    p->targetValue = to;
+                    p->stepTimer = 4;
                     if (d > 0)
-                        p->unk0 = 2;
+                        p->state = 2;
                     else
-                        p->unk0 = 3;
+                        p->state = 3;
                 }
             }
             gHudHpBarIndex = i;
@@ -404,10 +404,10 @@ s32 HudStartHpBarFill(s32 from, s32 to)
 
     if (gHudMode != 0 && gHudShowsHpBar == 1 && to > from) {
         for (i = 0; i < 2; i++) {
-            gHudHpBars[i].unk4 = from;
-            gHudHpBars[i].unk2 = to;
-            gHudHpBars[i].unk6 = 4;
-            gHudHpBars[i].unk0 = 1;
+            gHudHpBars[i].shownValue = from;
+            gHudHpBars[i].targetValue = to;
+            gHudHpBars[i].stepTimer = 4;
+            gHudHpBars[i].state = 1;
         }
         gHudHpBarIndex = 0;
         gHudHpBarFilled = 0;
@@ -416,7 +416,7 @@ s32 HudStartHpBarFill(s32 from, s32 to)
 
 void HudSetHpBar(s32 x, s32 i)
 {
-    sub_0800aaac(i);
+    HudStopHpBarAnim(i);
     HudDrawHpBar(x);
     gHudHpBarIndex = i;
 }
@@ -425,18 +425,18 @@ void HudResetHpBar(s32 i)
 {
     struct HudBar *p = &gHudHpBars[i];
 
-    p->unk0 = 0;
-    p->unk4 = 0;
-    p->unk2 = 0;
-    p->unk6 = 0;
+    p->state = 0;
+    p->shownValue = 0;
+    p->targetValue = 0;
+    p->stepTimer = 0;
 }
 
-void sub_0800aaac(s32 i)
+void HudStopHpBarAnim(s32 i)
 {
     struct HudBar *p = &gHudHpBars[i];
 
-    p->unk0 = 0;
-    p->unk4 = gHudHpBarValues[i];
-    p->unk2 = gHudHpBarValues[i];
-    p->unk6 = 0;
+    p->state = 0;
+    p->shownValue = gHudHpBarValues[i];
+    p->targetValue = gHudHpBarValues[i];
+    p->stepTimer = 0;
 }

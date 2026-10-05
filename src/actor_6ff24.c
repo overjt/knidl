@@ -19,7 +19,7 @@
  * vertical speed) through a table of steps with TaskYieldTrampoline, and
  * finally wait for the helper to reach unk24 == 2.
  *
- * Also here: sub_0806ff7c, the OAM draw routine for the family, and
+ * Also here: PlayerWarpStarRideDraw, the OAM draw routine for the family, and
  * PlayerBoardWarpStar / MetaKnightWarpStarRideInit, the entry points that re-seat the running
  * task from the player record (Task.player) and the id at 0x020055C0.
  *
@@ -71,11 +71,11 @@ void PlayerWarpStarRideState7Update(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    switch (gCurTask->unk24)
+    switch (gCurTask->playerRideLandCount)
     {
     case 1:
     case 2:
-        sub_08070334();
+        PlayerStepTumble();
         break;
     case 3:
         sub_080702d8();
@@ -83,7 +83,7 @@ void PlayerWarpStarRideState7Update(void)
     }
 }
 
-void sub_0806ff7c(void)
+void PlayerWarpStarRideDraw(void)
 {
     struct Task *t;
     struct Task *u;
@@ -126,7 +126,7 @@ void sub_0806ff7c(void)
         gfx = PlayerLoadFrameTilesAndPalette(0);
     }
     if (gPlayerCount > 1)
-        sub_0803d7c4();
+        PlayerLoadPlayerPalette();
     sub_0803db74();
     x = dx;
     y = dy;
@@ -136,7 +136,7 @@ void sub_0806ff7c(void)
                  gCurTask->tileWord | 0x800, x, y);
 }
 
-void sub_080700e8(void)
+void PlayerSetWarpStarRideFrame(void)
 {
     struct PlayerState *p;
     struct Task *t;
@@ -144,14 +144,14 @@ void sub_080700e8(void)
     s32 k;
     s32 pri;
 
-    tbl = gUnk_0873F950[(p = gCurTask->player)->ability];
+    tbl = gPlayerWarpStarRideFrames[(p = gCurTask->player)->ability];
     k = p->playerIndex;
     if (k == 1 || k == 2)
         if (gPlayerCount == 4)
             k += 3;
     TaskSetFrame(tbl[k]);
     t = gCurTask;
-    t->unk28 = t->frame;
+    t->playerWarpStarRideFrame = t->frame;
     switch (gCurTask->player->playerIndex)
     {
     case 0:
@@ -177,7 +177,7 @@ void sub_08070174(void)
     t = gCurTask;
     t->drawCallback = (u32)sub_0803ddc0;
     t->spriteFlags &= 0x7FFF;
-    if (t->unk34 != 0)
+    if (t->playerRideIsCannon != 0)
     {
         TaskSetMotionXFacing(0x10000, 0x5A5A5A5A);
     }
@@ -200,7 +200,7 @@ void sub_08070174(void)
         }
     }
     TaskSetMotionY(0xFFFC0000, 0x3000, 0x40000);
-    sub_0807029c();
+    PlayerStartTumble();
 }
 
 void sub_08070208(void)
@@ -211,14 +211,14 @@ void sub_08070208(void)
     t->moveCallback = (u32)TaskCopyParentPixelPos;
     t->taskClass = 4;
     gCurTask->lateUpdateCallback = 0;
-    sub_080700e8();
+    PlayerSetWarpStarRideFrame();
 }
 
 void sub_0807022c(void)
 {
-    while (gCurTask->unk24 != 3)
+    while (gCurTask->playerRideLandCount != 3)
         TaskYieldTrampoline(1);
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -230,19 +230,19 @@ void sub_08070264(void)
     row = gUnk_0873D420[gCurTask->player->ability];
     TaskSetFrame(row[1]);
     t = gCurTask;
-    t->unk2C = 1;
-    t->unk28 = 2;
+    t->playerTumbleFrameStep = 1;
+    t->playerTumbleFrameTimer = 2;
 }
 
-void sub_0807029c(void)
+void PlayerStartTumble(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->unk2C = -t->facing;
-    t->unk28 = 1;
-    t->frame = gUnk_0873FAB4[t->player->ability] + 13;
-    t->unk30 = 13;
+    t->playerTumbleFrameStep = -t->facing;
+    t->playerTumbleFrameTimer = 1;
+    t->frame = gPlayerTumbleFrames[t->player->ability] + 13;
+    t->playerTumbleFrame = 13;
 }
 
 void sub_080702d8(void)
@@ -256,18 +256,18 @@ void sub_080702d8(void)
         || (s8)k == 17 || (s8)k == 19 || (s8)k == 22 || (s8)k == 23)
     {
         t = gCurTask;
-        if (t->unk28 <= 0)
+        if (t->playerTumbleFrameTimer <= 0)
         {
-            v = t->unk2C;
+            v = t->playerTumbleFrameStep;
             t->frame += v;
-            t->unk28 = 2;
-            t->unk2C = -v;
+            t->playerTumbleFrameTimer = 2;
+            t->playerTumbleFrameStep = -v;
         }
-        gCurTask->unk28--;
+        gCurTask->playerTumbleFrameTimer--;
     }
 }
 
-void sub_08070334(void)
+void PlayerStepTumble(void)
 {
     struct Task *t;
     struct Task *u;
@@ -276,27 +276,27 @@ void sub_08070334(void)
     s32 v;
 
     t = gCurTask;
-    if (t->unk28 <= 0)
+    if (t->playerTumbleFrameTimer <= 0)
     {
-        d = t->unk2C;
+        d = t->playerTumbleFrameStep;
         t->frame += d;
-        v = t->unk30 + d;
-        t->unk30 = v;
-        t->unk28 = 1;
+        v = t->playerTumbleFrame + d;
+        t->playerTumbleFrame = v;
+        t->playerTumbleFrameTimer = 1;
         if (v > 15)
         {
-            t->frame = gUnk_0873FAB4[t->player->ability];
-            t->unk30 = 0;
+            t->frame = gPlayerTumbleFrames[t->player->ability];
+            t->playerTumbleFrame = 0;
         }
         u = gCurTask;
-        if (u->unk30 < 0)
+        if (u->playerTumbleFrame < 0)
         {
-            u->frame = gUnk_0873FAB4[u->player->ability] + 15;
-            u->unk30 = 15;
+            u->frame = gPlayerTumbleFrames[u->player->ability] + 15;
+            u->playerTumbleFrame = 15;
         }
     }
     w = gCurTask;
-    w->unk28--;
+    w->playerTumbleFrameTimer--;
 }
 
 void sub_080703a8(void)
@@ -309,11 +309,11 @@ void sub_080703a8(void)
     {
         t->onGround = 0;
         u = gCurTask;
-        u->unk24++;
-        switch (u->unk24)
+        u->playerRideLandCount++;
+        switch (u->playerRideLandCount)
         {
         case 1:
-            if (u->unk34 == 1)
+            if (u->playerRideIsCannon == 1)
             {
                 if (gCannonFuseState == -1)
                     PlaySfx(153);
@@ -334,10 +334,10 @@ void sub_080703a8(void)
 
 void sub_0807042c(void)
 {
-    switch (gCurTask->unk24)
+    switch (gCurTask->playerRideLandCount)
     {
     case 1:
-        sub_08070334();
+        PlayerStepTumble();
         break;
     case 2:
         sub_080702d8();
@@ -378,7 +378,7 @@ void PlayerBoardWarpStar(u32 a, s32 b)
     {
         if (gMetaKnightmareMode == 0)
         {
-            tbl = gUnk_0873F950[p->ability];
+            tbl = gPlayerWarpStarRideFrames[p->ability];
             k = p->playerIndex;
             if (k == 1 || k == 2)
                 if (gPlayerCount == 4)
@@ -404,7 +404,7 @@ void PlayerBoardWarpStar(u32 a, s32 b)
     }
     else
     {
-        tbl = gUnk_0873F950[p->ability];
+        tbl = gPlayerWarpStarRideFrames[p->ability];
         k = p->playerIndex;
         if (k == 1 || k == 2)
             if (gPlayerCount == 4)
@@ -416,15 +416,15 @@ void PlayerBoardWarpStar(u32 a, s32 b)
     TaskSetEntry((u32)PlayerWarpStarRideInit, a);
 }
 
-void sub_08070614(u32 a)
+void PlayerEndRideLanding(u32 a)
 {
     struct PlayerState *p;
 
     PlayerResumeControl(a, 0, 1, 0);
     p = gCurTask->player;
-    if (p->ability == 25)
+    if (p->ability == ABILITY_STAR_ROD)
         p->unk37 = 3;
-    sub_08040808(a);
+    CreateLocalPlayerArrow(a);
 }
 
 void MetaKnightWarpStarRideInit(void)
@@ -443,11 +443,11 @@ void MetaKnightWarpStarRideInit(void)
     TaskStop();
     u = gCurTask;
     u->spriteFlags &= 0x7FFF;
-    RequestCopy(2, gUnk_0824A9E4.unk08,
-                 &gObjPalette[u->tileWord >> 12], gUnk_0824A9E4.unk00 << 5);
-    RequestCopy(3, gUnk_0824A9E4.unk0C,
+    RequestCopy(2, gUnk_0824A9E4.palette,
+                 &gObjPalette[u->tileWord >> 12], gUnk_0824A9E4.paletteBankCount << 5);
+    RequestCopy(3, gUnk_0824A9E4.tiles,
                  (u16 *)(OBJ_VRAM0 + ((gCurTask->tileWord & 0xFFF) << 5)),
-                 gUnk_0824A9E4.unk02 << 5);
+                 gUnk_0824A9E4.tileCount << 5);
     v = gCurTask;
     v->parent = gWarpStarRideSlot;
     if (gTasks[i = v->parent].unk74 == 0)
@@ -455,7 +455,7 @@ void MetaKnightWarpStarRideInit(void)
     else
         v->facing = gUnk_0873FAE8[gTasks[i].unk74];
     w = gCurTask;
-    w->state = 2;
+    w->state = META_KNIGHT_WARP_STAR_RIDE_STATE_2;
     CallTableEntry(gCurTask->state, 7, gMetaKnightWarpStarRideStates);
 }
 
@@ -475,7 +475,7 @@ void MetaKnightWarpStarRideEnterState(void)
 
 void MetaKnightWarpStarRideState2(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_2;
     sub_08070ffc();
     TaskSleepForever();
 }
@@ -488,10 +488,10 @@ void MetaKnightWarpStarRideState1(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_1;
     t = gCurTask;
-    t->unk24 = 1;
-    t->unk34 = 0;
+    t->playerRideLandCount = 1;
+    t->playerRideIsCannon = 0;
     t->drawCallback = (u32)sub_0803ddc0;
     t->facing = 1;
     TaskSetFrame(0x11E4);
@@ -525,10 +525,10 @@ void MetaKnightWarpStarRideState1(void)
     gCurTask->velY = 0x20000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x40000;
-    while (gCurTask->unk24 != 2)
+    while (gCurTask->playerRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -543,8 +543,8 @@ void MetaKnightWarpStarRideState1Update(void)
     {
         t->onGround = 0;
         u = gCurTask;
-        u->unk24++;
-        if (u->unk24 == 1)
+        u->playerRideLandCount++;
+        if (u->playerRideLandCount == 1)
         {
             RequestScreenShake(4);
             CreateBurstEffect(0, 0);
@@ -556,10 +556,10 @@ void MetaKnightWarpStarRideState3(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 3;
+    gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_3;
     t = gCurTask;
-    t->unk24 = 1;
-    t->unk34 = 0;
+    t->playerRideLandCount = 1;
+    t->playerRideIsCannon = 0;
     t->drawCallback = (u32)sub_0803ddc0;
     t->layer = 7;
     TaskSetFrame(0x11E4);
@@ -593,10 +593,10 @@ void MetaKnightWarpStarRideState3(void)
     gCurTask->velY = 0x20000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x40000;
-    while (gCurTask->unk24 != 2)
+    while (gCurTask->playerRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -611,8 +611,8 @@ void MetaKnightWarpStarRideState3Update(void)
     {
         t->onGround = 0;
         u = gCurTask;
-        u->unk24++;
-        if (u->unk24 == 1)
+        u->playerRideLandCount++;
+        if (u->playerRideLandCount == 1)
         {
             RequestScreenShake(4);
             CreateBurstEffect(0, 0);
@@ -624,10 +624,10 @@ void MetaKnightWarpStarRideState4(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 4;
+    gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_4;
     t = gCurTask;
-    t->unk24 = 0;
-    t->unk34 = 0;
+    t->playerRideLandCount = 0;
+    t->playerRideIsCannon = 0;
     t->drawCallback = (u32)sub_0803ddc0;
     t->layer = 7;
     gCurTask->facing = 1;
@@ -661,10 +661,10 @@ void MetaKnightWarpStarRideState4(void)
     gCurTask->velY = 0x30000;
     TaskYieldTrampoline(4);
     gCurTask->velY = 0x40000;
-    while (gCurTask->unk24 != 2)
+    while (gCurTask->playerRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -679,8 +679,8 @@ void MetaKnightWarpStarRideState4Update(void)
     {
         t->onGround = 0;
         u = gCurTask;
-        u->unk24++;
-        if (u->unk24 == 1)
+        u->playerRideLandCount++;
+        if (u->playerRideLandCount == 1)
         {
             RequestScreenShake(4);
             CreateBurstEffect(0, 0);
@@ -693,10 +693,10 @@ void MetaKnightWarpStarRideState5(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 5;
+    gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_5;
     t = gCurTask;
-    t->unk24 = 0;
-    t->unk34 = 0;
+    t->playerRideLandCount = 0;
+    t->playerRideIsCannon = 0;
     t->drawCallback = (u32)sub_0803ddc0;
     t->layer = 7;
     gCurTask->facing = 1;
@@ -719,10 +719,10 @@ void MetaKnightWarpStarRideState5(void)
     gCurTask->velY = 0x30000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x40000;
-    while (gCurTask->unk24 != 2)
+    while (gCurTask->playerRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -740,7 +740,7 @@ void MetaKnightWarpStarRideState5Update(void)
     {
         u->onGround = 0;
         v = gCurTask;
-        v->unk24++;
+        v->playerRideLandCount++;
     }
 }
 
@@ -749,10 +749,10 @@ void MetaKnightWarpStarRideState6(void)
     struct Task *t;
     struct Task *u;
 
-    gCurTask->updateState = 6;
+    gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_6;
     t = gCurTask;
-    t->unk24 = 1;
-    t->unk34 = 0;
+    t->playerRideLandCount = 1;
+    t->playerRideIsCannon = 0;
     t->drawCallback = (u32)sub_0803ddc0;
     t->layer = 7;
     u = gCurTask;
@@ -774,10 +774,10 @@ void MetaKnightWarpStarRideState6(void)
     gCurTask->velY = 0x20000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x40000;
-    while (gCurTask->unk24 != 2)
+    while (gCurTask->playerRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -792,8 +792,8 @@ void MetaKnightWarpStarRideState6Update(void)
     {
         t->onGround = 0;
         u = gCurTask;
-        u->unk24++;
-        if (u->unk24 == 2)
+        u->playerRideLandCount++;
+        if (u->playerRideLandCount == 2)
         {
             RequestScreenShake(4);
             CreateBurstEffect(0, 0);

@@ -27,12 +27,12 @@ void PlayerActionBall(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 46;
-    gCurTask->unk74 = 0;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_BALL;
+    gCurTask->playerBallEnterDoor = 0;
     gCurTask->player->bumpKind = 0;
-    gCurTask->unk24 = 0;
+    gCurTask->playerBallPosePlaying = 0;
     gCurTask->variant = 0;
-    gCurTask->u80.attackAbility = 18;
+    gCurTask->u80.attackAbility = ABILITY_BALL;
     CallTableEntry(gCurTask->variant, 9, gPlayerBallVariants);
 }
 
@@ -50,15 +50,15 @@ void PlayerActionBallUpdate(void)
 
     if (t->playerBallRollFrame != -1)
     {
-        if (t->unk24 == 0)
+        if (t->playerBallPosePlaying == 0)
         {
-            if (t->unk6E == 1)
+            if (t->playerBallRollFacing == 1)
                 TaskSetFrameNoFlip((s16)gUnk_0873DB0A[t->playerBallRollFrame]);
             else
                 TaskSetFrameFlip(gUnk_0873DB0A[t->playerBallRollFrame]);
         }
         if (gCurTask->playerBallRollFrame == 9)
-            gCurTask->unk6E = gCurTask->facing;
+            gCurTask->playerBallRollFacing = gCurTask->facing;
     }
     if (abs(gCurTask->velY) > 0x20000)
     {
@@ -75,7 +75,7 @@ void PlayerActionBallUpdate(void)
         SetPlayerInvulnerability(0xFF, 0, gCurTask->player->playerIndex);
     }
     if (PlayerHasCrossedWaterSurface(0) != 0)
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
     else
         CallTableEntry(gCurTask->variant, 9, gPlayerBallVariantUpdates);
 }

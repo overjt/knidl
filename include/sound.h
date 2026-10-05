@@ -2,6 +2,7 @@
 #define GUARD_SOUND_H
 
 #include "gba/types.h"
+#include "constants/sound.h"
 
 /* sound.h: the RAM cells and ROM tables of the BGM/SE front end over the m4a
    engine (engine zone) and the m4a C driver.  One declaration per symbol,

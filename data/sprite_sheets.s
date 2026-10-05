@@ -48267,6 +48267,6 @@ gUnk_08334E74:
 	.global	gUnk_08334E94
 gUnk_08334E94:
 	.incbin	"baserom.gba", 0x334E94, 0x20
-	.global	gUnk_08334EB4
-gUnk_08334EB4:
+	.global	gLevelStageCounts
+gLevelStageCounts:
 	.incbin	"baserom.gba", 0x334EB4, 0xC

@@ -32,11 +32,11 @@ void PlayerActionMike(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 35;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_MIKE;
     gCurTask->variant = gCurTask->player->abilityUses - 1;
     gCurTask->player->unk42 &= 0xFFEF;
     if (--gCurTask->player->abilityUses == 0) {
-        SetPlayerAbilityNoHud(0, -1, gCurTask->player->playerIndex);
+        SetPlayerAbilityNoHud(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     } else {
         struct PlayerState *p = gCurTask->player;
         SetPlayerAbilityNoHud(p->ability, p->abilityUses, p->playerIndex);
@@ -49,7 +49,7 @@ void PlayerActionMike(void)
         gDispCnt |= 0x1D00;
     }
     gCurTask->player->unk16 = 0;
-    CreatePlayerEffect(gCurTask->player->playerIndex, 37, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 0);
     gCurTask->playerActionDone28 = 0;
     SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
     gCurTask->player->unk42 |= 0x700;
@@ -82,7 +82,7 @@ void PlayerActionMike(void)
         gCurTask->player->unk16++;
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 37, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 1);
         gCurTask->playerLoopCount = 0;
         do {
             PlayerStartOffsetScript(4);
@@ -117,7 +117,7 @@ void PlayerActionMike(void)
         gCurTask->player->unk16++;
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 37, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 1);
         gCurTask->playerLoopCount = 0;
         do {
             PlayerStartOffsetScript(4);
@@ -171,7 +171,7 @@ void PlayerActionMike(void)
         gCurTask->player->unk16++;
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 37, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 1);
         gCurTask->playerLoopCount = 0;
         do {
             PlayerStartOffsetScript(4);
@@ -195,10 +195,10 @@ void PlayerActionMike(void)
     FreezeOtherTasks(0);
     {
         struct PlayerState *p = gCurTask->player;
-        if (p->ability != 7)
+        if (p->ability != ABILITY_MIKE)
             HudShowAbility(p->ability, p->playerIndex);
         else
-            p->unk22 = 2;
+            p->paletteFlashMode = 2;
     }
     gCurTask->playerActionDone28++;
     gPauseDisabled = 0;
@@ -212,9 +212,9 @@ void PlayerActionMikeUpdate(void)
 
     if (t->playerActionDone28 != 0) {
         if (t->onGround & 1)
-            t->player->requestedAction = 1;
+            t->player->requestedAction = PLAYER_ACTION_STAND;
         else
-            t->player->requestedAction = 7;
+            t->player->requestedAction = PLAYER_ACTION_FALL;
     }
     PlayerStopAtCeilingAndWall();
 }

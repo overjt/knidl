@@ -17,7 +17,7 @@
  * player leaves mode 2 or the spawner's Task.onGround clears; 8 three puffs at
  * decreasing speeds, killed by PlayerEffectSlideDustUpdate once the player leaves mode 7),
  * each spawning its own sub-state 1, a small rising puff.  Variants 9-11 are
- * M09's player task effects: 9 (PlayerEffectSplash) and 10 (sub_080548f0) play
+ * M09's player task effects: 9 (PlayerEffectSplash) and 10 (PlayerEffectLeaveWaterSplash) play
  * short animations from gUnk_0874C520, 9 first calling M11's
  * PlaySfxIfLocalPlayer(134, ...) when the spawner is moving down (Task.velY > 0)
  * and 10 placed at the height the spawner passes in the low half of
@@ -48,9 +48,9 @@ void PlayerEffectRunDust(void)
     {
     case 0:
         t->updateCallback = (u32)PlayerEffectRunDustUpdate;
-        t->unk28 = 0;
+        t->playerEffectStopRequested = 0;
         t->playerEffectLoopCount = 0;
-        while (t->unk28 == 0)
+        while (t->playerEffectStopRequested == 0)
         {
             u = gCurTask;
             if (u->facing == 1)
@@ -67,7 +67,7 @@ void PlayerEffectRunDust(void)
             TaskYieldTrampoline(2);
             gCurTask->frame += 2;
             TaskYieldTrampoline(1);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 7, 1);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_RUN_DUST, 1);
             TaskSetMotionXFacing(0x5A5A5A5A, 0);
             TaskYieldTrampoline(1);
             gCurTask->frame -= 2;
@@ -102,8 +102,8 @@ void PlayerEffectRunDustUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 == 0 && (t->player->mode != 2 || (t->u8C.parentTask)->onGround == 0))
-        t->unk28 = 1;
+    if (t->playerEffectStopRequested == 0 && (t->player->mode != 2 || (t->u8C.parentTask)->onGround == 0))
+        t->playerEffectStopRequested = 1;
 }
 
 void PlayerEffectSlideDust(void)
@@ -135,7 +135,7 @@ void PlayerEffectSlideDust(void)
         TaskYieldTrampoline(2);
         gCurTask->frame += 2;
         TaskYieldTrampoline(1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 8, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SLIDE_DUST, 1);
         TaskYieldTrampoline(1);
         gCurTask->frame -= 2;
         TaskYieldTrampoline(2);
@@ -233,7 +233,7 @@ void PlayerEffectSplash(void)
     TaskExitTrampoline();
 }
 
-void sub_080548f0(void)
+void PlayerEffectLeaveWaterSplash(void)
 {
     struct Task *t;
 

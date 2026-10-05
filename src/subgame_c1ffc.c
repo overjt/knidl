@@ -13,7 +13,7 @@
  * 
  *   CreateAirGrindRacers / CreateAirGrindScenery / CreateAirGrindEffect   spawn task type #96:
  *       variant 0 once per player (Task.unk1C = the player), variant 1 (its
- *       task index kept in M37Game.unk44C) and variant 2 (Task.unk18/unk1C/
+ *       task index kept in AirGrindState.sceneryTaskSlot) and variant 2 (Task.unk18/unk1C/
  *       unk20 from the caller).
  *   AirGrindSetupRace   the state set-up: gAirGrindPtr = &gAirGrind,
  *       gAirGrindCoursePtr = &gAirGrindCourse, the linked-player count and mode
@@ -43,45 +43,45 @@ void AirGrindStepScript(void);                                  /* step the gAir
 void CreateAirGrindRacers(void)
 {
     s32 i;
-    s32 id;
-    struct Task *t;
+    s32 airGrindObjectSlot;
+    struct Task *airGrindObject;
 
     for (i = 0; i < 4; i++) {
-        id = TaskCreateFrom(96, 0);
-        if (id != -1) {
-            t = &gTasks[id];
-            t->unk18 = id;
-            t->unk1C = i;
-            t->variant = 0;
+        airGrindObjectSlot = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 0);
+        if (airGrindObjectSlot != -1) {
+            airGrindObject = &gTasks[airGrindObjectSlot];
+            airGrindObject->unk18 = airGrindObjectSlot;
+            airGrindObject->unk1C = i;
+            airGrindObject->variant = AIR_GRIND_OBJECT_VARIANT_RACER;
         }
     }
 }
 
 void CreateAirGrindScenery(s32 unused)
 {
-    s32 id;
+    s32 airGrindObjectSlot;
     struct Task *t;
 
-    id = TaskCreateFrom(96, 32);
-    if (id != -1) {
-        t = &gTasks[id];
-        t->variant = 1;
-        gAirGrindPtr->unk44C = id;
+    airGrindObjectSlot = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 32);
+    if (airGrindObjectSlot != -1) {
+        t = &gTasks[airGrindObjectSlot];
+        t->variant = AIR_GRIND_OBJECT_VARIANT_SCENERY;
+        gAirGrindPtr->sceneryTaskSlot = airGrindObjectSlot;
     }
 }
 
 void CreateAirGrindEffect(s32 a, s32 b, s32 c)
 {
-    s32 id;
-    struct Task *t;
+    s32 airGrindObjectSlot;
+    struct Task *airGrindObject;
 
-    id = TaskCreateFrom(96, 32);
-    if (id != -1) {
-        t = &gTasks[id];
-        t->unk18 = b;
-        t->unk1C = a;
-        t->variant = 2;
-        t->unk20 = c;
+    airGrindObjectSlot = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 32);
+    if (airGrindObjectSlot != -1) {
+        airGrindObject = &gTasks[airGrindObjectSlot];
+        airGrindObject->unk18 = b;
+        airGrindObject->unk1C = a;
+        airGrindObject->variant = AIR_GRIND_OBJECT_VARIANT_EFFECT;
+        airGrindObject->unk20 = c;
     }
 }
 
@@ -100,16 +100,16 @@ void AirGrindSetupRace(void)
     AirGrindClearScript();
     for (i = 0; i < 4; i++) {
         gAirGrindCoursePtr->players[i].coursePos = gAirGrindCoursePtr->scrollPos;
-        gAirGrindCoursePtr->players[i].unk04 = 0;
+        gAirGrindCoursePtr->players[i].holdingA = 0;
     }
-    gAirGrindPtr->unk014 = -1;
+    gAirGrindPtr->engineSfxPlayer = -1;
     gAirGrindPtr->frameCount = 0;
     gFrameCallback = (u32)AirGrindBuildSky;
     gVBlankCallback = (u32)AirGrindSkyVBlankCallback;
     AirGrindStopAllPaletteFades();
     for (i = 0; i < 16; i++) {
-        gAirGrindPtr->unk0EC.unk76[i] = gUnk_08609E40[32 + i];
-        gAirGrindPtr->unk0EC.unk96[i] = gUnk_08609E40[64 + i];
+        gAirGrindPtr->scenery.unk76[i] = gUnk_08609E40[32 + i];
+        gAirGrindPtr->scenery.unk96[i] = gUnk_08609E40[64 + i];
     }
 }
 
@@ -147,7 +147,7 @@ void AirGrindRace(void)
     if (gFrameCallback != 0 && gAirGrind.level != 2) {
         while (gAirGrindPtr->frameCount <= 0x4AF)
             TaskYieldTrampoline(1);
-        AirGrindStartPaletteFade(&gAirGrindPtr->unk0EC.unk76[1], 161, 256, 2, 6, 1);
+        AirGrindStartPaletteFade(&gAirGrindPtr->scenery.unk76[1], 161, 256, 2, 6, 1);
     }
     while (gAirGrindCoursePtr->scrollPos < gAirGrindCoursePtr->finishLine - 240)
         TaskYieldTrampoline(1);

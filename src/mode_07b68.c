@@ -32,7 +32,7 @@ void LinkMain1(u8 *cmd, u16 *send, u16 *recv);
 
 s32 SendLinkBlockAndVerify(u32 *src, u32 *dst, u32 size)
 {
-    s32 i;
+    s32 player;
     s32 n;
     s32 m;
 
@@ -56,10 +56,10 @@ s32 SendLinkBlockAndVerify(u32 *src, u32 *dst, u32 size)
     m = 0;
     n = 0;
     do {
-        for (i = 0; i < 4; i++) {
-            if (gRecvCmds[0][i] == 0x5503) {
+        for (player = 0; player < 4; player++) {
+            if (gRecvCmds[0][player] == 0x5503) {
                 n++;
-                if (gRecvCmds[1][i] != 0)
+                if (gRecvCmds[1][player] != 0)
                     m++;
             }
         }
@@ -135,11 +135,11 @@ void ExtraModeTitleLinkErrorScreen(void)
     gFadeBlankAtWhite = 0;
     while (1) {
         if (gPressedKeys & 9) {
-            PlaySfx(102);
+            PlaySfx(SE_CONFIRM);
             break;
         }
         if (gPressedKeys & 2) {
-            PlaySfx(215);
+            PlaySfx(SE_CANCEL);
             break;
         }
         RunFrameNoTasks();
@@ -147,7 +147,7 @@ void ExtraModeTitleLinkErrorScreen(void)
     BeginFastFadeOutToWhite();
     RunFramesNoTasksUntilFadeDone();
     gPrevGameState = gUnk_02007FCC + 14;
-    gGameState = 4;
+    gGameState = GAME_STATE_MAIN_MENU;
 }
 
 /* Stage the link-play payload at 0x02020000: the common blob
@@ -271,10 +271,10 @@ void ExtraModeTitleMain(void)
         ExtraModeTitleLinkErrorScreen();
         return;
     cancel:
-        PlaySfx(215);
+        PlaySfx(SE_CANCEL);
         BeginFastFadeOutToWhite();
         RunFramesUntilFadeDone();
-        gGameState = 4;
+        gGameState = GAME_STATE_MAIN_MENU;
         gPrevGameState = gUnk_02007FCC + 14;
         return;
     } else {
@@ -290,20 +290,20 @@ select:
     gExtraModeTitlePhase = 3;
     while (1) {
         RunLinkFrame();
-        if (gPrevGameState == 4) {
+        if (gPrevGameState == GAME_STATE_MAIN_MENU) {
             if (gUnk_02006090 <= 2) {
                 if ((gPlayerPressedKeys[0] & 0x20) && gSubGameLevel != 0) {
-                    PlaySfx(101);
+                    PlaySfx(SE_CURSOR_MOVE);
                     gSubGameLevel--;
                 } else if ((gPlayerPressedKeys[0] & 0x10) && gSubGameLevel != 2) {
-                    PlaySfx(101);
+                    PlaySfx(SE_CURSOR_MOVE);
                     gSubGameLevel++;
                 }
             }
             if (gPlayerCount == 1 && (gPlayerPressedKeys[0] & 2))
                 goto cancel;
             if (gPlayerPressedKeys[0] & 9) {
-                PlaySfx(102);
+                PlaySfx(SE_CONFIRM);
                 break;
             }
         } else {
@@ -322,7 +322,7 @@ select:
     LinkStopKeyExchange();
     /* store address first, then the one read of gUnk_02007FCC, kept in k */
     gGameState = (k = gUnk_02007FCC) + 14;
-    if (gPrevGameState == 4 && k <= 2)
+    if (gPrevGameState == GAME_STATE_MAIN_MENU && k <= 2)
         RunLinkFrames(32);
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();

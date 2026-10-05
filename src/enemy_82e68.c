@@ -36,7 +36,7 @@
  *   * the class-2 task #176 one-shot `Task_FlamerFlame` and the class-3 task #10
  *     entry `Task_Noddy`, whose script continues in src/enemy_844c4.c.
  *
- * `FlamerIdleEnterState`, `SirKibbleCutterEnterState`, `sub_080840d4` and `sub_0808429c` are dead
+ * `FlamerIdleEnterState`, `SirKibbleCutterEnterState`, `HotHeadFireBreathEnterState` and `HotHeadFireBallEnterState` are dead
  * exports: each is a copy of its host's tail dispatch that nothing in the ROM
  * references (lesson 4.30 / 4.34, curated in tools/symdb.py).
  */
@@ -71,7 +71,7 @@ extern void ActorReactToHit(void);
 void FlamerInit(void)
 {
     gCurTask->updateCallback = (u32)FlamerUpdate;
-    ActorSetState(0);
+    ActorSetState(FLAMER_STATE_0);
     CallTableEntry(gCurTask->state, 7, gFlamerStates);
 }
 
@@ -106,7 +106,7 @@ void FlamerState0(void)
     struct Task *t;
     u16 v;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = FLAMER_STATE_0;
     TaskFaceNearestPlayer();
     TaskSetFrame(4);
     TaskYieldTrampoline(1);
@@ -142,15 +142,15 @@ void FlamerState0(void)
     } while (gCurTask->flamerSurfaceSide != 0);
 done:
     if (gCurTask->flamerSurfaceSlope == 0)
-        ActorSetState(2);
+        ActorSetState(FLAMER_STATE_FALL);
     else
-        ActorSetState(1);
+        ActorSetState(FLAMER_STATE_CRAWL);
     TaskSleepForever();
 }
 
 void FlamerState0Update(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != FLAMER_STATE_0)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
@@ -158,7 +158,7 @@ void FlamerCrawl(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = FLAMER_STATE_CRAWL;
     TaskStop();
     TaskSetFrame(4);
     while (1)
@@ -252,7 +252,7 @@ void FlamerCrawlUpdate(void)
         break;
     case 2:
         if (FlamerGetSurfaceSlopeOnSide(t->flamerSurfaceSide) == 0)
-            ActorSetState(0);
+            ActorSetState(FLAMER_STATE_0);
         y = gCurTask;
         y->flamerCrawlPhase = 0;
         if ((y->flamerCrawlDir & 1) != 0)
@@ -272,10 +272,10 @@ void FlamerCrawlUpdate(void)
         p.x1 = z->pixelX + 64;
         p.y1 = gCurTask->pixelY + 64;
         if (TaskIsNearestPlayerInRect(&p) != 0)
-            ActorSetState(3);
+            ActorSetState(FLAMER_STATE_3);
         gCurTask->flamerCheckTimer = 20;
     }
-    if (gCurTask->state != 1)
+    if (gCurTask->state != FLAMER_STATE_CRAWL)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
@@ -283,7 +283,7 @@ void FlamerFall(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 2;
+    gCurTask->updateState = FLAMER_STATE_FALL;
     t = gCurTask;
     t->flamerSurfaceSide = 0;
     t->flamerSurfaceSlope = 0;
@@ -307,7 +307,7 @@ void FlamerFallUpdate(void)
         else
             gCurTask->flamerCrawlDir = 1;
         gCurTask->flamerCrawlPhase = 0;
-        ActorSetState(1);
+        ActorSetState(FLAMER_STATE_CRAWL);
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
     }
 }
@@ -316,7 +316,7 @@ void FlamerState3(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 3;
+    gCurTask->updateState = FLAMER_STATE_3;
     TaskFaceNearestPlayer();
     TaskStop();
     gCurTask->onGround = 0;
@@ -332,13 +332,13 @@ void FlamerState3(void)
         gCurTask->flamerLoopCount++;
     } while ((s16)gCurTask->flamerLoopCount <= 6);
     sub_08083dfc();
-    ActorSetState(4);
+    ActorSetState(FLAMER_STATE_4);
     TaskSleepForever();
 }
 
 void FlamerState3Update(void)
 {
-    if (gCurTask->state != 3)
+    if (gCurTask->state != FLAMER_STATE_3)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
@@ -346,7 +346,7 @@ void FlamerState4(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 4;
+    gCurTask->updateState = FLAMER_STATE_4;
     ActorSetAttackBox(gUnk_0873F758);
     gCurTask->flamerFlightAngle = TaskGetAngleToNearestPlayer(3);
     gCurTask->flamerSteerTimer = 1;
@@ -398,7 +398,7 @@ void FlamerState4Update(void)
         p.y1 = gUnk_030023D4;
         if (GetDistSq(&p) <= 99)
         {
-            ActorSetState(5);
+            ActorSetState(FLAMER_STATE_5);
             TaskSetEntry(FlamerEnterState, gCurTaskIdx);
         }
         else
@@ -417,7 +417,7 @@ void FlamerState5(void)
 {
     s32 n;
 
-    gCurTask->updateState = 5;
+    gCurTask->updateState = FLAMER_STATE_5;
     TaskFaceNearestPlayer();
     TaskStop();
     gCurTask->actorAnimDelay20 = ActorStartAnim(gUnk_08741744);
@@ -433,7 +433,7 @@ void FlamerState5(void)
         gCurTask->flamerFlameTimer++;
         if ((gCurTask->flamerFlameTimer & 3) == 0)
         {
-            gCurTask->flamerFlameSlot = CreateChildTaskAtOffsetFacing(176, 0, 0, 1);
+            gCurTask->flamerFlameSlot = CreateChildTaskAtOffsetFacing(TASK_FLAMER_FLAME, 0, 0, 1);
             (gTasks + (s16)gCurTask->flamerFlameSlot)->flamerFlameArcIndex = (gCurTask->flamerFlameTimer >> 2) & 3;
         }
         n = TaskGetNearestPlayerDx();
@@ -464,7 +464,7 @@ void FlamerState5(void)
         TaskYieldTrampoline(6);
         TaskStop();
         gCurTask->flamerDashCount++;
-        ActorSetState(6);
+        ActorSetState(FLAMER_STATE_6);
     }
     TaskSleepForever();
 }
@@ -472,7 +472,7 @@ void FlamerState5(void)
 void FlamerState5Update(void)
 {
     gCurTask->actorAnimDelay20 = ActorTickAnim(gCurTask->actorAnimDelay20);
-    if (gCurTask->state != 5)
+    if (gCurTask->state != FLAMER_STATE_5)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
@@ -480,7 +480,7 @@ void FlamerState6(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 6;
+    gCurTask->updateState = FLAMER_STATE_6;
     ActorSetAttackBox(gUnk_0873F720);
     gCurTask->flamerFlightAngle = TaskGetAngleToNearestPlayer(3);
     gCurTask->flamerSteerTimer = 1;
@@ -516,7 +516,7 @@ void FlamerState6(void)
         gCurTask->flamerLoopCount++;
     } while ((s16)gCurTask->flamerLoopCount <= 2);
     gCurTask->flamerCheckTimer = 20;
-    ActorSetState(2);
+    ActorSetState(FLAMER_STATE_FALL);
     TaskSleepForever();
 }
 
@@ -553,7 +553,7 @@ void FlamerState6Update(void)
             }
         }
     }
-    if (gCurTask->state != 6)
+    if (gCurTask->state != FLAMER_STATE_6)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
@@ -563,7 +563,7 @@ void FlamerIdleInit(void)
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(FLAMER_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gFlamerIdleStates);
 }
 
@@ -583,7 +583,7 @@ void FlamerIdle(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = FLAMER_IDLE_STATE_IDLE;
     TaskSetFrame(4);
     while (1)
     {
@@ -778,7 +778,7 @@ void SirKibbleCutterInit(void)
 {
     gCurTask->updateCallback = (u32)SirKibbleCutterUpdate;
     TaskFaceLikeParent();
-    ActorSetState(0);
+    ActorSetState(SIR_KIBBLE_CUTTER_STATE_0);
     CallTableEntry(gCurTask->state, 1, gSirKibbleCutterStates);
 }
 
@@ -801,7 +801,7 @@ void SirKibbleCutterState0(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = SIR_KIBBLE_CUTTER_STATE_0;
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(gUnk_08741E54[gCurTask->actorSpawnArg], gUnk_08741E5C[gCurTask->actorSpawnArg]);
     gCurTask->speedLimitX = 0x2A800;
@@ -859,26 +859,26 @@ void Task_HotHeadFire(void)
     CallTableEntry(gCurTask->variant, 2, gHotHeadFireVariants);
 }
 
-void HotHeadFireVariant0(void)
+void HotHeadFireBreathInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_080840f0;
-    ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08741E84);
+    gCurTask->updateCallback = (u32)HotHeadFireBreathUpdate;
+    ActorSetState(HOT_HEAD_FIRE_BREATH_STATE_BREATH);
+    CallTableEntry(gCurTask->state, 1, gHotHeadFireBreathStates);
 }
 
-void sub_080840d4(void)
+void HotHeadFireBreathEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741E84);
+    CallTableEntry(gCurTask->state, 1, gHotHeadFireBreathStates);
 }
 
-void sub_080840f0(void)
+void HotHeadFireBreathUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08741E88);
+    CallTableEntry(gCurTask->updateState, 1, gHotHeadFireBreathStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_08084114(void)
+void HotHeadFireBreath(void)
 {
     struct Task *t;
     struct Task *o;
@@ -891,7 +891,7 @@ void sub_08084114(void)
 
     t = gCurTask;
     o = gTasks + (s16)t->parent;
-    t->updateState = 0;
+    t->updateState = HOT_HEAD_FIRE_BREATH_STATE_BREATH;
     u = gCurTask;
     if (u->facing == 1)
         u->hotHeadFireAngle = 0;
@@ -938,22 +938,22 @@ void sub_08084248(void)
 {
 }
 
-void HotHeadFireVariant1(void)
+void HotHeadFireBallInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_080842b8;
+    gCurTask->updateCallback = (u32)HotHeadFireBallUpdate;
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
-        ActorSetState(0);
-        CallTableEntry(gCurTask->state, 1, gUnk_08741E8C);
+        ActorSetState(HOT_HEAD_FIRE_BALL_STATE_BALL);
+        CallTableEntry(gCurTask->state, 1, gHotHeadFireBallStates);
     }
 }
 
-void sub_0808429c(void)
+void HotHeadFireBallEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741E8C);
+    CallTableEntry(gCurTask->state, 1, gHotHeadFireBallStates);
 }
 
-void sub_080842b8(void)
+void HotHeadFireBallUpdate(void)
 {
     if (ActorCollideTerrainAlongVelocity() == 1)
     {
@@ -962,20 +962,20 @@ void sub_080842b8(void)
     }
     else
     {
-        CallTableEntry(gCurTask->updateState, 1, gUnk_08741E90);
+        CallTableEntry(gCurTask->updateState, 1, gHotHeadFireBallStateUpdates);
         ActorCheckHits();
         ActorReactToHit();
     }
 }
 
-void sub_08084308(void)
+void HotHeadFireBall(void)
 {
     struct Task *t;
     struct Task *u;
     struct Task *v;
     s32 n;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = HOT_HEAD_FIRE_BALL_STATE_BALL;
     gCurTask->unk28 = 0;
     gCurTask->hotHeadFireAimAngle = n = TaskGetAngleToNearestPlayer(3);
     if (n >= 25 && n <= 127)

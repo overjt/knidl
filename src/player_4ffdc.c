@@ -17,7 +17,7 @@
  * 17 with camera presets PlayerSetMotionXPreset(10, 24-27).  PlayerStarRodFlightCheckShoot re-binds
  * sub-action 2 when a direction is pressed or held for ten frames, and
  * PlayerStarRodFlightSteer steers the player with the held direction (velocity pairs
- * gUnk_0873B724[Task.unk6E], PlayerState.unk10 counting the glide
+ * gUnk_0873B724[Task.unk6E], PlayerState.flightCoastTimer counting the glide
  * frames). */
 
 void TaskSetEntry(void *a, u32 i);
@@ -32,7 +32,7 @@ void PlayerStarRodFlightIntro(void)
         t->updateCallback = (u32)PlayerStarRodFlightIntroUpdate;
         t->playerActionDone = 0;
         t->frame = 0xFFFF;
-        if (gGameState != 20)
+        if (gGameState != GAME_STATE_BOSS_ENDURANCE)
         {
             gPlayerHealth[t->player->playerIndex] = 0;
             AddPlayerHealth(gMaxHealth, t->player->playerIndex);
@@ -105,11 +105,11 @@ void PlayerStarRodFlightIntro(void)
     TaskYieldTrampoline(16);
     gCurTask->velY = 0x2000;
     TaskYieldTrampoline(16);
-    if (gUnk_020055C4 == 0)
-        sub_0803f6e0();
+    if (gPlayerOrderShuffleCount == 0)
+        ShufflePlayerOrder();
     {
         struct Task *t = gCurTask;
-        u16 *e = gUnk_0873B6CC[t->unk2C];
+        u16 *e = gUnk_0873B6CC[t->playerEntryOrder];
         s32 v;
 
         t->velX = 0xFFFF8000;
@@ -240,7 +240,7 @@ void PlayerStarRodFlightShoot(void)
         gCurTask->frame++;
         TaskYieldTrampoline(1);
     }
-    CreatePlayerObjectLowSlot(gCurTask->player->playerIndex, 12, 0);
+    CreatePlayerObjectLowSlot(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_STAR_ROD_FLIGHT_SHOT, 0);
     for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 9; gCurTask->playerLoopCount++)
     {
         gCurTask->frame++;
@@ -348,9 +348,9 @@ void PlayerStarRodFlightSteer(void)
                 v |= 0xFF000000;
             t->velY = v;
             t->speedLimitY = 0x20000;
-            t->player->unk10 = 8;
+            t->player->flightCoastTimer = 8;
         }
-        else if (t->player->unk10 != 0)
+        else if (t->player->flightCoastTimer != 0)
         {
             u16 *e;
             s32 v;
@@ -364,7 +364,7 @@ void PlayerStarRodFlightSteer(void)
             if (e[3] & 0x8000)
                 v |= 0xFF000000;
             t->velY = v;
-            if (--t->player->unk10 == 0)
+            if (--t->player->flightCoastTimer == 0)
             {
                 gCurTask->velX = 0;
                 gCurTask->velY = 0;

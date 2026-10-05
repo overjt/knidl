@@ -29,7 +29,7 @@ void MrTickTockNoteInit(void)
 
     t->updateCallback = (u32)MrTickTockNoteUpdate;
     t->mrTickTockNoteDir = -gTasks[t->parent].facing;
-    ActorSetState(0);
+    ActorSetState(MR_TICK_TOCK_NOTE_STATE_FLIGHT);
     CallTableEntry(gCurTask->state, 2, gMrTickTockNoteStates);
 }
 
@@ -41,10 +41,10 @@ void MrTickTockNoteUpdate(void)
     }
     else
     {
-        ActorSetState(1);
+        ActorSetState(MR_TICK_TOCK_NOTE_STATE_VANISH);
         TaskSetEntry(MrTickTockNoteEnterState, gCurTaskIdx);
     }
-    if (gCurTask->state != 1)
+    if (gCurTask->state != MR_TICK_TOCK_NOTE_STATE_VANISH)
         ActorCheckHits();
     ActorReactToHit();
 }
@@ -58,7 +58,7 @@ void MrTickTockNoteFlight(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = MR_TICK_TOCK_NOTE_STATE_FLIGHT;
     gCurTask->onGround = 0;
     t = gCurTask;
     t->unk28 = 0;
@@ -80,7 +80,7 @@ void MrTickTockNoteVanish(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = MR_TICK_TOCK_NOTE_STATE_VANISH;
     gCurTask->onGround = 0;
     gCurTask->unk28 = 0;
     TaskStop();
@@ -143,7 +143,7 @@ void sub_0809bc1c(void)
     {
         t = gCurTask;
         q = (u8 *)(t->metaKnightsQueue0 + (t->metaKnightsQueue0Index << 3));
-        r = CreateActor(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
+        r = CreateActor(3, 9, TASK_META_KNIGHTS_KNIGHT, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
                          gUnk_08745CEC[q[0]]);
         t2 = gCurTask;
         p2 = &t2->metaKnightsNewKnightSlot;
@@ -155,7 +155,7 @@ void sub_0809bc1c(void)
     {
         u = gCurTask;
         q = (u8 *)(u->metaKnightsQueue1 + (u->metaKnightsQueue1Index << 3));
-        r = CreateActor(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
+        r = CreateActor(3, 9, TASK_META_KNIGHTS_KNIGHT, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
                          gUnk_08745CEC[q[0]]);
         u2 = gCurTask;
         p2 = &u2->metaKnightsNewKnightSlot;
@@ -167,7 +167,7 @@ void sub_0809bc1c(void)
     {
         v = gCurTask;
         q = (u8 *)(v->metaKnightsQueue2 + (v->metaKnightsQueue2Index << 3));
-        r = CreateActor(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
+        r = CreateActor(3, 9, TASK_META_KNIGHTS_KNIGHT, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
                          gUnk_08745CEC[q[0]]);
         v2 = gCurTask;
         p2 = &v2->metaKnightsNewKnightSlot;
@@ -179,7 +179,7 @@ void sub_0809bc1c(void)
     {
         w = gCurTask;
         q = (u8 *)(w->metaKnightsQueue3 + (w->metaKnightsQueue3Index << 3));
-        r = CreateActor(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
+        r = CreateActor(3, 9, TASK_META_KNIGHTS_KNIGHT, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
                          gUnk_08745CEC[q[0]]);
         w2 = gCurTask;
         p2 = &w2->metaKnightsNewKnightSlot;

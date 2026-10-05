@@ -16,7 +16,7 @@ extern void RunLinkFrame(void);
 void ExchangeLinkSaveSlots(void)
 {
     s32 n;
-    s32 i;
+    s32 player;
 
     LinkStartRecordExchange();
     gLinkSaveSlotPart = 0;
@@ -30,9 +30,9 @@ void ExchangeLinkSaveSlots(void)
         }
         else
         {
-            for (i = 0; i < gPlayerCount; i++)
+            for (player = 0; player < gPlayerCount; player++)
             {
-                if ((gRecvCmds[i] & 0xFF00) == (204 << 7) && (gRecvCmds[i] & 255) == 27)
+                if ((gRecvCmds[player] & 0xFF00) == (204 << 7) && (gRecvCmds[player] & 255) == 27)
                     n++;
             }
         }

@@ -15,7 +15,7 @@
  * `switch (Task.unk18 & 15)` over its sub-states, each a yield script that
  * ends in TaskExitTrampoline; its per-frame callback (Task.updateCallback) runs
  * the hit test TaskBreakBlocks and the terrain checks and re-binds the body
- * in another sub-state, or the shared exit sub_08050814, on contact.
+ * in another sub-state, or the shared exit PlayerObjectVanish, on contact.
  * Variant 0 (PlayerObjectAirPuff, callback PlayerObjectAirPuffUpdate) spawns a copy of itself
  * in sub-state 1 while it moves; variants 1 and 2 (PlayerObjectSpitStar,
  * PlayerObjectSpitMultiStar) have the collision callbacks PlayerObjectSpitStarUpdate/PlayerObjectSpitMultiStarUpdate
@@ -70,7 +70,7 @@ void PlayerObjectAirPuff(void)
             TaskYieldTrampoline(2);
             gCurTask->frame += 2;
             TaskYieldTrampoline(1);
-            CreatePlayerObject(gCurTask->player->playerIndex, 0, 1);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_AIR_PUFF, 1);
             gCurTask->frame -= 2;
             TaskYieldTrampoline(2);
             TaskSetFrameByFacing(4);
@@ -226,7 +226,7 @@ void PlayerObjectSpitStarUpdate(void)
     if (hit)
     {
         struct Task *t;
-        TaskSetEntry(sub_08050814, gCurTaskIdx);
+        TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
         t = gCurTask;
         t->unk24 = (s32)gUnk_0873BD78;
         if (gTerrainResult.ceilingHits != 0 || (t->onGround & 1) || gTerrainResult.unk0 != 0)
@@ -250,21 +250,21 @@ void sub_08050f80(void)
     {
     case 0:
     case 1:
-        if (gUnk_02000020 == 2 || gUnk_02000020 == 3)
+        if (gRoomPlayerMode == 2 || gRoomPlayerMode == 3)
             gCurTask->unk34 = 4;
         else
             gCurTask->unk34 = 8;
         break;
     case 2:
     case 3:
-        if (gUnk_02000020 == 2 || gUnk_02000020 == 3)
+        if (gRoomPlayerMode == 2 || gRoomPlayerMode == 3)
             gCurTask->unk34 = 5;
         else
             gCurTask->unk34 = 9;
         break;
     case 4:
     case 5:
-        if (gUnk_02000020 == 2 || gUnk_02000020 == 3)
+        if (gRoomPlayerMode == 2 || gRoomPlayerMode == 3)
             gCurTask->unk34 = 6;
         else
             gCurTask->unk34 = 10;
@@ -399,7 +399,7 @@ void PlayerObjectSpitMultiStarUpdate(void)
         if ((t->onGround & 1) || *(u16 *)&gTerrainResult != 0)
         {
             PlaySfxIfLocalPlayer(125, t->parent);
-            TaskSetEntry(sub_08050814, gCurTaskIdx);
+            TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
             gCurTask->unk24 = (s32)gUnk_0873BD8C;
         }
         else if (t->waterFlags & 1)

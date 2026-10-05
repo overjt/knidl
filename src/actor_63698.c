@@ -7,7 +7,7 @@
  * (ActorBindDefSlot/ActorLoadDefSlot), resetting the actor record (ActorInitFromDefSlot),
  * 16.16 position/velocity accessors, ArcTan2 aiming, rectangle and distance
  * queries, animation-script walking, and the spawn helpers
- * (sub_08064A78/CreateChildTask/CreateActor) every later module calls.
+ * (CreateChildActor/CreateChildTask/CreateActor) every later module calls.
  */
 #include "gba/gba.h"
 #include "global.h"
@@ -32,7 +32,7 @@ extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 s32 TaskGetDxTo(u32 i);
 s32 TaskIsInRectSlot(struct Rect *r, u32 i);
 u16 TaskGetAngleToNearestPlayer(s32 prec);
-s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg, int prioArg,
+s32 CreateItemOrObject(u32 sub, u32 type, int p2Arg, int xArg, int yArg, int prioArg,
                  int altArg);
 s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
                  u16 prio);
@@ -71,25 +71,25 @@ void ActorBindDefSlot(u32 i)
     a->def = NULL;
     switch (t->actorKind)
     {
-    case 0:
+    case ACTOR_KIND_ENEMY:
         a->def = gEnemyDefs[t->u76.subtype];
         break;
-    case 1:
+    case ACTOR_KIND_MID_BOSS:
     case 3:
         a->def = gMidBossDefs[t->u76.subtype];
         break;
-    case 2:
+    case ACTOR_KIND_BOSS:
         a->def = gBossDefs[t->u76.subtype];
         gBossSubtype = t->u76.subtype;
         break;
-    case 4:
+    case ACTOR_KIND_CHILD:
         a->def = gChildActorDefs[t->u76.subtype];
         break;
-    case 5:
-        a->def = gUnk_0873EE70[t->u76.subtype];
+    case ACTOR_KIND_OBJECT:
+        a->def = gObjectDefs[t->u76.subtype];
         break;
     default:
-        a->def = gUnk_0873EE88[t->u76.subtype];
+        a->def = gItemDefs[t->u76.subtype];
         break;
     }
 }
@@ -175,7 +175,7 @@ void ActorInitFromDefSlot(u32 i)
         a->terrainHandlers = 0;
         a->prevTerrainHandlers = 0;
         a->hitReactions = 0;
-        a->ability = 0;
+        a->ability = ABILITY_NORMAL;
         a->score = 0;
         t->health = 0;
         a->unk60 = 0;
@@ -255,17 +255,17 @@ void ActorSetTerrainBox(u32 box)
     gCurTask->u8C.actor->terrainBox = box;
 }
 
-void sub_080639f0(struct ActorAux *v)
+void ActorSetAux(struct ActorAux *v)
 {
     gCurTask->u8C.actor->unk60 = v;
 }
 
-void sub_08063a00(u32 v)
+void ActorSetExtraAttackBox(u32 v)
 {
-    sub_08063a14(gCurTaskIdx, v);
+    ActorSetExtraAttackBoxSlot(gCurTaskIdx, v);
 }
 
-void sub_08063a14(u32 i, u32 v)
+void ActorSetExtraAttackBoxSlot(u32 i, u32 v)
 {
     struct Task *t;
 
@@ -580,10 +580,10 @@ void ActorDestroySlot(s32 i)
         }
         switch (t->actorKind)
         {
-        case 0:
+        case ACTOR_KIND_ENEMY:
             ReleaseRoomObject(i);
             break;
-        case 6:
+        case ACTOR_KIND_ITEM:
             if (gCurTask->u76.subtype != 0)
                 ReleaseRoomObject(i);
             break;
@@ -1218,16 +1218,16 @@ void ActorAwardScore(u32 arg, s32 mul)
 
     t = gCurTask;
     a = t->u8C.actor;
-    if (gGameState == 18)
+    if (gGameState == GAME_STATE_MUSEUM)
         return;
     v = a->score;
-    if (t->actorKind == 0 && t->u76.subtype == 37)
+    if (t->actorKind == ACTOR_KIND_ENEMY && t->u76.subtype == 37)
     {
         k = gFrameCount & 3;
         v = gUnk_0873DF14[k];
     }
     v *= mul;
-    if (gCurTask->actorKind == 0 && gCurTask->u76.subtype == 40
+    if (gCurTask->actorKind == ACTOR_KIND_ENEMY && gCurTask->u76.subtype == 40
         && (u8)(a->unk04 - 2) <= 1)
         v = 200;
     AddPlayerScore(v, arg);
@@ -1249,7 +1249,7 @@ void TaskFaceLikeParent(void)
 }
 
 /* Spawn a class-4 task from a descriptor; returns its slot or -1. */
-s32 sub_08064a78(struct ActorSpawn *p)
+s32 CreateChildActor(struct ActorSpawn *p)
 {
     struct Task *t;
     s32 i;
@@ -1263,7 +1263,7 @@ s32 sub_08064a78(struct ActorSpawn *p)
     if (i != -1)
     {
         t = &gTasks[i];
-        t->actorKind = 4;
+        t->actorKind = ACTOR_KIND_CHILD;
         t->u76.subtype = p->subtype;
         t->variant = p->variant;
         t->unk74 = p->spawnArg;
@@ -1288,7 +1288,7 @@ s32 CreateActorFromDescHere(struct ActorSpawn *p, u8 keepPrio)
     p->y = t->pixelY;
     if (keepPrio == 0)
         p->tileWord = t->tileWord;
-    return sub_08064a78(p);
+    return CreateChildActor(p);
 }
 
 s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio)
@@ -1300,14 +1300,14 @@ s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio)
     p->y += t->pixelY;
     if (keepPrio == 0)
         p->tileWord = t->tileWord;
-    return sub_08064a78(p);
+    return CreateChildActor(p);
 }
 
 s32 CreateActorFromDesc(struct ActorSpawn *p, u8 keepPrio)
 {
     if (keepPrio == 0)
         p->tileWord = gCurTask->tileWord;
-    return sub_08064a78(p);
+    return CreateChildActor(p);
 }
 
 /* Cycle the running task's frame between 4 and 7 every other tick. */
@@ -1360,13 +1360,13 @@ s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg)
         t = &gTasks[i];
         switch (gCurTask->actorKind)
         {
-        case 2:
-        case 7:
-            t->actorKind = 7;
+        case ACTOR_KIND_BOSS:
+        case ACTOR_KIND_BOSS_CHILD_TASK:
+            t->actorKind = ACTOR_KIND_BOSS_CHILD_TASK;
             break;
-        case 1:
-        case 8:
-            t->actorKind = 8;
+        case ACTOR_KIND_MID_BOSS:
+        case ACTOR_KIND_MID_BOSS_CHILD_TASK:
+            t->actorKind = ACTOR_KIND_MID_BOSS_CHILD_TASK;
             break;
         default:
             t->actorKind = 9;
@@ -1433,7 +1433,7 @@ s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio)
 
 /* Spawn a class-5/6 task; the 16-bit arguments are `int` for the same
    reason as CreateChildTask's. */
-s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
+s32 CreateItemOrObject(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
                  int prioArg, int altArg)
 {
     struct Task *t;
@@ -1449,9 +1449,9 @@ s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
     {
         t = &gTasks[i];
         if (alt != 0)
-            t->actorKind = 6;
+            t->actorKind = ACTOR_KIND_ITEM;
         else
-            t->actorKind = 5;
+            t->actorKind = ACTOR_KIND_OBJECT;
         t->u76.subtype = sub;
         t->variant = 0;
         t->unk74 = p2;
@@ -1467,20 +1467,20 @@ s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
     return i;
 }
 
-s32 sub_08064e5c(u32 sub, u32 type, u8 p2)
+s32 CreateItemHere(u32 sub, u32 type, u8 p2)
 {
     struct Task *t;
 
     t = gCurTask;
-    return sub_08064d9c(sub, type, p2, t->pixelX, t->pixelY, 0, 1);
+    return CreateItemOrObject(sub, type, p2, t->pixelX, t->pixelY, 0, 1);
 }
 
-s32 sub_08064e90(u32 sub, u32 type, u8 p2, s16 xArg, s16 yArg)
+s32 CreateItemAt(u32 sub, u32 type, u8 p2, s16 xArg, s16 yArg)
 {
     s32 x = xArg;
     s32 y = yArg;
 
-    return sub_08064d9c(sub, type, p2, x, y, 0, 1);
+    return CreateItemOrObject(sub, type, p2, x, y, 0, 1);
 }
 
 s32 CreateAbilityStar(u8 p2)
@@ -1490,18 +1490,18 @@ s32 CreateAbilityStar(u8 p2)
     struct PlayerState *p;
     s32 i;
 
-    i = sub_08064e5c(0, 68, p2);
+    i = CreateItemHere(0, TASK_ABILITY_STAR, p2);
     if (i != -1)
     {
         t = &gTasks[i];
         t->player = p = &gPlayerStates[gCurTaskIdx];
         a = t->u8C.actor;
-        t->unk18 = p->ability;
-        t->unk1C = p->abilityUses;
-        t->unk20 = gCurTaskIdx;
+        t->abilityStarAbility = p->ability;
+        t->abilityStarAbilityUses = p->abilityUses;
+        t->abilityStarOwnerSlot = gCurTaskIdx;
         a->ability = p->ability;
     }
-    CreateChildTaskHere(166, 0);
+    CreateChildTaskHere(TASK_ABILITY_RELEASE_FLASH, 0);
     return i;
 }
 
@@ -1539,21 +1539,21 @@ s32 CreateActorByKind(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio)
 
     switch (cls)
     {
-    case 0:
+    case ACTOR_KIND_ENEMY:
         type = gEnemyTaskTypes[sub];
         break;
-    case 1:
+    case ACTOR_KIND_MID_BOSS:
     case 3:
         type = gMidBossTaskTypes[sub];
         break;
-    case 2:
+    case ACTOR_KIND_BOSS:
         type = gBossTaskTypes[sub];
         break;
-    case 5:
-        type = gUnk_0873F288[sub];
+    case ACTOR_KIND_OBJECT:
+        type = gObjectTaskTypes[sub];
         break;
-    case 6:
-        type = gUnk_0873F2A0[sub];
+    case ACTOR_KIND_ITEM:
+        type = gItemTaskTypes[sub];
         break;
     default:
         while (1)
@@ -1563,7 +1563,7 @@ s32 CreateActorByKind(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio)
 }
 
 /* Clone the running task's class/sub into a fresh task. */
-s32 sub_0806505c(u8 p3, u8 p4, u32 x, u32 y, u16 prio)
+s32 CreateChildActorOfSameType(u8 p3, u8 p4, u32 x, u32 y, u16 prio)
 {
     struct Task *t;
     struct Task *u;
@@ -1587,18 +1587,18 @@ s32 sub_0806505c(u8 p3, u8 p4, u32 x, u32 y, u16 prio)
 
 s32 CreateBlockStar(s16 x, s16 y, u32 p2, u8 p3, u8 p4)
 {
-    struct Task *t;
-    s32 i;
+    struct Task *blockStar;
+    s32 blockStarSlot;
 
-    i = CreateActor(0, 40, 48, 0, 0, x, y, 0);
-    if (i != -1)
+    blockStarSlot = CreateActor(ACTOR_KIND_ENEMY, 40, TASK_BLOCK_STAR, 0, 0, x, y, 0);
+    if (blockStarSlot != -1)
     {
-        t = &gTasks[i];
-        t->hitKind = p3;
-        t->hitEffect = p4;
-        t->hitterSlot = p2;
+        blockStar = &gTasks[blockStarSlot];
+        blockStar->hitKind = p3;
+        blockStar->hitEffect = p4;
+        blockStar->hitterSlot = p2;
     }
-    return i;
+    return blockStarSlot;
 }
 
 /* Is the running task inside the 64px-padded camera window? */

@@ -29,7 +29,7 @@ void CheckPauseButton(void)
     for (i = 0; i < gPlayerCount; i++) {
         if (((gActivePlayerMask >> i) & 1) && gPauseDisabled == 0
             && (gPlayerPressedKeys[i] & 8)) {
-            gStageRequest = 5;
+            gStageRequest = STAGE_REQUEST_PAUSE;
             gPausingPlayer = i;
             return;
         }
@@ -39,7 +39,7 @@ void CheckPauseButton(void)
 void HubMain(void)
 {
     s32 done = 0;
-    s32 i;
+    s32 player;
 
     gPausingPlayer = 0;
     LoadBgLayout(3);
@@ -57,56 +57,56 @@ void HubMain(void)
         LatchPlayerKeys();
         CheckPauseButton();
         switch (gStageRequest) {
-        case 0:
+        case STAGE_REQUEST_NONE:
             break;
-        case 2:
-            gGameState = 6;
+        case STAGE_REQUEST_STAGE_START:
+            gGameState = GAME_STATE_STAGE_START;
             done = 1;
             break;
-        case 3:
-            gGameState = 8;
+        case STAGE_REQUEST_CHANGE_ROOM:
+            gGameState = GAME_STATE_STAGE;
             done = 1;
             break;
-        case 1:
-            gGameState = 5;
+        case STAGE_REQUEST_HUB:
+            gGameState = GAME_STATE_HUB;
             done = 1;
             break;
-        case 4:
+        case STAGE_REQUEST_BIG_SWITCH_VIEW:
             break;
-        case 5:
+        case STAGE_REQUEST_PAUSE:
             PauseScreen();
-            gStageRequest = 0;
+            gStageRequest = STAGE_REQUEST_NONE;
             break;
-        case 6:
+        case STAGE_REQUEST_LOST_LIFE:
             if (gPlayerLives[gLocalPlayer] != 0) {
                 gPlayerHealth[gLocalPlayer] = gMaxHealth;
-                gPlayerAbilities[gLocalPlayer] = 0;
+                gPlayerAbilities[gLocalPlayer] = ABILITY_NORMAL;
                 gPlayerAbilityUses[gLocalPlayer] = 0xFFFF;
             } else {
-                gGameState = 1;
+                gGameState = GAME_STATE_BOOT_LOGO;
             }
             done = 1;
             break;
-        case 7:
-        case 8:
+        case STAGE_REQUEST_ENDING:
+        case STAGE_REQUEST_GOAL_GAME:
             break;
-        case 9:
-        case 10:
-        case 11:
-        case 12:
-        case 13:
-        case 14:
+        case STAGE_REQUEST_QUICK_DRAW:
+        case STAGE_REQUEST_BOMB_RALLY:
+        case STAGE_REQUEST_AIR_GRIND:
+        case STAGE_REQUEST_WARP_STAR_STATION:
+        case STAGE_REQUEST_MUSEUM:
+        case STAGE_REQUEST_ARENA:
             gUnk_03001F2C = gStageRequest + 5;
             gUnk_02006090 = gStageRequest - 9;
             if (!((gExtraModeTitleSeen >> gUnk_02006090) & 1)) {
                 gUnk_02007FCC = gUnk_03001F2C - 14;
-                gGameState = 13;
+                gGameState = GAME_STATE_EXTRA_MODE_TITLE;
                 if (gUnk_02006090 > 2)
                     gExtraModeTitleSeen |= 1 << gUnk_02006090;
             } else {
                 gGameState = gUnk_03001F2C;
             }
-            gPrevGameState = 5;
+            gPrevGameState = GAME_STATE_HUB;
             done = 1;
             break;
         }
@@ -114,13 +114,13 @@ void HubMain(void)
     LinkStopKeyExchange();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
-    for (i = 0; i < gPlayerCount; i++) {
-        if (gPlayerStates[i].sfxPlayer != -1) {
-            StopSfxOnPlayer(gPlayerStates[i].sfxPlayer, gPlayerStates[i].sfxId);
-            gPlayerStates[i].sfxPlayer = -1;
+    for (player = 0; player < gPlayerCount; player++) {
+        if (gPlayerStates[player].sfxPlayer != -1) {
+            StopSfxOnPlayer(gPlayerStates[player].sfxPlayer, gPlayerStates[player].sfxId);
+            gPlayerStates[player].sfxPlayer = -1;
         }
     }
-    sub_08027178();
+    StopRoom();
 }
 
 void BigSwitchViewMain(void)
@@ -139,32 +139,32 @@ void BigSwitchViewMain(void)
     do {
         RunLinkFrame();
         switch (gStageRequest) {
-        case 0:
-        case 1:
-        case 2:
+        case STAGE_REQUEST_NONE:
+        case STAGE_REQUEST_HUB:
+        case STAGE_REQUEST_STAGE_START:
             break;
-        case 3:
-            gGameState = 8;
+        case STAGE_REQUEST_CHANGE_ROOM:
+            gGameState = GAME_STATE_STAGE;
             done = 1;
             break;
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-        case 8:
-        case 9:
-        case 10:
-        case 11:
-        case 12:
-        case 13:
-        case 14:
+        case STAGE_REQUEST_BIG_SWITCH_VIEW:
+        case STAGE_REQUEST_PAUSE:
+        case STAGE_REQUEST_LOST_LIFE:
+        case STAGE_REQUEST_ENDING:
+        case STAGE_REQUEST_GOAL_GAME:
+        case STAGE_REQUEST_QUICK_DRAW:
+        case STAGE_REQUEST_BOMB_RALLY:
+        case STAGE_REQUEST_AIR_GRIND:
+        case STAGE_REQUEST_WARP_STAR_STATION:
+        case STAGE_REQUEST_MUSEUM:
+        case STAGE_REQUEST_ARENA:
             break;
         }
     } while (done == 0);
     LinkStopKeyExchange();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
-    sub_08027198();
+    FreeRoomAndDoorObjects();
     if (CheckNewMilestones() != 0 && gMetaKnightmareMode == 0)
         ShowMilestonePicture();
 }
@@ -198,39 +198,39 @@ void StageMain(void)
         LatchPlayerKeys();
         CheckPauseButton();
         switch (gStageRequest) {
-        case 0:
+        case STAGE_REQUEST_NONE:
             break;
-        case 2:
-            gGameState = 6;
+        case STAGE_REQUEST_STAGE_START:
+            gGameState = GAME_STATE_STAGE_START;
             done = 1;
             break;
-        case 1:
-            gGameState = 5;
+        case STAGE_REQUEST_HUB:
+            gGameState = GAME_STATE_HUB;
             done = 1;
             break;
-        case 3:
+        case STAGE_REQUEST_CHANGE_ROOM:
             done = 1;
             break;
-        case 4:
-            gGameState = 9;
+        case STAGE_REQUEST_BIG_SWITCH_VIEW:
+            gGameState = GAME_STATE_BIG_SWITCH_VIEW;
             done = 1;
             break;
-        case 5:
+        case STAGE_REQUEST_PAUSE:
             PauseScreen();
-            if (gGameState == 5) {
-                sub_080272dc();
+            if (gGameState == GAME_STATE_HUB) {
+                ReturnToHubStageDoor();
                 done = 1;
             } else {
-                gStageRequest = 0;
+                gStageRequest = STAGE_REQUEST_NONE;
             }
             break;
-        case 6:
+        case STAGE_REQUEST_LOST_LIFE:
             if (gPlayerCount == 1) {
                 if (gPlayerLives[gLocalPlayer] != 0) {
                     ReturnToRestartPoint();
                 } else {
                 gameover:
-                    gGameState = 22;
+                    gGameState = GAME_STATE_GAME_OVER;
                 }
             } else {
                 n = 0;
@@ -244,24 +244,24 @@ void StageMain(void)
             }
             done = 1;
             break;
-        case 7:
-            gGameState = 11;
+        case STAGE_REQUEST_ENDING:
+            gGameState = GAME_STATE_ENDING;
             done = 1;
             break;
-        case 8:
-            gGameState = 10;
+        case STAGE_REQUEST_GOAL_GAME:
+            gGameState = GAME_STATE_GOAL_GAME;
             done = 1;
             break;
-        case 9:
-        case 10:
-        case 11:
+        case STAGE_REQUEST_QUICK_DRAW:
+        case STAGE_REQUEST_BOMB_RALLY:
+        case STAGE_REQUEST_AIR_GRIND:
             break;
-        case 12:
-            gGameState = 17;
+        case STAGE_REQUEST_WARP_STAR_STATION:
+            gGameState = GAME_STATE_WARP_STAR_STATION;
             done = 1;
             break;
-        case 13:
-        case 14:
+        case STAGE_REQUEST_MUSEUM:
+        case STAGE_REQUEST_ARENA:
             break;
         }
     } while (done == 0);
@@ -272,8 +272,8 @@ void StageMain(void)
         InputRecorderUpdate();
     }
     gFadeBlankAtWhite = 0;
-    sub_08027128();
-    if (gMetaKnightmareMode == 0 && gGameState != 9
+    StopRoomAndApplyExitFlags();
+    if (gMetaKnightmareMode == 0 && gGameState != GAME_STATE_BIG_SWITCH_VIEW
         && (gMilestoneFlags & (4 << gExtraMode))
         && !(gMilestoneFlags & (64 << gExtraMode))) {
         gMilestoneFlags |= 64 << gExtraMode;

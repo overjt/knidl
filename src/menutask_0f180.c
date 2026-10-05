@@ -48,12 +48,12 @@ void Task_LinkPlayPlayerList(void)
     t->posY = 0x340000;
     t->linkPlayPlayerListLoopCount = 0;
     do {
-        gCurTask->linkPlayPlayerListChildSlot = TaskCreateFrom(252, 32);
+        gCurTask->linkPlayPlayerListChildSlot = TaskCreateFrom(TASK_LINK_PLAY_CONSOLE, 32);
         u = gCurTask;
         x = &gTasks[u->linkPlayPlayerListChildSlot];
         x->parent = gCurTaskIdx;
         x->unk18 = (s16)u->linkPlayPlayerListLoopCount;
-        gCurTask->linkPlayPlayerListChildSlot = TaskCreateFrom(253, 32);
+        gCurTask->linkPlayPlayerListChildSlot = TaskCreateFrom(TASK_LINK_PLAY_CABLE, 32);
         u = gCurTask;
         x = &gTasks[u->linkPlayPlayerListChildSlot];
         x->parent = gCurTaskIdx;

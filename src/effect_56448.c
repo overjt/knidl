@@ -377,7 +377,7 @@ void sub_08056770(void)
         {
             struct Task *u = gCurTask;
 
-            u->unk28 = 0;
+            u->playerEffectStopRequested = 0;
             u->updateCallback = (u32)sub_08056da8;
         }
         do
@@ -401,7 +401,7 @@ void sub_08056770(void)
             TaskYieldTrampoline(2);
             gCurTask->frame += 2;
             TaskYieldTrampoline(2);
-        } while (gCurTask->unk28 == 0);
+        } while (gCurTask->playerEffectStopRequested == 0);
         break;
     case 5:
         {
@@ -437,6 +437,6 @@ void sub_08056da8(void)
 {
     struct Task *t = gCurTask;
 
-    if ((t->playerEffectSpawnWord & 15) == 4 && t->unk28 == 0 && t->player->mode != 13)
-        t->unk28 = 1;
+    if ((t->playerEffectSpawnWord & 15) == 4 && t->playerEffectStopRequested == 0 && t->player->mode != 13)
+        t->playerEffectStopRequested = 1;
 }

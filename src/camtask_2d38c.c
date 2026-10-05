@@ -9,10 +9,10 @@
  *
  * The seven bodies of task type #4 (Task_MapEvent dispatches Task.state
  * into the anchor table gMapEventVariants), the level's scripted map events:
- * sub_0802d38c waits for camera mode 3 and M07's AreInactivePlayerCamerasParked, raises
+ * MapEventMidBossFight waits for camera mode 3 and M07's AreInactivePlayerCamerasParked, raises
  * gMidBossFightState until it drops, then by Task.unk18 spawns a type-#4
- * child (sub_0802d478/sub_0802d5b4) or updates two metatiles through
- * CreateBlockBreakEffect and M09's BreakBlockAt; sub_0802d4bc and sub_0802d5f8
+ * child (CreateMapEventBreakTwoBlocks/CreateMapEventBreakThreeBlocks) or updates two metatiles through
+ * CreateBlockBreakEffect and M09's BreakBlockAt; MapEventBreakTwoBlocks and MapEventBreakThreeBlocks
  * update one or three metatiles behind type-#236 effects;
  * sub_0802d6cc and sub_0802d96c/sub_0802da8c fade the room palettes
  * towards another room's (the table gRoomTable, BlendColors into the
@@ -51,11 +51,11 @@ void CameraLeaveScrollLock(void);
 s32 CreateStageEffect(s32 a, s32 x, s32 y);
 void PauseBlockAnims(void);
 void StartBg1BlockAnims(void);
-s32 sub_0802d478(s32 x, s32 y);
-s32 sub_0802d5b4(s32 x, s32 y);
+s32 CreateMapEventBreakTwoBlocks(s32 x, s32 y);
+s32 CreateMapEventBreakThreeBlocks(s32 x, s32 y);
 void sub_0802da8c(void);
 
-void sub_0802d38c(void)
+void MapEventMidBossFight(void)
 {
     struct Task *t;
 
@@ -64,7 +64,7 @@ void sub_0802d38c(void)
     t->drawCallback = 0;
     if (t->mapEventWaitScrollLock != 0)
     {
-        while (gCameraMode != 3)
+        while (gCameraMode != CAMERA_MODE_SCROLL_LOCKED)
             TaskYieldTrampoline(1);
         while (AreInactivePlayerCamerasParked() == 0)
             TaskYieldTrampoline(1);
@@ -78,9 +78,9 @@ void sub_0802d38c(void)
     if (gCurTask->mapEventEndAction == 1)
     {
         if (gUnk_02007D64 == 4)
-            sub_0802d5b4(gCurTask->mapEventTargetX, gCurTask->mapEventTargetY);
+            CreateMapEventBreakThreeBlocks(gCurTask->mapEventTargetX, gCurTask->mapEventTargetY);
         else
-            sub_0802d478(gCurTask->mapEventTargetX, gCurTask->mapEventTargetY);
+            CreateMapEventBreakTwoBlocks(gCurTask->mapEventTargetX, gCurTask->mapEventTargetY);
     }
     else if (gCurTask->mapEventEndAction == 2)
     {
@@ -92,12 +92,12 @@ void sub_0802d38c(void)
     TaskExitTrampoline();
 }
 
-s32 sub_0802d478(s32 x, s32 y)
+s32 CreateMapEventBreakTwoBlocks(s32 x, s32 y)
 {
     s32 id;
     struct Task *t;
 
-    id = TaskCreateHighSlot(4);
+    id = TaskCreateHighSlot(TASK_MAP_EVENT);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -110,7 +110,7 @@ s32 sub_0802d478(s32 x, s32 y)
     return id;
 }
 
-void sub_0802d4bc(void)
+void MapEventBreakTwoBlocks(void)
 {
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = 0;
@@ -128,12 +128,12 @@ void sub_0802d4bc(void)
     TaskExitTrampoline();
 }
 
-s32 sub_0802d5b4(s32 x, s32 y)
+s32 CreateMapEventBreakThreeBlocks(s32 x, s32 y)
 {
     s32 id;
     struct Task *t;
 
-    id = TaskCreateHighSlot(4);
+    id = TaskCreateHighSlot(TASK_MAP_EVENT);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -146,7 +146,7 @@ s32 sub_0802d5b4(s32 x, s32 y)
     return id;
 }
 
-void sub_0802d5f8(void)
+void MapEventBreakThreeBlocks(void)
 {
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = 0;

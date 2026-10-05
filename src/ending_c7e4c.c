@@ -9,12 +9,12 @@
 /* ending_c7e4c.c (0x080C7E4C-0x080C9003, issue #100).
  *
  * The first ending scene, part 2: task type #100 variants 4-10.
- *   sub_080c7e4c / sub_080c8298   variant 4, the long scripted sprite, and
+ *   EndingEpilogueKirby / EndingEpilogueKirbyDraw   variant 4, the long scripted sprite, and
  *       its draw callback (follows the task Task.parent while Task.unk28 is
  *       set, cycles a palette blend, draws scaled like it); near the end it
- *       spawns variant 5 (sub_080c8468).
- *   sub_080c8498   variant 5, an effect drifting away from its spawner.
- *   sub_080c85d8 / sub_080c8778   variant 6: hidden for 2278 frames, then a
+ *       spawns variant 5 (CreateEndingEpilogueStarRod).
+ *   EndingEpilogueStarRod   variant 5, an effect drifting away from its spawner.
+ *   EndingEpilogueKingDedede / EndingEpilogueKingDededeDraw   variant 6: hidden for 2278 frames, then a
  *       sprite that drifts in, shrinks while it fades in and falls away.
  *   sub_080c88f0   variant 7: after 240 frames spawns the nine variant-8
  *       sprites (sub_080c8924) and calls M07's sub_080269e8.
@@ -51,12 +51,12 @@ void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 void TaskStop(void);
 
 /* Task type #100 variant 4: the long scripted sprite of the first ending
-   scene; its draw callback sub_080c8298 cycles the palette blend.  Near
-   the end it spawns variant 5 (sub_080c8468) with sound 0x121. */
-void sub_080c7e4c(void)
+   scene; its draw callback EndingEpilogueKirbyDraw cycles the palette blend.  Near
+   the end it spawns variant 5 (CreateEndingEpilogueStarRod) with sound 0x121. */
+void EndingEpilogueKirby(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_080c8298;
+    gCurTask->drawCallback = (u32)EndingEpilogueKirbyDraw;
     gCurTask->layer = 7;
     gCurTask->frameTable = gUnk_08755708;
     gCurTask->tileWord = 0x8810;
@@ -194,7 +194,7 @@ void sub_080c7e4c(void)
     TaskStop();
     gCurTask->velY = 0x28000;
     gCurTask->accelY = -0x10000;
-    sub_080c8468();
+    CreateEndingEpilogueStarRod();
     PlaySfx(0x121);
     gCurTask->frame = 46;
     TaskYieldTrampoline(4);
@@ -233,7 +233,7 @@ void sub_080c7e4c(void)
 /* The draw callback task type #100 variant 4 installs: follows the task
    Task.parent while Task.unk28 is set, cycles a palette blend, and draws the
    sprite scaled like the followed task. */
-void sub_080c8298(void)
+void EndingEpilogueKirbyDraw(void)
 {
     struct Task *p;
     struct Task *t;
@@ -283,21 +283,21 @@ void sub_080c8298(void)
 }
 
 /* Spawn task type #100 variant 5 next to the calling task (Task.parent). */
-void sub_080c8468(void)
+void CreateEndingEpilogueStarRod(void)
 {
     s32 id;
     struct Task *t;
 
-    id = TaskCreateFrom(100, 32);
+    id = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
     t = &gTasks[id];
-    t->variant = 5;
+    t->variant = ENDING_EPILOGUE_VARIANT_STAR_ROD;
     t->parent = gCurTaskIdx;
 }
 
 /* Task type #100 variant 5: an effect that starts next to the task that
    spawned it (Task.parent), drifts up and left, and loops a 16-frame
    animation. */
-void sub_080c8498(void)
+void EndingEpilogueStarRod(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreenOrFree;
@@ -347,10 +347,10 @@ void sub_080c8498(void)
 /* Task type #100 variant 6: hidden for 2278 frames, then a sprite that
    drifts in from (224, 208), shrinks from 63.0 while it fades in, and
    falls away. */
-void sub_080c85d8(void)
+void EndingEpilogueKingDedede(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_080c8778;
+    gCurTask->drawCallback = (u32)EndingEpilogueKingDededeDraw;
     gCurTask->layer = 11;
     gCurTask->frameTable = gUnk_08755708;
     gCurTask->tileWord = 0x8810;
@@ -408,7 +408,7 @@ void sub_080c85d8(void)
 /* The draw callback task type #100 variant 6 installs: grows the scale
    Task.unk18 by Task.unk28 (up to 127.0), fades the palette in by Task.unk2C
    per frame, and draws the sprite scaled, frame 64 alternating with 65. */
-void sub_080c8778(void)
+void EndingEpilogueKingDededeDraw(void)
 {
     struct Task *t;
     u32 *tbl;
@@ -472,7 +472,7 @@ void sub_080c8924(void)
     struct Task *t;
 
     for (i = 0; i <= 8; i++) {
-        id = TaskCreateFrom(100, 32);
+        id = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
         t = &gTasks[id];
         t->variant = 8;
         t->endingEpilogueIndex = i;

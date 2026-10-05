@@ -10,16 +10,16 @@
  * Task type #6, variants 7-9, each variant body followed by the callbacks
  * only it installs.  Variant 7 (PlayerObjectIceBreath, animation tables
  * gUnk_08751B40/gUnk_08751E5C) switches on the sub-state Task.unk18 & 15
- * and installs M11's sub_0803dfc8 and its own collision callback
+ * and installs M11's PlayerDrawWorldLoadTilesAndPalette and its own collision callback
  * PlayerObjectIceBreathUpdate, which registers the collider row gUnk_0873BE24 and runs the
  * hit test TaskBreakBlocksAt(gUnk_0873CC1C) at the spawner's position (Task.u8C.parentTask).
  * Variant 8 (PlayerObjectBeamOrb, gUnk_08751BB0) traces six-step paths from the
  * 8.8 velocity rows gUnk_0873B7C0[k] and the animation rows
- * gUnk_0873B808[k] (sound 129) with the callback sub_08052b08 (collider row
+ * gUnk_0873B808[k] (sound 129) with the callback PlayerObjectBeamOrbUpdate (collider row
  * gUnk_0873BE38, hit test gUnk_0873CC2C), which variant 10
  * (src/plobj_52f6c.c) installs too; both end in a `pop {r1}` epilogue
  * without setting r0, so they are declared s32 with no return.  Variant 9
- * (sub_08052b88, gUnk_0875204C) is a copy of the spawner's sprite:
+ * (PlayerObjectLightOrb, gUnk_0875204C) is a copy of the spawner's sprite:
  * sub-state 0 queues the tiles gUnk_08204B98 (four 320-byte rows) and the
  * palette gUnk_08204B78 into the spawner's OBJ slots through the VRAM
  * transfer queue RequestCopy, blinks, flies to the top centre of the
@@ -39,7 +39,7 @@ u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y, s32 e);
 s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/PlayerObjectAirPuffUpdate.c); landed M09/M12/M13 files spell it u16 */
 
 s32 CreatePlayerObject(s8 player, u8 variant, s32 arg);
-s32 sub_08052b08(void);   /* returns a value: pop {r1} epilogue; plobj_52f6c.c spells it void */
+s32 PlayerObjectBeamOrbUpdate(void);   /* returns a value: pop {r1} epilogue; plobj_52f6c.c spells it void */
 
 void PlayerObjectIceBreath(void)
 {
@@ -48,14 +48,14 @@ void PlayerObjectIceBreath(void)
         t->moveCallback = (u32)TaskMove;
         t->updateCallback = (u32)PlayerObjectIceBreathUpdate;
         t->unk28 = 0;
-        t->u80.attackAbility = 13;
+        t->u80.attackAbility = ABILITY_ICE;
     }
     {
         struct Task *t = gCurTask;
         switch (t->playerObjectSpawnWord & 15)
         {
         case 0:
-            t->drawCallback = (u32)sub_0803dfc8;
+            t->drawCallback = (u32)PlayerDrawWorldLoadTilesAndPalette;
             t->frameTable = gUnk_08751B40;
             t->layer = 7;
             {
@@ -163,7 +163,7 @@ void PlayerObjectIceBreathUpdate(void)
         TaskFree(gCurTaskIdx);
         return;
     }
-    if (gCurTask->player->ability != 13)
+    if (gCurTask->player->ability != ABILITY_ICE)
     {
         TaskFree(gCurTaskIdx);
         return;
@@ -207,13 +207,13 @@ s32 PlayerObjectBeamOrb(void)
         struct Task *t = gCurTask;
         t->moveCallback = (u32)TaskMoveRelativeToParent;
         t->drawCallback = (u32)TaskDrawWorld;
-        t->updateCallback = (u32)sub_08052b08;
+        t->updateCallback = (u32)PlayerObjectBeamOrbUpdate;
         t->layer = 5;
     }
     {
         struct Task *t = gCurTask;
         t->frameTable = gUnk_08751BB0;
-        t->u80.attackAbility = 16;
+        t->u80.attackAbility = ABILITY_BEAM;
     }
     {
         struct Task *t = gCurTask;
@@ -347,7 +347,7 @@ s32 PlayerObjectBeamOrb(void)
     TaskExitTrampoline();
 }
 
-s32 sub_08052b08(void)
+s32 PlayerObjectBeamOrbUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -364,7 +364,7 @@ s32 sub_08052b08(void)
     }
 }
 
-void sub_08052b88(void)
+void PlayerObjectLightOrb(void)
 {
     struct Task *t = gCurTask;
 
@@ -419,7 +419,7 @@ void sub_08052b88(void)
             TaskYieldTrampoline(1);
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            CreatePlayerObject(gCurTask->player->playerIndex, 9, 1);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_LIGHT_ORB, 1);
         }
         PlaySfx(176);
         sub_08027588();

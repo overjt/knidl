@@ -35,13 +35,13 @@ void PlayerActionBurning(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 33;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_BURNING;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
             t->variant = 0;
-            gCurTask->u80.attackAbility = 5;
-            gCurTask->unk28 = 0;
+            gCurTask->u80.attackAbility = ABILITY_BURNING;
+            gCurTask->playerBurningHitWall = 0;
         }
     }
     switch (gCurTask->variant) {
@@ -49,8 +49,8 @@ void PlayerActionBurning(void)
         gCurTask->onGround = 0;
         PlayerSetMotionXPreset(11, 38);
         PlayerSetMotionYPreset(34);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 32, 2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 32, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 0);
         TaskSetFrame(0x5CB);
         TaskYieldTrampoline(2);
         gCurTask->frame++;
@@ -67,30 +67,30 @@ void PlayerActionBurning(void)
         gCurTask->variant = 1;
         /* fallthrough */
     case 1:
-        PlayerStartSfx(137, gCurTask->player->playerIndex);
+        PlayerStartSfx(SE_BURNING_ATTACK, gCurTask->player->playerIndex);
         gCurTask->onGround = 0;
         gCurTask->player->terrainBox = (u32)gUnk_0873CB2C;
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
         gCurTask->player->bodyBox = (u32)gUnk_0873BD3C;
         gCurTask->player->unk42 |= 16;
         gCurTask->playerLoopCount = 0;
-        gCurTask->unk2C = 0;
+        gCurTask->playerBurningFadeStep = 0;
         TaskSetFrame(0x5CF);
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 32, 3);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 32, 4);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 3);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 4);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->playerLoopCount = 0;
-        gCurTask->unk2C = 1;
+        gCurTask->playerBurningFadeStep = 1;
         TaskSetFrame(0x5D3);
         TaskYieldTrampoline(2);
         gCurTask->playerLoopCount = 0;
-        gCurTask->unk2C = 2;
+        gCurTask->playerBurningFadeStep = 2;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->frame++;
@@ -98,17 +98,17 @@ void PlayerActionBurning(void)
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->playerLoopCount = 0;
-        gCurTask->unk2C = 0;
+        gCurTask->playerBurningFadeStep = 0;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->playerLoopCount = 0;
-        gCurTask->unk2C = 1;
+        gCurTask->playerBurningFadeStep = 1;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->playerLoopCount = 0;
-        gCurTask->unk2C = 2;
+        gCurTask->playerBurningFadeStep = 2;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->frame++;
@@ -116,16 +116,16 @@ void PlayerActionBurning(void)
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->playerLoopCount = 0;
-        gCurTask->unk2C = 0;
+        gCurTask->playerBurningFadeStep = 0;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->playerLoopCount = 0;
-        gCurTask->unk2C = 1;
+        gCurTask->playerBurningFadeStep = 1;
         TaskSetFrame(0x5DF);
         TaskYieldTrampoline(2);
-        gCurTask->unk2C = -1;
+        gCurTask->playerBurningFadeStep = -1;
         gCurTask->player->unk42 &= 0xFFEF;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
@@ -141,10 +141,10 @@ void PlayerActionBurning(void)
         gCurTask->player->bodyBox = (u32)gPlayerDefaultBodyBox;
         PlayerSetMotionXPreset(11, 41);
         PlayerSetMotionYPreset(2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 32, 5);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 32, 6);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 32, 7);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 32, 8);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 5);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 6);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 7);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 8);
         TaskSetFrame(0x53C);
         TaskYieldTrampoline(2);
         gCurTask->frame++;
@@ -193,7 +193,7 @@ void PlayerActionBurningUpdate(void)
             s8 d = gCurTask->facing;
             if ((d == 1 && gTerrainResult.unk0 == 1)
                 || (d == -1 && gTerrainResult.unk0 == 2))
-                gCurTask->unk28 = 1;
+                gCurTask->playerBurningHitWall = 1;
         }
         break;
     case 1:
@@ -201,11 +201,11 @@ void PlayerActionBurningUpdate(void)
             struct Task *t = gCurTask;
             if (t->onGround & 1) {
                 if (gTerrainResult.slope != 0) {
-                    t->player->requestedAction = 2;
+                    t->player->requestedAction = PLAYER_ACTION_WALK;
                     PlayerSetMotionXPreset(11, 41);
                     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
                 }
-            } else if (*(u16 *)&gTerrainResult != 0 || t->unk28 != 0
+            } else if (*(u16 *)&gTerrainResult != 0 || t->playerBurningHitWall != 0
                        || (t->player->boundsClamp & 11) != 0) {
                 gCurTask->variant = 3;
                 TaskSetEntry(PlayerActionBurning, gCurTaskIdx);
@@ -213,12 +213,12 @@ void PlayerActionBurningUpdate(void)
         }
         {
             struct Task *t = gCurTask;
-            if (t->unk2C != -1) {
-                struct M12Fade *f = &gUnk_0873B510[t->unk2C];
-                t->unk6E += f->unk8;
-                if (t->unk6E > 255)
-                    t->unk6E = 256;
-                BlendColors(f->unk0, f->unk4, (u16)gCurTask->unk6E, 16,
+            if (t->playerBurningFadeStep != -1) {
+                struct BurningPaletteFade *f = &gUnk_0873B510[t->playerBurningFadeStep];
+                t->playerBurningFadeRatio += f->rate;
+                if (t->playerBurningFadeRatio > 255)
+                    t->playerBurningFadeRatio = 256;
+                BlendColors(f->src, f->dst, (u16)gCurTask->playerBurningFadeRatio, 16,
                              (u16 *)(gObjPalette + ((gCurTask->tileWord >> 12) << 5)));
             }
         }
@@ -234,10 +234,10 @@ void PlayerActionBurningUpdate(void)
         break;
     }
     if (PlayerHasCrossedWaterSurface(0) != 0)
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
     {
         struct PlayerState *p = gCurTask->player;
-        if (p->requestedAction != 0)
+        if (p->requestedAction != PLAYER_ACTION_NONE)
             p->unk42 &= 0xFFEF;
     }
 }
@@ -246,9 +246,9 @@ void PlayerActionLaser(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 34;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_LASER;
     gCurTask->playerActionDone28 = 0;
-    gCurTask->u80.attackAbility = 0;
+    gCurTask->u80.attackAbility = ABILITY_NORMAL;
     TaskSetFrame(0x658);
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -257,8 +257,8 @@ void PlayerActionLaser(void)
     TaskYieldTrampoline(2);
     TaskSetFrame(0x65A);
     TaskYieldTrampoline(2);
-    CreatePlayerObject(gCurTask->player->playerIndex, 6, 0);
-    PlaySfxIfLocalPlayer(172, gCurTask->player->playerIndex);
+    CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_LASER_BEAM, 0);
+    PlaySfxIfLocalPlayer(SE_LASER_ATTACK, gCurTask->player->playerIndex);
     gCurTask->playerLoopCount = 0;
     do {
         gCurTask->frame++;

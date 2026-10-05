@@ -2,6 +2,13 @@
 #define GUARD_TASK_H
 
 #include "gba/types.h"
+#include "constants/abilities.h"
+#include "constants/actors.h"
+#include "constants/hits.h"
+#include "constants/player.h"
+#include "constants/states.h"
+#include "constants/tasks.h"
+#include "constants/variants.h"
 
 /*
  * Cooperative task system data model.
@@ -82,7 +89,7 @@ struct Task
     /*0x74*/ u8 unk74;
     /*0x75*/ s8 hitTimer;
     /* A per-family view (docs/header-conventions.md): an actor's subtype
-       (written by CreateActor, sub_08064a78 and sub_08064d9c;
+       (written by CreateActor, CreateChildActor and CreateItemOrObject;
        ActorBindDefSlot binds Actor.def = gEnemyDefs[subtype] ...); the door
        index into gDoorStates for the door signs (src/obj_2eac8.c,
        obj_2f62c.c); the player's hit and status bits and Quick Draw's flag
@@ -118,8 +125,8 @@ struct Task
        store the nearest player's struct Task * here instead, which no actor
        reads back; ActorAttachToHitter rebinds it to the hitter's record. */
     /*0x88*/ struct PlayerState *player;
-    /* The task's actor record &gActors[slot] (CreateActor, sub_08064a78,
-       sub_08064d9c, SetPaletteAnimSource); task types #6/#7 keep their parent
+    /* The task's actor record &gActors[slot] (CreateActor, CreateChildActor,
+       CreateItemOrObject, SetPaletteAnimSource); task types #6/#7 keep their parent
        task &gTasks[Task.parent] here instead (Task_PlayerObject,
        Task_PlayerEffect, sub_08056770). */
     /*0x8C*/ union {
@@ -260,25 +267,25 @@ struct PlayerState
     /*0x06*/ u8 mouthState;
     /*0x07*/ u8 attachedCount;
     /*0x08*/ u8 heldCount;
-    /*0x09*/ u8 unk09;
-    /*0x0A*/ u8 unk0A;
+    /*0x09*/ u8 catchKind;
+    /*0x0A*/ u8 abilitySwallowCount;
     /*0x0B*/ u8 pendingAbility;
     /*0x0C*/ u8 pendingAbilityUses;
     /*0x0D*/ s8 ability;
     /*0x0E*/ s8 abilityUses;
-    /*0x0F*/ u8 unk0F;
-    /*0x10*/ s8 unk10;
+    /*0x0F*/ u8 runTapTimer;
+    /*0x10*/ s8 flightCoastTimer;
     /*0x11*/ u8 filler11;
     /*0x12*/ u16 invulnerabilityTimer;
     /*0x14*/ u16 unk14;
     /*0x16*/ u8 unk16;
     /*0x17*/ u8 invincible;
     /*0x18*/ u16 invincibleTimer;
-    /*0x1A*/ u16 unk1A;
-    /*0x1C*/ u16 unk1C;
+    /*0x1A*/ u16 invincibleFlashTimer;
+    /*0x1C*/ u16 invincibleFlashStep;
     /*0x1E*/ u16 unk1E;
     /*0x20*/ u16 unk20;
-    /*0x22*/ u8 unk22;
+    /*0x22*/ u8 paletteFlashMode;
     /*0x23*/ u8 filler23;
     /*0x24*/ u16 pixelOffsetX;
     /*0x26*/ u16 pixelOffsetY;
@@ -290,10 +297,10 @@ struct PlayerState
     /*0x2E*/ s16 sfxId;
     /*0x30*/ u8 ownStarSwallowCount;
     /*0x31*/ u8 ownStarInMouth;
-    /*0x32*/ s8 unk32;
-    /*0x33*/ s8 unk33;
-    /*0x34*/ s8 unk34;
-    /*0x35*/ s8 unk35;
+    /*0x32*/ s8 blinkShown;
+    /*0x33*/ s8 facingSlope;
+    /*0x34*/ s8 blinkScriptPos;
+    /*0x35*/ s8 blinkTimer;
     /*0x36*/ u8 unk36;
     /*0x37*/ u8 unk37;
     /*0x38*/ u16 shareTimer;
@@ -340,7 +347,7 @@ struct PlayerState
     /*0x70*/ u32 *prevTerrainBox;
 };
 
-/* Spawn descriptor sub_08064A78 turns into a task of actor kind 4
+/* Spawn descriptor CreateChildActor turns into a task of actor kind 4
    (Task.actorKind). */
 struct ActorSpawn
 {

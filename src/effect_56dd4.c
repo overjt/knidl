@@ -43,7 +43,7 @@ void PlayerEffectFireBreathFlames(void)
     t = gCurTask;
     t->frameTable = gUnk_08751CA4;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 12;
-    t->unk28 = 0;
+    t->playerEffectStopRequested = 0;
     switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
@@ -68,7 +68,7 @@ void PlayerEffectFireBreathFlames(void)
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(4);
-        } while (gCurTask->unk28 == 0);
+        } while (gCurTask->playerEffectStopRequested == 0);
         break;
     case 1:
         t->frame = 0xFFFF;
@@ -88,7 +88,7 @@ void PlayerEffectFireBreathFlames(void)
             TaskYieldTrampoline(3);
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-        } while (gCurTask->unk28 == 0);
+        } while (gCurTask->playerEffectStopRequested == 0);
         break;
     case 2:
         t->frame = 0xFFFF;
@@ -108,7 +108,7 @@ void PlayerEffectFireBreathFlames(void)
             TaskYieldTrampoline(3);
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-        } while (gCurTask->unk28 == 0);
+        } while (gCurTask->playerEffectStopRequested == 0);
         break;
     }
     TaskExitTrampoline();
@@ -119,8 +119,8 @@ void PlayerEffectFireBreathFlamesUpdate(void)
     {
         struct Task *t = gCurTask;
 
-        if (t->unk28 == 0 && (t->player->mode != 13 || t->facing != (t->u8C.parentTask)->facing))
-            t->unk28 = 1;
+        if (t->playerEffectStopRequested == 0 && (t->player->mode != 13 || t->facing != (t->u8C.parentTask)->facing))
+            t->playerEffectStopRequested = 1;
     }
     {
         struct Task *t = gCurTask;
@@ -128,7 +128,7 @@ void PlayerEffectFireBreathFlamesUpdate(void)
         if (!(t->player->unk40 & 0x100) && ((t->u8C.parentTask)->waterFlags & 1))
             TaskFree(gCurTaskIdx);
     }
-    if (gCurTask->player->ability != 1)
+    if (gCurTask->player->ability != ABILITY_FIRE)
         TaskFree(gCurTaskIdx);
 }
 

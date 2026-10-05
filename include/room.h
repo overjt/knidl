@@ -2,12 +2,15 @@
 #define GUARD_ROOM_H
 
 #include "gba/types.h"
+#include "constants/camera.h"
+#include "constants/game_states.h"
+#include "constants/rooms.h"
 
 /* room.h: the RAM cells and ROM tables of the level / room builder, the doors
    and the stage helpers (M07).  One declaration per symbol, with the type its
    consumers prove (issue #36 phase 2, docs/header-conventions.md). */
 
-struct Unk020055D8Entry;
+struct RoomObjectEntry;
 
 struct BgMap
 {
@@ -84,12 +87,12 @@ struct RoomDef
     /*0x50*/ u16 entryX;
     /*0x52*/ u16 entryY;
     /*0x54*/ u8 unk54;
-    /*0x55*/ u8 unk55;
+    /*0x55*/ u8 bg3FullShake;
     /*0x56*/ u8 unk56;
     /*0x57*/ u8 unk57;
 };
 
-struct Unk02004B90
+struct DoorState
 {
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 unk1;
@@ -99,14 +102,14 @@ struct Unk02004B90
     /*0x05*/ u8 filler05[3];
 };
 
-struct Unk020055D8
+struct RoomObjectList
 {
     /*0x00*/ s16 count;
     /*0x02*/ s16 sortedByY;
-    /*0x04*/ struct Unk020055D8Entry *entries;
+    /*0x04*/ struct RoomObjectEntry *entries;
 };
 
-struct Unk020061F0
+struct BreakingBlock
 {
     /*0x00*/ u16 cellX;
     /*0x02*/ u16 cellY;
@@ -123,7 +126,7 @@ struct Unk020061F0
     /*0x1D*/ u8 filler1D[3];
 };
 
-struct Unk03005670
+struct ScreenShake
 {
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 filler01;
@@ -132,7 +135,7 @@ struct Unk03005670
     /*0x06*/ u8 unk6;
 };
 
-struct Unk03005680
+struct ScrollLock
 {
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 lockedAxes;
@@ -147,15 +150,15 @@ struct Unk03005680
 /* EWRAM */
 extern s8 gRoomBg3FullShake;
 extern u16 gHubUnlockSource;
-extern u8 gUnk_02000020;
+extern u8 gRoomPlayerMode;
 extern u16 gFoundDoor;
 extern struct MapCell gRoomMapBuffer[];
 extern u16 gPlayerAbilities[];
 extern u8 gBigSwitchPressActive;
 extern s16 gObjectSpawnViewRect[4];
 extern u16 gBigSwitchReturnBg3X;
-extern struct Unk02004B90 gDoorStates[];
-extern s8 gUnk_02004C98;
+extern struct DoorState gDoorStates[];
+extern s8 gWarpStarStationDirection;
 extern u16 gBg1MetatileMap[];
 extern u8 gUnk_02005574[];
 extern u8 gContinueLevel;
@@ -166,13 +169,13 @@ extern u8 gBg3MapShape;
 extern s16 gBlockAnimClipRect[4];
 extern u8 gRoomBgmStarted;
 extern s16 gUnk_020055D4;
-extern struct Unk020055D8 gRoomObjectList;
+extern struct RoomObjectList gRoomObjectList;
 extern s16 gRoomEntryX;
 extern u8 gCameraPanDone;
 extern s8 gUnk_02006098[];
 extern s8 gSubGameLevel;
 extern u8 gRoomEntrySet;
-extern struct Unk020061F0 gBreakingBlocks[];
+extern struct BreakingBlock gBreakingBlocks[];
 extern u8 gRoomEntryMode;
 extern s8 gDoorObjectTasks[][3];
 extern struct MapCell gHubRoomMapBuffer[];
@@ -191,7 +194,7 @@ extern u16 gStageExitFlags;
 extern u8 gBigSwitchReturnStage;
 extern u8 gCutscenePending;
 extern u16 gUnk_02007FF0;
-extern s8 gUnk_02007FF8;
+extern s8 gContinueStage;
 extern u8 gBigSwitchReturnLevel;
 extern u16 gSavedPlayerAbilities[];
 extern u16 gUnk_02008050;
@@ -206,7 +209,7 @@ extern s16 gUnk_0200AF0C;
 extern u16 gPlayerAbilityUses[];
 extern s16 gHubUnlockBlocks[4];
 extern u16 gUnk_0200AFF4;
-extern s8 gUnk_0200B02C;
+extern s8 gWarpStarStationDest;
 extern s8 gEntryDoorIndex;
 extern s8 gUnk_0200B038;
 extern u8 gHBlankScrollStarted;
@@ -221,7 +224,7 @@ extern u16 gBgPaletteBank2[];
 extern u16 gBgPaletteBank8[];
 extern s16 gCameraAnchorY;
 extern u32 gUnk_03001F10;
-extern s8 gUnk_03001F20;
+extern s8 gCurStage;
 extern s32 gUnk_03001F2C; /* boot_091ac.c spelling */
 extern u8 gMetaKnightmareMode; /* set only by the mode list's fifth row
                                        (src/menu_0ca10.c); not link play */
@@ -277,12 +280,12 @@ extern struct MapCell *gRoomMap; /* the room's metatile map */
 extern s32 gScrollLockSpeedY;
 extern u16 gBg3StreamPos[2];
 extern u16 gCameraStreamPos[2];
-extern struct Unk03005670 gScreenShake;
-extern struct Unk03005680 gScrollLock;
+extern struct ScreenShake gScreenShake;
+extern struct ScrollLock gScrollLock;
 extern u16 gBg3Pos[2];
 
 /* ROM */
-extern u8 gUnk_08334EB4[];
+extern u8 gLevelStageCounts[];
 extern struct RoomDef gLevel7Stage1Room0;
 extern struct RoomDef gLevel7Stage1Room1;
 extern struct RoomDef gLevel7Stage1Room2;
@@ -693,11 +696,11 @@ extern struct RoomDef *const gLevel8Stage7Rooms[];
 /* Functions (defined in the files named above each group). */
 
 /* src/level_2296c.c */
-void sub_0802296c(void);
-void sub_08022c3c(void);
-void sub_08022f50(void);
+void ResetLevelStateAtHub(void);
+void ResetLevelStateForContinue(void);
+void BossEnduranceSetStart(void);
 void sub_08022f98(void);
-void sub_08022f9c(void);
+void ClearRoomBgmStarted(void);
 void LoadRoom(void);
 void sub_080233e0(void);
 void CreateRoomTask(s32 a);
@@ -751,9 +754,9 @@ void ReturnFromBigSwitchView(void);
 void sub_08025e00(void);
 void sub_08025e0c(void);
 s32 sub_08025e88(s32 i);
-s32 sub_08025f00(void);
+s32 ExitOnWarpStar(void);
 s32 sub_080260b0(void);
-s32 sub_0802610c(void);
+s32 ExitByCannon(void);
 
 /* src/stage_261c0.c */
 s32 CreateBlockBreakEffect(s32 x, s32 y);
@@ -771,9 +774,9 @@ void sub_08026704(s32 i);
 s32 CreateStageUnlockPan(void);
 s32 CreateBigSwitchUnlockPan(void);
 void ClampCameraFocusToRoom(void);
-void sub_0802695c(void);
+void UnlockNextLevel(void);
 void sub_08026994(void);
-void sub_08026998(void);
+void SaveAndSetContinuePoint(void);
 void sub_080269e8(void);
 u32 WhispyWoodsCheckScrollLock(void);
 u32 KrackoCheckScrollLock(void);
@@ -786,15 +789,15 @@ void DrawDoors(void);
 
 /* src/stage_270d0.c */
 void sub_080270d0(void);
-void sub_08027128(void);
-void sub_08027178(void);
-void sub_08027198(void);
+void StopRoomAndApplyExitFlags(void);
+void StopRoom(void);
+void FreeRoomAndDoorObjects(void);
 void PauseRoom(void);
 void SetRoomUpdateFlags(u32 a);
 void ResumeRoom(void);
 void PauseSaveBgPalette(void);
 void PauseRestoreRoomGraphics(void);
-void sub_080272dc(void);
+void ReturnToHubStageDoor(void);
 
 /* src/stage_273a0.c */
 void ReturnToRestartPoint(void);

@@ -44,7 +44,7 @@ void PauseScreen(void)
     PauseSaveBgPalette();
     mode = gGameState;
     flag = 0;
-    if (mode == 8 && gStageClearStatus[gCurLevel][gUnk_03001F20] != 0)
+    if (mode == GAME_STATE_STAGE && gStageClearStatus[gCurLevel][gCurStage] != 0)
         flag = gUnk_02007D64 != 5;
     LoadBgLayout(5);
     if (gMetaKnightmareMode == 1) {
@@ -80,13 +80,13 @@ void PauseScreen(void)
                 if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0) {
                     if (gPlayerPressedKeys[i] & 9) {
                         if (sel != 0) {
-                            gGameState = 5;
+                            gGameState = GAME_STATE_HUB;
                             StopAllSfx();
                         }
                         PlaySfx(0x11F);
                         pressed++;
                     } else if (gPlayerPressedKeys[i] & 2) {
-                        PlaySfx(215);
+                        PlaySfx(SE_CANCEL);
                         pressed++;
                     }
                     if (flag != 0 && (gPlayerPressedKeys[i] & 0xC0)) {
@@ -104,18 +104,18 @@ void PauseScreen(void)
             }
             if (gPlayerPressedKeys[gPausingPlayer] & 9) {
                 if (sel != 0) {
-                    gGameState = 5;
+                    gGameState = GAME_STATE_HUB;
                     StopAllSfx();
                 }
                 PlaySfx(0x11F);
                 pressed++;
             } else if (gPlayerPressedKeys[gPausingPlayer] & 2) {
-                PlaySfx(215);
+                PlaySfx(SE_CANCEL);
                 pressed++;
             }
         }
     } while (pressed == 0);
-    if (gInHub != 0 || gGameState != 5) {
+    if (gInHub != 0 || gGameState != GAME_STATE_HUB) {
         LinkStopKeyExchange();
         BeginFastFadeOutToWhite();
         RunLinkFramesUntilFadeDone();
@@ -171,28 +171,28 @@ void BossEnduranceMain(void)
         LatchPlayerKeys();
         CheckPauseButton();
         switch (gStageRequest) {
-        case 0:
+        case STAGE_REQUEST_NONE:
             break;
-        case 1:
+        case STAGE_REQUEST_HUB:
             done = 1;
             break;
-        case 2:
+        case STAGE_REQUEST_STAGE_START:
             break;
-        case 3:
+        case STAGE_REQUEST_CHANGE_ROOM:
             done = 1;
             break;
-        case 4:
+        case STAGE_REQUEST_BIG_SWITCH_VIEW:
             break;
-        case 5:
+        case STAGE_REQUEST_PAUSE:
             PauseScreen();
-            gStageRequest = 0;
+            gStageRequest = STAGE_REQUEST_NONE;
             break;
-        case 6:
-            gGameState = 22;
+        case STAGE_REQUEST_LOST_LIFE:
+            gGameState = GAME_STATE_GAME_OVER;
             done = 1;
             break;
-        case 7:
-            gGameState = 11;
+        case STAGE_REQUEST_ENDING:
+            gGameState = GAME_STATE_ENDING;
             done = 1;
             break;
         }
@@ -210,5 +210,5 @@ void BossEnduranceMain(void)
             gPlayerStates[i].sfxPlayer = -1;
         }
     }
-    sub_08027128();
+    StopRoomAndApplyExitFlags();
 }

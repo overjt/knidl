@@ -20,8 +20,8 @@ extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(void *p);
 extern void ActorSetAttackBox(void *p);
 extern void ActorSetTerrainBox(void *p);
-extern void sub_080639f0(void *p);
-extern void sub_08063a00(void *p);
+extern void ActorSetAux(void *p);
+extern void ActorSetExtraAttackBox(void *p);
 extern s16 ActorComputeHealth(void);
 extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern void ReleaseHeldPlayer(s32 i, s32 d);
@@ -46,7 +46,7 @@ void Task_FireLion(void)
     ActorIntroPoseUntilMidBossFight(gUnk_08744510);
     if (IsMidBossDroppingIn() != 0) {
         gCurTask->updateCallback = (u32)sub_0809699c;
-        sub_0809595c();
+        FireLionDropIn();
     } else {
         gCurTask->updateCallback = (u32)FireLionUpdate;
         sub_080959ec();
@@ -68,19 +68,19 @@ void sub_08095834(void)
     ActorInitBossGfx(1);
     gCurTask->speedLimitY = 0x30000;
     TaskFaceNearestPlayer();
-    gCurTask->fireLionFlameSlot = CreateChildTaskHere(214, 0);
+    gCurTask->fireLionFlameSlot = CreateChildTaskHere(TASK_FIRE_LION_FLAME, 0);
     gTasks[gCurTask->fireLionFlameSlot].variant = 0;
     b = gCurTask;
     b->fireLionFlameSlots = b->fireLionFlameSlot;
-    gCurTask->fireLionFlameSlot = CreateChildTaskHere(214, 0);
+    gCurTask->fireLionFlameSlot = CreateChildTaskHere(TASK_FIRE_LION_FLAME, 0);
     gTasks[gCurTask->fireLionFlameSlot].variant = 1;
     d = gCurTask;
     d->fireLionFlameSlots += d->fireLionFlameSlot << 8;
-    gCurTask->fireLionFlameSlot = CreateChildTaskHere(214, 0);
+    gCurTask->fireLionFlameSlot = CreateChildTaskHere(TASK_FIRE_LION_FLAME, 0);
     gTasks[gCurTask->fireLionFlameSlot].variant = 2;
     f = gCurTask;
     f->fireLionFlameSlots += f->fireLionFlameSlot << 8;
-    gCurTask->fireLionFlameSlot = CreateChildTaskHere(214, 0);
+    gCurTask->fireLionFlameSlot = CreateChildTaskHere(TASK_FIRE_LION_FLAME, 0);
     gTasks[gCurTask->fireLionFlameSlot].variant = 3;
     h = gCurTask;
     h->actorAnimDelay = 0;
@@ -93,7 +93,7 @@ void sub_08095834(void)
     h->fireLionFlameSlots = 0;
     h->fireLionSequencePhase = 0;
     h->fireLionPalettePhase = 0;
-    sub_08066ae0();
+    MidBossResetHealth();
     gUnk_02007D00[9] = ActorComputeHealth();
 }
 
@@ -102,12 +102,12 @@ void FireLionEnterState(void)
     CallTableEntry(gCurTask->state, 12, gFireLionStates);
 }
 
-void sub_0809595c(void)
+void FireLionDropIn(void)
 {
     struct Task *t;
     struct Task *u;
 
-    ActorSetState(0);
+    ActorSetState(FIRE_LION_STATE_DROP_IN);
     gCurTask->updateState = 0;
     ActorSetTerrainBox(gUnk_0874530C);
     gCurTask->onGround = 0;
@@ -126,30 +126,30 @@ void sub_0809595c(void)
     ActorSetTerrainBox(gUnk_08745304);
     TaskSetFrame(16);
     TaskYieldTrampoline(24);
-    ActorSetState(1);
+    ActorSetState(FIRE_LION_STATE_1);
     gCurTask->updateState = 12;
     TaskSleepForever();
 }
 
-void sub_080959e8(void)
+void FireLionDropInUpdate(void)
 {
 }
 
 void sub_080959ec(void)
 {
-    ActorSetState(1);
+    ActorSetState(FIRE_LION_STATE_1);
     gCurTask->updateState = 1;
     ActorSetTerrainBox(gUnk_08745304);
     gCurTask->actorAnimDelay = ActorStartAnim(gUnk_08744510);
     sub_08066580();
     TaskYieldTrampoline(gUnk_08744524[gCurTask->actorSpawnArg]);
     gCurTask->fireLionSequencePhase = RandomRange(8);
-    ActorSetState(2);
+    ActorSetState(FIRE_LION_STATE_WAIT);
     gCurTask->updateState = 12;
     TaskSleepForever();
 }
 
-void FireLionState2(void)
+void FireLionWait(void)
 {
     struct Task *t;
     s32 v;
@@ -209,10 +209,10 @@ void FireLionHop(void)
     TaskYieldTrampoline(8);
     TaskSetFrame(7);
     TaskYieldTrampoline(8);
-    if (gCurTask->state == 3)
+    if (gCurTask->state == FIRE_LION_STATE_3)
         ActorSetState(gUnk_08744608[RandomRange(8)]);
     else
-        ActorSetState(8);
+        ActorSetState(FIRE_LION_STATE_POUNCE);
     gCurTask->updateState = 12;
     TaskSleepForever();
 }
@@ -254,8 +254,8 @@ void sub_08095be8(void)
         FireLionWaitForLanding();
         ActorSetTerrainBox(gUnk_08745304);
         sub_08096924();
-        if (gCurTask->state == 5)
-            ActorSetState(2);
+        if (gCurTask->state == FIRE_LION_STATE_5)
+            ActorSetState(FIRE_LION_STATE_WAIT);
         else
             ActorSetState(gUnk_08744608[RandomRange(8)]);
     } else {
@@ -271,7 +271,7 @@ void sub_08095be8(void)
             x->fireLionLoopCount++;
         } while ((s16)x->fireLionLoopCount <= 1);
         sub_08096924();
-        ActorSetState(2);
+        ActorSetState(FIRE_LION_STATE_WAIT);
     }
     gCurTask->updateState = 12;
     TaskSleepForever();
@@ -343,7 +343,7 @@ void sub_08095e4c(void)
     } while ((s16)gCurTask->fireLionLoopCount <= 1);
 }
 
-void FireLionState7(void)
+void FireLionSlash(void)
 {
     struct Task *t;
     struct Task *u;
@@ -401,12 +401,12 @@ void FireLionState7(void)
         u->fireLionLoopCount++;
     } while ((s16)u->fireLionLoopCount <= 2);
     FireLionJumpBack();
-    ActorSetState(2);
+    ActorSetState(FIRE_LION_STATE_WAIT);
     gCurTask->updateState = 12;
     TaskSleepForever();
 }
 
-void sub_08096058(void)
+void FireLionSlashUpdate(void)
 {
     struct Task *t;
 
@@ -493,7 +493,7 @@ void FireLionCharge(void)
     TaskYieldTrampoline(8);
     FireLionWaitForLanding();
     sub_08096924();
-    ActorSetState(2);
+    ActorSetState(FIRE_LION_STATE_WAIT);
     gCurTask->updateState = 12;
     TaskSleepForever();
 }
@@ -557,7 +557,7 @@ void FireLionBounceOffWall(void)
     FireLionWaitForLanding();
     ActorSetTerrainBox(gUnk_08745304);
     sub_08096924();
-    ActorSetState(2);
+    ActorSetState(FIRE_LION_STATE_WAIT);
     gCurTask->updateState = 12;
     TaskSleepForever();
 }
@@ -571,7 +571,7 @@ void sub_080963c0(void)
         t->velY = 0;
 }
 
-void FireLionState8(void)
+void FireLionPounce(void)
 {
     struct Task *t;
     struct Task *u;
@@ -656,9 +656,9 @@ rest:
     RequestScreenShake(2);
     FireLionCreateLandingStar();
     gCurTask->actorAnimDelay = ActorStartAnim(gUnk_08744550);
-    sub_08063a00(gUnk_08745040);
+    ActorSetExtraAttackBox(gUnk_08745040);
     TaskYieldTrampoline(2);
-    sub_08063a00(0);
+    ActorSetExtraAttackBox(0);
     TaskYieldTrampoline(gUnk_08744562[gCurTask->actorSpawnArg]);
     gCurTask->fireLionLoopCount = 0;
     do {
@@ -677,12 +677,12 @@ rest:
     TaskSetFrame(36);
     TaskYieldTrampoline(8);
     sub_08096924();
-    ActorSetState(2);
+    ActorSetState(FIRE_LION_STATE_WAIT);
     gCurTask->updateState = 12;
     TaskSleepForever();
 }
 
-void sub_08096640(void)
+void FireLionPounceUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -750,7 +750,7 @@ void sub_08096680(void)
     do {
         if (gLocalPlayer == gCurTask->fireLionHeldPlayerSlot)
             PlaySfx(0x237);
-        CreateChildTaskAtOffsetFacing(141, 24, 0, 0);
+        CreateChildTaskAtOffsetFacing(TASK_STAR_FLASH, 24, 0, 0);
         TaskSetFrame(30);
         TaskYieldTrampoline(4);
         TaskSetFrame(31);
@@ -910,10 +910,10 @@ void FireLionCheckCatch(void)
         break;
     }
     u = gCurTask;
-    if (u->hitKind == 8) {
+    if (u->hitKind == HIT_KIND_CATCH) {
         p = gPlayerStates;
         i = u->hitterSlot;
-        if (p[i].ability != 17) {
+        if (p[i].ability != ABILITY_STONE) {
             u->fireLionHeldPlayerSlot = i;
             TaskFaceToward(i);
             HoldPlayer(gCurTask->fireLionHeldPlayerSlot, gCurTaskIdx, 5);
@@ -932,39 +932,39 @@ void FireLionDefeat(void)
     ActorStopAnim();
     gUnk_02007D00[8]--;
     if (gUnk_02007D00[8] <= 0)
-        sub_0806684c();
+        EndMidBossFightWithReward();
     sub_080667c0(1, 21);
     TaskStop();
     t = gCurTask;
     t->fireLionLanded = zero;
     t->fireLionCatchActive = zero;
     t->fireLionGlowing = 1;
-    CreateChildTaskHere(142, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     ActorSetHitReactions(gFireLionDefeatedHitReactions);
     gCurTask->onGround = zero;
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
     TaskSetMotionY(-0x30000, 0x1A00, 0x30000);
     TaskSetFrame(21);
     ActorSetAttackBox(gUnk_08744F0C);
-    sub_08063a00(gUnk_087446E8[gCurTask->frame]);
-    sub_080639f0(gUnk_087447B8[gCurTask->frame]);
+    ActorSetExtraAttackBox(gUnk_087446E8[gCurTask->frame]);
+    ActorSetAux(gUnk_087447B8[gCurTask->frame]);
     ActorSetTerrainBox(gUnk_08745304);
     while (gCurTask->velY < 0)
         TaskYieldTrampoline(1);
     TaskSetFrame(38);
     ActorSetAttackBox(gUnk_087450CC);
-    sub_08063a00(gUnk_087450E8);
-    sub_080639f0(gUnk_087447B8[gCurTask->frame]);
+    ActorSetExtraAttackBox(gUnk_087450E8);
+    ActorSetAux(gUnk_087447B8[gCurTask->frame]);
     while (gCurTask->fireLionLanded == 0)
         TaskYieldTrampoline(1);
     gCurTask->actorAnimDelay = ActorStartAnim(gUnk_08744550);
     TaskSetFrameByFacing(40);
     ActorSetAttackBox(gUnk_08745104);
-    sub_08063a00(gUnk_08745120);
-    sub_080639f0(gUnk_087447B8[gCurTask->frame]);
+    ActorSetExtraAttackBox(gUnk_08745120);
+    ActorSetAux(gUnk_087447B8[gCurTask->frame]);
     RequestScreenShake(4);
     PlaySfx(0x1F7);
-    CreateChildTaskHere(141, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH, 0);
     gCurTask->fireLionDustTimer = 0;
     TaskSetMotionXFacing(-0x10000, 0x600);
     TaskYieldTrampoline(30);
@@ -1026,7 +1026,7 @@ s32 FireLionHitWall(void)
 
 s32 FireLionReactToDamage(void)
 {
-    CreateChildTaskHere(142, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     RequestScreenShake(2);
     return 0;
 }
@@ -1041,7 +1041,7 @@ s32 FireLionReactToDefeat(void)
         ReleaseHeldPlayer(t->fireLionHeldPlayerSlot, -t->facing);
         gCurTask->fireLionHeldPlayerSlot = -1;
     }
-    ActorSetState(10);
+    ActorSetState(FIRE_LION_STATE_DEFEAT);
     TaskSetEntry(FireLionEnterState, gCurTaskIdx);
     return 1;
 }
@@ -1124,8 +1124,8 @@ void sub_08097024(void)
         u = gCurTask;
         v = u->frame;
         if (v < 40 || v > 43)
-            sub_08063a00(gUnk_087446E8[u->frame]);
-        sub_080639f0(gUnk_087447B8[gCurTask->frame]);
+            ActorSetExtraAttackBox(gUnk_087446E8[u->frame]);
+        ActorSetAux(gUnk_087447B8[gCurTask->frame]);
     }
 }
 

@@ -23,9 +23,9 @@ s32 PlayerBallPlayBump(void)
 
     if (k != 0)
     {
-        CreatePlayerEffect(gCurTask->player->playerIndex, 4, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_IMPACT_STAR, 0);
         gCurTask->player->bumpKind = 0;
-        gCurTask->unk24 = 1;
+        gCurTask->playerBallPosePlaying = 1;
         switch (k)
         {
         case 1:
@@ -33,7 +33,7 @@ s32 PlayerBallPlayBump(void)
             TaskYieldTrampoline(2);
             {
                 struct Task *t = gCurTask;
-                t->velY = -t->unk20;
+                t->velY = -t->playerBallBumpVelY;
                 t->speedLimitY = 0x50000;
             }
             break;
@@ -70,7 +70,7 @@ s32 PlayerBallPlayBump(void)
             }
             break;
         }
-        gCurTask->unk24 = 0;
+        gCurTask->playerBallPosePlaying = 0;
     }
 }
 
@@ -92,7 +92,7 @@ void PlayerBallStepRoll(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk6E == 1)
+    if (t->playerBallRollFacing == 1)
     {
         if (t->velX < 0)
         {
@@ -148,8 +148,8 @@ s32 PlayerBallCheckVariant(s32 a)
     case 3:
         if (PlayerCheckEnterDoor() != 0)
         {
-            gCurTask->player->requestedAction = 0;
-            gCurTask->unk74 = 1;
+            gCurTask->player->requestedAction = PLAYER_ACTION_NONE;
+            gCurTask->playerBallEnterDoor = 1;
             gCurTask->variant = 8;
             r = 8;
         }
@@ -164,7 +164,7 @@ s32 PlayerBallCheckLanding(s32 a0)
     {
         if ((gCurTask->waterFlags & 1) == 0
             && (gCurTask->velY & 0xFFFF0000) != 0 && a0 != 0)
-            CreatePlayerEffect(gCurTask->player->playerIndex, 4, 0);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_IMPACT_STAR, 0);
         PlayerStopAxes(2);
         return 1;
     }

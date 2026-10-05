@@ -121,43 +121,43 @@ void QuickDrawResetRound(void)
 
 void CreateQuickDrawRedrawSign(void)
 {
-    s32 i = TaskCreateFrom(94, 32);
+    s32 i = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (i != -1)
     {
-        struct Task *t = &gTasks[i];
-        t->variant = 1;
-        t->unk18 = 0;
-        t->unk1C = 1;
-        t->unk20 = 120;
-        t->unk24 = -1;
-        t->pixelX = 88;
-        t->pixelY = 24;
-        t->unk34 = 0;
+        struct Task *quickDrawObject = &gTasks[i];
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
+        quickDrawObject->unk18 = 0;
+        quickDrawObject->unk1C = 1;
+        quickDrawObject->unk20 = 120;
+        quickDrawObject->unk24 = -1;
+        quickDrawObject->pixelX = 88;
+        quickDrawObject->pixelY = 24;
+        quickDrawObject->unk34 = 0;
     }
 }
 
 void CreateQuickDrawSlash(void)
 {
-    s32 i = TaskCreateFrom(94, 32);
+    s32 i = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
     struct Task *t;
 
     if (i != -1)
     {
         t = &gTasks[i];
-        t->variant = 3;
+        t->variant = QUICK_DRAW_OBJECT_VARIANT_SLASH;
     }
 }
 
 void CreateQuickDrawBurst(void)
 {
-    s32 i = TaskCreateFrom(94, 32);
+    s32 i = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
     struct Task *t;
 
     if (i != -1)
     {
         t = &gTasks[i];
-        t->variant = 4;
+        t->variant = QUICK_DRAW_OBJECT_VARIANT_BURST;
     }
 }
 
@@ -279,7 +279,7 @@ void QuickDrawFalseStart(s32 a0)
     t->quickDrawFalseStartMask |= t->quickDrawPressMask;
     if (gPlayerCount != 1 && (s16)t->quickDrawFalseStartCount == gPlayerCount)
     {
-        t->state = 3;
+        t->state = QUICK_DRAW_STATE_ROUND_ALL_FALSE_START;
         if (gTaskSlotTypes[62] != -1)
             TaskFree(62);
     }
@@ -305,9 +305,9 @@ u8 QuickDrawFindMatchWinner(void)
 void QuickDrawDecideRound(s32 a0)
 {
     if (a0 == 1)
-        gCurTask->state = 4;
+        gCurTask->state = QUICK_DRAW_STATE_ROUND_WIN;
     else
-        gCurTask->state = 5;
+        gCurTask->state = QUICK_DRAW_STATE_ROUND_TIE;
     QuickDrawFreeze();
 }
 
@@ -318,12 +318,12 @@ void QuickDrawEnterState(void)
 
 void QuickDrawRoundWait(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = QUICK_DRAW_STATE_ROUND_WAIT;
     PlayBgm(0x823);
     while (gCurTask->quickDrawPlayersReady == 0)
         TaskYieldTrampoline(1);
     QuickDrawWaitForSignal();
-    gCurTask->state = 1;
+    gCurTask->state = QUICK_DRAW_STATE_ROUND_SIGNAL;
     TaskSleepForever();
 }
 
@@ -334,14 +334,14 @@ void QuickDrawRoundWaitUpdate(void)
         s32 r = QuickDrawCountPresses();
         if (r != 0)
             QuickDrawFalseStart(r);
-        if (gCurTask->state != 0)
+        if (gCurTask->state != QUICK_DRAW_STATE_ROUND_WAIT)
             TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
     }
 }
 
 void QuickDrawRoundSignal(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = QUICK_DRAW_STATE_ROUND_SIGNAL;
     QuickDrawStartTimer();
     TaskSleepForever();
 }
@@ -353,47 +353,47 @@ void QuickDrawRoundSignalUpdate(void)
     if (r != 0)
         QuickDrawDecideRound(r);
     else if (QuickDrawIsTimeUp())
-        gCurTask->state = 2;
-    if (gCurTask->state != 1)
+        gCurTask->state = QUICK_DRAW_STATE_ROUND_TIME_UP;
+    if (gCurTask->state != QUICK_DRAW_STATE_ROUND_SIGNAL)
         TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
 }
 
 void QuickDrawRoundTimeUp(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = QUICK_DRAW_STATE_ROUND_TIME_UP;
     QuickDrawEndRoundTimeUp();
     TaskYieldTrampoline(8);
-    gCurTask->state = 6;
+    gCurTask->state = QUICK_DRAW_STATE_ROUND_NEXT;
     TaskSleepForever();
 }
 
 void QuickDrawRoundTimeUpUpdate(void)
 {
-    if (gCurTask->state != 2)
+    if (gCurTask->state != QUICK_DRAW_STATE_ROUND_TIME_UP)
         TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
 }
 
 void QuickDrawRoundAllFalseStart(void)
 {
-    gCurTask->updateState = 3;
+    gCurTask->updateState = QUICK_DRAW_STATE_ROUND_ALL_FALSE_START;
     QuickDrawEndRoundFalseStart();
     TaskYieldTrampoline(8);
-    gCurTask->state = 6;
+    gCurTask->state = QUICK_DRAW_STATE_ROUND_NEXT;
     TaskSleepForever();
 }
 
 void QuickDrawRoundAllFalseStartUpdate(void)
 {
-    if (gCurTask->state != 3)
+    if (gCurTask->state != QUICK_DRAW_STATE_ROUND_ALL_FALSE_START)
         TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
 }
 
 void QuickDrawRoundWin(void)
 {
-    gCurTask->updateState = 4;
+    gCurTask->updateState = QUICK_DRAW_STATE_ROUND_WIN;
     QuickDrawEndRoundWin(1);
     TaskYieldTrampoline(80);
-    gCurTask->state = 6;
+    gCurTask->state = QUICK_DRAW_STATE_ROUND_NEXT;
     TaskSleepForever();
 }
 
@@ -401,7 +401,7 @@ void QuickDrawRoundWinUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->state != 4 && t->subGameNextPhase != 2)
+    if (t->state != QUICK_DRAW_STATE_ROUND_WIN && t->subGameNextPhase != 2)
     {
         if (QuickDrawFindMatchWinner())
             gCurTask->subGameNextPhase = 2;
@@ -412,22 +412,22 @@ void QuickDrawRoundWinUpdate(void)
 
 void QuickDrawRoundTie(void)
 {
-    gCurTask->updateState = 5;
+    gCurTask->updateState = QUICK_DRAW_STATE_ROUND_TIE;
     QuickDrawEndRoundTie();
     TaskYieldTrampoline(8);
-    gCurTask->state = 6;
+    gCurTask->state = QUICK_DRAW_STATE_ROUND_NEXT;
     TaskSleepForever();
 }
 
 void QuickDrawRoundTieUpdate(void)
 {
-    if (gCurTask->state != 5)
+    if (gCurTask->state != QUICK_DRAW_STATE_ROUND_TIE)
         TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
 }
 
 void QuickDrawRoundNext(void)
 {
-    gCurTask->updateState = 6;
+    gCurTask->updateState = QUICK_DRAW_STATE_ROUND_NEXT;
     BeginFastFadeOutToWhite();
     while (gFadeSteps != 0)
         TaskYieldTrampoline(1);
@@ -435,7 +435,7 @@ void QuickDrawRoundNext(void)
     BeginFastFadeInFromWhite();
     while (gFadeSteps != 0)
         TaskYieldTrampoline(1);
-    gCurTask->state = 0;
+    gCurTask->state = QUICK_DRAW_STATE_ROUND_WAIT;
     TaskSleepForever();
 }
 
@@ -443,7 +443,7 @@ void QuickDrawRoundNextUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->state != 6 && t->subGameNextPhase != 2)
+    if (t->state != QUICK_DRAW_STATE_ROUND_NEXT && t->subGameNextPhase != 2)
         TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
 }
 
@@ -477,19 +477,19 @@ void QuickDrawFalseStartVsCpu(s32 a0)
 
 void CreateQuickDrawOpponent(void)
 {
-    s32 i;
-    struct Task *t;
+    s32 quickDrawObjectSlot;
+    struct Task *quickDrawObject;
 
     QuickDrawLoadOpponentGraphics(0);
-    i = TaskCreateFrom(94, 32);
-    if (i != -1)
+    quickDrawObjectSlot = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
+    if (quickDrawObjectSlot != -1)
     {
-        t = &gTasks[i];
-        t->parent = gCurTaskIdx;
-        t->variant = 5;
-        t->quickDrawObjectLevel = gSubGameLevel;
-        t->u76.unk76 = 0;
-        gCurTask->quickDrawOpponentSlot = i;
+        quickDrawObject = &gTasks[quickDrawObjectSlot];
+        quickDrawObject->parent = gCurTaskIdx;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_OPPONENT;
+        quickDrawObject->quickDrawObjectLevel = gSubGameLevel;
+        quickDrawObject->u76.unk76 = 0;
+        gCurTask->quickDrawOpponentSlot = quickDrawObjectSlot;
     }
 }
 

@@ -10,7 +10,7 @@
  * gBlockLayer[] is the room's block layer, one u16 per metatile: 0 = no
  * block, the low byte = which replacement metatile of RoomDef.blockMetatiles[] the
  * cell turns into, bit 15 = being broken.  gBreakingBlocks[64] holds the
- * blocks being broken (struct Unk020061F0).  An attack's hit-box set
+ * blocks being broken (struct BreakingBlock).  An attack's hit-box set
  * (struct HitBoxSet) is placed at the task's position and facing by the
  * six wrappers TaskBreakBlocksAt ... TaskBreakTopBlockRow and scanned tile by tile:
  * BreakBlocksInHitBoxes tries every metatile its boxes cover and returns how many
@@ -62,7 +62,7 @@ struct MapTile
    free the record), unk14 = the frames left to wait, unk16/unk18 = the
    metatile index and collision byte written back to the map, unk1A = the
    block kind, unk1C = the player that broke it (-1 = none). */
-struct Unk020061F0
+struct BreakingBlock
 {
     /*0x00*/ u16 cellX;
     /*0x02*/ u16 cellY;
@@ -97,7 +97,7 @@ extern u16 gBrokenBlockY;               /*   y (pixels) */
 extern u16 gBlockLayer[];             /* per-cell block layer: low byte = replacement index, 0x8000 = being broken */
 extern struct MapTile *gRoomMap;   /* the room's metatile map */
 extern struct RoomDef *gCurRoomDef;   /* the current room header */
-extern struct Unk020061F0 gBreakingBlocks[];
+extern struct BreakingBlock gBreakingBlocks[];
 extern u16 gBlockCursorX;               /* the block CanBreakBlock accepted: x */
 extern u16 gBlockCursorY;               /*   y */
 extern u16 gBlockCursorIndex;               /*   map index */
@@ -115,8 +115,8 @@ s32 PlaySfx(s32 id);
 s32 CreateBlockBreakEffect(s32 x, s32 y);
 void RequestScreenShake(u16 a);
 s32 CreateStageEffect(s32 a, s32 x, s32 y);
-void BlockAnimWriteColumn(struct Unk020061F0 *b, s32 n);
-void BlockAnimWriteMetatileWrapped(struct Unk020061F0 *b);
+void BlockAnimWriteColumn(struct BreakingBlock *b, s32 n);
+void BlockAnimWriteMetatileWrapped(struct BreakingBlock *b);
 u16 BreakBlocksInHitBoxes(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e);
 u16 BreakFirstBlockInHitBox(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e);
 u16 BreakTopBlockRow(struct HitBoxSet *p, s32 x, s32 y, s32 dir);
@@ -433,7 +433,7 @@ s32 IsUnbrokenBlockAt(u32 x, u32 y)
 s32 BreakBlockAt(u32 x, u32 y)
 {
     s32 i = 0;
-    struct Unk020061F0 *b;
+    struct BreakingBlock *b;
 
     if (gBlockAnimHook != 0 && x < gRoomWidth && y < gRoomHeight)
     {
@@ -554,7 +554,7 @@ s32 BreakBlockAtCursor(void)
 {
     s32 i;
     s32 k;
-    struct Unk020061F0 *b;
+    struct BreakingBlock *b;
 
     i = 0;
     while (gBreakingBlocks[i].scriptPos != 0x7FFF)
@@ -712,7 +712,7 @@ s32 BreakBlockAtCursor(void)
 s32 sub_08031738(u32 x, u32 y, s32 n)
 {
     s32 i;
-    struct Unk020061F0 *b;
+    struct BreakingBlock *b;
     struct MapTile *t;
 
     if (x >= gRoomWidth || y >= gRoomHeight)

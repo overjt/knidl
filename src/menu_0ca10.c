@@ -87,7 +87,7 @@ void MenuEnterModeList(void)
         gModeListExtraRows = 0;
     MenuDrawModeList();
     if (gMenuScreen != 5)
-        TaskCreateFrom(247, 32);
+        TaskCreateFrom(TASK_MODE_LIST_CURSOR, 32);
 }
 
 void MenuDrawModeList(void)
@@ -131,12 +131,12 @@ void MenuModeListSelect(void)
         }
         if ((gPressedKeys & 9) || (gMenuBufferedKeys & 9)) {
             gMenuBufferedKeys = 0;
-            PlaySfx(102);
+            PlaySfx(SE_CONFIRM);
             if (gMenuCursor == 4) {
                 gMenuScreen = 9;
                 gExtraMode = 0;
                 gMetaKnightmareMode = 1;
-                gGameState = 13;
+                gGameState = GAME_STATE_EXTRA_MODE_TITLE;
                 gUnk_02006090 = 7;
                 gUnk_02007FCC = 7;
                 return;
@@ -153,13 +153,13 @@ void MenuModeListSelect(void)
             gSubGameLevel = 0;
             gMenuScreen = 5;
             gMenuChoiceCursor = 0;
-            TaskCreateFrom(248, 32);
+            TaskCreateFrom(TASK_MODE_PLAYER_COUNT_PANEL, 32);
             RunFrames(6);
             return;
         }
         if ((gPressedKeys & 2) || (gMenuBufferedKeys & 2)) {
             gMenuBufferedKeys = 0;
-            PlaySfx(215);
+            PlaySfx(SE_CANCEL);
             gPrevMenuScreen = gMenuScreen;
             gMenuScreen = 1;
             gDispCnt &= 0xE0FF;
@@ -179,11 +179,11 @@ void MenuModeListSelect(void)
             return;
         }
         if (gRepeatedKeys & 64) {
-            PlaySfx(101);
+            PlaySfx(SE_CURSOR_MOVE);
             if (--gMenuCursor < 0)
                 gMenuCursor = gModeListExtraRows + 2;
         } else if (gRepeatedKeys & 128) {
-            PlaySfx(101);
+            PlaySfx(SE_CURSOR_MOVE);
             if (++gMenuCursor >= gModeListExtraRows + 3)
                 gMenuCursor = 0;
         }
@@ -203,7 +203,7 @@ void MenuEnterLinkPlay(void)
     gBg2ScrollY = gBg3ScrollY = 0;
     BgScrollStartX(0xFFF00000, 256, 2);
     BgScrollStartX(0xFFF00000, 256, 3);
-    TaskCreateFrom(250, 32);
+    TaskCreateFrom(TASK_LINK_PLAY_COLOR_CYCLE, 32);
     LoadGfxSet(33);
     StartHBlankScroll(5);
     for (i = 0; i < 16; i++) {
@@ -216,10 +216,10 @@ void MenuEnterLinkPlay(void)
     LoadGfxSet(37);
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1E00;
-    TaskCreateFrom(249, 32);
+    TaskCreateFrom(TASK_LINK_PLAY_PALETTE_PULSE, 32);
     RunFrames(8);
     LoadGfxSet(42);
-    TaskCreateFrom(251, 32);
+    TaskCreateFrom(TASK_LINK_PLAY_PLAYER_LIST, 32);
 }
 
 void MenuModePlayerCountSelect(void)
@@ -236,20 +236,20 @@ void MenuModePlayerCountSelect(void)
             if (gMenuTransitionTimer == 0) {
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1F00;
-                TaskCreateFrom(247, 32);
+                TaskCreateFrom(TASK_MODE_LIST_CURSOR, 32);
                 gMenuChoiceCursor = 1;
-                TaskCreateFrom(248, 32);
+                TaskCreateFrom(TASK_MODE_PLAYER_COUNT_PANEL, 32);
                 if (gMenuBufferedKeys != 0)
                     RunFrames(1);
             }
         }
         if ((gPressedKeys & 9) || (gMenuBufferedKeys & 9)) {
             gMenuBufferedKeys = 0;
-            PlaySfx(102);
+            PlaySfx(SE_CONFIRM);
             if (gMenuChoiceCursor == 0) {
                 gMenuScreen = 9;
                 gMetaKnightmareMode = 0;
-                gGameState = 13;
+                gGameState = GAME_STATE_EXTRA_MODE_TITLE;
                 return;
             }
             MenuEnterLinkPlay();
@@ -257,17 +257,17 @@ void MenuModePlayerCountSelect(void)
         }
         if ((gPressedKeys & 2) || (gMenuBufferedKeys & 2)) {
             gMenuBufferedKeys = 0;
-            PlaySfx(215);
+            PlaySfx(SE_CANCEL);
             gMenuScreen = 4;
             RunFrames(8);
             return;
         }
         if (gMenuTransitionTimer == 0) {
             if ((gHeldKeys & 128) && gMenuChoiceCursor == 0) {
-                PlaySfx(101);
+                PlaySfx(SE_CURSOR_MOVE);
                 gMenuChoiceCursor = 1;
             } else if ((gHeldKeys & 64) && gMenuChoiceCursor == 1) {
-                PlaySfx(101);
+                PlaySfx(SE_CURSOR_MOVE);
                 gMenuChoiceCursor = 0;
             }
         }

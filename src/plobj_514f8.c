@@ -12,16 +12,16 @@
  * Task.u8C.parentTask (position, facing, OAM flags).  Variant 3 (PlayerObjectWaterShot,
  * animation table gUnk_087519E8) is a four-way `switch (Task.unk28)` of
  * endless loops that the ROM lays out in the order 3, 1, 0, 2, with M11's
- * callback sub_0803dfc8 and the collision callback PlayerObjectWaterShotUpdate (sound
+ * callback PlayerDrawWorldLoadTilesAndPalette and the collision callback PlayerObjectWaterShotUpdate (sound
  * 133).  Variant 4 (PlayerObjectFireBreath, gUnk_08751A28/gUnk_08751CA4) installs
  * PlayerObjectFireBreathUpdate, which registers the collider row gUnk_0873BDD4 and calls
  * the hit test TaskBreakBlocksAt at the spawner's position with only three
  * arguments.  Variant 5 (PlayerObjectCutterBlade, gUnk_08751A98) and its callback
- * PlayerObjectCutterBladeUpdate re-bind the body or the shared exit sub_08050814.  Variant
+ * PlayerObjectCutterBladeUpdate re-bind the body or the shared exit PlayerObjectVanish.  Variant
  * 6 (PlayerObjectLaserBeam, gUnk_08751AF8, the animation/velocity pairs
  * gUnk_0873B7B0) and its callback PlayerObjectLaserBeamUpdate (a nine-way `switch` on
  * the collision result gTerrainResult.unk4, sounds 173 and 211) turn the
- * object into variant 10's body sub_08052f6c or the burst sub_0805091c on
+ * object into variant 10's body PlayerObjectUFOShot or the burst PlayerObjectLaserBeamVanish on
  * contact. */
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
@@ -41,7 +41,7 @@ void PlayerObjectWaterShot(void)
     {
         struct Task *t = gCurTask;
         t->moveCallback = (u32)TaskMoveRelativeToParent;
-        t->drawCallback = (u32)sub_0803dfc8;
+        t->drawCallback = (u32)PlayerDrawWorldLoadTilesAndPalette;
         t->updateCallback = (u32)PlayerObjectWaterShotUpdate;
         t->layer = 7;
     }
@@ -51,12 +51,12 @@ void PlayerObjectWaterShot(void)
         t->tileWord = (t->u8C.parentTask)->tileWord | 0xE006;
         t->unk28 = (t->u8C.parentTask)->unk28;
         t->unk2C = 1;
-        gPlayerBodyBoxes[t->player->playerIndex] = *(struct M11R20 *)gUnk_0873BDA0;
+        gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873BDA0;
     }
     LoadPlayerBodyBoxRect(gCurTask->player->playerIndex, (u8 *)gUnk_0873BDB4 + gCurTask->unk28 * 8);
     {
         struct Task *t;
-        gPlayerHitBoxSets[(t = gCurTask)->player->playerIndex] = *(struct M11R8 *)gUnk_0873CBAC;
+        gPlayerHitBoxSets[(t = gCurTask)->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CBAC;
         LoadPlayerHitBoxSet(t->player->playerIndex, (s32)((u8 *)gUnk_0873CBB4 + t->unk28 * 8));
     }
     switch (gCurTask->unk28)
@@ -183,12 +183,12 @@ void PlayerObjectFireBreath(void)
     t->moveCallback = (u32)TaskMove;
     t->updateCallback = (u32)PlayerObjectFireBreathUpdate;
     t->unk28 = 0;
-    t->u80.attackAbility = 1;
+    t->u80.attackAbility = ABILITY_FIRE;
     t = gCurTask;
     switch (t->playerObjectSpawnWord & 15)
     {
     case 0:
-        t->drawCallback = (u32)sub_0803dfc8;
+        t->drawCallback = (u32)PlayerDrawWorldLoadTilesAndPalette;
         t->frameTable = gUnk_08751A28;
         t->layer = 7;
         {
@@ -291,7 +291,7 @@ void PlayerObjectFireBreathUpdate(void)
     }
     {
         struct Task *t = gCurTask;
-        if (t->player->ability != 1)
+        if (t->player->ability != ABILITY_FIRE)
         {
             TaskFree(gCurTaskIdx);
             return;
@@ -335,7 +335,7 @@ void PlayerObjectCutterBlade(void)
                 u->tileWord = ((u->u8C.parentTask)->tileWord + 0x1800) | 8;
             }
             sub_0802205c(gUnk_0873CB54);
-            gCurTask->u80.attackAbility = 3;
+            gCurTask->u80.attackAbility = ABILITY_CUTTER;
             {
                 struct Task *u = gCurTask;
                 u->unk28 = 0;
@@ -393,9 +393,9 @@ void PlayerObjectCutterBladeUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->player->ability != 3)
+    if (t->player->ability != ABILITY_CUTTER)
     {
-        TaskSetEntry(sub_08050814, gCurTaskIdx);
+        TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
         return;
     }
     switch (t->unk28)
@@ -405,7 +405,7 @@ void PlayerObjectCutterBladeUpdate(void)
             gCurTask->hitKind = 1;
         if (gCurTask->hitKind != 0)
         {
-            TaskSetEntry(sub_08050814, gCurTaskIdx);
+            TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
             return;
         }
         TerrainCollideBoxAlongVelocity(gUnk_0873CB54);
@@ -451,7 +451,7 @@ void PlayerObjectCutterBladeUpdate(void)
     case 1:
         if (t->hitKind != 0)
         {
-            TaskSetEntry(sub_08050814, gCurTaskIdx);
+            TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
             return;
         }
         if (--t->unk2C == 0)
@@ -505,7 +505,7 @@ void PlayerObjectLaserBeam(void)
         }
         TaskInitWaterFlags();
         sub_0802233c(gUnk_0873CB5C);
-        gCurTask->u80.attackAbility = 6;
+        gCurTask->u80.attackAbility = ABILITY_LASER;
     }
     else
     {
@@ -558,7 +558,7 @@ void PlayerObjectLaserBeamUpdate(void)
 {
     s32 hit;
 
-    if (gCurTask->player->ability == 0)
+    if (gCurTask->player->ability == ABILITY_NORMAL)
         goto rebind;
     hit = 0;
     gTerrainResult.unk2 = 0;
@@ -590,10 +590,10 @@ void PlayerObjectLaserBeamUpdate(void)
         struct Task *t = gCurTask;
         if (t->unk2C-- == 0)
             t->hitKind = 1;
-        else if (t->player->ability == 6)
+        else if (t->player->ability == ABILITY_LASER)
             TaskSetEntry(PlayerObjectLaserBeam, gCurTaskIdx);
         else
-            TaskSetEntry(sub_08052f6c, gCurTaskIdx);
+            TaskSetEntry(PlayerObjectUFOShot, gCurTaskIdx);
         hit = 1;
     }
     else if (*(u32 *)&gTerrainResult & 0xFFFFFF)
@@ -605,7 +605,7 @@ void PlayerObjectLaserBeamUpdate(void)
     {
         {
             struct Task *t = gCurTask;
-            if (t->player->ability == 6)
+            if (t->player->ability == ABILITY_LASER)
             {
                 if (!(t->player->unk42 & 128))
                     PlaySfxIfLocalPlayer(173, t->parent);
@@ -631,7 +631,7 @@ void PlayerObjectLaserBeamUpdate(void)
     if (gCurTask->hitKind != 0)
     {
     rebind:
-        TaskSetEntry(sub_0805091c, gCurTaskIdx);
+        TaskSetEntry(PlayerObjectLaserBeamVanish, gCurTaskIdx);
         return;
     }
     switch (gTerrainResult.slope)

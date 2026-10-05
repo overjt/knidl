@@ -547,7 +547,7 @@ void CutsceneBeachMeatDream(void)
     TaskSleepForever();
 }
 
-s32 CutsceneBeachActorScript10(void)
+s32 CutsceneBeachThoughtBubble(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -1138,7 +1138,7 @@ void CutsceneBombKirby(void)
     gCurTask->cutsceneActorLoopCount = 0;
     do
     {
-        if ((gCurTask->cutsceneActorChildSlot = TaskCreateFrom(7, 32)) != -1)
+        if ((gCurTask->cutsceneActorChildSlot = TaskCreateFrom(TASK_PLAYER_EFFECT, 32)) != -1)
         {
             gTasks[gCurTask->cutsceneActorChildSlot].unk18 = ((s16)gCurTask->cutsceneActorLoopCount & 0x00FFFFFF) | (192 << 20);
             gTasks[gCurTask->cutsceneActorChildSlot].posX = gCurTask->posX;
@@ -1501,7 +1501,7 @@ void CutsceneBombActorScript18(void)
     TaskSleepForever();
 }
 
-void CutsceneBombActorScript19(void)
+void CutsceneBombHeldBombFuse(void)
 {
     gCurTask->moveCallback = (u32)sub_08012fe0;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -1598,7 +1598,7 @@ void sub_08012fe0(void)
     t->pixelY = (y >> 16) + (u16)tt2->pixelY;
 }
 
-void CutsceneBombActorScript20(void)
+void CutsceneBombThrownBombFuse(void)
 {
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -3683,7 +3683,7 @@ void CutsceneSingingActorScript42(void)
     TaskExitTrampoline();
 }
 
-void CutsceneSingingActorScript43(void)
+void CutsceneSingingBeamedNotes(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -3806,7 +3806,7 @@ void CutsceneSingingActorScript43(void)
     TaskSleepForever();
 }
 
-void CutsceneSingingActorScript44(void)
+void CutsceneSingingDottedNote(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -4071,7 +4071,7 @@ void CutsceneSingingActorScript45(void)
     TaskSleepForever();
 }
 
-void CutsceneSingingActorScript46(void)
+void CutsceneSingingQuarterNote(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -4353,7 +4353,7 @@ void CutsceneSingingActorScript47(void)
     TaskSleepForever();
 }
 
-void CutsceneSingingActorScript48(void)
+void CutsceneSingingThoughtBubble(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -4413,7 +4413,7 @@ void CutsceneSingingActorScript48(void)
     TaskSleepForever();
 }
 
-void CutsceneSingingActorScript49(void)
+void CutsceneSingingTrebleClef(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -4441,7 +4441,7 @@ void CutsceneSingingActorScript49(void)
     TaskSleepForever();
 }
 
-void sub_0801761c(void)
+void CutsceneFountainStart(void)
 {
     PlayBgm(31);
     CreateCutsceneActor(50, 0);

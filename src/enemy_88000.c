@@ -187,7 +187,7 @@ void TwizzyHoverInit(void)
 {
     gCurTask->updateCallback = (u32)TwizzyHoverUpdate;
     gCurTask->onGround = 0;
-    ActorSetState(0);
+    ActorSetState(TWIZZY_HOVER_STATE_HOVER);
     CallTableEntry(gCurTask->state, 1, gTwizzyHoverStates);
 }
 
@@ -208,7 +208,7 @@ void TwizzyHoverUpdate(void)
 
 void TwizzyHover(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = TWIZZY_HOVER_STATE_HOVER;
     TaskFaceNearestPlayer();
     gCurTask->twizzyFaceTimer = 8;
     while (1)
@@ -358,11 +358,11 @@ void SquishyWalkInit(void)
     TaskInitWaterFlags();
     if (gCurTask->waterFlags == 3)
     {
-        ActorSetState(3);
+        ActorSetState(SQUISHY_WALK_STATE_3);
         gCurTask->onGround = 0;
         CallTableEntry(gCurTask->state, 5, gSquishyWalkStates);
     }
-    ActorSetState(0);
+    ActorSetState(SQUISHY_WALK_STATE_WALK);
     CallTableEntry(gCurTask->state, 5, gSquishyWalkStates);
 }
 
@@ -382,7 +382,7 @@ void SquishyWalkUpdate(void)
 
 void SquishyWalk(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = SQUISHY_WALK_STATE_WALK;
     gCurTask->squishyWalkTimer = 100;
     TaskSetMotionXFacing(gUnk_087426EC[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     while (1)
@@ -411,12 +411,12 @@ void SquishyWalkState0Update(void)
     case 80:
         if (RandomRange(4) == 0)
         {
-            ActorSetState(1);
+            ActorSetState(SQUISHY_WALK_STATE_1);
             TaskSetEntry(SquishyWalkEnterState, gCurTaskIdx);
         }
         break;
     case 0:
-        ActorSetState(1);
+        ActorSetState(SQUISHY_WALK_STATE_1);
         TaskSetEntry(SquishyWalkEnterState, gCurTaskIdx);
         break;
     }
@@ -424,7 +424,7 @@ void SquishyWalkState0Update(void)
 
 void SquishyWalkState1(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = SQUISHY_WALK_STATE_1;
     gCurTask->squishyLanded = 0;
     TaskStop();
     TaskSetFrame(5);
@@ -440,19 +440,19 @@ void SquishyWalkState1(void)
     TaskStop();
     TaskSetFrame(5);
     TaskYieldTrampoline(10);
-    ActorSetState(0);
+    ActorSetState(SQUISHY_WALK_STATE_WALK);
     TaskSleepForever();
 }
 
 void SquishyWalkState1Update(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != SQUISHY_WALK_STATE_1)
         TaskSetEntry(SquishyWalkEnterState, gCurTaskIdx);
 }
 
 void SquishyWalkFall(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = SQUISHY_WALK_STATE_FALL;
     gCurTask->squishyLanded = 0;
     gCurTask->accelY = 0x1500;
     gCurTask->speedLimitY = 0x30000;
@@ -462,19 +462,19 @@ void SquishyWalkFall(void)
     TaskStop();
     TaskSetFrame(5);
     TaskYieldTrampoline(10);
-    ActorSetState(0);
+    ActorSetState(SQUISHY_WALK_STATE_WALK);
     TaskSleepForever();
 }
 
 void SquishyWalkFallUpdate(void)
 {
-    if (gCurTask->state != 2)
+    if (gCurTask->state != SQUISHY_WALK_STATE_FALL)
         TaskSetEntry(SquishyWalkEnterState, gCurTaskIdx);
 }
 
 void SquishyWalkState3(void)
 {
-    gCurTask->updateState = 3;
+    gCurTask->updateState = SQUISHY_WALK_STATE_3;
     TaskStop();
     gCurTask->velY = 0x4000;
     while (1)
@@ -502,7 +502,7 @@ void SquishyWalkState3Update(void)
 
 void SquishyWalkState4(void)
 {
-    gCurTask->updateState = 4;
+    gCurTask->updateState = SQUISHY_WALK_STATE_4;
     gCurTask->squishyLanded = 0;
     TaskFaceNearestPlayer();
     TaskSetMotionXFacing(0x18000, 0x5A5A5A5A);
@@ -513,13 +513,13 @@ void SquishyWalkState4(void)
     TaskStop();
     TaskSetFrame(5);
     TaskYieldTrampoline(10);
-    ActorSetState(0);
+    ActorSetState(SQUISHY_WALK_STATE_WALK);
     TaskSleepForever();
 }
 
 void SquishyWalkState4Update(void)
 {
-    if (gCurTask->state != 4)
+    if (gCurTask->state != SQUISHY_WALK_STATE_4)
         TaskSetEntry(SquishyWalkEnterState, gCurTaskIdx);
 }
 
@@ -779,7 +779,7 @@ s32 SquishyStartFall(void)
         default:
             return 0;
         case 0:
-            ActorSetState(2);
+            ActorSetState(SQUISHY_WALK_STATE_FALL);
             TaskSetEntry(SquishyWalkEnterState, gCurTaskIdx);
             return 1;
         }
@@ -794,12 +794,12 @@ s32 SquishyEnterWater(void)
         switch (gCurTask->variant)
         {
         case 0:
-            ActorSetState(3);
+            ActorSetState(SQUISHY_WALK_STATE_3);
             TaskSetEntry(SquishyWalkEnterState, gCurTaskIdx);
             return 1;
         case 2:
             gCurTask->variant = 0;
-            ActorSetState(3);
+            ActorSetState(SQUISHY_WALK_STATE_3);
             TaskSetEntry(SquishyWalkEnterState, gCurTaskIdx);
             return 1;
         }
@@ -814,7 +814,7 @@ s32 SquishyLeaveWater(void)
         gCurTask->u8C.actor->hitReactions = (u32)gSquishyHitReactions;
         if (gCurTask->variant != 0)
             return 0;
-        ActorSetState(4);
+        ActorSetState(SQUISHY_WALK_STATE_4);
         TaskSetEntry(SquishyWalkEnterState, gCurTaskIdx);
         return 1;
     }
@@ -856,7 +856,7 @@ void BubblesInit(void)
     gCurTask->updateCallback = (u32)BubblesUpdate;
     gCurTask->bubblesRollPhase = 12;
     TaskFaceNearestPlayer();
-    ActorSetState(0);
+    ActorSetState(BUBBLES_STATE_JUMP);
     CallTableEntry(gCurTask->state, 5, gBubblesStates);
 }
 
@@ -1062,7 +1062,7 @@ void BubblesLand(void)
         gCurTask->frame = 14;
         TaskYieldTrampoline(3);
     }
-    ActorSetState(0);
+    ActorSetState(BUBBLES_STATE_JUMP);
     gCurTask->moveCallback = (u32)ActorMove;
     ActorSetAttackBox((u32)gUnk_08742C14);
     TaskSleepForever();
@@ -1070,7 +1070,7 @@ void BubblesLand(void)
 
 void BubblesLandUpdate(void)
 {
-    if (gCurTask->state != 3)
+    if (gCurTask->state != BUBBLES_STATE_LAND)
         TaskSetEntry(BubblesEnterState, gCurTaskIdx);
 }
 
@@ -1144,9 +1144,9 @@ s32 sub_080896ec(void)
 {
     if (gCurTask->variant != 1)
     {
-        if (gCurTask->state == 3)
+        if (gCurTask->state == BUBBLES_STATE_LAND)
             return 0;
-        ActorSetState(3);
+        ActorSetState(BUBBLES_STATE_LAND);
         TaskSetEntry(BubblesEnterState, gCurTaskIdx);
         return 1;
     }
@@ -1156,9 +1156,9 @@ s32 BubblesStartFall(void)
 {
     if (gCurTask->variant != 1)
     {
-        if (gCurTask->state != 3)
+        if (gCurTask->state != BUBBLES_STATE_LAND)
             return 0;
-        ActorSetState(4);
+        ActorSetState(BUBBLES_STATE_FALL);
         TaskSetEntry(BubblesEnterState, gCurTaskIdx);
         return 1;
     }
@@ -1179,7 +1179,7 @@ s32 BubblesHitWall(void)
     {
         if (gCurTask->velX != 0 && gCurTask->velY != 0)
         {
-            ActorSetState(1);
+            ActorSetState(BUBBLES_STATE_BOUNCE_OFF_WALL);
             TaskSetEntry(BubblesEnterState, gCurTaskIdx);
             return 1;
         }
@@ -1192,7 +1192,7 @@ s32 BubblesHitCeiling(void)
     if (gCurTask->variant != 1)
     {
         gCurTask->velY = -gCurTask->velY;
-        ActorSetState(2);
+        ActorSetState(BUBBLES_STATE_BOUNCE_OFF_CEILING);
         TaskSetEntry(BubblesEnterState, gCurTaskIdx);
         return 1;
     }
@@ -1219,7 +1219,7 @@ void Task_Glunk(void)
 void GlunkInit(void)
 {
     gCurTask->updateCallback = (u32)GlunkUpdate;
-    ActorSetState(0);
+    ActorSetState(GLUNK_STATE_WAIT);
     CallTableEntry(gCurTask->state, 2, gGlunkStates);
 }
 
@@ -1239,7 +1239,7 @@ void GlunkUpdate(void)
 
 void GlunkWait(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = GLUNK_STATE_WAIT;
     gCurTask->glunkLoopCount = 0;
     while ((s16)gCurTask->glunkLoopCount < gUnk_087427B0[gCurTask->actorSpawnArg])
     {
@@ -1261,13 +1261,13 @@ void GlunkWait(void)
         TaskYieldTrampoline(4);
         gCurTask->glunkLoopCount++;
     }
-    ActorSetState(1);
+    ActorSetState(GLUNK_STATE_SHOOT);
     TaskSleepForever();
 }
 
 void GlunkWaitUpdate(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != GLUNK_STATE_WAIT)
         TaskSetEntry(GlunkEnterState, gCurTaskIdx);
 }
 
@@ -1276,14 +1276,14 @@ void GlunkShoot(void)
     struct ActorSpawn sp;
     u8 zero;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = GLUNK_STATE_SHOOT;
     gCurTask->glunkLoopCount = 0;
     while ((s16)gCurTask->glunkLoopCount < gUnk_087427B2[gCurTask->actorSpawnArg])
     {
         if (gCurTask->actorSpawnArg == 1)
         {
             sp.subtype = 5;
-            sp.taskType = 107;
+            sp.taskType = TASK_GLUNK_SHOT;
             sp.variant = zero = 0;
             sp.spawnArg = gCurTask->actorSpawnArg;
             sp.x = zero;
@@ -1291,19 +1291,19 @@ void GlunkShoot(void)
             sp.checkTerrain = 1;
             PlaySfx(195);
             gCurTask->glunkShotSlot = CreateActorFromDescAtOffsetFacing(&sp, 0);
-            CreateChildTaskHere(219, 1);
+            CreateChildTaskHere(TASK_GLUNK_SHOT_SPRAY, 1);
         }
         gCurTask->frame = 4;
         TaskYieldTrampoline(12);
         gCurTask->glunkLoopCount++;
     }
-    ActorSetState(0);
+    ActorSetState(GLUNK_STATE_WAIT);
     TaskSleepForever();
 }
 
 void GlunkShootUpdate(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != GLUNK_STATE_SHOOT)
         TaskSetEntry(GlunkEnterState, gCurTaskIdx);
 }
 
@@ -1408,11 +1408,11 @@ void SlippyInit(void)
         else
             gCurTask->slippySwimAngle = 256;
         TaskSetFrame(7);
-        ActorSetState(6);
+        ActorSetState(SLIPPY_STATE_6);
     }
     else
     {
-        ActorSetState(0);
+        ActorSetState(SLIPPY_STATE_0);
         gCurTask->onGround = 0;
         gCurTask->slippyCollideTerrain = 1;
     }
@@ -1438,12 +1438,12 @@ void SlippyUpdate(void)
     }
     switch (gCurTask->state)
     {
-    case 4:
-    case 5:
-    case 6:
-    case 7:
-    case 8:
-    case 9:
+    case SLIPPY_STATE_4:
+    case SLIPPY_STATE_5:
+    case SLIPPY_STATE_6:
+    case SLIPPY_STATE_7:
+    case SLIPPY_STATE_8:
+    case SLIPPY_STATE_9:
         gCurTask->onGround = 0;
         break;
     }
@@ -1453,7 +1453,7 @@ void SlippyUpdate(void)
 
 void SlippyState0(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = SLIPPY_STATE_0;
     gCurTask->slippyCollideTerrain = 1;
     TaskStop();
     TaskFaceNearestPlayer();
@@ -1463,31 +1463,31 @@ void SlippyState0(void)
     switch (gUnk_030023D4)
     {
     case 0:
-        ActorSetState(2);
+        ActorSetState(SLIPPY_STATE_JUMP);
         TaskSleepForever();
         break;
     case 1:
-        ActorSetState(3);
+        ActorSetState(SLIPPY_STATE_HIGH_JUMP);
         TaskSleepForever();
         break;
     case 2:
-        ActorSetState(2);
+        ActorSetState(SLIPPY_STATE_JUMP);
         TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
         TaskSleepForever();
         break;
     case 3:
-        ActorSetState(3);
+        ActorSetState(SLIPPY_STATE_HIGH_JUMP);
         TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
         TaskSleepForever();
         break;
     case 4:
-        ActorSetState(2);
+        ActorSetState(SLIPPY_STATE_JUMP);
         TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
         TaskTurnAroundAndReverseX();
         TaskSleepForever();
         break;
     case 5:
-        ActorSetState(1);
+        ActorSetState(SLIPPY_STATE_1);
         break;
     }
     TaskSleepForever();
@@ -1495,13 +1495,13 @@ void SlippyState0(void)
 
 void SlippyState0Update(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != SLIPPY_STATE_0)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
 }
 
 void SlippyState1(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = SLIPPY_STATE_1;
     gCurTask->onGround = 1;
     while (1)
     {
@@ -1529,25 +1529,25 @@ void SlippyState1(void)
         switch (gUnk_030023D4)
         {
         case 0:
-            ActorSetState(2);
+            ActorSetState(SLIPPY_STATE_JUMP);
             TaskSleepForever();
             break;
         case 1:
-            ActorSetState(3);
+            ActorSetState(SLIPPY_STATE_HIGH_JUMP);
             TaskSleepForever();
             break;
         case 2:
-            ActorSetState(2);
+            ActorSetState(SLIPPY_STATE_JUMP);
             TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
             TaskSleepForever();
             break;
         case 3:
-            ActorSetState(3);
+            ActorSetState(SLIPPY_STATE_HIGH_JUMP);
             TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
             TaskSleepForever();
             break;
         case 4:
-            ActorSetState(2);
+            ActorSetState(SLIPPY_STATE_JUMP);
             TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
             TaskTurnAroundAndReverseX();
             TaskSleepForever();
@@ -1560,13 +1560,13 @@ void SlippyState1(void)
 
 void SlippyState1Update(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != SLIPPY_STATE_1)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
 }
 
-void SlippyState2(void)
+void SlippyJump(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = SLIPPY_STATE_JUMP;
     gCurTask->slippyCollideTerrain = 1;
     gCurTask->onGround = 0;
     PlaySfx(188);
@@ -1582,13 +1582,13 @@ void SlippyState2(void)
     TaskSleepForever();
 }
 
-void SlippyState2Update(void)
+void SlippyJumpUpdate(void)
 {
 }
 
-void SlippyState3(void)
+void SlippyHighJump(void)
 {
-    gCurTask->updateState = 3;
+    gCurTask->updateState = SLIPPY_STATE_HIGH_JUMP;
     gCurTask->slippyCollideTerrain = 1;
     gCurTask->onGround = 0;
     PlaySfx(188);
@@ -1604,13 +1604,13 @@ void SlippyState3(void)
     TaskSleepForever();
 }
 
-void SlippyState3Update(void)
+void SlippyHighJumpUpdate(void)
 {
 }
 
 void SlippyState4(void)
 {
-    gCurTask->updateState = 4;
+    gCurTask->updateState = SLIPPY_STATE_4;
     gCurTask->slippyCollideTerrain = 0;
     TaskFaceNearestPlayer();
     TaskStop();
@@ -1650,7 +1650,7 @@ void SlippyState4Update(void)
 
 void SlippyState5(void)
 {
-    gCurTask->updateState = 5;
+    gCurTask->updateState = SLIPPY_STATE_5;
     gCurTask->slippyCollideTerrain = 1;
     gCurTask->onGround = 0;
     TaskStop();
@@ -1663,19 +1663,19 @@ void SlippyState5(void)
     TaskSetFrame(5);
     TaskYieldTrampoline(40);
     TaskSetFrame(7);
-    ActorSetState(6);
+    ActorSetState(SLIPPY_STATE_6);
     TaskSleepForever();
 }
 
 void SlippyState5Update(void)
 {
-    if (gCurTask->state != 5)
+    if (gCurTask->state != SLIPPY_STATE_5)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
 }
 
 void SlippyState6(void)
 {
-    gCurTask->updateState = 6;
+    gCurTask->updateState = SLIPPY_STATE_6;
     gCurTask->slippyCollideTerrain = 1;
     gCurTask->onGround = 0;
     AngleToVector((s16)gCurTask->slippySwimAngle, 128);
@@ -1697,13 +1697,13 @@ void SlippyState6(void)
     switch (RandomRange(3))
     {
     case 0:
-        ActorSetState(7);
+        ActorSetState(SLIPPY_STATE_7);
         break;
     case 1:
-        ActorSetState(8);
+        ActorSetState(SLIPPY_STATE_8);
         break;
     case 2:
-        ActorSetState(9);
+        ActorSetState(SLIPPY_STATE_9);
         break;
     }
     TaskSleepForever();
@@ -1711,19 +1711,19 @@ void SlippyState6(void)
 
 void SlippyState6Update(void)
 {
-    if (gCurTask->state != 6)
+    if (gCurTask->state != SLIPPY_STATE_6)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
     if (sub_08021c14(gCurTask->pixelX,
                      (u16)gCurTask->pixelY - 8) == 0)
     {
-        ActorSetState(4);
+        ActorSetState(SLIPPY_STATE_4);
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
     }
 }
 
 void SlippyState7(void)
 {
-    gCurTask->updateState = 7;
+    gCurTask->updateState = SLIPPY_STATE_7;
     gCurTask->slippyCollideTerrain = 1;
     gCurTask->onGround = 0;
     TaskStop();
@@ -1741,25 +1741,25 @@ void SlippyState7(void)
     gCurTask->velX = gUnk_030023B4;
     gCurTask->velY = gUnk_030023D4;
     TaskYieldTrampoline(8);
-    ActorSetState(6);
+    ActorSetState(SLIPPY_STATE_6);
     TaskSleepForever();
 }
 
 void SlippyState7Update(void)
 {
-    if (gCurTask->state != 7)
+    if (gCurTask->state != SLIPPY_STATE_7)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
     if (sub_08021c14(gCurTask->pixelX,
                      (u16)gCurTask->pixelY - 8) == 0)
     {
-        ActorSetState(4);
+        ActorSetState(SLIPPY_STATE_4);
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
     }
 }
 
 void SlippyState8(void)
 {
-    gCurTask->updateState = 8;
+    gCurTask->updateState = SLIPPY_STATE_8;
     gCurTask->slippyCollideTerrain = 1;
     gCurTask->onGround = 0;
     while (1)
@@ -1787,7 +1787,7 @@ void SlippyState8(void)
         TaskYieldTrampoline(8);
         if (RandomRange(3) != 0)
         {
-            ActorSetState(6);
+            ActorSetState(SLIPPY_STATE_6);
             TaskSleepForever();
         }
     }
@@ -1795,19 +1795,19 @@ void SlippyState8(void)
 
 void SlippyState8Update(void)
 {
-    if (gCurTask->state != 8)
+    if (gCurTask->state != SLIPPY_STATE_8)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
     if (sub_08021c14(gCurTask->pixelX,
                      (u16)gCurTask->pixelY - 8) == 0)
     {
-        ActorSetState(4);
+        ActorSetState(SLIPPY_STATE_4);
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
     }
 }
 
 void SlippyState9(void)
 {
-    gCurTask->updateState = 9;
+    gCurTask->updateState = SLIPPY_STATE_9;
     gCurTask->slippyCollideTerrain = 1;
     gCurTask->onGround = 0;
     TaskStop();
@@ -1832,27 +1832,27 @@ void SlippyState9(void)
     gCurTask->velY = gUnk_030023D4;
     TaskYieldTrampoline(8);
     if (RandomRange(3) != 0)
-        ActorSetState(6);
+        ActorSetState(SLIPPY_STATE_6);
     else
-        ActorSetState(8);
+        ActorSetState(SLIPPY_STATE_8);
     TaskSleepForever();
 }
 
 void SlippyState9Update(void)
 {
-    if (gCurTask->state != 9)
+    if (gCurTask->state != SLIPPY_STATE_9)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
     if (sub_08021c14(gCurTask->pixelX,
                      (u16)gCurTask->pixelY - 8) == 0)
     {
-        ActorSetState(4);
+        ActorSetState(SLIPPY_STATE_4);
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
     }
 }
 
 void SlippyFall(void)
 {
-    gCurTask->updateState = 10;
+    gCurTask->updateState = SLIPPY_STATE_FALL;
     gCurTask->slippyCollideTerrain = 1;
     gCurTask->onGround = 0;
     TaskStop();
@@ -1930,21 +1930,21 @@ s32 SlippyLand(void)
     {
         switch (gCurTask->state)
         {
-        case 5:
-        case 6:
-        case 7:
-        case 8:
-        case 9:
+        case SLIPPY_STATE_5:
+        case SLIPPY_STATE_6:
+        case SLIPPY_STATE_7:
+        case SLIPPY_STATE_8:
+        case SLIPPY_STATE_9:
             gCurTask->slippySwimAngle = 512 - gCurTask->slippySwimAngle;
             gCurTask->velY = -gCurTask->velY;
             return 0;
-        case 0:
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 10:
-            ActorSetState(0);
+        case SLIPPY_STATE_0:
+        case SLIPPY_STATE_1:
+        case SLIPPY_STATE_JUMP:
+        case SLIPPY_STATE_HIGH_JUMP:
+        case SLIPPY_STATE_4:
+        case SLIPPY_STATE_FALL:
+            ActorSetState(SLIPPY_STATE_0);
             TaskSetEntry(SlippyEnterState, gCurTaskIdx);
             return 1;
         default:
@@ -1959,9 +1959,9 @@ s32 SlippyStartFall(void)
     {
         switch (gCurTask->state)
         {
-        case 0:
-        case 1:
-            ActorSetState(10);
+        case SLIPPY_STATE_0:
+        case SLIPPY_STATE_1:
+            ActorSetState(SLIPPY_STATE_FALL);
             TaskSetEntry(SlippyEnterState, gCurTaskIdx);
             return 1;
         }
@@ -1973,7 +1973,7 @@ s32 SlippyEnterWater(void)
 {
     if (gCurTask->variant != 1)
     {
-        ActorSetState(5);
+        ActorSetState(SLIPPY_STATE_5);
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
         return 1;
     }

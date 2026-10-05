@@ -13,7 +13,7 @@
  * race screen's sky.
  * 
  *   AirGrindResults   the results task body: ranks the four racers by their
- *       frame counts M37Game.raceTimes[] (a bubble sort into gAirGrindResults.unk04,
+ *       frame counts AirGrindState.raceTimes[] (a bubble sort into gAirGrindResults.unk04,
  *       ties share a place in unk0C), picks each one's score (course record
  *       unk20 or unk24) and installs AirGrindResultsDraw / AirGrindResultsUpdate.
  *   AirGrindResultsDraw   draws the table: time (AirGrindDrawTime), score
@@ -30,9 +30,9 @@
  *       two palette cycles through gUnk_08609F40 with the cursor sprite, and
  *       the cycle's start row for a menu choice.
  *   AirGrindBuildSky   the per-frame hook AirGrindSetupRace installs: builds the
- *       160-line sky gradient M37Game.skyLineColors[] from eleven RGB key colours,
+ *       160-line sky gradient AirGrindState.skyLineColors[] from eleven RGB key colours,
  *       fading from gUnk_080CFE60 to gUnk_080CFEA2 (level 2: gUnk_080CFE81 to
- *       gUnk_080CFEC3) between frames 0x4B0 and 0x8B0 of M37Game.frameCount.  It
+ *       gUnk_080CFEC3) between frames 0x4B0 and 0x8B0 of AirGrindState.frameCount.  It
  *       reads one key past the end of the eleven-entry local table, as the
  *       ROM does.
  *   AirGrindSkyVBlankCallback   the VBlank hook: sets backdrop colour 0 and re-arms DMA0
@@ -60,7 +60,7 @@ void AirGrindResults(void)
     gCurTask->drawCallback = (u32)AirGrindResultsDraw;
     x = gAirGrindCoursePtr->unk014 * 2;
     for (i = 0; i < 4; i++) {
-        if (gAirGrindPtr->players[i].unk01 == x && gAirGrindPtr->players[i].unk0E == x + 1)
+        if (gAirGrindPtr->players[i].fullBoostCount == x && gAirGrindPtr->players[i].aToggleCount == x + 1)
             gAirGrindResults.unk1C[i] = gAirGrindCoursePtr->players[i].unk20;
         else
             gAirGrindResults.unk1C[i] = gAirGrindCoursePtr->players[i].unk24;
@@ -118,7 +118,7 @@ void AirGrindResultsDraw(void)
             layer = 3;
         AirGrindDrawRacerSprite(0, pal, scale, 76, y, layer);
         if (gAirGrindResults.state != 3) {
-            if (gAirGrindResults.state > 3 && gPrevGameState == 5)
+            if (gAirGrindResults.state > 3 && gPrevGameState == GAME_STATE_HUB)
                 blink = gAirGrindFrame & 64;
             else
                 blink = 1;
@@ -186,7 +186,7 @@ void AirGrindResultsStep(void)
         break;
     case 2:
         if (++gAirGrindResults.timer > 174) {
-            if (gPrevGameState != 5) {
+            if (gPrevGameState != GAME_STATE_HUB) {
                 gAirGrindResults.state = 4;
             } else {
                 gAirGrindResults.timer = 20;
@@ -213,7 +213,7 @@ void AirGrindResultsStep(void)
         break;
     case 4:
         if (gPlayerPressedKeys[0] & 9) {
-            if (gPrevGameState != 5) {
+            if (gPrevGameState != GAME_STATE_HUB) {
                 t = gCurTask;
                 t->airGrindContinueCursor = 0;
                 t->airGrindLevelCursor = gAirGrind.level;
@@ -225,7 +225,7 @@ void AirGrindResultsStep(void)
                     t->spriteFlags = 0x2000;
                     t->layer = 1;
                     AirGrindResultsSetCursorBlend(-1);
-                    PlaySfx(102);
+                    PlaySfx(SE_CONFIRM);
                 }
                 gAirGrindResults.state++;
             } else {
@@ -256,7 +256,7 @@ void AirGrindResultsStep(void)
                 gCurTask->airGrindContinueCursor = 1;
             if (gAirGrindPtr->localPlayer == 0) {
                 AirGrindResultsSetCursorBlend(gCurTask->airGrindContinueCursor);
-                PlaySfx(101);
+                PlaySfx(SE_CURSOR_MOVE);
             }
         }
         if (gPlayerPressedKeys[0] & 128) {
@@ -264,7 +264,7 @@ void AirGrindResultsStep(void)
                 gCurTask->airGrindContinueCursor = 0;
             if (gAirGrindPtr->localPlayer == 0) {
                 AirGrindResultsSetCursorBlend(gCurTask->airGrindContinueCursor);
-                PlaySfx(101);
+                PlaySfx(SE_CURSOR_MOVE);
             }
         }
         if (gPlayerPressedKeys[0] & 9) {
@@ -280,7 +280,7 @@ void AirGrindResultsStep(void)
                 gAirGrindResults.state = 99;
             }
             if (gAirGrindPtr->localPlayer == 0)
-                PlaySfx(102);
+                PlaySfx(SE_CONFIRM);
         }
         break;
     case 6:
@@ -289,7 +289,7 @@ void AirGrindResultsStep(void)
                 gCurTask->airGrindLevelCursor = 2;
             if (gAirGrindPtr->localPlayer == 0) {
                 AirGrindResultsSetCursorBlend(gCurTask->airGrindLevelCursor);
-                PlaySfx(101);
+                PlaySfx(SE_CURSOR_MOVE);
             }
         }
         if (gPlayerPressedKeys[0] & 128) {
@@ -297,19 +297,19 @@ void AirGrindResultsStep(void)
                 gCurTask->airGrindLevelCursor = 0;
             if (gAirGrindPtr->localPlayer == 0) {
                 AirGrindResultsSetCursorBlend(gCurTask->airGrindLevelCursor);
-                PlaySfx(101);
+                PlaySfx(SE_CURSOR_MOVE);
             }
         }
         if (gPlayerPressedKeys[0] & 9) {
             SubGameReplay(gCurTask->airGrindLevelCursor);
             gAirGrindResults.state = 99;
             if (gAirGrindPtr->localPlayer == 0)
-                PlaySfx(102);
+                PlaySfx(SE_CONFIRM);
         } else if (gPlayerPressedKeys[0] & 2) {
             if (gAirGrindPtr->localPlayer == 0) {
                 gCurTask->frame = 1;
                 AirGrindResultsSetCursorBlend(gCurTask->airGrindContinueCursor);
-                PlaySfx(215);
+                PlaySfx(SE_CANCEL);
             }
             gAirGrindResults.state--;
         }

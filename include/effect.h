@@ -9,9 +9,9 @@
    docs/header-conventions.md). */
 
 /* EWRAM */
-extern u32 gUnk_020060CC[];
+extern u32 gStageClearDanceBgmPlayed[];
 extern u8 gUnk_02006A14[];
-extern s8 gUnk_02008010;
+extern s8 gDanceId;
 extern u16 gObjPaletteBlendBase[];
 extern u16 gScreenAttackTasks[]; /* 20 task indices, 0xFFFF = empty; non-volatile, signed reads cast (s16) (variant 37 in effect_57ce0.c) */
 
@@ -57,7 +57,7 @@ extern u16 gGoalGameLayerScores[];
 extern u32 gUnk_0873DCA8[];
 extern u32 gUnk_0873DCC0[];
 extern u32 gUnk_0873DCC8[];
-extern u32 gUnk_0873DCCC[];
+extern u32 gGoalGameSpringDepths[];
 extern u32 gUnk_0873DD16[];
 extern u32 gUnk_0873DD30[];
 extern u32 gUnk_0873DD4C[];
@@ -114,11 +114,11 @@ extern u32 gUnk_087548A0[];
 
 /* src/effect_53af4.c */
 void Task_PlayerEffect(void);
-void sub_08053b40(void);
-void sub_08053be0(void);
-void sub_08053c1c(void);
-void sub_08053c48(void);
-void sub_08053d08(void);
+void PlayerEffectInhaleAir(void);
+void PlayerEffectInhaleAirUpdate(void);
+void PlayerEffectInhaleAirDraw(void);
+void PlayerEffectCatchDust(void);
+void PlayerEffectSpitDust(void);
 void PlayerEffectAbilityGetSparkle(void);
 void sub_08053e34(void);
 void PlayerEffectImpactStar(void);
@@ -132,7 +132,7 @@ void PlayerEffectRunDustUpdate(void);
 void PlayerEffectSlideDust(void);
 void PlayerEffectSlideDustUpdate(void);
 void PlayerEffectSplash(void);
-void sub_080548f0(void);
+void PlayerEffectLeaveWaterSplash(void);
 void PlayerEffectBubble(void);
 void sub_08054a44(void);
 
@@ -148,18 +148,18 @@ void sub_080553d4(void);
 /* src/effect_55460.c */
 void sub_08055460(void);
 void sub_08055520(void);
-void sub_0805569c(void);
+void PlayerEffectDanceStarBurst(void);
 void sub_0805574c(void);
 void sub_080557d4(void);
 void sub_0805587c(void);
-void sub_08055a40(void);
-void sub_08055abc(void);
+void PlayerEffectLocalPlayerArrow(void);
+void PlayerEffectLocalPlayerArrowUpdate(void);
 
 /* src/effect_55b24.c */
-void sub_08055b24(void);
-void sub_08055d24(void);
-void sub_08055d74(void);
-void sub_080560fc(void);
+void PlayerEffectHurtFlames(void);
+void PlayerEffectHurtFlamesUpdate(void);
+void PlayerEffectHurtSparks(void);
+void PlayerEffectHurtSparksUpdate(void);
 void sub_0805614c(void);
 void sub_08056300(void);
 void sub_08056320(void);
@@ -181,13 +181,13 @@ void PlayerEffectSwordSparkle(void);
 /* src/effect_57494.c */
 void PlayerEffectBurningFlames(void);
 void PlayerEffectBurningFlamesUpdate(void);
-void sub_08057a48(void);
+void PlayerEffectUFOLaserTrail(void);
 void sub_08057ad4(void);
 void sub_08057c98(void);
 
 /* src/effect_57ce0.c */
-void sub_08057ce0(void);
-void sub_08057e90(void);
+void PlayerEffectHammerDust(void);
+void PlayerEffectParasolSparkle(void);
 void PlayerEffectMikeAttack(void);
 void PlayerEffectMikeAttackUpdate(void);
 void PlayerEffectSleepBubble(void);
@@ -204,7 +204,7 @@ void PlayerEffectFreezeAuraUpdate(void);
 void sub_08059570(void);
 void sub_08059aac(void);
 void sub_08059b18(void);
-void sub_08059c28(void);
+void PlayerEffectStonePuff(void);
 void sub_08059d7c(void);
 void sub_0805a320(void);
 
@@ -216,8 +216,8 @@ void PlayerEffectCrashBlastUpdate(void);
 void PlayerEffectCrashBlastDraw(void);
 void sub_0805acec(void);
 void sub_0805ae00(void);
-void sub_0805ae94(void);
-void sub_0805af44(void);
+void PlayerEffectUFOChargeSparkle(void);
+void PlayerEffectUFOChargeSparkleUpdate(void);
 void sub_0805af80(void);
 
 /* src/effect_5afac.c */
@@ -237,35 +237,35 @@ s32 PlayerGoalGameCheckPress(void);
 void PlayerGoalGameSetLaunchPower(void);
 void PlayerGoalGameState2(void);
 void PlayerGoalGameState2Update(void);
-void sub_0805b670(void);
-void PlayerGoalGameState3Update(void);
+void PlayerGoalGameWaitForLaunch(void);
+void PlayerGoalGameWaitForLaunchUpdate(void);
 void PlayerGoalGameLaunch(void);
 void PlayerGoalGameLaunchUpdate(void);
 void sub_0805b83c(void);
-void sub_0805b8b8(void);
+void PlayerGoalGameAddToLayerSign(void);
 void sub_0805b8f8(void);
 void PlayerGoalGameState5Update(void);
 void PlayerGoalGameFall(void);
 void PlayerGoalGameFallUpdate(void);
 void PlayerGoalGameLand(void);
 void PlayerGoalGameLandUpdate(void);
-void sub_0805bb90(void);
+void PlayerGoalGameWalkToSpotUpdate(void);
 void PlayerGoalGameWait(void);
 void PlayerGoalGameWaitUpdate(void);
 void PlayerGoalGameWaitLateUpdate(void);
-void sub_0805bca4(void);
+void PlayerGoalGameRemoveFromLayerSign(void);
 void PlayerGoalGameDance(void);
 void PlayerGoalGameDanceUpdate(void);
 void PlayerGoalGameFinish(void);
 void PlayerGoalGameFinishUpdate(void);
-void sub_0805be48(void);
+void PlayerGoalGameDrawPressPrompt(void);
 void Task_GoalGameLaunchStars(void);
 void GoalGameLaunchStarsFall(void);
 void GoalGameLaunchStarsUpdate(void);
 void GoalGameLaunchStarsDraw(void);
 void Task_GoalGameBigTrailStar(void);
 void Task_GoalGameSmallTrailStar(void);
-void sub_0805c584(void);
+void PlayerGoalGameRideSpring(void);
 void Task_GoalGameCamera(void);
 void GoalGameCameraFollowPlayer(void);
 void GoalGameCameraUpdate(void);
@@ -283,8 +283,8 @@ void TaskStartFrameScript(s32 a0);
 void TaskStartFrameScriptId(s32 a0);
 void TaskUpdateFrameScript(void);
 void TaskAdvanceFrameScript(void);
-void sub_0805d994(s32 a0, s32 a1);
-void sub_0805da2c(void);
+void GoalGameHelperKirbyInitSprite(s32 a0, s32 a1);
+void GoalGameHelperKirbyDraw(void);
 void sub_0805dba0(void);
 void sub_0805dbfc(void);
 void sub_0805dc18(void);

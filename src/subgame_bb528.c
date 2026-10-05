@@ -51,7 +51,7 @@ void QuickDrawSetupResults(void)
         QuickDrawSetupResultsVsCpu();
     t = gCurTask;
     t->quickDrawMenuDelay = 40;
-    t->state = 0;
+    t->state = QUICK_DRAW_RESULTS_STATE_PLAY_SONG;
 }
 
 void QuickDrawInitContinueMenu(void)
@@ -84,7 +84,7 @@ void QuickDrawContinueMenuInput(void)
         t = gCurTask;
         t->quickDrawMenuActive = 0;
         if (t->quickDrawMenuCursor == 0)
-            t->state = 5;
+            t->state = QUICK_DRAW_RESULTS_STATE_LEVEL_MENU;
         else
             SubGameQuit();
     }
@@ -139,7 +139,7 @@ void QuickDrawLevelMenuInput(void)
     else if (gPlayerPressedKeys[0] & 2)
     {
         QuickDrawPlaySfxIfPlayer0(215);
-        gCurTask->state = 4;
+        gCurTask->state = QUICK_DRAW_RESULTS_STATE_CONTINUE_MENU;
         gCurTask->quickDrawMenuActive = 0;
     }
     else if (gPlayerPressedKeys[0] & 0x30)
@@ -168,16 +168,16 @@ void QuickDrawLevelMenuInput(void)
 
 void CreateQuickDrawBonusSign(u16 a0, u16 a1, u16 a2)
 {
-    s32 i = TaskCreateFrom(94, 32);
+    s32 i = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (i != -1)
     {
-        struct Task *t = &gTasks[i];
+        struct Task *quickDrawObject = &gTasks[i];
 
-        t->variant = 7;
-        t->frame = a0;
-        t->pixelX = a1;
-        t->pixelY = a2;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_BONUS_SIGN;
+        quickDrawObject->frame = a0;
+        quickDrawObject->pixelX = a1;
+        quickDrawObject->pixelY = a2;
     }
 }
 
@@ -200,34 +200,34 @@ void QuickDrawCreateNextBonus(void)
 
 void CreateQuickDrawBonus(u8 a0, s16 a1, s16 a2, s8 a3)
 {
-    s32 i = TaskCreateFrom(94, 32);
+    s32 i = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (i != -1)
     {
-        struct Task *t = &gTasks[i];
+        struct Task *quickDrawObject = &gTasks[i];
 
-        t->variant = 8;
-        t->unk18 = a0;
-        t->pixelX = a1;
-        t->pixelY = a2;
-        t->unk1C = a3;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_BONUS;
+        quickDrawObject->unk18 = a0;
+        quickDrawObject->pixelX = a1;
+        quickDrawObject->pixelY = a2;
+        quickDrawObject->unk1C = a3;
     }
 }
 
 void CreateQuickDrawRankLabel(u8 a0, s16 a1, s16 a2, s8 a3)
 {
-    s32 i = TaskCreateFrom(94, 32);
+    s32 i = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (i != -1)
     {
-        struct Task *t = &gTasks[i];
+        struct Task *quickDrawObject = &gTasks[i];
 
-        t->pixelX = a1;
-        t->pixelY = a2;
-        t->variant = 9;
-        t->unk18 = a0;
-        t->unk1C = a3;
-        t->frame = a0;
+        quickDrawObject->pixelX = a1;
+        quickDrawObject->pixelY = a2;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_RANK_LABEL;
+        quickDrawObject->unk18 = a0;
+        quickDrawObject->unk1C = a3;
+        quickDrawObject->frame = a0;
     }
 }
 
@@ -393,11 +393,11 @@ void QuickDrawPickResultsSong(void)
 
 void QuickDrawSetupResultsLink(void)
 {
-    if (gPrevGameState == 5)
+    if (gPrevGameState == GAME_STATE_HUB)
         CreateQuickDrawBonusSign(0, 120, 16);
     CreateQuickDrawPlayers(1);
     QuickDrawPickResultsSong();
-    if (gPrevGameState == 5)
+    if (gPrevGameState == GAME_STATE_HUB)
         gCurTask->quickDrawResultsNextState = 2;
     else
         gCurTask->quickDrawResultsNextState = 3;
@@ -426,7 +426,7 @@ void QuickDrawSetupResultsVsCpu(void)
 {
     CreateQuickDrawDefeatedLabel();
     CreateQuickDrawBestTimeLabel();
-    if (gPrevGameState != 5)
+    if (gPrevGameState != GAME_STATE_HUB)
         CreateQuickDrawResultsPlayer();
     switch (gUnk_0200B048)
     {
@@ -445,45 +445,45 @@ void QuickDrawSetupResultsVsCpu(void)
 
 void CreateQuickDrawDefeatedLabel(void)
 {
-    s32 id = TaskCreateFrom(94, 32);
+    s32 id = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (id != -1)
     {
-        struct Task *t = &gTasks[id];
+        struct Task *quickDrawObject = &gTasks[id];
 
-        t->variant = 1;
-        t->unk18 = gUnk_0200B048;
-        t->unk1C = 4;
-        t->unk20 = -1;
-        t->unk24 = 6;
-        t->pixelX = 80;
-        t->pixelY = 16;
-        t->unk28 = -12;
-        t->unk2C = 80;
-        t->unk30 = (s32)gUnk_08755A88;
-        t->unk34 = 0;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
+        quickDrawObject->unk18 = gUnk_0200B048;
+        quickDrawObject->unk1C = 4;
+        quickDrawObject->unk20 = -1;
+        quickDrawObject->unk24 = 6;
+        quickDrawObject->pixelX = 80;
+        quickDrawObject->pixelY = 16;
+        quickDrawObject->unk28 = -12;
+        quickDrawObject->unk2C = 80;
+        quickDrawObject->unk30 = (s32)gUnk_08755A88;
+        quickDrawObject->unk34 = 0;
     }
 }
 
 void CreateQuickDrawBestTimeLabel(void)
 {
-    s32 id = TaskCreateFrom(94, 32);
+    s32 id = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (id != -1)
     {
-        struct Task *t = &gTasks[id];
+        struct Task *quickDrawObject = &gTasks[id];
         s32 v;
         s32 n;
 
-        t->variant = 1;
-        t->unk1C = 5;
-        t->unk20 = -1;
-        t->pixelX = 172;
-        t->pixelY = 96;
-        t->unk28 = -8;
-        t->unk2C = 0;
-        t->unk30 = (s32)gQuickDrawDigitFrames;
-        t->unk34 = 0;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
+        quickDrawObject->unk1C = 5;
+        quickDrawObject->unk20 = -1;
+        quickDrawObject->pixelX = 172;
+        quickDrawObject->pixelY = 96;
+        quickDrawObject->unk28 = -8;
+        quickDrawObject->unk2C = 0;
+        quickDrawObject->unk30 = (s32)gQuickDrawDigitFrames;
+        quickDrawObject->unk34 = 0;
         v = gQuickDrawBestTime;
         n = 0;
         while (v > 9)
@@ -491,24 +491,24 @@ void CreateQuickDrawBestTimeLabel(void)
             v -= 10;
             n++;
         }
-        t->unk24 = n;
-        t->unk18 = v;
+        quickDrawObject->unk24 = n;
+        quickDrawObject->unk18 = v;
     }
 }
 
 void CreateQuickDrawResultsPlayer(void)
 {
-    s32 id = TaskCreateFrom(94, 0);
+    s32 quickDrawObjectSlot = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 0);
 
-    if (id != -1)
+    if (quickDrawObjectSlot != -1)
     {
-        struct Task *t = &gTasks[id];
+        struct Task *quickDrawObject = &gTasks[quickDrawObjectSlot];
 
-        t->parent = gCurTaskIdx;
-        t->quickDrawObjectPlayerIndex = id;
-        t->variant = 0;
-        t->quickDrawObjectStartMode = 2;
-        t->unk28 = 0;
+        quickDrawObject->parent = gCurTaskIdx;
+        quickDrawObject->quickDrawObjectPlayerIndex = quickDrawObjectSlot;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_PLAYER;
+        quickDrawObject->quickDrawObjectStartMode = 2;
+        quickDrawObject->unk28 = 0;
     }
 }
 
@@ -538,7 +538,7 @@ void QuickDrawResultsEnterState(void)
 
 void QuickDrawResultsPlaySong(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = QUICK_DRAW_RESULTS_STATE_PLAY_SONG;
     TaskYieldTrampoline(30);
     PlayBgm(gCurTask->quickDrawResultsSong | 0x800);
     TaskYieldTrampoline(180);
@@ -548,41 +548,41 @@ void QuickDrawResultsPlaySong(void)
 
 void QuickDrawResultsPlaySongUpdate(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != QUICK_DRAW_RESULTS_STATE_PLAY_SONG)
         TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
 }
 
 void QuickDrawResultsBonusSign(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = QUICK_DRAW_RESULTS_STATE_BONUS_SIGN;
     TaskYieldTrampoline(16);
-    if (gPrevGameState == 5)
+    if (gPrevGameState == GAME_STATE_HUB)
     {
         if (gUnk_0200B048 != 0)
         {
             CreateQuickDrawBonusSign(0, 96, 64);
-            gCurTask->state = 2;
+            gCurTask->state = QUICK_DRAW_RESULTS_STATE_AWARD_BONUSES;
         }
         else
         {
             CreateQuickDrawBonusSign(1, 120, 64);
-            gCurTask->state = 6;
+            gCurTask->state = QUICK_DRAW_RESULTS_STATE_WAIT_QUIT;
         }
     }
     else
-        gCurTask->state = 4;
+        gCurTask->state = QUICK_DRAW_RESULTS_STATE_CONTINUE_MENU;
     TaskSleepForever();
 }
 
 void QuickDrawResultsBonusSignUpdate(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != QUICK_DRAW_RESULTS_STATE_BONUS_SIGN)
         TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
 }
 
 void QuickDrawResultsAwardBonuses(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = QUICK_DRAW_RESULTS_STATE_AWARD_BONUSES;
     QuickDrawInitBonusSteps();
     TaskYieldTrampoline(16);
     while (gCurTask->quickDrawBonusStepsLeft != 0)
@@ -590,35 +590,35 @@ void QuickDrawResultsAwardBonuses(void)
         QuickDrawCreateNextBonus();
         TaskYieldTrampoline(20);
     }
-    gCurTask->state = 6;
+    gCurTask->state = QUICK_DRAW_RESULTS_STATE_WAIT_QUIT;
     TaskSleepForever();
 }
 
 void QuickDrawResultsAwardBonusesUpdate(void)
 {
-    if (gCurTask->state != 2)
+    if (gCurTask->state != QUICK_DRAW_RESULTS_STATE_AWARD_BONUSES)
         TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
 }
 
 void QuickDrawResultsRanking(void)
 {
-    gCurTask->updateState = 3;
+    gCurTask->updateState = QUICK_DRAW_RESULTS_STATE_RANKING;
     TaskYieldTrampoline(16);
     QuickDrawCreateRankLabels();
     TaskYieldTrampoline(20);
-    gCurTask->state = 4;
+    gCurTask->state = QUICK_DRAW_RESULTS_STATE_CONTINUE_MENU;
     TaskSleepForever();
 }
 
 void QuickDrawResultsRankingUpdate(void)
 {
-    if (gCurTask->state != 3)
+    if (gCurTask->state != QUICK_DRAW_RESULTS_STATE_RANKING)
         TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
 }
 
 void QuickDrawResultsContinueMenu(void)
 {
-    gCurTask->updateState = 4;
+    gCurTask->updateState = QUICK_DRAW_RESULTS_STATE_CONTINUE_MENU;
     gCurTask->quickDrawMenuActive = 0;
     TaskYieldTrampoline(gCurTask->quickDrawMenuDelay);
     if (gLocalPlayer == 0)
@@ -633,14 +633,14 @@ void QuickDrawResultsContinueMenuUpdate(void)
     if (gCurTask->quickDrawMenuActive != 0)
     {
         QuickDrawContinueMenuInput();
-        if (gCurTask->state != 4)
+        if (gCurTask->state != QUICK_DRAW_RESULTS_STATE_CONTINUE_MENU)
             TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
     }
 }
 
 void QuickDrawResultsLevelMenu(void)
 {
-    gCurTask->updateState = 5;
+    gCurTask->updateState = QUICK_DRAW_RESULTS_STATE_LEVEL_MENU;
     gCurTask->quickDrawMenuActive = 0;
     TaskYieldTrampoline(8);
     QuickDrawInitLevelMenu();
@@ -653,14 +653,14 @@ void QuickDrawResultsLevelMenuUpdate(void)
     if (gCurTask->quickDrawMenuActive != 0)
     {
         QuickDrawLevelMenuInput();
-        if (gCurTask->state != 5)
+        if (gCurTask->state != QUICK_DRAW_RESULTS_STATE_LEVEL_MENU)
             TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
     }
 }
 
 void QuickDrawResultsWaitQuit(void)
 {
-    gCurTask->updateState = 6;
+    gCurTask->updateState = QUICK_DRAW_RESULTS_STATE_WAIT_QUIT;
     TaskSleepForever();
 }
 

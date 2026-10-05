@@ -1,5 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "constants/actors.h"
+#include "constants/hits.h"
 
 /* Early subsystem: the cooperative TASK ENGINE (0x08004FEC-0x08005653,
  * issue #32 batch F1).
@@ -218,14 +220,14 @@ void InitTasks(void)
         p->h76 = 0;
         p->b74 = 0;
         p->variant = 0;
-        p->actorKind = 0;
+        p->actorKind = ACTOR_KIND_ENEMY;
         p->hitTimer = 0;
         p->health = 0;
         p->waterFlags = 0;
         p->onGround = 0;
         p->hitDirection = 0;
         p->hitEffect = 0;
-        p->hitKind = 0;
+        p->hitKind = HIT_KIND_NONE;
         p->hitterSlot |= 0xFF;
         p->hitterPlayer |= 0xFF;
         p->h84 = 0x80;

@@ -38,16 +38,16 @@ void PlayerActionBeam(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 44;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_BEAM;
     gCurTask->playerActionDone28 = 0;
-    gCurTask->u80.attackAbility = 0;
+    gCurTask->u80.attackAbility = ABILITY_NORMAL;
     TaskSetFrame(0xBBD);
     TaskYieldTrampoline(6);
     gCurTask->frame++;
     TaskYieldTrampoline(2);
-    CreatePlayerObject(gCurTask->player->playerIndex, 8, 0);
-    CreatePlayerObject(gCurTask->player->playerIndex, 8, 1);
-    CreatePlayerObject(gCurTask->player->playerIndex, 8, 2);
+    CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_BEAM_ORB, 0);
+    CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_BEAM_ORB, 1);
+    CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_BEAM_ORB, 2);
     gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xBBF);
@@ -86,20 +86,20 @@ void PlayerActionStone(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 45;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_STONE;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
             struct Task *u;
             t->variant = 0;
             u = gCurTask;
-            u->unk28 = 15;
-            u->u80.attackAbility = 17;
+            u->playerAttackHoldTimer = 15;
+            u->u80.attackAbility = ABILITY_STONE;
         }
     }
     switch (gCurTask->variant) {
     case 0:
-        PlaySfxIfLocalPlayer(152, gCurTask->player->playerIndex);
+        PlaySfxIfLocalPlayer(SE_STONE_ATTACK, gCurTask->player->playerIndex);
         if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 48) == 0)
             PlayerStopAxes(1);
         if (gCurTask->onGround & 1) {
@@ -129,11 +129,11 @@ void PlayerActionStone(void)
         PlayerStopAxes(1);
         TaskSetFrame(0xC48);
         while (1) {
-            if (gCurTask->unk28 == 0) {
+            if (gCurTask->playerAttackHoldTimer == 0) {
                 if (gLatchedPressedKeys[gCurTask->player->playerIndex] & 2)
                     break;
             } else {
-                gCurTask->unk28--;
+                gCurTask->playerAttackHoldTimer--;
             }
             TaskYieldTrampoline(1);
         }
@@ -154,10 +154,10 @@ void PlayerActionStone(void)
         }
         TaskSetFrame(0xC4D);
         TaskYieldTrampoline(2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 43, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 43, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 43, 2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 43, 3);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_STONE_PUFF, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_STONE_PUFF, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_STONE_PUFF, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_STONE_PUFF, 3);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->playerLoopCount = 0;
@@ -193,7 +193,7 @@ void PlayerActionStoneUpdate(void)
         if (t->onGround & 1) {
             if (t->velY != 0) {
                 CreatePlayerEffect(t->player->playerIndex, 27, 0);
-                PlaySfxIfLocalPlayer(143, gCurTask->player->playerIndex);
+                PlaySfxIfLocalPlayer(SE_STONE_LAND, gCurTask->player->playerIndex);
                 RequestScreenShake(2);
                 PlayerStopAxes(2);
             }

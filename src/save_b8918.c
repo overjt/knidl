@@ -9,51 +9,51 @@
 
 void MergeLinkSaveSlots(void)
 {
-    s32 i;
-    s32 j;
-    s32 k;
+    s32 player;
+    s32 level;
+    s32 stage;
 
-    for (i = 0; i < gPlayerCount; i++)
+    for (player = 0; player < gPlayerCount; player++)
     {
-        if ((s8)gSaveSlots[3].furthestLevel[gExtraMode] > (s8)gLinkSaveSlots[i].unk0A[gExtraMode])
+        if ((s8)gSaveSlots[3].furthestLevel[gExtraMode] > (s8)gLinkSaveSlots[player].furthestLevel[gExtraMode])
         {
-            gSaveSlots[3].furthestLevel[gExtraMode] = gLinkSaveSlots[i].unk0A[gExtraMode];
-            gSaveSlots[3].furthestStage[gExtraMode] = gLinkSaveSlots[i].unk0C[gExtraMode];
-            gSaveSlots[3].curLevel[gExtraMode] = gLinkSaveSlots[i].unk06[gExtraMode];
-            gSaveSlots[3].unk18[gExtraMode] = gLinkSaveSlots[i].unk08[gExtraMode];
+            gSaveSlots[3].furthestLevel[gExtraMode] = gLinkSaveSlots[player].furthestLevel[gExtraMode];
+            gSaveSlots[3].furthestStage[gExtraMode] = gLinkSaveSlots[player].furthestStage[gExtraMode];
+            gSaveSlots[3].curLevel[gExtraMode] = gLinkSaveSlots[player].curLevel[gExtraMode];
+            gSaveSlots[3].curStage[gExtraMode] = gLinkSaveSlots[player].curStage[gExtraMode];
         }
-        else if ((s8)gSaveSlots[3].furthestLevel[gExtraMode] == (s8)gLinkSaveSlots[i].unk0A[gExtraMode])
+        else if ((s8)gSaveSlots[3].furthestLevel[gExtraMode] == (s8)gLinkSaveSlots[player].furthestLevel[gExtraMode])
         {
-            if ((s8)gSaveSlots[3].furthestStage[gExtraMode] > (s8)gLinkSaveSlots[i].unk0C[gExtraMode])
+            if ((s8)gSaveSlots[3].furthestStage[gExtraMode] > (s8)gLinkSaveSlots[player].furthestStage[gExtraMode])
             {
-                gSaveSlots[3].furthestStage[gExtraMode] = gLinkSaveSlots[i].unk0C[gExtraMode];
-                gSaveSlots[3].curLevel[gExtraMode] = gLinkSaveSlots[i].unk06[gExtraMode];
-                gSaveSlots[3].unk18[gExtraMode] = gLinkSaveSlots[i].unk08[gExtraMode];
+                gSaveSlots[3].furthestStage[gExtraMode] = gLinkSaveSlots[player].furthestStage[gExtraMode];
+                gSaveSlots[3].curLevel[gExtraMode] = gLinkSaveSlots[player].curLevel[gExtraMode];
+                gSaveSlots[3].curStage[gExtraMode] = gLinkSaveSlots[player].curStage[gExtraMode];
             }
-            else if ((s8)gSaveSlots[3].furthestStage[gExtraMode] == (s8)gLinkSaveSlots[i].unk0C[gExtraMode])
+            else if ((s8)gSaveSlots[3].furthestStage[gExtraMode] == (s8)gLinkSaveSlots[player].furthestStage[gExtraMode])
             {
-                if ((s8)gSaveSlots[3].curLevel[gExtraMode] > (s8)gLinkSaveSlots[i].unk06[gExtraMode])
+                if ((s8)gSaveSlots[3].curLevel[gExtraMode] > (s8)gLinkSaveSlots[player].curLevel[gExtraMode])
                 {
-                    gSaveSlots[3].curLevel[gExtraMode] = gLinkSaveSlots[i].unk06[gExtraMode];
-                    gSaveSlots[3].unk18[gExtraMode] = gLinkSaveSlots[i].unk08[gExtraMode];
+                    gSaveSlots[3].curLevel[gExtraMode] = gLinkSaveSlots[player].curLevel[gExtraMode];
+                    gSaveSlots[3].curStage[gExtraMode] = gLinkSaveSlots[player].curStage[gExtraMode];
                 }
-                else if ((s8)gSaveSlots[3].curLevel[gExtraMode] == (s8)gLinkSaveSlots[i].unk06[gExtraMode])
+                else if ((s8)gSaveSlots[3].curLevel[gExtraMode] == (s8)gLinkSaveSlots[player].curLevel[gExtraMode])
                 {
-                    if ((s8)gSaveSlots[3].unk18[gExtraMode] > (s8)gLinkSaveSlots[i].unk08[gExtraMode])
-                        gSaveSlots[3].unk18[gExtraMode] = gLinkSaveSlots[i].unk08[gExtraMode];
+                    if ((s8)gSaveSlots[3].curStage[gExtraMode] > (s8)gLinkSaveSlots[player].curStage[gExtraMode])
+                        gSaveSlots[3].curStage[gExtraMode] = gLinkSaveSlots[player].curStage[gExtraMode];
                 }
             }
         }
-        if (gSaveSlots[3].completionPercent[gExtraMode] > gLinkSaveSlots[i].unk02[gExtraMode])
-            gSaveSlots[3].completionPercent[gExtraMode] = gLinkSaveSlots[i].unk02[gExtraMode];
-        gSaveSlots[3].bigSwitchFlags[gExtraMode] &= gLinkSaveSlots[i].unk10[gExtraMode];
-        gSaveSlots[3].milestoneFlags &= gLinkSaveSlots[i].unk00;
-        for (j = 0; j <= 7; j++)
+        if (gSaveSlots[3].completionPercent[gExtraMode] > gLinkSaveSlots[player].completionPercent[gExtraMode])
+            gSaveSlots[3].completionPercent[gExtraMode] = gLinkSaveSlots[player].completionPercent[gExtraMode];
+        gSaveSlots[3].bigSwitchFlags[gExtraMode] &= gLinkSaveSlots[player].bigSwitchFlags[gExtraMode];
+        gSaveSlots[3].milestoneFlags &= gLinkSaveSlots[player].milestoneFlags;
+        for (level = 0; level <= 7; level++)
         {
-            for (k = 0; k <= 6; k++)
+            for (stage = 0; stage <= 6; stage++)
             {
-                if (gSaveSlots[3].stageClearStatus[j][k] > gLinkSaveSlots[i].unk18[j][k])
-                    gSaveSlots[3].stageClearStatus[j][k] = gLinkSaveSlots[i].unk18[j][k];
+                if (gSaveSlots[3].stageClearStatus[level][stage] > gLinkSaveSlots[player].stageClearStatus[level][stage])
+                    gSaveSlots[3].stageClearStatus[level][stage] = gLinkSaveSlots[player].stageClearStatus[level][stage];
             }
         }
     }
@@ -61,26 +61,26 @@ void MergeLinkSaveSlots(void)
 void MergeProgressIntoSaveSlot(s32 a)
 {
     s32 i;
-    s32 j;
+    s32 stage;
 
     gSaveSlots[3].curLevel[gExtraMode] = gCurLevel;
-    gSaveSlots[3].unk18[gExtraMode] = gUnk_03001F20;
+    gSaveSlots[3].curStage[gExtraMode] = gCurStage;
     gSaveSlots[3].furthestLevel[gExtraMode] = gFurthestLevel;
     gSaveSlots[3].furthestStage[gExtraMode] = gFurthestStage;
     gSaveSlots[3].bigSwitchFlags[gExtraMode] = gBigSwitchFlags[0];
     for (i = 0; i <= 7; i++)
     {
-        for (j = 0; j <= 6; j++)
+        for (stage = 0; stage <= 6; stage++)
         {
-            gSaveSlots[3].stageClearStatus[i][j] &= 15 << ((gExtraMode ^ 1) * 4);
-            gSaveSlots[3].stageClearStatus[i][j] |= gStageClearStatus[i][j] << (gExtraMode * 4);
+            gSaveSlots[3].stageClearStatus[i][stage] &= 15 << ((gExtraMode ^ 1) * 4);
+            gSaveSlots[3].stageClearStatus[i][stage] |= gStageClearStatus[i][stage] << (gExtraMode * 4);
         }
     }
     CalcCompletionPercent(gExtraMode);
     gSaveSlots[3].completionPercent[gExtraMode] = gCompletionPercent;
     gSaveSlots[3].milestoneFlags = gMilestoneFlags;
     gSaveSlots[a].curLevel[gExtraMode] = gSaveSlots[3].curLevel[gExtraMode];
-    gSaveSlots[a].unk18[gExtraMode] = gSaveSlots[3].unk18[gExtraMode];
+    gSaveSlots[a].curStage[gExtraMode] = gSaveSlots[3].curStage[gExtraMode];
     if ((s8)gSaveSlots[a].furthestLevel[gExtraMode] < (s8)gSaveSlots[3].furthestLevel[gExtraMode])
     {
         gSaveSlots[a].furthestLevel[gExtraMode] = gSaveSlots[3].furthestLevel[gExtraMode];
@@ -95,10 +95,10 @@ void MergeProgressIntoSaveSlot(s32 a)
     gSaveSlots[a].milestoneFlags |= gSaveSlots[3].milestoneFlags;
     for (i = 0; i <= 7; i++)
     {
-        for (j = 0; j <= 6; j++)
+        for (stage = 0; stage <= 6; stage++)
         {
-            if (gSaveSlots[a].stageClearStatus[i][j] < gSaveSlots[3].stageClearStatus[i][j])
-                gSaveSlots[a].stageClearStatus[i][j] = gSaveSlots[3].stageClearStatus[i][j];
+            if (gSaveSlots[a].stageClearStatus[i][stage] < gSaveSlots[3].stageClearStatus[i][stage])
+                gSaveSlots[a].stageClearStatus[i][stage] = gSaveSlots[3].stageClearStatus[i][stage];
         }
     }
     if ((gSaveSlots[a].milestoneFlags & (4 << gExtraMode)) != 0)

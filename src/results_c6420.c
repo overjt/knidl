@@ -42,7 +42,7 @@ void LoadGfxSet(u16 a0);                                   /* load screen graphi
    and returns (AgbMain goes back to state 0). */
 void FinalResultsScreen(void)
 {
-    if (gPrevGameState != 20) {
+    if (gPrevGameState != GAME_STATE_BOSS_ENDURANCE) {
         LoadGfxSet(4);
         if (gMetaKnightmareMode == 0) {
             if (gExtraMode == 0)
@@ -64,7 +64,7 @@ void FinalResultsScreen(void)
     gBg0ScrollX = gBg0ScrollY = 0;
     gBg2ScrollX = gBg2ScrollY = 0;
     gBg3ScrollX = gBg3ScrollY = 0;
-    if (gPrevGameState == 20) {
+    if (gPrevGameState == GAME_STATE_BOSS_ENDURANCE) {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x800;
     } else if (gMetaKnightmareMode == 1) {
@@ -79,7 +79,7 @@ void FinalResultsScreen(void)
     }
     BeginFastFadeInFromWhite();
     RunLinkFramesUntilFadeDone();
-    if (gPrevGameState == 20 || gMetaKnightmareMode == 1) {
+    if (gPrevGameState == GAME_STATE_BOSS_ENDURANCE || gMetaKnightmareMode == 1) {
         PlayBgm(29);
         RunLinkFrames(174);
     } else {
@@ -89,7 +89,7 @@ void FinalResultsScreen(void)
     do
         RunLinkFrame();
     while (!(gPlayerPressedKeys[0] & 8));
-    PlaySfx(102);
+    PlaySfx(SE_CONFIRM);
     LinkStopKeyExchange();
     FadeOutBgm(8);
     BeginFadeOutToWhite();
@@ -148,7 +148,7 @@ void ShowMilestonePicture(void)
         RunLinkFrame();
         for (i = 0; i < gPlayerCount; i++) {
             if (gPlayerPressedKeys[i] & 9) {
-                PlaySfx(102);
+                PlaySfx(SE_CONFIRM);
                 break;
             }
         }
@@ -181,7 +181,7 @@ void ShowMilestonePictureForMode(s32 slot)
     do
         RunFrameNoTasks();
     while (!(gPressedKeys & 9));
-    PlaySfx(102);
+    PlaySfx(SE_CONFIRM);
     BeginFastFadeOutToWhite();
     RunFramesNoTasksUntilFadeDone();
     gBg3ScrollX = x;

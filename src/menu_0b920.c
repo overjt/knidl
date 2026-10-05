@@ -46,13 +46,13 @@ void MainMenuMain(void)
     LoadBgLayout(2);
     LoadGfxSet(22);
     BgScrollInit();
-    TaskCreateFrom(0x101, 32);
-    TaskCreateFrom(0x102, 32);
-    TaskCreateFrom(0x103, 32);
-    TaskCreateFrom(0x100, 32);
+    TaskCreateFrom(TASK_BG_SCROLL, 32);
+    TaskCreateFrom(TASK_MENU_BACKGROUND, 32);
+    TaskCreateFrom(TASK_MENU_BG_PALETTE_CYCLE, 32);
+    TaskCreateFrom(TASK_MENU_SCREEN_TITLE, 32);
     switch (gPrevGameState)
     {
-    case 3:
+    case GAME_STATE_TITLE:
         gBg3ScrollY = 64;
         BgScrollStartY(0x80000, 80, 3);
         gDispCnt &= 0xE0FF;
@@ -61,16 +61,16 @@ void MainMenuMain(void)
         MenuDrawSaveSlots();
         CreateFileSelectSprites(0);
         break;
-    case 14:
-    case 15:
-    case 16:
-    case 20:
-    case 21:
+    case GAME_STATE_QUICK_DRAW:
+    case GAME_STATE_BOMB_RALLY:
+    case GAME_STATE_AIR_GRIND:
+    case GAME_STATE_BOSS_ENDURANCE:
+    case GAME_STATE_META_KNIGHTMARE:
         gBg3ScrollY = 64;
         BgScrollStartY(0x80000, 80, 3);
-        if (gPrevGameState <= 16)
+        if (gPrevGameState <= GAME_STATE_AIR_GRIND)
             gMenuCursor = gPrevGameState - 14;
-        else if (gPrevGameState == 20)
+        else if (gPrevGameState == GAME_STATE_BOSS_ENDURANCE)
             gMenuCursor = 3;
         else
             gMenuCursor = 4;
@@ -133,15 +133,15 @@ void MainMenuMain(void)
         }
         gFadeBlankAtWhite = 0;
         gMetaKnightmareMode = 0;
-        gGameState = 13;
+        gGameState = GAME_STATE_EXTRA_MODE_TITLE;
     }
     else
     {
-        if (gGameState == 5 || gGameState == 3)
+        if (gGameState == GAME_STATE_HUB || gGameState == GAME_STATE_TITLE)
             FadeOutBgm(16);
         if (gPlayerCount > 1)
         {
-            if (gGameState == 5)
+            if (gGameState == GAME_STATE_HUB)
             {
                 ExchangeLinkSaveSlots();
                 MergeLinkSaveSlots();
@@ -159,15 +159,15 @@ void MainMenuMain(void)
     gDispCnt &= 0xDFFF;
     switch (gGameState)
     {
-    case 3: /* empty but load-bearing: it adds the `cmp #5; ble` split */
+    case GAME_STATE_TITLE: /* empty but load-bearing: it adds the `cmp #5; ble` split */
         break;
-    case 5:
+    case GAME_STATE_HUB:
         LoadSaveSlot(gCurSaveSlot);
         CheckNewMilestones();
         ResetScoresAndMaxHealth();
         gCutscenePending = 1;
         break;
-    case 13:
+    case GAME_STATE_EXTRA_MODE_TITLE:
         if (gUnk_02006090 == 6 || gUnk_02006090 == 7)
         {
             LoadSaveSlot(gCurSaveSlot);
@@ -175,7 +175,7 @@ void MainMenuMain(void)
             if (gUnk_02006090 == 7)
                 ResetLevelProgress(gCurSaveSlot);
         }
-        gPrevGameState = 4;
+        gPrevGameState = GAME_STATE_MAIN_MENU;
         break;
     }
 }

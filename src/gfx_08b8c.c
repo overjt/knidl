@@ -43,11 +43,11 @@ void LinkErrorScreen(void)
     gFadeBlankAtWhite = 0;
     for (;;) {
         if (gPressedKeys & 9) {
-            PlaySfx(102);
+            PlaySfx(SE_CONFIRM);
             break;
         }
         if (gPressedKeys & 2) {
-            PlaySfx(215);
+            PlaySfx(SE_CANCEL);
             break;
         }
         RunFrameNoTasks();

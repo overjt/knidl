@@ -130,23 +130,23 @@ s16 (*gHBlankScrollEffects[11])(void) LATE_TBL(08756198) = {
 /* ---- 0x08756270-0x087562A8: 2 table(s), 14 function pointer(s), section .late_tbl_08756270 ---- */
 /* include/save.h; CallTableEntry(i, 7, ...) in PlayerLifeRequestInit, PlayerLifeRequestEnterState */
 u32 gPlayerLifeRequestStates[7] LATE_TBL(08756270) = {
-    (u32)PlayerLifeRequestState0,
-    (u32)PlayerLifeRequestState1,
+    (u32)PlayerLifeRequestChoose,
+    (u32)PlayerLifeRequestPickGiver,
     (u32)PlayerLifeRequestWait,
     (u32)PlayerLifeRequestReceive,
-    (u32)PlayerLifeRequestState4,
-    (u32)PlayerLifeRequestState5,
-    (u32)PlayerLifeRequestState6,
+    (u32)PlayerLifeRequestFail,
+    (u32)PlayerLifeRequestNoGiver,
+    (u32)PlayerLifeRequestGameOver,
 };
 /* include/save.h; CallTableEntry(i, 7, ...) in PlayerLifeRequestUpdate */
 u32 gPlayerLifeRequestStateUpdates[7] LATE_TBL(08756270) = {
-    (u32)PlayerLifeRequestState0Update,
-    (u32)PlayerLifeRequestState1Update,
+    (u32)PlayerLifeRequestChooseUpdate,
+    (u32)PlayerLifeRequestPickGiverUpdate,
     (u32)PlayerLifeRequestWaitUpdate,
     (u32)PlayerLifeRequestReceiveUpdate,
-    (u32)PlayerLifeRequestState4Update,
-    (u32)PlayerLifeRequestState5Update,
-    (u32)PlayerLifeRequestState6Update,
+    (u32)PlayerLifeRequestFailUpdate,
+    (u32)PlayerLifeRequestNoGiverUpdate,
+    (u32)PlayerLifeRequestGameOverUpdate,
 };
 
 /* ---- 0x087562CC-0x087562D8: 1 table(s), 3 function pointer(s), section .late_tbl_087562cc ---- */
@@ -436,12 +436,12 @@ void (*gAirGrindObjectVariants[3])(void) LATE_TBL(087572cc) = {
 /* include/ending.h; CallTableEntry(i, 11, ...) in Task_EndingEpilogue */
 void (*gEndingEpilogueVariants[11])(void) LATE_TBL(08757330) = {
     NULL,
-    sub_080c6d84,
+    EndingEpilogueWarpStar,
     sub_080c7810,
     sub_080c7cc0,
-    sub_080c7e4c,
-    sub_080c8498,
-    sub_080c85d8,
+    EndingEpilogueKirby,
+    EndingEpilogueStarRod,
+    EndingEpilogueKingDedede,
     sub_080c88f0,
     sub_080c8958,
     sub_080c8cd4,
@@ -452,12 +452,12 @@ void (*gEndingEpilogueVariants[11])(void) LATE_TBL(08757330) = {
 /* include/ending.h; CallTableEntry(i, 12, ...) in Task_EndingStarRodReturn */
 void (*gEndingStarRodReturnVariants[12])(void) LATE_TBL(087573f4) = {
     NULL,
-    sub_080c9114,
+    EndingStarRodReturnStarRod,
     sub_080c9d10,
-    sub_080c94cc,
+    EndingStarRodReturnWarpStar,
     sub_080c9884,
-    sub_080c98d8,
-    sub_080ca71c,
+    EndingStarRodReturnKirby,
+    EndingStarRodReturnFountainJet,
     sub_080ca830,
     sub_080ca8f0,
     sub_080c9e8c,
@@ -473,7 +473,7 @@ void (*gGameOverObjectVariants[6])(void) LATE_TBL(08758294) = {
     sub_080ccd4c,
     sub_080ccec8,
     sub_080cd24c,
-    sub_080cd2f8,
+    GameOverKnockedOutPlayers,
 };
 /* include/ending.h; CallTableEntry(i, 3, ...) in GameOverPlayer, GameOverPlayerEnterState */
 void (*gGameOverPlayerStates[3])(void) LATE_TBL(08758294) = {

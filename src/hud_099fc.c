@@ -85,7 +85,7 @@ void HudInit(s32 i)
         HudDrawHealth(gPlayerHealth[i] >> 3);
         if ((gActivePlayerMask >> i) & 1) {
             HudShowAbility((s16)gPlayerAbilities[i], i);
-            if ((s16)gPlayerAbilities[i] != 0) {
+            if ((s16)gPlayerAbilities[i] != ABILITY_NORMAL) {
                 gHudAbilityPanelState = 1;
                 gUnk_0200801C = 16;
                 HudDrawAbilityPanel(2);
@@ -95,7 +95,7 @@ void HudInit(s32 i)
                 HudDrawAbilityPanel(0);
             }
         } else if (gPlayerCameraMode[i] != 1) {
-            HudShowAbility(26, i);
+            HudShowAbility(ABILITY_PICTURE_WAIT, i);
             gHudAbilityPanelState = 1;
             gUnk_0200801C = 16;
             HudDrawAbilityPanel(2);
@@ -136,7 +136,7 @@ void HudRedraw(s32 i)
     HudDrawHealth(gPlayerHealth[i] >> 3);
     if ((gActivePlayerMask >> i) & 1) {
         HudShowAbility((s16)gPlayerAbilities[i], i);
-        if ((s16)gPlayerAbilities[i] != 0) {
+        if ((s16)gPlayerAbilities[i] != ABILITY_NORMAL) {
             gHudAbilityPanelState = 1;
             gUnk_0200801C = 16;
             HudDrawAbilityPanel(2);
@@ -146,7 +146,7 @@ void HudRedraw(s32 i)
             HudDrawAbilityPanel(0);
         }
     } else {
-        HudShowAbilityAnimated(26, i);
+        HudShowAbilityAnimated(ABILITY_PICTURE_WAIT, i);
     }
     if (gHudShowsHpBar == 0) {
         if (gHudShowsClock == 0)
@@ -155,11 +155,11 @@ void HudRedraw(s32 i)
             HudDrawClock(gHudClock);
     } else {
         HudShowHpBar();
-        HudDrawHpBar(gHudHpBars[gHudHpBarIndex].unk4);
+        HudDrawHpBar(gHudHpBars[gHudHpBarIndex].shownValue);
     }
     if (gUnk_020055F0[0] != 0) {
         if (gUnk_020055F0[0] == 2)
-            sub_0800b230(gLifeRequests.unk04[i] >> 4, gUnk_020055F0[0]);
+            sub_0800b230(gLifeRequests.requests[i] >> 4, gUnk_020055F0[0]);
         else
             sub_0800b230(i, gUnk_020055F0[0]);
     }

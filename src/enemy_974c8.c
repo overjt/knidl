@@ -18,7 +18,7 @@ extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(void *p);
 extern void ActorSetAttackBox(void *p);
-extern void sub_08063a00(void *p);
+extern void ActorSetExtraAttackBox(void *p);
 extern void ReleaseHeldPlayer(s32 i, s32 d);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCheckHitsWithExtraBox(void);
@@ -29,7 +29,7 @@ extern u8 ActorHasExtraFrame(void);
 
 void FireLionFlameCheckParent(void)
 {
-    if (gTaskSlotTypes[gCurTask->parent] != 55)
+    if (gTaskSlotTypes[gCurTask->parent] != TASK_FIRE_LION)
         TaskFree(gCurTaskIdx);
 }
 
@@ -49,7 +49,7 @@ void Task_PhanPhan(void)
     ActorIntroPoseUntilMidBossFight(gUnk_08744888);
     if (IsMidBossDroppingIn() != 0) {
         gCurTask->updateCallback = (u32)sub_080975c8;
-        sub_08097694();
+        PhanPhanDropIn();
     } else {
         gCurTask->updateCallback = (u32)PhanPhanUpdate;
         sub_08066580();
@@ -62,14 +62,14 @@ void sub_08097580(void)
 {
     struct Task *t;
 
-    sub_08063a00(gUnk_08745238);
+    ActorSetExtraAttackBox(gUnk_08745238);
     TaskFaceNearestPlayer();
     t = gCurTask;
     t->phanPhanLanded = 0;
     t->phanPhanCatchActive = 0;
     t->phanPhanMoveCount = 0;
     t->phanPhanHeldPlayerSlot = -1;
-    sub_08066ae0();
+    MidBossResetHealth();
 }
 
 void PhanPhanEnterState(void)
@@ -107,12 +107,12 @@ void PhanPhanUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08097694(void)
+void PhanPhanDropIn(void)
 {
     struct Task *t;
 
-    ActorSetState(0);
-    gCurTask->updateState = 0;
+    ActorSetState(PHAN_PHAN_STATE_DROP_IN);
+    gCurTask->updateState = PHAN_PHAN_STATE_DROP_IN;
     gCurTask->onGround = 0;
     gCurTask->phanPhanLanded = 0;
     TaskSetFrame(18);
@@ -130,13 +130,13 @@ void sub_08097694(void)
     TaskSetFrame(19);
     TaskYieldTrampoline(24);
     sub_08066580();
-    ActorSetState(1);
+    ActorSetState(PHAN_PHAN_STATE_1);
     TaskSleepForever();
 }
 
-void PhanPhanState0Update(void)
+void PhanPhanDropInUpdate(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != PHAN_PHAN_STATE_DROP_IN)
         TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
 }
 
@@ -146,7 +146,7 @@ void sub_0809773c(void)
     s32 r;
     s16 v;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = PHAN_PHAN_STATE_1;
     gCurTask->phanPhanCatchActive = 1;
     gCurTask->phanPhanLoopCount = 0;
     while ((s16)gCurTask->phanPhanLoopCount < gUnk_087448E4[gCurTask->actorSpawnArg]) {
@@ -267,7 +267,7 @@ void PhanPhanHopForward(void)
 
 void PhanPhanState1Update(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != PHAN_PHAN_STATE_1)
         TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
 }
 
@@ -277,7 +277,7 @@ void PhanPhanHop(void)
     struct Task *u;
     s32 n;
 
-    gCurTask->updateState = 2;
+    gCurTask->updateState = PHAN_PHAN_STATE_HOP;
     gCurTask->phanPhanCatchActive = 1;
     TaskStop();
     TaskFaceNearestPlayer();
@@ -300,13 +300,13 @@ void PhanPhanHop(void)
         RequestScreenShake(2);
         gCurTask->phanPhanLoopCount++;
     }
-    ActorSetState(1);
+    ActorSetState(PHAN_PHAN_STATE_1);
     TaskSleepForever();
 }
 
 void PhanPhanHopUpdate(void)
 {
-    if (gCurTask->state != 2)
+    if (gCurTask->state != PHAN_PHAN_STATE_HOP)
         TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
 }
 
@@ -315,7 +315,7 @@ void PhanPhanCharge(void)
     struct Task *t;
     s32 v;
 
-    gCurTask->updateState = 3;
+    gCurTask->updateState = PHAN_PHAN_STATE_CHARGE;
     gCurTask->phanPhanCatchActive = 1;
     TaskSetMotionXFacing(-0x30000, 0x3000);
     ActorStopAnim();
@@ -341,7 +341,7 @@ void PhanPhanCharge(void)
     TaskYieldTrampoline(48);
     TaskStop();
     ActorStopAnim();
-    ActorSetState(1);
+    ActorSetState(PHAN_PHAN_STATE_1);
     TaskSleepForever();
 }
 
@@ -350,7 +350,7 @@ void PhanPhanChargeUpdate(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->state != 3) {
+    if (t->state != PHAN_PHAN_STATE_CHARGE) {
         TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
     } else {
         gCurTask->actorAnimDelay24 = ActorTickAnim(t->actorAnimDelay24);
@@ -362,12 +362,12 @@ void PhanPhanBounceOffWall(void)
     struct Task *t;
     s32 zero;
 
-    gCurTask->updateState = 4;
+    gCurTask->updateState = PHAN_PHAN_STATE_BOUNCE_OFF_WALL;
     zero = 0;
     PlaySfx(0x1F7);
     RequestScreenShake(4);
     ActorSetAttackBox(gUnk_08745270);
-    sub_08063a00(gUnk_0874528C);
+    ActorSetExtraAttackBox(gUnk_0874528C);
     t = gCurTask;
     t->phanPhanCatchActive = zero;
     t->onGround = zero;
@@ -387,18 +387,18 @@ void PhanPhanBounceOffWall(void)
     if (gCurTask->actorSpawnArg == 0)
         TaskYieldTrampoline(40);
     ActorSetAttackBox(gUnk_0874521C);
-    sub_08063a00(gUnk_08745238);
+    ActorSetExtraAttackBox(gUnk_08745238);
     TaskSetFrame(14);
     TaskYieldTrampoline(4);
     TaskSetFrame(15);
     TaskYieldTrampoline(3);
-    ActorSetState(1);
+    ActorSetState(PHAN_PHAN_STATE_1);
     TaskSleepForever();
 }
 
 void PhanPhanBounceOffWallUpdate(void)
 {
-    if (gCurTask->state != 4)
+    if (gCurTask->state != PHAN_PHAN_STATE_BOUNCE_OFF_WALL)
         TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
 }
 
@@ -407,7 +407,7 @@ void PhanPhanJump(void)
     struct Task *t;
     s32 zero;
 
-    gCurTask->updateState = 5;
+    gCurTask->updateState = PHAN_PHAN_STATE_JUMP;
     zero = 0;
     TaskFaceNearestPlayer();
     gCurTask->onGround = zero;
@@ -428,13 +428,13 @@ void PhanPhanJump(void)
     TaskStop();
     TaskSetFrame(19);
     TaskYieldTrampoline(8);
-    ActorSetState(1);
+    ActorSetState(PHAN_PHAN_STATE_1);
     TaskSleepForever();
 }
 
 void PhanPhanJumpUpdate(void)
 {
-    if (gCurTask->state != 5)
+    if (gCurTask->state != PHAN_PHAN_STATE_JUMP)
         TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
 }
 
@@ -448,7 +448,7 @@ void PhanPhanThrowPlayer(void)
     s32 d;
     s32 k;
 
-    gCurTask->updateState = 6;
+    gCurTask->updateState = PHAN_PHAN_STATE_THROW_PLAYER;
     zero = 0;
     TaskStop();
     gCurTask->phanPhanCatchActive = zero;
@@ -524,7 +524,7 @@ tail:
     TaskYieldTrampoline(8);
     TaskSetFrame(7);
     TaskYieldTrampoline(8);
-    ActorSetState(1);
+    ActorSetState(PHAN_PHAN_STATE_1);
     TaskSleepForever();
 }
 
@@ -569,7 +569,7 @@ void sub_08098140(void)
 
 void PhanPhanThrowPlayerUpdate(void)
 {
-    if (gCurTask->state != 6)
+    if (gCurTask->state != PHAN_PHAN_STATE_THROW_PLAYER)
         TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
 }
 
@@ -577,7 +577,7 @@ void PhanPhanThrowApple(void)
 {
     s32 zero;
 
-    gCurTask->updateState = 7;
+    gCurTask->updateState = PHAN_PHAN_STATE_THROW_APPLE;
     zero = 0;
     gCurTask->phanPhanCatchActive = zero;
     TaskStop();
@@ -603,7 +603,7 @@ void PhanPhanThrowApple(void)
         TaskYieldTrampoline(1);
     TaskSetFrame(19);
     TaskYieldTrampoline(8);
-    ActorSetState(1);
+    ActorSetState(PHAN_PHAN_STATE_1);
     TaskSleepForever();
 }
 
@@ -612,7 +612,7 @@ void PhanPhanThrowAppleUpdate(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->state != 7) {
+    if (t->state != PHAN_PHAN_STATE_THROW_APPLE) {
         TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
     } else {
         gCurTask->actorAnimDelay24 = ActorTickAnim(t->actorAnimDelay24);
@@ -623,15 +623,15 @@ void PhanPhanDefeat(void)
 {
     s32 zero;
 
-    gCurTask->updateState = 8;
+    gCurTask->updateState = PHAN_PHAN_STATE_DEFEAT;
     zero = 0;
     TaskStop();
     gCurTask->phanPhanCatchActive = zero;
     gUnk_02007D00[8]--;
     if (gUnk_02007D00[8] <= 0)
-        sub_0806684c();
+        EndMidBossFightWithReward();
     sub_080667c0(1, 28);
-    CreateChildTaskHere(142, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     ActorSetHitReactions(gPhanPhanDefeatedHitReactions);
     gCurTask->onGround = zero;
     gCurTask->phanPhanLanded = zero;
@@ -642,13 +642,13 @@ void PhanPhanDefeat(void)
     while (gCurTask->velY < 0)
         TaskYieldTrampoline(1);
     ActorSetAttackBox(gUnk_087452A8);
-    sub_08063a00(gUnk_087452C4);
+    ActorSetExtraAttackBox(gUnk_087452C4);
     while (gCurTask->phanPhanLanded == 0)
         TaskYieldTrampoline(1);
     TaskStop();
     TaskSetFrame(29);
     RequestScreenShake(4);
-    CreateChildTaskHere(141, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH, 0);
     CreateDustTrail(0, 1, -4, 12);
     TaskYieldTrampoline(170);
     ActorShakeVertically();
@@ -669,7 +669,7 @@ void PhanPhanChooseNextState(void)
     t->phanPhanMoveCount++;
     if (t->phanPhanMoveCount > 2) {
         t->phanPhanMoveCount = 0;
-        ActorSetState(7);
+        ActorSetState(PHAN_PHAN_STATE_THROW_APPLE);
         return;
     }
     k = 0;
@@ -687,14 +687,14 @@ void PhanPhanChooseNextState(void)
         k += 3;
     gUnk_030023D4 = r = RandomRange(8);
     if (r < gUnk_08744934[k]) {
-        ActorSetState(3);
+        ActorSetState(PHAN_PHAN_STATE_CHARGE);
         return;
     }
     if (r < gUnk_0874494C[k]) {
-        ActorSetState(5);
+        ActorSetState(PHAN_PHAN_STATE_JUMP);
         return;
     }
-    ActorSetState(2);
+    ActorSetState(PHAN_PHAN_STATE_HOP);
 }
 
 void CreatePhanPhanApple(void)
@@ -705,7 +705,7 @@ void CreatePhanPhanApple(void)
     s8 d;
 
     sp.subtype = 35;
-    sp.taskType = 138;
+    sp.taskType = TASK_PHAN_PHAN_APPLE;
     p = &sp;
     t = gCurTask;
     p->variant = t->variant;
@@ -730,12 +730,12 @@ void PhanPhanCheckCatch(void)
         p = gPlayerStates;
         t = gCurTask;
         i = t->hitterSlot;
-        if (p[i].ability != 17 || p[i].mode != 13) {
+        if (p[i].ability != ABILITY_STONE || p[i].mode != 13) {
             t->phanPhanHeldPlayerSlot = i;
             TaskFaceToward(i);
             PlaySfx(568);
             HoldPlayer(gCurTask->phanPhanHeldPlayerSlot, gCurTaskIdx, 7);
-            ActorSetState(6);
+            ActorSetState(PHAN_PHAN_STATE_THROW_PLAYER);
             TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
         }
     }
@@ -774,7 +774,7 @@ miss:
 
 s32 PhanPhanReactToDamage(void)
 {
-    CreateChildTaskHere(142, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     RequestScreenShake(2);
     return 0;
 }
@@ -789,7 +789,7 @@ s32 PhanPhanReactToDefeat(void)
         ReleaseHeldPlayer(t->phanPhanHeldPlayerSlot, -t->facing);
         gCurTask->phanPhanHeldPlayerSlot = -1;
     }
-    ActorSetState(8);
+    ActorSetState(PHAN_PHAN_STATE_DEFEAT);
     TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
     return 1;
 }
@@ -970,8 +970,8 @@ void sub_080988c0(void)
 
 s32 MrFrostyStartFall(void)
 {
-    if (gCurTask->state == 0) {
-        ActorSetState(16);
+    if (gCurTask->state == MR_FROSTY_STATE_WAIT) {
+        ActorSetState(MR_FROSTY_STATE_16);
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
         return 1;
     }

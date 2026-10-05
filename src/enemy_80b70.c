@@ -11,7 +11,7 @@
  *     `HotHeadLand` are its unk73 handlers (`0x08741BF4`);
  *   * task #31's dispatcher `Task_Starman` (`0x08741544`, four rows) and
  *     task #38's `Task_PoppyBrosJr` (`0x087415B8`, three rows);
- *   * six scripts in the entry/hook shape: `StarmanVariant0`+`sub_08080e5c`
+ *   * six scripts in the entry/hook shape: `StarmanAmbushInit`+`StarmanAmbushUpdate`
  *     (`0x08741554`/`0x0874156C`, six states), `StarmanJumpInit`+`StarmanJumpUpdate`
  *     (`0x08741584`), `StarmanFlyInit`+`StarmanFlyUpdate` (`0x0874159C`),
  *     `StarmanIdleInit`+`StarmanIdleUpdate` (`0x087415A4`), `PoppyBrosJrInit`+
@@ -188,54 +188,54 @@ void Task_Starman(void)
     CallTableEntry(u->variant, 4, gStarmanVariants);
 }
 
-void StarmanVariant0(void)
+void StarmanAmbushInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_08080e5c;
+    t->updateCallback = (u32)StarmanAmbushUpdate;
     t->starmanDropCount = 0;
-    ActorSetState(0);
-    CallTableEntry(gCurTask->state, 6, gUnk_08741554);
+    ActorSetState(STARMAN_AMBUSH_STATE_WALK);
+    CallTableEntry(gCurTask->state, 6, gStarmanAmbushStates);
 }
 
-void sub_08080e40(void)
+void StarmanAmbushEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 6, gUnk_08741554);
+    CallTableEntry(gCurTask->state, 6, gStarmanAmbushStates);
 }
 
-void sub_08080e5c(void)
+void StarmanAmbushUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->state == 5)
+    if (t->state == STARMAN_AMBUSH_STATE_FLY_AWAY)
     {
-        CallTableEntry(t->updateState, 6, gUnk_0874156C);
+        CallTableEntry(t->updateState, 6, gStarmanAmbushStateUpdates);
     }
     else if ((u8)ActorCollideTerrain() == 0)
     {
-        CallTableEntry(gCurTask->updateState, 6, gUnk_0874156C);
+        CallTableEntry(gCurTask->updateState, 6, gStarmanAmbushStateUpdates);
     }
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_08080ea4(void)
+void StarmanAmbushWalk(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = STARMAN_AMBUSH_STATE_WALK;
     TaskFaceNearestPlayer();
     TaskSetMotionXFacing(gUnk_087414F8[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     sub_08081814();
 }
 
-void sub_08080edc(void)
+void StarmanAmbushWalkUpdate(void)
 {
     gCurTask->unk18 = (u16)TaskGetAngleToNearestPlayer(3);
     if (gCurTask->unk18 == 0 || gCurTask->unk18 > 255)
     {
         if (abs(TaskGetNearestPlayerDx()) <= 47)
         {
-            ActorSetState(1);
-            TaskSetEntry(sub_08080e40, gCurTaskIdx);
+            ActorSetState(STARMAN_AMBUSH_STATE_1);
+            TaskSetEntry(StarmanAmbushEnterState, gCurTaskIdx);
         }
     }
 }
@@ -246,7 +246,7 @@ void sub_08080f34(void)
     struct Task *b;
     struct Task *c;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = STARMAN_AMBUSH_STATE_1;
     a = gCurTask;
     a->starmanHideCount = 0;
     a->velX = 0;
@@ -285,8 +285,8 @@ void sub_08080fa4(void)
     {
         TaskStop();
         gCurTask->frame = 0xFFFF;
-        ActorSetState(2);
-        TaskSetEntry(sub_08080e40, gCurTaskIdx);
+        ActorSetState(STARMAN_AMBUSH_STATE_HIDE);
+        TaskSetEntry(StarmanAmbushEnterState, gCurTaskIdx);
         return;
     }
     if (TaskGetNearestPlayerDx() < 0)
@@ -318,12 +318,12 @@ void sub_08080fa4(void)
         TaskSetFrame(*(s16 *)&w->starmanLeapFrame);
 }
 
-void sub_08081084(void)
+void StarmanAmbushHide(void)
 {
     struct Task *a;
     struct Task *b;
 
-    gCurTask->updateState = 2;
+    gCurTask->updateState = STARMAN_AMBUSH_STATE_HIDE;
     a = gCurTask;
     a->starmanHideCount++;
     TaskStop();
@@ -333,7 +333,7 @@ void sub_08081084(void)
     TaskSleepForever();
 }
 
-void sub_080810c4(void)
+void StarmanAmbushHideUpdate(void)
 {
     struct Task *t;
     struct Task *o;
@@ -346,8 +346,8 @@ void sub_080810c4(void)
     t->starmanHideTimer = n;
     if (n == 0)
     {
-        ActorSetState(3);
-        TaskSetEntry(sub_08080e40, gCurTaskIdx);
+        ActorSetState(STARMAN_AMBUSH_STATE_DIVE);
+        TaskSetEntry(StarmanAmbushEnterState, gCurTaskIdx);
     }
     else
     {
@@ -360,13 +360,13 @@ void sub_080810c4(void)
     }
 }
 
-void sub_08081140(void)
+void StarmanAmbushDive(void)
 {
     struct Task *a;
     struct Task *b;
     struct Task *c;
 
-    gCurTask->updateState = 3;
+    gCurTask->updateState = STARMAN_AMBUSH_STATE_DIVE;
     TaskSetMotionY(0x20000, 0x1500, 0x30000);
     TaskSetFrame(20);
     while ((s8)gCurTask->onGround == 0)
@@ -400,26 +400,26 @@ void sub_08081140(void)
     {
         TaskSetFrame(13);
         TaskYieldTrampoline(60);
-        ActorSetState(0);
+        ActorSetState(STARMAN_AMBUSH_STATE_WALK);
     }
     else
     {
-        ActorSetState(5);
+        ActorSetState(STARMAN_AMBUSH_STATE_FLY_AWAY);
     }
     TaskSleepForever();
 }
 
-void sub_0808124c(void)
+void StarmanAmbushDiveUpdate(void)
 {
-    if (gCurTask->state != 3)
-        TaskSetEntry(sub_08080e40, gCurTaskIdx);
+    if (gCurTask->state != STARMAN_AMBUSH_STATE_DIVE)
+        TaskSetEntry(StarmanAmbushEnterState, gCurTaskIdx);
 }
 
-void sub_08081274(void)
+void StarmanAmbushFlyAway(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 5;
+    gCurTask->updateState = STARMAN_AMBUSH_STATE_FLY_AWAY;
     if (TaskGetFacingTowardNearestPlayer() == 1)
         gCurTask->facing = -1;
     else
@@ -437,7 +437,7 @@ void sub_08081274(void)
     TaskSleepForever();
 }
 
-void sub_080812ec(void)
+void StarmanAmbushFlyAwayUpdate(void)
 {
 }
 
@@ -447,7 +447,7 @@ void sub_080812f0(void)
     struct Task *b;
     struct Task *c;
 
-    gCurTask->updateState = 4;
+    gCurTask->updateState = STARMAN_AMBUSH_STATE_4;
     ActorSetTerrainBox(gUnk_08741B44);
     a = gCurTask;
     a->accelX = 0;
@@ -491,8 +491,8 @@ void sub_080813a4(void)
         {
             TaskStopX();
             ActorSetTerrainBox(gUnk_08741B3C);
-            ActorSetState(0);
-            TaskSetEntry(sub_08080e40, gCurTaskIdx);
+            ActorSetState(STARMAN_AMBUSH_STATE_WALK);
+            TaskSetEntry(StarmanAmbushEnterState, gCurTaskIdx);
         }
     }
 }
@@ -505,7 +505,7 @@ void StarmanJumpInit(void)
     t->starmanWalkTimer = 216;
     t->starmanJumpTime = 0;
     t->starmanFallCount = 0;
-    ActorSetState(0);
+    ActorSetState(STARMAN_JUMP_STATE_WALK);
     CallTableEntry(gCurTask->state, 3, gStarmanJumpStates);
 }
 
@@ -524,7 +524,7 @@ void StarmanJumpUpdate(void)
 
 void StarmanJumpWalk(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = STARMAN_JUMP_STATE_WALK;
     TaskFaceNearestPlayer();
     TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
     sub_08081814();
@@ -539,7 +539,7 @@ void StarmanJumpWalkUpdate(void)
     t->starmanWalkTimer = n;
     if (n == t->starmanJumpTime)
     {
-        ActorSetState(1);
+        ActorSetState(STARMAN_JUMP_STATE_JUMP);
         TaskSetEntry(StarmanJumpEnterState, gCurTaskIdx);
     }
     else if (n == 217)
@@ -551,7 +551,7 @@ void StarmanJumpWalkUpdate(void)
 
 void StarmanJump(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = STARMAN_JUMP_STATE_JUMP;
     gCurTask->velX = 0;
     TaskSetFrame(11);
     TaskYieldTrampoline(16);
@@ -569,7 +569,7 @@ void StarmanJumpState1Update(void)
 
     if ((s8)t->onGround == 0 && t->velY >= 0)
     {
-        ActorSetState(2);
+        ActorSetState(STARMAN_JUMP_STATE_FALL);
         TaskSetEntry(StarmanJumpEnterState, gCurTaskIdx);
     }
 }
@@ -578,7 +578,7 @@ void StarmanJumpFall(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 2;
+    gCurTask->updateState = STARMAN_JUMP_STATE_FALL;
     t = gCurTask;
     t->velX = 0;
     t->accelY = 0x1000;
@@ -597,7 +597,7 @@ void StarmanJumpFallUpdate(void)
     if ((s8)gCurTask->onGround != 0)
     {
         TaskStopY();
-        ActorSetState(0);
+        ActorSetState(STARMAN_JUMP_STATE_WALK);
         TaskSetEntry(StarmanJumpEnterState, gCurTaskIdx);
     }
 }
@@ -609,7 +609,7 @@ void StarmanFlyInit(void)
     t->updateCallback = (u32)StarmanFlyUpdate;
     t->onGround = 0;
     TaskFaceNearestPlayer();
-    ActorSetState(0);
+    ActorSetState(STARMAN_FLY_STATE_FLY);
     CallTableEntry(gCurTask->state, 1, gStarmanFlyStates);
 }
 
@@ -629,7 +629,7 @@ void StarmanFly(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = STARMAN_FLY_STATE_FLY;
     t = gCurTask;
     t->starmanWaveTimer = 6;
     t->starmanWavePhase = 0;
@@ -708,7 +708,7 @@ void StarmanIdleInit(void)
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(STARMAN_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gStarmanIdleStates);
 }
 
@@ -726,7 +726,7 @@ void StarmanIdleUpdate(void)
 
 void StarmanIdle(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = STARMAN_IDLE_STATE_IDLE;
     sub_08081814();
 }
 
@@ -777,7 +777,7 @@ s32 StarmanHitCeiling(void)
         if (t->state == 1)
         {
             ActorSetState(3);
-            TaskSetEntry(sub_08080e40, gCurTaskIdx);
+            TaskSetEntry(StarmanAmbushEnterState, gCurTaskIdx);
             r = 1;
         }
         break;
@@ -804,7 +804,7 @@ s32 StarmanStartFall(void)
         if (t->state == 0 || t->state == 4)
         {
             ActorSetState(4);
-            TaskSetEntry(sub_08080e40, gCurTaskIdx);
+            TaskSetEntry(StarmanAmbushEnterState, gCurTaskIdx);
             r = 1;
         }
         break;
@@ -873,13 +873,13 @@ void PoppyBrosJrInit(void)
     if (u->variant == 0)
     {
         u->poppyBrosJrNoHitTimer = 0;
-        ActorSetState(0);
+        ActorSetState(POPPY_BROS_JR_STATE_HOP);
     }
     else
     {
         u->variant = 0;
         gCurTask->poppyBrosJrNoHitTimer = 30;
-        ActorSetState(2);
+        ActorSetState(POPPY_BROS_JR_STATE_JUMP);
     }
     CallTableEntry(gCurTask->state, 3, gPoppyBrosJrStates);
 }
@@ -903,7 +903,7 @@ void PoppyBrosJrHop(void)
     struct Task *t;
     struct Task *u;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = POPPY_BROS_JR_STATE_HOP;
     while (1)
     {
         gCurTask->poppyBrosJrHopPhase = -1;
@@ -952,13 +952,13 @@ void PoppyBrosJrHopUpdate(void)
             t->speedLimitY = 0x30000;
         }
     }
-    if (gCurTask->state != 0)
+    if (gCurTask->state != POPPY_BROS_JR_STATE_HOP)
         TaskSetEntry(PoppyBrosJrEnterState, gCurTaskIdx);
 }
 
 void PoppyBrosJrWalk(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = POPPY_BROS_JR_STATE_WALK;
     TaskStopY();
     TaskYieldTrampoline(6);
     TaskSetMotionXFacing(gUnk_087415AC[gCurTask->actorSpawnArg], 0x5A5A5A5A);
@@ -981,14 +981,14 @@ void PoppyBrosJrWalkUpdate(void)
 {
     if (gCurTask->onGround != 0 && (u8)sub_08081e64() == 0)
     {
-        ActorSetState(0);
+        ActorSetState(POPPY_BROS_JR_STATE_HOP);
         TaskSetEntry(PoppyBrosJrEnterState, gCurTaskIdx);
     }
 }
 
 void PoppyBrosJrJump(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = POPPY_BROS_JR_STATE_JUMP;
     TaskSetMotionY(0xFFFE0000, 0x1500, 0x30000);
     TaskSetFrame(6);
     TaskYieldTrampoline(3);
@@ -1013,7 +1013,7 @@ void PoppyBrosJrJumpUpdate(void)
     if (u->onGround != 0)
     {
         u->poppyBrosJrNoHitTimer = 0;
-        ActorSetState(0);
+        ActorSetState(POPPY_BROS_JR_STATE_HOP);
         TaskSetEntry(PoppyBrosJrEnterState, gCurTaskIdx);
     }
 }
@@ -1026,7 +1026,7 @@ void PoppyBrosJrStandInit(void)
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(POPPY_BROS_JR_STAND_STATE_HOP);
     CallTableEntry(gCurTask->state, 1, gPoppyBrosJrStandStates);
 }
 
@@ -1048,7 +1048,7 @@ void PoppyBrosJrStandHop(void)
     struct Task *t;
     struct Task *u;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = POPPY_BROS_JR_STAND_STATE_HOP;
     gCurTask->poppyBrosJrGravityTimer = 0;
     while (1)
     {
@@ -1139,7 +1139,7 @@ s32 sub_08081e64(void)
     }
     else
     {
-        ActorSetState(1);
+        ActorSetState(POPPY_BROS_JR_STATE_WALK);
     }
     return r;
 }

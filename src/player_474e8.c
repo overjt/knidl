@@ -40,7 +40,7 @@ void PlayerActionParasol(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 38;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_PARASOL;
     {
         struct Task *t = gCurTask;
         t->playerActionDone28 = 0;
@@ -49,9 +49,9 @@ void PlayerActionParasol(void)
         else
             t->unk2C = 0;
     }
-    gCurTask->u80.attackAbility = 10;
+    gCurTask->u80.attackAbility = ABILITY_PARASOL;
     PlayerSetMotionXPreset(0, 72);
-    PlaySfxIfLocalPlayer(151, gCurTask->player->playerIndex);
+    PlaySfxIfLocalPlayer(SE_PARASOL_ATTACK, gCurTask->player->playerIndex);
     if (gCurTask->unk2C == 0) {
         TaskSetFrame(0x8D2);
         TaskYieldTrampoline(4);
@@ -62,9 +62,9 @@ void PlayerActionParasol(void)
             gCurTask->frame++;
             TaskYieldTrampoline(1);
         } while ((s16)++gCurTask->playerLoopCount <= 4);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 36, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 36, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 36, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_PARASOL_SPARKLE, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_PARASOL_SPARKLE, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_PARASOL_SPARKLE, 2);
         gCurTask->playerLoopCount = 0;
         do {
             TaskSetFrame(0x8D8);
@@ -96,9 +96,9 @@ void PlayerActionParasol(void)
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 36, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 36, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 36, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_PARASOL_SPARKLE, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_PARASOL_SPARKLE, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_PARASOL_SPARKLE, 2);
         gCurTask->playerLoopCount = 0;
         do {
             TaskSetFrame(0x8D8);
@@ -130,7 +130,7 @@ void PlayerActionParasolUpdate(void)
         PlayerRequestLocomotion();
     } else if (t->velY > 0) {
         if (PlayerHasCrossedWaterSurface(0) != 0)
-            gCurTask->player->requestedAction = 23;
+            gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
     }
     u = gCurTask;
     if ((u->onGround & 1) == 0) {
@@ -148,7 +148,7 @@ void PlayerActionSleep(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 39;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_SLEEP;
     gCurTask->playerActionDone28 = 0;
     gCurTask->player->unk42 |= 2;
     PlayerSetMotionXPreset(0, 72);
@@ -185,7 +185,7 @@ void PlayerActionSleep(void)
     TaskYieldTrampoline(6);
     gCurTask->frame++;
     TaskYieldTrampoline(6);
-    CreatePlayerEffect(gCurTask->player->playerIndex, 38, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SLEEP_BUBBLE, 0);
     TaskSetFrame(0x8EA);
     TaskYieldTrampoline(20);
     gCurTask->playerLoopCount = 0;
@@ -202,7 +202,7 @@ void PlayerActionSleep(void)
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(12);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 38, (s16)gCurTask->playerLoopCount + 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SLEEP_BUBBLE, (s16)gCurTask->playerLoopCount + 1);
         gCurTask->frame++;
         TaskYieldTrampoline(12);
     } while ((s16)++gCurTask->playerLoopCount <= 1);
@@ -215,7 +215,7 @@ void PlayerActionSleep(void)
     TaskYieldTrampoline(2);
     TaskSetFrame(0x8EB);
     TaskYieldTrampoline(4);
-    CreatePlayerEffect(gCurTask->player->playerIndex, 38, 3);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SLEEP_BUBBLE, 3);
     gCurTask->frame++;
     TaskYieldTrampoline(4);
     gCurTask->frame++;
@@ -227,7 +227,7 @@ void PlayerActionSleep(void)
     gCurTask->frame++;
     TaskYieldTrampoline(4);
     gCurTask->player->unk42 &= 0xFFFD;
-    SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
+    SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     gCurTask->frame--;
     TaskYieldTrampoline(32);
     TaskSetFrame(0x8F6);
@@ -259,9 +259,9 @@ void PlayerActionSleepUpdate(void)
 {
     if (sub_0803e55c() != 0) {
         struct Task *t = gCurTask;
-        if (t->player->ability == 11) {
+        if (t->player->ability == ABILITY_SLEEP) {
             t->player->unk42 &= 0xFFFD;
-            SetPlayerAbility(0, -1, t->player->playerIndex);
+            SetPlayerAbility(ABILITY_NORMAL, -1, t->player->playerIndex);
         }
     } else if (gCurTask->playerActionDone28 != 0) {
         PlayerRequestLocomotion();
@@ -272,35 +272,35 @@ void PlayerActionNeedle(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 40;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_NEEDLE;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
             t->variant = 0;
-            gCurTask->u80.attackAbility = 12;
+            gCurTask->u80.attackAbility = ABILITY_NEEDLE;
         }
     }
     switch (gCurTask->variant) {
     case 0:
         {
             struct Task *t = gCurTask;
-            t->unk2C = -1;
-            gPlayerBodyBoxes[t->player->playerIndex] = *(struct M11R20 *)gUnk_0873C1B0;
+            t->playerAttackStep = -1;
+            gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C1B0;
         }
-        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct M11R8 *)gUnk_0873CEEC;
-        gCurTask->unk28 = gCurTask->onGround;
+        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CEEC;
+        gCurTask->playerNeedleOnGround = gCurTask->onGround;
         gCurTask->playerNeedleStep = 0;
         TaskYieldTrampoline(8);
-        PlaySfxIfLocalPlayer(138, gCurTask->player->playerIndex);
+        PlaySfxIfLocalPlayer(SE_NEEDLE_ATTACK, gCurTask->player->playerIndex);
         gCurTask->playerNeedleStep = 1;
         TaskYieldTrampoline(4);
-        gCurTask->unk2C++;
+        gCurTask->playerAttackStep++;
         gCurTask->playerNeedleStep = 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk2C++;
+        gCurTask->playerAttackStep++;
         gCurTask->playerNeedleStep = 3;
         TaskYieldTrampoline(2);
-        gCurTask->unk2C++;
+        gCurTask->playerAttackStep++;
         gCurTask->playerNeedleStep = 4;
         TaskYieldTrampoline(2);
         gCurTask->variant = 1;
@@ -310,10 +310,10 @@ void PlayerActionNeedle(void)
         }
         /* fallthrough */
     case 1:
-        gCurTask->unk2C = 3;
+        gCurTask->playerAttackStep = 3;
         gCurTask->playerNeedleStep = 5;
         TaskYieldTrampoline(2);
-        gCurTask->unk2C = 4;
+        gCurTask->playerAttackStep = 4;
         gCurTask->playerNeedleStep = 6;
         TaskYieldTrampoline(2);
         gCurTask->playerNeedleStep = 7;
@@ -328,7 +328,7 @@ void PlayerActionNeedle(void)
         gCurTask->variant = 2;
         /* fallthrough */
     case 2:
-        gCurTask->unk2C = 1;
+        gCurTask->playerAttackStep = 1;
         gCurTask->playerNeedleStep = 3;
         TaskYieldTrampoline(2);
         gCurTask->playerNeedleStep = 0;
@@ -344,34 +344,34 @@ void PlayerActionNeedleUpdate(void)
     u16 *e = gUnk_0873DADE[gCurTask->playerNeedleStep];
 
     sub_0803e55c();
-    if (gCurTask->player->requestedAction != 0)
+    if (gCurTask->player->requestedAction != PLAYER_ACTION_NONE)
         return;
     switch (gCurTask->variant) {
     case 1:
-        if (gCurTask->unk28 != gCurTask->onGround)
+        if (gCurTask->playerNeedleOnGround != gCurTask->onGround)
             TaskSetEntry(PlayerActionNeedle, gCurTaskIdx);
         /* fallthrough */
     case 0:
     case 2:
-        gCurTask->frame = e[gCurTask->unk28];
-        if (gCurTask->unk2C >= 0) {
-            if (gCurTask->unk28 != 0) {
+        gCurTask->frame = e[gCurTask->playerNeedleOnGround];
+        if (gCurTask->playerAttackStep >= 0) {
+            if (gCurTask->playerNeedleOnGround != 0) {
                 LoadPlayerBodyBoxRect(gCurTask->player->playerIndex,
-                             (u8 *)gUnk_0873C1C4 + gCurTask->unk2C * 8);
+                             (u8 *)gUnk_0873C1C4 + gCurTask->playerAttackStep * 8);
                 LoadPlayerHitBoxSet(gCurTask->player->playerIndex,
-                             (s32)((u8 *)gUnk_0873CEF4 + gCurTask->unk2C * 8));
+                             (s32)((u8 *)gUnk_0873CEF4 + gCurTask->playerAttackStep * 8));
             } else {
                 LoadPlayerBodyBoxRect(gCurTask->player->playerIndex,
-                             (u8 *)gUnk_0873C1EC + gCurTask->unk2C * 8);
+                             (u8 *)gUnk_0873C1EC + gCurTask->playerAttackStep * 8);
                 LoadPlayerHitBoxSet(gCurTask->player->playerIndex,
-                             (s32)((u8 *)gUnk_0873CF1C + gCurTask->unk2C * 8));
+                             (s32)((u8 *)gUnk_0873CF1C + gCurTask->playerAttackStep * 8));
             }
             RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                          (u8 *)gPlayerBodyBoxes + gCurTask->player->playerIndex * 20);
             TaskBreakBlocks((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->player->playerIndex],
                          gCurTask->player->playerIndex);
         }
-        gCurTask->unk28 = gCurTask->onGround;
+        gCurTask->playerNeedleOnGround = gCurTask->onGround;
         break;
     case 3:
         PlayerRequestLocomotion();

@@ -14,7 +14,7 @@
 #include "enemy.h"
 
 /* RAM cells / ROM tables */
-struct Unk020055D8Entry
+struct RoomObjectEntry
 {
     /*0x00*/ s8 kind;
     /*0x01*/ s8 unk1;
@@ -55,8 +55,8 @@ extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
 extern void ActorSetHitReactions(u32 v);
 extern void ActorSetAttackBox(u32 v);
-extern void sub_080639f0(struct ActorAux *v);
-extern void sub_08063a00(u32 v);
+extern void ActorSetAux(struct ActorAux *v);
+extern void ActorSetExtraAttackBox(u32 v);
 extern s32 TaskGetDxTo(u32 i);
 extern s32 TaskIsInRectSlot(struct Rect *r, u32 i);
 extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
@@ -178,7 +178,7 @@ s32 LoadRoomBossGfx(u8 *e, s32 i, s32 k)
 
 void LoadRoomMetaKnightsGfx(u8 *e, s32 idx, s32 n)
 {
-    struct Unk0873EEA0 *d;
+    struct RoomObjectGfx *d;
     s32 i;
 
     gRoomObjectGfxSlotIds[idx] = n;
@@ -208,9 +208,9 @@ void LoadRoomMetaKnightsGfx(u8 *e, s32 idx, s32 n)
     }
 }
 
-s32 sub_080b5a94(struct Unk020055D8Entry *e, s32 idx, s32 n)
+s32 sub_080b5a94(struct RoomObjectEntry *e, s32 idx, s32 n)
 {
-    struct Unk0873EEA0 *d;
+    struct RoomObjectGfx *d;
     s32 i;
 
     if (gUnk_08756178[e->unk1] == -1)
@@ -253,7 +253,7 @@ s32 sub_080b5a94(struct Unk020055D8Entry *e, s32 idx, s32 n)
     return 1;
 }
 
-s32 SpawnRoomEnemy(struct Unk020055D8Entry *e, s32 i)
+s32 SpawnRoomEnemy(struct RoomObjectEntry *e, s32 i)
 {
     s32 res = -1;
 
@@ -262,36 +262,36 @@ s32 SpawnRoomEnemy(struct Unk020055D8Entry *e, s32 i)
         if (e->unk1 == 32)
         {
             if (!(gUsedRoomObjects[gLevelIndex][gStageIndex] & (1 << (e->unk3 & 31))))
-                res = CreateActorByKind(0, e->unk1, e->unk2, 0, e->x, e->y,
+                res = CreateActorByKind(ACTOR_KIND_ENEMY, e->unk1, e->unk2, 0, e->x, e->y,
                                    (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
         }
         else if (e->unk1 == 37)
         {
             if (!(gUsedRoomObjects[gLevelIndex][gStageIndex] & (1 << (e->unk3 & 31))))
             {
-                res = CreateActorByKind(0, e->unk1, e->unk2, 0, e->x, e->y,
+                res = CreateActorByKind(ACTOR_KIND_ENEMY, e->unk1, e->unk2, 0, e->x, e->y,
                                    (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
                 gUsedRoomObjects[gLevelIndex][gStageIndex] |= 1 << (e->unk3 & 31);
             }
         }
         else
         {
-            res = CreateActorByKind(0, e->unk1, e->unk2, e->unk3 & 31, e->x, e->y,
+            res = CreateActorByKind(ACTOR_KIND_ENEMY, e->unk1, e->unk2, e->unk3 & 31, e->x, e->y,
                                (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
         }
     }
     else
     {
-        res = CreateActorByKind(0, e->unk1, e->unk2, e->unk3 & 31, e->x, e->y, 0);
+        res = CreateActorByKind(ACTOR_KIND_ENEMY, e->unk1, e->unk2, e->unk3 & 31, e->x, e->y, 0);
     }
     return res;
 }
 
-s32 sub_080b5d84(struct Unk020055D8Entry *e)
+s32 sub_080b5d84(struct RoomObjectEntry *e)
 {
     s32 slot;
     struct Task *t;
-    struct Unk020055D8Entry *f;
+    struct RoomObjectEntry *f;
     s32 i;
     s32 n;
     s32 y;
@@ -377,7 +377,7 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
                 gMidBossDropsIn = 0;
                 y = f->y;
             }
-            r = CreateActorByKind(1, f->unk1, f->unk2, f->unk3, f->x, y,
+            r = CreateActorByKind(ACTOR_KIND_MID_BOSS, f->unk1, f->unk2, f->unk3, f->x, y,
                              (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
             if (r != -1)
             {

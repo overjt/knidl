@@ -25,14 +25,14 @@ void TaskSetFrame(s32 a);
 
 s32 CreateCutsceneActor(s32 a, s32 b)
 {
-    s32 i;
+    s32 cutsceneActorSlot;
     struct Task *t;
     struct Task *dst;
 
-    i = TaskCreateInRange(92, b, 62);
-    if (i != -1)
+    cutsceneActorSlot = TaskCreateInRange(TASK_CUTSCENE_ACTOR, b, 62);
+    if (cutsceneActorSlot != -1)
     {
-        dst = &gTasks[i];
+        dst = &gTasks[cutsceneActorSlot];
         t = gCurTask;
         dst->pixelX = t->pixelX;
         dst->pixelY = t->pixelY;
@@ -44,7 +44,7 @@ s32 CreateCutsceneActor(s32 a, s32 b)
         if (gCutsceneSheets[*(s8 *)&gCurLevel] != 0)
             dst->tileWord = 0x8810;
     }
-    return i;
+    return cutsceneActorSlot;
 }
 
 void CutsceneCheckSkip(void);   /* hdr.c lacks this in-module prototype */
@@ -69,7 +69,7 @@ void Task_CutsceneDirector(void)
             gCurTask->cutsceneDirectorTimer++;
         } while ((s16)gCurTask->cutsceneDirectorTimer < q[*(s8 *)&gCurLevel] - 60);
     }
-    gGameState = 5;
+    gGameState = GAME_STATE_HUB;
     TaskSleepForever();
 }
 
@@ -88,7 +88,7 @@ void CutsceneCheckSkip(void)
                 StopSfxOnPlayer(gUnk_02007D00[0], 0x21B);
                 gUnk_02007D00[0] = -1;
             }
-            gGameState = 5;
+            gGameState = GAME_STATE_HUB;
             TaskFree(gCurTaskIdx);
         }
     }
@@ -234,11 +234,11 @@ void CutsceneActorScript1(void)
     gUnk_03001F2C = 0;
     do
     {
-        gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk00 = 0;
-        gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk04 = 0;
-        gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk08 = 0;
-        gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk0C = 1;
-        gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk0D = 0;
+        gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].offsetX = 0;
+        gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].offsetY = 0;
+        gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].velX = 0;
+        gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].frameTimer = 1;
+        gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].frame = 0;
         gUnk_03001F2C++;
     } while (gUnk_03001F2C <= 2);
     RequestCopy(1, (u32)gUnk_081AC378, (u32)(dst + 384), 128);

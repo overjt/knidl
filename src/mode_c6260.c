@@ -25,7 +25,7 @@
  *       (LoadEndingEpilogueRoom(0, 0) / LoadEndingStarRodReturnRoom(632, 248)), palette set 15 / 16
  *       (LoadBgLayout), DISPCNT BG bits 0x1D00 / 0x1C00, spawn the scene's
  *       task and run frames (RunLinkFrame) until it clears gEndingSceneActive,
- *       then tear the level down (sub_08027178).
+ *       then tear the level down (StopRoom).
  *   CreateEndingEpilogue / CreateEndingStarRodReturn   spawn M38's task type #100 / #101,
  *       retrying every frame until a slot is free, with Task.variant = 0. */
 
@@ -37,13 +37,13 @@ void EndingMain(void)
     gEndingLinkIsMaster = gLinkIsMaster;
     gEndingLinkPlayerCount = gLinkPlayerCount;
     gEndingPlayerCount = gPlayerCount;
-    if (gPrevGameState == 20) {
+    if (gPrevGameState == GAME_STATE_BOSS_ENDURANCE) {
         LinkRequestSync();
         LinkSyncClock();
     }
     DisconnectLink();
     StopAllSound();
-    if (gPrevGameState != 20 && gMetaKnightmareMode != 1) {
+    if (gPrevGameState != GAME_STATE_BOSS_ENDURANCE && gMetaKnightmareMode != 1) {
         EndingEpilogueScene();
         EndingStarRodReturnScene();
     }
@@ -65,7 +65,7 @@ void EndingEpilogueScene(void)
         RunLinkFrame();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
-    sub_08027178();
+    StopRoom();
 }
 
 void CreateEndingEpilogue(void)
@@ -73,7 +73,7 @@ void CreateEndingEpilogue(void)
     s32 id;
     struct Task *t;
 
-    while ((id = TaskCreateFrom(100, 32)) == -1)
+    while ((id = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32)) == -1)
         RunLinkFrame();
     t = &gTasks[id];
     t->variant = 0;
@@ -93,7 +93,7 @@ void EndingStarRodReturnScene(void)
         RunLinkFrame();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
-    sub_08027178();
+    StopRoom();
 }
 
 void CreateEndingStarRodReturn(void)
@@ -101,7 +101,7 @@ void CreateEndingStarRodReturn(void)
     s32 id;
     struct Task *t;
 
-    while ((id = TaskCreateFrom(101, 32)) == -1)
+    while ((id = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32)) == -1)
         RunLinkFrame();
     t = &gTasks[id];
     t->variant = 0;

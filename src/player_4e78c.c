@@ -55,7 +55,7 @@ void PlayerBallTransform(void)
     }
     {
         struct Task *t = gCurTask;
-        t->unk6E = t->facing;
+        t->playerBallRollFacing = t->facing;
         t->playerActionDone++;
         CreatePlayerEffect(t->player->playerIndex, 44, 0x100);
     }
@@ -92,24 +92,24 @@ void PlayerBallStand(void)
     PlayerStopAxes(3);
     {
         struct Task *t = gCurTask;
-        t->unk28 = t->player->wallSide;
+        t->playerBallStandWallSide = t->player->wallSide;
     }
     PlayerBallPlayBump();
     {
         struct Task *t = gCurTask;
         if (t->playerBallRollFrame == 0)
-            t->unk2C = 0;
+            t->playerBallStandRollDir = 0;
         else if (t->playerBallRollFrame <= 7)
-            t->unk2C = -1;
+            t->playerBallStandRollDir = -1;
         else
-            t->unk2C = 1;
+            t->playerBallStandRollDir = 1;
     }
     if (gCurTask->playerBallRollFrame != 0)
     {
         do
         {
             struct Task *t = gCurTask;
-            t->playerBallRollFrame += t->unk2C;
+            t->playerBallRollFrame += t->playerBallStandRollDir;
             if (t->playerBallRollFrame > 15)
                 t->playerBallRollFrame = 0;
             TaskYieldTrampoline(1);
@@ -143,18 +143,18 @@ void PlayerBallStandUpdate(void)
     {
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48)
         {
-            if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 16) && gCurTask->unk28 == 1)
+            if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 16) && gCurTask->playerBallStandWallSide == 1)
                 break;
-            if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 32) && gCurTask->unk28 == 2)
+            if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 32) && gCurTask->playerBallStandWallSide == 2)
                 break;
             gCurTask->variant = 2;
         }
         break;
     }
-    if (gCurTask->variant != 1)
+    if (gCurTask->variant != PLAYER_BALL_VARIANT_STAND)
     {
         struct Task *t = gCurTask;
-        t->unk24 = 0;
+        t->playerBallPosePlaying = 0;
         TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
     }
 }
@@ -163,12 +163,12 @@ void PlayerBallRoll(void)
 {
     PlayerBallPlayBump();
     PlayerSetMotionXPreset(12, 1);
-    gCurTask->unk28 = PlayerBallGetRollDelay();
-    gCurTask->unk2C = gCurTask->player->slope;
+    gCurTask->playerBallRollDelay = PlayerBallGetRollDelay();
+    gCurTask->playerBallRollSlope = gCurTask->player->slope;
     while (1)
     {
         PlayerBallStepRoll();
-        TaskYieldTrampoline(gCurTask->unk28);
+        TaskYieldTrampoline(gCurTask->playerBallRollDelay);
     }
 }
 
@@ -184,7 +184,7 @@ void PlayerBallRollUpdate(void)
             t->velX = -t->velX;
             t->accelX = -t->accelX;
             t->facing = -t->facing;
-            gCurTask->unk24 = 0;
+            gCurTask->playerBallPosePlaying = 0;
             TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
             break;
         }
@@ -206,28 +206,28 @@ void PlayerBallRollUpdate(void)
             gCurTask->variant = 1;
             break;
         }
-        if (gCurTask->unk2C != gCurTask->player->slope)
+        if (gCurTask->playerBallRollSlope != gCurTask->player->slope)
         {
-            gCurTask->unk24 = 0;
+            gCurTask->playerBallPosePlaying = 0;
             TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
         }
         break;
     }
-    if (gCurTask->variant != 2)
+    if (gCurTask->variant != PLAYER_BALL_VARIANT_ROLL)
     {
         struct Task *t = gCurTask;
-        t->unk24 = 0;
+        t->playerBallPosePlaying = 0;
         TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
     }
     PlayerSetMotionXPreset(12, 1);
-    gCurTask->unk28 = PlayerBallGetRollDelay();
+    gCurTask->playerBallRollDelay = PlayerBallGetRollDelay();
 }
 
 void PlayerBallSkid(void)
 {
     PlayerSetMotionXPreset(11, 62);
     PlaySfxIfLocalPlayer(119, (u16)gCurTask->player->playerIndex);
-    gCurTask->unk34 = CreatePlayerEffect(gCurTask->player->playerIndex, 6, 60);
+    gCurTask->playerBallSkidDustSlot = CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SKID_DUST, 60);
     TaskSleepForever();
 }
 
@@ -266,9 +266,9 @@ void PlayerBallSkidUpdate(void)
         }
         break;
     }
-    if (gCurTask->variant != 3)
+    if (gCurTask->variant != PLAYER_BALL_VARIANT_SKID)
     {
         TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
-        gTasks[gCurTask->unk34].unk28 = -1;
+        gTasks[gCurTask->playerBallSkidDustSlot].playerEffectStopRequested = -1;
     }
 }

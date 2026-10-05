@@ -64,15 +64,15 @@ void HeldPlayerUpdate(void)
     CallTableEntry(gCurTask->updateState, 11, gHeldPlayerStateUpdates);
     PlayerUpdateInvulnerability();
     if ((gCurTask->player->unk42 & 32) == 0)
-        sub_0803e080();
+        PlayerUpdatePaletteFlash();
     if (gLocalPlayer == gCurTask->player->playerIndex)
         SetCameraFocus(gCurTask->pixelX, gCurTask->pixelY);
 }
 
 void HeldPlayerSwallow(void)
 {
-    gCurTask->updateState = 0;
-    sub_08068690();
+    gCurTask->updateState = HELD_PLAYER_STATE_SWALLOW;
+    HeldPlayerStartSwallow();
     while (HeldPlayerIsNearCaptor() == 0)
     {
         HeldPlayerPullTowardCaptor();
@@ -94,13 +94,13 @@ void HeldPlayerSwallowUpdate(void)
         return;
     if (t->frame == -1)
         return;
-    sub_080687fc();
+    HeldPlayerSwallowAdvanceFrame();
 }
 
 void HeldPlayerSpitFlight(void)
 {
-    gCurTask->updateState = 1;
-    sub_08068828();
+    gCurTask->updateState = HELD_PLAYER_STATE_SPIT_FLIGHT;
+    HeldPlayerStartSpitFlight();
     TaskSleepForever();
 }
 
@@ -114,9 +114,9 @@ void HeldPlayerSpitBounceOff(void)
 
     t = gCurTask;
     t->moveCallback = (u32)PlayerMove;
-    t->updateState = 2;
+    t->updateState = HELD_PLAYER_STATE_SPIT_BOUNCE_OFF;
     TaskStop();
-    sub_08068840();
+    HeldPlayerStartSpitBounceOff();
     TaskSleepForever();
 }
 
@@ -133,7 +133,7 @@ void HeldPlayerSpitBounceOffUpdate(void)
     else
     {
         t->playerHeldSpitTimer--;
-        sub_0806896c();
+        HeldPlayerStepTumble();
     }
 }
 
@@ -142,7 +142,7 @@ void HeldPlayerBackdropHeld(void)
     struct Task *u;
     struct PlayerState *p;
 
-    gCurTask->updateState = 3;
+    gCurTask->updateState = HELD_PLAYER_STATE_BACKDROP_HELD;
     gCurTask->facing = gTasks[gCurTask->parent].facing;
     if (gMetaKnightmareMode == 0)
     {
@@ -219,7 +219,7 @@ void HeldPlayerBackdropBounceOff(void)
 
     u = gCurTask;
     u->moveCallback = (u32)PlayerMove;
-    u->updateState = 4;
+    u->updateState = HELD_PLAYER_STATE_BACKDROP_BOUNCE_OFF;
     TaskStop();
     HeldPlayerDamage(-8, 512);
     if (gMetaKnightmareMode == 0)
@@ -289,7 +289,7 @@ void HeldPlayerBackdropBounceOff(void)
         gCurTask->playerHeldLoopCount = 0;
         do
         {
-            sub_0806896c();
+            HeldPlayerStepTumble();
             TaskYieldTrampoline(1);
         } while ((s16)(++gCurTask->playerHeldLoopCount) <= 29);
     }
@@ -319,7 +319,7 @@ void HeldPlayerState5(void)
     struct Task *w;
     struct Task *x;
 
-    gCurTask->updateState = 5;
+    gCurTask->updateState = HELD_PLAYER_STATE_5;
     u = gCurTask;
     u->facing = gTasks[u->parent].facing;
     v = gCurTask;
@@ -402,7 +402,7 @@ void HeldPlayerState6(void)
 
     t = gCurTask;
     t->moveCallback = (u32)PlayerMove;
-    t->updateState = 6;
+    t->updateState = HELD_PLAYER_STATE_6;
     TaskStop();
     t = gCurTask;
     t->posX = t->pixelX << 16;
@@ -474,7 +474,7 @@ void HeldPlayerState6(void)
             gCurTask->playerHeldLoopCount = 0;
             do
             {
-                sub_0806896c();
+                HeldPlayerStepTumble();
                 TaskYieldTrampoline(1);
                 t = gCurTask;
                 t->playerHeldLoopCount++;
@@ -510,7 +510,7 @@ void HeldPlayerThrowHeld(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 7;
+    gCurTask->updateState = HELD_PLAYER_STATE_THROW_HELD;
     t = gCurTask;
     t->facing = gTasks[t->parent].facing;
     TaskSleepForever();
@@ -560,7 +560,7 @@ void HeldPlayerThrowFlightForward(void)
     struct PlayerState *p;
     s32 f;
 
-    gCurTask->updateState = 8;
+    gCurTask->updateState = HELD_PLAYER_STATE_THROW_FLIGHT_FORWARD;
     gCurTask->moveCallback = (u32)PlayerMove;
     gCurTask->layer = 7;
     gCurTask->facing = gTasks[gCurTask->parent].facing;
@@ -621,7 +621,7 @@ void HeldPlayerThrowFlightForwardUpdate(void)
     TerrainCollideBox(gPlayerDefaultTerrainBox);
     if (gTerrainResult != 0)
     {
-        CreateChildTaskHere(148, 0);
+        CreateChildTaskHere(TASK_STAR_SCATTER, 0);
         PlaySfx(153);
         RequestScreenShake(2);
         t = gCurTask;
@@ -644,7 +644,7 @@ void HeldPlayerThrowFlightBackward(void)
     struct PlayerState *p;
     s32 f;
 
-    gCurTask->updateState = 9;
+    gCurTask->updateState = HELD_PLAYER_STATE_THROW_FLIGHT_BACKWARD;
     gCurTask->moveCallback = (u32)PlayerMove;
     gCurTask->layer = 7;
     gCurTask->facing = -gTasks[gCurTask->parent].facing;
@@ -701,7 +701,7 @@ void HeldPlayerThrowFlightBackwardUpdate(void)
     TerrainCollideBox(gPlayerDefaultTerrainBox);
     if (gTerrainResult != 0)
     {
-        CreateChildTaskHere(148, 0);
+        CreateChildTaskHere(TASK_STAR_SCATTER, 0);
         PlaySfx(153);
         RequestScreenShake(2);
         t = gCurTask;
@@ -724,7 +724,7 @@ void HeldPlayerThrowBounceOff(void)
 
     t = gCurTask;
     t->moveCallback = (u32)PlayerMove;
-    t->updateState = 10;
+    t->updateState = HELD_PLAYER_STATE_THROW_BOUNCE_OFF;
     TaskStop();
     HeldPlayerDamage(-8, 512);
     u = gCurTask;
@@ -775,7 +775,7 @@ void HeldPlayerThrowBounceOff(void)
             gCurTask->playerHeldLoopCount = 0;
             do
             {
-                sub_0806896c();
+                HeldPlayerStepTumble();
                 TaskYieldTrampoline(1);
             } while ((s16)(++gCurTask->playerHeldLoopCount) <= 14);
         }
@@ -806,72 +806,72 @@ s32 HeldPlayerAddAbilityFrameOffset(void)
 
     switch (gCurTask->player->ability)
     {
-    case 0:
-    case 7:
-    case 11:
-    case 20:
-    case 21:
-    case 24:
+    case ABILITY_NORMAL:
+    case ABILITY_MIKE:
+    case ABILITY_SLEEP:
+    case ABILITY_CRASH:
+    case ABILITY_LIGHT:
+    case ABILITY_UFO:
         d = 0;
         break;
-    case 1:
+    case ABILITY_FIRE:
         d = 0x143;
         break;
-    case 2:
+    case ABILITY_SPARK:
         d = 0x234;
         break;
-    case 3:
+    case ABILITY_CUTTER:
         d = 0x2B3;
         break;
-    case 4:
+    case ABILITY_SWORD:
         d = 0x384;
         break;
-    case 5:
+    case ABILITY_BURNING:
         d = 0x495;
         break;
-    case 6:
+    case ABILITY_LASER:
         d = 0x522;
         break;
-    case 8:
+    case ABILITY_WHEEL:
         d = 0x5CB;
         break;
-    case 9:
+    case ABILITY_HAMMER:
         d = 0x69C;
         break;
-    case 10:
+    case ABILITY_PARASOL:
         d = 0x79C;
         break;
-    case 12:
+    case ABILITY_NEEDLE:
         d = 0x838;
         break;
-    case 13:
+    case ABILITY_ICE:
         d = 0x8C4;
         break;
-    case 14:
+    case ABILITY_FREEZE:
         d = 0x950;
         break;
-    case 15:
+    case ABILITY_HI_JUMP:
         d = 0x9F5;
         break;
-    case 16:
+    case ABILITY_BEAM:
         d = 0xA87;
         break;
-    case 17:
+    case ABILITY_STONE:
         d = 0xB0A;
         break;
-    case 18:
+    case ABILITY_BALL:
         d = 0xB94;
         break;
-    case 19:
+    case ABILITY_TORNADO:
         d = 0xC8F;
         break;
-    case 22:
+    case ABILITY_BACKDROP:
         d = 0xD60;
         break;
-    case 23:
+    case ABILITY_THROW:
         d = 0xE38;
         break;
-    case 25:
+    case ABILITY_STAR_ROD:
         d = 0xF3A;
         break;
     default:
@@ -891,7 +891,7 @@ void HoldPlayer(s32 i, s32 j, u8 c)
     t->taskClass = 4;
     t->state = c;
     t->actorKind = gCurTask->actorKind;
-    if (u->actorKind == 2)
+    if (u->actorKind == ACTOR_KIND_BOSS)
         PlayerSuspendControl(i, 1);
     else
         PlayerSuspendControl(i, 0);
@@ -906,9 +906,9 @@ void DropHeldPlayer(s32 i)
     t = &gTasks[i];
     PlayerResumeControl(i, 0, 0, 1);
     gUnk_02007D00[1] = -1;
-    t->actorKind = 0;
+    t->actorKind = ACTOR_KIND_ENEMY;
 }
-void sub_08068690(void)
+void HeldPlayerStartSwallow(void)
 {
     struct Task *t;
     struct Task *u;
@@ -985,7 +985,7 @@ void HeldPlayerEnterMouth(void)
     gUnk_02007D00[0] = 1;
     gCurTask->frame = 0xFFFF;
 }
-void sub_080687fc(void)
+void HeldPlayerSwallowAdvanceFrame(void)
 {
     struct Task *t;
 
@@ -1001,7 +1001,7 @@ void sub_080687fc(void)
         t->playerHeldFrameTimer--;
     }
 }
-void sub_08068828(void)
+void HeldPlayerStartSpitFlight(void)
 {
     struct Task *t;
 
@@ -1010,7 +1010,7 @@ void sub_08068828(void)
     t->posX = 0;
     t->posY = 0;
 }
-void sub_08068840(void)
+void HeldPlayerStartSpitBounceOff(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1055,7 +1055,7 @@ void sub_08068950(s16 x, s16 y, s16 d)
     gUnk_02007D00[3] = y;
     gUnk_02007D00[4] = d;
 }
-void sub_0806896c(void)
+void HeldPlayerStepTumble(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1089,7 +1089,7 @@ void ReleaseHeldPlayer(s32 i, u8 d)
     t->onGround = 0;
     t->posX = t->pixelX << 16;
     t->posY = t->pixelY << 16;
-    t->actorKind = 0;
+    t->actorKind = ACTOR_KIND_ENEMY;
     TaskStopSlot(i);
     PlayerResumeControl(i, 6, 0, 0);
     p->unk14 = 4;
@@ -1100,10 +1100,10 @@ s32 HeldPlayerDamage(s32 a, s32 b)
     s32 r;
 
     r = AddPlayerHealth(a, gCurTaskIdx);
-    if (gCurTask->player->ability != 0)
+    if (gCurTask->player->ability != ABILITY_NORMAL)
     {
         CreateAbilityStar(0);
-        SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
+        SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     }
     t = gCurTask;
     if (t->health == 0)
@@ -1127,7 +1127,7 @@ void PlayerSuspendControl(s32 i, u8 flag)
     t->sleepFrames = 0;
     t->u76.unk76 = 0;
     t->variant = 0;
-    t->hitKind = 0;
+    t->hitKind = HIT_KIND_NONE;
     if (p->unk40 & 1)
     {
         gCurTask->player->pixelOffsetY = 0;
@@ -1148,9 +1148,9 @@ void PlayerSuspendControl(s32 i, u8 flag)
     a = p->mode;
     b = p->hitsThisFrame;
     if (flag != 0)
-        sub_0803d1c4(i);
+        InitPlayerStateKeepInvincibility(i);
     else
-        sub_0803d2d4(i);
+        InitPlayerStateKeepMouth(i);
     p->prevMode = a;
     p->mode = 16;
     gPlayerStates[i].hitsThisFrame = b;
@@ -1165,9 +1165,9 @@ void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)
     t = &gTasks[i];
     p = &gPlayerStates[i];
     if (c != 0)
-        sub_0803d1c4(i);
+        InitPlayerStateKeepInvincibility(i);
     else
-        sub_0803d2d4(i);
+        InitPlayerStateKeepMouth(i);
     t->taskClass = 1;
     t->layer = 7;
     t->parent = i;
@@ -1179,16 +1179,16 @@ void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)
         if (t->waterFlags == 0)
         {
             if (t->onGround != 0)
-                p->requestedAction = 1;
+                p->requestedAction = PLAYER_ACTION_STAND;
             else
-                p->requestedAction = 7;
+                p->requestedAction = PLAYER_ACTION_FALL;
         }
         else
         {
             if (t->onGround != 0)
-                p->requestedAction = 24;
+                p->requestedAction = PLAYER_ACTION_STAND_IN_WATER;
             else
-                p->requestedAction = 23;
+                p->requestedAction = PLAYER_ACTION_SWIM;
         }
     }
     else
@@ -1197,13 +1197,13 @@ void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)
     }
     switch (p->ability)
     {
-    case 7:
-    case 20:
-    case 21:
-        p->unk22 = 2;
+    case ABILITY_MIKE:
+    case ABILITY_CRASH:
+    case ABILITY_LIGHT:
+        p->paletteFlashMode = 2;
         break;
-    case 24:
-        p->requestedAction = 55;
+    case ABILITY_UFO:
+        p->requestedAction = PLAYER_ACTION_UFO;
         break;
     }
     TaskSetEntry(PlayerStartRequestedAction, i);
@@ -1243,7 +1243,7 @@ u32 ActorCheckHitsWithBox(s32 a)
 
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
-    gCurTask->hitKind = 0;
+    gCurTask->hitKind = HIT_KIND_NONE;
     t = gCurTask;
     saved = t->health;
     r = 0;
@@ -1284,7 +1284,7 @@ u32 ActorCheckHits(void)
         return 0;
     t = gCurTask;
     a = t->u8C.actor;
-    t->hitKind = 0;
+    t->hitKind = HIT_KIND_NONE;
     if (a->attackBox == 0)
         return 0;
     u = gCurTask;
@@ -1338,7 +1338,7 @@ u32 ActorCheckHitsWithExtraBox(void)
         return 0;
     t = gCurTask;
     a = t->u8C.actor;
-    t->hitKind = 0;
+    t->hitKind = HIT_KIND_NONE;
     if (a->attackBox != 0)
     {
         u = gCurTask;
@@ -1415,7 +1415,7 @@ u32 ActorCheckPlayerHitsWithBox(s32 a)
         return 0;
     t = gCurTask;
     b = t->u8C.actor;
-    t->hitKind = 0;
+    t->hitKind = HIT_KIND_NONE;
     if (a == 0)
         return 0;
     gAttackX = gCurTask->pixelX;

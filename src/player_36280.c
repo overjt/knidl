@@ -209,7 +209,7 @@ void PlayerActionFloatUpdate(void)
     if (PlayerHasCrossedWaterSurface(0) != 0)
     {
         gCurTask->player->mouthState = 0;
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
     }
 }
 
@@ -220,7 +220,7 @@ void PlayerActionDuck(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 6;
-    gCurTask->updateState = 10;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_DUCK;
     t = gCurTask;
     if (t->player->prevMode != 6)
     {
@@ -230,17 +230,17 @@ void PlayerActionDuck(void)
         PlayerSetMotionXPreset(0, 72);
     }
     gCurTask->playerDuckDropTimer = 8;
-    gCurTask->player->unk33 = PlayerGetFacingSlope(gCurTask->player->playerIndex);
+    gCurTask->player->facingSlope = PlayerGetFacingSlope(gCurTask->player->playerIndex);
     p = gCurTask->player;
-    p->unk35 = 0;
-    p->unk34 = 0;
+    p->blinkTimer = 0;
+    p->blinkScriptPos = 0;
     gCurTask->playerBaseFrame = gUnk_0873D4BC[gCurTask->player->ability][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
     switch (gCurTask->player->ability)
     {
-    case 1:
-    case 2:
-    case 5:
-    case 19:
+    case ABILITY_FIRE:
+    case ABILITY_SPARK:
+    case ABILITY_BURNING:
+    case ABILITY_TORNADO:
         while (1)
         {
             TaskSetFrame(gCurTask->playerBaseFrame);
@@ -251,7 +251,7 @@ void PlayerActionDuck(void)
                 TaskYieldTrampoline(2);
             }
         }
-    case 15:
+    case ABILITY_HI_JUMP:
         while (1)
         {
             TaskSetFrame(gCurTask->playerBaseFrame);
@@ -262,7 +262,7 @@ void PlayerActionDuck(void)
                 TaskYieldTrampoline(6);
             }
         }
-    case 0:
+    case ABILITY_NORMAL:
     default:
         TaskSetFrame(gCurTask->playerBaseFrame);
         TaskSleepForever();
@@ -281,7 +281,7 @@ void PlayerActionDuckUpdate(void)
 
         if (q[t->player->playerIndex] & 3)
         {
-            t->player->requestedAction = 11;
+            t->player->requestedAction = PLAYER_ACTION_SLIDE;
             break;
         }
         if (!(gLatchedHeldKeys[t->player->playerIndex] & 128))
@@ -294,7 +294,7 @@ void PlayerActionDuckUpdate(void)
             if (t->playerDuckDropTimer == 0)
             {
                 t->onGround = 0;
-                gCurTask->player->requestedAction = 7;
+                gCurTask->player->requestedAction = PLAYER_ACTION_FALL;
                 gCurTask->unk84 = 0;
                 gCurTask->posY += 0x10000;
                 break;
@@ -325,7 +325,7 @@ void PlayerActionSlide(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 7;
-    gCurTask->updateState = 11;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_SLIDE;
     t = gCurTask;
     if (t->player->prevMode != 7)
     {
@@ -335,7 +335,7 @@ void PlayerActionSlide(void)
         PlayerStartSfx(118, gCurTask->player->playerIndex);
         gCurTask->player->hitBoxSet = gUnk_0873CC84;
         PlayerSetMotionXPreset(11, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 8, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SLIDE_DUST, 0);
     }
     switch (gCurTask->variant)
     {
@@ -343,13 +343,13 @@ void PlayerActionSlide(void)
         gCurTask->playerBaseFrame = gUnk_0873D5CA[gCurTask->player->ability][0];
         switch (gCurTask->player->ability)
         {
-        case 0:
+        case ABILITY_NORMAL:
         default:
             TaskSetFrame(gCurTask->playerBaseFrame);
             TaskSleepForever();
-        case 1:
-        case 2:
-        case 5:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
             while (1)
             {
                 TaskSetFrame(gCurTask->playerBaseFrame);
@@ -360,13 +360,13 @@ void PlayerActionSlide(void)
                     TaskYieldTrampoline(2);
                 }
             }
-        case 4:
-        case 15:
-        case 16:
-        case 17:
-        case 19:
-        case 22:
-        case 23:
+        case ABILITY_SWORD:
+        case ABILITY_HI_JUMP:
+        case ABILITY_BEAM:
+        case ABILITY_STONE:
+        case ABILITY_TORNADO:
+        case ABILITY_BACKDROP:
+        case ABILITY_THROW:
             while (1)
             {
                 TaskSetFrame(gCurTask->playerBaseFrame);
@@ -402,13 +402,13 @@ void PlayerActionSlideUpdate(void)
         t = gCurTask;
         if (t->playerActionDone28 != 0)
         {
-            t->player->requestedAction = 1;
+            t->player->requestedAction = PLAYER_ACTION_STAND;
         }
         else if (gTerrainResult.unk0 != 0)
         {
             PlayerCheckBump();
             PlayerStopAxes(1);
-            gCurTask->player->requestedAction = 1;
+            gCurTask->player->requestedAction = PLAYER_ACTION_STAND;
         }
         else
         {

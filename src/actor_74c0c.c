@@ -309,18 +309,18 @@ void Task_NightmarePowerOrbEscape(void)
 
 void CreateNightmarePowerOrbEscapeStars(s32 a)
 {
-    struct Task *t;
-    s32 id;
+    struct Task *escapeStar;
+    s32 escapeStarSlot;
 
     if (a == 12)
     {
         a = 3;
     loop:
-        id = TaskCreateFrom(99, 32);
-        if (id != -1)
+        escapeStarSlot = TaskCreateFrom(TASK_NIGHTMARE_POWER_ORB_ESCAPE_STAR, 32);
+        if (escapeStarSlot != -1)
         {
-            t = &gTasks[id];
-            t->variant = a;
+            escapeStar = &gTasks[escapeStarSlot];
+            escapeStar->variant = a;
         }
         a++;
         if (a <= 10)
@@ -328,11 +328,11 @@ void CreateNightmarePowerOrbEscapeStars(s32 a)
     }
     else
     {
-        id = TaskCreateFrom(99, 32);
-        if (id != -1)
+        escapeStarSlot = TaskCreateFrom(TASK_NIGHTMARE_POWER_ORB_ESCAPE_STAR, 32);
+        if (escapeStarSlot != -1)
         {
-            t = &gTasks[id];
-            t->variant = a;
+            escapeStar = &gTasks[escapeStarSlot];
+            escapeStar->variant = a;
         }
     }
 }
@@ -1349,8 +1349,8 @@ void PlayerCannonUpdate(void)
     CallTableEntry(gCurTask->updateState, 6, gPlayerCannonStateUpdates);
     id = gLocalPlayer;
     t = gCurTask;
-    if (id == t->player->playerIndex && t->unk18 != 0)
-        SetCameraFocus(t->unk1C, t->unk20);
+    if (id == t->player->playerIndex && t->playerCannonCameraFollow != 0)
+        SetCameraFocus(t->playerCannonFocusX, t->playerCannonFocusY);
 }
 
 void PlayerCannonEnterState(void)

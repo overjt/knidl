@@ -32,7 +32,7 @@ void Task_Blipper(void)
     gCurTask->layer = 11;
     gCurTask->frameTable = gBlipperFrames;
     gCurTask->onGround = 0;
-    if (gCurTask->variant == 5)
+    if (gCurTask->variant == BLIPPER_VARIANT_IDLE)
         BlipperIdle();
     TaskInitWaterFlags();
     if (gCurTask->waterFlags == 3)
@@ -40,34 +40,34 @@ void Task_Blipper(void)
     sub_0808b5b4();
 }
 
-void sub_0808aad8(void)
+void BlipperChaseInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808ab38;
+    gCurTask->updateCallback = (u32)BlipperChaseUpdate;
     gCurTask->onGround = 0;
     gCurTask->blipperChaseTimer = 0;
     TaskFaceNearestPlayer();
-    ActorSetState(0);
-    CallTableEntry(gCurTask->state, 2, gUnk_087428D8);
+    ActorSetState(BLIPPER_CHASE_STATE_CHASE);
+    CallTableEntry(gCurTask->state, 2, gBlipperChaseStates);
 }
 
-void sub_0808ab14(void)
+void BlipperChaseEnterState(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808ab38;
-    CallTableEntry(gCurTask->state, 2, gUnk_087428D8);
+    gCurTask->updateCallback = (u32)BlipperChaseUpdate;
+    CallTableEntry(gCurTask->state, 2, gBlipperChaseStates);
 }
 
-void sub_0808ab38(void)
+void BlipperChaseUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 2, gUnk_087428E0);
+        CallTableEntry(gCurTask->updateState, 2, gBlipperChaseStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
     gCurTask->onGround = 0;
 }
 
-void sub_0808ab70(void)
+void BlipperChase(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = BLIPPER_CHASE_STATE_CHASE;
     while (gCurTask->blipperChaseTimer <= 0x6FF)
     {
         if (gCurTask->blipperStroking == 0)
@@ -87,15 +87,15 @@ void sub_0808ab70(void)
             TaskYieldTrampoline(4);
         }
     }
-    ActorSetState(1);
+    ActorSetState(BLIPPER_CHASE_STATE_1);
     TaskSleepForever();
 }
 
 void sub_0808abf4(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != BLIPPER_CHASE_STATE_CHASE)
     {
-        TaskSetEntry(sub_0808ab14, gCurTaskIdx);
+        TaskSetEntry(BlipperChaseEnterState, gCurTaskIdx);
         return;
     }
     gCurTask->blipperChaseTimer++;
@@ -123,7 +123,7 @@ void sub_0808abf4(void)
 
 void sub_0808acdc(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = BLIPPER_CHASE_STATE_1;
     while (1)
     {
         if (gCurTask->blipperStroking == 0)
@@ -166,35 +166,35 @@ void sub_0808ad20(void)
     }
 }
 
-void sub_0808adec(void)
+void BlipperWaveInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808ae48;
+    gCurTask->updateCallback = (u32)BlipperWaveUpdate;
     gCurTask->onGround = 0;
     TaskFaceNearestPlayer();
-    ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08742908);
+    ActorSetState(BLIPPER_WAVE_STATE_WAVE);
+    CallTableEntry(gCurTask->state, 1, gBlipperWaveStates);
 }
 
-void sub_0808ae24(void)
+void BlipperWaveEnterState(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_0808ae48;
-    CallTableEntry(t->state, 1, gUnk_08742908);
+    t->updateCallback = (u32)BlipperWaveUpdate;
+    CallTableEntry(t->state, 1, gBlipperWaveStates);
 }
 
-void sub_0808ae48(void)
+void BlipperWaveUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 1, gUnk_0874290C);
+        CallTableEntry(gCurTask->updateState, 1, gBlipperWaveStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
     gCurTask->onGround = 0;
 }
 
-void sub_0808ae80(void)
+void BlipperWave(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = BLIPPER_WAVE_STATE_WAVE;
     TaskStop();
     TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
     gCurTask->actorAnimDelay = ActorStartAnim(gUnk_08742894);
@@ -330,33 +330,33 @@ void sub_0808b1a8(void)
         TaskSetEntry(sub_0808afac, gCurTaskIdx);
 }
 
-void sub_0808b1d0(void)
+void BlipperLeapInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808b234;
+    gCurTask->updateCallback = (u32)BlipperLeapUpdate;
     gCurTask->blipperCollideTerrain = 1;
     gCurTask->onGround = 0;
     TaskFaceNearestPlayer();
     gCurTask->blipperLeapTimer = 1;
-    ActorSetState(0);
-    CallTableEntry(gCurTask->state, 2, gUnk_08742920);
+    ActorSetState(BLIPPER_LEAP_STATE_0);
+    CallTableEntry(gCurTask->state, 2, gBlipperLeapStates);
 }
 
-void sub_0808b210(void)
+void BlipperLeapEnterState(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808b234;
-    CallTableEntry(gCurTask->state, 2, gUnk_08742920);
+    gCurTask->updateCallback = (u32)BlipperLeapUpdate;
+    CallTableEntry(gCurTask->state, 2, gBlipperLeapStates);
 }
 
-void sub_0808b234(void)
+void BlipperLeapUpdate(void)
 {
     if (gCurTask->blipperCollideTerrain != 0)
     {
         if ((u8)ActorCollideTerrain() == 0)
-            CallTableEntry(gCurTask->updateState, 2, gUnk_08742928);
+            CallTableEntry(gCurTask->updateState, 2, gBlipperLeapStateUpdates);
     }
     else
     {
-        CallTableEntry(gCurTask->updateState, 2, gUnk_08742928);
+        CallTableEntry(gCurTask->updateState, 2, gBlipperLeapStateUpdates);
     }
     ActorCheckHits();
     ActorReactToHit();
@@ -365,7 +365,7 @@ void sub_0808b234(void)
 
 void sub_0808b28c(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = BLIPPER_LEAP_STATE_0;
     gCurTask->blipperTurnTimer = 192;
     TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
     gCurTask->accelY = 0xFFFFCD00;
@@ -393,8 +393,8 @@ void sub_0808b2fc(void)
     {
         gCurTask->pixelY = (gCurTask->pixelY & -16) + 8;
         gCurTask->posY = (s16)gCurTask->pixelY << 16;
-        ActorSetState(0);
-        TaskSetEntry(sub_0808ae24, gCurTaskIdx);
+        ActorSetState(BLIPPER_WAVE_STATE_WAVE);
+        TaskSetEntry(BlipperWaveEnterState, gCurTaskIdx);
     }
     else
     {
@@ -402,9 +402,9 @@ void sub_0808b2fc(void)
     }
 }
 
-void sub_0808b368(void)
+void BlipperLeap(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = BLIPPER_LEAP_STATE_LEAP;
     if (gCurTask->variant == 3)
         gCurTask->blipperCollideTerrain = 0;
     else
@@ -447,8 +447,8 @@ void sub_0808b468(void)
                                 + ((s8 *)gCurTask->u8C.actor->terrainBox)[2]) != 0)
     {
         gCurTask->velY >>= 2;
-        ActorSetState(0);
-        TaskSetEntry(sub_0808b210, gCurTaskIdx);
+        ActorSetState(BLIPPER_LEAP_STATE_0);
+        TaskSetEntry(BlipperLeapEnterState, gCurTaskIdx);
     }
 }
 
@@ -461,8 +461,8 @@ void sub_0808b4d0(void)
     }
     if ((u8)IsWaterAtPixel(gCurTask->pixelX, gCurTask->pixelY) == 0)
     {
-        ActorSetState(1);
-        TaskSetEntry(sub_0808b210, gCurTaskIdx);
+        ActorSetState(BLIPPER_LEAP_STATE_LEAP);
+        TaskSetEntry(BlipperLeapEnterState, gCurTaskIdx);
         return;
     }
     if (abs(TaskGetNearestPlayerDx()) > 64)
@@ -488,8 +488,8 @@ one:
 zero:
     gCurTask->blipperLeapSpeedIndex = 0;
 done:
-    ActorSetState(1);
-    TaskSetEntry(sub_0808b210, gCurTaskIdx);
+    ActorSetState(BLIPPER_LEAP_STATE_LEAP);
+    TaskSetEntry(BlipperLeapEnterState, gCurTaskIdx);
 }
 
 void sub_0808b5b4(void)
@@ -633,11 +633,11 @@ void sub_0808b8c4(void)
         {
         case 0:
             TaskStop();
-            TaskSetEntry(sub_0808aad8, gCurTaskIdx);
+            TaskSetEntry(BlipperChaseInit, gCurTaskIdx);
             break;
         case 1:
             TaskStop();
-            TaskSetEntry(sub_0808adec, gCurTaskIdx);
+            TaskSetEntry(BlipperWaveInit, gCurTaskIdx);
             break;
         case 2:
             TaskStop();
@@ -648,7 +648,7 @@ void sub_0808b8c4(void)
             gCurTask->velY >>= 2;
             gCurTask->blipperLeapTimer = 90;
             ActorSetState(0);
-            gCurTask->updateCallback = (u32)sub_0808b234;
+            gCurTask->updateCallback = (u32)BlipperLeapUpdate;
             TaskSetEntry(sub_0808b28c, gCurTaskIdx);
             break;
         }
@@ -660,7 +660,7 @@ void sub_0808b8c4(void)
 
 void CreateBlipperDroplet(s32 a)
 {
-    gCurTask->blipperDropletSlot = CreateChildTaskHere(218, 1);
+    gCurTask->blipperDropletSlot = CreateChildTaskHere(TASK_BLIPPER_DROPLET, 1);
     gTasks[gCurTask->blipperDropletSlot].variant = a;
 }
 
@@ -818,7 +818,7 @@ s32 BlipperHitCeiling(void)
             return 1;
         case 3:
         case 4:
-            TaskSetEntry(sub_0808adec, gCurTaskIdx);
+            TaskSetEntry(BlipperWaveInit, gCurTaskIdx);
             return 1;
         }
     }
@@ -838,9 +838,9 @@ void GipInit(void)
     gCurTask->updateCallback = (u32)GipUpdate;
     gCurTask->gipShootTimer = 120;
     if (GipTrySnapToWall() != 0)
-        ActorSetState(3);
+        ActorSetState(GIP_STATE_WAIT);
     else
-        ActorSetState(1);
+        ActorSetState(GIP_STATE_1);
     CallTableEntry(gCurTask->state, 12, gGipStates);
 }
 
@@ -871,9 +871,9 @@ void GipWalk(void)
     gCurTask->onGround = 1;
     TaskStop();
     TaskFaceNearestPlayer();
-    if (gCurTask->state == 2)
+    if (gCurTask->state == GIP_STATE_2)
         gCurTask->facing = -gCurTask->facing;
-    ActorSetState(0);
+    ActorSetState(GIP_STATE_0);
     TaskSetMotionXFacing(0x10000, 0x5A5A5A5A);
     gCurTask->gipTurnTimer = 16;
     while (1)
@@ -893,7 +893,7 @@ void GipWalkUpdate(void)
 {
     if (--gCurTask->gipShootTimer == 0)
     {
-        ActorSetState(11);
+        ActorSetState(GIP_STATE_SHOOT);
         TaskSetEntry(GipEnterState, gCurTaskIdx);
         return;
     }
@@ -921,7 +921,7 @@ done:
     gCurTask->gipTurnTimer = 16;
 }
 
-void GipState3(void)
+void GipWait(void)
 {
     gCurTask->updateState = 1;
     gCurTask->gipCollideTerrain = 1;
@@ -932,13 +932,13 @@ void GipState3(void)
         TaskSetFrame(8);
         TaskYieldTrampoline(29);
         GipPickNextState();
-    } while (gCurTask->state == 3);
+    } while (gCurTask->state == GIP_STATE_WAIT);
     TaskSleepForever();
 }
 
-void sub_0808c004(void)
+void GipWaitUpdate(void)
 {
-    if (gCurTask->state != 3)
+    if (gCurTask->state != GIP_STATE_WAIT)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
@@ -976,13 +976,13 @@ void GipState4(void)
             gCurTask->gipLoopCount++;
         } while ((s16)gCurTask->gipLoopCount <= 2);
         GipPickNextState();
-    } while (gCurTask->state == 4);
+    } while (gCurTask->state == GIP_STATE_4);
     TaskSleepForever();
 }
 
 void GipState6(void)
 {
-    ActorSetState(4);
+    ActorSetState(GIP_STATE_4);
     gCurTask->updateState = 2;
     gCurTask->gipCollideTerrain = 1;
     gCurTask->onGround = 0;
@@ -1012,25 +1012,25 @@ void GipState6(void)
         TaskYieldTrampoline(2);
         gCurTask->gipLoopCount++;
     } while ((s16)gCurTask->gipLoopCount <= 2);
-    ActorSetState(3);
+    ActorSetState(GIP_STATE_WAIT);
     TaskSleepForever();
 }
 
 void sub_0808c1d0(void)
 {
-    if (gCurTask->state != 4)
+    if (gCurTask->state != GIP_STATE_4)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
     if (gCurTask->facing == 1)
     {
         if (GipGetWallDistRight(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
         {
-            ActorSetState(8);
+            ActorSetState(GIP_STATE_8);
             TaskSetEntry(GipEnterState, gCurTaskIdx);
         }
     }
     else if (GipGetWallDistLeft(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
     {
-        ActorSetState(8);
+        ActorSetState(GIP_STATE_8);
         TaskSetEntry(GipEnterState, gCurTaskIdx);
     }
 }
@@ -1069,13 +1069,13 @@ void GipState5(void)
             gCurTask->gipLoopCount++;
         } while ((s16)gCurTask->gipLoopCount <= 2);
         GipPickNextState();
-    } while (gCurTask->state == 5);
+    } while (gCurTask->state == GIP_STATE_5);
     TaskSleepForever();
 }
 
 void GipState7(void)
 {
-    ActorSetState(5);
+    ActorSetState(GIP_STATE_5);
     gCurTask->updateState = 3;
     gCurTask->gipCollideTerrain = 0;
     gCurTask->onGround = 0;
@@ -1102,25 +1102,25 @@ void GipState7(void)
         TaskYieldTrampoline(4);
         gCurTask->gipLoopCount++;
     } while ((s16)gCurTask->gipLoopCount <= 2);
-    ActorSetState(3);
+    ActorSetState(GIP_STATE_WAIT);
     TaskSleepForever();
 }
 
 void sub_0808c3e8(void)
 {
-    if (gCurTask->state != 5)
+    if (gCurTask->state != GIP_STATE_5)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
     if (gCurTask->facing == 1)
     {
         if (GipGetWallDistRight(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
         {
-            ActorSetState(9);
+            ActorSetState(GIP_STATE_9);
             TaskSetEntry(GipEnterState, gCurTaskIdx);
         }
     }
     else if (GipGetWallDistLeft(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
     {
-        ActorSetState(9);
+        ActorSetState(GIP_STATE_9);
         TaskSetEntry(GipEnterState, gCurTaskIdx);
     }
 }
@@ -1134,13 +1134,13 @@ void GipState8(void)
     TaskSetMotionXFacing(0x10000, 0x5A5A5A5A);
     TaskSetFrame(4);
     TaskYieldTrampoline(10);
-    ActorSetState(1);
+    ActorSetState(GIP_STATE_1);
     TaskSleepForever();
 }
 
 void sub_0808c4bc(void)
 {
-    if (gCurTask->state != 8)
+    if (gCurTask->state != GIP_STATE_8)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
@@ -1162,7 +1162,7 @@ void sub_0808c538(void)
 {
 }
 
-void GipState10(void)
+void GipJump(void)
 {
     gCurTask->updateState = 6;
     gCurTask->gipCollideTerrain = 0;
@@ -1170,7 +1170,7 @@ void GipState10(void)
     TaskStop();
     if (TaskGetFacingTowardNearestPlayer() == gCurTask->facing)
     {
-        ActorSetState(3);
+        ActorSetState(GIP_STATE_WAIT);
         TaskSleepForever();
     }
     TaskSetFrame(8);
@@ -1195,9 +1195,9 @@ void GipState10(void)
     }
 }
 
-void sub_0808c5e8(void)
+void GipJumpUpdate(void)
 {
-    if (gCurTask->state != 10)
+    if (gCurTask->state != GIP_STATE_JUMP)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
@@ -1219,13 +1219,13 @@ void GipShoot(void)
     TaskSetFrame(7);
     TaskYieldTrampoline(8);
     gCurTask->gipShootTimer = 120;
-    ActorSetState(1);
+    ActorSetState(GIP_STATE_1);
     TaskSleepForever();
 }
 
 void sub_0808c684(void)
 {
-    if (gCurTask->state != 11)
+    if (gCurTask->state != GIP_STATE_SHOOT)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
@@ -1259,7 +1259,7 @@ s32 GipLand(void)
 {
     if (gCurTask->variant != 1)
     {
-        ActorSetState(0);
+        ActorSetState(GIP_STATE_0);
         TaskSetEntry(GipEnterState, gCurTaskIdx);
         return 1;
     }
@@ -1269,7 +1269,7 @@ s32 GipStartFall(void)
 {
     if (gCurTask->variant != 1)
     {
-        ActorSetState(7);
+        ActorSetState(GIP_STATE_7);
         TaskSetEntry(GipEnterState, gCurTaskIdx);
         return 1;
     }
@@ -1290,13 +1290,13 @@ s32 GipHitWall(void)
     {
         switch (gCurTask->state)
         {
-        case 0:
-            ActorSetState(6);
+        case GIP_STATE_0:
+            ActorSetState(GIP_STATE_6);
             TaskSetEntry(GipEnterState, gCurTaskIdx);
             return 1;
-        case 9:
-        case 10:
-            ActorSetState(3);
+        case GIP_STATE_9:
+        case GIP_STATE_JUMP:
+            ActorSetState(GIP_STATE_WAIT);
             TaskSetEntry(GipEnterState, gCurTaskIdx);
             return 1;
         }
@@ -1308,12 +1308,12 @@ s32 GipHitCeiling(void)
 {
     if (gCurTask->variant != 1)
     {
-        if (gCurTask->state != 4)
+        if (gCurTask->state != GIP_STATE_4)
         {
             gCurTask->velY = 0;
             return 0;
         }
-        ActorSetState(10);
+        ActorSetState(GIP_STATE_JUMP);
         TaskSetEntry(GipEnterState, gCurTaskIdx);
         return 1;
     }
@@ -1350,19 +1350,19 @@ void GipPickNextState(void)
     switch (gUnk_030023D4)
     {
     case 0:
-        ActorSetState(4);
+        ActorSetState(GIP_STATE_4);
         break;
     case 1:
-        ActorSetState(5);
+        ActorSetState(GIP_STATE_5);
         break;
     case 2:
-        ActorSetState(9);
+        ActorSetState(GIP_STATE_9);
         break;
     case 3:
-        ActorSetState(10);
+        ActorSetState(GIP_STATE_JUMP);
         break;
     case 4:
-        ActorSetState(3);
+        ActorSetState(GIP_STATE_WAIT);
         break;
     }
 }
@@ -1373,7 +1373,7 @@ void CreateGipStar(void)
     u8 zero;
 
     sp.subtype = 34;
-    sp.taskType = 137;
+    sp.taskType = TASK_GIP_STAR;
     sp.variant = gCurTask->variant;
     sp.spawnArg = gCurTask->actorSpawnArg;
     zero = 0;
@@ -1513,7 +1513,7 @@ void ChillyFreezeUpdate(void)
     t = gCurTask;
     t->chillyFreezeSfxTimer--;
     u = &gTasks[t->parent];
-    if (u->hitKind != 0 || u->onGround == 0)
+    if (u->hitKind != HIT_KIND_NONE || u->onGround == 0)
     {
         TaskSetEntry(ActorDie, gCurTaskIdx);
         return;
@@ -1521,13 +1521,13 @@ void ChillyFreezeUpdate(void)
     n = t->chillyFreezeSparkleTimer;
     if (n == 0)
     {
-        gCurTask->chillyFreezeSparkleSlot = CreateChildTaskHere(215, 1);
+        gCurTask->chillyFreezeSparkleSlot = CreateChildTaskHere(TASK_CHILLY_FREEZE_SPARKLE, 1);
         gTasks[gCurTask->chillyFreezeSparkleSlot].state = 0;
         gCurTask->chillyFreezeSparkleTimer++;
     }
     else if (n == 10)
     {
-        gCurTask->chillyFreezeSparkleSlot = CreateChildTaskHere(215, 1);
+        gCurTask->chillyFreezeSparkleSlot = CreateChildTaskHere(TASK_CHILLY_FREEZE_SPARKLE, 1);
         gTasks[gCurTask->chillyFreezeSparkleSlot].state = 1;
         gCurTask->chillyFreezeSparkleTimer++;
     }

@@ -18,7 +18,7 @@ void MetaKnightsKnightFlashPalette(void)
         w->tileWord = (w->tileWord & 0xFFF) | (240 << 8);
         if (w->actorSpawnArg == 2)
         {
-            if (gTaskSlotTypes[w->metaKnightsKnightWeaponSlot] == 130)
+            if (gTaskSlotTypes[w->metaKnightsKnightWeaponSlot] == TASK_MACE_KNIGHT_MACE)
                 gTasks[w->metaKnightsKnightWeaponSlot].tileWord = (w->tileWord & 0xFFF) | (240 << 8);
         }
     }
@@ -38,7 +38,7 @@ void MetaKnightsKnightFlashPalette(void)
             t->tileWord = (t->tileWord & 0xFFF) | (160 << 8);
             if (*s == 2)
             {
-                if (gTaskSlotTypes[t->metaKnightsKnightWeaponSlot] == 130)
+                if (gTaskSlotTypes[t->metaKnightsKnightWeaponSlot] == TASK_MACE_KNIGHT_MACE)
                     gTasks[t->metaKnightsKnightWeaponSlot].tileWord = (t->tileWord & 0xFFF) | (160 << 8);
             }
             break;
@@ -68,7 +68,7 @@ void MetaKnightsKnightRestorePalette(void)
         t->tileWord = (t->tileWord & 0xFFF) | (160 << 8);
         if (*s == 2)
         {
-            if (gTaskSlotTypes[t->metaKnightsKnightWeaponSlot] == 130)
+            if (gTaskSlotTypes[t->metaKnightsKnightWeaponSlot] == TASK_MACE_KNIGHT_MACE)
                 gTasks[t->metaKnightsKnightWeaponSlot].tileWord = (t->tileWord & 0xFFF) | (160 << 8);
         }
         break;

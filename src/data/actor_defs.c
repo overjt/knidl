@@ -127,7 +127,7 @@ struct ActorDef *const gChildActorDefs[] = {
 };
 
 /* kind 5 */
-struct ActorDef *const gUnk_0873EE70[] = {
+struct ActorDef *const gObjectDefs[] = {
     &gWarpStarDef,
     &gCannonDef,
     &gCannonFuseDef,
@@ -137,7 +137,7 @@ struct ActorDef *const gUnk_0873EE70[] = {
 };
 
 /* every other kind */
-struct ActorDef *const gUnk_0873EE88[] = {
+struct ActorDef *const gItemDefs[] = {
     &gAbilityStarDef,
     &gOneUpDef,
     &gMaximTomatoDef,

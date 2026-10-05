@@ -235,8 +235,8 @@ u8 TridentKnightLand(void);
 u8 TridentKnightHitWall(void);
 u8 TridentKnightHitCeiling(void);
 void MetaKnightsKnightReactToDamage(void);
-u8 sub_0809fd64(void);
-u8 sub_0809fe10(void);
+u8 KingDededeReactToDefeat(void);
+u8 KingDededeReactToDamage(void);
 u8 KingDededeLand(void);
 void KingDededeHitWall(void);
 u8 KingDededeHitCeiling(void);
@@ -269,7 +269,7 @@ s32 PickupEnterWater(void);
 s32 AbilityStarBounceOffFloor(void);
 s32 AbilityStarEnterWater(void);
 s32 AbilityStarBounceOffWall(void);
-s32 sub_080b442c(void);
+s32 AbilityStarHitCeiling(void);
 
 /* ---- 0x0873F5FC-0x0873F664: 6 record(s), section .actor_tbl_0873f5fc ---- */
 /* gAbilityStarDef */
@@ -280,7 +280,7 @@ struct ActorHandlers gAbilityStarTerrainHandlers ACTOR_TBL(0873f5fc) = {
     .leaveWaterCallback = 0,
     .hitWallCallback = (u32)AbilityStarBounceOffWall,
     .unk14 = 0,
-    .hitCeilingCallback = (u32)sub_080b442c,
+    .hitCeilingCallback = (u32)AbilityStarHitCeiling,
 };
 /* 4 ActorDefs (gOneUpDef, gMaximTomatoDef, ...) */
 struct ActorHandlers gPickupTerrainHandlers ACTOR_TBL(0873f5fc) = {
@@ -1699,16 +1699,16 @@ struct ActorVt gKingDededeHitReactions ACTOR_TBL(08748930) = {
     .damageKind = -1,
     .defeatKind = -1,
     .filler02 = { 0x00, 0x00 },
-    .damageCallback = (u32)sub_0809fe10,
-    .defeatCallback = (u32)sub_0809fd64,
+    .damageCallback = (u32)KingDededeReactToDamage,
+    .defeatCallback = (u32)KingDededeReactToDefeat,
 };
 /* src/enemy_9fbd0.c */
-struct ActorVt gUnk_08748974 ACTOR_TBL(08748930) = {
+struct ActorVt gKingDededeDefeatedHitReactions ACTOR_TBL(08748930) = {
     .damageKind = -1,
     .defeatKind = 7,
     .filler02 = { 0x00, 0x00 },
-    .damageCallback = (u32)sub_0809fe10,
-    .defeatCallback = (u32)sub_0809fd64,
+    .damageCallback = (u32)KingDededeReactToDamage,
+    .defeatCallback = (u32)KingDededeReactToDefeat,
 };
 /* gMrShineAndMrBrightDef */
 struct ActorVt gMrShineAndMrBrightHitReactions ACTOR_TBL(08748930) = {
@@ -1719,7 +1719,7 @@ struct ActorVt gMrShineAndMrBrightHitReactions ACTOR_TBL(08748930) = {
     .defeatCallback = (u32)MrShineAndMrBrightReactToDefeat,
 };
 /* src/enemy_a1590.c */
-struct ActorVt gUnk_0874898C ACTOR_TBL(08748930) = {
+struct ActorVt gMrShineAndMrBrightDefeatedHitReactions ACTOR_TBL(08748930) = {
     .damageKind = -1,
     .defeatKind = 7,
     .filler02 = { 0x00, 0x00 },

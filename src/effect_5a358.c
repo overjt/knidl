@@ -30,9 +30,9 @@
  * Task.variant is not 4 (and copies the spawner's facing), and in the other
  * sub-states tests the block hit-box set gUnk_0873CF8C (TaskBreakBlocksAt) at the
  * spawner's position offset by PlayerState.pixelOffsetX/unk26 (8.8).  Variant 48
- * (sub_0805ae94, M14's action 55) rides on its spawner with the draw hook
- * sub_0805af80 (shared with variant 34: M11's sub_0803dfc8 in player mode
- * 13, otherwise the task dies) and the callback sub_0805af44, which kills it
+ * (PlayerEffectUFOChargeSparkle, M14's action 55) rides on its spawner with the draw hook
+ * sub_0805af80 (shared with variant 34: M11's PlayerDrawWorldLoadTilesAndPalette in player mode
+ * 13, otherwise the task dies) and the callback PlayerEffectUFOChargeSparkleUpdate, which kills it
  * once the player leaves mode 13 or releases both A and B. */
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
@@ -252,10 +252,10 @@ void PlayerEffectCrashBlast(void)
             {
                 switch (gTasks[i].actorKind)
                 {
-                case 1:
-                case 2:
-                case 7:
-                case 8:
+                case ACTOR_KIND_MID_BOSS:
+                case ACTOR_KIND_BOSS:
+                case ACTOR_KIND_BOSS_CHILD_TASK:
+                case ACTOR_KIND_MID_BOSS_CHILD_TASK:
                     gScreenAttackTasks[k++] = i;
                     break;
                 }
@@ -275,10 +275,10 @@ void PlayerEffectCrashBlast(void)
             n--;
             switch (gTasks[(s16)gScreenAttackTasks[n]].actorKind)
             {
-            case 1:
-            case 2:
-            case 7:
-            case 8:
+            case ACTOR_KIND_MID_BOSS:
+            case ACTOR_KIND_BOSS:
+            case ACTOR_KIND_BOSS_CHILD_TASK:
+            case ACTOR_KIND_MID_BOSS_CHILD_TASK:
                 TaskSaveSkipMask((s16)gScreenAttackTasks[n]);
                 break;
             default:
@@ -307,7 +307,7 @@ void PlayerEffectCrashBlast(void)
                 gScreenAttackActive = 1;
             switch (gTasks[i].actorKind)
             {
-            case 5:
+            case ACTOR_KIND_OBJECT:
                 r = 0;
                 if (gTasks[i].u76.subtype == 2)
                 {
@@ -316,7 +316,7 @@ void PlayerEffectCrashBlast(void)
                     r = 1;
                 }
                 break;
-            case 6:
+            case ACTOR_KIND_ITEM:
                 r = 0;
                 if (gTasks[i].u76.subtype != 5)
                 {
@@ -325,9 +325,9 @@ void PlayerEffectCrashBlast(void)
                     r = 1;
                 }
                 break;
-            case 0:
+            case ACTOR_KIND_ENEMY:
             case 3:
-            case 4:
+            case ACTOR_KIND_CHILD:
             case 9:
                 TaskRestoreSkipMask(i);
                 TaskYieldTrampoline(2);
@@ -498,13 +498,13 @@ void sub_0805ae00(void)
     }
 }
 
-void sub_0805ae94(void)
+void PlayerEffectUFOChargeSparkle(void)
 {
     struct Task *t;
 
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)sub_0805af80;
-    gCurTask->updateCallback = (u32)sub_0805af44;
+    gCurTask->updateCallback = (u32)PlayerEffectUFOChargeSparkleUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_08752090;
@@ -526,7 +526,7 @@ void sub_0805ae94(void)
     TaskExitTrampoline();
 }
 
-void sub_0805af44(void)
+void PlayerEffectUFOChargeSparkleUpdate(void)
 {
     struct PlayerState *p = gCurTask->player;
 
@@ -539,5 +539,5 @@ void sub_0805af80(void)
     if (gCurTask->player->mode != 13)
         TaskFree(gCurTaskIdx);
     else
-        sub_0803dfc8();
+        PlayerDrawWorldLoadTilesAndPalette();
 }

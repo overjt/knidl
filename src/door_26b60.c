@@ -28,7 +28,7 @@ void sub_08026b60(void)
 
     for (i = 0; i < gCurRoomDef->doorCount; d++, i++)
     {
-        struct Unk02004B90 *p;
+        struct DoorState *p;
         s16 x;
         s16 y;
         s32 lim;
@@ -70,7 +70,7 @@ void UpdateDoors(void)
 
     for (i = 0; i < gCurRoomDef->doorCount; d++, i++)
     {
-        struct Unk02004B90 *p;
+        struct DoorState *p;
         s16 x;
         s16 y;
         s16 j;
@@ -145,7 +145,7 @@ void DrawDoors(void)
     d = gCurRoomDef->doors;
     for (i = 0; i < gCurRoomDef->doorCount; d++, i++)
     {
-        struct Unk02004B90 *p;
+        struct DoorState *p;
         s16 x;
         s16 y;
         s16 k;

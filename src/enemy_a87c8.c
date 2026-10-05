@@ -36,8 +36,8 @@ extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
 extern void ActorSetHitReactions(u32 v);
 extern void ActorSetAttackBox(u32 v);
-extern void sub_080639f0(struct ActorAux *v);
-extern void sub_08063a00(u32 v);
+extern void ActorSetAux(struct ActorAux *v);
+extern void ActorSetExtraAttackBox(u32 v);
 extern s32 TaskGetDxTo(u32 i);
 extern s32 TaskIsInRectSlot(struct Rect *r, u32 i);
 extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
@@ -80,7 +80,7 @@ void KrackoInit(void)
         gCurTask->krackoSide = 0;
     else
         gCurTask->krackoSide = 1;
-    ActorSetState(0);
+    ActorSetState(KRACKO_STATE_INTRO);
     CallTableEntry(gCurTask->state, 7, gKrackoStates);
 }
 
@@ -97,11 +97,11 @@ void KrackoUpdate(void)
     ActorReactToHit();
 }
 
-void KrackoState0(void)
+void KrackoIntro(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = KRACKO_STATE_INTRO;
     t = gCurTask;
     t->posY = (gViewRect[2] - 16) << 16;
     t->velY = 128 << 8;
@@ -127,22 +127,22 @@ void KrackoState0(void)
         TaskYieldTrampoline(1);
     ActorResetAttackBox();
     ActorSetAttackBox((u32)gUnk_08749720);
-    sub_08063a00((u32)gUnk_08749758);
-    ActorSetState(1);
+    ActorSetExtraAttackBox((u32)gUnk_08749758);
+    ActorSetState(KRACKO_STATE_PICK_MOVE);
     TaskSleepForever();
 }
 
-void KrackoState0Update(void)
+void KrackoIntroUpdate(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != KRACKO_STATE_INTRO)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
-void KrackoState1(void)
+void KrackoPickMove(void)
 {
     s32 idx;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = KRACKO_STATE_PICK_MOVE;
     for (;;)
     {
         switch (gCurTask->krackoPickPhase)
@@ -151,12 +151,12 @@ void KrackoState1(void)
             if (gCurTask->krackoLastPick == 0)
             {
                 gCurTask->krackoLastPick = 4;
-                ActorSetState(4);
+                ActorSetState(KRACKO_STATE_LIGHTNING_SWEEP);
             }
             else
             {
                 gCurTask->krackoLastPick = 5;
-                ActorSetState(5);
+                ActorSetState(KRACKO_STATE_SWOOP);
                 gCurTask->krackoPickPhase = 3;
             }
             break;
@@ -171,7 +171,7 @@ void KrackoState1(void)
             {
                 gCurTask->krackoPickCount = 128;
                 gCurTask->krackoPickPhase = 3;
-                ActorSetState(6);
+                ActorSetState(KRACKO_STATE_SUMMON);
                 break;
             }
 pick:
@@ -184,7 +184,7 @@ pick:
             {
                 if (gUnk_030023D4 <= 95)
                 {
-                    ActorSetState(5);
+                    ActorSetState(KRACKO_STATE_SWOOP);
                     goto st3;
                 }
                 if (gCurTask->krackoSide == 0)
@@ -217,7 +217,7 @@ st3:
             gCurTask->krackoPickPhase = 3;
             break;
         case 2:
-            ActorSetState(2);
+            ActorSetState(KRACKO_STATE_WAIT);
             gCurTask->posX = (gUnk_087490E4[gCurTask->krackoSide] + gViewRect[0]) << 16;
             gCurTask->posY = (gViewRect[2] + 48) << 16;
             gCurTask->krackoPickPhase = 3;
@@ -227,15 +227,15 @@ st3:
     }
 }
 
-void KrackoState1Update(void)
+void KrackoPickMoveUpdate(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != KRACKO_STATE_PICK_MOVE)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
 void KrackoWait(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = KRACKO_STATE_WAIT;
     TaskStop();
     gCurTask->krackoLoopCount = 0;
     do
@@ -245,19 +245,19 @@ void KrackoWait(void)
         gCurTask->krackoLoopCount++;
     } while ((s16)gCurTask->krackoLoopCount <= 5);
     gCurTask->krackoPickPhase = 1;
-    ActorSetState(1);
+    ActorSetState(KRACKO_STATE_PICK_MOVE);
     TaskSleepForever();
 }
 
 void KrackoWaitUpdate(void)
 {
-    if (gCurTask->state != 2)
+    if (gCurTask->state != KRACKO_STATE_WAIT)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
-void KrackoState3(void)
+void KrackoCross(void)
 {
-    gCurTask->updateState = 3;
+    gCurTask->updateState = KRACKO_STATE_CROSS;
     TaskStop();
     TaskGetScreenPosSlot(gCurTaskIdx);
     if (gUnk_030023B4 <= 127)
@@ -283,7 +283,7 @@ void KrackoState3(void)
     }
 }
 
-void KrackoState3Update(void)
+void KrackoCrossUpdate(void)
 {
     struct Task *t;
 
@@ -310,14 +310,14 @@ void KrackoState3Update(void)
         u->velY = 0;
         u->krackoPickPhase = 2;
         u->krackoSide ^= 1;
-        ActorSetState(1);
+        ActorSetState(KRACKO_STATE_PICK_MOVE);
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
     }
 }
 
 void KrackoLightningSweep(void)
 {
-    gCurTask->updateState = 4;
+    gCurTask->updateState = KRACKO_STATE_LIGHTNING_SWEEP;
     gUnk_02007D00[0] = 1;
     TaskStop();
     StartBgPaletteBlend(8, 128);
@@ -344,7 +344,7 @@ void KrackoLightningSweep(void)
     {
         for (gCurTask->krackoBoltCount = 0; (s16)gCurTask->krackoBoltCount <= 3; gCurTask->krackoBoltCount++)
         {
-            CreateChildTaskAtOffsetFacing(197, 0, 32, 1);
+            CreateChildTaskAtOffsetFacing(TASK_KRACKO_LIGHTNING_TOP, 0, 32, 1);
             gCurTask->velY = gUnk_08749100[(s16)gCurTask->krackoBoltCount];
             for (gCurTask->krackoBoltFrameCount = 0; (s16)gCurTask->krackoBoltFrameCount <= 3; gCurTask->krackoBoltFrameCount++)
             {
@@ -357,7 +357,7 @@ void KrackoLightningSweep(void)
             }
         }
     }
-    CreateChildTaskAtOffsetFacing(197, 0, 32, 1);
+    CreateChildTaskAtOffsetFacing(TASK_KRACKO_LIGHTNING_TOP, 0, 32, 1);
     gCurTask->velY = 0;
     TaskYieldTrampoline(6);
     EndBgPaletteBlend(8);
@@ -379,13 +379,13 @@ void KrackoLightningSweep(void)
     gCurTask->krackoSide ^= 1;
     if (gCurTask->krackoPickPhase != 0)
         gCurTask->krackoPickPhase = 2;
-    ActorSetState(1);
+    ActorSetState(KRACKO_STATE_PICK_MOVE);
     TaskSleepForever();
 }
 
 void KrackoLightningSweepUpdate(void)
 {
-    if (gCurTask->state != 4)
+    if (gCurTask->state != KRACKO_STATE_LIGHTNING_SWEEP)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
@@ -393,12 +393,12 @@ void KrackoSummon(void)
 {
     struct ActorSpawn sp;
 
-    gCurTask->updateState = 6;
+    gCurTask->updateState = KRACKO_STATE_SUMMON;
     TaskStop();
     gUnk_02007D00[0] = 1;
     TaskYieldTrampoline(36);
     sp.subtype = 25;
-    sp.taskType = 128;
+    sp.taskType = TASK_KRACKO_STARMAN;
     sp.variant = 0;
     sp.spawnArg = 0;
     sp.x = 0;
@@ -408,19 +408,19 @@ void KrackoSummon(void)
     PlaySfx(506);
     gUnk_02007D00[0] = 0;
     gCurTask->krackoPickPhase = 2;
-    ActorSetState(1);
+    ActorSetState(KRACKO_STATE_PICK_MOVE);
     TaskSleepForever();
 }
 
 void KrackoSummonUpdate(void)
 {
-    if (gCurTask->state != 6)
+    if (gCurTask->state != KRACKO_STATE_SUMMON)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
 void KrackoSwoop(void)
 {
-    gCurTask->updateState = 5;
+    gCurTask->updateState = KRACKO_STATE_SWOOP;
     gUnk_02007D00[0] = 1;
     if (gCurTask->krackoSide == 0)
         gCurTask->facing = 1;
@@ -521,12 +521,12 @@ void KrackoSwoop(void)
     if (gCurTask->krackoPickPhase != 0)
         gCurTask->krackoPickPhase = 2;
     gCurTask->krackoSide ^= 1;
-    ActorSetState(1);
+    ActorSetState(KRACKO_STATE_PICK_MOVE);
     TaskSleepForever();
 }
 
 void KrackoSwoopUpdate(void)
 {
-    if (gCurTask->state != 5)
+    if (gCurTask->state != KRACKO_STATE_SWOOP)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }

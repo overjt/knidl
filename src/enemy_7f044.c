@@ -70,7 +70,7 @@ void KabuJumpInit(void)
 
     t->updateCallback = (u32)KabuJumpUpdate;
     t->kabuJumpIndex = -1;
-    ActorSetState(0);
+    ActorSetState(KABU_JUMP_STATE_SPIN);
     CallTableEntry(gCurTask->state, 3, gKabuJumpStates);
 }
 
@@ -108,7 +108,7 @@ void KabuJumpSpin(void)
     s32 m;
     s32 z;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = KABU_JUMP_STATE_SPIN;
     a = gCurTask;
     if (a->kabuJumpIndex != -1)
     {
@@ -165,13 +165,13 @@ void KabuJumpSpin(void)
     } while (r->unk28 == *(s16 *)&r->unk6C);
     j = *h;
     j->unk28 = *(s16 *)&j->unk6C;
-    ActorSetState(1);
+    ActorSetState(KABU_JUMP_STATE_JUMP);
     TaskSleepForever();
 }
 
 void KabuJumpSpinUpdate(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != KABU_JUMP_STATE_SPIN)
         TaskSetEntry(KabuJumpEnterState, gCurTaskIdx);
 }
 
@@ -181,7 +181,7 @@ void KabuJump(void)
     struct Task *u;
 
     t = gCurTask;
-    t->updateState = 1;
+    t->updateState = KABU_JUMP_STATE_JUMP;
     PlaySfx(188);
     gCurTask->onGround = 0;
     TaskFaceNearestPlayer();
@@ -208,7 +208,7 @@ void KabuJumpState1Update(void)
     if ((s8)gCurTask->onGround != 0)
     {
         TaskStop();
-        ActorSetState(0);
+        ActorSetState(KABU_JUMP_STATE_SPIN);
         TaskSetEntry(KabuJumpEnterState, gCurTaskIdx);
     }
 }
@@ -219,7 +219,7 @@ void KabuJumpFall(void)
     struct Task *b;
     struct Task *c;
 
-    gCurTask->updateState = 2;
+    gCurTask->updateState = KABU_JUMP_STATE_FALL;
     a = gCurTask;
     if (a->kabuJumpIndex != -1)
         a->kabuJumpIndex = 0;
@@ -241,7 +241,7 @@ void KabuJumpFallUpdate(void)
     if ((s8)gCurTask->onGround != 0)
     {
         TaskStop();
-        ActorSetState(0);
+        ActorSetState(KABU_JUMP_STATE_SPIN);
         TaskSetEntry(KabuJumpEnterState, gCurTaskIdx);
     }
 }
@@ -250,7 +250,7 @@ void KabuTeleportInit(void)
 {
     gCurTask->updateCallback = (u32)KabuTeleportUpdate;
     ActorSetHitReactions(gKabuTeleportHitReactions);
-    ActorSetState(0);
+    ActorSetState(KABU_TELEPORT_STATE_SPIN);
     CallTableEntry(gCurTask->state, 3, gKabuTeleportStates);
 }
 
@@ -263,7 +263,7 @@ void KabuTeleportUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->state == 2)
+    if (t->state == KABU_TELEPORT_STATE_2)
     {
         if ((u8)ActorCollideTerrain() == 0)
             CallTableEntry(gCurTask->updateState, 3, gKabuTeleportStateUpdates);
@@ -272,7 +272,7 @@ void KabuTeleportUpdate(void)
     {
         CallTableEntry(t->updateState, 3, gKabuTeleportStateUpdates);
     }
-    if (gCurTask->state != 1)
+    if (gCurTask->state != KABU_TELEPORT_STATE_TELEPORT)
         ActorCheckHits();
     ActorReactToHit();
 }
@@ -282,7 +282,7 @@ void KabuTeleportSpin(void)
     struct Task *a;
     struct Task *b;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = KABU_TELEPORT_STATE_SPIN;
     a = gCurTask;
     a->kabuTeleportTimer = gUnk_08741355[a->actorSpawnArg];
     while (1)
@@ -308,7 +308,7 @@ void KabuTeleportSpinUpdate(void)
     t = gCurTask;
     if (--t->kabuTeleportTimer <= 0)
     {
-        ActorSetState(1);
+        ActorSetState(KABU_TELEPORT_STATE_TELEPORT);
         TaskSetEntry(KabuTeleportEnterState, gCurTaskIdx);
     }
 }
@@ -325,7 +325,7 @@ void KabuTeleport(void)
     s32 n;
     s32 m;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = KABU_TELEPORT_STATE_TELEPORT;
     a = gCurTask;
     a->kabuBlinkTimer = 48;
     a->unk30 = 7;
@@ -381,7 +381,7 @@ void KabuTeleport(void)
         }
         TaskYieldTrampoline(1);
     } while (gCurTask->kabuBlinkTimer != 0);
-    ActorSetState(2);
+    ActorSetState(KABU_TELEPORT_STATE_2);
     TaskSleepForever();
 }
 
@@ -403,7 +403,7 @@ void KabuTeleportState1Update(void)
             t->frame = 0xFFFF;
         gCurTask->kabuBlinkTimer--;
     }
-    if (gCurTask->state != 1)
+    if (gCurTask->state != KABU_TELEPORT_STATE_TELEPORT)
         TaskSetEntry(KabuTeleportEnterState, gCurTaskIdx);
 }
 
@@ -461,7 +461,7 @@ void KabuTeleportState2(void)
     struct Task *d;
     struct Task *e;
 
-    gCurTask->updateState = 2;
+    gCurTask->updateState = KABU_TELEPORT_STATE_2;
     a = gCurTask;
     a->kabuFrameDelay = 4;
     while (1)
@@ -515,7 +515,7 @@ void KabuTeleportState2Update(void)
 void KabuSlideInit(void)
 {
     gCurTask->updateCallback = (u32)KabuSlideUpdate;
-    ActorSetState(0);
+    ActorSetState(KABU_SLIDE_STATE_SLIDE);
     CallTableEntry(gCurTask->state, 2, gKabuSlideStates);
 }
 
@@ -528,7 +528,7 @@ void KabuSlideUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->state == 1)
+    if (t->state == KABU_SLIDE_STATE_1)
     {
         CallTableEntry(t->updateState, 2, gKabuSlideStateUpdates);
     }
@@ -547,7 +547,7 @@ void KabuSlide(void)
     s32 n;
     struct Task *o;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = KABU_SLIDE_STATE_SLIDE;
     t = gCurTask;
     t->kabuPassCount = 3;
     t->kabuTurnTimer = 0;
@@ -631,7 +631,7 @@ void KabuSlideState0Update(void)
     }
     if (gCurTask->kabuPassCount == 0)
     {
-        ActorSetState(1);
+        ActorSetState(KABU_SLIDE_STATE_1);
         TaskSetEntry(KabuSlideEnterState, gCurTaskIdx);
     }
 }
@@ -640,7 +640,7 @@ void KabuSlideState1(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = KABU_SLIDE_STATE_1;
     TaskStop();
     gCurTask->frame = 12;
     TaskYieldTrampoline(15);
@@ -673,7 +673,7 @@ void KabuIdleInit(void)
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(KABU_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gKabuIdleStates);
 }
 
@@ -693,7 +693,7 @@ void KabuIdle(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = KABU_IDLE_STATE_IDLE;
     while (1)
     {
         TaskSetFrame(4);
@@ -741,7 +741,7 @@ s32 KabuStartFall(void)
     switch (gCurTask->variant)
     {
     case 0:
-        ActorSetState(2);
+        ActorSetState(KABU_JUMP_STATE_FALL);
         TaskSetEntry(KabuJumpEnterState, gCurTaskIdx);
         r = 1;
         break;
@@ -811,7 +811,7 @@ void Task_Twister(void)
 void TwisterInit(void)
 {
     gCurTask->updateCallback = (u32)TwisterUpdate;
-    ActorSetState(0);
+    ActorSetState(TWISTER_STATE_0);
     CallTableEntry(gCurTask->state, 3, gTwisterStates);
 }
 
@@ -824,7 +824,7 @@ void TwisterUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->state == 0)
+    if (t->state == TWISTER_STATE_0)
     {
         if ((u8)ActorCollideTerrain() == 0)
             CallTableEntry(gCurTask->updateState, 3, gTwisterStateUpdates);
@@ -841,7 +841,7 @@ void TwisterState0(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = TWISTER_STATE_0;
     ActorSetAttackBox(gUnk_0873F720);
     t = gCurTask;
     if ((s8)t->onGround == 0)
@@ -949,7 +949,7 @@ void TwisterState0Update(void)
         g = gCurTask;
         if ((--g->twisterPhaseTimer & 28) == 0)
         {
-            ActorSetState(1);
+            ActorSetState(TWISTER_STATE_1);
             TaskSetEntry(TwisterEnterState, gCurTaskIdx);
         }
         break;
@@ -961,7 +961,7 @@ void TwisterState1(void)
     struct Task *t;
     s32 n;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = TWISTER_STATE_1;
     ActorSetAttackBox(gUnk_08741ADC);
     gCurTask->twisterPhase = -1;
     gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_08741454);
@@ -1012,7 +1012,7 @@ void TwisterState1Update(void)
     {
         if (m == 2)
         {
-            ActorSetState(2);
+            ActorSetState(TWISTER_STATE_2);
             TaskSetEntry(TwisterEnterState, gCurTaskIdx);
             return;
         }
@@ -1067,7 +1067,7 @@ void TwisterState2(void)
     struct Task *c;
     struct Task *d;
 
-    gCurTask->updateState = 2;
+    gCurTask->updateState = TWISTER_STATE_2;
     a = gCurTask;
     a->velX = 0;
     a->accelY = 0xFFFF1900;
@@ -1090,7 +1090,7 @@ void TwisterState2(void)
         d->twisterPhase = 0;
         d->actorAnimDelay34 = 1;
         ActorStartAnim(gUnk_08741420);
-        ActorSetState(0);
+        ActorSetState(TWISTER_STATE_0);
     }
     TaskSleepForever();
 }
@@ -1104,7 +1104,7 @@ void TwisterState2Update(void)
         gCurTask->actorAnimDelay34 = ActorStepAnim();
         TwisterTickSound(gCurTask->actorAnimDelay34, 8);
     }
-    if (gCurTask->state != 2)
+    if (gCurTask->state != TWISTER_STATE_2)
         TaskSetEntry(TwisterEnterState, gCurTaskIdx);
 }
 
@@ -1116,7 +1116,7 @@ void TwisterIdleInit(void)
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(TWISTER_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gTwisterIdleStates);
 }
 
@@ -1134,7 +1134,7 @@ void TwisterIdleUpdate(void)
 
 void TwisterIdle(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = TWISTER_IDLE_STATE_IDLE;
     TaskSleepForever();
 }
 
@@ -1195,7 +1195,7 @@ void Task_HotHead(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     gCurTask->frameTable = gHotHeadFrames;
-    CreateChildTaskHere(175, 0);
+    CreateChildTaskHere(TASK_HOT_HEAD_FLAME, 0);
     CallTableEntry(gCurTask->variant, 3, gHotHeadVariants);
 }
 
@@ -1209,9 +1209,9 @@ void HotHeadWalkInit(void)
     t->hotHeadLoopFrame = 6;
     t->hotHeadFrameStep = -1;
     if (RandomRange(4) == 0)
-        ActorSetState(1);
+        ActorSetState(HOT_HEAD_WALK_STATE_SHOOT);
     else
-        ActorSetState(0);
+        ActorSetState(HOT_HEAD_WALK_STATE_WALK);
     CallTableEntry(gCurTask->state, 3, gHotHeadWalkStates);
 }
 
@@ -1232,7 +1232,7 @@ void HotHeadWalk(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = HOT_HEAD_WALK_STATE_WALK;
     t = gCurTask;
     t->hotHeadShotTimer = 90;
     t->hotHeadOddsIndex = 0;
@@ -1249,7 +1249,7 @@ void HotHeadWalkState0Update(void)
     {
         if (RandomRange(gUnk_087414B0[t->hotHeadOddsIndex]) != 0)
         {
-            ActorSetState(1);
+            ActorSetState(HOT_HEAD_WALK_STATE_SHOOT);
             TaskSetEntry(HotHeadWalkEnterState, gCurTaskIdx);
         }
         else
@@ -1265,7 +1265,7 @@ void HotHeadWalkShoot(void)
 {
     struct ActorSpawn sp;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = HOT_HEAD_WALK_STATE_SHOOT;
     TaskFaceNearestPlayer();
     TaskStop();
     TaskSetFrame(9);
@@ -1274,8 +1274,8 @@ void HotHeadWalkShoot(void)
     if (abs(TaskGetNearestPlayerDistSq()) <= 0x143F)
     {
         sp.subtype = 6;
-        sp.taskType = 108;
-        sp.variant = 0;
+        sp.taskType = TASK_HOT_HEAD_FIRE;
+        sp.variant = HOT_HEAD_FIRE_VARIANT_BREATH;
         sp.spawnArg = 0;
         sp.tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
         sp.checkTerrain = 0;
@@ -1296,8 +1296,8 @@ void HotHeadWalkShoot(void)
     else
     {
         sp.subtype = 6;
-        sp.taskType = 108;
-        sp.variant = 1;
+        sp.taskType = TASK_HOT_HEAD_FIRE;
+        sp.variant = HOT_HEAD_FIRE_VARIANT_BALL;
         sp.spawnArg = 0;
         sp.tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
         gCurTask->hotHeadFireSlot = CreateActorFromDescHere(&sp, 1);
@@ -1312,7 +1312,7 @@ void HotHeadWalkShoot(void)
     }
     TaskStop();
     TaskYieldTrampoline(15);
-    ActorSetState(0);
+    ActorSetState(HOT_HEAD_WALK_STATE_WALK);
     TaskSleepForever();
 }
 
@@ -1320,18 +1320,18 @@ void HotHeadWalkShootUpdate(void)
 {
     struct PlayerState *p = &gPlayerStates[TaskFindNearestPlayer()];
 
-    if (*(s8 *)&p->pendingAbility == 1 || p->ability == 1)
+    if (*(s8 *)&p->pendingAbility == ABILITY_FIRE || p->ability == ABILITY_FIRE)
     {
         TaskSetFrame(*(s16 *)&gCurTask->hotHeadLoopFrame);
-        ActorSetState(0);
+        ActorSetState(HOT_HEAD_WALK_STATE_WALK);
     }
-    if (gCurTask->state != 1)
+    if (gCurTask->state != HOT_HEAD_WALK_STATE_SHOOT)
         TaskSetEntry(HotHeadWalkEnterState, gCurTaskIdx);
 }
 
 void HotHeadWalkFall(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = HOT_HEAD_WALK_STATE_FALL;
     TaskStopX();
     TaskSetMotionY(0, 0x1500, 0x30000);
     sub_08080b2c();
@@ -1352,7 +1352,7 @@ void HotHeadIdleInit(void)
     t->hotHeadFrameStep = -1;
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(HOT_HEAD_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gHotHeadIdleStates);
 }
 
@@ -1370,7 +1370,7 @@ void HotHeadIdleUpdate(void)
 
 void HotHeadIdle(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = HOT_HEAD_IDLE_STATE_IDLE;
     sub_08080b2c();
 }
 
@@ -1388,9 +1388,9 @@ void HotHeadStandInit(void)
     t->hotHeadLoopFrame = 6;
     t->hotHeadFrameStep = -1;
     if (RandomRange(4) == 0)
-        ActorSetState(1);
+        ActorSetState(HOT_HEAD_STAND_STATE_SHOOT);
     else
-        ActorSetState(0);
+        ActorSetState(HOT_HEAD_STAND_STATE_WAIT);
     CallTableEntry(gCurTask->state, 3, gHotHeadStandStates);
 }
 
@@ -1411,7 +1411,7 @@ void HotHeadStandWait(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = HOT_HEAD_STAND_STATE_WAIT;
     t = gCurTask;
     t->hotHeadShotTimer = 90;
     t->hotHeadOddsIndex = 0;
@@ -1427,7 +1427,7 @@ void HotHeadStandWaitUpdate(void)
     {
         if (RandomRange(gUnk_087414B0[t->hotHeadOddsIndex]) != 0)
         {
-            ActorSetState(1);
+            ActorSetState(HOT_HEAD_STAND_STATE_SHOOT);
             TaskSetEntry(HotHeadStandEnterState, gCurTaskIdx);
         }
         else
@@ -1443,7 +1443,7 @@ void HotHeadStandShoot(void)
 {
     struct ActorSpawn sp;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = HOT_HEAD_STAND_STATE_SHOOT;
     TaskFaceNearestPlayer();
     TaskStop();
     TaskSetFrame(9);
@@ -1452,8 +1452,8 @@ void HotHeadStandShoot(void)
     if (abs(TaskGetNearestPlayerDistSq()) <= 0x143F)
     {
         sp.subtype = 6;
-        sp.taskType = 108;
-        sp.variant = 0;
+        sp.taskType = TASK_HOT_HEAD_FIRE;
+        sp.variant = HOT_HEAD_FIRE_VARIANT_BREATH;
         sp.spawnArg = 0;
         sp.tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
         sp.checkTerrain = 0;
@@ -1474,8 +1474,8 @@ void HotHeadStandShoot(void)
     else
     {
         sp.subtype = 6;
-        sp.taskType = 108;
-        sp.variant = 1;
+        sp.taskType = TASK_HOT_HEAD_FIRE;
+        sp.variant = HOT_HEAD_FIRE_VARIANT_BALL;
         sp.spawnArg = 0;
         sp.tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
         sp.checkTerrain = 1;
@@ -1491,7 +1491,7 @@ void HotHeadStandShoot(void)
     }
     TaskStop();
     TaskYieldTrampoline(15);
-    ActorSetState(0);
+    ActorSetState(HOT_HEAD_STAND_STATE_WAIT);
     TaskSleepForever();
 }
 
@@ -1499,18 +1499,18 @@ void HotHeadStandShootUpdate(void)
 {
     struct PlayerState *p = &gPlayerStates[TaskFindNearestPlayer()];
 
-    if (*(s8 *)&p->pendingAbility == 1 || p->ability == 1)
+    if (*(s8 *)&p->pendingAbility == ABILITY_FIRE || p->ability == ABILITY_FIRE)
     {
         TaskSetFrame(*(s16 *)&gCurTask->hotHeadLoopFrame);
-        ActorSetState(0);
+        ActorSetState(HOT_HEAD_STAND_STATE_WAIT);
     }
-    if (gCurTask->state != 1)
+    if (gCurTask->state != HOT_HEAD_STAND_STATE_SHOOT)
         TaskSetEntry(HotHeadStandEnterState, gCurTaskIdx);
 }
 
 void HotHeadStandFall(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = HOT_HEAD_STAND_STATE_FALL;
     TaskStopX();
     TaskSetMotionY(0, 0x1500, 0x30000);
     sub_08080b2c();

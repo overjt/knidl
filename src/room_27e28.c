@@ -19,7 +19,7 @@
  * gHubRoomMapBuffer for LoadHubRoom/LoadBigSwitchViewRoom), landed separately as
  * src/level_27a6c.c. */
 
-struct Unk020055D8Entry
+struct RoomObjectEntry
 {
     /*0x00*/ u8 filler0[4];
     /*0x04*/ u16 x;
@@ -84,7 +84,7 @@ void InitRoomBgLayout(void)
         }
         CpuSet(p, p + 2048, (gRoomMetatileCount * 2) & 0x1FFFFF);
         CpuSet(gBlockLayer, gBlockLayer + 2048, gRoomMetatileCount & 0x1FFFFF);
-        gCameraMode = 5;
+        gCameraMode = CAMERA_MODE_HOLD_ANCHOR;
         break;
     case 2:
         gUnk_0200B078 = 2;
@@ -101,16 +101,16 @@ void InitRoomBgLayout(void)
         *gUnk_02005574 = 1;
         SetBg23ScreenSize(0);
         StartRoomHBlankScroll(8);
-        gUnk_02000020 = 2;
-        gCameraMode = 5;
+        gRoomPlayerMode = 2;
+        gCameraMode = CAMERA_MODE_HOLD_ANCHOR;
         break;
     case 5:
         gUnk_0200B078 = 7;
         gRoomBgLayout = 5;
         gRoomBounds[1] = gRoomBorder[0] + 120;
         StartRoomHBlankScroll(9);
-        gUnk_02000020 = 3;
-        if (gRoomEntryMode != 2)
+        gRoomPlayerMode = 3;
+        if (gRoomEntryMode != ROOM_ENTRY_WARP_STAR)
             sub_08025e0c();
         break;
     case 6:
@@ -187,7 +187,7 @@ void InitEndingRoomBgLayout(s32 a)
     {
         SetBg3ScreenSize(0x8000);
     }
-    gCameraMode = 5;
+    gCameraMode = CAMERA_MODE_HOLD_ANCHOR;
 }
 
 void StartRoomBlockAnims(void)

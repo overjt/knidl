@@ -39,10 +39,10 @@ void Task_DustTrail(void)
     {
         if (TaskHasSameSerial(gCurTask->parent) != 1)
             break;
-        if ((s8)gTasks[j = gCurTask->parent].hitKind == 3
-         && gTasks[j].hitEffect == 1)
+        if ((s8)gTasks[j = gCurTask->parent].hitKind == HIT_KIND_INHALE
+         && gTasks[j].hitEffect == HIT_EFFECT_INHALE)
             break;
-        if ((s8)gTasks[j].hitKind == 4
+        if ((s8)gTasks[j].hitKind == HIT_KIND_GRAB
          && (u16)(gTasks[j].hitEffect - 2) <= 1)
             break;
         v = gCurTask;
@@ -130,11 +130,11 @@ void CreateLandingDust(s16 dx, s16 dy)
     s32 i;
 
     t = gCurTask;
-    i = (s16)CreateChildTask(146, (s16)(dx + t->pixelX), (s16)(dy + t->pixelY), 0);
+    i = (s16)CreateChildTask(TASK_LANDING_DUST, (s16)(dx + t->pixelX), (s16)(dy + t->pixelY), 0);
     if (i != -1)
         gTasks[i].facing = 1;
     u = gCurTask;
-    i = (s16)CreateChildTask(146, (s16)(u->pixelX - dx), (s16)(dy + u->pixelY), 0);
+    i = (s16)CreateChildTask(TASK_LANDING_DUST, (s16)(u->pixelX - dx), (s16)(dy + u->pixelY), 0);
     if (i != -1)
         gTasks[i].facing = 0xFF;
 }
@@ -146,12 +146,12 @@ void sub_0806d08c(s16 a, s16 b, s16 c)
     s32 i;
 
     t = gCurTask;
-    i = (s16)CreateChildTask(146, (s16)(t->pixelX + t->facing * a),
+    i = (s16)CreateChildTask(TASK_LANDING_DUST, (s16)(t->pixelX + t->facing * a),
                           (s16)(c + t->pixelY), 0);
     if (i != -1)
         gTasks[i].facing = gCurTask->facing;
     u = gCurTask;
-    i = (s16)CreateChildTask(146, (s16)(u->pixelX - b * u->facing),
+    i = (s16)CreateChildTask(TASK_LANDING_DUST, (s16)(u->pixelX - b * u->facing),
                           (s16)(c + u->pixelY), 0);
     if (i != -1)
         gTasks[i].facing = -gCurTask->facing;
@@ -188,15 +188,15 @@ void Task_LandingDust(void)
 
 s32 CreateDustBurst(s16 a, s16 b)
 {
-    struct Task *p;
-    s32 i;
+    struct Task *dustBurst;
+    s32 dustBurstSlot;
 
-    i = CreateChildTaskAt(147, 0, 0, 0);
-    if (i != -1)
+    dustBurstSlot = CreateChildTaskAt(TASK_DUST_BURST, 0, 0, 0);
+    if (dustBurstSlot != -1)
     {
-        p = &gTasks[i];
-        p->dustBurstOffsetX = a;
-        p->dustBurstOffsetY = b;
+        dustBurst = &gTasks[dustBurstSlot];
+        dustBurst->dustBurstOffsetX = a;
+        dustBurst->dustBurstOffsetY = b;
     }
-    return i;
+    return dustBurstSlot;
 }

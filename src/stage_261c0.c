@@ -16,7 +16,7 @@
  * player or the camera target, sub_080262e8 spawns a map event at a
  * tabled position, WrapLoopingRoom wraps every camera, object and task
  * coordinate back by 0x200 pixels in a looping room, ClampCameraFocusToRoom clamps
- * the player to the room bounds and sub_0802695c starts the next stage.
+ * the player to the room bounds and UnlockNextLevel starts the next stage.
  * CreateEntryDoorOpening, CloseDoorOpening, CreateEntryDoorStageClearFlag, sub_08026584 and sub_08026704
  * spawn and adjust the M08 stage objects of the door the player entered by
  * (gEntryDoorIndex, its slots in gDoorObjectTasks); CreateStageUnlockPan/CreateBigSwitchUnlockPan
@@ -85,7 +85,7 @@ void SetCameraFocusOrAnchor(s32 x, s32 y)
             return;
         }
     }
-    else if (gCameraMode != 5)
+    else if (gCameraMode != CAMERA_MODE_HOLD_ANCHOR)
     {
         gCameraFocusX = x;
         gCameraFocusY = y;
@@ -102,7 +102,7 @@ void EndMidBossFight(void)
 
 void sub_080262e8(s32 a)
 {
-    sub_0802d478(gUnk_08732638[a][0], gUnk_08732638[a][1]);
+    CreateMapEventBreakTwoBlocks(gUnk_08732638[a][0], gUnk_08732638[a][1]);
 }
 
 void WrapLoopingRoom(void)
@@ -204,12 +204,12 @@ s32 sub_08026584(void)
         case 0:
             break;
         case 1:
-            TaskSetEntry(sub_0802f6c0, gDoorObjectTasks[gEntryDoorIndex][0]);
+            TaskSetEntry(StageDoorSignBlinkDoor, gDoorObjectTasks[gEntryDoorIndex][0]);
             break;
         case 2:
             CreateStageEffect(4, (d->unk2 << 4) + 16, (d->unk4 << 4) + 8);
             n = 1;
-            TaskSetEntry(sub_0802f6f4, gDoorObjectTasks[gEntryDoorIndex][0]);
+            TaskSetEntry(StageDoorSignShowStill, gDoorObjectTasks[gEntryDoorIndex][0]);
             break;
         }
         break;
@@ -219,13 +219,13 @@ s32 sub_08026584(void)
         switch (*(u8 *)&gCurRoomDef->doors[gEntryDoorIndex].unk6)
         {
         case 3:
-            TaskSetEntry(sub_0802f2fc, gDoorObjectTasks[gEntryDoorIndex][0]);
+            TaskSetEntry(BombRallyDoorSignShowStill, gDoorObjectTasks[gEntryDoorIndex][0]);
             break;
         case 4:
-            TaskSetEntry(sub_0802f400, gDoorObjectTasks[gEntryDoorIndex][0]);
+            TaskSetEntry(AirGrindDoorSignShowStill, gDoorObjectTasks[gEntryDoorIndex][0]);
             break;
         case 5:
-            TaskSetEntry(sub_0802f1dc, gDoorObjectTasks[gEntryDoorIndex][0]);
+            TaskSetEntry(QuickDrawDoorSignShowStill, gDoorObjectTasks[gEntryDoorIndex][0]);
             break;
         default:
             return;
@@ -330,12 +330,12 @@ void ClampCameraFocusToRoom(void)
         gCameraFocusY = gRoomBounds[3];
 }
 
-void sub_0802695c(void)
+void UnlockNextLevel(void)
 {
     gFurthestLevel = gCurLevel + 1;
     gFurthestStage = 0;
     gCurLevel = gFurthestLevel;
-    gUnk_03001F20 = 16;
+    gCurStage = 16;
     gStageExitFlags |= 1;
 }
 
@@ -343,12 +343,12 @@ void sub_08026994(void)
 {
 }
 
-void sub_08026998(void)
+void SaveAndSetContinuePoint(void)
 {
     if (gMetaKnightmareMode == 0)
         SaveProgress(gCurSaveSlot);
     gContinueLevel = gCurLevel;
-    gUnk_02007FF8 = gUnk_03001F20;
+    gContinueStage = gCurStage;
 }
 
 void sub_080269d8(u32 x, u32 y)
@@ -370,19 +370,19 @@ u32 WhispyWoodsCheckScrollLock(void)
 {
     switch (gCameraMode)
     {
-    case 0:
+    case CAMERA_MODE_FOLLOW_FOCUS:
         if (gViewRect[3] > 0x167)
         {
             gScrollLock.unkC = 280;
             StartScrollLock(0xFFFF, 0xFFFF, 200, 360);
         }
         break;
-    case 3:
+    case CAMERA_MODE_SCROLL_LOCKED:
         return 1;
-    case 1:
-    case 2:
-    case 4:
-    case 5:
+    case CAMERA_MODE_FOLLOW_PLAYER:
+    case CAMERA_MODE_SLIDE_TO_LOCK:
+    case CAMERA_MODE_SLIDE_FROM_LOCK:
+    case CAMERA_MODE_HOLD_ANCHOR:
         break;
     }
     return 0;
@@ -392,19 +392,19 @@ u32 KrackoCheckScrollLock(void)
 {
     switch (gCameraMode)
     {
-    case 0:
+    case CAMERA_MODE_FOLLOW_FOCUS:
         if (gViewRect[2] <= 69)
         {
             gScrollLock.unkC = 149;
             StartScrollLock(0xFFFF, 0xFFFF, 16, 176);
         }
         break;
-    case 3:
+    case CAMERA_MODE_SCROLL_LOCKED:
         return 1;
-    case 1:
-    case 2:
-    case 4:
-    case 5:
+    case CAMERA_MODE_FOLLOW_PLAYER:
+    case CAMERA_MODE_SLIDE_TO_LOCK:
+    case CAMERA_MODE_SLIDE_FROM_LOCK:
+    case CAMERA_MODE_HOLD_ANCHOR:
         break;
     }
     return 0;
@@ -414,19 +414,19 @@ u32 KingDededeCheckScrollLock(void)
 {
     switch (gCameraMode)
     {
-    case 0:
+    case CAMERA_MODE_FOLLOW_FOCUS:
         if (gViewRect[3] > 0x147)
         {
             gScrollLock.unkC = 248;
             StartScrollLock(0xFFFF, 0xFFFF, 168, 328);
         }
         break;
-    case 3:
+    case CAMERA_MODE_SCROLL_LOCKED:
         return 1;
-    case 1:
-    case 2:
-    case 4:
-    case 5:
+    case CAMERA_MODE_FOLLOW_PLAYER:
+    case CAMERA_MODE_SLIDE_TO_LOCK:
+    case CAMERA_MODE_SLIDE_FROM_LOCK:
+    case CAMERA_MODE_HOLD_ANCHOR:
         break;
     }
     return 0;

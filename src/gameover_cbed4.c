@@ -3,6 +3,7 @@
 #include "task.h"
 #include "main.h"
 #include "ending.h"
+#include "constants/sound.h"
 
 /* gameover_cbed4.c (0x080CBED4-0x080CCD4B, issue #100).
  *
@@ -50,7 +51,7 @@ void GameOverChoiceUpdate(void)
 /* Spawn task type #264 with Task.variant = variant. */
 void CreateGameOverObject(u8 variant)
 {
-    s32 id = TaskCreateFrom(264, 32);
+    s32 id = TaskCreateFrom(TASK_GAME_OVER_OBJECT, 32);
     struct Task *t;
 
     if (id != -1) {
@@ -108,11 +109,11 @@ void GameOverChoiceWaitUpdate(void)
         gCurTask->gameOverChoiceGiveUp ^= 1;
         gCurTask->state = 1;
     } else if (gPlayerPressedKeys[0] & 9) {
-        PlaySfx(102);
+        PlaySfx(SE_CONFIRM);
         if (gCurTask->gameOverChoiceGiveUp != 0) {
             gCurTask->state = 4;
         } else {
-            TaskCreateFrom(263, 32);
+            TaskCreateFrom(TASK_HALVE_SCORE, 32);
             gCurTask->state = 2;
         }
     }

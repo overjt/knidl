@@ -39,14 +39,14 @@ void PlayerActionFall(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 5;
-    gCurTask->updateState = 7;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_FALL;
     PlayerSetMotionYPreset(2);
     gCurTask->playerFallBumped = 0;
     if (gCurTask->player->prevMode != 5)
         gCurTask->player->unk14 = 300;
     if (gCurTask->player->bumpKind & 1)
         gCurTask->playerFallBumped = 1;
-    if (gCurTask->player->ability == 10)
+    if (gCurTask->player->ability == ABILITY_PARASOL)
     {
         gCurTask->playerParasolSwayVelX = 0;
         gCurTask->playerParasolSwayAccelX = 0;
@@ -75,7 +75,7 @@ void PlayerActionFall(void)
             gCurTask->playerBaseFrame = gUnk_0873D3B8[gCurTask->player->ability][0];
             switch (gCurTask->player->ability)
             {
-            case 0:
+            case ABILITY_NORMAL:
             default:
                 TaskSetFrame(gCurTask->playerBaseFrame);
                 TaskYieldTrampoline(2);
@@ -86,10 +86,10 @@ void PlayerActionFall(void)
                 }
                 gCurTask->player->unk14 = 20;
                 break;
-            case 4:
-            case 9:
-            case 10:
-            case 25:
+            case ABILITY_SWORD:
+            case ABILITY_HAMMER:
+            case ABILITY_PARASOL:
+            case ABILITY_STAR_ROD:
                 TaskSetFrame(gCurTask->playerBaseFrame);
                 TaskYieldTrampoline(4);
                 gCurTask->player->unk14 = 28;
@@ -111,7 +111,7 @@ void PlayerActionFall(void)
     gCurTask->playerBaseFrame = gUnk_0873D3B8[gCurTask->player->ability][1];
     switch (gCurTask->player->ability)
     {
-    case 0:
+    case ABILITY_NORMAL:
     default:
         while (1)
         {
@@ -120,7 +120,7 @@ void PlayerActionFall(void)
             gCurTask->frame++;
             TaskYieldTrampoline(2);
         }
-    case 10:
+    case ABILITY_PARASOL:
         if (gCurTask->player->prevMode != 8)
             gCurTask->player->unk14 = 0;
         do
@@ -226,20 +226,20 @@ void PlayerActionFallUpdate(void)
             PlayerRequestLocomotion();
             break;
         }
-        if (gMetaKnightmareMode == 0 && gCurTask->player->ability != 10
+        if (gMetaKnightmareMode == 0 && gCurTask->player->ability != ABILITY_PARASOL
             && gCurTask->player->mouthState == 0 && gCurTask->velY > 0
             && --gCurTask->player->unk14 == 0)
         {
-            gCurTask->player->requestedAction = 8;
+            gCurTask->player->requestedAction = PLAYER_ACTION_HIGH_FALL;
             break;
         }
-        if (gCurTask->player->ability != 10 && gTerrainResult.unk0 != 0)
+        if (gCurTask->player->ability != ABILITY_PARASOL && gTerrainResult.unk0 != 0)
         {
             PlayerCheckBump();
             if (gCurTask->player->bumpKind & 7)
                 TaskSetEntry(PlayerActionFall, gCurTaskIdx);
         }
-        if (gCurTask->player->ability == 10)
+        if (gCurTask->player->ability == ABILITY_PARASOL)
         {
             if ((s16)gCurTask->player->unk14 != 0)
                 gCurTask->player->unk14--;
@@ -247,7 +247,7 @@ void PlayerActionFallUpdate(void)
                 && (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128))
             {
                 PlayerStopAxes(1);
-                gCurTask->player->requestedAction = 8;
+                gCurTask->player->requestedAction = PLAYER_ACTION_HIGH_FALL;
             }
         }
         break;
@@ -264,7 +264,7 @@ void PlayerActionHighFall(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 8;
-    gCurTask->updateState = 8;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_HIGH_FALL;
     if (gCurTask->player->prevMode != 8)
     {
         gCurTask->variant = 0;
@@ -279,9 +279,9 @@ void PlayerActionHighFall(void)
         gCurTask->player->hitBoxSet = gUnk_0873CC74;
         switch (gCurTask->player->ability)
         {
-        case 10:
+        case ABILITY_PARASOL:
             PlayerSetMotionYPreset(2);
-        case 0:
+        case ABILITY_NORMAL:
         default:
             TaskSetFrame(anim[0]);
             TaskYieldTrampoline(2);
@@ -290,15 +290,15 @@ void PlayerActionHighFall(void)
             gCurTask->playerHighFallPhase++;
             TaskSetFrame(anim[1]);
             TaskSleepForever();
-        case 1:
-        case 2:
-        case 5:
-        case 15:
-        case 16:
-        case 17:
-        case 19:
-        case 22:
-        case 23:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_HI_JUMP:
+        case ABILITY_BEAM:
+        case ABILITY_STONE:
+        case ABILITY_TORNADO:
+        case ABILITY_BACKDROP:
+        case ABILITY_THROW:
             TaskSetFrame(anim[0]);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
@@ -315,7 +315,7 @@ void PlayerActionHighFall(void)
         }
     case 2:
         gCurTask->player->unk42 |= 0x100;
-        CreatePlayerEffect(gCurTask->player->playerIndex, 4, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_IMPACT_STAR, 0);
         gCurTask->player->bumpKind = 0;
         TaskSetFrame(anim[2]);
         TaskYieldTrampoline(2);
@@ -348,7 +348,7 @@ void PlayerActionHighFallUpdate(void)
     if (PlayerCheckLadder() == 0 && PlayerCheckEnterDoor() == 0 && PlayerCheckEnterWater() == 0
         && PlayerCheckFloat() == 0 && PlayerCheckAirFloat() == 0 && PlayerCheckBButton() == 0)
         PlayerCheckDropAbility();
-    if (gCurTask->player->requestedAction != 0)
+    if (gCurTask->player->requestedAction != PLAYER_ACTION_NONE)
     {
         gCurTask->player->unk42 &= 0xFEFF;
     }
@@ -400,7 +400,7 @@ void PlayerActionHighFallUpdate(void)
         case 2:
             if (gCurTask->playerHighFallPhase != 0)
             {
-                gCurTask->player->requestedAction = 7;
+                gCurTask->player->requestedAction = PLAYER_ACTION_FALL;
                 gCurTask->player->unk42 &= 0xFEFF;
             }
             break;
@@ -413,7 +413,7 @@ void PlayerActionFloat(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 14;
-    gCurTask->updateState = 9;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_FLOAT;
     if (gCurTask->player->prevMode != 14)
     {
         gCurTask->player->running = 0;
@@ -441,7 +441,7 @@ void PlayerActionFloat(void)
             gCurTask->playerBaseFrame = gUnk_0873D7E4[gCurTask->player->ability][1];
             switch (gCurTask->player->ability)
             {
-            case 0:
+            case ABILITY_NORMAL:
             default:
                 while (1)
                 {
@@ -463,10 +463,10 @@ void PlayerActionFloat(void)
                         PlaySfxIfLocalPlayer(115, gCurTask->player->playerIndex);
                 }
                 break;
-            case 1:
-            case 2:
-            case 5:
-            case 19:
+            case ABILITY_FIRE:
+            case ABILITY_SPARK:
+            case ABILITY_BURNING:
+            case ABILITY_TORNADO:
                 while (1)
                 {
                     TaskSetFrame(gCurTask->playerBaseFrame);
@@ -498,7 +498,7 @@ void PlayerActionFloat(void)
             gCurTask->playerBaseFrame = gUnk_0873D7E4[gCurTask->player->ability][1];
             switch (gCurTask->player->ability)
             {
-            case 0:
+            case ABILITY_NORMAL:
             default:
                 while (1)
                 {
@@ -511,10 +511,10 @@ void PlayerActionFloat(void)
                     TaskSetFrame((s16)(gCurTask->playerBaseFrame + 5));
                     TaskYieldTrampoline(3);
                 }
-            case 1:
-            case 2:
-            case 5:
-            case 19:
+            case ABILITY_FIRE:
+            case ABILITY_SPARK:
+            case ABILITY_BURNING:
+            case ABILITY_TORNADO:
                 while (1)
                 {
                     TaskSetFrame(gCurTask->playerBaseFrame);
@@ -535,7 +535,7 @@ void PlayerActionFloat(void)
             gCurTask->playerBaseFrame = gUnk_0873D7E4[gCurTask->player->ability][1];
             switch (gCurTask->player->ability)
             {
-            case 0:
+            case ABILITY_NORMAL:
             default:
                 while (1)
                 {
@@ -552,10 +552,10 @@ void PlayerActionFloat(void)
                         TaskYieldTrampoline(4);
                     }
                 }
-            case 1:
-            case 2:
-            case 5:
-            case 19:
+            case ABILITY_FIRE:
+            case ABILITY_SPARK:
+            case ABILITY_BURNING:
+            case ABILITY_TORNADO:
                 while (1)
                 {
                     TaskSetFrame(gCurTask->playerBaseFrame);
@@ -578,7 +578,7 @@ void PlayerActionFloat(void)
                 gCurTask->player->mouthState = 0;
                 gCurTask->player->bodyBox = (u32)gPlayerDefaultBodyBox;
                 gCurTask->player->terrainBox = (u32)gPlayerDefaultTerrainBox;
-                CreatePlayerObject(gCurTask->player->playerIndex, 0, 0);
+                CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_AIR_PUFF, 0);
                 gCurTask->unk28++;
                 PlayerSetMotionYPreset(2);
                 TaskSetFrame(gUnk_0873D7E4[gCurTask->player->ability][2]);
@@ -607,7 +607,7 @@ void PlayerActionFloat(void)
             gCurTask->playerBaseFrame = gUnk_0873D7E4[gCurTask->player->ability][1];
             switch (gCurTask->player->ability)
             {
-            case 0:
+            case ABILITY_NORMAL:
             default:
                 while (1)
                 {
@@ -626,10 +626,10 @@ void PlayerActionFloat(void)
                         TaskYieldTrampoline(4);
                     }
                 }
-            case 1:
-            case 2:
-            case 5:
-            case 19:
+            case ABILITY_FIRE:
+            case ABILITY_SPARK:
+            case ABILITY_BURNING:
+            case ABILITY_TORNADO:
                 while (1)
                 {
                     PlayerSetMotionYPreset(9);

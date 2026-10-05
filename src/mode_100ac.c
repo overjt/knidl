@@ -64,7 +64,7 @@ void CutsceneMain(void)
         for (i = 0; i <= 3; i++)
             InitPlayerState(i);
         CutsceneLoadGraphics();
-        TaskCreateFrom(91, 32);
+        TaskCreateFrom(TASK_CUTSCENE_DIRECTOR, 32);
         LinkRequestSync();
         LinkSyncRandom();
         LinkStartKeyExchange();
@@ -73,14 +73,14 @@ void CutsceneMain(void)
         gLinkCommand = 0x8800;
         do
             RunLinkFrame();
-        while (gGameState == 7);
+        while (gGameState == GAME_STATE_CUTSCENE);
         LinkStopKeyExchange();
         BeginFastFadeOutToWhite();
         RunLinkFramesUntilFadeDone();
         gDispCnt &= 0xDFFF;
         gWin0H = gWin0V = gWinIn0 = gWinOut = 0;
         gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = 0;
-        sub_08027178();
+        StopRoom();
     }
 }
 

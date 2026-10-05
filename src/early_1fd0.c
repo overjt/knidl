@@ -208,10 +208,10 @@ void RunFrame(void)
 
 void LinkStartKeyExchange(void)
 {
-    s32 i;
+    s32 player;
 
-    for (i = 0; i < 4; i++)
-        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
+    for (player = 0; player < 4; player++)
+        gPlayerHeldKeys[player] = gPlayerPressedKeys[player] = 0;
     gLinkCommand = 0x8800;
 }
 

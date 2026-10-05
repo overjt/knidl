@@ -15,7 +15,7 @@
  *       cursor gGameOverCursor is set), handlers gUnk_0875832C[Task.updateState]
  *       (sub_080ccf10): sub_080ccf2c / sub_080cd0c8 and sub_080cd0cc /
  *       sub_080cd248, two scripted sprites with empty handlers.
- *   sub_080cd24c / sub_080cd2f8   variants 4 and 5. */
+ *   sub_080cd24c / GameOverKnockedOutPlayers   variants 4 and 5. */
 
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 s32 PlaySfx(s32 id);                                    /* play a sound effect */
@@ -233,10 +233,10 @@ void sub_080cd24c(void)
 }
 
 /* Task type #264 variant 5. */
-void sub_080cd2f8(void)
+void GameOverKnockedOutPlayers(void)
 {
     gCurTask->layer = 8;
-    gCurTask->frameTable = gUnk_087548A8;
+    gCurTask->frameTable = gGameOverKnockedOutPlayersFrames;
     gCurTask->posX = 120 << 16;
     gCurTask->posY = 120 << 16;
     gCurTask->frame = gPlayerCount - 1;

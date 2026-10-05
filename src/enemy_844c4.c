@@ -13,7 +13,7 @@
  * kind) is outside 1-4.
  *
  * `NoddyLand` / `NoddyStartFall` / `NoddyEnterWater` / `NoddyBounceOffWall` plus the
- * shared `sub_08084c84` are the four class-3 hook rows at `0x08742CF0` /
+ * shared `NoddyTurnAtSlope` are the four class-3 hook rows at `0x08742CF0` /
  * `0x08742D00`: each returns 1 when it has handed the task to a new state and
  * 0 otherwise, and all four open with the same `Task.variant == 1` bail-out.
  * `Task_Chilly` is the class-3 task #14 entry; its script is in
@@ -54,7 +54,7 @@ void NoddyInit(void)
     t = gCurTask;
     t->updateCallback = (u32)NoddyUpdate;
     t->onGround = 1;
-    ActorSetState(0);
+    ActorSetState(NODDY_STATE_WALK);
     CallTableEntry(gCurTask->state, 6, gNoddyStates);
 }
 
@@ -88,7 +88,7 @@ void NoddyUpdate(void)
 skip:
     if (r == 0)
     {
-        sub_08084c84();
+        NoddyTurnAtSlope();
         CallTableEntry(gCurTask->updateState, 6, gNoddyStateUpdates);
     }
     v = gCurTask;
@@ -108,7 +108,7 @@ void NoddyWalk(void)
     struct Task *u6;
     struct Task *u7;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = NODDY_STATE_WALK;
     TaskStop();
     TaskFaceNearestPlayer();
     t = gCurTask;
@@ -146,7 +146,7 @@ void NoddyWalkUpdate(void)
 {
     if (--gCurTask->noddyWalkTimer == 0)
     {
-        ActorSetState(1);
+        ActorSetState(NODDY_STATE_FALL_ASLEEP);
         TaskSetEntry(NoddyEnterState, gCurTaskIdx);
     }
 }
@@ -163,7 +163,7 @@ void NoddyState5(void)
     struct Task *u6;
     struct Task *u7;
 
-    gCurTask->updateState = 5;
+    gCurTask->updateState = NODDY_STATE_5;
     TaskStop();
     t = gCurTask;
     if (t->actorSpawnArg != 0)
@@ -206,11 +206,11 @@ void NoddyState5Update(void)
 {
 }
 
-void NoddyState1(void)
+void NoddyFallAsleep(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = NODDY_STATE_FALL_ASLEEP;
     TaskStop();
     TaskSetFrame(5);
     TaskYieldTrampoline(4);
@@ -223,13 +223,13 @@ void NoddyState1(void)
     t = gCurTask;
     t->frame--;
     TaskYieldTrampoline(40);
-    ActorSetState(2);
+    ActorSetState(NODDY_STATE_SLEEP);
     TaskSleepForever();
 }
 
-void NoddyState1Update(void)
+void NoddyFallAsleepUpdate(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != NODDY_STATE_FALL_ASLEEP)
         TaskSetEntry(NoddyEnterState, gCurTaskIdx);
 }
 
@@ -239,7 +239,7 @@ void NoddySleep(void)
     struct Task *u;
     struct Task *w;
 
-    gCurTask->updateState = 2;
+    gCurTask->updateState = NODDY_STATE_SLEEP;
     TaskStop();
     t = gCurTask;
     t->noddySleepTimer = 224;
@@ -251,7 +251,7 @@ void NoddySleep(void)
         u = gCurTask;
         u->frame++;
         TaskYieldTrampoline(22);
-        gCurTask->noddyBubbleSlot = CreateChildTaskAtOffsetFacing(194, 12, 0, 1);
+        gCurTask->noddyBubbleSlot = CreateChildTaskAtOffsetFacing(TASK_NODDY_BUBBLE, 12, 0, 1);
         gCurTask->frame++;
         TaskYieldTrampoline(26);
         w = gCurTask;
@@ -272,22 +272,22 @@ void NoddySleepUpdate(void)
     u = gCurTask;
     if (u->noddySleepPeriodCount == 0 && u->noddySleepTimer == 0)
     {
-        ActorSetState(3);
+        ActorSetState(NODDY_STATE_WAKE_UP);
         TaskSetEntry(NoddyEnterState, gCurTaskIdx);
     }
     v = gCurTask;
     if (v->actorSpawnArg != 0 && v->noddySleepPeriodCount != 0 && v->noddySleepTimer <= 119 && TaskGetNearestPlayerDistSq() <= 0xFFF)
     {
-        ActorSetState(3);
+        ActorSetState(NODDY_STATE_WAKE_UP);
         TaskSetEntry(NoddyEnterState, gCurTaskIdx);
     }
 }
 
-void NoddyState3(void)
+void NoddyWakeUp(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 3;
+    gCurTask->updateState = NODDY_STATE_WAKE_UP;
     TaskSetFrame(5);
     TaskYieldTrampoline(4);
     t = gCurTask;
@@ -299,13 +299,13 @@ void NoddyState3(void)
     t = gCurTask;
     t->frame--;
     TaskYieldTrampoline(40);
-    ActorSetState(0);
+    ActorSetState(NODDY_STATE_WALK);
     TaskSleepForever();
 }
 
-void NoddyState3Update(void)
+void NoddyWakeUpUpdate(void)
 {
-    if (gCurTask->state != 3)
+    if (gCurTask->state != NODDY_STATE_WAKE_UP)
         TaskSetEntry(NoddyEnterState, gCurTaskIdx);
 }
 
@@ -315,7 +315,7 @@ void NoddySleepFall(void)
     struct Task *u;
     struct Task *w;
 
-    gCurTask->updateState = 4;
+    gCurTask->updateState = NODDY_STATE_SLEEP_FALL;
     TaskStop();
     t = gCurTask;
     t->accelY = 0x1500;
@@ -329,7 +329,7 @@ void NoddySleepFall(void)
         u = gCurTask;
         u->frame++;
         TaskYieldTrampoline(22);
-        gCurTask->noddyBubbleSlot = CreateChildTaskAtOffsetFacing(194, 12, 0, 1);
+        gCurTask->noddyBubbleSlot = CreateChildTaskAtOffsetFacing(TASK_NODDY_BUBBLE, 12, 0, 1);
         gCurTask->frame++;
         TaskYieldTrampoline(26);
         w = gCurTask;
@@ -359,13 +359,13 @@ void NoddySleepFallUpdate(void)
     }
 }
 
-void NoddyVariant1(void)
+void NoddyAsleep(void)
 {
     struct Task *t;
     struct Task *u;
     struct Task *w;
 
-    gCurTask->updateCallback = (u32)sub_08084ae8;
+    gCurTask->updateCallback = (u32)NoddyAsleepUpdate;
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
@@ -376,7 +376,7 @@ void NoddyVariant1(void)
         u = gCurTask;
         u->frame++;
         TaskYieldTrampoline(22);
-        gCurTask->noddyBubbleSlot = CreateChildTaskAtOffsetFacing(194, 12, 0, 1);
+        gCurTask->noddyBubbleSlot = CreateChildTaskAtOffsetFacing(TASK_NODDY_BUBBLE, 12, 0, 1);
         gCurTask->frame++;
         TaskYieldTrampoline(26);
         w = gCurTask;
@@ -385,7 +385,7 @@ void NoddyVariant1(void)
     }
 }
 
-void sub_08084ae8(void)
+void NoddyAsleepUpdate(void)
 {
     ActorCollideTerrain();
     ActorCheckHits();
@@ -431,10 +431,10 @@ u8 NoddyLand(void)
     {
         switch (t->state)
         {
-        case 5:
+        case NODDY_STATE_5:
             v = 0;
             break;
-        case 4:
+        case NODDY_STATE_SLEEP_FALL:
             v = 2;
             break;
         default:
@@ -459,12 +459,12 @@ u8 NoddyStartFall(void)
     {
         switch (t->state)
         {
-        case 0:
-        case 3:
+        case NODDY_STATE_WALK:
+        case NODDY_STATE_WAKE_UP:
             v = 5;
             break;
-        case 1:
-        case 2:
+        case NODDY_STATE_FALL_ASLEEP:
+        case NODDY_STATE_SLEEP:
             v = 4;
             break;
         default:
@@ -486,7 +486,7 @@ u8 NoddyEnterWater(void)
     return 1;
 }
 
-s32 sub_08084c84(void)
+s32 NoddyTurnAtSlope(void)
 {
     struct Task *t;
     u8 r;

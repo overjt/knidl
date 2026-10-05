@@ -21,7 +21,7 @@
  * has no lives and no health left, installs the callbacks (Task.moveCallback =
  * M11's PlayerMove, unk04 = PlayerUpdate, unk08 = sub_0803332c, unk0C =
  * M11's sub_0803ddc0), sets up the ability (PlayerState.ability) and the
- * stage entry mode (gUnk_02000020, gRoomEntryMode), and starts the first
+ * stage entry mode (gRoomPlayerMode, gRoomEntryMode), and starts the first
  * action.  The actions are two tables of void (*)(void) dispatched
  * through CallTableEntry(index, count, table), entry 0 NULL: the "enter"
  * coroutine of action PlayerState.action from gPlayerActions[62] (M11's
@@ -59,17 +59,17 @@ void Task_Player(void)
         gCurTask->taskClass = 4;
         if (gCreditsDemoSet == 0)
         {
-            if (gGameState != 20)
+            if (gGameState != GAME_STATE_BOSS_ENDURANCE)
                 PlayerLifeRequestInit();
             else
-                sub_080b9118();
+                PlayerLifeRequestShowGameOver();
             TaskSleepForever();
         }
         TaskSleepForever();
     }
     else
     {
-        sub_080b8ebc();
+        PlayerClearOwnLifeRequests();
     }
     gCurTask->facing = 1;
     t = gCurTask;
@@ -84,7 +84,7 @@ void Task_Player(void)
         t->layer = 7;
     gCurTask->tileWord = (gCurTask->player->playerIndex << 13) | (gCurTask->player->playerIndex << 7);
     gCurTask->u76.unk76 = 0;
-    gCurTask->player->requestedAction = 0;
+    gCurTask->player->requestedAction = PLAYER_ACTION_NONE;
     if (gMetaKnightmareMode == 0)
         gCurTask->player->bodyBox = (u32)gPlayerDefaultBodyBox;
     else
@@ -94,43 +94,43 @@ void Task_Player(void)
     gCurTask->player->prevPixelX = gCurTask->posX >> 16;
     gCurTask->player->prevPixelY = gCurTask->posY >> 16;
     gCurTask->health = gPlayerHealth[gCurTask->player->playerIndex];
-    if (gCurTask->player->ability != 0)
+    if (gCurTask->player->ability != ABILITY_NORMAL)
     {
         LoadAbilityTiles();
         switch (gCurTask->player->ability)
         {
-        case 1:
-        case 2:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
             CreatePlayerEffect(gCurTask->player->playerIndex, 15, 0);
             PlayerLoadSparkTiles();
             break;
-        case 10:
+        case ABILITY_PARASOL:
             {
-                struct M11R20 *d = gPlayerBodyBoxes;
+                struct PlayerBodyBox *d = gPlayerBodyBoxes;
 
-                d[gCurTask->player->playerIndex] = *(struct M11R20 *)gUnk_0873C358;
+                d[gCurTask->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C358;
             }
-            gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct M11R8 *)gUnk_0873CF94;
+            gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CF94;
             break;
-        case 7:
-        case 20:
-        case 21:
-            gCurTask->player->unk22 = 2;
+        case ABILITY_MIKE:
+        case ABILITY_CRASH:
+        case ABILITY_LIGHT:
+            gCurTask->player->paletteFlashMode = 2;
             break;
-        case 24:
-            if (gGameState != 5)
+        case ABILITY_UFO:
+            if (gGameState != GAME_STATE_HUB)
                 break;
-        case 11:
-            SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
+        case ABILITY_SLEEP:
+            SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
             break;
-        case 25:
-            if (gUnk_02000020 != 2 && gUnk_02000020 != 3)
-                SetPlayerAbilityNoHud(0, -1, gCurTask->player->playerIndex);
+        case ABILITY_STAR_ROD:
+            if (gRoomPlayerMode != 2 && gRoomPlayerMode != 3)
+                SetPlayerAbilityNoHud(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
             break;
         }
     }
     gCurTask->player->unk36 = 0;
-    switch (gUnk_02000020)
+    switch (gRoomPlayerMode)
     {
     case 0:
         break;
@@ -144,17 +144,17 @@ void Task_Player(void)
         TaskSleepForever();
     case 2:
         gCurTask->player->unk37 = 2;
-        SetPlayerAbility(25, -1, gCurTask->player->playerIndex);
+        SetPlayerAbility(ABILITY_STAR_ROD, -1, gCurTask->player->playerIndex);
         gCurTask->player->mouthState = 3;
         PlayerActionStarRodFlight();
         TaskSleepForever();
     case 3:
         gCurTask->player->unk37 = 3;
-        SetPlayerAbilityNoHud(25, -1, gCurTask->player->playerIndex);
+        SetPlayerAbilityNoHud(ABILITY_STAR_ROD, -1, gCurTask->player->playerIndex);
     }
     switch (gRoomEntryMode)
     {
-    case 2:
+    case ROOM_ENTRY_WARP_STAR:
         gCurTask->player->bodyBox = 0;
         gCurTask->player->terrainBox = 0;
         gCurTask->player->hitBoxSet = 0;
@@ -162,7 +162,7 @@ void Task_Player(void)
             CreateFlyingWarpStar(gCurTask->posX, gCurTask->posY, sub_080260b0());
         PlayerWarpStarRideInit();
         TaskSleepForever();
-    case 3:
+    case ROOM_ENTRY_CANNON:
         gCurTask->player->bodyBox = 0;
         gCurTask->player->terrainBox = 0;
         gCurTask->player->hitBoxSet = 0;
@@ -170,11 +170,11 @@ void Task_Player(void)
         gCurTask->state = 4;
         PlayerCannonInit();
         TaskSleepForever();
-    case 1:
+    case ROOM_ENTRY_DOOR:
         gPauseDisabled = 1;
-        gCurTask->player->action = 21;
+        gCurTask->player->action = PLAYER_ACTION_EXIT_DOOR;
         break;
-    case 0:
+    case ROOM_ENTRY_NORMAL:
     default:
         TaskInitWaterFlags();
         sub_08021c74((s8 *)gPlayerDefaultTerrainBox, gCurTaskIdx);
@@ -182,21 +182,21 @@ void Task_Player(void)
         if (!(gCurTask->waterFlags & 1))
         {
             if (gCurTask->onGround & 1)
-                gCurTask->player->action = 1;
+                gCurTask->player->action = PLAYER_ACTION_STAND;
             else
-                gCurTask->player->action = 7;
+                gCurTask->player->action = PLAYER_ACTION_FALL;
         }
         else
         {
             if (gCurTask->onGround & 1)
-                gCurTask->player->action = 24;
+                gCurTask->player->action = PLAYER_ACTION_STAND_IN_WATER;
             else
-                gCurTask->player->action = 23;
+                gCurTask->player->action = PLAYER_ACTION_SWIM;
         }
-        if (gCurTask->player->ability == 24)
-            gCurTask->player->action = 55;
+        if (gCurTask->player->ability == ABILITY_UFO)
+            gCurTask->player->action = PLAYER_ACTION_UFO;
         gCurTask->player->mode = 21;
-        sub_08040808(gCurTask->player->playerIndex);
+        CreateLocalPlayerArrow(gCurTask->player->playerIndex);
         break;
     }
     if (gMetaKnightmareMode == 0)
@@ -224,7 +224,7 @@ void PlayerStartRequestedAction(void)
     }
     gCurTask->player->prevAction = gCurTask->player->action;
     gCurTask->player->action = gCurTask->player->requestedAction;
-    gCurTask->player->requestedAction = 0;
+    gCurTask->player->requestedAction = PLAYER_ACTION_NONE;
     if (gCurTask->player->mouthState == 1)
     {
         gCurTask->player->bodyBox = (u32)gPlayerDefaultBodyBox;
@@ -245,9 +245,9 @@ void PlayerStartRequestedAction(void)
         SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     if (gMetaKnightmareMode == 0)
     {
-        if (gCurTask->player->prevAction == 28 && gCurTask->player->ability != 0)
+        if (gCurTask->player->prevAction == PLAYER_ACTION_WATER_SHOT && gCurTask->player->ability != ABILITY_NORMAL)
             LoadAbilityTiles();
-        if (gCurTask->player->ability != 0)
+        if (gCurTask->player->ability != ABILITY_NORMAL)
             gCurTask->player->unk36 = 1;
     }
     if (gMetaKnightmareMode == 0)
@@ -273,7 +273,7 @@ void PlayerUpdate(void)
 
     if ((gCurTask->player->unk40 & 1) && (gCurTask->skipMask & 1))
         goto post;
-    if (gCurTask->player->ability == 10 && gCurTask->player->mode == 5)
+    if (gCurTask->player->ability == ABILITY_PARASOL && gCurTask->player->mode == 5)
     {
         gCurTask->playerParasolSwayVelX += gCurTask->playerParasolSwayAccelX;
         gCurTask->posX += gCurTask->playerParasolSwayVelX;
@@ -305,11 +305,11 @@ void PlayerUpdate(void)
             if (r != 0)
             {
                 gCurTask->hitEffect = gTerrainResult.damage | 0x80;
-                gCurTask->hitKind = 2;
+                gCurTask->hitKind = HIT_KIND_DAMAGE;
             }
             else
             {
-                gCurTask->hitKind = 1;
+                gCurTask->hitKind = HIT_KIND_DEFEAT;
                 gCurTask->hitEffect = 0;
                 goto post;
             }
@@ -350,30 +350,30 @@ post:
     gCurTask->player->hitsThisFrame = 0;
     sub_0803fb54();
     if (!(gCurTask->player->unk42 & 32))
-        sub_0803e080();
+        PlayerUpdatePaletteFlash();
     if ((gMetaKnightmareMode == 1 || gUnk_0300244C != 0)
      && (gCurTask->player->unk40 & 1) && (gCurTask->skipMask & 1))
         goto check;
     if (gCurTask->velY >= 0)
     {
         if (gCurTask->waterFlags & 0x80)
-            CreatePlayerEffect(gCurTask->player->playerIndex, 9, gTerrainResult.unk8);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SPLASH, gTerrainResult.unk8);
     }
     else if (gCurTask->player->mouthState == 2)
     {
         if (gCurTask->waterFlags & 0x80)
-            CreatePlayerEffect(gCurTask->player->playerIndex, 10, gTerrainResult.unk8);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_LEAVE_WATER_SPLASH, gTerrainResult.unk8);
     }
     else if ((gCurTask->player->prevWaterFlags & 1) && !(gCurTask->waterFlags & 1))
     {
-        CreatePlayerEffect(gCurTask->player->playerIndex, 10, gTerrainResult.unk8);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_LEAVE_WATER_SPLASH, gTerrainResult.unk8);
     }
     if ((gCurTask->waterFlags & 65) == 1)
     {
         if (--gPlayerBubbleTimers[gCurTask->player->playerIndex] == 0)
         {
             gPlayerBubbleTimers[gCurTask->player->playerIndex] = RandomRange(90) + 120;
-            CreatePlayerEffectHighSlot(gCurTask->player->playerIndex, 11, 0);
+            CreatePlayerEffectHighSlot(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BUBBLE, 0);
         }
     }
     else
@@ -383,19 +383,19 @@ post:
 check:
     if (gMetaKnightmareMode == 0)
     {
-        if (gCurTask->player->ability == 10)
+        if (gCurTask->player->ability == ABILITY_PARASOL)
         {
             x = gCurTask->frame - 0x808;
             if (x >= 0 && LoadPlayerBodyBoxRect(gCurTask->player->playerIndex, (u8 *)gUnk_0873C36C + x * 8) != 0)
             {
                 if (gCurTask->frame <= 0x8D1)
                 {
-                    struct M11R20 *d = gPlayerBodyBoxes;
+                    struct PlayerBodyBox *d = gPlayerBodyBoxes;
                     ((u8 *)&d[gCurTask->player->playerIndex])[12] = 2;
                 }
                 else
                 {
-                    struct M11R20 *d = gPlayerBodyBoxes;
+                    struct PlayerBodyBox *d = gPlayerBodyBoxes;
                     ((u8 *)&d[gCurTask->player->playerIndex])[12] = 5;
                 }
                 RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
@@ -405,15 +405,15 @@ check:
             if (x >= 0 && LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CF9C + x * 8)) != 0)
                 TaskBreakBlocks((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->player->playerIndex], gCurTask->player->playerIndex);
         }
-        if (gLifeRequests.unk04[gCurTaskIdx] & 1)
+        if (gLifeRequests.requests[gCurTaskIdx] & 1)
         {
             if ((gPlayerHeldKeys[gCurTask->player->playerIndex] & 0x300) == 0x300)
-                gLifeRequests.unk04[gCurTaskIdx] = (gLifeRequests.unk04[gCurTaskIdx] & 0xF0) | 2;
+                gLifeRequests.requests[gCurTaskIdx] = (gLifeRequests.requests[gCurTaskIdx] & 0xF0) | 2;
         }
     }
-    else if (gCurTask->player->unk10 != 0)
+    else if (gCurTask->player->flightCoastTimer != 0)
     {
-        gCurTask->player->unk10--;
+        gCurTask->player->flightCoastTimer--;
     }
 tail:
     if (gCurTask->player->unk37 != 2 && gLocalPlayer == gCurTask->player->playerIndex)
@@ -431,7 +431,7 @@ void sub_0803332c(void)
     struct PlayerState *p;
 
     t = gCurTask;
-    if (t->player->requestedAction == 0)
+    if (t->player->requestedAction == PLAYER_ACTION_NONE)
     {
         if (t->u76.unk76 & 1)
         {
@@ -450,7 +450,7 @@ void sub_0803332c(void)
             if (!(p->unk40 & 1) && gMetaKnightmareMode == 0 && p->mode == 7 && p->blocksBroken == 0)
             {
                 TaskSetEntry(PlayerStartRequestedAction, gCurTaskIdx);
-                gCurTask->player->requestedAction = 18;
+                gCurTask->player->requestedAction = PLAYER_ACTION_RECOIL;
             }
         }
         else if ((s8)p->blockBreakCooldown != 0)
@@ -458,7 +458,7 @@ void sub_0803332c(void)
             p->blockBreakCooldown--;
         }
     }
-    if (gCurTask->player->requestedAction == 0)
+    if (gCurTask->player->requestedAction == PLAYER_ACTION_NONE)
         PlayerCheckShareItem();
 }
 
@@ -468,57 +468,57 @@ void sub_08033414(void)
     struct PlayerState *p;
 
     if (gCurTask->player->requestedAction > 31 && gRoomExitKind == 1)
-        gCurTask->player->requestedAction = 0;
+        gCurTask->player->requestedAction = PLAYER_ACTION_NONE;
     switch (gCurTask->hitKind)
     {
     default:
         if (gMetaKnightmareMode == 0 && (gCurTask->player->unk40 & 32))
         {
-            if ((s16)gPlayerAbilities[gCurTask->player->playerIndex] != 0)
+            if ((s16)gPlayerAbilities[gCurTask->player->playerIndex] != ABILITY_NORMAL)
             {
                 gSavedPlayerAbilities[gCurTask->player->playerIndex] = gPlayerAbilities[gCurTask->player->playerIndex];
                 gSavedPlayerAbilityUses[gCurTask->player->playerIndex] = gPlayerAbilityUses[gCurTask->player->playerIndex];
             }
             else
             {
-                gSavedPlayerAbilities[gCurTask->player->playerIndex] = 4;
+                gSavedPlayerAbilities[gCurTask->player->playerIndex] = ABILITY_SWORD;
                 gSavedPlayerAbilityUses[gCurTask->player->playerIndex] = 0xFFFF;
             }
-            gCurTask->player->pendingAbility = 4;
+            gCurTask->player->pendingAbility = ABILITY_SWORD;
             gCurTask->player->pendingAbilityUses = 255;
             gCurTask->player->unk37 = 1;
-            gCurTask->player->requestedAction = 29;
+            gCurTask->player->requestedAction = PLAYER_ACTION_GET_ABILITY;
         }
         else if (gCurTask->player->unk40 & 64)
         {
             SetPlayerInvulnerability(5, 0, gCurTask->player->playerIndex);
             gCurTask->player->unk40 &= 0xFFBF;
-            PlayBgm(19);
+            PlayBgm(BGM_INVINCIBLE);
             PlayerStartItemShare(gCurTask->player->playerIndex, 3);
         }
         break;
-    case 1:
-        gCurTask->player->requestedAction = 17;
-        gCurTask->player->unk22 = 0;
+    case HIT_KIND_DEFEAT:
+        gCurTask->player->requestedAction = PLAYER_ACTION_DIE;
+        gCurTask->player->paletteFlashMode = 0;
         gCurTask->player->unk1E = gCurTask->player->unk20 = 0;
         break;
-    case 2:
+    case HIT_KIND_DAMAGE:
         if (gCurTask->player->unk37 != 2)
         {
-            gCurTask->player->requestedAction = 16;
+            gCurTask->player->requestedAction = PLAYER_ACTION_HURT;
             gCurTask->player->unk16 = 255;
         }
         else
         {
-            gCurTask->player->requestedAction = 58;
+            gCurTask->player->requestedAction = PLAYER_ACTION_STAR_ROD_FLIGHT;
             gCurTask->variant = 3;
         }
-        gCurTask->player->unk22 = 0;
+        gCurTask->player->paletteFlashMode = 0;
         gCurTask->player->unk1E = gCurTask->player->unk20 = 0;
         break;
     }
-    gCurTask->hitKind = 0;
-    if (gCurTask->player->requestedAction != 0)
+    gCurTask->hitKind = HIT_KIND_NONE;
+    if (gCurTask->player->requestedAction != PLAYER_ACTION_NONE)
     {
         if (gCurTask->player->unk40 & 1)
         {
@@ -533,7 +533,7 @@ void sub_08033414(void)
         gCurTask->u76.unk76 = 0;
         gCurTask->player->unk40 = 0;
         gCurTask->player->unk50 = 0;
-        gCurTask->u80.attackAbility = 0;
+        gCurTask->u80.attackAbility = ABILITY_NORMAL;
     }
     else if (gMetaKnightmareMode == 0)
     {
@@ -541,19 +541,19 @@ void sub_08033414(void)
         {
             gCurTask->player->unk40 |= 2;
             gCurTask->variant = 1;
-            gCurTask->player->requestedAction = 8;
+            gCurTask->player->requestedAction = PLAYER_ACTION_HIGH_FALL;
             gCurTask->u76.unk76 &= 0xFFFD;
         }
         if (!(gCurTask->player->unk40 & 128))
-            sub_0803ce98();
+            PlayerUpdateBlink();
     }
-    if (gCurTask->player->requestedAction != 0)
+    if (gCurTask->player->requestedAction != PLAYER_ACTION_NONE)
         TaskSetEntry(PlayerStartRequestedAction, gCurTaskIdx);
     if (gMetaKnightmareMode == 0)
     {
         if (gCurTask->player->unk40 & 4)
         {
-            if (gCurTask->player->ability == 0)
+            if (gCurTask->player->ability == ABILITY_NORMAL)
                 sub_0803c9b4(0);
             else
                 sub_0803c9b4(1);
@@ -562,8 +562,8 @@ void sub_08033414(void)
         {
             switch (gCurTask->player->prevAction)
             {
-            case 32:
-            case 33:
+            case PLAYER_ACTION_FIRE:
+            case PLAYER_ACTION_SPARK:
                 CreatePlayerEffect(gCurTask->player->playerIndex, 15, 0);
                 PlayerLoadSparkTiles();
                 break;

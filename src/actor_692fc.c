@@ -85,7 +85,7 @@ u32 ActorCollideTerrain(void)
     TerrainCollideBox(&v);
     u = gCurTask;
     if ((u->waterFlags & 0x80) != 0)
-        CreateChildTaskAt(140, u->pixelX, ((s16 *)gTerrainResult)[i], 0);
+        CreateChildTaskAt(TASK_ACTOR_SPLASH, u->pixelX, ((s16 *)gTerrainResult)[i], 0);
     if ((f & 1) != 0)
         goto b1;
     if ((f & 0x40) == 0)
@@ -274,10 +274,10 @@ u32 ActorCollideTerrainInCameraBounds(void)
     f = t->waterFlags;
     ActorGetTerrainBox(&v);
     TerrainCollideBoxInCameraBounds(&v);
-    sub_080b460c();
+    TaskBounceOffCameraBounds();
     u = gCurTask;
     if ((u->waterFlags & 0x80) != 0)
-        CreateChildTaskAt(140, u->pixelX, ((s16 *)gTerrainResult)[i], 0);
+        CreateChildTaskAt(TASK_ACTOR_SPLASH, u->pixelX, ((s16 *)gTerrainResult)[i], 0);
     if ((f & 1) != 0)
         goto b1;
     if ((f & 0x40) == 0)
@@ -372,7 +372,7 @@ u32 ActorCollideTerrainFloor(void)
     TerrainCollideBoxFloor(&v);
     u = gCurTask;
     if ((u->waterFlags & 0x80) != 0)
-        CreateChildTaskAt(140, u->pixelX, ((s16 *)gTerrainResult)[i], 0);
+        CreateChildTaskAt(TASK_ACTOR_SPLASH, u->pixelX, ((s16 *)gTerrainResult)[i], 0);
     if ((f & 1) == 0)
         goto b1;
     if ((f & 0x40) == 0)
@@ -530,8 +530,8 @@ u32 PickupReactToHit(void)
     r = 0;
     switch ((s8)gCurTask->hitKind)
     {
-    case 1:
-    case 2:
+    case HIT_KIND_DEFEAT:
+    case HIT_KIND_DAMAGE:
     case 5:
     case 7:
         /* PickupCollect is void in the ROM but its result is consumed here:
@@ -540,12 +540,12 @@ u32 PickupReactToHit(void)
            direct `bl` without tripping -Wimplicit -Werror. */
         r = ((u32 (*)(void))PickupCollect)();
         break;
-    case 3:
-    case 4:
+    case HIT_KIND_INHALE:
+    case HIT_KIND_GRAB:
         r = ActorAttachToHitter();
         break;
-    case 6:
-    case 8:
+    case HIT_KIND_NO_DAMAGE:
+    case HIT_KIND_CATCH:
         break;
     }
     return r;
@@ -559,7 +559,7 @@ s8 ActorHitKindWithTerrainDamage(void)
     s32 c;
 
     t = gCurTask;
-    if ((s8)t->hitKind != 0)
+    if ((s8)t->hitKind != HIT_KIND_NONE)
     {
         v = t->hitKind;
     }
@@ -592,64 +592,64 @@ void ActorPlayHitSfx(void)
         u = &gTasks[t->hitterSlot];
         switch (u->u80.attackAbility)
         {
-        case 3:
-            PlaySfx(145);
+        case ABILITY_CUTTER:
+            PlaySfx(SE_CUTTER_HIT);
             break;
-        case 4:
-            PlaySfx(146);
+        case ABILITY_SWORD:
+            PlaySfx(SE_SWORD_HIT);
             break;
-        case 9:
-            PlaySfx(132);
+        case ABILITY_HAMMER:
+            PlaySfx(SE_HAMMER_HIT);
             break;
-        case 12:
-            PlaySfx(139);
+        case ABILITY_NEEDLE:
+            PlaySfx(SE_NEEDLE_HIT);
             break;
-        case 13:
-        case 14:
-            PlaySfx(142);
+        case ABILITY_ICE:
+        case ABILITY_FREEZE:
+            PlaySfx(SE_ICE_HIT);
             break;
-        case 0:
-        case 1:
-        case 2:
-        case 5:
-        case 6:
-        case 7:
-        case 8:
-        case 10:
-        case 11:
-        case 15:
-        case 16:
-        case 17:
-        case 18:
-        case 19:
-        case 20:
-        case 21:
-        case 22:
-        case 23:
-        case 24:
-        case 25:
-            sub_08069d78();
+        case ABILITY_NORMAL:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_LASER:
+        case ABILITY_MIKE:
+        case ABILITY_WHEEL:
+        case ABILITY_PARASOL:
+        case ABILITY_SLEEP:
+        case ABILITY_HI_JUMP:
+        case ABILITY_BEAM:
+        case ABILITY_STONE:
+        case ABILITY_BALL:
+        case ABILITY_TORNADO:
+        case ABILITY_CRASH:
+        case ABILITY_LIGHT:
+        case ABILITY_BACKDROP:
+        case ABILITY_THROW:
+        case ABILITY_UFO:
+        case ABILITY_STAR_ROD:
+            ActorPlayDefaultHitSfx();
             break;
         }
     }
     else
     {
-        sub_08069d78();
+        ActorPlayDefaultHitSfx();
     }
 }
 
-void sub_08069d78(void)
+void ActorPlayDefaultHitSfx(void)
 {
     switch (gCurTask->actorKind)
     {
-    case 0:
+    case ACTOR_KIND_ENEMY:
     case 3:
-    case 4:
-    case 5:
+    case ACTOR_KIND_CHILD:
+    case ACTOR_KIND_OBJECT:
         PlaySfx(127);
         break;
-    case 1:
-    case 2:
+    case ACTOR_KIND_MID_BOSS:
+    case ACTOR_KIND_BOSS:
         PlaySfx(508);
         break;
     }
@@ -706,7 +706,7 @@ u32 ActorReactToDamage(void)
     p = (struct ActorVt *)a->hitReactions;
     r = 0;
     ActorPlayHitSfx();
-    if ((gCurTask->actorKind == 1 || gCurTask->actorKind == 2) && a->hitState != 2)
+    if ((gCurTask->actorKind == ACTOR_KIND_MID_BOSS || gCurTask->actorKind == ACTOR_KIND_BOSS) && a->hitState != 2)
         HudAnimateTaskHpBar();
     if (p != NULL)
     {
@@ -769,8 +769,8 @@ void ActorHitStunLateUpdate(void)
 
 void sub_08069fc8(void)
 {
-    if (gTaskSlotTypes[gCurTaskIdx] == 107 || gTaskSlotTypes[gCurTaskIdx] == 109
-     || gTaskSlotTypes[gCurTaskIdx] == 137)
+    if (gTaskSlotTypes[gCurTaskIdx] == TASK_GLUNK_SHOT || gTaskSlotTypes[gCurTaskIdx] == TASK_SHOTZO_CANNONBALL
+     || gTaskSlotTypes[gCurTaskIdx] == TASK_GIP_STAR)
         PlaySmallBlastAnim();
     else
         PlayRayBurstAnim();
@@ -781,7 +781,7 @@ void ActorFaceHitter(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->actorKind == 1 || t->actorKind == 2)
+    if (t->actorKind == ACTOR_KIND_MID_BOSS || t->actorKind == ACTOR_KIND_BOSS)
         gCurTask->facing = TaskGetFacingToward(t->hitterPlayer);
 }
 
@@ -845,9 +845,9 @@ void ActorStartDrown(s32 a)
     b->hitState = 2;
     ActorSetTerrainHandlers((u32)gActorDrownTerrainHandlers);
     if (gCurTask->onGround & 1)
-        ActorSetState(1);
+        ActorSetState(ACTOR_DROWN_STATE_1);
     else
-        ActorSetState(0);
+        ActorSetState(ACTOR_DROWN_STATE_SINK);
     TaskSetEntry(ActorDrownInit, gCurTaskIdx);
 }
 
@@ -904,10 +904,10 @@ u32 ActorReactToDefeat(void)
     p = (struct ActorVt *)a->hitReactions;
     r = 0;
     ActorPlayHitSfx();
-    if (gCurTask->actorKind == 1 || gCurTask->actorKind == 2)
+    if (gCurTask->actorKind == ACTOR_KIND_MID_BOSS || gCurTask->actorKind == ACTOR_KIND_BOSS)
         HudAnimateTaskHpBar();
     t = gCurTask;
-    if (t->actorKind == 1)
+    if (t->actorKind == ACTOR_KIND_MID_BOSS)
         ActorAwardScore(t->hitterPlayer, 1);
     else
         ActorAwardScore(t->hitterPlayer, 2);
@@ -920,9 +920,9 @@ u32 ActorReactToDefeat(void)
         }
         else
         {
-            if (gCurTask->actorKind == 1)
+            if (gCurTask->actorKind == ACTOR_KIND_MID_BOSS)
             {
-                if (gGameState != 19)
+                if (gGameState != GAME_STATE_ARENA)
                     PlaySfx(510);
                 else
                     PlaySfx(514);

@@ -35,7 +35,7 @@ extern void ActorLoadDef(u32 def);
 extern void ActorResetHealth(void);
 extern void ActorSetState(u8 v);
 extern void ActorCheckHits(void);
-extern s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
+extern s32 CreateItemOrObject(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
                         int prioArg, int altArg);
 
 extern u32 TaskIsOnScreen(void);
@@ -295,21 +295,21 @@ void StartBgPaletteBlend(u32 a, u32 b)
 /* Reference-counted spawn of the slot-`idx` helper task. */
 void AcquirePaletteAnim(u32 p0, s32 idx)
 {
-    struct Task *t;
-    s32 i;
+    struct Task *paletteAnim;
+    s32 paletteAnimSlot;
 
     if (idx > 2)
         return;
     if (gPaletteAnimRefCounts[idx] == 0)
     {
-        i = CreateChildTaskHere(174, 1);
-        if (i != -1)
+        paletteAnimSlot = CreateChildTaskHere(TASK_PALETTE_ANIM, 1);
+        if (paletteAnimSlot != -1)
         {
-            t = &gTasks[i];
-            t->paletteAnimPaletteBank = gCurTask->tileWord >> 12;
-            t->variant = p0;
-            t->paletteAnimRefIndex = idx;
-            gPaletteAnimTasks[idx] = i;
+            paletteAnim = &gTasks[paletteAnimSlot];
+            paletteAnim->paletteAnimPaletteBank = gCurTask->tileWord >> 12;
+            paletteAnim->variant = p0;
+            paletteAnim->paletteAnimRefIndex = idx;
+            gPaletteAnimTasks[idx] = paletteAnimSlot;
         }
     }
     gPaletteAnimRefCounts[idx]++;
@@ -552,10 +552,10 @@ void ActorSelectPaletteVariant(u32 i)
     a = t->u8C.actor;
     switch (t->actorKind)
     {
-    case 0:
+    case ACTOR_KIND_ENEMY:
         tbl = gEnemyPaletteVariants[t->u76.subtype];
         break;
-    case 1:
+    case ACTOR_KIND_MID_BOSS:
         tbl = gMidBossPaletteVariants[t->u76.subtype];
         break;
     default:
@@ -684,7 +684,7 @@ void LockAllActorPalettes(void)
 
     for (i = 32; i < 63; i++)
     {
-        if (gTaskSlotTypes[i] != -1 && gTaskSlotTypes[i] != 4)
+        if (gTaskSlotTypes[i] != -1 && gTaskSlotTypes[i] != TASK_MAP_EVENT)
         {
             t = &gTasks[i];
             a = t->u8C.actor;
@@ -705,7 +705,7 @@ void ClearActorPaletteOverrides(void)
 
     for (i = 32; i < 63; i++)
     {
-        if (gTaskSlotTypes[i] != -1 && gTaskSlotTypes[i] != 4)
+        if (gTaskSlotTypes[i] != -1 && gTaskSlotTypes[i] != TASK_MAP_EVENT)
         {
             t = &gTasks[i];
             a = t->u8C.actor;
@@ -768,14 +768,14 @@ s16 ActorComputeHealthSlot(u32 i)
     }
     switch (t->actorKind)
     {
-    case 1:
+    case ACTOR_KIND_MID_BOSS:
         m = gUnk_02007D60 & 15;
         if (w > 30)
             adj = m << 2;
         else
             adj = m << 1;
         break;
-    case 2:
+    case ACTOR_KIND_BOSS:
         m = gUnk_02007FF0 & 15;
         if (w > 30)
             adj = m << 2;
@@ -802,7 +802,7 @@ u32 *sub_0806601c(void)
 
     t = gCurTask;
     a = t->u8C.actor;
-    if (t->actorKind == 1)
+    if (t->actorKind == ACTOR_KIND_MID_BOSS)
     {
         r = gUnk_0873F0C4[t->u76.subtype];
         if (a->paletteVariant != 0)
@@ -840,7 +840,7 @@ u16 ActorInitBossGfx(u32 mode)
     prio = gCurTask->tileWord;
     p = sub_0806601c();
     t = gCurTask;
-    if (t->actorKind == 1)
+    if (t->actorKind == ACTOR_KIND_MID_BOSS)
         a->gfx.header = (struct GfxHeader *)gMidBossGfx[t->u76.subtype];
     else
         a->gfx.header = (struct GfxHeader *)gBossGfx[t->u76.subtype];
@@ -1116,7 +1116,7 @@ void ActorShowHpBar(void)
     gHudHpBarFilled = 0;
     HudShowHpBar();
     t = *g;
-    if (t->actorKind == 1 || (t->actorKind == 2 && t->u76.subtype == 7))
+    if (t->actorKind == ACTOR_KIND_MID_BOSS || (t->actorKind == ACTOR_KIND_BOSS && t->u76.subtype == 7))
     {
         v = t->health;
         HudStartTaskHpBar(v, v);
@@ -1225,7 +1225,7 @@ void ActorIntroPoseUpdate(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->actorKind == 2 && t->u76.subtype == 5)
+    if (t->actorKind == ACTOR_KIND_BOSS && t->u76.subtype == 5)
         gCurTask->actorAnimDelay24 = ActorTickAnim(t->actorAnimDelay24);
     else
         gCurTask->actorAnimDelay24 = ActorTickAnimFacingNearestPlayer(gCurTask->actorAnimDelay24);
@@ -1233,10 +1233,10 @@ void ActorIntroPoseUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08066798(void)
+void ArenaDropMaximTomato(void)
 {
-    if (gGameState == 19)
-        sub_08064e90(2, 70, 0, 128, 0);
+    if (gGameState == GAME_STATE_ARENA)
+        CreateItemAt(2, TASK_MAXIM_TOMATO, 0, 128, 0);
 }
 
 void sub_080667c0(u8 a, u16 b)
@@ -1260,10 +1260,10 @@ void sub_080667c0(u8 a, u16 b)
     sub_0806ae94();
 }
 
-void sub_0806684c(void)
+void EndMidBossFightWithReward(void)
 {
     EndMidBossFight();
-    sub_08066798();
+    ArenaDropMaximTomato();
 }
 
 void ActorLoadPalette(void *src, u32 size, u8 force)
@@ -1275,7 +1275,7 @@ void ActorLoadPalette(void *src, u32 size, u8 force)
     t = gCurTask;
     a = t->u8C.actor;
     slot = t->tileWord >> 12;
-    if (force == 0 && t->actorKind == 1 && a->paletteVariant != 0 && a->palette != 0)
+    if (force == 0 && t->actorKind == ACTOR_KIND_MID_BOSS && a->paletteVariant != 0 && a->palette != 0)
         RequestCopy(2, a->palette, (u32)(gObjPalette + (slot << 5)), size);
     else
         RequestCopy(2, (u32)src, (u32)(gObjPalette + (slot << 5)), size);
@@ -1299,24 +1299,24 @@ void BossDefeatSweep(void)
             continue;
         if (i == gCurTaskIdx)
             continue;
-        if (gTaskSlotTypes[i] == 4)
+        if (gTaskSlotTypes[i] == TASK_MAP_EVENT)
             continue;
         t = &gTasks[i];
-        if (gCurTask->actorKind == 2 && a->defeatSweepCallback != 0)
+        if (gCurTask->actorKind == ACTOR_KIND_BOSS && a->defeatSweepCallback != 0)
         {
             if ((u8)((u8 (*)(s32))a->defeatSweepCallback)(i) != 1)
                 continue;
         }
         p = &cls;
         cls = t->actorKind;
-        if (*p == 6 && t->u76.subtype == 0)
+        if (*p == ACTOR_KIND_ITEM && t->u76.subtype == 0)
             continue;
         if (*p == 10)
             continue;
         v = *p;
-        if (v == 9 || v == 7 || v == 8)
+        if (v == 9 || v == ACTOR_KIND_BOSS_CHILD_TASK || v == ACTOR_KIND_MID_BOSS_CHILD_TASK)
         {
-            if (gTaskSlotTypes[i] == 174)
+            if (gTaskSlotTypes[i] == TASK_PALETTE_ANIM)
                 continue;
             ActorDestroySlot(i);
         }
@@ -1409,7 +1409,7 @@ void ActorSetDefaultPalette(u8 mode)
     a->paletteColorCount = n;
 }
 
-void sub_08066ae0(void)
+void MidBossResetHealth(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -1637,7 +1637,7 @@ void CreateDroppedParasol(u8 a)
     t = gCurTask;
     x = t->pixelX + gUnk_030023B4;
     y = t->pixelY + gUnk_030023D4;
-    i = CreateActorByKind(0, 38, kind, 0, x, y, 0);
+    i = CreateActorByKind(ACTOR_KIND_ENEMY, 38, kind, 0, x, y, 0);
     if (i != -1)
     {
         u = &gTasks[i];
@@ -1678,11 +1678,11 @@ void CreateStarRodPiece(u8 p3, s16 x, s16 y)
     struct Task *t;
     s32 i;
 
-    i = sub_08064d9c(5, 73, 0, x, y, 0xD3D0, 1);
+    i = CreateItemOrObject(5, TASK_STAR_ROD_PIECE, 0, x, y, 0xD3D0, 1);
     if (i != -1)
     {
         t = &gTasks[i];
-        if (gGameState == 8 && gMetaKnightmareMode == 0)
+        if (gGameState == GAME_STATE_STAGE && gMetaKnightmareMode == 0)
         {
             t->variant = p3;
             PlayBgm(1);
@@ -1758,7 +1758,7 @@ s32 CreateInhalableStar(s16 x, s16 y, u16 dir, u8 p8)
     s32 i;
 
     sp.subtype = 36;
-    sp.taskType = 139;
+    sp.taskType = TASK_INHALABLE_STAR;
     sp.variant = p8;
     sp.spawnArg = 0;
     sp.x = x;
@@ -1805,7 +1805,7 @@ void Task_InhalableStar(void)
     t->frameTable = gInhalableStarFrames;
     t->updateCallback = (u32)InhalableStarUpdate;
     InhalableStarInitVariant();
-    ActorSetState(0);
+    ActorSetState(INHALABLE_STAR_STATE_0);
     CallTableEntry(gCurTask->state, 1, gInhalableStarStates);
 }
 
@@ -1826,7 +1826,7 @@ void InhalableStarState0(void)
     struct Task *u;
     struct Task *v;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = INHALABLE_STAR_STATE_0;
     gCurTask->onGround = 0;
     gCurTask->unk24 = 2;
     TaskSetMotionXFacing(0x20000, 0x5A5A5A5A);

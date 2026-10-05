@@ -119,7 +119,7 @@ void ActorDefeatMidBoss(void)
 
     TaskStop();
     TaskSetFrame(0);
-    CreateChildTaskHere(142, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     gCurTask->actorLoopCount = 0;
     do
     {
@@ -217,7 +217,7 @@ s32 BossDefeatStopBgm(void)
     case 4:
     case 5:
     case 6:
-        if (gGameState != 20)
+        if (gGameState != GAME_STATE_BOSS_ENDURANCE)
             StopBgm();
         break;
     case 2:
@@ -301,7 +301,7 @@ void ActorDefeat9(void)
 
 s32 ActorDrownLand(void)
 {
-    ActorSetState(1);
+    ActorSetState(ACTOR_DROWN_STATE_1);
     TaskSetEntry(ActorDrownEnterState, gCurTaskIdx);
     return 1;
 }
@@ -323,7 +323,7 @@ void ActorDrownUpdate(void)
 {
     if (ActorCollideTerrain() == 0)
         CallTableEntry(gCurTask->updateState, 3, gActorDrownStateUpdates);
-    if (gCurTask->state != 2)
+    if (gCurTask->state != ACTOR_DROWN_STATE_2)
     {
         ActorCheckHits();
         ActorReactToHit();

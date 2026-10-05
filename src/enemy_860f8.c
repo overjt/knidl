@@ -32,7 +32,7 @@ extern void AngleToVector(s16 t, s16 mag);
 void BrontoBurtWaveInit(void)
 {
     gCurTask->updateCallback = (u32)BrontoBurtWaveUpdate;
-    ActorSetState(0);
+    ActorSetState(BRONTO_BURT_WAVE_STATE_WAVE);
     CallTableEntry(gCurTask->state, 1, gBrontoBurtWaveStates);
 }
 
@@ -56,7 +56,7 @@ void BrontoBurtWave(void)
     struct Task *t;
     s16 *p;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = BRONTO_BURT_WAVE_STATE_WAVE;
     TaskStop();
     TaskSetMotionXFacing(gUnk_08742088[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     p = &gCurTask->pixelY;
@@ -126,34 +126,34 @@ void BrontoBurtWaveState0Update(void)
     gCurTask->brontoBurtTurnTimer = 40;
 }
 
-void BrontoBurtVariant1(void)
+void BrontoBurtWeaveInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08086320;
-    ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087420A0);
+    gCurTask->updateCallback = (u32)BrontoBurtWeaveUpdate;
+    ActorSetState(BRONTO_BURT_WEAVE_STATE_WEAVE);
+    CallTableEntry(gCurTask->state, 1, gBrontoBurtWeaveStates);
 }
 
-void sub_080862fc(void)
+void BrontoBurtWeaveEnterState(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_08086320;
-    CallTableEntry(t->state, 1, gUnk_087420A0);
+    t->updateCallback = (u32)BrontoBurtWeaveUpdate;
+    CallTableEntry(t->state, 1, gBrontoBurtWeaveStates);
 }
 
-void sub_08086320(void)
+void BrontoBurtWeaveUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087420A4);
+    CallTableEntry(gCurTask->updateState, 1, gBrontoBurtWeaveStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_08086344(void)
+void BrontoBurtWeave(void)
 {
     struct Task *t;
     s16 *p;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = BRONTO_BURT_WEAVE_STATE_WEAVE;
     TaskStop();
     TaskSetMotionXFacing(gUnk_08742088[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     p = &gCurTask->pixelY;
@@ -371,7 +371,7 @@ void BrontoBurtDiagonalInit(void)
     gCurTask->velX = gUnk_030023B4;
     gCurTask->velY = gUnk_030023D4;
     gCurTask->brontoBurtBounceTimer = 0;
-    ActorSetState(0);
+    ActorSetState(BRONTO_BURT_DIAGONAL_STATE_DIAGONAL);
     CallTableEntry(gCurTask->state, 1, gBrontoBurtDiagonalStates);
 }
 
@@ -407,7 +407,7 @@ void BrontoBurtDiagonalUpdate(void)
 
 void BrontoBurtDiagonal(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = BRONTO_BURT_DIAGONAL_STATE_DIAGONAL;
     gCurTask->onGround = 0;
     while (1)
     {
@@ -431,7 +431,7 @@ void BrontoBurtDiagonalState0Update(void)
 void BrontoBurtChaseInit(void)
 {
     gCurTask->updateCallback = (u32)BrontoBurtChaseUpdate;
-    ActorSetState(0);
+    ActorSetState(BRONTO_BURT_CHASE_STATE_CHASE);
     CallTableEntry(gCurTask->state, 1, gBrontoBurtChaseStates);
 }
 
@@ -450,7 +450,7 @@ void BrontoBurtChaseUpdate(void)
 
 void BrontoBurtChase(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = BRONTO_BURT_CHASE_STATE_CHASE;
     TaskStop();
     gCurTask->brontoBurtSteerDirY = 0;
     gCurTask->brontoBurtChaseTimer = 384;
@@ -521,7 +521,7 @@ void BrontoBurtChaseState0Update(void)
 void BrontoBurtTakeOffInit(void)
 {
     gCurTask->updateCallback = (u32)BrontoBurtTakeOffUpdate;
-    ActorSetState(0);
+    ActorSetState(BRONTO_BURT_TAKE_OFF_STATE_WAIT);
     CallTableEntry(gCurTask->state, 3, gBrontoBurtTakeOffStates);
 }
 
@@ -548,7 +548,7 @@ void BrontoBurtTakeOffUpdate(void)
 
 void BrontoBurtTakeOffWait(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = BRONTO_BURT_TAKE_OFF_STATE_WAIT;
     gCurTask->brontoBurtGrounded = 1;
     gCurTask->onGround = 1;
     gCurTask->actorAnimDelay = ActorStartAnim(gUnk_08742144);
@@ -563,13 +563,13 @@ void BrontoBurtTakeOffWait(void)
             break;
         TaskYieldTrampoline(1);
     }
-    ActorSetState(1);
+    ActorSetState(BRONTO_BURT_TAKE_OFF_STATE_TAKE_OFF);
     TaskSleepForever();
 }
 
 void BrontoBurtTakeOffWaitUpdate(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != BRONTO_BURT_TAKE_OFF_STATE_WAIT)
     {
         TaskSetEntry(BrontoBurtTakeOffEnterState, gCurTaskIdx);
         return;
@@ -584,7 +584,7 @@ void BrontoBurtTakeOffWaitUpdate(void)
 
 void BrontoBurtTakeOff(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = BRONTO_BURT_TAKE_OFF_STATE_TAKE_OFF;
     gCurTask->brontoBurtGrounded = 0;
     PlaySfx(187);
     gCurTask->actorAnimDelay = ActorStartAnim(gUnk_087420C0);
@@ -598,13 +598,13 @@ void BrontoBurtTakeOff(void)
     gCurTask->velY = 0xFFFF8000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x8000;
-    ActorSetState(2);
+    ActorSetState(BRONTO_BURT_TAKE_OFF_STATE_2);
     TaskSleepForever();
 }
 
 void BrontoBurtTakeOffState1Update(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != BRONTO_BURT_TAKE_OFF_STATE_TAKE_OFF)
     {
         TaskSetEntry(BrontoBurtTakeOffEnterState, gCurTaskIdx);
         return;
@@ -619,7 +619,7 @@ void BrontoBurtTakeOffState1Update(void)
 
 void BrontoBurtTakeOffState2(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = BRONTO_BURT_TAKE_OFF_STATE_2;
     gCurTask->actorAnimDelay = ActorStartAnim(gUnk_087420D4);
     switch (gCurTask->actorSpawnArg)
     {
@@ -753,7 +753,7 @@ void TwizzyEnterVariant(void)
 void TwizzyWaveInit(void)
 {
     gCurTask->updateCallback = (u32)TwizzyWaveUpdate;
-    ActorSetState(0);
+    ActorSetState(TWIZZY_WAVE_STATE_WAVE);
     CallTableEntry(gCurTask->state, 1, gTwizzyWaveStates);
 }
 
@@ -774,7 +774,7 @@ void TwizzyWave(void)
 {
     s16 *p;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = TWIZZY_WAVE_STATE_WAVE;
     TaskStop();
     TaskSetMotionXFacing(gUnk_087425B8[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     p = &gCurTask->pixelY;
@@ -833,31 +833,31 @@ void TwizzyWaveState0Update(void)
     gCurTask->twizzyTurnTimer = 40;
 }
 
-void TwizzyVariant1(void)
+void TwizzyWeaveInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_080872bc;
-    ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087425D0);
+    gCurTask->updateCallback = (u32)TwizzyWeaveUpdate;
+    ActorSetState(TWIZZY_WEAVE_STATE_WEAVE);
+    CallTableEntry(gCurTask->state, 1, gTwizzyWeaveStates);
 }
 
-void sub_08087298(void)
+void TwizzyWeaveEnterState(void)
 {
-    gCurTask->updateCallback = (u32)sub_080872bc;
-    CallTableEntry(gCurTask->state, 1, gUnk_087425D0);
+    gCurTask->updateCallback = (u32)TwizzyWeaveUpdate;
+    CallTableEntry(gCurTask->state, 1, gTwizzyWeaveStates);
 }
 
-void sub_080872bc(void)
+void TwizzyWeaveUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087425D4);
+    CallTableEntry(gCurTask->updateState, 1, gTwizzyWeaveStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_080872e0(void)
+void TwizzyWeave(void)
 {
     s16 *p;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = TWIZZY_WEAVE_STATE_WEAVE;
     TaskStop();
     TaskSetMotionXFacing(gUnk_087425B8[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     p = &gCurTask->pixelY;
@@ -1065,7 +1065,7 @@ void TwizzyDiagonalInit(void)
     gCurTask->velX = gUnk_030023B4;
     gCurTask->velY = gUnk_030023D4;
     gCurTask->twizzyBounceTimer = 0;
-    ActorSetState(0);
+    ActorSetState(TWIZZY_DIAGONAL_STATE_DIAGONAL);
     CallTableEntry(gCurTask->state, 1, gTwizzyDiagonalStates);
 }
 
@@ -1103,7 +1103,7 @@ void TwizzyDiagonalUpdate(void)
 
 void TwizzyDiagonal(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = TWIZZY_DIAGONAL_STATE_DIAGONAL;
     gCurTask->onGround = 0;
     while (1)
     {
@@ -1127,7 +1127,7 @@ void TwizzyDiagonalState0Update(void)
 void TwizzyChaseInit(void)
 {
     gCurTask->updateCallback = (u32)TwizzyChaseUpdate;
-    ActorSetState(0);
+    ActorSetState(TWIZZY_CHASE_STATE_CHASE);
     CallTableEntry(gCurTask->state, 1, gTwizzyChaseStates);
 }
 
@@ -1148,7 +1148,7 @@ void TwizzyChaseUpdate(void)
 
 void TwizzyChase(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = TWIZZY_CHASE_STATE_CHASE;
     TaskStop();
     gCurTask->twizzySteerDirY = 0;
     gCurTask->twizzyChaseTimer = 384;
@@ -1207,7 +1207,7 @@ void TwizzyChaseState0Update(void)
 void TwizzyTakeOffInit(void)
 {
     gCurTask->updateCallback = (u32)TwizzyTakeOffUpdate;
-    ActorSetState(0);
+    ActorSetState(TWIZZY_TAKE_OFF_STATE_WAIT);
     CallTableEntry(gCurTask->state, 3, gTwizzyTakeOffStates);
 }
 
@@ -1234,7 +1234,7 @@ void TwizzyTakeOffUpdate(void)
 
 void TwizzyTakeOffWait(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = TWIZZY_TAKE_OFF_STATE_WAIT;
     gCurTask->twizzyGrounded = 1;
     gCurTask->onGround = 1;
     gCurTask->actorAnimDelay = ActorStartAnim(gUnk_08742634);
@@ -1249,13 +1249,13 @@ void TwizzyTakeOffWait(void)
             break;
         TaskYieldTrampoline(1);
     }
-    ActorSetState(1);
+    ActorSetState(TWIZZY_TAKE_OFF_STATE_TAKE_OFF);
     TaskSleepForever();
 }
 
 void TwizzyTakeOffWaitUpdate(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != TWIZZY_TAKE_OFF_STATE_WAIT)
     {
         TaskSetEntry(TwizzyTakeOffEnterState, gCurTaskIdx);
         return;
@@ -1270,7 +1270,7 @@ void TwizzyTakeOffWaitUpdate(void)
 
 void TwizzyTakeOff(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = TWIZZY_TAKE_OFF_STATE_TAKE_OFF;
     gCurTask->twizzyGrounded = 0;
     PlaySfx(187);
     gCurTask->actorAnimDelay = ActorStartAnim(gUnk_08742598);
@@ -1284,13 +1284,13 @@ void TwizzyTakeOff(void)
     gCurTask->velY = 0xFFFF8000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x8000;
-    ActorSetState(2);
+    ActorSetState(TWIZZY_TAKE_OFF_STATE_2);
     TaskSleepForever();
 }
 
 void TwizzyTakeOffState1Update(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != TWIZZY_TAKE_OFF_STATE_TAKE_OFF)
     {
         TaskSetEntry(TwizzyTakeOffEnterState, gCurTaskIdx);
         return;
@@ -1305,7 +1305,7 @@ void TwizzyTakeOffState1Update(void)
 
 void TwizzyTakeOffState2(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = TWIZZY_TAKE_OFF_STATE_2;
     gCurTask->actorAnimDelay = ActorStartAnim(gUnk_087425A4);
     switch (gCurTask->actorSpawnArg)
     {

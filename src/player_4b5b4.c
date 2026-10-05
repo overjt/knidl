@@ -25,9 +25,9 @@ void PlayerActionLight(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 49;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_LIGHT;
     gPauseDisabled = 1;
-    gCurTask->u80.attackAbility = 0;
+    gCurTask->u80.attackAbility = ABILITY_NORMAL;
     PlayerStopAxes(3);
     {
         struct Task *t = gCurTask;
@@ -37,7 +37,7 @@ void PlayerActionLight(void)
         t->player->terrainBox = 0;
     }
     FreezeOtherTasks(15);
-    CreatePlayerObject(gCurTask->player->playerIndex, 9, 0);
+    CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_LIGHT_ORB, 0);
     gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xDFD);
@@ -87,7 +87,7 @@ void PlayerActionLight(void)
     {
         struct Task *t = gCurTask;
         t->player->terrainBox = (u32)gPlayerDefaultTerrainBox;
-        SetPlayerAbility(0, -1, t->player->playerIndex);
+        SetPlayerAbility(ABILITY_NORMAL, -1, t->player->playerIndex);
     }
     FreezeOtherTasks(0);
     if (gCurTask->onGround & 1) {
@@ -117,11 +117,11 @@ void PlayerActionLightUpdate(void)
                deletes the branch, but the `ldr [t, #84]` that fed the test
                stays in the ROM (0x0804B834) as a dead load. */
             if (t->velX == 0)
-                t->player->requestedAction = 1;
+                t->player->requestedAction = PLAYER_ACTION_STAND;
             else
-                t->player->requestedAction = 1;
+                t->player->requestedAction = PLAYER_ACTION_STAND;
         } else {
-            t->player->requestedAction = 7;
+            t->player->requestedAction = PLAYER_ACTION_FALL;
         }
     }
     PlayerStopAtCeilingAndWall();

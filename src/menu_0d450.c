@@ -35,8 +35,8 @@ void MenuSoundTest(void)
                 SoundTestDrawNumber(0);
                 SoundTestDrawNumber(1);
                 SoundTestHighlightCursor();
-                TaskCreateFrom(254, 32);
-                TaskCreateFrom(255, 32);
+                TaskCreateFrom(TASK_SOUND_TEST_CURSORS, 32);
+                TaskCreateFrom(TASK_SOUND_TEST_PULSE, 32);
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1D00;
             }
@@ -63,7 +63,7 @@ void MenuSoundTest(void)
             gKeyRepeatDelay = 10;
             gKeyRepeatInterval = 6;
             StopAllSfx();
-            PlaySfx(215);
+            PlaySfx(SE_CANCEL);
             LoadGfxSet(50);
             RunFrames(3);
             LoadGfxSet(47);
@@ -139,7 +139,7 @@ void MenuLinkPlay(void)
     RunFrames(4);
     while (1) {
         if (gPressedKeys & 2) {
-            PlaySfx(215);
+            PlaySfx(SE_CANCEL);
             LinkSetupStop();
             gDispCnt &= 0xE0FF;
             gDispCnt |= 0x1A00;
@@ -167,9 +167,9 @@ void MenuLinkPlay(void)
                 gMenuScreen = 9;
                 gMetaKnightmareMode = 0;
                 if (gPrevMenuScreen == 3)
-                    gGameState = 5;
+                    gGameState = GAME_STATE_HUB;
                 else
-                    gGameState = 13;
+                    gGameState = GAME_STATE_EXTRA_MODE_TITLE;
                 if (ConnectLink())
                     LinkErrorScreen();
                 return;
@@ -228,15 +228,15 @@ void CreateFileSelectSprites(s32 mode)
     struct Task *t;
     s32 id;
 
-    id = TaskCreateFrom(240, 32);
+    id = TaskCreateFrom(TASK_FILE_SELECT_CURSOR, 32);
     t = &gTasks[id];
     t->unk18 = mode;
     for (i = 0; i <= 2; i++) {
-        id = TaskCreateFrom(238, 32);
+        id = TaskCreateFrom(TASK_FILE_SELECT_SLOT_LABEL, 32);
         t = &gTasks[id];
         t->unk18 = mode;
         t->unk1C = i;
-        id = TaskCreateFrom(239, 32);
+        id = TaskCreateFrom(TASK_FILE_SELECT_SLOT, 32);
         t = &gTasks[id];
         t->unk18 = mode;
         t->unk1C = i;

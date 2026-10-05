@@ -28,7 +28,7 @@
  * byte the ROM keeps at [sp, #4] is the compiler's own copy of
  * gRoomObjectGfxSlotIds[i] (lesson 3.474). */
 
-struct Unk020055D8Entry
+struct RoomObjectEntry
 {
     /*0x00*/ s8 kind;
     /*0x01*/ s8 unk1;
@@ -40,9 +40,9 @@ struct Unk020055D8Entry
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
-s32 LoadRoomEnemyGfx(struct Unk020055D8Entry *e, s32 idx, s32 n)
+s32 LoadRoomEnemyGfx(struct RoomObjectEntry *e, s32 idx, s32 n)
 {
-    struct Unk0873EEA0 *d;
+    struct RoomObjectGfx *d;
     s32 i;
     s32 cnt;
     u32 vram;

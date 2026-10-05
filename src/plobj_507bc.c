@@ -11,11 +11,11 @@
  * Task_PlayerObject links the task to its spawner (Task.u8C.parentTask =
  * &gTasks[Task.parent], the first time only) and dispatches the
  * variant, the top byte of Task.unk18, through the 13 variant bodies
- * gPlayerObjectVariants.  sub_08050814 is the common exit most variants re-bind on
+ * gPlayerObjectVariants.  PlayerObjectVanish is the common exit most variants re-bind on
  * contact: it installs the sprite (TaskDrawScreen for PlayerState.unk37 == 2,
  * TaskDrawWorldInViewOrFree otherwise, animation table gUnk_0874C650), registers the
  * collider row Task.unk24 if there is one and steps animation frames
- * 0-10 before TaskExitTrampoline.  sub_0805091c is a second, drifting burst
+ * 0-10 before TaskExitTrampoline.  PlayerObjectLaserBeamVanish is a second, drifting burst
  * (gUnk_0874C7CC). */
 
 /* task / sprite services (landed prototypes) */
@@ -26,7 +26,7 @@ void Task_PlayerObject(void)
 {
     if (gCurTask->u8C.parentTask == NULL)
     {
-        gCurTask->u80.attackAbility = 0;
+        gCurTask->u80.attackAbility = ABILITY_NORMAL;
         gCurTask->u8C.parentTask = &gTasks[gCurTask->parent];
         gCurTask->health = 1;
         gCurTask->unk24 = 0;
@@ -34,7 +34,7 @@ void Task_PlayerObject(void)
     CallTableEntry(((u8 *)gCurTask)[27], 13, gPlayerObjectVariants);
 }
 
-void sub_08050814(void)
+void PlayerObjectVanish(void)
 {
     struct Task *t = gCurTask;
 
@@ -78,7 +78,7 @@ void sub_08050814(void)
     TaskExitTrampoline();
 }
 
-void sub_0805091c(void)
+void PlayerObjectLaserBeamVanish(void)
 {
     struct Task *t;
 

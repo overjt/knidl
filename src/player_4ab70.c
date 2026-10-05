@@ -43,14 +43,14 @@ void PlayerActionTornado(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 47;
-    gCurTask->unk28 = 0;
-    gCurTask->unk2C = 0;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_TORNADO;
+    gCurTask->playerTornadoTurnTimer = 0;
+    gCurTask->playerTornadoSfxTimer = 0;
     gCurTask->variant = 0;
-    gCurTask->u80.attackAbility = 19;
+    gCurTask->u80.attackAbility = ABILITY_TORNADO;
     switch (gCurTask->variant) {
     case 0:
-        PlaySfxIfLocalPlayer(150, gCurTask->player->playerIndex);
+        PlaySfxIfLocalPlayer(SE_TORNADO_ATTACK, gCurTask->player->playerIndex);
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
         PlayerSetMotionXPreset(11, 63);
         gCurTask->spriteFlags &= 0x7FFF;
@@ -71,19 +71,19 @@ void PlayerActionTornado(void)
         do {
             gCurTask->frame = 0xDDD;
             TaskYieldTrampoline(2);
-            gCurTask->unk6E = 0;
+            gCurTask->playerLoopCount6E = 0;
             do {
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
-            } while (++gCurTask->unk6E <= 6);
+            } while (++gCurTask->playerLoopCount6E <= 6);
         } while ((s16)++gCurTask->playerLoopCount <= 5);
         gCurTask->variant = 2;
         /* fallthrough */
     case 2:
         gCurTask->player->unk16 = 255;
-        CreatePlayerEffect(gCurTask->player->playerIndex, 45, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 45, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 45, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_TORNADO_DUST, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_TORNADO_DUST, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_TORNADO_DUST, 2);
         PlayerSetMotionXPreset(11, 65);
         {
             struct Task *t = gCurTask;
@@ -120,9 +120,9 @@ void PlayerActionTornadoUpdate(void)
         }
         {
             struct Task *u = gCurTask;
-            if (u->unk2C-- == 0) {
+            if (u->playerTornadoSfxTimer-- == 0) {
                 PlaySfxIfLocalPlayer(149, u->player->playerIndex);
-                gCurTask->unk2C = 3;
+                gCurTask->playerTornadoSfxTimer = 3;
             }
         }
         goto common;
@@ -133,19 +133,19 @@ void PlayerActionTornadoUpdate(void)
     common:
         {
             struct Task *u = gCurTask;
-            if (u->unk28 == 0) {
+            if (u->playerTornadoTurnTimer == 0) {
                 if (PlayerFaceHeldDirection() != 0) {
                     struct Task *v = gCurTask;
-                    v->unk28 = 8;
+                    v->playerTornadoTurnTimer = 8;
                     v->velX = -v->velX;
                     v->accelX = -v->accelX;
                 }
             } else {
-                u->unk28--;
+                u->playerTornadoTurnTimer--;
             }
         }
         if (gTerrainResult.unk0 != 0) {
-            gCurTask->unk28 = 8;
+            gCurTask->playerTornadoTurnTimer = 8;
             gCurTask->facing = -gCurTask->facing;
             {
                 struct Task *v = gCurTask;
@@ -170,7 +170,7 @@ void PlayerActionTornadoUpdate(void)
         PlayerCheckLanding();
     if (gCurTask->waterFlags != 0 && PlayerHasCrossedWaterSurface(0) != 0) {
         PlayerSetWaterMotionY();
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
         gCurTask->player->unk16 = 255;
     }
 }
@@ -179,9 +179,9 @@ void PlayerActionCrash(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 48;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_CRASH;
     gPauseDisabled = 1;
-    gCurTask->u80.attackAbility = 20;
+    gCurTask->u80.attackAbility = ABILITY_CRASH;
     PlayerStopAxes(3);
     FreezeOtherTasks(15);
     if ((gDispCnt & 0x400) == 0) {
@@ -191,12 +191,12 @@ void PlayerActionCrash(void)
     SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
     gCurTask->player->unk42 |= 0x700;
     gCurTask->playerCrashSavedPosY = gCurTask->posY;
-    CreatePlayerEffect(gCurTask->player->playerIndex, 46, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_CRASH_BLAST, 0);
     gCurTask->player->terrainBox = 0;
     gCurTask->variant = 0;
     RequestScreenShake(5);
     SetRoomUpdateFlags(2);
-    PlaySfx(248);
+    PlaySfx(SE_CRASH_ATTACK);
     gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xDE7);
@@ -254,7 +254,7 @@ void PlayerActionCrash(void)
     TaskYieldTrampoline(2);
     gCurTask->frame++;
     TaskYieldTrampoline(2);
-    CreatePlayerEffect(gCurTask->player->playerIndex, 46, 1);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_CRASH_BLAST, 1);
     PlayerSetMotionYPreset(53);
     TaskSetFrame(0xDE7);
     TaskYieldTrampoline(3);
@@ -272,22 +272,22 @@ void PlayerActionCrash(void)
             TaskYieldTrampoline(2);
             TaskSetFrame(0xDEF);
             TaskYieldTrampoline(2);
-            gCurTask->unk6E = 0;
+            gCurTask->playerLoopCount6E = 0;
             do {
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
-            } while (++gCurTask->unk6E <= 9);
+            } while (++gCurTask->playerLoopCount6E <= 9);
         } while ((s16)++gCurTask->playerLoopCount <= 1);
         if ((s8)(*c)->player->unk16 == 0) {
             TaskSetFrame(0xDE7);
             TaskYieldTrampoline(2);
             TaskSetFrame(0xDEF);
             TaskYieldTrampoline(2);
-            (*c)->unk6E = 0;
+            (*c)->playerLoopCount6E = 0;
             do {
                 (*c)->frame++;
                 TaskYieldTrampoline(2);
-            } while (++(*c)->unk6E <= 9);
+            } while (++(*c)->playerLoopCount6E <= 9);
         } else {
             TaskSetSkipMask(2, gCurTaskIdx);
             do {
@@ -299,11 +299,11 @@ void PlayerActionCrash(void)
                 TaskYieldTrampoline(2);
                 TaskSetFrame(0xDEF);
                 TaskYieldTrampoline(2);
-                (*c)->unk6E = 0;
+                (*c)->playerLoopCount6E = 0;
                 do {
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
-                } while (++gCurTask->unk6E <= 9);
+                } while (++gCurTask->playerLoopCount6E <= 9);
             } while ((s8)(*c)->player->unk16 != 2);
         }
     }
@@ -313,7 +313,7 @@ void PlayerActionCrash(void)
     TaskYieldTrampoline(2);
     PlayerStopAxes(2);
     gCurTask->player->terrainBox = (u32)gPlayerDefaultTerrainBox;
-    SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
+    SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     gCurTask->variant = 2;
     gCurTask->frame++;
     for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 31; gCurTask->playerLoopCount++) {
@@ -364,9 +364,9 @@ void PlayerActionCrashUpdate(void)
         break;
     case 3:
         if (t->onGround & 1)
-            t->player->requestedAction = 1;
+            t->player->requestedAction = PLAYER_ACTION_STAND;
         else
-            t->player->requestedAction = 7;
+            t->player->requestedAction = PLAYER_ACTION_FALL;
         break;
     }
     {

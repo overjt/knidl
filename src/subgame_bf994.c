@@ -85,7 +85,7 @@ void BombRallyPlayerBubblesServe(void)
 
     t = gCurTask;
     t->moveCallback = (u32)TaskMoveRelativeToBg3;
-    t->updateState = 10;
+    t->updateState = BOMB_RALLY_PLAYER_STATE_BUBBLES_SERVE;
     v = gCurTask;
     v->posX = gUnk_0875674C[v->bombRallyObjectSeat] << 16;
     v->posY = gUnk_0875675C[v->bombRallyObjectSeat] << 16;
@@ -131,13 +131,13 @@ void BombRallyPlayerBubblesServe(void)
         while (u->bombRallyThrow < 0)
             TaskYieldTrampoline(1);
     }
-    gCurTask->state = 11;
+    gCurTask->state = BOMB_RALLY_PLAYER_STATE_BUBBLES_WAIT;
     TaskSleepForever();
 }
 
 void BombRallyPlayerBubblesServeUpdate(void)
 {
-    if (gCurTask->state != 10)
+    if (gCurTask->state != BOMB_RALLY_PLAYER_STATE_BUBBLES_SERVE)
         TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
@@ -146,7 +146,7 @@ void BombRallyPlayerBubblesWait(void)
     struct Task *t;
 
     t = gCurTask;
-    t->updateState = 11;
+    t->updateState = BOMB_RALLY_PLAYER_STATE_BUBBLES_WAIT;
     while (1) {
         gCurTask->frame = 0;
         TaskYieldTrampoline(6);
@@ -168,7 +168,7 @@ void BombRallyPlayerBubblesWaitUpdate(void)
     u = &gTasks[t->parent];
     if ((u->bombRallyTurnSeat == ((t->bombRallyObjectSeat + 3) & 3) && u->bombRallyThrow <= 2)
      || (u->bombRallyTurnSeat == ((t->bombRallyObjectSeat + 1) & 3) && u->bombRallyThrow > 2)) {
-        gCurTask->state = 12;
+        gCurTask->state = BOMB_RALLY_PLAYER_STATE_BUBBLES_THROW;
         TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
     }
 }
@@ -188,7 +188,7 @@ void BombRallyPlayerBubblesThrow(void)
 
     t = gCurTask;
     u = &gTasks[t->parent];
-    t->updateState = 12;
+    t->updateState = BOMB_RALLY_PLAYER_STATE_BUBBLES_THROW;
     if (RandomRange(8) == 0) {
         if (u->bombRallyThrow <= 2)
             u->bombRallyNextThrow = u->bombRallyThrow + 3;
@@ -246,13 +246,13 @@ void BombRallyPlayerBubblesThrow(void)
     TaskYieldTrampoline(2);
     gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->state = 11;
+    gCurTask->state = BOMB_RALLY_PLAYER_STATE_BUBBLES_WAIT;
     TaskSleepForever();
 }
 
 void BombRallyPlayerBubblesThrowUpdate(void)
 {
-    if (gCurTask->state != 12)
+    if (gCurTask->state != BOMB_RALLY_PLAYER_STATE_BUBBLES_THROW)
         TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
@@ -262,7 +262,7 @@ void BombRallyBomb(void)
 
     t = gCurTask;
     t->updateCallback = (u32)BombRallyBombUpdate;
-    t->state = 0;
+    t->state = BOMB_RALLY_BOMB_STATE_START;
     CallTableEntry(gCurTask->state, 3, gBombRallyBombStates);
     TaskSleepForever();
 }
@@ -288,7 +288,7 @@ void BombRallyBombStart(void)
     u = &gTasks[t->parent];
     t->drawCallback = 0;
     t->moveCallback = (u32)TaskMoveRelativeToBg3;
-    t->updateState = 0;
+    t->updateState = BOMB_RALLY_BOMB_STATE_START;
     CreateBombRallyStartSign();
     v = gCurTask;
     v->unk30 = 0;
@@ -302,7 +302,7 @@ void BombRallyBombStart(void)
     w->frameTable = 0;
     TaskYieldTrampoline(30);
     u->bombRallyThrow = -2;
-    gCurTask->state = 1;
+    gCurTask->state = BOMB_RALLY_BOMB_STATE_PASS;
     TaskSleepForever();
 }
 
@@ -332,7 +332,7 @@ void BombRallyBombStartUpdate(void)
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->pixelX, gCurTask->pixelY);
     }
-    if (gCurTask->state != 0)
+    if (gCurTask->state != BOMB_RALLY_BOMB_STATE_START)
         TaskSetEntry(BombRallyBombEnterState, gCurTaskIdx);
 }
 
@@ -357,7 +357,7 @@ void BombRallyBombPass(void)
     u = &gTasks[t->parent];
     t->drawCallback = 0;
     t->moveCallback = (u32)TaskMoveRelativeToBg3;
-    t->updateState = 1;
+    t->updateState = BOMB_RALLY_BOMB_STATE_PASS;
     gCurTask->layer = 8;
     v = gCurTask;
     v->frameTable = gBombRallyBombFrames;
@@ -436,7 +436,7 @@ void BombRallyBombPassUpdate(void)
     n = t->unk30 + 1;
     t->unk30 = n;
     if (u->unk28 == 6) {
-        t->state = 2;
+        t->state = BOMB_RALLY_BOMB_STATE_EXPLODE;
         TaskSetEntry(BombRallyBombEnterState, gCurTaskIdx);
         return;
     }
@@ -546,7 +546,7 @@ void BombRallyBombExplode(void)
     t = gCurTask;
     u = &gTasks[t->parent];
     t->drawCallback = (u32)TaskDrawScreen;
-    t->updateState = 2;
+    t->updateState = BOMB_RALLY_BOMB_STATE_EXPLODE;
     gBgPalette[0] = 0x7FFF;
     v = gCurTask;
     v->unk28 = u->unk34;
@@ -626,7 +626,7 @@ void BombRallyBombExplodeUpdate(void)
         gCurTask->unk30++;
     }
     if (u->unk28 == -4) {
-        gCurTask->state = 1;
+        gCurTask->state = BOMB_RALLY_BOMB_STATE_PASS;
         TaskSetEntry(BombRallyBombEnterState, gCurTaskIdx);
     }
 }
