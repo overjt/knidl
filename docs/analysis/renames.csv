@@ -14400,3 +14400,94 @@ gUnk_0874807C,gJavelinKnightSpinAttackBox4,rom,"slot: gJavelinKnightSpinAttackBo
 gUnk_08748098,gJavelinKnightSpinAttackBox5,rom,"slot: gJavelinKnightSpinAttackBoxes[5] (data/actor_rodata.s), the only referrer of this record (docs/naming.md 2.4)",155
 gUnk_087480B4,gJavelinKnightSpinAttackBox6,rom,"slot: gJavelinKnightSpinAttackBoxes[6] (data/actor_rodata.s), the only referrer of this record (docs/naming.md 2.4)",155
 gUnk_087480D0,gJavelinKnightSpinAttackBox7,rom,"slot: gJavelinKnightSpinAttackBoxes[7] (data/actor_rodata.s), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_0825E9F0,gBonkersFrame4Palette,asset,"slot: gBonkersFrames[4] -> TaskGfx.palette, gBonkersFrames[5] -> TaskGfx.palette, gBonkersFrames[6] -> TaskGfx.palette, gBonkersFrames[7] -> TaskGfx.palette, gBonkersFrames[8] -> TaskGfx.palette, gBonkersFrames[9] -> TaskGfx.palette, gBonkersFrames[10] -> TaskGfx.palette, gBonkersFrames[11] -> TaskGfx.palette (src/data/frame_tables.c); docs/naming.md 2.5 A3",183
+gUnk_0825EA12,gBonkersFrame4Tiles,asset,slot: gBonkersFrames[4] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_0825F19C,gBonkersFrame5Tiles,asset,slot: gBonkersFrames[5] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_0825F826,gBonkersFrame6Tiles,asset,slot: gBonkersFrames[6] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_0825FDB0,gBonkersFrame7Tiles,asset,slot: gBonkersFrames[7] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_0826033A,gBonkersFrame8Tiles,asset,slot: gBonkersFrames[8] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08260944,gBonkersFrame9Tiles,asset,slot: gBonkersFrames[9] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08260ECE,gBonkersFrame10Tiles,asset,slot: gBonkersFrames[10] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08261458,gBonkersFrame11Tiles,asset,slot: gBonkersFrames[11] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_082619E2,gBonkersFrame4OamTemplate,asset,slot: gBonkersFrames[4] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08261A12,gBonkersFrame5OamTemplate,asset,slot: gBonkersFrames[5] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08261A3A,gBonkersFrame6OamTemplate,asset,slot: gBonkersFrames[6] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08261A62,gBonkersFrame7OamTemplate,asset,slot: gBonkersFrames[7] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08261A82,gBonkersFrame8OamTemplate,asset,slot: gBonkersFrames[8] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08261AAA,gBonkersFrame9OamTemplate,asset,slot: gBonkersFrames[9] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08261AD2,gBonkersFrame10OamTemplate,asset,slot: gBonkersFrames[10] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08261AFA,gBonkersFrame11OamTemplate,asset,slot: gBonkersFrames[11] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08261B2C,gBonkersFrame4,asset,slot: gBonkersFrames[4] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C00[0],183
+gUnk_08261B38,gBonkersFrame5,asset,slot: gBonkersFrames[5] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C00[1],183
+gUnk_08261B44,gBonkersFrame6,asset,slot: gBonkersFrames[6] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C00[2],183
+gUnk_08261B50,gBonkersFrame7,asset,slot: gBonkersFrames[7] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C00[3],183
+gUnk_08261B5C,gBonkersFrame8,asset,slot: gBonkersFrames[8] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C00[4],183
+gUnk_08261B68,gBonkersFrame9,asset,slot: gBonkersFrames[9] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C00[5],183
+gUnk_08261B74,gBonkersFrame10,asset,slot: gBonkersFrames[10] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C00[6],183
+gUnk_08261B80,gBonkersFrame11,asset,slot: gBonkersFrames[11] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C00[7],183
+gUnk_08261B94,gBonkersFrame12Palette,asset,"slot: gBonkersFrames[12] -> TaskGfx.palette, gBonkersFrames[13] -> TaskGfx.palette, gBonkersFrames[14] -> TaskGfx.palette, gBonkersFrames[15] -> TaskGfx.palette, gBonkersFrames[16] -> TaskGfx.palette, gBonkersFrames[17] -> TaskGfx.palette, gBonkersFrames[18] -> TaskGfx.palette, gBonkersFrames[19] -> TaskGfx.palette (src/data/frame_tables.c); docs/naming.md 2.5 A3",183
+gUnk_08261BB6,gBonkersFrame14Tiles,asset,slot: gBonkersFrames[14] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_082621C0,gBonkersFrame15Tiles,asset,slot: gBonkersFrames[15] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_0826294A,gBonkersFrame16Tiles,asset,slot: gBonkersFrames[16] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08262FD4,gBonkersFrame17Tiles,asset,slot: gBonkersFrames[17] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_082637DE,gBonkersFrame18Tiles,asset,slot: gBonkersFrames[18] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08263E68,gBonkersFrame19Tiles,asset,slot: gBonkersFrames[19] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_082644F2,gBonkersFrame12Tiles,asset,slot: gBonkersFrames[12] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08264A7C,gBonkersFrame13Tiles,asset,slot: gBonkersFrames[13] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08265186,gBonkersFrame14OamTemplate,asset,slot: gBonkersFrames[14] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_082651BE,gBonkersFrame15OamTemplate,asset,slot: gBonkersFrames[15] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_082651E6,gBonkersFrame16OamTemplate,asset,slot: gBonkersFrames[16] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_0826520E,gBonkersFrame17OamTemplate,asset,slot: gBonkersFrames[17] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08265246,gBonkersFrame18OamTemplate,asset,slot: gBonkersFrames[18] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_0826526E,gBonkersFrame19OamTemplate,asset,slot: gBonkersFrames[19] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08265296,gBonkersFrame12OamTemplate,asset,slot: gBonkersFrames[12] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_082652B6,gBonkersFrame13OamTemplate,asset,slot: gBonkersFrames[13] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_082652E0,gBonkersFrame14,asset,slot: gBonkersFrames[14] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C20[0],183
+gUnk_082652EC,gBonkersFrame15,asset,slot: gBonkersFrames[15] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C20[1],183
+gUnk_082652F8,gBonkersFrame16,asset,slot: gBonkersFrames[16] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C20[2],183
+gUnk_08265304,gBonkersFrame17,asset,slot: gBonkersFrames[17] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C20[3],183
+gUnk_08265310,gBonkersFrame18,asset,slot: gBonkersFrames[18] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C20[4],183
+gUnk_0826531C,gBonkersFrame19,asset,slot: gBonkersFrames[19] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C20[5],183
+gUnk_08265328,gBonkersFrame12,asset,slot: gBonkersFrames[12] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C20[6],183
+gUnk_08265334,gBonkersFrame13,asset,slot: gBonkersFrames[13] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C20[7],183
+gUnk_08265348,gBonkersFrame20Palette,asset,"slot: gBonkersFrames[20] -> TaskGfx.palette, gBonkersFrames[21] -> TaskGfx.palette, gBonkersFrames[22] -> TaskGfx.palette (src/data/frame_tables.c); docs/naming.md 2.5 A3",183
+gUnk_0826536A,gBonkersFrame20Tiles,asset,slot: gBonkersFrames[20] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08265A74,gBonkersFrame21Tiles,asset,slot: gBonkersFrames[21] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_0826627E,gBonkersFrame22Tiles,asset,slot: gBonkersFrames[22] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08266908,gBonkersFrame20OamTemplate,asset,slot: gBonkersFrames[20] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08266928,gBonkersFrame21OamTemplate,asset,slot: gBonkersFrames[21] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08266948,gBonkersFrame22OamTemplate,asset,slot: gBonkersFrames[22] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08266970,gBonkersFrame20,asset,slot: gBonkersFrames[20] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C40[0],183
+gUnk_0826697C,gBonkersFrame21,asset,slot: gBonkersFrames[21] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C40[1],183
+gUnk_08266988,gBonkersFrame22,asset,slot: gBonkersFrames[22] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C40[2],183
+gUnk_0826699C,gBonkersFrame0Palette,asset,"slot: gBonkersFrames[0,1,2,31,32,33] -> TaskGfx.palette, gBonkersFrames[3] -> TaskGfx.palette, gBonkersFrames[27] -> TaskGfx.palette, gBonkersFrames[28] -> TaskGfx.palette, gBonkersFrames[29] -> TaskGfx.palette, gBonkersFrames[30] -> TaskGfx.palette (src/data/frame_tables.c); docs/naming.md 2.5 A3",183
+gUnk_082669BE,gBonkersFrame27Tiles,asset,slot: gBonkersFrames[27] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08267048,gBonkersFrame28Tiles,asset,slot: gBonkersFrames[28] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_082676D2,gBonkersFrame29Tiles,asset,slot: gBonkersFrames[29] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08267DDC,gBonkersFrame30Tiles,asset,slot: gBonkersFrames[30] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08268466,gBonkersFrame0Tiles,asset,"slot: gBonkersFrames[0,1,2,31,32,33] -> TaskGfx.tiles, gBonkersFrames[3] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A3",183
+gUnk_082689F0,gBonkersFrame27OamTemplate,asset,slot: gBonkersFrames[27] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08268A10,gBonkersFrame28OamTemplate,asset,slot: gBonkersFrames[28] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08268A30,gBonkersFrame29OamTemplate,asset,slot: gBonkersFrames[29] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08268A50,gBonkersFrame30OamTemplate,asset,slot: gBonkersFrames[30] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08268A88,gBonkersFrame0OamTemplate,asset,"slot: gBonkersFrames[0,1,2,31,32,33] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2",183
+gUnk_08268AA8,gBonkersFrame3OamTemplate,asset,slot: gBonkersFrames[3] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08268AC8,gBonkersFrame27,asset,slot: gBonkersFrames[27] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C4C[0],183
+gUnk_08268AD4,gBonkersFrame28,asset,slot: gBonkersFrames[28] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C4C[1],183
+gUnk_08268AE0,gBonkersFrame29,asset,slot: gBonkersFrames[29] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C4C[2],183
+gUnk_08268AEC,gBonkersFrame30,asset,slot: gBonkersFrames[30] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C4C[3],183
+gUnk_08268AF8,gBonkersFrame0,asset,"slot: gBonkersFrames[0,1,2,31,32,33] (src/data/frame_tables.c); docs/naming.md 2.5 A3; also format-only gUnk_08769C4C[4]",183
+gUnk_08268B04,gBonkersFrame3,asset,slot: gBonkersFrames[3] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C4C[5],183
+gUnk_08268B18,gBonkersFrame23Palette,asset,"slot: gBonkersFrames[23] -> TaskGfx.palette, gBonkersFrames[24] -> TaskGfx.palette, gBonkersFrames[25] -> TaskGfx.palette, gBonkersFrames[26] -> TaskGfx.palette (src/data/frame_tables.c); docs/naming.md 2.5 A3",183
+gUnk_08268B3A,gBonkersFrame23Tiles,asset,slot: gBonkersFrames[23] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08269164,gBonkersFrame24Tiles,asset,slot: gBonkersFrames[24] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_0826986E,gBonkersFrame25Tiles,asset,slot: gBonkersFrames[25] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_08269E18,gBonkersFrame26Tiles,asset,slot: gBonkersFrames[26] -> TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_0826A3E2,gBonkersFrame23OamTemplate,asset,slot: gBonkersFrames[23] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_0826A41A,gBonkersFrame24OamTemplate,asset,slot: gBonkersFrames[24] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_0826A44A,gBonkersFrame25OamTemplate,asset,slot: gBonkersFrames[25] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_0826A48A,gBonkersFrame26OamTemplate,asset,slot: gBonkersFrames[26] -> TaskGfx.oamTemplate (src/data/frame_tables.c); docs/naming.md 2.5 A2,183
+gUnk_0826A4D4,gBonkersFrame23,asset,slot: gBonkersFrames[23] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C64[0],183
+gUnk_0826A4E0,gBonkersFrame24,asset,slot: gBonkersFrames[24] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C64[1],183
+gUnk_0826A4EC,gBonkersFrame25,asset,slot: gBonkersFrames[25] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C64[2],183
+gUnk_0826A4F8,gBonkersFrame26,asset,slot: gBonkersFrames[26] (src/data/frame_tables.c); docs/naming.md 2.5 A1; also format-only gUnk_08769C64[3],183

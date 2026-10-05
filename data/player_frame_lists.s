@@ -714,43 +714,43 @@ gUnk_08769B70:
 	.word	gUnk_0825DF54
 	.global	gUnk_08769C00
 gUnk_08769C00:
-	.word	gUnk_08261B2C
-	.word	gUnk_08261B38
-	.word	gUnk_08261B44
-	.word	gUnk_08261B50
-	.word	gUnk_08261B5C
-	.word	gUnk_08261B68
-	.word	gUnk_08261B74
-	.word	gUnk_08261B80
+	.word	gBonkersFrame4
+	.word	gBonkersFrame5
+	.word	gBonkersFrame6
+	.word	gBonkersFrame7
+	.word	gBonkersFrame8
+	.word	gBonkersFrame9
+	.word	gBonkersFrame10
+	.word	gBonkersFrame11
 	.global	gUnk_08769C20
 gUnk_08769C20:
-	.word	gUnk_082652E0
-	.word	gUnk_082652EC
-	.word	gUnk_082652F8
-	.word	gUnk_08265304
-	.word	gUnk_08265310
-	.word	gUnk_0826531C
-	.word	gUnk_08265328
-	.word	gUnk_08265334
+	.word	gBonkersFrame14
+	.word	gBonkersFrame15
+	.word	gBonkersFrame16
+	.word	gBonkersFrame17
+	.word	gBonkersFrame18
+	.word	gBonkersFrame19
+	.word	gBonkersFrame12
+	.word	gBonkersFrame13
 	.global	gUnk_08769C40
 gUnk_08769C40:
-	.word	gUnk_08266970
-	.word	gUnk_0826697C
-	.word	gUnk_08266988
+	.word	gBonkersFrame20
+	.word	gBonkersFrame21
+	.word	gBonkersFrame22
 	.global	gUnk_08769C4C
 gUnk_08769C4C:
-	.word	gUnk_08268AC8
-	.word	gUnk_08268AD4
-	.word	gUnk_08268AE0
-	.word	gUnk_08268AEC
-	.word	gUnk_08268AF8
-	.word	gUnk_08268B04
+	.word	gBonkersFrame27
+	.word	gBonkersFrame28
+	.word	gBonkersFrame29
+	.word	gBonkersFrame30
+	.word	gBonkersFrame0
+	.word	gBonkersFrame3
 	.global	gUnk_08769C64
 gUnk_08769C64:
-	.word	gUnk_0826A4D4
-	.word	gUnk_0826A4E0
-	.word	gUnk_0826A4EC
-	.word	gUnk_0826A4F8
+	.word	gBonkersFrame23
+	.word	gBonkersFrame24
+	.word	gBonkersFrame25
+	.word	gBonkersFrame26
 	.global	gBonkersGfxFrameList
 gBonkersGfxFrameList:
 	.word	gUnk_0826A614

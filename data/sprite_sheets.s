@@ -38493,345 +38493,345 @@ gUnk_0825E9E0:
 	.global	gUnk_0825E9E8
 gUnk_0825E9E8:
 	.incbin	"baserom.gba", 0x25E9E8, 0x8
-	.global	gUnk_0825E9F0
-gUnk_0825E9F0:
+	.global	gBonkersFrame4Palette
+gBonkersFrame4Palette:
 	.incbin	"baserom.gba", 0x25E9F0, 0x22
-	.global	gUnk_0825EA12
-gUnk_0825EA12:
+	.global	gBonkersFrame4Tiles
+gBonkersFrame4Tiles:
 	.incbin	"baserom.gba", 0x25EA12, 0x78A
-	.global	gUnk_0825F19C
-gUnk_0825F19C:
+	.global	gBonkersFrame5Tiles
+gBonkersFrame5Tiles:
 	.incbin	"baserom.gba", 0x25F19C, 0x68A
-	.global	gUnk_0825F826
-gUnk_0825F826:
+	.global	gBonkersFrame6Tiles
+gBonkersFrame6Tiles:
 	.incbin	"baserom.gba", 0x25F826, 0x58A
-	.global	gUnk_0825FDB0
-gUnk_0825FDB0:
+	.global	gBonkersFrame7Tiles
+gBonkersFrame7Tiles:
 	.incbin	"baserom.gba", 0x25FDB0, 0x58A
-	.global	gUnk_0826033A
-gUnk_0826033A:
+	.global	gBonkersFrame8Tiles
+gBonkersFrame8Tiles:
 	.incbin	"baserom.gba", 0x26033A, 0x60A
-	.global	gUnk_08260944
-gUnk_08260944:
+	.global	gBonkersFrame9Tiles
+gBonkersFrame9Tiles:
 	.incbin	"baserom.gba", 0x260944, 0x58A
-	.global	gUnk_08260ECE
-gUnk_08260ECE:
+	.global	gBonkersFrame10Tiles
+gBonkersFrame10Tiles:
 	.incbin	"baserom.gba", 0x260ECE, 0x58A
-	.global	gUnk_08261458
-gUnk_08261458:
+	.global	gBonkersFrame11Tiles
+gBonkersFrame11Tiles:
 	.incbin	"baserom.gba", 0x261458, 0x58A
-	.global	gUnk_082619E2
-gUnk_082619E2:
+	.global	gBonkersFrame4OamTemplate
+gBonkersFrame4OamTemplate:
 	.incbin	"baserom.gba", 0x2619E2, 0x30
-	.global	gUnk_08261A12
-gUnk_08261A12:
+	.global	gBonkersFrame5OamTemplate
+gBonkersFrame5OamTemplate:
 	.incbin	"baserom.gba", 0x261A12, 0x28
-	.global	gUnk_08261A3A
-gUnk_08261A3A:
+	.global	gBonkersFrame6OamTemplate
+gBonkersFrame6OamTemplate:
 	.incbin	"baserom.gba", 0x261A3A, 0x28
-	.global	gUnk_08261A62
-gUnk_08261A62:
+	.global	gBonkersFrame7OamTemplate
+gBonkersFrame7OamTemplate:
 	.incbin	"baserom.gba", 0x261A62, 0x20
-	.global	gUnk_08261A82
-gUnk_08261A82:
+	.global	gBonkersFrame8OamTemplate
+gBonkersFrame8OamTemplate:
 	.incbin	"baserom.gba", 0x261A82, 0x28
-	.global	gUnk_08261AAA
-gUnk_08261AAA:
+	.global	gBonkersFrame9OamTemplate
+gBonkersFrame9OamTemplate:
 	.incbin	"baserom.gba", 0x261AAA, 0x28
-	.global	gUnk_08261AD2
-gUnk_08261AD2:
+	.global	gBonkersFrame10OamTemplate
+gBonkersFrame10OamTemplate:
 	.incbin	"baserom.gba", 0x261AD2, 0x28
-	.global	gUnk_08261AFA
-gUnk_08261AFA:
+	.global	gBonkersFrame11OamTemplate
+gBonkersFrame11OamTemplate:
 	.incbin	"baserom.gba", 0x261AFA, 0x32
-	.global	gUnk_08261B2C
-gUnk_08261B2C:
-	.word	gUnk_082619E2
-	.word	gUnk_0825E9F0
-	.word	gUnk_0825EA12
-	.global	gUnk_08261B38
-gUnk_08261B38:
-	.word	gUnk_08261A12
-	.word	gUnk_0825E9F0
-	.word	gUnk_0825F19C
-	.global	gUnk_08261B44
-gUnk_08261B44:
-	.word	gUnk_08261A3A
-	.word	gUnk_0825E9F0
-	.word	gUnk_0825F826
-	.global	gUnk_08261B50
-gUnk_08261B50:
-	.word	gUnk_08261A62
-	.word	gUnk_0825E9F0
-	.word	gUnk_0825FDB0
-	.global	gUnk_08261B5C
-gUnk_08261B5C:
-	.word	gUnk_08261A82
-	.word	gUnk_0825E9F0
-	.word	gUnk_0826033A
-	.global	gUnk_08261B68
-gUnk_08261B68:
-	.word	gUnk_08261AAA
-	.word	gUnk_0825E9F0
-	.word	gUnk_08260944
-	.global	gUnk_08261B74
-gUnk_08261B74:
-	.word	gUnk_08261AD2
-	.word	gUnk_0825E9F0
-	.word	gUnk_08260ECE
-	.global	gUnk_08261B80
-gUnk_08261B80:
-	.word	gUnk_08261AFA
-	.word	gUnk_0825E9F0
-	.word	gUnk_08261458
+	.global	gBonkersFrame4
+gBonkersFrame4:
+	.word	gBonkersFrame4OamTemplate
+	.word	gBonkersFrame4Palette
+	.word	gBonkersFrame4Tiles
+	.global	gBonkersFrame5
+gBonkersFrame5:
+	.word	gBonkersFrame5OamTemplate
+	.word	gBonkersFrame4Palette
+	.word	gBonkersFrame5Tiles
+	.global	gBonkersFrame6
+gBonkersFrame6:
+	.word	gBonkersFrame6OamTemplate
+	.word	gBonkersFrame4Palette
+	.word	gBonkersFrame6Tiles
+	.global	gBonkersFrame7
+gBonkersFrame7:
+	.word	gBonkersFrame7OamTemplate
+	.word	gBonkersFrame4Palette
+	.word	gBonkersFrame7Tiles
+	.global	gBonkersFrame8
+gBonkersFrame8:
+	.word	gBonkersFrame8OamTemplate
+	.word	gBonkersFrame4Palette
+	.word	gBonkersFrame8Tiles
+	.global	gBonkersFrame9
+gBonkersFrame9:
+	.word	gBonkersFrame9OamTemplate
+	.word	gBonkersFrame4Palette
+	.word	gBonkersFrame9Tiles
+	.global	gBonkersFrame10
+gBonkersFrame10:
+	.word	gBonkersFrame10OamTemplate
+	.word	gBonkersFrame4Palette
+	.word	gBonkersFrame10Tiles
+	.global	gBonkersFrame11
+gBonkersFrame11:
+	.word	gBonkersFrame11OamTemplate
+	.word	gBonkersFrame4Palette
+	.word	gBonkersFrame11Tiles
 	.incbin	"baserom.gba", 0x261B8C, 0x4
 	.word	gUnk_08769C00
-	.global	gUnk_08261B94
-gUnk_08261B94:
+	.global	gBonkersFrame12Palette
+gBonkersFrame12Palette:
 	.incbin	"baserom.gba", 0x261B94, 0x22
-	.global	gUnk_08261BB6
-gUnk_08261BB6:
+	.global	gBonkersFrame14Tiles
+gBonkersFrame14Tiles:
 	.incbin	"baserom.gba", 0x261BB6, 0x60A
-	.global	gUnk_082621C0
-gUnk_082621C0:
+	.global	gBonkersFrame15Tiles
+gBonkersFrame15Tiles:
 	.incbin	"baserom.gba", 0x2621C0, 0x78A
-	.global	gUnk_0826294A
-gUnk_0826294A:
+	.global	gBonkersFrame16Tiles
+gBonkersFrame16Tiles:
 	.incbin	"baserom.gba", 0x26294A, 0x68A
-	.global	gUnk_08262FD4
-gUnk_08262FD4:
+	.global	gBonkersFrame17Tiles
+gBonkersFrame17Tiles:
 	.incbin	"baserom.gba", 0x262FD4, 0x80A
-	.global	gUnk_082637DE
-gUnk_082637DE:
+	.global	gBonkersFrame18Tiles
+gBonkersFrame18Tiles:
 	.incbin	"baserom.gba", 0x2637DE, 0x68A
-	.global	gUnk_08263E68
-gUnk_08263E68:
+	.global	gBonkersFrame19Tiles
+gBonkersFrame19Tiles:
 	.incbin	"baserom.gba", 0x263E68, 0x68A
-	.global	gUnk_082644F2
-gUnk_082644F2:
+	.global	gBonkersFrame12Tiles
+gBonkersFrame12Tiles:
 	.incbin	"baserom.gba", 0x2644F2, 0x58A
-	.global	gUnk_08264A7C
-gUnk_08264A7C:
+	.global	gBonkersFrame13Tiles
+gBonkersFrame13Tiles:
 	.incbin	"baserom.gba", 0x264A7C, 0x70A
-	.global	gUnk_08265186
-gUnk_08265186:
+	.global	gBonkersFrame14OamTemplate
+gBonkersFrame14OamTemplate:
 	.incbin	"baserom.gba", 0x265186, 0x38
-	.global	gUnk_082651BE
-gUnk_082651BE:
+	.global	gBonkersFrame15OamTemplate
+gBonkersFrame15OamTemplate:
 	.incbin	"baserom.gba", 0x2651BE, 0x28
-	.global	gUnk_082651E6
-gUnk_082651E6:
+	.global	gBonkersFrame16OamTemplate
+gBonkersFrame16OamTemplate:
 	.incbin	"baserom.gba", 0x2651E6, 0x28
-	.global	gUnk_0826520E
-gUnk_0826520E:
+	.global	gBonkersFrame17OamTemplate
+gBonkersFrame17OamTemplate:
 	.incbin	"baserom.gba", 0x26520E, 0x38
-	.global	gUnk_08265246
-gUnk_08265246:
+	.global	gBonkersFrame18OamTemplate
+gBonkersFrame18OamTemplate:
 	.incbin	"baserom.gba", 0x265246, 0x28
-	.global	gUnk_0826526E
-gUnk_0826526E:
+	.global	gBonkersFrame19OamTemplate
+gBonkersFrame19OamTemplate:
 	.incbin	"baserom.gba", 0x26526E, 0x28
-	.global	gUnk_08265296
-gUnk_08265296:
+	.global	gBonkersFrame12OamTemplate
+gBonkersFrame12OamTemplate:
 	.incbin	"baserom.gba", 0x265296, 0x20
-	.global	gUnk_082652B6
-gUnk_082652B6:
+	.global	gBonkersFrame13OamTemplate
+gBonkersFrame13OamTemplate:
 	.incbin	"baserom.gba", 0x2652B6, 0x2A
-	.global	gUnk_082652E0
-gUnk_082652E0:
-	.word	gUnk_08265186
-	.word	gUnk_08261B94
-	.word	gUnk_08261BB6
-	.global	gUnk_082652EC
-gUnk_082652EC:
-	.word	gUnk_082651BE
-	.word	gUnk_08261B94
-	.word	gUnk_082621C0
-	.global	gUnk_082652F8
-gUnk_082652F8:
-	.word	gUnk_082651E6
-	.word	gUnk_08261B94
-	.word	gUnk_0826294A
-	.global	gUnk_08265304
-gUnk_08265304:
-	.word	gUnk_0826520E
-	.word	gUnk_08261B94
-	.word	gUnk_08262FD4
-	.global	gUnk_08265310
-gUnk_08265310:
-	.word	gUnk_08265246
-	.word	gUnk_08261B94
-	.word	gUnk_082637DE
-	.global	gUnk_0826531C
-gUnk_0826531C:
-	.word	gUnk_0826526E
-	.word	gUnk_08261B94
-	.word	gUnk_08263E68
-	.global	gUnk_08265328
-gUnk_08265328:
-	.word	gUnk_08265296
-	.word	gUnk_08261B94
-	.word	gUnk_082644F2
-	.global	gUnk_08265334
-gUnk_08265334:
-	.word	gUnk_082652B6
-	.word	gUnk_08261B94
-	.word	gUnk_08264A7C
+	.global	gBonkersFrame14
+gBonkersFrame14:
+	.word	gBonkersFrame14OamTemplate
+	.word	gBonkersFrame12Palette
+	.word	gBonkersFrame14Tiles
+	.global	gBonkersFrame15
+gBonkersFrame15:
+	.word	gBonkersFrame15OamTemplate
+	.word	gBonkersFrame12Palette
+	.word	gBonkersFrame15Tiles
+	.global	gBonkersFrame16
+gBonkersFrame16:
+	.word	gBonkersFrame16OamTemplate
+	.word	gBonkersFrame12Palette
+	.word	gBonkersFrame16Tiles
+	.global	gBonkersFrame17
+gBonkersFrame17:
+	.word	gBonkersFrame17OamTemplate
+	.word	gBonkersFrame12Palette
+	.word	gBonkersFrame17Tiles
+	.global	gBonkersFrame18
+gBonkersFrame18:
+	.word	gBonkersFrame18OamTemplate
+	.word	gBonkersFrame12Palette
+	.word	gBonkersFrame18Tiles
+	.global	gBonkersFrame19
+gBonkersFrame19:
+	.word	gBonkersFrame19OamTemplate
+	.word	gBonkersFrame12Palette
+	.word	gBonkersFrame19Tiles
+	.global	gBonkersFrame12
+gBonkersFrame12:
+	.word	gBonkersFrame12OamTemplate
+	.word	gBonkersFrame12Palette
+	.word	gBonkersFrame12Tiles
+	.global	gBonkersFrame13
+gBonkersFrame13:
+	.word	gBonkersFrame13OamTemplate
+	.word	gBonkersFrame12Palette
+	.word	gBonkersFrame13Tiles
 	.incbin	"baserom.gba", 0x265340, 0x4
 	.word	gUnk_08769C20
-	.global	gUnk_08265348
-gUnk_08265348:
+	.global	gBonkersFrame20Palette
+gBonkersFrame20Palette:
 	.incbin	"baserom.gba", 0x265348, 0x22
-	.global	gUnk_0826536A
-gUnk_0826536A:
+	.global	gBonkersFrame20Tiles
+gBonkersFrame20Tiles:
 	.incbin	"baserom.gba", 0x26536A, 0x70A
-	.global	gUnk_08265A74
-gUnk_08265A74:
+	.global	gBonkersFrame21Tiles
+gBonkersFrame21Tiles:
 	.incbin	"baserom.gba", 0x265A74, 0x80A
-	.global	gUnk_0826627E
-gUnk_0826627E:
+	.global	gBonkersFrame22Tiles
+gBonkersFrame22Tiles:
 	.incbin	"baserom.gba", 0x26627E, 0x68A
-	.global	gUnk_08266908
-gUnk_08266908:
+	.global	gBonkersFrame20OamTemplate
+gBonkersFrame20OamTemplate:
 	.incbin	"baserom.gba", 0x266908, 0x20
-	.global	gUnk_08266928
-gUnk_08266928:
+	.global	gBonkersFrame21OamTemplate
+gBonkersFrame21OamTemplate:
 	.incbin	"baserom.gba", 0x266928, 0x20
-	.global	gUnk_08266948
-gUnk_08266948:
+	.global	gBonkersFrame22OamTemplate
+gBonkersFrame22OamTemplate:
 	.incbin	"baserom.gba", 0x266948, 0x28
-	.global	gUnk_08266970
-gUnk_08266970:
-	.word	gUnk_08266908
-	.word	gUnk_08265348
-	.word	gUnk_0826536A
-	.global	gUnk_0826697C
-gUnk_0826697C:
-	.word	gUnk_08266928
-	.word	gUnk_08265348
-	.word	gUnk_08265A74
-	.global	gUnk_08266988
-gUnk_08266988:
-	.word	gUnk_08266948
-	.word	gUnk_08265348
-	.word	gUnk_0826627E
+	.global	gBonkersFrame20
+gBonkersFrame20:
+	.word	gBonkersFrame20OamTemplate
+	.word	gBonkersFrame20Palette
+	.word	gBonkersFrame20Tiles
+	.global	gBonkersFrame21
+gBonkersFrame21:
+	.word	gBonkersFrame21OamTemplate
+	.word	gBonkersFrame20Palette
+	.word	gBonkersFrame21Tiles
+	.global	gBonkersFrame22
+gBonkersFrame22:
+	.word	gBonkersFrame22OamTemplate
+	.word	gBonkersFrame20Palette
+	.word	gBonkersFrame22Tiles
 	.incbin	"baserom.gba", 0x266994, 0x4
 	.word	gUnk_08769C40
-	.global	gUnk_0826699C
-gUnk_0826699C:
+	.global	gBonkersFrame0Palette
+gBonkersFrame0Palette:
 	.incbin	"baserom.gba", 0x26699C, 0x22
-	.global	gUnk_082669BE
-gUnk_082669BE:
+	.global	gBonkersFrame27Tiles
+gBonkersFrame27Tiles:
 	.incbin	"baserom.gba", 0x2669BE, 0x68A
-	.global	gUnk_08267048
-gUnk_08267048:
+	.global	gBonkersFrame28Tiles
+gBonkersFrame28Tiles:
 	.incbin	"baserom.gba", 0x267048, 0x68A
-	.global	gUnk_082676D2
-gUnk_082676D2:
+	.global	gBonkersFrame29Tiles
+gBonkersFrame29Tiles:
 	.incbin	"baserom.gba", 0x2676D2, 0x70A
-	.global	gUnk_08267DDC
-gUnk_08267DDC:
+	.global	gBonkersFrame30Tiles
+gBonkersFrame30Tiles:
 	.incbin	"baserom.gba", 0x267DDC, 0x68A
-	.global	gUnk_08268466
-gUnk_08268466:
+	.global	gBonkersFrame0Tiles
+gBonkersFrame0Tiles:
 	.incbin	"baserom.gba", 0x268466, 0x58A
-	.global	gUnk_082689F0
-gUnk_082689F0:
+	.global	gBonkersFrame27OamTemplate
+gBonkersFrame27OamTemplate:
 	.incbin	"baserom.gba", 0x2689F0, 0x20
-	.global	gUnk_08268A10
-gUnk_08268A10:
+	.global	gBonkersFrame28OamTemplate
+gBonkersFrame28OamTemplate:
 	.incbin	"baserom.gba", 0x268A10, 0x20
-	.global	gUnk_08268A30
-gUnk_08268A30:
+	.global	gBonkersFrame29OamTemplate
+gBonkersFrame29OamTemplate:
 	.incbin	"baserom.gba", 0x268A30, 0x20
-	.global	gUnk_08268A50
-gUnk_08268A50:
+	.global	gBonkersFrame30OamTemplate
+gBonkersFrame30OamTemplate:
 	.incbin	"baserom.gba", 0x268A50, 0x38
-	.global	gUnk_08268A88
-gUnk_08268A88:
+	.global	gBonkersFrame0OamTemplate
+gBonkersFrame0OamTemplate:
 	.incbin	"baserom.gba", 0x268A88, 0x20
-	.global	gUnk_08268AA8
-gUnk_08268AA8:
+	.global	gBonkersFrame3OamTemplate
+gBonkersFrame3OamTemplate:
 	.incbin	"baserom.gba", 0x268AA8, 0x20
-	.global	gUnk_08268AC8
-gUnk_08268AC8:
-	.word	gUnk_082689F0
-	.word	gUnk_0826699C
-	.word	gUnk_082669BE
-	.global	gUnk_08268AD4
-gUnk_08268AD4:
-	.word	gUnk_08268A10
-	.word	gUnk_0826699C
-	.word	gUnk_08267048
-	.global	gUnk_08268AE0
-gUnk_08268AE0:
-	.word	gUnk_08268A30
-	.word	gUnk_0826699C
-	.word	gUnk_082676D2
-	.global	gUnk_08268AEC
-gUnk_08268AEC:
-	.word	gUnk_08268A50
-	.word	gUnk_0826699C
-	.word	gUnk_08267DDC
-	.global	gUnk_08268AF8
-gUnk_08268AF8:
-	.word	gUnk_08268A88
-	.word	gUnk_0826699C
-	.word	gUnk_08268466
-	.global	gUnk_08268B04
-gUnk_08268B04:
-	.word	gUnk_08268AA8
-	.word	gUnk_0826699C
-	.word	gUnk_08268466
+	.global	gBonkersFrame27
+gBonkersFrame27:
+	.word	gBonkersFrame27OamTemplate
+	.word	gBonkersFrame0Palette
+	.word	gBonkersFrame27Tiles
+	.global	gBonkersFrame28
+gBonkersFrame28:
+	.word	gBonkersFrame28OamTemplate
+	.word	gBonkersFrame0Palette
+	.word	gBonkersFrame28Tiles
+	.global	gBonkersFrame29
+gBonkersFrame29:
+	.word	gBonkersFrame29OamTemplate
+	.word	gBonkersFrame0Palette
+	.word	gBonkersFrame29Tiles
+	.global	gBonkersFrame30
+gBonkersFrame30:
+	.word	gBonkersFrame30OamTemplate
+	.word	gBonkersFrame0Palette
+	.word	gBonkersFrame30Tiles
+	.global	gBonkersFrame0
+gBonkersFrame0:
+	.word	gBonkersFrame0OamTemplate
+	.word	gBonkersFrame0Palette
+	.word	gBonkersFrame0Tiles
+	.global	gBonkersFrame3
+gBonkersFrame3:
+	.word	gBonkersFrame3OamTemplate
+	.word	gBonkersFrame0Palette
+	.word	gBonkersFrame0Tiles
 	.incbin	"baserom.gba", 0x268B10, 0x4
 	.word	gUnk_08769C4C
-	.global	gUnk_08268B18
-gUnk_08268B18:
+	.global	gBonkersFrame23Palette
+gBonkersFrame23Palette:
 	.incbin	"baserom.gba", 0x268B18, 0x22
-	.global	gUnk_08268B3A
-gUnk_08268B3A:
+	.global	gBonkersFrame23Tiles
+gBonkersFrame23Tiles:
 	.incbin	"baserom.gba", 0x268B3A, 0x62A
-	.global	gUnk_08269164
-gUnk_08269164:
+	.global	gBonkersFrame24Tiles
+gBonkersFrame24Tiles:
 	.incbin	"baserom.gba", 0x269164, 0x70A
-	.global	gUnk_0826986E
-gUnk_0826986E:
+	.global	gBonkersFrame25Tiles
+gBonkersFrame25Tiles:
 	.incbin	"baserom.gba", 0x26986E, 0x5AA
-	.global	gUnk_08269E18
-gUnk_08269E18:
+	.global	gBonkersFrame26Tiles
+gBonkersFrame26Tiles:
 	.incbin	"baserom.gba", 0x269E18, 0x5CA
-	.global	gUnk_0826A3E2
-gUnk_0826A3E2:
+	.global	gBonkersFrame23OamTemplate
+gBonkersFrame23OamTemplate:
 	.incbin	"baserom.gba", 0x26A3E2, 0x38
-	.global	gUnk_0826A41A
-gUnk_0826A41A:
+	.global	gBonkersFrame24OamTemplate
+gBonkersFrame24OamTemplate:
 	.incbin	"baserom.gba", 0x26A41A, 0x30
-	.global	gUnk_0826A44A
-gUnk_0826A44A:
+	.global	gBonkersFrame25OamTemplate
+gBonkersFrame25OamTemplate:
 	.incbin	"baserom.gba", 0x26A44A, 0x40
-	.global	gUnk_0826A48A
-gUnk_0826A48A:
+	.global	gBonkersFrame26OamTemplate
+gBonkersFrame26OamTemplate:
 	.incbin	"baserom.gba", 0x26A48A, 0x4A
-	.global	gUnk_0826A4D4
-gUnk_0826A4D4:
-	.word	gUnk_0826A3E2
-	.word	gUnk_08268B18
-	.word	gUnk_08268B3A
-	.global	gUnk_0826A4E0
-gUnk_0826A4E0:
-	.word	gUnk_0826A41A
-	.word	gUnk_08268B18
-	.word	gUnk_08269164
-	.global	gUnk_0826A4EC
-gUnk_0826A4EC:
-	.word	gUnk_0826A44A
-	.word	gUnk_08268B18
-	.word	gUnk_0826986E
-	.global	gUnk_0826A4F8
-gUnk_0826A4F8:
-	.word	gUnk_0826A48A
-	.word	gUnk_08268B18
-	.word	gUnk_08269E18
+	.global	gBonkersFrame23
+gBonkersFrame23:
+	.word	gBonkersFrame23OamTemplate
+	.word	gBonkersFrame23Palette
+	.word	gBonkersFrame23Tiles
+	.global	gBonkersFrame24
+gBonkersFrame24:
+	.word	gBonkersFrame24OamTemplate
+	.word	gBonkersFrame23Palette
+	.word	gBonkersFrame24Tiles
+	.global	gBonkersFrame25
+gBonkersFrame25:
+	.word	gBonkersFrame25OamTemplate
+	.word	gBonkersFrame23Palette
+	.word	gBonkersFrame25Tiles
+	.global	gBonkersFrame26
+gBonkersFrame26:
+	.word	gBonkersFrame26OamTemplate
+	.word	gBonkersFrame23Palette
+	.word	gBonkersFrame26Tiles
 	.incbin	"baserom.gba", 0x26A504, 0x4
 	.word	gUnk_08769C64
 	.global	gBonkersGfxPalette
