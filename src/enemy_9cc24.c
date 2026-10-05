@@ -593,7 +593,7 @@ void JavelinKnightLandFromJump(void)
 
 void JavelinKnightLandFromJumpUpdate(void)
 {
-    if (gCurTask->state != JAVELIN_KNIGHT_STATE_5)
+    if (gCurTask->state != JAVELIN_KNIGHT_STATE_LAND_FROM_JUMP)
         TaskSetEntry(JavelinKnightEnterState, gCurTaskIdx);
 }
 

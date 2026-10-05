@@ -976,7 +976,7 @@ void NeedlousPickStartState(void)
     if (r == 0)
         ActorSetState(NEEDLOUS_STATE_WALK);
     else
-        ActorSetState(NEEDLOUS_STATE_2);
+        ActorSetState(NEEDLOUS_STATE_BOUNCE1);
 }
 
 s32 NeedlousStartFall(void)
@@ -1005,12 +1005,12 @@ s32 NeedlousLand(void)
         ActorSetState(a->prevState);
         break;
     case 2:
-        ActorSetState(NEEDLOUS_STATE_3);
+        ActorSetState(NEEDLOUS_STATE_BOUNCE2);
         break;
     case 3:
         if (gUnk_0300244C != 0 && a->animScript == 0)
             gCurTask->actorAnimDelay34 = ActorStartAnim(gNeedlousBounceAnim);
-        ActorSetState(NEEDLOUS_STATE_4);
+        ActorSetState(NEEDLOUS_STATE_BOUNCE3);
         break;
     case 4:
         ActorSetState(NEEDLOUS_STATE_DASH);
@@ -1170,7 +1170,7 @@ void NeedlousWalkUpdate(void)
             return;
 
     reset:
-        ActorSetState(NEEDLOUS_STATE_2);
+        ActorSetState(NEEDLOUS_STATE_BOUNCE1);
         TaskSetEntry(NeedlousEnterState, gCurTaskIdx);
         return;
     }
@@ -1195,7 +1195,7 @@ void NeedlousFallUpdate(void)
 
 void NeedlousBounce1(void)
 {
-    gCurTask->updateState = NEEDLOUS_STATE_2;
+    gCurTask->updateState = NEEDLOUS_STATE_BOUNCE1;
     sub_0807bf74();
     TaskSleepForever();
 }
@@ -1207,7 +1207,7 @@ void NeedlousBounce1Update(void)
 
 void NeedlousBounce2(void)
 {
-    gCurTask->updateState = NEEDLOUS_STATE_3;
+    gCurTask->updateState = NEEDLOUS_STATE_BOUNCE2;
     sub_0807bfd0();
     TaskSleepForever();
 }
@@ -1219,7 +1219,7 @@ void NeedlousBounce2Update(void)
 
 void NeedlousBounce3(void)
 {
-    gCurTask->updateState = NEEDLOUS_STATE_4;
+    gCurTask->updateState = NEEDLOUS_STATE_BOUNCE3;
     sub_0807c000();
     TaskSleepForever();
 }

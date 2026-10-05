@@ -343,12 +343,12 @@
 #define INHALABLE_STAR_STATE_0  0
 
 /* JavelinKnight states - gJavelinKnightStates[N], CallTableEntry(Task.state) in JavelinKnightEnterState */
-#define JAVELIN_KNIGHT_STATE_START_HOP   0
-#define JAVELIN_KNIGHT_STATE_HOP         1
-#define JAVELIN_KNIGHT_STATE_THRUST      2
-#define JAVELIN_KNIGHT_STATE_JUMP_THROW  3
-#define JAVELIN_KNIGHT_STATE_JUMP        4
-#define JAVELIN_KNIGHT_STATE_5           5
+#define JAVELIN_KNIGHT_STATE_START_HOP       0
+#define JAVELIN_KNIGHT_STATE_HOP             1
+#define JAVELIN_KNIGHT_STATE_THRUST          2
+#define JAVELIN_KNIGHT_STATE_JUMP_THROW      3
+#define JAVELIN_KNIGHT_STATE_JUMP            4
+#define JAVELIN_KNIGHT_STATE_LAND_FROM_JUMP  5
 
 /* KabuIdle states - gKabuIdleStates[N], CallTableEntry(Task.state) in KabuIdleInit */
 #define KABU_IDLE_STATE_IDLE  0
@@ -430,10 +430,10 @@
 /* MetaKnight states - gMetaKnightStates[N], CallTableEntry(Task.state) in MetaKnightInit */
 #define META_KNIGHT_STATE_INTRO                    0
 #define META_KNIGHT_STATE_FOLLOW                   1
-#define META_KNIGHT_STATE_2                        2
-#define META_KNIGHT_STATE_3                        3
-#define META_KNIGHT_STATE_4                        4
-#define META_KNIGHT_STATE_5                        5
+#define META_KNIGHT_STATE_START_FOLLOW_AHEAD       2
+#define META_KNIGHT_STATE_START_FOLLOW_OTHER_SIDE  3
+#define META_KNIGHT_STATE_EXTEND_FOLLOW            4
+#define META_KNIGHT_STATE_START_FOLLOW_BACK        5
 #define META_KNIGHT_STATE_APPROACH                 6
 #define META_KNIGHT_STATE_RUN                      7
 #define META_KNIGHT_STATE_JUMP_HIGH                8
@@ -450,8 +450,8 @@
 #define META_KNIGHT_STATE_SLASH_SHORT              19
 #define META_KNIGHT_STATE_DOUBLE_SLASH             20
 #define META_KNIGHT_STATE_SLASH_LONG               21
-#define META_KNIGHT_STATE_22                       22
-#define META_KNIGHT_STATE_23                       23
+#define META_KNIGHT_STATE_GUARD_HIT                22
+#define META_KNIGHT_STATE_GUARD_CATCH              23
 
 /* MetaKnightWarpStarRide states - gMetaKnightWarpStarRideStates[N], CallTableEntry(Task.state) in MetaKnightWarpStarRideInit */
 #define META_KNIGHT_WARP_STAR_RIDE_STATE_0  0
@@ -491,7 +491,7 @@
 #define MR_BRIGHT_STATE_CONVERGE_END      17
 
 /* MrFrostyIceCube states - gMrFrostyIceCubeStates[N], CallTableEntry(Task.state) in MrFrostyIceCubeInit */
-#define MR_FROSTY_ICE_CUBE_STATE_0       0
+#define MR_FROSTY_ICE_CUBE_STATE_POP_UP  0
 #define MR_FROSTY_ICE_CUBE_STATE_FLIGHT  1
 #define MR_FROSTY_ICE_CUBE_STATE_BURST   2
 
@@ -501,8 +501,8 @@
 #define MR_FROSTY_STATE_WALK_BACK                2
 #define MR_FROSTY_STATE_DASH                     3
 #define MR_FROSTY_STATE_BOUNCE_OFF_WALL          4
-#define MR_FROSTY_STATE_5                        5
-#define MR_FROSTY_STATE_6                        6
+#define MR_FROSTY_STATE_BOUNCE_FROM_WALL         5
+#define MR_FROSTY_STATE_SHAKE                    6
 #define MR_FROSTY_STATE_WALK_BACK_AT_WALL        7
 #define MR_FROSTY_STATE_SPIN                     8
 #define MR_FROSTY_STATE_TOSS_ICE_CUBE_HOP_BACK   9
@@ -510,8 +510,8 @@
 #define MR_FROSTY_STATE_TOSS_ICE_CUBE_WALK_BACK  11
 #define MR_FROSTY_STATE_KICK                     12
 #define MR_FROSTY_STATE_DEFEAT                   13
-#define MR_FROSTY_STATE_14                       14
-#define MR_FROSTY_STATE_15                       15
+#define MR_FROSTY_STATE_BOUNCE_FROM_DEFEAT       14
+#define MR_FROSTY_STATE_DEFEAT_END               15
 #define MR_FROSTY_STATE_FALL                     16
 #define MR_FROSTY_STATE_17                       17
 #define MR_FROSTY_STATE_DROP_IN                  18
@@ -555,47 +555,47 @@
 #define MR_TICK_TOCK_NOTE_STATE_VANISH  1
 
 /* MrTickTockRing states - gMrTickTockRingStates[N], CallTableEntry(Task.state) in MrTickTockRingInit */
-#define MR_TICK_TOCK_RING_STATE_0  0
+#define MR_TICK_TOCK_RING_STATE_EXPAND  0
 
 /* MrTickTock states - gMrTickTockStates[N], CallTableEntry(Task.state) in MrTickTockInit */
-#define MR_TICK_TOCK_STATE_WAIT_LONG        0
-#define MR_TICK_TOCK_STATE_PICK_MOVE        1
-#define MR_TICK_TOCK_STATE_HOP              2
-#define MR_TICK_TOCK_STATE_WALK_BACK        3
-#define MR_TICK_TOCK_STATE_JUMP_FORWARD     4
-#define MR_TICK_TOCK_STATE_DASH_WIND_UP     5
-#define MR_TICK_TOCK_STATE_DASH_START       6
-#define MR_TICK_TOCK_STATE_JUMP_HIGH        7
-#define MR_TICK_TOCK_STATE_RING_FROM_JUMP   8
-#define MR_TICK_TOCK_STATE_JUMP_LOW         9
-#define MR_TICK_TOCK_STATE_JUMP_BACK        10
-#define MR_TICK_TOCK_STATE_SHOOT_NOTES      11
-#define MR_TICK_TOCK_STATE_DASH_LOOP        12
-#define MR_TICK_TOCK_STATE_RING_FROM_DASH   13
-#define MR_TICK_TOCK_STATE_WAIT_SHORT       14
-#define MR_TICK_TOCK_STATE_BOUNCE_OFF_WALL  15
-#define MR_TICK_TOCK_STATE_16               16
-#define MR_TICK_TOCK_STATE_17               17
-#define MR_TICK_TOCK_STATE_18               18
-#define MR_TICK_TOCK_STATE_DEFEAT           19
-#define MR_TICK_TOCK_STATE_20               20
-#define MR_TICK_TOCK_STATE_21               21
-#define MR_TICK_TOCK_STATE_FALL             22
-#define MR_TICK_TOCK_STATE_DROP_IN          23
+#define MR_TICK_TOCK_STATE_WAIT_LONG           0
+#define MR_TICK_TOCK_STATE_PICK_MOVE           1
+#define MR_TICK_TOCK_STATE_HOP                 2
+#define MR_TICK_TOCK_STATE_WALK_BACK           3
+#define MR_TICK_TOCK_STATE_JUMP_FORWARD        4
+#define MR_TICK_TOCK_STATE_DASH_WIND_UP        5
+#define MR_TICK_TOCK_STATE_DASH_START          6
+#define MR_TICK_TOCK_STATE_JUMP_HIGH           7
+#define MR_TICK_TOCK_STATE_RING_FROM_JUMP      8
+#define MR_TICK_TOCK_STATE_JUMP_LOW            9
+#define MR_TICK_TOCK_STATE_JUMP_BACK           10
+#define MR_TICK_TOCK_STATE_SHOOT_NOTES         11
+#define MR_TICK_TOCK_STATE_DASH_LOOP           12
+#define MR_TICK_TOCK_STATE_RING_FROM_DASH      13
+#define MR_TICK_TOCK_STATE_WAIT_SHORT          14
+#define MR_TICK_TOCK_STATE_BOUNCE_OFF_WALL     15
+#define MR_TICK_TOCK_STATE_SHAKE               16
+#define MR_TICK_TOCK_STATE_PACE                17
+#define MR_TICK_TOCK_STATE_PACE_AT_WALL        18
+#define MR_TICK_TOCK_STATE_DEFEAT              19
+#define MR_TICK_TOCK_STATE_BOUNCE_FROM_DEFEAT  20
+#define MR_TICK_TOCK_STATE_DEFEAT_END          21
+#define MR_TICK_TOCK_STATE_FALL                22
+#define MR_TICK_TOCK_STATE_DROP_IN             23
 
 /* NeedlousIdle states - gNeedlousIdleStates[N], CallTableEntry(Task.state) in NeedlousIdleInit */
 #define NEEDLOUS_IDLE_STATE_IDLE  0
 
 /* Needlous states - gNeedlousStates[N], CallTableEntry(Task.state) in NeedlousInit */
-#define NEEDLOUS_STATE_WALK  0
-#define NEEDLOUS_STATE_FALL  1
-#define NEEDLOUS_STATE_2     2
-#define NEEDLOUS_STATE_3     3
-#define NEEDLOUS_STATE_4     4
-#define NEEDLOUS_STATE_DASH  5
+#define NEEDLOUS_STATE_WALK     0
+#define NEEDLOUS_STATE_FALL     1
+#define NEEDLOUS_STATE_BOUNCE1  2
+#define NEEDLOUS_STATE_BOUNCE2  3
+#define NEEDLOUS_STATE_BOUNCE3  4
+#define NEEDLOUS_STATE_DASH     5
 
 /* NightmareWizardStar states - gNightmareWizardStarStates[N], CallTableEntry(Task.state) in Task_NightmareWizardStar */
-#define NIGHTMARE_WIZARD_STAR_STATE_0  0
+#define NIGHTMARE_WIZARD_STAR_STATE_FLIGHT  0
 
 /* NightmareWizard states - gNightmareWizardStates[N], CallTableEntry(Task.state) in NightmareWizardInit */
 #define NIGHTMARE_WIZARD_STATE_INTRO           0
@@ -798,16 +798,16 @@
 #define ROCKY_IDLE_STATE_IDLE  0
 
 /* RockyStand states - gRockyStandStates[N], CallTableEntry(Task.state) in RockyStandInit */
-#define ROCKY_STAND_STATE_0  0
-#define ROCKY_STAND_STATE_1  1
-#define ROCKY_STAND_STATE_2  2
+#define ROCKY_STAND_STATE_0     0
+#define ROCKY_STAND_STATE_1     1
+#define ROCKY_STAND_STATE_FALL  2
 
 /* RockyWalk states - gRockyWalkStates[N], CallTableEntry(Task.state) in RockyWalkInit */
 #define ROCKY_WALK_STATE_WALK  0
 #define ROCKY_WALK_STATE_1     1
-#define ROCKY_WALK_STATE_2     2
+#define ROCKY_WALK_STATE_JUMP  2
 #define ROCKY_WALK_STATE_3     3
-#define ROCKY_WALK_STATE_4     4
+#define ROCKY_WALK_STATE_FALL  4
 
 /* Scarfy states - gScarfyStates[N], CallTableEntry(Task.state) in ScarfyInit */
 #define SCARFY_STATE_HIDE       0
@@ -850,17 +850,17 @@
 #define SIR_KIBBLE_WALK_STATE_JUMP   2
 
 /* Slippy states - gSlippyStates[N], CallTableEntry(Task.state) in SlippyInit */
-#define SLIPPY_STATE_0          0
-#define SLIPPY_STATE_1          1
-#define SLIPPY_STATE_JUMP       2
-#define SLIPPY_STATE_HIGH_JUMP  3
-#define SLIPPY_STATE_4          4
-#define SLIPPY_STATE_5          5
-#define SLIPPY_STATE_6          6
-#define SLIPPY_STATE_7          7
-#define SLIPPY_STATE_8          8
-#define SLIPPY_STATE_9          9
-#define SLIPPY_STATE_FALL       10
+#define SLIPPY_STATE_WAIT         0
+#define SLIPPY_STATE_LOOK_AROUND  1
+#define SLIPPY_STATE_JUMP         2
+#define SLIPPY_STATE_HIGH_JUMP    3
+#define SLIPPY_STATE_LEAP         4
+#define SLIPPY_STATE_5            5
+#define SLIPPY_STATE_6            6
+#define SLIPPY_STATE_7            7
+#define SLIPPY_STATE_8            8
+#define SLIPPY_STATE_9            9
+#define SLIPPY_STATE_FALL         10
 
 /* SparkyIdle states - gSparkyIdleStates[N], CallTableEntry(Task.state) in SparkyIdleInit */
 #define SPARKY_IDLE_STATE_IDLE  0

@@ -293,7 +293,7 @@ void RockyWalkState0Update(void)
                 if (RandomRange(gCurTask->unk30) == 0)
                 {
                     TaskFaceToward(gCurTask->rockyPlayerSlot);
-                    ActorSetState(ROCKY_WALK_STATE_2);
+                    ActorSetState(ROCKY_WALK_STATE_JUMP);
                 }
                 gCurTask->rockyLeapTimer = 60;
             }
@@ -326,7 +326,7 @@ void RockyWalkState1Update(void)
 void RockyWalkJump(void)
 {
     gCurTask->onGround = 0;
-    gCurTask->updateState = ROCKY_WALK_STATE_2;
+    gCurTask->updateState = ROCKY_WALK_STATE_JUMP;
     TaskSetMotionXFacing(0x18000, 0);
     {
         struct Task *t = gCurTask;
@@ -339,13 +339,13 @@ void RockyWalkJump(void)
     TaskSetFrame(12);
     TaskStop();
     TaskYieldTrampoline(16);
-    ActorSetState(ROCKY_WALK_STATE_4);
+    ActorSetState(ROCKY_WALK_STATE_FALL);
     TaskSleepForever();
 }
 
 void RockyWalkJumpUpdate(void)
 {
-    if (gCurTask->state != ROCKY_WALK_STATE_2)
+    if (gCurTask->state != ROCKY_WALK_STATE_JUMP)
         TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
 }
 
@@ -355,7 +355,7 @@ void RockyWalkState3(void)
     TaskSetFrame(12);
     TaskStop();
     TaskYieldTrampoline(16);
-    ActorSetState(ROCKY_WALK_STATE_4);
+    ActorSetState(ROCKY_WALK_STATE_FALL);
     TaskSleepForever();
 }
 
@@ -367,7 +367,7 @@ void RockyWalkState3Update(void)
 
 void RockyWalkFall(void)
 {
-    gCurTask->updateState = ROCKY_WALK_STATE_4;
+    gCurTask->updateState = ROCKY_WALK_STATE_FALL;
     gCurTask->velY = 0x80000;
     TaskSetFrame(12);
     TaskSleepForever();
@@ -487,7 +487,7 @@ void RockyStandState1Update(void)
 
 void RockyStandFall(void)
 {
-    gCurTask->updateState = ROCKY_STAND_STATE_2;
+    gCurTask->updateState = ROCKY_STAND_STATE_FALL;
     gCurTask->velY = 0x80000;
     TaskSetFrame(12);
     TaskSleepForever();

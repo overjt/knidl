@@ -1873,7 +1873,7 @@ void Task_NightmareWizardStar(void)
     gCurTask->frameTable = gUnk_08754738;
     gCurTask->updateCallback = (u32)NightmareWizardStarUpdate;
     gCurTask->nightmareWizardStarDone = 0;
-    ActorSetState(NIGHTMARE_WIZARD_STAR_STATE_0);
+    ActorSetState(NIGHTMARE_WIZARD_STAR_STATE_FLIGHT);
     CallTableEntry(gCurTask->state, 1, gNightmareWizardStarStates);
 }
 
@@ -1900,7 +1900,7 @@ void NightmareWizardStarFlight(void)
     struct Task **c2;
     struct Task **c3;
 
-    gCurTask->updateState = NIGHTMARE_WIZARD_STAR_STATE_0;
+    gCurTask->updateState = NIGHTMARE_WIZARD_STAR_STATE_FLIGHT;
     TaskFaceLikeParent();
     gCurTask->actorAnimDelay30 = ActorStartAnim((struct AnimCmd *)gUnk_08749BD0);
     gCurTask->onGround = 0;

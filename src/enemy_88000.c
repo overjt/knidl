@@ -1412,7 +1412,7 @@ void SlippyInit(void)
     }
     else
     {
-        ActorSetState(SLIPPY_STATE_0);
+        ActorSetState(SLIPPY_STATE_WAIT);
         gCurTask->onGround = 0;
         gCurTask->slippyCollideTerrain = 1;
     }
@@ -1438,7 +1438,7 @@ void SlippyUpdate(void)
     }
     switch (gCurTask->state)
     {
-    case SLIPPY_STATE_4:
+    case SLIPPY_STATE_LEAP:
     case SLIPPY_STATE_5:
     case SLIPPY_STATE_6:
     case SLIPPY_STATE_7:
@@ -1453,7 +1453,7 @@ void SlippyUpdate(void)
 
 void SlippyWait(void)
 {
-    gCurTask->updateState = SLIPPY_STATE_0;
+    gCurTask->updateState = SLIPPY_STATE_WAIT;
     gCurTask->slippyCollideTerrain = 1;
     TaskStop();
     TaskFaceNearestPlayer();
@@ -1487,7 +1487,7 @@ void SlippyWait(void)
         TaskSleepForever();
         break;
     case 5:
-        ActorSetState(SLIPPY_STATE_1);
+        ActorSetState(SLIPPY_STATE_LOOK_AROUND);
         break;
     }
     TaskSleepForever();
@@ -1495,13 +1495,13 @@ void SlippyWait(void)
 
 void SlippyWaitUpdate(void)
 {
-    if (gCurTask->state != SLIPPY_STATE_0)
+    if (gCurTask->state != SLIPPY_STATE_WAIT)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
 }
 
 void SlippyLookAround(void)
 {
-    gCurTask->updateState = SLIPPY_STATE_1;
+    gCurTask->updateState = SLIPPY_STATE_LOOK_AROUND;
     gCurTask->onGround = 1;
     while (1)
     {
@@ -1560,7 +1560,7 @@ void SlippyLookAround(void)
 
 void SlippyLookAroundUpdate(void)
 {
-    if (gCurTask->state != SLIPPY_STATE_1)
+    if (gCurTask->state != SLIPPY_STATE_LOOK_AROUND)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
 }
 
@@ -1610,7 +1610,7 @@ void SlippyHighJumpUpdate(void)
 
 void SlippyLeap(void)
 {
-    gCurTask->updateState = SLIPPY_STATE_4;
+    gCurTask->updateState = SLIPPY_STATE_LEAP;
     gCurTask->slippyCollideTerrain = 0;
     TaskFaceNearestPlayer();
     TaskStop();
@@ -1716,7 +1716,7 @@ void SlippyState6Update(void)
     if (sub_08021c14(gCurTask->pixelX,
                      (u16)gCurTask->pixelY - 8) == 0)
     {
-        ActorSetState(SLIPPY_STATE_4);
+        ActorSetState(SLIPPY_STATE_LEAP);
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
     }
 }
@@ -1752,7 +1752,7 @@ void SlippyState7Update(void)
     if (sub_08021c14(gCurTask->pixelX,
                      (u16)gCurTask->pixelY - 8) == 0)
     {
-        ActorSetState(SLIPPY_STATE_4);
+        ActorSetState(SLIPPY_STATE_LEAP);
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
     }
 }
@@ -1800,7 +1800,7 @@ void SlippyState8Update(void)
     if (sub_08021c14(gCurTask->pixelX,
                      (u16)gCurTask->pixelY - 8) == 0)
     {
-        ActorSetState(SLIPPY_STATE_4);
+        ActorSetState(SLIPPY_STATE_LEAP);
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
     }
 }
@@ -1845,7 +1845,7 @@ void SlippyState9Update(void)
     if (sub_08021c14(gCurTask->pixelX,
                      (u16)gCurTask->pixelY - 8) == 0)
     {
-        ActorSetState(SLIPPY_STATE_4);
+        ActorSetState(SLIPPY_STATE_LEAP);
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
     }
 }
@@ -1938,13 +1938,13 @@ s32 SlippyLand(void)
             gCurTask->slippySwimAngle = 512 - gCurTask->slippySwimAngle;
             gCurTask->velY = -gCurTask->velY;
             return 0;
-        case SLIPPY_STATE_0:
-        case SLIPPY_STATE_1:
+        case SLIPPY_STATE_WAIT:
+        case SLIPPY_STATE_LOOK_AROUND:
         case SLIPPY_STATE_JUMP:
         case SLIPPY_STATE_HIGH_JUMP:
-        case SLIPPY_STATE_4:
+        case SLIPPY_STATE_LEAP:
         case SLIPPY_STATE_FALL:
-            ActorSetState(SLIPPY_STATE_0);
+            ActorSetState(SLIPPY_STATE_WAIT);
             TaskSetEntry(SlippyEnterState, gCurTaskIdx);
             return 1;
         default:
@@ -1959,8 +1959,8 @@ s32 SlippyStartFall(void)
     {
         switch (gCurTask->state)
         {
-        case SLIPPY_STATE_0:
-        case SLIPPY_STATE_1:
+        case SLIPPY_STATE_WAIT:
+        case SLIPPY_STATE_LOOK_AROUND:
             ActorSetState(SLIPPY_STATE_FALL);
             TaskSetEntry(SlippyEnterState, gCurTaskIdx);
             return 1;
