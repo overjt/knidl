@@ -1398,21 +1398,21 @@ void CreateMrBrightBeamEffects(void)
     if (beamEffectSlot != -1)
     {
         beamEffect = &gTasks[beamEffectSlot];
-        beamEffect->variant = 0;
+        beamEffect->variant = MR_BRIGHT_BEAM_EFFECT_VARIANT_FLICKER;
     }
     beamEffectSlot = CreateChildTask(TASK_MR_BRIGHT_BEAM_EFFECT, 0, 16, (u16)ActorGetGfxTileWordPalOffset(2));
     gUnk_02006040[1] = beamEffectSlot;
     if (beamEffectSlot != -1)
     {
         beamEffect = &gTasks[beamEffectSlot];
-        beamEffect->variant = 1;
+        beamEffect->variant = MR_BRIGHT_BEAM_EFFECT_VARIANT_DROP_SLOW;
     }
     beamEffectSlot = CreateChildTask(TASK_MR_BRIGHT_BEAM_EFFECT, 0, 8, (u16)ActorGetGfxTileWordPalOffset(2));
     gUnk_02006040[2] = beamEffectSlot;
     if (beamEffectSlot != -1)
     {
         beamEffect = &gTasks[beamEffectSlot];
-        beamEffect->variant = 2;
+        beamEffect->variant = MR_BRIGHT_BEAM_EFFECT_VARIANT_DROP_FAST;
     }
 }
 
