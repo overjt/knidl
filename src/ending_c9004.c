@@ -17,16 +17,16 @@
  *       (CreateEndingStarRodReturnObjects); variants 1-11 run gEndingStarRodReturnVariants[Task.variant].
  *   EndingStarRodReturnStarRod / EndingStarRodReturnStarRodDraw   variant 1, a sprite that falls in, then
  *       rides the BG3 layer and flashes its palette.
- *   sub_080c9d10   variant 2, a 22-frame animation played six times.
+ *   EndingStarRodReturnConvergingStars   variant 2, a 22-frame animation played six times.
  *   EndingStarRodReturnWarpStar / EndingStarRodReturnWarpStarUpdate / EndingStarRodReturnWarpStarDraw   variant 3, which spawns its
  *       variant-5 companion, crosses the screen twice leaving variant-4
  *       tasks behind, fades the music out and ends the scene (clearing
  *       gEndingSceneActive).
- *   sub_080c9884, EndingStarRodReturnKirby / EndingStarRodReturnKirbyDraw   variants 4 and 5.
+ *   EndingStarRodReturnTrailStar, EndingStarRodReturnKirby / EndingStarRodReturnKirbyDraw   variants 4 and 5.
  *   EndingStarRodReturnFountainJet, sub_080ca830, sub_080ca8f0   variants 6-8, scripted
- *       sprites drawn by M05's sub_0801a3e4.
- *   sub_080c9e8c   variant 9, eleven sprites bursting out of one point.
- *   sub_080ca344 / sub_080ca570 / sub_080ca640   variant 10, sixteen falling
+ *       sprites drawn by M05's FountainSpriteDraw.
+ *   EndingStarRodReturnBurstStar   variant 9, eleven sprites bursting out of one point.
+ *   EndingStarRodReturnFallingStar / EndingStarRodReturnFallingStarDriftFast / EndingStarRodReturnFallingStarDriftSlow   variant 10, sixteen falling
  *       sprites with two sway scripts.
  *   sub_080c9a28 / sub_080c9cf0   variant 11, the finale: palette flashes,
  *       variants 2, 9 and 10, a fade to an OBJ-only display. */
@@ -117,7 +117,7 @@ void EndingStarRodReturnStarRod(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_0875585C;
+    gCurTask->frameTable = gEndingStarRodReturnFrames;
     gCurTask->tileWord = 0x8810;
     gCurTask->posX = (gSpriteCameraX + 120) << 16;
     gCurTask->posY = (gSpriteCameraY - 24) << 16;
@@ -231,7 +231,7 @@ void EndingStarRodReturnWarpStar(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)EndingStarRodReturnWarpStarDraw;
     gCurTask->layer = 8;
-    gCurTask->frameTable = gUnk_0875585C;
+    gCurTask->frameTable = gEndingStarRodReturnFrames;
     gCurTask->tileWord = 0x8810;
     gCurTask->updateCallback = (u32)EndingStarRodReturnWarpStarUpdate;
     gCurTask->endingStarRodReturnBgmVolume = 255;
@@ -312,7 +312,7 @@ void EndingStarRodReturnWarpStarUpdate(void)
         if (--gCurTask->endingStarRodReturnTrailTimer <= 0) {
             id = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32);
             t = &gTasks[id];
-            t->variant = 4;
+            t->variant = ENDING_STAR_ROD_RETURN_VARIANT_TRAIL_STAR;
             t->pixelX = gCurTask->pixelX;
             t->pixelY = gCurTask->pixelY;
             t->posX = t->pixelX << 16;
@@ -352,7 +352,7 @@ void EndingStarRodReturnWarpStarDraw(void)
 }
 
 /* Task type #101 variant 4. */
-void sub_080c9884(void)
+void EndingStarRodReturnTrailStar(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
@@ -373,15 +373,15 @@ void EndingStarRodReturnKirby(void)
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = (u32)EndingStarRodReturnKirbyDraw;
     gCurTask->layer = 7;
-    gCurTask->frameTable = gUnk_0875585C;
+    gCurTask->frameTable = gEndingStarRodReturnFrames;
     gCurTask->tileWord = 0x8810;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0;
     TaskYieldTrampoline(200);
     TaskYieldTrampoline(200);
     TaskYieldTrampoline(200);
     TaskYieldTrampoline(207);
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     TaskYieldTrampoline(56);
     for (;;) {
         gCurTask->frame = 1;
@@ -495,7 +495,7 @@ void sub_080c9cf0(void)
 
 /* Task type #101 variant 2: a sprite at the camera's (120, 40) that plays
    a 22-frame animation six times. */
-void sub_080c9d10(void)
+void EndingStarRodReturnConvergingStars(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
@@ -558,7 +558,7 @@ void sub_080c9d10(void)
 /* Task type #101 variant 9: one of eleven sprites that burst out of the
    camera's (120, 48) point; Task.unk74 picks its sprite, frame, direction
    and speed, each slowing down over four steps. */
-void sub_080c9e8c(void)
+void EndingStarRodReturnBurstStar(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -612,7 +612,7 @@ void sub_080c9e8c(void)
         TaskYieldTrampoline(12);
         break;
     case 3:
-        gCurTask->frameTable = gUnk_0874CF28;
+        gCurTask->frameTable = gEndingEffectFrames;
         gCurTask->frame = 24;
         gCurTask->velX = 0x14000;
         gCurTask->velY = -0x40000;
@@ -660,7 +660,7 @@ void sub_080c9e8c(void)
         TaskYieldTrampoline(12);
         break;
     case 6:
-        gCurTask->frameTable = gUnk_0874CF28;
+        gCurTask->frameTable = gEndingEffectFrames;
         gCurTask->frame = 26;
         gCurTask->velX = -0x40000;
         gCurTask->velY = -0x14000;
@@ -677,7 +677,7 @@ void sub_080c9e8c(void)
         break;
     case 7:
         TaskYieldTrampoline(2);
-        gCurTask->frameTable = gUnk_0874CF28;
+        gCurTask->frameTable = gEndingEffectFrames;
         gCurTask->frame = 26;
         gCurTask->velX = 0xA000;
         gCurTask->velY = -0x1E000;
@@ -728,7 +728,7 @@ void sub_080c9e8c(void)
         break;
     case 10:
         TaskYieldTrampoline(4);
-        gCurTask->frameTable = gUnk_0874CF28;
+        gCurTask->frameTable = gEndingEffectFrames;
         gCurTask->frame = 24;
         gCurTask->velX = -0x1E000;
         gCurTask->velY = -0xA000;
@@ -750,7 +750,7 @@ void sub_080c9e8c(void)
 /* Task type #101 variant 10: one of sixteen falling sprites; Task.unk74
    picks its start delay, its column and (0-7 / 8-15) which of the two
    sway scripts it runs, over and over. */
-void sub_080ca344(void)
+void EndingStarRodReturnFallingStar(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -763,93 +763,93 @@ void sub_080ca344(void)
         case 0:
             TaskYieldTrampoline(30);
             gCurTask->posX = 64 << 16;
-            sub_080ca570();
+            EndingStarRodReturnFallingStarDriftFast();
             break;
         case 1:
             TaskYieldTrampoline(34);
             gCurTask->posX = 96 << 16;
-            sub_080ca570();
+            EndingStarRodReturnFallingStarDriftFast();
             break;
         case 2:
             TaskYieldTrampoline(100);
             gCurTask->posX = 0;
-            sub_080ca570();
+            EndingStarRodReturnFallingStarDriftFast();
             break;
         case 3:
             TaskYieldTrampoline(160);
             TaskYieldTrampoline(210);
             gCurTask->posX = 128 << 16;
-            sub_080ca570();
+            EndingStarRodReturnFallingStarDriftFast();
             break;
         case 4:
             TaskYieldTrampoline(14);
             TaskYieldTrampoline(210);
             gCurTask->posX = 160 << 16;
-            sub_080ca570();
+            EndingStarRodReturnFallingStarDriftFast();
             break;
         case 5:
             TaskYieldTrampoline(210);
             gCurTask->posX = 32 << 16;
-            sub_080ca570();
+            EndingStarRodReturnFallingStarDriftFast();
             break;
         case 6:
             TaskYieldTrampoline(200);
             TaskYieldTrampoline(210);
             gCurTask->posX = 80 << 16;
-            sub_080ca570();
+            EndingStarRodReturnFallingStarDriftFast();
             break;
         case 7:
             TaskYieldTrampoline(240);
             TaskYieldTrampoline(240);
             TaskYieldTrampoline(34);
             gCurTask->posX = 192 << 16;
-            sub_080ca570();
+            EndingStarRodReturnFallingStarDriftFast();
             break;
         case 8:
             TaskYieldTrampoline(30);
             gCurTask->posX = 64 << 16;
-            sub_080ca640();
+            EndingStarRodReturnFallingStarDriftSlow();
             break;
         case 9:
             TaskYieldTrampoline(90);
             gCurTask->posX = 144 << 16;
-            sub_080ca640();
+            EndingStarRodReturnFallingStarDriftSlow();
             break;
         case 10:
             TaskYieldTrampoline(130);
             gCurTask->posX = 96 << 16;
-            sub_080ca640();
+            EndingStarRodReturnFallingStarDriftSlow();
             break;
         case 11:
             TaskYieldTrampoline(180);
             gCurTask->posX = 32 << 16;
-            sub_080ca640();
+            EndingStarRodReturnFallingStarDriftSlow();
             break;
         case 12:
             TaskYieldTrampoline(240);
             TaskYieldTrampoline(98);
             gCurTask->posX = 128 << 16;
-            sub_080ca640();
+            EndingStarRodReturnFallingStarDriftSlow();
             break;
         case 13:
             TaskYieldTrampoline(240);
             TaskYieldTrampoline(160);
             gCurTask->posX = 240 << 16;
-            sub_080ca640();
+            EndingStarRodReturnFallingStarDriftSlow();
             break;
         case 14:
             TaskYieldTrampoline(240);
             TaskYieldTrampoline(240);
             TaskYieldTrampoline(130);
             gCurTask->posX = 160 << 16;
-            sub_080ca640();
+            EndingStarRodReturnFallingStarDriftSlow();
             break;
         case 15:
             TaskYieldTrampoline(240);
             TaskYieldTrampoline(240);
             TaskYieldTrampoline(98);
             gCurTask->posX = 192 << 16;
-            sub_080ca640();
+            EndingStarRodReturnFallingStarDriftSlow();
             break;
         }
     }
@@ -857,7 +857,7 @@ void sub_080ca344(void)
 
 /* Task type #101 variant 10, one of its two falling kinds: sway left and
    right five times while drifting down. */
-void sub_080ca570(void)
+void EndingStarRodReturnFallingStarDriftFast(void)
 {
     gCurTask->frameTable = gUnk_0874C44C;
     gCurTask->frame = RandomRange(2) * 2 + 4;
@@ -891,7 +891,7 @@ void sub_080ca570(void)
 
 /* Task type #101 variant 10, the other falling kind: sway right and left
    ten times while drifting down. */
-void sub_080ca640(void)
+void EndingStarRodReturnFallingStarDriftSlow(void)
 {
     gCurTask->frameTable = gUnk_0874C500;
     gCurTask->frame = RandomRange(4) + 4;
@@ -927,9 +927,9 @@ void sub_080ca640(void)
 void EndingStarRodReturnFountainJet(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_0801a3e4;
+    gCurTask->drawCallback = (u32)FountainSpriteDraw;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08755440;
+    gCurTask->frameTable = gFountainJetFrames;
     gCurTask->tileWord = 0xD350;
     gCurTask->posX = 128 << 16;
     gCurTask->posY = 192 << 16;
@@ -973,7 +973,7 @@ void EndingStarRodReturnFountainJet(void)
 void sub_080ca830(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_0801a3e4;
+    gCurTask->drawCallback = (u32)FountainSpriteDraw;
     gCurTask->layer = 11;
     gCurTask->frameTable = gUnk_0875546C;
     gCurTask->tileWord = 0xD350;
@@ -1005,7 +1005,7 @@ void sub_080ca830(void)
 void sub_080ca8f0(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_0801a3e4;
+    gCurTask->drawCallback = (u32)FountainSpriteDraw;
     gCurTask->layer = 10;
     gCurTask->frameTable = gUnk_08755484;
     gCurTask->tileWord = 0xD350;

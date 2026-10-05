@@ -37,7 +37,7 @@ struct MapTile
    script (0x7FFF = free slot; bit 15 = already stepped this frame), unk8 =
    the metatile the cell shows next (RoomDef.blockMetatiles[] + the layer's low byte,
    advanced by one per drawn frame), unkC = its tile entry in the BG map,
-   unk10 = the script (gUnk_0873A47C[kind], {op, arg} pairs: 1 and 2 draw a
+   unk10 = the script (gBlockBreakScripts[kind], {op, arg} pairs: 1 and 2 draw a
    frame, 3 breaks the four neighbours, 4 waits arg frames, 0x8000/0x8001
    free the record), unk14 = the frames left to wait, unk16/unk18 = the
    metatile index and collision byte written back to the map, unk1A = the

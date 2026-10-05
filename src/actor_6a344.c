@@ -217,7 +217,7 @@ void ActorDefeatFrozenBlink(void)
             else
                 t->frame = 0xFFFF;
             u = gCurTask;
-            tbl = gUnk_0873E5F8;
+            tbl = gIceBlockBlinkTimes;
             n = u->actorFreezeBlinkShown;
             a = n << 1;
             a += i << 2;
@@ -231,7 +231,7 @@ void ActorDefeatFrozenBlink(void)
     }
     else
     {
-        t->frameTable = gUnk_0874CB7C;
+        t->frameTable = gIceBlockFrames;
         t->tileWord = 0;
         if (gUnk_0300244C != 0)
             t->u8C.actor->savedPaletteBits = 0;
@@ -271,16 +271,16 @@ void ActorFreezeIntoIceBlock(void)
     a->teardown = fn;
 }
 
-void sub_0806a6a0(void)
+void ActorDefeatFrozenCheckFreezerAbility(void)
 {
     if ((u8)(gPlayerStates[gCurTask->actorFreezerPlayer].ability - 13) > 1)
     {
-        ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_2);
+        ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_BURST);
         TaskSetEntry(ActorDefeatFrozenEnterState, gCurTaskIdx);
     }
 }
 
-void sub_0806a6e0(void)
+void ActorDefeatFrozenCheckPush(void)
 {
     struct Task *t;
     struct Task *u;
@@ -355,7 +355,7 @@ void ActorDefeatFrozenUpdate(void)
     {
         if ((s8)t->hitKind != HIT_KIND_NONE)
         {
-            ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_2);
+            ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_BURST);
             TaskSetEntry(ActorDefeatFrozenEnterState, gCurTaskIdx);
         }
         else
@@ -366,13 +366,13 @@ void ActorDefeatFrozenUpdate(void)
     else if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
-        sub_0806a6e0();
+        ActorDefeatFrozenCheckPush();
         r = ActorReactToHit();
         if (r == 0)
         {
             gCurTask->hitKind = r;
-            if (gCurTask->state != ACTOR_DEFEAT_FROZEN_STATE_2)
-                sub_0806a6a0();
+            if (gCurTask->state != ACTOR_DEFEAT_FROZEN_STATE_BURST)
+                ActorDefeatFrozenCheckFreezerAbility();
         }
         else
         {
@@ -408,7 +408,7 @@ void ActorDefeatFrozenShake(void)
     } while ((s16)t->actorLoopCount <= 7);
     gCurTask->velY = 0;
     TaskYieldTrampoline(120);
-    ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_2);
+    ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_BURST);
     TaskSleepForever();
 }
 
@@ -444,7 +444,7 @@ void ActorDefeatFrozenSlideUpdate(void)
 {
 }
 
-void ActorDefeatFrozenState2(void)
+void ActorDefeatFrozenBurst(void)
 {
     struct Task *t;
     struct Task *u;
@@ -456,7 +456,7 @@ void ActorDefeatFrozenState2(void)
     PlaySfx(242);
     TaskStop();
     u = gCurTask;
-    u->frameTable = gUnk_0874C9D8;
+    u->frameTable = gRayBurstFrames;
     u->tileWord = zero;
     PlayRayBurstAnim();
     ActorDestroy();
@@ -493,17 +493,17 @@ void ActorDefeatExplode(void)
     PlayExplosionAnim();
 }
 
-void ActorExplodeDefeat1(void)
+void ActorExplodeDefeatBurning(void)
 {
     ActorDefeatExplode();
 }
 
-void ActorExplodeDefeat2(void)
+void ActorExplodeDefeatShocked(void)
 {
     ActorDefeatExplode();
 }
 
-void ActorExplodeDefeat3(void)
+void ActorExplodeDefeatFrozen(void)
 {
     ActorDefeatFrozen();
 }
@@ -631,7 +631,7 @@ void ActorDefeat4(void)
     u->updateCallback = (u32)ActorDefeat4Update;
     ActorPlaySfx(109, 0);
     v = gCurTask;
-    v->frameTable = gUnk_0874C9D8;
+    v->frameTable = gRayBurstFrames;
     v->tileWord = zero;
     PlayRayBurstAnim();
 }
@@ -647,7 +647,7 @@ void ActorDefeatAbilityStar(void)
     TaskStop();
     TaskSetFrame(0);
     t = gCurTask;
-    t->frameTable = gUnk_0874C9D8;
+    t->frameTable = gRayBurstFrames;
     t->tileWord = 0;
     PlaySfx(125);
     PlayRayBurstAnim();

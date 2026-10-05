@@ -15,13 +15,13 @@ void CutsceneFountainKirby(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)CutsceneFountainKirbyDraw;
     gCurTask->layer = 7;
-    gCurTask->frameTable = gUnk_08755068;
+    gCurTask->frameTable = gCutsceneFountainKirbyFrames;
     gCurTask->updateCallback = (u32)CutsceneFountainKirbyUpdate;
     gCurTask->cutsceneActorBgmFadeStep = -1;
     gCurTask->tileWord = 128 << 4;
     gCurTask->posX = 128 << 16;
     gCurTask->posY = 218 << 15;
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     TaskStop();
     gCurTask->frame = 78;
     TaskYieldTrampoline(64);
@@ -35,7 +35,7 @@ void CutsceneFountainKirby(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 80;
     TaskYieldTrampoline(40);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->velX = 240 << 5;
     gCurTask->frame = 81;
     TaskYieldTrampoline(8);
@@ -141,7 +141,7 @@ void CutsceneFountainKirby(void)
     TaskYieldTrampoline(4);
     gCurTask->frame = 85;
     TaskYieldTrampoline(8);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     TaskStop();
     gCurTask->frame = 78;
     TaskYieldTrampoline(44);
@@ -163,7 +163,7 @@ void CutsceneFountainKirby(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 51;
     TaskYieldTrampoline(36);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 78;
     TaskYieldTrampoline(4);
     gCurTask->cutsceneActorLoopCount = 0;
@@ -277,7 +277,7 @@ void CutsceneFountainKirby(void)
     TaskYieldTrampoline(4);
     gCurTask->frame = 88;
     TaskYieldTrampoline(4);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     TaskStop();
     gCurTask->frame = 78;
     TaskYieldTrampoline(44);
@@ -367,10 +367,10 @@ void CutsceneFountainKirby(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 100;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 72;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 102;
     TaskYieldTrampoline(2);
     gCurTask->frame = 73;
@@ -423,7 +423,7 @@ void CutsceneFountainKirby(void)
     TaskStop();
     gCurTask->frame = 9;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->velY = 0xFFFD0000;
     gCurTask->accelY = 212 << 6;
     gCurTask->frame = 0;
@@ -454,21 +454,21 @@ void CutsceneFountainKirby(void)
     gCurTask->cutsceneActorLoopCount = 0;
     do
     {
-        gCurTask->spriteFlags &= 0x7FFF;
+        gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         gCurTask->velX = 160 << 7;
         gCurTask->accelX = 192 << 3;
         gCurTask->frame = 7;
         TaskYieldTrampoline(4);
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
-        gCurTask->spriteFlags |= 128 << 8;
+        gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
         gCurTask->frame = 7;
         TaskYieldTrampoline(4);
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
-        gCurTask->spriteFlags &= 0x7FFF;
+        gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
         gCurTask->velX = 0xFFFFB000;
@@ -477,14 +477,14 @@ void CutsceneFountainKirby(void)
         TaskYieldTrampoline(4);
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
-        gCurTask->spriteFlags |= 128 << 8;
+        gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
         gCurTask->frame = 7;
         TaskYieldTrampoline(4);
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
-        gCurTask->spriteFlags &= 0x7FFF;
+        gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
         gCurTask->cutsceneActorLoopCount++;
@@ -493,21 +493,21 @@ void CutsceneFountainKirby(void)
     gCurTask->cutsceneActorLoopCount = 0;
     do
     {
-        gCurTask->spriteFlags &= 0x7FFF;
+        gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         gCurTask->velX = 160 << 7;
         gCurTask->accelX = 192 << 3;
         gCurTask->frame = 7;
         TaskYieldTrampoline(4);
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
-        gCurTask->spriteFlags |= 128 << 8;
+        gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
         gCurTask->frame = 7;
         TaskYieldTrampoline(4);
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
-        gCurTask->spriteFlags &= 0x7FFF;
+        gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
         gCurTask->velX = 0xFFFFB000;
@@ -516,14 +516,14 @@ void CutsceneFountainKirby(void)
         TaskYieldTrampoline(4);
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
-        gCurTask->spriteFlags |= 128 << 8;
+        gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
         gCurTask->frame = 7;
         TaskYieldTrampoline(4);
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
-        gCurTask->spriteFlags &= 0x7FFF;
+        gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
         gCurTask->cutsceneActorLoopCount++;
@@ -618,9 +618,9 @@ done:
 void CutsceneFountainKingDedede(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_0801a310;
+    gCurTask->drawCallback = (u32)CutsceneActorDrawStreamedFrame;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08755378;
+    gCurTask->frameTable = gCutsceneFountainKingDededeFrames;
     gCurTask->updateCallback = (u32)CutsceneFountainKingDededeUpdate;
     gUnk_02007D00[0] = -1;
     gCurTask->cutsceneActorSfxTimer = -1;
@@ -629,7 +629,7 @@ void CutsceneFountainKingDedede(void)
     gCurTask->posY = 0xFFDA0000;
     gCurTask->cutsceneActorChildGate = 0;
     CreateCutsceneActor(53, 32);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     TaskStop();
     gCurTask->frame = 0xFFFF;
     TaskYieldTrampoline(200);
@@ -787,21 +787,21 @@ void CutsceneFountainKingDedede(void)
     gCurTask->cutsceneActorLoopCount = 0;
     do
     {
-        gCurTask->spriteFlags &= 0x7FFF;
+        gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         gCurTask->velX = 160 << 7;
         gCurTask->accelX = 192 << 3;
         gCurTask->frame = 9;
         TaskYieldTrampoline(4);
         gCurTask->frame = 10;
         TaskYieldTrampoline(4);
-        gCurTask->spriteFlags |= 128 << 8;
+        gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
         gCurTask->frame = 10;
         TaskYieldTrampoline(4);
         gCurTask->frame = 9;
         TaskYieldTrampoline(4);
         gCurTask->frame = 10;
         TaskYieldTrampoline(4);
-        gCurTask->spriteFlags &= 0x7FFF;
+        gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         gCurTask->frame = 10;
         TaskYieldTrampoline(4);
         gCurTask->velX = 0xFFFFB000;
@@ -810,19 +810,19 @@ void CutsceneFountainKingDedede(void)
         TaskYieldTrampoline(4);
         gCurTask->frame = 10;
         TaskYieldTrampoline(4);
-        gCurTask->spriteFlags |= 128 << 8;
+        gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
         gCurTask->frame = 10;
         TaskYieldTrampoline(4);
         gCurTask->frame = 9;
         TaskYieldTrampoline(4);
         gCurTask->frame = 10;
         TaskYieldTrampoline(4);
-        gCurTask->spriteFlags &= 0x7FFF;
+        gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         gCurTask->frame = 10;
         TaskYieldTrampoline(4);
         gCurTask->cutsceneActorLoopCount++;
     } while ((s16)gCurTask->cutsceneActorLoopCount <= 5);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     TaskStop();
     gCurTask->frame = 19;
     TaskYieldTrampoline(10);
@@ -837,7 +837,7 @@ void CutsceneFountainKingDedede(void)
     TaskYieldTrampoline(6);
     gCurTask->frame = 19;
     TaskYieldTrampoline(4);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 19;
     TaskYieldTrampoline(4);
     gCurTask->frame = 20;
@@ -861,7 +861,7 @@ void CutsceneFountainKingDedede(void)
     PlaySfx(135 << 2);
     gCurTask->frame = 23;
     TaskYieldTrampoline(10);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 23;
     TaskYieldTrampoline(4);
     PlaySfx(0x113);

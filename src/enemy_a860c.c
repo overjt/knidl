@@ -54,15 +54,15 @@ extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
 /* Module functions */
-void sub_080a2b2c();
+void MrBrightFlashPalette();
 void ReleaseRoomObject();
 s32 LoadRoomEnemyGfx();
 s32 LoadRoomMidBossGfx();
 s32 LoadRoomBossGfx();
 void LoadRoomMetaKnightsGfx();
-s32 sub_080b5a94();
+s32 LoadRoomStageObjectGfx();
 s32 SpawnRoomEnemy();
-s32 sub_080b5d84();
+s32 SpawnRoomMapEvent();
 void KrackoJrTransformUpdate(void)
 {
     s32 n;
@@ -101,7 +101,7 @@ void KrackoJrTransformUpdate(void)
             {
                 TaskGetNearestPlayerScreenPos();
                 if (gUnk_030023B4 == 128)
-                    gCurTask->posX = (gUnk_087490E4[RandomRange(2)] + gViewRect[0]) << 16;
+                    gCurTask->posX = (gKrackoSideX[RandomRange(2)] + gViewRect[0]) << 16;
                 if (gUnk_030023B4 <= 127)
                     gCurTask->posX = (gViewRect[0] + 168) << 16;
                 else

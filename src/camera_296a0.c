@@ -160,45 +160,45 @@ void StreamBg23Rows(void)
 
 void CameraWriteScrollParallax(void)
 {
-    gBg2ScrollX = (gCameraPos[0] + gScreenShake.unk2) << 16;
-    gBg2ScrollY = (gCameraPos[1] + gScreenShake.unk4) << 16;
+    gBg2ScrollX = (gCameraPos[0] + gScreenShake.offsetX) << 16;
+    gBg2ScrollY = (gCameraPos[1] + gScreenShake.offsetY) << 16;
     if (gRoomBg3FullShake != 0)
     {
-        gBg3ScrollX = (gBg3Pos[0] + gScreenShake.unk2) << 16;
-        gBg3ScrollY = (gBg3Pos[1] + gScreenShake.unk4) << 16;
+        gBg3ScrollX = (gBg3Pos[0] + gScreenShake.offsetX) << 16;
+        gBg3ScrollY = (gBg3Pos[1] + gScreenShake.offsetY) << 16;
     }
     else
     {
-        gBg3ScrollX = (gBg3Pos[0] + (gScreenShake.unk2 >> 1)) << 16;
+        gBg3ScrollX = (gBg3Pos[0] + (gScreenShake.offsetX >> 1)) << 16;
         gBg3ScrollY = gBg3Pos[1] << 16;
     }
-    gSpriteCameraX = gCameraPos[0] + gScreenShake.unk2;
-    gSpriteCameraY = gCameraPos[1] + gScreenShake.unk4;
+    gSpriteCameraX = gCameraPos[0] + gScreenShake.offsetX;
+    gSpriteCameraY = gCameraPos[1] + gScreenShake.offsetY;
 }
 
 void CameraWriteScrollHBlank(void)
 {
-    gBg2ScrollY = (gCameraPos[1] + gScreenShake.unk4) << 16;
-    gBg3ScrollY = (gBg3Pos[1] + gScreenShake.unk4) << 16;
-    gSpriteCameraX = gCameraPos[0] + gScreenShake.unk2;
-    gSpriteCameraY = gCameraPos[1] + gScreenShake.unk4;
+    gBg2ScrollY = (gCameraPos[1] + gScreenShake.offsetY) << 16;
+    gBg3ScrollY = (gBg3Pos[1] + gScreenShake.offsetY) << 16;
+    gSpriteCameraX = gCameraPos[0] + gScreenShake.offsetX;
+    gSpriteCameraY = gCameraPos[1] + gScreenShake.offsetY;
     gHBlankScrollBaseX = gCameraPos[0];
 }
 
 void CameraWriteScrollBg23(void)
 {
-    gBg3ScrollX = gBg2ScrollX = (gCameraPos[0] + gScreenShake.unk2) << 16;
-    gBg3ScrollY = gBg2ScrollY = (gCameraPos[1] + gScreenShake.unk4) << 16;
-    gSpriteCameraX = gCameraPos[0] + gScreenShake.unk2;
-    gSpriteCameraY = gCameraPos[1] + gScreenShake.unk4;
+    gBg3ScrollX = gBg2ScrollX = (gCameraPos[0] + gScreenShake.offsetX) << 16;
+    gBg3ScrollY = gBg2ScrollY = (gCameraPos[1] + gScreenShake.offsetY) << 16;
+    gSpriteCameraX = gCameraPos[0] + gScreenShake.offsetX;
+    gSpriteCameraY = gCameraPos[1] + gScreenShake.offsetY;
 }
 
 void CameraWriteScrollBg123(void)
 {
-    gBg1ScrollX = gBg3ScrollX = gBg2ScrollX = (gCameraPos[0] + gScreenShake.unk2) << 16;
-    gBg1ScrollY = gBg3ScrollY = gBg2ScrollY = (gCameraPos[1] + gScreenShake.unk4) << 16;
-    gSpriteCameraX = gCameraPos[0] + gScreenShake.unk2;
-    gSpriteCameraY = gCameraPos[1] + gScreenShake.unk4;
+    gBg1ScrollX = gBg3ScrollX = gBg2ScrollX = (gCameraPos[0] + gScreenShake.offsetX) << 16;
+    gBg1ScrollY = gBg3ScrollY = gBg2ScrollY = (gCameraPos[1] + gScreenShake.offsetY) << 16;
+    gSpriteCameraX = gCameraPos[0] + gScreenShake.offsetX;
+    gSpriteCameraY = gCameraPos[1] + gScreenShake.offsetY;
 }
 
 void sub_08029b30(void)

@@ -6,7 +6,7 @@
  * The tail of the vehicle/ride block: Task_DustTrail's per-frame integrator
  * over the gTasks[] task table, the two sprite-list players
  * Task_DustPuff / Task_BackwardDustPuff, and the spawn/teardown helpers
- * CreateLandingDust / sub_0806d08c / Task_LandingDust / CreateDustBurst.  Every literal
+ * CreateLandingDust / CreateLandingDustFacing / Task_LandingDust / CreateDustBurst.  Every literal
  * pool in this range ends exactly on the next function's entry, so any
  * symbols.csv boundary here is a valid carve point.
  */
@@ -34,7 +34,7 @@ void Task_DustTrail(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_0874CB90;
+    u->frameTable = gDustFrames;
     while (u->dustTrailPuffCount != 0 && gTaskSlotTypes[u->parent] != -1)
     {
         if (TaskHasSameSerial(gCurTask->parent) != 1)
@@ -81,7 +81,7 @@ void Task_DustPuff(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_0874CB90;
+    u->frameTable = gDustFrames;
     TaskFaceLikeParent();
     gCurTask->posX = (RandomSpreadFacing(-8, 1, 8) + gCurTask->pixelX) << 16;
     gCurTask->posY = (RandomSpread(-8, 1, 8) + gCurTask->pixelY) << 16;
@@ -107,7 +107,7 @@ void Task_BackwardDustPuff(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_0874CB90;
+    u->frameTable = gDustFrames;
     TaskFaceLikeParent();
     TaskSetMotionXFacing(0xFFFDC000, 0x1800);
     v = gCurTask;
@@ -139,7 +139,7 @@ void CreateLandingDust(s16 dx, s16 dy)
         gTasks[i].facing = 0xFF;
 }
 
-void sub_0806d08c(s16 a, s16 b, s16 c)
+void CreateLandingDustFacing(s16 a, s16 b, s16 c)
 {
     struct Task *t;
     struct Task *u;
@@ -168,7 +168,7 @@ void Task_LandingDust(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_0874CB90;
+    u->frameTable = gDustFrames;
     if (u->facing != 1 && u->facing != -1)
         u->facing = 1;
     TaskSetMotionXFacing(0x24000, 0xFFFFE800);

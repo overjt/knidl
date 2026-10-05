@@ -21,7 +21,7 @@ extern u32 ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
 
-void sub_0809c0a8(void)
+void MetaKnightsIntro(void)
 {
     struct Task *t;
     struct Task *u;
@@ -214,7 +214,7 @@ void Task_MetaKnightsKnight(void)
     u = gCurTask;
     a = u->u8C.actor;
     a->savedPaletteBits = 0xF000 & u->tileWord;
-    sub_0809f818(1);
+    MetaKnightsKnightSetQueueState(1);
     switch (gCurTask->actorSpawnArg)
     {
     case 0:
@@ -230,10 +230,10 @@ void Task_MetaKnightsKnight(void)
         sub_0809e824();
         break;
     case 4:
-        sub_0809f61c();
+        MetaKnightsKnightQueueDelay();
         break;
     case 5:
-        sub_0809f7e4();
+        MetaKnightsKnightQueueEnd();
         break;
     }
 }
@@ -251,7 +251,7 @@ void sub_0809c490(void)
     CallTableEntry(u->variant, 4, gAxeKnightVariants);
 }
 
-void AxeKnightVariant0(void)
+void AxeKnightFallInInit(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
@@ -264,7 +264,7 @@ void AxeKnightVariant0(void)
     u->accelY = 148 << 6;
     u->speedLimitY = 192 << 10;
     u->onGround = 0;
-    sub_0809c5a4();
+    AxeKnightAnimateWalk();
 }
 
 void AxeKnightEnterState(void)
@@ -299,10 +299,10 @@ void AxeKnightWalk(void)
     sub_0809f90c();
     sub_0809f91c();
     TaskSetMotionXFacing(128 << 8, 0x5A5A5A5A);
-    sub_0809c5a4();
+    AxeKnightAnimateWalk();
 }
 
-void sub_0809c5a4(void)
+void AxeKnightAnimateWalk(void)
 {
     while (1)
     {
@@ -336,7 +336,7 @@ void AxeKnightWalkUpdate(void)
     struct Task *v;
     s32 n;
 
-    if (sub_0809f994() != 0)
+    if (MetaKnightsKnightIsAtEdge() != 0)
         sub_0809f930();
     t = gCurTask;
     if (t->metaKnightsKnightAxeWaitTimer > 0)
@@ -444,7 +444,7 @@ void AxeKnightSlashUpdate(void)
     if (gCurTask->state != AXE_KNIGHT_STATE_SLASH)
         TaskSetEntry(AxeKnightEnterState, gCurTaskIdx);
     if ((u16)(gCurTask->frame - 22) <= 1)
-        ActorCheckHitsWithBox((s32)gUnk_08747EF4);
+        ActorCheckHitsWithBox((s32)gAxeKnightSlashAttackBox);
 }
 
 void AxeKnightThrow(void)
@@ -576,11 +576,11 @@ void AxeKnightState4Update(void)
 {
 }
 
-void AxeKnightVariant1(void)
+void AxeKnightSlashLoop(void)
 {
     struct Task *t;
 
-    gCurTask->updateCallback = (u32)sub_0809cb90;
+    gCurTask->updateCallback = (u32)AxeKnightSlashLoopUpdate;
     TaskFaceScreenCenter();
     while (1)
     {

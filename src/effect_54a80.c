@@ -12,12 +12,12 @@
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
  * variants 12-15.  Variant 12 (PlayerEffectDeathStarRing, M10/M11) has no motion or draw
  * hook: it picks one of eight directions by the low three bits of Task.unk18
- * and flies two particles from the spawner's position, rows gUnk_0873BA4C[i]
+ * and flies two particles from the spawner's position, rows gPlayerEffectDeathStarRingMotions[i]
  * and [i + 4] holding each one's 8.8 velocity and acceleration, which its
  * Task.lateUpdateCallback callback PlayerEffectDeathStarRingLateUpdate integrates every frame, drawing both with
  * QueueSprite when on screen (IsOnScreen; camera-relative unless
  * PlayerState.unk37 == 2).  Variant 13 (PlayerEffectMetaKnightDeathBlast, M11) plays the 23
- * frames of gUnk_0873E640.  Variant 14 (sub_08054de8, M13's ability get)
+ * frames of gExplosionAnimFrames.  Variant 14 (sub_08054de8, M13's ability get)
  * rides on its spawner through four sub-states of frame loops.  Variant 15
  * (sub_08054fe4; M09, M11, M13) runs one of two endless particle loops
  * chosen by the ability PlayerState.ability (1 or 2), re-seeding a random
@@ -49,31 +49,31 @@ void PlayerEffectDeathStarRing(void)
     gCurTask->lateUpdateCallback = (u32)PlayerEffectDeathStarRingLateUpdate;
     gCurTask->layer = 8;
     t = gCurTask;
-    t->frameTable = gUnk_0874C6F4;
+    t->frameTable = gPlayerEffectDeathStarRingFrames;
     t->pixelX = (t->u8C.parentTask)->pixelX;
     t->pixelY = (t->u8C.parentTask)->pixelY;
-    a = gUnk_0873BA4C[t->playerEffectSpawnWord & 7][0];
+    a = gPlayerEffectDeathStarRingMotions[t->playerEffectSpawnWord & 7][0];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
-    t->unk28 = b;
-    a = gUnk_0873BA4C[t->playerEffectSpawnWord & 7][1];
+    t->playerEffectRingStarVelX = b;
+    a = gPlayerEffectDeathStarRingMotions[t->playerEffectSpawnWord & 7][1];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
-    t->unk2C = b;
+    t->playerEffectRingStarVelY = b;
     t->posX = t->pixelX;
     t->posY = t->pixelY;
-    a = gUnk_0873BA4C[(t->playerEffectSpawnWord & 7) + 4][0];
+    a = gPlayerEffectDeathStarRingMotions[(t->playerEffectSpawnWord & 7) + 4][0];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
-    t->unk30 = b;
-    a = gUnk_0873BA4C[(t->playerEffectSpawnWord & 7) + 4][1];
+    t->playerEffectRingOppositeVelX = b;
+    a = gPlayerEffectDeathStarRingMotions[(t->playerEffectSpawnWord & 7) + 4][1];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
-    t->unk34 = b;
+    t->playerEffectRingOppositeVelY = b;
     t->frame = 0;
     TaskYieldTrampoline(2);
     gCurTask->playerEffectLoopCount = 0;
@@ -123,15 +123,15 @@ void PlayerEffectDeathStarRingLateUpdate(void)
     if (IsOnScreen(x, y) != 0)
         QueueSprite(gCurTask->layer, tbl[gCurTask->frame], 0, 0, x, y);
     i = gCurTask->playerEffectSpawnWord & 7;
-    gCurTask->unk28 += (gUnk_0873BA4C[i][2] & 0x8000) ? (gUnk_0873BA4C[i][2] << 8) | 0xFF000000 : gUnk_0873BA4C[i][2] << 8;
-    gCurTask->unk2C += (gUnk_0873BA4C[i][3] & 0x8000) ? (gUnk_0873BA4C[i][3] << 8) | 0xFF000000 : gUnk_0873BA4C[i][3] << 8;
-    gCurTask->pixelX += gCurTask->unk28 >> 16;
-    gCurTask->pixelY += gCurTask->unk2C >> 16;
+    gCurTask->playerEffectRingStarVelX += (gPlayerEffectDeathStarRingMotions[i][2] & 0x8000) ? (gPlayerEffectDeathStarRingMotions[i][2] << 8) | 0xFF000000 : gPlayerEffectDeathStarRingMotions[i][2] << 8;
+    gCurTask->playerEffectRingStarVelY += (gPlayerEffectDeathStarRingMotions[i][3] & 0x8000) ? (gPlayerEffectDeathStarRingMotions[i][3] << 8) | 0xFF000000 : gPlayerEffectDeathStarRingMotions[i][3] << 8;
+    gCurTask->pixelX += gCurTask->playerEffectRingStarVelX >> 16;
+    gCurTask->pixelY += gCurTask->playerEffectRingStarVelY >> 16;
     j = (gCurTask->playerEffectSpawnWord & 7) + 4;
-    gCurTask->unk30 += (gUnk_0873BA4C[j][2] & 0x8000) ? (gUnk_0873BA4C[j][2] << 8) | 0xFF000000 : gUnk_0873BA4C[j][2] << 8;
-    gCurTask->unk34 += (gUnk_0873BA4C[j][3] & 0x8000) ? (gUnk_0873BA4C[j][3] << 8) | 0xFF000000 : gUnk_0873BA4C[j][3] << 8;
-    gCurTask->posX += ((s16 *)&gCurTask->unk30)[1];
-    gCurTask->posY += ((s16 *)&gCurTask->unk34)[1];
+    gCurTask->playerEffectRingOppositeVelX += (gPlayerEffectDeathStarRingMotions[j][2] & 0x8000) ? (gPlayerEffectDeathStarRingMotions[j][2] << 8) | 0xFF000000 : gPlayerEffectDeathStarRingMotions[j][2] << 8;
+    gCurTask->playerEffectRingOppositeVelY += (gPlayerEffectDeathStarRingMotions[j][3] & 0x8000) ? (gPlayerEffectDeathStarRingMotions[j][3] << 8) | 0xFF000000 : gPlayerEffectDeathStarRingMotions[j][3] << 8;
+    gCurTask->posX += ((s16 *)&gCurTask->playerEffectRingOppositeVelX)[1];
+    gCurTask->posY += ((s16 *)&gCurTask->playerEffectRingOppositeVelY)[1];
 }
 
 void PlayerEffectMetaKnightDeathBlast(void)
@@ -143,10 +143,10 @@ void PlayerEffectMetaKnightDeathBlast(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 8;
     t = gCurTask;
-    t->frameTable = gUnk_0874CA1C;
+    t->frameTable = gExplosionFrames;
     for (i = 0; i < 23; i++)
     {
-        gCurTask->frame = gUnk_0873E640[i];
+        gCurTask->frame = gExplosionAnimFrames[i];
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();
@@ -258,7 +258,7 @@ void sub_08054fe4(void)
     t->lateUpdateCallback = (u32)sub_080553d4;
     t->layer = (t->u8C.parentTask)->layer;
     u = gCurTask;
-    u->unk28 = u->player->ability;
+    u->playerEffectStartAbility = u->player->ability;
     switch (u->player->ability)
     {
     case ABILITY_FIRE:
@@ -341,7 +341,7 @@ void sub_080552fc(void)
     s32 r;
 
     if (gRoomExitKind == 1
-     || (t = gCurTask, ps = t->player, t->unk28 != ps->ability)
+     || (t = gCurTask, ps = t->player, t->playerEffectStartAbility != ps->ability)
      || ps->mode == 13 || ps->mode == 22
      || gRoomPlayerMode == 1)
     {
@@ -361,10 +361,10 @@ void sub_080552fc(void)
         gCurTask->pixelX = (gCurTask->posX >> 16) + ((u32)r >> 16);
         gCurTask->pixelY = (gCurTask->posY >> 16) + r;
     }
-    if (gCurTask->player->mode == 20 && (gCurTask->u8C.parentTask)->unk18 != 0)
+    if (gCurTask->player->mode == 20 && (gCurTask->u8C.parentTask)->playerWarpStarScale != 0)
         ok = 0;
     if (ok == 0)
-        TaskSetSkipMask(8, gCurTaskIdx);
+        TaskSetSkipMask(TASK_SKIP_LATE_UPDATE, gCurTaskIdx);
     else
         TaskSetSkipMask(0, gCurTaskIdx);
 }

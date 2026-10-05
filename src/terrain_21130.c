@@ -44,7 +44,7 @@ void TerrainProbeWaterAndDrift(void)
     }
     prev = gTerrainProbeResult.waterFlags;
     prev2 = prev;
-    gTerrainProbeResult.unk8 = 0xFFFF;
+    gTerrainProbeResult.waterSurfaceY = 0xFFFF;
     gTerrainProbeResult.waterFlags = 0;
     zero = 0;
     y = gTerrainProbeY;
@@ -69,7 +69,7 @@ void TerrainProbeWaterAndDrift(void)
                 if ((prev & 2) == 0)
                 {
                     gTerrainProbeResult.waterFlags = v | 0x80;
-                    gTerrainProbeResult.unk8 = (gTerrainProbeY + gTerrainBoxTop) & 0xFFF0;
+                    gTerrainProbeResult.waterSurfaceY = (gTerrainProbeY + gTerrainBoxTop) & 0xFFF0;
                 }
                 else
                 {
@@ -79,7 +79,7 @@ void TerrainProbeWaterAndDrift(void)
             else
             {
                 gTerrainProbeResult.waterFlags |= 0x48;
-                gTerrainProbeResult.unk8 = ((gTerrainProbeY + gTerrainBoxTop) & 0xFFF0) + 16;
+                gTerrainProbeResult.waterSurfaceY = ((gTerrainProbeY + gTerrainBoxTop) & 0xFFF0) + 16;
             }
         }
         else
@@ -89,12 +89,12 @@ void TerrainProbeWaterAndDrift(void)
             if (gTerrainTile & 0x80)
             {
                 gTerrainProbeResult.waterFlags |= 0x48;
-                gTerrainProbeResult.unk8 = (gTerrainProbeY + gTerrainBoxBottom) & 0xFFF0;
+                gTerrainProbeResult.waterSurfaceY = (gTerrainProbeY + gTerrainBoxBottom) & 0xFFF0;
             }
             else if (prev2 & 8)
             {
                 gTerrainProbeResult.waterFlags |= 0x80;
-                gTerrainProbeResult.unk8 = ((gTerrainProbeY + gTerrainBoxBottom) & 0xFFF0) + 16;
+                gTerrainProbeResult.waterSurfaceY = ((gTerrainProbeY + gTerrainBoxBottom) & 0xFFF0) + 16;
             }
         }
     }

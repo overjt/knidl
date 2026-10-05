@@ -19,7 +19,7 @@ void PlayerDance12(void)
 {
     struct Task *t;
 
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     TaskSetMotion(0xFFFF0000, 0, 0x5A5A5A5A, 0x40000, 0, 0x5A5A5A5A);
     gCurTask->frame = 0x133;
     TaskYieldTrampoline(1);
@@ -252,10 +252,10 @@ void PlayerDance12(void)
     TaskYieldTrampoline(3);
     gCurTask->frame = 0x6E;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x11;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->velX = 0x10000;
     gCurTask->frame = 0x6F;
     TaskYieldTrampoline(3);
@@ -281,12 +281,12 @@ void PlayerDance12(void)
     TaskYieldTrampoline(4);
     gCurTask->frame = 0x6E;
     TaskYieldTrampoline(4);
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x11;
     TaskYieldTrampoline(1);
     gCurTask->frame = 0x11;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->velX = 0x10000;
     gCurTask->frame = 0x6F;
     TaskYieldTrampoline(3);
@@ -371,14 +371,14 @@ void PlayerDance12(void)
     TaskYieldTrampoline(2);
     TaskStop();
     t = gCurTask;
-    t->spriteFlags |= 0x8000;
+    t->spriteFlags |= SPRITE_FLAG_FLIP_X;
     CreatePlayerEffect(t->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 0x92;
     TaskYieldTrampoline(0x15);
 }
 void PlayerDance13(void)
 {
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     TaskSetMotion(0xFFFF0000, 0xC00, 0x5A5A5A5A, 0xFFFE7800, 0x3800, 0x5A5A5A5A);
     gCurTask->frame = 0x10;
     TaskYieldTrampoline(4);
@@ -430,7 +430,7 @@ void PlayerDance13(void)
     TaskYieldTrampoline(3);
     gCurTask->frame = 0x14;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     TaskSetMotion(0xFFFF0000, 0x1600, 0x5A5A5A5A, 0xFFFE7800, 0x3800, 0x5A5A5A5A);
     gCurTask->frame = 0x6D;
     TaskYieldTrampoline(1);
@@ -514,10 +514,10 @@ void PlayerDance13(void)
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x92;
     TaskYieldTrampoline(0x15);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     gCurTask->velX = 0x20000;
@@ -532,7 +532,7 @@ void PlayerDance13(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 0x11;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x6F;
     TaskYieldTrampoline(2);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
@@ -550,7 +550,7 @@ void PlayerDance13(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 0x11;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x6F;
     TaskYieldTrampoline(2);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
@@ -625,7 +625,7 @@ void PlayerDance13(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 0x28;
     TaskYieldTrampoline(1);
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0x8400, 0xFFFFF400, 0x5A5A5A5A);
     gCurTask->frame = 0x7B;
     TaskYieldTrampoline(0x13);

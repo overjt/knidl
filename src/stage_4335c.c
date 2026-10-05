@@ -92,8 +92,8 @@ void MetaKnightActionSwimUpdate(void)
         k = gLatchedHeldKeys[t->player->playerIndex] & 0xF0;
         if (k == 0)
             goto Lstore;
-        if ((s16)t->player->unk14 != 0)
-            t->player->unk14--;
+        if ((s16)t->player->playerSwimStrokeTimer != 0)
+            t->player->playerSwimStrokeTimer--;
         break;
     Lc3set1:
         *st = 1;
@@ -102,7 +102,7 @@ void MetaKnightActionSwimUpdate(void)
         *st = 2;
         goto Lmerge;
     Lc3dec:
-        u->unk14--;
+        u->playerSwimStrokeTimer--;
         goto Lmerge;
     case 3:
         if (gLatchedHeldKeys[(u = t->player)->playerIndex] & 0x30)
@@ -111,7 +111,7 @@ void MetaKnightActionSwimUpdate(void)
             goto Lc3set1;
         if (gLatchedHeldKeys[u->playerIndex] & 0x80)
             goto Lc3set2;
-        if ((s16)u->unk14 != 0)
+        if ((s16)u->playerSwimStrokeTimer != 0)
             goto Lc3dec;
         if ((gLatchedHeldKeys[u->playerIndex] & 0xF1) == 0 && t->velY >= 0)
             *st = 0;

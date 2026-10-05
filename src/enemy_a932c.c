@@ -54,15 +54,15 @@ extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
 /* Module functions */
-void sub_080a2b2c();
+void MrBrightFlashPalette();
 void ReleaseRoomObject();
 s32 LoadRoomEnemyGfx();
 s32 LoadRoomMidBossGfx();
 s32 LoadRoomBossGfx();
 void LoadRoomMetaKnightsGfx();
-s32 sub_080b5a94();
+s32 LoadRoomStageObjectGfx();
 s32 SpawnRoomEnemy();
-s32 sub_080b5d84();
+s32 SpawnRoomMapEvent();
 void KrackoJrClampToView(void)
 {
     struct Task *t = gCurTask;

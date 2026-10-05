@@ -87,7 +87,7 @@ s32 ExtraModeTitleSendModeData(void)
     if (gLinkIsMaster != 0) {
         gLinkBroadcastAcks = 0;
         gSendCmd[0] = 0xAA00;
-        gSendCmd[1] = gUnk_02006090;
+        gSendCmd[1] = gExtraModeTitleIndex;
     }
     do {
         RunFrame();
@@ -95,7 +95,7 @@ s32 ExtraModeTitleSendModeData(void)
         if (IsLinkError() != 0)
             return 1;
     } while (LinkBroadcastWordStep() == 0);
-    switch (gUnk_02006090) {
+    switch (gExtraModeTitleIndex) {
     case 0:
         src = gUnk_0876F690;
         size = gUnk_087954C0 - gUnk_0876F690;
@@ -146,12 +146,12 @@ void ExtraModeTitleLinkErrorScreen(void)
     }
     BeginFastFadeOutToWhite();
     RunFramesNoTasksUntilFadeDone();
-    gPrevGameState = gUnk_02007FCC + 14;
+    gPrevGameState = gExtraModeIndex + 14;
     gGameState = GAME_STATE_MAIN_MENU;
 }
 
 /* Stage the link-play payload at 0x02020000: the common blob
-   0x0876B1FC-0x0876F690 plus three chunks picked by gUnk_02006090.  The table
+   0x0876B1FC-0x0876F690 plus three chunks picked by gExtraModeTitleIndex.  The table
    at 0x020200C8 (inside the copied blob) gets each chunk's address as seen
    once the payload runs from 0x02000000, hence the - 0x20000.  The addresses
    are written as literals: the ROM rebuilds each one as size + constant. */
@@ -164,7 +164,7 @@ void ExtraModeTitleLoadMultiBootImage(void)
     size = gUnk_0876F690 - gUnk_0876B1FC;
     CpuSet(gUnk_0876B1FC, dst, ((size + 16) / 2) & 0x1FFFFF);
     dst = (u8 *)(size + (EWRAM_START + 0x20010));
-    switch (gUnk_02006090) {
+    switch (gExtraModeTitleIndex) {
     case 0:
         CpuSet(gUnk_085B4ACC, dst, 0x40);
         *tbl++ = (u32)dst - 0x20000;
@@ -210,19 +210,19 @@ void ExtraModeTitleMain(void)
 
     ResetTasksAndOam();
     LoadBgLayout(4);
-    ExtraModeTitleLoadPicture(gUnk_02006090);
+    ExtraModeTitleLoadPicture(gExtraModeTitleIndex);
     LoadGfxSet(63);
     gBg0ScrollX = gBg0ScrollY = 0;
     gBg3ScrollX = gBg3ScrollY = 0;
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1800;
-    if (gUnk_02006090 == 6 || gUnk_02006090 == 7) {
+    if (gExtraModeTitleIndex == 6 || gExtraModeTitleIndex == 7) {
         LoadGfxSet(4);
         RequestCopy(6, 0, BG_VRAM + 0x1000, 0x800);
         /* Two complete copies: jump2 cross-jumps the identical tails, which
            is what leaves the ROM's `ldr r0, =F18; b join` arm.  A pointer
            local (if/else or ?:) is folded into "p = b; if (c) p = a". */
-        if (gUnk_02006090 == 6) {
+        if (gExtraModeTitleIndex == 6) {
             if (gBossEnduranceBestTime[0] != 0 || gBossEnduranceBestTime[1] != 0
                 || gBossEnduranceBestTime[2] != 0 || gBossEnduranceBestTime[3] != 0) {
                 DrawClockToBgMap(gBossEnduranceBestTime, 22, 18);
@@ -275,7 +275,7 @@ void ExtraModeTitleMain(void)
         BeginFastFadeOutToWhite();
         RunFramesUntilFadeDone();
         gGameState = GAME_STATE_MAIN_MENU;
-        gPrevGameState = gUnk_02007FCC + 14;
+        gPrevGameState = gExtraModeIndex + 14;
         return;
     } else {
         LinkRequestSync();
@@ -291,7 +291,7 @@ select:
     while (1) {
         RunLinkFrame();
         if (gPrevGameState == GAME_STATE_MAIN_MENU) {
-            if (gUnk_02006090 <= 2) {
+            if (gExtraModeTitleIndex <= 2) {
                 if ((gPlayerPressedKeys[0] & 0x20) && gSubGameLevel != 0) {
                     PlaySfx(SE_CURSOR_MOVE);
                     gSubGameLevel--;
@@ -320,8 +320,8 @@ select:
         gLinkDriverMode = 0;
     gExtraModeTitlePhase = 4;
     LinkStopKeyExchange();
-    /* store address first, then the one read of gUnk_02007FCC, kept in k */
-    gGameState = (k = gUnk_02007FCC) + 14;
+    /* store address first, then the one read of gExtraModeIndex, kept in k */
+    gGameState = (k = gExtraModeIndex) + 14;
     if (gPrevGameState == GAME_STATE_MAIN_MENU && k <= 2)
         RunLinkFrames(32);
     BeginFastFadeOutToWhite();

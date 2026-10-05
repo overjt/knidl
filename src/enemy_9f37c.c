@@ -161,7 +161,7 @@ u8 TridentKnightHitWall(void)
         break;
     case 0:
         if (t->state == 0)
-            sub_0809ec84();
+            TridentKnightPickMoveAtEdge();
         else
             TaskStopX();
         return 0;
@@ -191,7 +191,7 @@ u8 TridentKnightHitCeiling(void)
     return 0;
 }
 
-void sub_0809f61c(void)
+void MetaKnightsKnightQueueDelay(void)
 {
     struct Task *t;
     struct Task *u;
@@ -270,13 +270,13 @@ void sub_0809f61c(void)
         TaskYieldTrampoline(1);
         break;
     }
-    sub_0809f818(0);
+    MetaKnightsKnightSetQueueState(0);
     TaskExitTrampoline();
 }
 
-void sub_0809f7e4(void)
+void MetaKnightsKnightQueueEnd(void)
 {
-    sub_0809f818(-1);
+    MetaKnightsKnightSetQueueState(-1);
     TaskExitTrampoline();
 }
 
@@ -287,11 +287,11 @@ void MetaKnightsKnightReactToDamage(void)
 
 void MetaKnightsKnightTeardown(void)
 {
-    sub_0809f818(0);
-    sub_0809f874();
+    MetaKnightsKnightSetQueueState(0);
+    MetaKnightsKnightDamageGroup();
 }
 
-void sub_0809f818(s32 v)
+void MetaKnightsKnightSetQueueState(s32 v)
 {
     switch (gCurTask->metaKnightsKnightQueue)
     {
@@ -313,7 +313,7 @@ void sub_0809f818(s32 v)
     }
 }
 
-void sub_0809f874(void)
+void MetaKnightsKnightDamageGroup(void)
 {
     switch (gCurTask->metaKnightsKnightQueue)
     {
@@ -385,7 +385,7 @@ void sub_0809f970(void)
     TaskUpdateFlip();
 }
 
-s32 sub_0809f994(void)
+s32 MetaKnightsKnightIsAtEdge(void)
 {
     struct Task *t;
     struct Actor *a;

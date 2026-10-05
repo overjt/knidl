@@ -18,12 +18,12 @@
  * decreasing speeds, killed by PlayerEffectSlideDustUpdate once the player leaves mode 7),
  * each spawning its own sub-state 1, a small rising puff.  Variants 9-11 are
  * M09's player task effects: 9 (PlayerEffectSplash) and 10 (PlayerEffectLeaveWaterSplash) play
- * short animations from gUnk_0874C520, 9 first calling M11's
+ * short animations from gSplashFrames, 9 first calling M11's
  * PlaySfxIfLocalPlayer(134, ...) when the spawner is moving down (Task.velY > 0)
  * and 10 placed at the height the spawner passes in the low half of
  * Task.unk18; 11 (PlayerEffectBubble) asks M07's IsFullBlockAtPixel about its position
  * and, when that returns 0, rises while swaying left and right, until its
- * companion sub_08054a44 (the collision box gUnk_0873CB74 through
+ * companion PlayerEffectBubbleUpdate (the collision box gUnk_0873CB74 through
  * TerrainCollidePointStop) kills it once its Task.waterFlags is clear or gTerrainResult.unk1
  * is set. */
 
@@ -215,7 +215,7 @@ void PlayerEffectSplash(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_0874C520;
+    t->frameTable = gSplashFrames;
     if ((t->u8C.parentTask)->velY > 0)
         PlaySfxIfLocalPlayer(134, t->parent);
     u = gCurTask;
@@ -241,7 +241,7 @@ void PlayerEffectLeaveWaterSplash(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_0874C520;
+    t->frameTable = gSplashFrames;
     t->posX = (t->u8C.parentTask)->pixelX << 16;
     t->posY = (u16)t->playerEffectSpawnWord << 16;
     t->frame = 11;
@@ -269,10 +269,10 @@ void PlayerEffectBubble(void)
 
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorldInViewOrFree;
-    gCurTask->updateCallback = (u32)sub_08054a44;
+    gCurTask->updateCallback = (u32)PlayerEffectBubbleUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_0874C648;
+    t->frameTable = gPlayerEffectBubbleFrames;
     if (t->facing == 1)
         t->posX = (t->pixelX + 4) << 16;
     if (IsFullBlockAtPixel(gCurTask->posX >> 16, gCurTask->posY >> 10) == 0)
@@ -291,7 +291,7 @@ void PlayerEffectBubble(void)
     TaskExitTrampoline();
 }
 
-void sub_08054a44(void)
+void PlayerEffectBubbleUpdate(void)
 {
     TerrainCollidePointStop(gUnk_0873CB74);
     if (gCurTask->waterFlags == 0 || gTerrainResult.ceilingHits != 0)

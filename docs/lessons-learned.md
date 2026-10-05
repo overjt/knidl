@@ -4986,6 +4986,22 @@ or a global already uses would silently rebind the body, so
 `tools/rename.py --locals` refuses a NEW that is a macro, a global or
 already in the body, and an OLD that is a parameter.
 
+### 3.530 Bit expressions are codegen-neutral here: `~FLAG`, `(A | B)` and a constant for `128 << 8`
+
+R3's second form (#155 run 7, approved by the owner's coordinator)
+respelled 262 literal sites as expressions of single-bit constants:
+a clear `t->spriteFlags &= 0x7FFF` became `&= ~SPRITE_FLAG_FLIP_X`, a
+mask `& 0x700` became `& (PLAYER_STATUS_NO_DRIFT | ... )`, a set written
+`|= 128 << 8` became `|= SPRITE_FLAG_FLIP_X`, and `TaskSetSkipMask(15, i)`
+spells its four bits.  The token stream changes (`~0x8000` is the int
+-32769, not 0x7FFF), so D6's cpp identity cannot prove it; every site went
+through the per-file assembly oracle one file at a time, with a per-site
+fallback (a per-site fallback script in the run's harness), and not one unit's `.s`
+changed: agbcc folds the constant expression before RTL, and a u8 / u16
+field's store truncates `~FLAG` to the same value the literal had.  The
+oracle stays the proof, because a complement that reaches a 32-bit
+context (a `u32` mask, a comparison) is a different pool word.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -11862,6 +11878,85 @@ Run 6 of #155 (the owner's decision D6) gave the magic numbers pret-style
 * `--verify-diff` from `origin/master` verifies the whole stacked branch in
   one pass once it replays run 5's parameters (prototypes in `include/` and
   the defining file only, as their tool did) and run 6's locals.
+
+### 4.173 Records by consumer: the engine API proves the kind, the consumer the owner
+
+1,153 functional ROM labels were read by code at the start of run 7.  Where
+every use of a label is one engine API's argument - stored in
+`Task.frameTable`, passed to `ActorSetAttackBox` / `ActorSetExtraAttackBox`
+/ `ActorSetHitReactions` / `ActorSetTerrainBox`, run by `ActorStartAnim` -
+the record's kind is proven by the API and its owner by the one function
+(or family) that uses it, so a script can name it
+(a script in the run's harness: `g<Consumer><Kind>`, `Task_` and
+a trailing `Init` dropped; docs/naming.md 2.4).  122 labels were named that
+way before the agents started, which also gave the agents names to cite.
+Skip a consumer that is a `sub_*` or a slot name: its name will change.
+
+### 4.174 A census that cannot say "not examined": reasons per placeholder, classes per label
+
+To close #155 the census needed a reason for everything left, and "not
+examined" could not be one.  `docs/analysis/unnamed.csv` gives every
+remaining `sub_*`, `gUnk_` RAM cell and `unk*` field one reason code
+(`pair`, `identity`, `unnamed-input`, `no-verb`, `restates`, `mixed`,
+`dead`, `library`, `two-meanings`, `local`, `write-only`,
+`never-accessed`, `unproven-bits`, `asset`), and `make audit` fails on a
+placeholder without a row, on a row whose symbol was renamed, and on an
+unknown code.  The functional ROM labels are classed mechanically by
+their referrers instead (shared by two or more slots or records; reached
+only through an unnamed record or a `sub_*`; one slot of a named record;
+read by one function only - the RAM cells' "local" rule; read by several
+named functions, which need a row; unreferenced).  Two traps: a C table
+written `u32 gFoo[] FRAME_TABLE = {` must be parsed with its section
+macro, or every frame table reads as one record called `FRAME_TABLE`;
+and "shared" must count references, not referring definitions (one table
+holding a record at two slots shares it).  Agents gave the reasons as
+they read: every agent kept a `<agent>-unnamed.csv` next to its names.
+
+### 4.175 A struct-member census for any struct, and unique flag-word names
+
+A field census for any struct (the run's `fieldcensus.py STRUCT F1,F2`)
+generalises run 5's `taskcensus.py` (all its definitions renamed in a work copy,
+gcc 12's "has no member" errors read back).  gcc's column can point at the
+`->` or `.` rather than the member, so the locator must accept an operator
+before the name (the first version silently missed 249 of 265
+`PlayerState` accesses).  For R3, a flag word needs a member name no other
+struct uses (`attackFlags`, `bodyFlags`, `actionFlags`, `statusFlags`, not
+`flags`, which m4a's `track->flags` already uses): `tools/constants.py`'s
+`bits` positions are matched by member name, and a shared name would put
+one struct's constants on another's bits.
+
+### 4.176 Harness notes from #155 run 7 (R1-R3 and the final census)
+
+* Four proposal agents by subject, resumed 5-7 rounds each with
+  `SendMessage` (A: actor core, terrain, cannon, Warp Star, link records,
+  then the remaining fields and the player's raw registers; B: ending, game
+  over, R2 rows, effects, HUD, menus, then the regular enemies' R1; C: the
+  bosses' and mid-bosses' R1, then the shared ROM records and raw
+  registers; D: R3, PlayerState's scratch, the RAM cells).  A finished
+  agent took a busy agent's leftover subject; nobody waited.
+* Per-round row files (`wip/<agent>/newN.csv`) made every batch exact; the
+  agents' cumulative CSVs stopped dry-running once earlier rows were
+  applied, so two of them moved applied rows aside.
+* Constants follow names: after each wave of renames,
+  `refresh_states.py --write` renamed the state constants whose slot got a
+  verb, and `newconsts.py` added the constants of newly named tables
+  (rows R2 named, Meta Knight's sword); both are cpp-identical.
+* A proof chain written `cmd | tail -1 && next` hides a failing `cmd`
+  without `set -o pipefail`: one `--verify-diff` failure was committed
+  that way and caught on the next look (the tool was fixed, the branch
+  re-verified).
+* `tools/task_alias.py` serves `struct PlayerState` too (its unk14 /
+  unk16 per-action scratch, aliases `player<Role>`); `--verify-types`
+  turns the aliased members of either struct into unions for gcc 12.
+* Every agent wrote its reason rows (`<agent>-unnamed.csv`) as it read; a
+  merge script kept the rows whose symbol was still a census placeholder
+  and listed what had no row, which turned "is anything left unread?" into
+  a count that reached 0 before `docs/analysis/unnamed.csv` was committed.
+  Rows an agent gave to asset-segment labels or to symbols renamed later
+  were dropped by the same check.
+* An account usage limit stopped two agents mid-round for about two hours;
+  their files were intact and a `SendMessage` naming what had been applied
+  resumed both.  The census merge showed what the stop had left open.
 
 ## 5. Workflow that worked
 

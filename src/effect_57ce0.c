@@ -13,8 +13,8 @@
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
  * variants 35-39, all spawned by M12's actions (39 also by M11 and M13).
  * Variants 35 (PlayerEffectHammerDust, two sub-states), 36 (PlayerEffectParasolSparkle) and 39
- * (sub_08058720) are animations in world space (gUnk_08751D88,
- * gUnk_08751DB0, gUnk_08751E00).  Variant 37 (PlayerEffectMikeAttack) stops other
+ * (sub_08058720) are animations in world space (gPlayerEffectHammerDustFrames,
+ * gPlayerEffectParasolSparkleFrames, gUnk_08751E00).  Variant 37 (PlayerEffectMikeAttack) stops other
  * tasks: it fills the 20-slot table gScreenAttackTasks with 0xFFFF, collects the
  * indices of the tasks of kinds 1, 2, 7 and 8 (Task.actorKind) whose
  * gTaskSlotTypes entry is not -1 (while gInHub is clear), stops them
@@ -40,7 +40,7 @@ void PlayerEffectHammerDust(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_08751D88;
+    t->frameTable = gPlayerEffectHammerDustFrames;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 12;
     switch (t->playerEffectSpawnWord & 15)
     {
@@ -110,7 +110,7 @@ void PlayerEffectParasolSparkle(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_08751DB0;
+    t->frameTable = gPlayerEffectParasolSparkleFrames;
     t->tileWord = (t->u8C.parentTask)->tileWord | 0xF00C;
     if (t->facing == 1)
     {
@@ -166,11 +166,11 @@ void PlayerEffectMikeAttack(void)
         t->drawCallback = 0;
         t->updateCallback = (u32)PlayerEffectMikeAttackUpdate;
         t->u80.attackAbility = ABILITY_MIKE;
-        while ((s8)gCurTask->player->unk16 == 0)
+        while ((s8)gCurTask->player->playerMikeShoutCount == 0)
             TaskYieldTrampoline(1);
         u = gCurTask;
-        u->unk28 = gPlayerCameraPos[u->parent].x;
-        u->unk2C = gPlayerCameraPos[u->parent].y;
+        u->playerEffectMikeX = gPlayerCameraPos[u->parent].x;
+        u->playerEffectMikeY = gPlayerCameraPos[u->parent].y;
         gScreenAttackActive = 0;
         for (i = 0; i < 20; i++)
             gScreenAttackTasks[i] |= 0xFFFF;
@@ -215,7 +215,7 @@ void PlayerEffectMikeAttack(void)
                 TaskSaveSkipMask((s16)gScreenAttackTasks[n]);
                 break;
             }
-            TaskSetSkipMask(15, (s16)gScreenAttackTasks[n]);
+            TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), (s16)gScreenAttackTasks[n]);
         }
         if (m != 0)
             TaskYieldTrampoline(3);
@@ -263,14 +263,14 @@ void PlayerEffectMikeAttack(void)
             if (r != 0)
             {
                 TaskSaveSkipMask(i);
-                TaskSetSkipMask(15, i);
+                TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), i);
                 TaskYieldTrampoline(2);
                 gScreenAttackActive = 0;
             }
         }
         if (m == 0)
             TaskYieldTrampoline(1);
-        gCurTask->player->unk16--;
+        gCurTask->player->playerMikeShoutCount--;
         gScreenAttackActive = 0;
         TaskExitTrampoline();
     }
@@ -328,8 +328,8 @@ void PlayerEffectMikeAttackUpdate(void)
 
     if (t->player->mode != 13)
         TaskFree(gCurTaskIdx);
-    else if ((s8)t->player->unk16 != 0)
-        RegisterCollider((u8)gCurTaskIdx, t->unk28, t->unk2C, gUnk_0873C04C);
+    else if ((s8)t->player->playerMikeShoutCount != 0)
+        RegisterCollider((u8)gCurTaskIdx, t->playerEffectMikeX, t->playerEffectMikeY, gUnk_0873C04C);
 }
 
 void PlayerEffectSleepBubble(void)
@@ -350,7 +350,7 @@ void PlayerEffectSleepBubble(void)
         t->drawCallback = (u32)TaskDrawWorld;
         t->layer = 5;
         u = gCurTask;
-        u->frameTable = gUnk_08751DD0;
+        u->frameTable = gPlayerEffectSleepBubbleFrames;
         u->tileWord = ((u->u8C.parentTask)->tileWord + 0x1800) | 8;
         if (u->facing == 1)
             u->posX = 0x60000;

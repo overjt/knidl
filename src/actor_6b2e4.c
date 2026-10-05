@@ -7,7 +7,7 @@
  * position integrators ActorAttachedThrowHeldFollowCarrier and ActorAttachedBackdropHeldFollowCarrier that walk the two stride-5
  * offset tables at 0x0873E7C4 / 0x0873E864, the handover helpers that hand the
  * actor back to the generic task body (ActorAttachedDie), the player-record
- * bookkeeping around gPlayerStates[] (ActorAttachedBindCarrier, ActorAttachedEnterMouth, sub_0806be4c),
+ * bookkeeping around gPlayerStates[] (ActorAttachedBindCarrier, ActorAttachedEnterMouth, ActorAttachedReleaseCarrierSlot),
  * and the class-1 task bodies ActorAttachedSwallow / ActorAttachedBackdropHeld / ActorAttachedBackdropFlight with
  * their per-frame callbacks.
  */
@@ -57,36 +57,36 @@ void ActorDrownSinkUpdate(void)
 {
 }
 
-void ActorDrownState1(void)
+void ActorDrownWait(void)
 {
-    gCurTask->updateState = ACTOR_DROWN_STATE_1;
+    gCurTask->updateState = ACTOR_DROWN_STATE_WAIT;
     TaskStop();
     TaskSetFrame(*(s16 *)&gCurTask->actorDrownFrame);
     TaskYieldTrampoline(30);
-    ActorSetState(ACTOR_DROWN_STATE_2);
+    ActorSetState(ACTOR_DROWN_STATE_BURST);
     TaskSleepForever();
 }
 
-void ActorDrownState1Update(void)
+void ActorDrownWaitUpdate(void)
 {
-    if (gCurTask->state != ACTOR_DROWN_STATE_1)
+    if (gCurTask->state != ACTOR_DROWN_STATE_WAIT)
         TaskSetEntry(ActorDrownEnterState, gCurTaskIdx);
 }
 
-void ActorDrownState2(void)
+void ActorDrownBurst(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = ACTOR_DROWN_STATE_2;
+    gCurTask->updateState = ACTOR_DROWN_STATE_BURST;
     t = gCurTask;
-    t->frameTable = gUnk_0874C9D8;
+    t->frameTable = gRayBurstFrames;
     t->tileWord = 0;
     ActorPlayRandomDefeatSfx();
     PlayRayBurstAnim();
     ActorDestroy();
 }
 
-void ActorDrownState2Update(void)
+void ActorDrownBurstUpdate(void)
 {
 }
 
@@ -101,7 +101,7 @@ void ActorDefeatPickup(void)
         MarkRoomObjectUsed(gCurTaskIdx);
     TaskYieldTrampoline(1);
     u = gCurTask;
-    u->frameTable = gUnk_0874C9D8;
+    u->frameTable = gRayBurstFrames;
     u->tileWord = 0;
     PlaySfx(109);
     PlayRayBurstAnim();
@@ -137,18 +137,18 @@ void ActorAttachedThrowHeldFollowCarrier(void)
         t->facing = -t->facing;
     u = gCurTask;
     u->actorCarrierFacing = s->facing;
-    if (*(s8 *)&p->unk16 == -1)
+    if (*(s8 *)&p->playerHoldPose == -1)
     {
         u->pixelX = u->actorCarriedX;
         u->pixelY = u->actorCarriedY;
         ActorAttachedDie();
         return;
     }
-    if ((u8)(p->unk16 + 5) <= 2)
+    if ((u8)(p->playerHoldPose + 5) <= 2)
     {
         u->facing = s->facing;
         v = gCurTask;
-        v->unk70 = -*(s8 *)&p->unk16;
+        v->unk70 = -*(s8 *)&p->playerHoldPose;
         v->pixelX = v->actorCarriedX;
         v->pixelY = v->actorCarriedY;
         k = *(s16 *)&v->unk70 - 3;
@@ -182,7 +182,7 @@ void ActorAttachedThrowHeldFollowCarrier(void)
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
         return;
     }
-    n = *(s8 *)&p->unk16 * 5;
+    n = *(s8 *)&p->playerHoldPose * 5;
     g = (gUnk_0873E7C4[n] + u->actorCarryOffsetX) * s->facing;
     if (e == 1)
         h = gUnk_0873E7C4[n + 1] - u->actorCarryOffsetY;
@@ -218,14 +218,14 @@ void ActorAttachedBackdropHeldFollowCarrier(void)
     t = gCurTask;
     s = &gTasks[t->parent];
     p = t->player;
-    if (*(s8 *)&p->unk16 == -1)
+    if (*(s8 *)&p->playerHoldPose == -1)
     {
         t->pixelX = t->actorCarriedX;
         t->pixelY = t->actorCarriedY;
         ActorAttachedDie();
         return;
     }
-    if (*(s8 *)&p->unk16 == -2)
+    if (*(s8 *)&p->playerHoldPose == -2)
     {
         t->pixelX = t->actorCarriedX;
         t->pixelY = t->actorCarriedY;
@@ -251,7 +251,7 @@ void ActorAttachedBackdropHeldFollowCarrier(void)
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
         return;
     }
-    n = *(s8 *)&p->unk16 * 5;
+    n = *(s8 *)&p->playerHoldPose * 5;
     g = (gUnk_0873E864[n] + t->actorCarryOffsetX) * s->facing;
     if (e == 1)
         h = gUnk_0873E864[n + 1] - t->actorCarryOffsetY;
@@ -270,9 +270,9 @@ void ActorAttachedBackdropHeldFollowCarrier(void)
     {
         x = gCurTask;
         if (x->facing == 1)
-            x->spriteFlags |= 0x8000;
+            x->spriteFlags |= SPRITE_FLAG_FLIP_X;
         else
-            x->spriteFlags &= 0x7FFF;
+            x->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     }
 }
 
@@ -375,7 +375,7 @@ void sub_0806b95c(void)
     m &= w;
     c->savedPaletteBits = m;
     v->actorPaletteRestoreDelay = 2;
-    a->unk04 = v->hitEffect;
+    a->attachEffect = v->hitEffect;
 }
 
 void ActorAttachedBindCarrier(void)
@@ -627,11 +627,11 @@ void ActorAttachedEnterMouth(void)
             if (gUnk_0300244C == 0)
                 return;
             p->abilitySwallowCount = f;
-            gUnk_02007CF4[p->playerIndex] = 1;
+            gAbilityStarInMouth[p->playerIndex] = 1;
             return;
         }
     }
-    if (gUnk_0300244C == 0 || gUnk_02007CF4[p->playerIndex] != 1)
+    if (gUnk_0300244C == 0 || gAbilityStarInMouth[p->playerIndex] != 1)
         p->abilitySwallowCount++;
     if (*(s8 *)&p->pendingAbility != ABILITY_NORMAL)
         return;
@@ -653,7 +653,7 @@ void ActorAttachedEnterMouth(void)
     p->pendingAbilityUses = q;
 }
 
-void sub_0806be4c(u32 i)
+void ActorAttachedReleaseCarrierSlot(u32 i)
 {
     struct Task *s;
     struct Actor *a;
@@ -662,7 +662,7 @@ void sub_0806be4c(u32 i)
     s = &gTasks[i];
     a = s->u8C.actor;
     p = s->player;
-    if (a->unk04 == 1)
+    if (a->attachEffect == 1)
     {
         if (*(s8 *)&p->heldCount != 0)
         {
@@ -693,7 +693,7 @@ u8 ActorAttachedCheckScreenAttack(void)
 
     if (gScreenAttackActive == 1)
     {
-        sub_0806be4c(gCurTaskIdx);
+        ActorAttachedReleaseCarrierSlot(gCurTaskIdx);
         t = gCurTask;
         w = t->tileWord;
         m = 0xFFF;
@@ -731,7 +731,7 @@ void ActorAttachedSwallow(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
     t->lateUpdateCallback = (u32)ActorAttachedSwallowLateUpdate;
-    ActorSetTerrainHandlers(gUnk_0873F8F4);
+    ActorSetTerrainHandlers(gNullTerrainHandlers);
     TaskSetPosRelativeToParent();
     u = gCurTask;
     u->actorSwallowed = 0;
@@ -800,7 +800,7 @@ void ActorAttachedBackdropHeld(void)
     u->actorCarriedX = u->pixelX;
     u->actorCarriedY = u->pixelY;
     u->taskClass = 1;
-    ActorSetTerrainHandlers(gUnk_0873F8F4);
+    ActorSetTerrainHandlers(gNullTerrainHandlers);
     gCurTask->actorMouthFull = 0;
     sub_0806bc9c();
     TaskSleepForever();
@@ -820,9 +820,9 @@ void ActorAttachedBackdropHeldUpdate(void)
     ActorAttachedRestorePalette();
     u = gCurTask;
     if (u->actorKind == ACTOR_KIND_MID_BOSS)
-        RegisterCollider((u8)gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873F844);
+        RegisterCollider((u8)gCurTaskIdx, u->pixelX, u->pixelY, gActorAttachedBackdropMidBossBodyBox);
     else
-        RegisterCollider((u8)gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873F830);
+        RegisterCollider((u8)gCurTaskIdx, u->pixelX, u->pixelY, gActorAttachedBackdropBodyBox);
 }
 
 void ActorAttachedBackdropHeldLateUpdate(void)
@@ -870,7 +870,7 @@ void ActorAttachedBackdropFlightUpdate(void)
     }
     t = gCurTask;
     if (t->actorKind == ACTOR_KIND_MID_BOSS)
-        RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F844);
+        RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gActorAttachedBackdropMidBossBodyBox);
     else
-        RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F830);
+        RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gActorAttachedBackdropBodyBox);
 }

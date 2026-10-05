@@ -42,7 +42,7 @@ void PlayerActionWheel(void)
                 t->playerWheelWasOnGround = 1;
             else
                 t->playerWheelWasOnGround = 0;
-            gCurTask->unk30 = 0;
+            gCurTask->playerWheelCrossingGap = 0;
             CreatePlayerEffect(gCurTask->player->playerIndex, 34, 0);
             gCurTask->u80.attackAbility = ABILITY_WHEEL;
             gCurTask->variant = 0;
@@ -176,28 +176,28 @@ void PlayerActionWheelUpdate(void)
 {
     {
         struct Task *t = gCurTask;
-        if (t->unk30 == 0) {
-            if (gTerrainResult.unkD != 0) {
-                t->player->unk14 = 5;
-                t->unk30 = 1;
+        if (t->playerWheelCrossingGap == 0) {
+            if (gTerrainResult.overGap != 0) {
+                t->player->playerOverGapTimer = 5;
+                t->playerWheelCrossingGap = 1;
             } else {
-                t->player->unk14 = 0;
+                t->player->playerOverGapTimer = 0;
             }
         } else {
             struct PlayerState *p = t->player;
-            if ((s16)p->unk14 == 0) {
+            if ((s16)p->playerOverGapTimer == 0) {
                 if (IsFullBlockAtPixel(t->pixelX, (t->pixelY & ~15) + 16) != 0)
                     gCurTask->onGround = 1;
             } else {
-                p->unk14--;
+                p->playerOverGapTimer--;
             }
         }
     }
     {
         struct Task *t = gCurTask;
         if (t->onGround & 1) {
-            t->unk30 = 0;
-            t->player->unk14 = 0;
+            t->playerWheelCrossingGap = 0;
+            t->player->playerOverGapTimer = 0;
         }
     }
     switch (gCurTask->variant) {

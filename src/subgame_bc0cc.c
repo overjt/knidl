@@ -71,7 +71,7 @@ void QuickDrawPlayerSlideIn(void)
             if (t->pixelX > 67)
             {
                 t->pixelX = 68;
-                t->unk24 = 1;
+                t->quickDrawObjectArrived = 1;
             }
             else
                 t->pixelX += 10;
@@ -80,7 +80,7 @@ void QuickDrawPlayerSlideIn(void)
             if (t->pixelX <= 164)
             {
                 t->pixelX = 164;
-                t->unk24 = 1;
+                t->quickDrawObjectArrived = 1;
             }
             else
                 t->pixelX -= 10;
@@ -109,7 +109,7 @@ void QuickDrawPlayerStartSlideIn(void)
             break;
         }
         t = gCurTask;
-        t->unk24 = 0;
+        t->quickDrawObjectArrived = 0;
         t->posX = t->pixelX << 16;
         t->posY = t->pixelY << 16;
     }
@@ -122,7 +122,7 @@ void QuickDrawPlacePlayer(void)
     s32 n;
     s32 k;
 
-    t->spriteFlags &= 0x7FFF;
+    t->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     t->tileWord = t->quickDrawObjectPlayerIndex << 12;
     n = gPlayerCount - 1;
     k = gLocalPlayer - t->quickDrawObjectPlayerIndex;
@@ -174,7 +174,7 @@ void QuickDrawPlacePlayerStrike(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
-    s32 v = t->unk20;
+    s32 v = t->quickDrawObjectStrikeSpot;
 
     if (v == 4)
     {
@@ -256,19 +256,19 @@ void sub_080bc460(void)
     switch (t->quickDrawObjectHomeX)
     {
     case 68:
-        t->unk20 = 0;
+        t->quickDrawObjectHomeSpot = 0;
         break;
     case 164:
-        t->unk20 = 3;
+        t->quickDrawObjectHomeSpot = 3;
         break;
     case 188:
-        t->unk20 = 1;
+        t->quickDrawObjectHomeSpot = 1;
         break;
     case 60:
-        t->unk20 = 2;
+        t->quickDrawObjectHomeSpot = 2;
         break;
     default:
-        gCurTask->unk20 = 0;
+        gCurTask->quickDrawObjectHomeSpot = 0;
         break;
     }
     PlaySfx(256);
@@ -285,13 +285,13 @@ void CreateQuickDrawFalseStartMark(void)
 
         quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
         p = gCurTask;
-        quickDrawObject->unk18 = p->unk20;
-        quickDrawObject->unk1C = 6;
-        quickDrawObject->unk20 = -1;
-        quickDrawObject->unk24 = -1;
-        quickDrawObject->pixelX = p->pixelX + gUnk_08756448[p->unk20] * p->facing;
-        quickDrawObject->pixelY = p->pixelY - gUnk_08756450[p->unk20];
-        quickDrawObject->unk34 = 0;
+        quickDrawObject->quickDrawObjectLabelFrame = p->quickDrawObjectHomeSpot;
+        quickDrawObject->quickDrawObjectLabelKind = 6;
+        quickDrawObject->quickDrawObjectLabelLifetime = -1;
+        quickDrawObject->quickDrawObjectSubFrame = -1;
+        quickDrawObject->pixelX = p->pixelX + gUnk_08756448[p->quickDrawObjectHomeSpot] * p->facing;
+        quickDrawObject->pixelY = p->pixelY - gUnk_08756450[p->quickDrawObjectHomeSpot];
+        quickDrawObject->quickDrawObjectSubTileWord = 0;
     }
     gCurTask->quickDrawObjectFalseStartMarkSlot = quickDrawObjectSlot;
 }
@@ -307,9 +307,9 @@ void CreateQuickDrawSweatDrop(void)
 
         quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_SWEAT_DROP;
         p = gCurTask;
-        quickDrawObject->unk18 = p->unk20;
-        quickDrawObject->pixelX = p->pixelX + gUnk_08756458[p->unk20];
-        quickDrawObject->pixelY = p->pixelY - gUnk_08756460[p->unk20];
+        quickDrawObject->quickDrawObjectDropIndex = p->quickDrawObjectHomeSpot;
+        quickDrawObject->pixelX = p->pixelX + gUnk_08756458[p->quickDrawObjectHomeSpot];
+        quickDrawObject->pixelY = p->pixelY - gUnk_08756460[p->quickDrawObjectHomeSpot];
     }
     gCurTask->quickDrawObjectSweatDropSlot = quickDrawObjectSlot;
 }
@@ -341,19 +341,19 @@ void CreateQuickDrawPlayerTag(void)
         quickDrawObject = &gTasks[idx];
         quickDrawObject->variant = 1;
         u = gCurTask;
-        quickDrawObject->unk18 = u->quickDrawObjectPlayerIndex;
-        quickDrawObject->unk1C = 0;
-        quickDrawObject->unk20 = 60;
-        quickDrawObject->unk24 = -1;
+        quickDrawObject->quickDrawObjectLabelFrame = u->quickDrawObjectPlayerIndex;
+        quickDrawObject->quickDrawObjectLabelKind = 0;
+        quickDrawObject->quickDrawObjectLabelLifetime = 60;
+        quickDrawObject->quickDrawObjectSubFrame = -1;
         quickDrawObject->pixelX = x;
         quickDrawObject->pixelY = y;
         if (gLocalPlayer == u->quickDrawObjectPlayerIndex)
         {
-            quickDrawObject->unk18 = 4;
+            quickDrawObject->quickDrawObjectLabelFrame = 4;
             quickDrawObject->pixelY = u->pixelY - 32;
             quickDrawObject->pixelX += 12;
         }
-        quickDrawObject->unk34 = 0;
+        quickDrawObject->quickDrawObjectSubTileWord = 0;
         quickDrawObject->layer = gCurTask->layer - 8;
     }
     gCurTask->quickDrawObjectArriveDelay = 60;
@@ -389,17 +389,17 @@ void CreateQuickDrawWinCountLabel(void)
         }
         quickDrawObject = &gTasks[idx];
         quickDrawObject->variant = 1;
-        quickDrawObject->unk18 = gQuickDrawWins[gCurTask->quickDrawObjectPlayerIndex];
-        quickDrawObject->unk1C = 2;
-        quickDrawObject->unk20 = 60;
-        quickDrawObject->unk24 = -1;
+        quickDrawObject->quickDrawObjectLabelFrame = gQuickDrawWins[gCurTask->quickDrawObjectPlayerIndex];
+        quickDrawObject->quickDrawObjectLabelKind = 2;
+        quickDrawObject->quickDrawObjectLabelLifetime = 60;
+        quickDrawObject->quickDrawObjectSubFrame = -1;
         quickDrawObject->pixelX = x + 4;
         quickDrawObject->pixelY = y;
     }
     gCurTask->quickDrawObjectArriveDelay = 60;
 }
 
-void sub_080bc70c(void)
+void QuickDrawPlayerSetReady(void)
 {
     if (gCurTaskIdx == 0)
     {
@@ -506,13 +506,13 @@ void QuickDrawPlayerArrive(void)
         CreateQuickDrawWinCountLabel();
         TaskYieldTrampoline(gCurTask->quickDrawObjectArriveDelay);
     }
-    sub_080bc70c();
+    QuickDrawPlayerSetReady();
     TaskSleepForever();
 }
 
 void QuickDrawPlayerArriveUpdate(void)
 {
-    if (gBrightness == 0 && gCurTask->unk24 == 0)
+    if (gBrightness == 0 && gCurTask->quickDrawObjectArrived == 0)
         QuickDrawPlayerSlideIn();
     if (gCurTask->state != QUICK_DRAW_PLAYER_STATE_ARRIVE)
         TaskSetEntry(QuickDrawPlayerEnterState, gCurTaskIdx);
@@ -545,11 +545,11 @@ void QuickDrawPlayerStrike(void)
     for (i = 0; i < 2; i++)
     {
         t = gCurTask;
-        t->pixelX = x + gUnk_08756498[0] * (u16)t->facing;
+        t->pixelX = x + gQuickDrawShakeAmplitudes[0] * (u16)t->facing;
         t->posX = t->pixelX << 16;
         TaskYieldTrampoline(1);
         t = gCurTask;
-        t->pixelX = x - gUnk_08756498[0] * (u16)t->facing;
+        t->pixelX = x - gQuickDrawShakeAmplitudes[0] * (u16)t->facing;
         t->posX = t->pixelX << 16;
         TaskYieldTrampoline(1);
     }
@@ -609,11 +609,11 @@ void QuickDrawPlayerFalseStart(void)
     for (i = 0; i < 2; i++)
     {
         t = gCurTask;
-        t->pixelX = x + gUnk_08756498[t->unk20] * (u16)t->facing;
+        t->pixelX = x + gQuickDrawShakeAmplitudes[t->quickDrawObjectHomeSpot] * (u16)t->facing;
         t->posX = t->pixelX << 16;
         TaskYieldTrampoline(1);
         t = gCurTask;
-        t->pixelX = x - gUnk_08756498[t->unk20] * (u16)t->facing;
+        t->pixelX = x - gQuickDrawShakeAmplitudes[t->quickDrawObjectHomeSpot] * (u16)t->facing;
         t->posX = t->pixelX << 16;
         TaskYieldTrampoline(1);
     }
@@ -657,14 +657,14 @@ void QuickDrawLabelDraw(void)
         u = gCurTask;
         if (u->quickDrawObjectSubFrame != -1)
         {
-            tbl = (u32 *)u->unk30;
+            tbl = (u32 *)u->quickDrawObjectSubFrames;
             QueueSprite(u->layer, tbl[u->quickDrawObjectSubFrame], u->spriteFlags, u->quickDrawObjectSubTileWord,
                          u->pixelX + u->quickDrawObjectSubOffsetX, (s16)(u->pixelY + u->quickDrawObjectSubOffsetY));
         }
     }
 }
 
-void sub_080bccbc(void)
+void QuickDrawLabelShow(void)
 {
     struct Task *t;
     u8 *p = &gCurTask->layer;
@@ -685,10 +685,10 @@ void sub_080bccbc(void)
         gCurTask->frameTable = gQuickDrawWinCountFrames;
         break;
     case 3:
-        gCurTask->frameTable = gUnk_08755A7C;
+        gCurTask->frameTable = gQuickDrawSlashFrames;
         break;
     case 4:
-        gCurTask->frameTable = gUnk_08755A88;
+        gCurTask->frameTable = gQuickDrawDefeatedFrames;
         break;
     case 5:
         gCurTask->frameTable = gQuickDrawDigitFrames;
@@ -717,7 +717,7 @@ void sub_080bccbc(void)
 void QuickDrawLabel(void)
 {
     gCurTask->drawCallback = (u32)QuickDrawLabelDraw;
-    sub_080bccbc();
+    QuickDrawLabelShow();
     if (gCurTask->quickDrawObjectLabelLifetime != -1)
         TaskExitTrampoline();
     else
@@ -814,7 +814,7 @@ void QuickDrawSlash(void)
     t->moveCallback = (u32)TaskMove;
     t->layer = 4;
     u = gCurTask;
-    u->frameTable = gUnk_08755A7C;
+    u->frameTable = gQuickDrawSlashFrames;
     u->tileWord |= 0x800;
     u->pixelX = 240;
     u->pixelY = 0;
@@ -908,7 +908,7 @@ void QuickDrawOpponentSlideIn(void)
     if (t->pixelX <= 164)
     {
         t->pixelX = 164;
-        t->unk24 = 1;
+        t->quickDrawObjectArrived = 1;
     }
     else
     {
@@ -925,7 +925,7 @@ void QuickDrawOpponentStartSlideIn(void)
     QuickDrawPlaceOpponent();
     t = gCurTask;
     t->pixelX = 276;
-    t->unk24 = 0;
+    t->quickDrawObjectArrived = 0;
     t->posX = t->pixelX << 16;
     t->posY = t->pixelY << 16;
 }
@@ -939,7 +939,7 @@ void QuickDrawPlaceOpponent(void)
     gCurTask->posX = gCurTask->pixelX << 16;
     gCurTask->posY = gCurTask->pixelY << 16;
     gCurTask->facing = -1;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     switch (gCurTask->quickDrawObjectOpponentIndex)
     {
     case 0:
@@ -1094,7 +1094,7 @@ void QuickDrawOpponentArrive(void)
 
 void QuickDrawOpponentArriveUpdate(void)
 {
-    if (gBrightness == 0 && gCurTask->unk24 == 0)
+    if (gBrightness == 0 && gCurTask->quickDrawObjectArrived == 0)
         QuickDrawOpponentSlideIn();
     if (gCurTask->state != QUICK_DRAW_OPPONENT_STATE_ARRIVE)
         TaskSetEntry(QuickDrawOpponentEnterState, gCurTaskIdx);

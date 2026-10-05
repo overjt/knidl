@@ -198,9 +198,9 @@ void MenuSetLinkSessionMode(void)
             gLinkSessionMode = 1;
         else
             gLinkSessionMode = 2;
-    } else if (gUnk_02007FCC <= 2) {
-        gLinkSessionMode = gUnk_02007FCC + 4;
-    } else if (gUnk_02007FCC == 6) {
+    } else if (gExtraModeIndex <= 2) {
+        gLinkSessionMode = gExtraModeIndex + 4;
+    } else if (gExtraModeIndex == 6) {
         gLinkSessionMode = 3;
     }
 }

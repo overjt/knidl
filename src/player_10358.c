@@ -111,7 +111,7 @@ void CutsceneDuelKirby(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 7;
-    gCurTask->frameTable = gUnk_08754A14;
+    gCurTask->frameTable = gCutsceneDuelFrames;
     gCurTask->posX = 150 << 16;
     gCurTask->posY = 186 << 15;
     TaskStop();
@@ -247,10 +247,10 @@ void CutsceneActorScript1(void)
     RequestCopy(1, (u32)gUnk_081AC378 + 384, (u32)(dst + 3456), 128);
     RequestCopy(2, (u32)gUnk_081AC358, (u32)gObjPalette, 32);
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_08010b38;
+    gCurTask->drawCallback = (u32)CutsceneActorDrawPlayerFrame;
     gCurTask->updateCallback = (u32)sub_080109c8;
     gCurTask->layer = 5;
-    gCurTask->frameTable = gUnk_08751C44;
+    gCurTask->frameTable = gInhaleAirFrames;
     gCurTask->tileWord = 0x1004;
     gCurTask->cutsceneActorNextFrame = 0;
     gCurTask->cutsceneActorLoopCount = 0;

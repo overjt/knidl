@@ -23,7 +23,7 @@
  *     `0x08741794`, per-frame hook `FlamerUpdate`, re-arm `FlamerEnterState`);
  *   * its terrain library: `FlamerGetSurfaceSlopeInDir` / `FlamerGetSurfaceSlopeOnSide` / `sub_08083bbc` /
  *     `FlamerGetSurfaceSlopeAt` probe the room with GetCollisionTileAtPixel/GetCollisionTileAtOffset and turn the
- *     `gUnk_087339F0` / `gCollisionTileSlope` / `gUnk_087416A4` index chain into a
+ *     `gCollisionTileCollides` / `gCollisionTileSlope` / `gUnk_087416A4` index chain into a
  *     tile class, `FlamerSetCrawlVelocity` turns a direction code into an aim angle plus
  *     a 16.16 velocity through AngleToVector, and `sub_08083dfc` is the
  *     five-times-four-frame animation wait;
@@ -404,8 +404,8 @@ void FlamerState4Update(void)
         else
         {
             w = gCurTask;
-            w->flamerSteerTimer = gUnk_08741738[w->flamerSpeedLevel];
-            AngleToVector((s16)w->flamerFlightAngle, gUnk_0874173C[w->flamerSpeedLevel]);
+            w->flamerSteerTimer = gFlamerSteerTimes[w->flamerSpeedLevel];
+            AngleToVector((s16)w->flamerFlightAngle, gFlamerFlightSpeeds[w->flamerSpeedLevel]);
             x = gCurTask;
             x->velX = gUnk_030023B4;
             x->velY = gUnk_030023D4;
@@ -545,8 +545,8 @@ void FlamerState6Update(void)
             if (gUnk_03001F2C != 0)
             {
                 v = gCurTask;
-                v->flamerSteerTimer = gUnk_08741738[v->flamerSpeedLevel];
-                AngleToVector((s16)v->flamerFlightAngle, gUnk_0874173C[v->flamerSpeedLevel]);
+                v->flamerSteerTimer = gFlamerSteerTimes[v->flamerSpeedLevel];
+                AngleToVector((s16)v->flamerFlightAngle, gFlamerFlightSpeeds[v->flamerSpeedLevel]);
                 w = gCurTask;
                 w->velX = gUnk_030023B4;
                 w->velY = gUnk_030023D4;
@@ -561,7 +561,7 @@ void FlamerIdleInit(void)
 {
     gCurTask->updateCallback = (u32)FlamerIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(FLAMER_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gFlamerIdleStates);
@@ -612,7 +612,7 @@ u8 FlamerGetSurfaceSlopeInDir(s32 dir)
     a = t->pixelX + gUnk_08741684[dir];
     b = t->pixelY + gUnk_08741688[dir];
     i = GetCollisionTileAtPixel(a, b);
-    if (gUnk_087339F0[i] != 0)
+    if (gCollisionTileCollides[i] != 0)
     {
         r = gUnk_087416A4[gCollisionTileSlope[i]];
         if ((u8)(r - 2) <= 3 && gCurTask->onGround == 0)
@@ -677,7 +677,7 @@ u8 sub_08083bbc(s32 dir, s32 k)
     i = GetCollisionTileAtOffset(a, b, *p, *q);
     if (i == -1)
         return 0;
-    if (gUnk_087339F0[i] != 0)
+    if (gCollisionTileCollides[i] != 0)
     {
         r = gUnk_087416A4[gCollisionTileSlope[i]];
         if ((u8)(r - 2) <= 3 && gCurTask->onGround == 0)
@@ -695,7 +695,7 @@ u8 FlamerGetSurfaceSlopeAt(s16 x, s16 y)
     i = (s16)GetCollisionTileAtPixel(x, y);
     if (i == -1)
         return 0;
-    if (gUnk_087339F0[i] != 0)
+    if (gCollisionTileCollides[i] != 0)
     {
         r = gUnk_087416A4[gCollisionTileSlope[i]];
         if ((u8)(r - 2) <= 3 && gCurTask->onGround == 0)
@@ -898,7 +898,7 @@ void HotHeadFireBreath(void)
     else
         u->hotHeadFireAngle = 256;
     v = gCurTask;
-    n = (s16)o->unk6E;
+    n = (s16)o->hotHeadFlameIndex;
     v->hotHeadFireFanIndex = n;
     m = (v->hotHeadFireAngle + gUnk_08741E70[n]) & 0x1FF;
     v->hotHeadFireAngle = m;
@@ -911,9 +911,9 @@ void HotHeadFireBreath(void)
     w->velX = gUnk_030023B4;
     w->velY = gUnk_030023D4;
     if ((w->hotHeadFireFanIndex & 2) != 0)
-        w->spriteFlags = w->spriteFlags & 0x7FFF;
+        w->spriteFlags = w->spriteFlags & ~SPRITE_FLAG_FLIP_X;
     else
-        w->spriteFlags = w->spriteFlags | 0x8000;
+        w->spriteFlags = w->spriteFlags | SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 4;
     TaskYieldTrampoline(2);
     x = gCurTask;
@@ -957,7 +957,7 @@ void HotHeadFireBallUpdate(void)
 {
     if (ActorCollideTerrainAlongVelocity() == 1)
     {
-        ActorSetHitReactions(gUnk_08741F64);
+        ActorSetHitReactions(gHotHeadFireBallUpdateHitReactions);
         TaskSetEntry(ActorDie, gCurTaskIdx);
     }
     else

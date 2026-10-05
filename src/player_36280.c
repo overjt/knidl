@@ -15,7 +15,7 @@
  * re-binds the coroutine with the next state (1 on a held A or up, 4 on
  * a newly-pressed B, 2/3/5 from the ground flags Task.onGround/unk7B).
  * PlayerActionDuck (action 10, mode 6) installs the scripts
- * gUnk_0873BD28/gUnk_0873CB24 in PlayerState.bodyBox/unk68 and plays
+ * gPlayerDuckBodyBox/gPlayerDuckTerrainBox in PlayerState.bodyBox/unk68 and plays
  * gUnk_0873D4BC[ability][column]; its handler PlayerActionDuckUpdate requests
  * action 11 on a newly-pressed A or B and 7 on the collision flag
  * gTerrainResult.unk5.  PlayerActionSlide (action 11, mode 7) installs the
@@ -224,8 +224,8 @@ void PlayerActionDuck(void)
     t = gCurTask;
     if (t->player->prevMode != 6)
     {
-        t->player->bodyBox = (u32)gUnk_0873BD28;
-        t->player->terrainBox = (u32)gUnk_0873CB24;
+        t->player->bodyBox = (u32)gPlayerDuckBodyBox;
+        t->player->terrainBox = (u32)gPlayerDuckTerrainBox;
         t->playerPoseSlope = t->player->slope;
         PlayerSetMotionXPreset(0, 72);
     }
@@ -331,7 +331,7 @@ void PlayerActionSlide(void)
     {
         t->playerActionDone28 = 0;
         t->variant = 0;
-        gCurTask->player->unk14 = 10;
+        gCurTask->player->playerSlideBrakeTimer = 10;
         PlayerStartSfx(118, gCurTask->player->playerIndex);
         gCurTask->player->hitBoxSet = gUnk_0873CC84;
         PlayerSetMotionXPreset(11, 0);
@@ -423,13 +423,13 @@ void PlayerActionSlideUpdate(void)
         break;
     }
     p = gCurTask->player;
-    if ((s16)p->unk14 == 0)
+    if ((s16)p->playerSlideBrakeTimer == 0)
     {
         PlayerSetMotionXPreset(5, 72);
-        gCurTask->player->unk14--;
+        gCurTask->player->playerSlideBrakeTimer--;
     }
-    else if ((s16)p->unk14 > 0)
+    else if ((s16)p->playerSlideBrakeTimer > 0)
     {
-        p->unk14--;
+        p->playerSlideBrakeTimer--;
     }
 }

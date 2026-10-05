@@ -109,20 +109,20 @@ void Task_MetaKnights(void)
     struct Task *t;
 
     sub_0809c028();
-    sub_0809fbd0();
+    MetaKnightsLockPlayers();
     DisablePause();
     sub_08066544();
-    sub_0809c0a8();
-    sub_0809fc08();
+    MetaKnightsIntro();
+    MetaKnightsUnlockPlayers();
     MetaKnightsLoadGfx();
     EnablePause();
     t = gCurTask;
-    t->updateCallback = (u32)sub_0809bc1c;
-    t->lateUpdateCallback = (u32)sub_0809bf2c;
+    t->updateCallback = (u32)MetaKnightsUpdate;
+    t->lateUpdateCallback = (u32)MetaKnightsLateUpdate;
     TaskSleepForever();
 }
 
-void sub_0809bc1c(void)
+void MetaKnightsUpdate(void)
 {
     struct Task *t;
     struct Task *t2;
@@ -144,7 +144,7 @@ void sub_0809bc1c(void)
         t = gCurTask;
         q = (u8 *)(t->metaKnightsQueue0 + (t->metaKnightsQueue0Index << 3));
         r = CreateActor(3, 9, TASK_META_KNIGHTS_KNIGHT, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
-                         gUnk_08745CEC[q[0]]);
+                         gMetaKnightsKnightTileWords[q[0]]);
         t2 = gCurTask;
         p2 = &t2->metaKnightsNewKnightSlot;
         *p2 = r;
@@ -156,7 +156,7 @@ void sub_0809bc1c(void)
         u = gCurTask;
         q = (u8 *)(u->metaKnightsQueue1 + (u->metaKnightsQueue1Index << 3));
         r = CreateActor(3, 9, TASK_META_KNIGHTS_KNIGHT, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
-                         gUnk_08745CEC[q[0]]);
+                         gMetaKnightsKnightTileWords[q[0]]);
         u2 = gCurTask;
         p2 = &u2->metaKnightsNewKnightSlot;
         *p2 = r;
@@ -168,7 +168,7 @@ void sub_0809bc1c(void)
         v = gCurTask;
         q = (u8 *)(v->metaKnightsQueue2 + (v->metaKnightsQueue2Index << 3));
         r = CreateActor(3, 9, TASK_META_KNIGHTS_KNIGHT, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
-                         gUnk_08745CEC[q[0]]);
+                         gMetaKnightsKnightTileWords[q[0]]);
         v2 = gCurTask;
         p2 = &v2->metaKnightsNewKnightSlot;
         *p2 = r;
@@ -180,7 +180,7 @@ void sub_0809bc1c(void)
         w = gCurTask;
         q = (u8 *)(w->metaKnightsQueue3 + (w->metaKnightsQueue3Index << 3));
         r = CreateActor(3, 9, TASK_META_KNIGHTS_KNIGHT, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
-                         gUnk_08745CEC[q[0]]);
+                         gMetaKnightsKnightTileWords[q[0]]);
         w2 = gCurTask;
         p2 = &w2->metaKnightsNewKnightSlot;
         *p2 = r;
@@ -212,7 +212,7 @@ void sub_0809bc1c(void)
     }
 }
 
-void sub_0809bf2c(void)
+void MetaKnightsLateUpdate(void)
 {
     if (gUnk_02007D00[5] & 1)
         gCurTask->health -= gUnk_02007D00[4];

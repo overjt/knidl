@@ -22,9 +22,9 @@ extern u8 gUnk_02005E10[];
 extern u8 gRoomEntryMode;
 extern u32 gUsedRoomObjects[8][8];
 extern s16 gPlayerLives[];
-extern u16 gUnk_02007D60;
+extern u16 gMidBossRetryCount;
 extern s8 gUnk_02007D64;
-extern s16 gUnk_0200AF0C;
+extern s16 gMidBossRetryRoom;
 extern u8 gWarpStarStationLevels;
 extern u8 gUnk_0200B078;
 extern u8 gMidBossFightState;
@@ -101,15 +101,15 @@ extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
 /* Module functions */
-void sub_080a2b2c();
+void MrBrightFlashPalette();
 void ReleaseRoomObject();
 s32 LoadRoomEnemyGfx();
 s32 LoadRoomMidBossGfx();
 s32 LoadRoomBossGfx();
 void LoadRoomMetaKnightsGfx();
-s32 sub_080b5a94();
+s32 LoadRoomStageObjectGfx();
 s32 SpawnRoomEnemy();
-s32 sub_080b5d84();
+s32 SpawnRoomMapEvent();
 
 void sub_080b2fe8(void)
 {
@@ -121,7 +121,7 @@ void sub_080b2fe8(void)
     t->whispyWoodsAirPuffEffectY = t->pixelY;
 }
 
-void sub_080b3010(u8 a)
+void WhispyWoodsAppleAdvanceRollFrame(u8 a)
 {
     struct Task **c;
     struct Task *t;
@@ -235,9 +235,9 @@ void WhispyWoodsAppleFall(void)
     u3->speedLimitY = 128 << 11;
     for (;;)
     {
-        sub_080b3010(15);
-        sub_080b3010(8);
-        sub_080b3010(4);
+        WhispyWoodsAppleAdvanceRollFrame(15);
+        WhispyWoodsAppleAdvanceRollFrame(8);
+        WhispyWoodsAppleAdvanceRollFrame(4);
     }
 }
 
@@ -245,7 +245,7 @@ void WhispyWoodsAppleFallUpdate(void)
 {
 }
 
-void WhispyWoodsAppleState1(void)
+void WhispyWoodsAppleBounce1(void)
 {
     struct Task **c;
     s32 z;
@@ -265,22 +265,22 @@ void WhispyWoodsAppleState1(void)
     u2->velY = 0xFFFE0000;
     u2->accelY = 168 << 5;
     for (;;)
-        sub_080b3010(4);
+        WhispyWoodsAppleAdvanceRollFrame(4);
 }
 
-void WhispyWoodsAppleState1Update(void)
+void WhispyWoodsAppleBounce1Update(void)
 {
     struct Task *t;
 
     t = gCurTask;
     if (t->pixelY > t->whispyWoodsAppleFloorY)
     {
-        ActorSetState(WHISPY_WOODS_APPLE_STATE_2);
+        ActorSetState(WHISPY_WOODS_APPLE_STATE_BOUNCE2);
         TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
     }
 }
 
-void WhispyWoodsAppleState2(void)
+void WhispyWoodsAppleBounce2(void)
 {
     struct Task **c;
     s32 z;
@@ -300,22 +300,22 @@ void WhispyWoodsAppleState2(void)
     u2->velY = 0xFFFF0000;
     u2->accelY = 192 << 4;
     for (;;)
-        sub_080b3010(8);
+        WhispyWoodsAppleAdvanceRollFrame(8);
 }
 
-void WhispyWoodsAppleState2Update(void)
+void WhispyWoodsAppleBounce2Update(void)
 {
     struct Task *t;
 
     t = gCurTask;
     if (t->pixelY > t->whispyWoodsAppleFloorY)
     {
-        ActorSetState(WHISPY_WOODS_APPLE_STATE_3);
+        ActorSetState(WHISPY_WOODS_APPLE_STATE_BOUNCE3);
         TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
     }
 }
 
-void WhispyWoodsAppleState3(void)
+void WhispyWoodsAppleBounce3(void)
 {
     struct Task **c;
     s32 z;
@@ -335,10 +335,10 @@ void WhispyWoodsAppleState3(void)
     u2->velY = 0xFFFFC000;
     u2->accelY = 224 << 3;
     for (;;)
-        sub_080b3010(8);
+        WhispyWoodsAppleAdvanceRollFrame(8);
 }
 
-void WhispyWoodsAppleState3Update(void)
+void WhispyWoodsAppleBounce3Update(void)
 {
     struct Task **c;
     struct Task *t;
@@ -373,7 +373,7 @@ void Task_WhispyWoodsAirPuff(void)
     z = 0;
     *b42 = 9;
     u = *c;
-    u->frameTable = gUnk_0874C568;
+    u->frameTable = gAirPuffFrames;
     u->tileWord = z;
     u->facing = 255;
     u2 = *c;
@@ -399,7 +399,7 @@ void WhispyWoodsAirPuffUpdate(void)
     ActorReactToHit();
 }
 
-void sub_080b33bc(void)
+void WhispyWoodsAirPuffEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gWhispyWoodsAirPuffStates);
 }
@@ -620,7 +620,7 @@ void WhispyWoodsAirPuffState0Update(void)
         w = t6->whispyWoodsAirPuffEffectX - d;
         t6->whispyWoodsAirPuffEffectX = w;
         a0v = t->layer + 1;
-        t68 = (u32 *)gUnk_0874C568;
+        t68 = (u32 *)gAirPuffFrames;
         t40 = (u8 *)gUnk_0874C240;
         QueueSprite(a0v, t68[t40[*a]], t->spriteFlags, t->tileWord,
                      w - gSpriteCameraX,
@@ -739,25 +739,25 @@ void WhispyWoodsLeavesDraw(void)
 {
     if (gUnk_0874C260[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer] != -1)
         QueueSprite(gCurTask->layer,
-                     gUnk_0874CE68[gUnk_0874C260[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
+                     gWhispyWoodsLeavesFrames[gUnk_0874C260[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->pixelX - gSpriteCameraX + gCurTask->hitTimer,
                      gCurTask->pixelY - gSpriteCameraY + gCurTask->hitKind);
     if (gUnk_0874C2A6[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer] != -1)
         QueueSprite(gCurTask->layer,
-                     gUnk_0874CE68[gUnk_0874C2A6[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
+                     gWhispyWoodsLeavesFrames[gUnk_0874C2A6[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      ((u32)gCurTask->unk20 >> 16) - gSpriteCameraX + gCurTask->onGround,
                      gCurTask->unk20 - gSpriteCameraY + (s8)gCurTask->hitDirection);
     if (gUnk_0874C2EC[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer] != -1)
         QueueSprite(gCurTask->layer,
-                     gUnk_0874CE68[gUnk_0874C2EC[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
+                     gWhispyWoodsLeavesFrames[gUnk_0874C2EC[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->health - gSpriteCameraX + gCurTask->waterFlags,
                      gCurTask->unk84 - gSpriteCameraY + (s8)gCurTask->hitEffect);
     if (gUnk_0874C332[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer] != -1)
         QueueSprite(gCurTask->layer,
-                     gUnk_0874CE68[gUnk_0874C332[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
+                     gWhispyWoodsLeavesFrames[gUnk_0874C332[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->whispyWoodsLeavesStartX - gSpriteCameraX,
                      gCurTask->whispyWoodsLeavesStartY - gSpriteCameraY);
@@ -772,7 +772,7 @@ void Task_WhispyWoodsLeaves(void)
     gCurTask->tileWord = 0;
     gCurTask->drawCallback = (u32)WhispyWoodsLeavesDraw;
     gCurTask->layer = 8;
-    gCurTask->frameTable = (u32 *)gUnk_0874CE68;
+    gCurTask->frameTable = (u32 *)gWhispyWoodsLeavesFrames;
     gCurTask->updateCallback = (u32)WhispyWoodsLeavesUpdate;
     WhispyWoodsLeavesFillTrail();
     sub_080b3a00();
@@ -925,13 +925,13 @@ void Task_EnergyDrink(void)
     CallTableEntry(*(u8 *)((u8 *)tb + 115), 2, gPickupVariants);
 }
 
-void sub_080b3f54(void)
+void PickupInitSprite(void)
 {
     struct Actor *a;
 
     a = gCurTask->u8C.actor;
     if (a->animScript == NULL)
-        gCurTask->unk34 = ActorStartAnim((struct AnimCmd *)gUnk_08756084);
+        gCurTask->actorAnimDelay34 = ActorStartAnim((struct AnimCmd *)gUnk_08756084);
     gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
     if (gMetaKnightmareMode == 1 && gCurTask->u76.subtype == 1)
         gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xE000;
@@ -1014,7 +1014,7 @@ void PickupInit(void)
         ActorSetState(PICKUP_STATE_FALL_IN_WATER);
     else
         ActorSetState(PICKUP_STATE_FALL);
-    sub_080b3f54();
+    PickupInitSprite();
     CallTableEntry(gCurTask->state, 3, gPickupStates);
 }
 
@@ -1024,8 +1024,8 @@ void PickupUpdate(void)
 
     if (gCurTask->variant == 0 && (u8)ActorCollideTerrainFloor() == 0)
         CallTableEntry(gCurTask->updateState, 3, gPickupStateUpdates);
-    v = gCurTask->unk34;
-    gCurTask->unk34 = ActorTickAnim(v);
+    v = gCurTask->actorAnimDelay34;
+    gCurTask->actorAnimDelay34 = ActorTickAnim(v);
     if (v <= 0)
     {
         sub_080b3fcc();
@@ -1732,7 +1732,7 @@ void StarRodPieceHoverState0(void)
     (*c)->updateState = 0;
     *(u8 *)((u8 *)*c + 67) = 1;
     TaskStop();
-    r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_087560EC);
+    r = ActorStartAnimNoFlip((struct AnimCmd *)gStarRodPieceAnim);
     t = *c;
     t->actorAnimDelay34 = r;
     v6 = 0xFFFFC000;
@@ -1824,7 +1824,7 @@ void StarRodPieceSlideOutState0(void)
     (*c)->updateState = 0;
     *(u8 *)((u8 *)*c + 67) = 255;
     TaskStop();
-    r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_087560EC);
+    r = ActorStartAnimNoFlip((struct AnimCmd *)gStarRodPieceAnim);
     t = *c;
     t->actorAnimDelay34 = r;
     t->velX = 0xFFFC0000;

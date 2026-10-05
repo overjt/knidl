@@ -24,7 +24,7 @@ extern u16 gLatchedPressedKeys[];
 extern u32 gStageRequest[];
 extern u32 gUnk_085B9B2C[];
 extern u32 gUnk_085B9B6C[];
-extern s16 gUnk_0873DBAC[];
+extern s16 gGoalGameLaneX[];
 extern s16 gGoalGameLayerHeights[];
 extern u32 gPlayerGoalGameStates[];
 extern u32 gPlayerGoalGameStateUpdates[];
@@ -34,11 +34,11 @@ extern u8 gUnk_0873DC66[];
 extern u8 gUnk_0873DC80[];
 extern u16 gGoalGameLayerScores[];
 extern u32 gUnk_0873DCA8[];
-extern u32 gUnk_0873DCC0[];
-extern u32 gUnk_0873DCC8[];
+extern u32 gGoalGameTrailStarOffsetX[];
+extern u32 gGoalGameTrailStarOffsetY[];
 extern u32 gGoalGameSpringDepths[];
-extern u32 gUnk_0873DD16[];
-extern u32 gUnk_0873DD30[];
+extern u32 gGoalGameCameraRiseDurations[];
+extern u32 gGoalGameCameraPauseDurations[];
 extern u32 gUnk_0873DD4C[];
 extern u32 gUnk_0873DD5C[];
 extern u32 gUnk_0873DD64[];
@@ -50,10 +50,10 @@ extern u32 gUnk_0873DDE8[];
 extern u32 gUnk_0873DEA0[];
 extern u16 gUnk_0873DEA8[];
 extern u32 gPlayerDances[];
-extern u32 gUnk_0874C890[];
-extern u32 gUnk_0874CDF8[];
-extern u32 gUnk_08754850[];
-extern u32 gUnk_0875488C[];
+extern u32 gGoalGameStarFrames[];
+extern u32 gDoorOverlayFrames[];
+extern u32 gGoalGameSpringFrames[];
+extern u32 gGoalGamePlayerMarkerFrames[];
 extern u32 gUnk_087548A0[];
 
 /* Declared here, not through a header: the calls in this file pass other
@@ -97,7 +97,7 @@ void PlayerGoalGameRideSpring(void);
 void GoalGameCameraFollowPlayer(void);
 void GoalGameCameraUpdate(void);
 s32 GoalGamePlayerMarkerFollowParent(void);
-void sub_0805ceec(void);
+void GoalGameSignFollowHelperKirby(void);
 void GoalGameHelperKirbyUpdate(void);
 void sub_0805d5fc(void);
 void TaskStartFrameScript(s32 a0);
@@ -271,7 +271,7 @@ void sub_0805b370(void)
     gCurTask->playerGoalGameLaunchPower = 0;
     gUnk_02007D00[7] = 0;
     gUnk_02007D00[9] = 0;
-    gCurTask->unk70 = 0xFFFF;
+    gCurTask->playerGoalGameFlightFrames = 0xFFFF;
     if (gCurTask->playerGoalGameActiveIndex == 0)
     {
         LZ77UnCompWram((const void *)gUnk_085B9B6C[3], gUnk_02020000);
@@ -286,7 +286,7 @@ void sub_0805b370(void)
         } while ((s16)gCurTask->playerLoopCount <= 6);
         TaskCreateFrom(TASK_GOAL_GAME_CAMERA, 32);
     }
-    gCurTask->posX = gUnk_0873DBAC[gActivePlayerCount * 4 + gCurTask->playerGoalGameActiveIndex] << 16;
+    gCurTask->posX = gGoalGameLaneX[gActivePlayerCount * 4 + gCurTask->playerGoalGameActiveIndex] << 16;
     gCurTask->posY = 232 << 18;
     TaskCreateFrom(TASK_88, 32);
     gCurTask->playerGoalGameSpringSlot = TaskCreateFrom(TASK_GOAL_GAME_SPRING, 32);
@@ -370,7 +370,7 @@ s32 PlayerGoalGameCheckPress(void)
         {
             gUnk_030023D4 = 0;
         }
-        gCurTask->unk70 = 0;
+        gCurTask->playerGoalGameFlightFrames = 0;
         return 1;
     }
     return 0;
@@ -451,7 +451,7 @@ void PlayerGoalGameLaunch(void)
 
 void PlayerGoalGameLaunchUpdate(void)
 {
-    gCurTask->unk70++;
+    gCurTask->playerGoalGameFlightFrames++;
     TaskUpdateFrameScript();
     gCurTask->playerGoalGameTrailTimer++;
     if (IsWorldPosOnScreen(gCurTask->pixelX, gCurTask->pixelY) != 0)
@@ -485,8 +485,8 @@ void PlayerGoalGameAddToLayerSign(void)
     struct Task *t;
 
     t = &gTasks[gUnk_02007D00[gCurTask->playerGoalGameLayer]];
-    t->unk28 = 0;
-    t->unk2C |= 1 << gCurTask->player->playerIndex;
+    t->goalGameSignWaiting = 0;
+    t->goalGameSignIncomingMask |= 1 << gCurTask->player->playerIndex;
 }
 
 void sub_0805b8f8(void)
@@ -564,7 +564,7 @@ void PlayerGoalGameLand(void)
             }
             gCurTask->playerLoopCount++;
         }
-        gCurTask->playerGoalGameSpotX = ((s16 *)gUnk_0873DBAC)[gUnk_030023D4 * 4 + gUnk_030023B4];
+        gCurTask->playerGoalGameSpotX = ((s16 *)gGoalGameLaneX)[gUnk_030023D4 * 4 + gUnk_030023B4];
         if (gCurTask->playerGoalGameSpotX == gCurTask->pixelX)
         {
             gCurTask->state = PLAYER_GOAL_GAME_STATE_WAIT;
@@ -636,7 +636,7 @@ void PlayerGoalGameWaitLateUpdate(void)
     struct Task *t;
 
     t = &gTasks[gUnk_02007D00[gCurTask->playerGoalGameLayer]];
-    if (t->unk2C == 0)
+    if (t->goalGameSignIncomingMask == 0)
     {
         gCurTask->state = PLAYER_GOAL_GAME_STATE_DANCE;
         TaskSetEntry(PlayerGoalGameEnterState, gCurTaskIdx);
@@ -648,7 +648,7 @@ void PlayerGoalGameRemoveFromLayerSign(void)
     struct Task *t;
 
     t = &gTasks[gUnk_02007D00[gCurTask->playerGoalGameLayer]];
-    t->unk2C &= ~(1 << gCurTask->player->playerIndex);
+    t->goalGameSignIncomingMask &= ~(1 << gCurTask->player->playerIndex);
 }
 
 void PlayerGoalGameDance(void)
@@ -722,7 +722,7 @@ void Task_GoalGameLaunchStars(void)
     gCurTask->drawCallback = (u32)GoalGameLaunchStarsDraw;
     gCurTask->updateCallback = (u32)GoalGameLaunchStarsUpdate;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_0874C890;
+    gCurTask->frameTable = gGoalGameStarFrames;
     gCurTask->tileWord = 0;
     TaskStop();
     gCurTask->pixelX = gTasks[gCurTask->parent].pixelX;
@@ -830,12 +830,12 @@ void Task_GoalGameBigTrailStar(void)
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_0874C890;
+    gCurTask->frameTable = gGoalGameStarFrames;
     gCurTask->tileWord = 0;
     gCurTask->pixelX = gTasks[gCurTask->parent].pixelX
-                         + ((s8 *)gUnk_0873DCC0)[RandomRange(8)];
+                         + ((s8 *)gGoalGameTrailStarOffsetX)[RandomRange(8)];
     gCurTask->pixelY = gTasks[gCurTask->parent].pixelY
-                         + ((s8 *)gUnk_0873DCC8)[RandomRange(4)];
+                         + ((s8 *)gGoalGameTrailStarOffsetY)[RandomRange(4)];
     gCurTask->posX = gCurTask->pixelX << 16;
     gCurTask->posY = gCurTask->pixelY << 16;
     TaskSetMotionY(gTasks[gCurTask->parent].velY + (128 << 9),
@@ -900,12 +900,12 @@ void Task_GoalGameSmallTrailStar(void)
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 13;
-    gCurTask->frameTable = gUnk_0874C890;
+    gCurTask->frameTable = gGoalGameStarFrames;
     gCurTask->tileWord = 0;
     gCurTask->pixelX = gTasks[gCurTask->parent].pixelX
-                         + ((s8 *)gUnk_0873DCC0)[RandomRange(8)];
+                         + ((s8 *)gGoalGameTrailStarOffsetX)[RandomRange(8)];
     gCurTask->pixelY = gTasks[gCurTask->parent].pixelY
-                         + ((s8 *)gUnk_0873DCC8)[RandomRange(4)];
+                         + ((s8 *)gGoalGameTrailStarOffsetY)[RandomRange(4)];
     gCurTask->posX = gCurTask->pixelX << 16;
     gCurTask->posY = gCurTask->pixelY << 16;
     TaskSetMotionY(gTasks[gCurTask->parent].velY + (128 << 8),
@@ -961,8 +961,8 @@ void Task_GoalGameCamera(void)
     if ((gActivePlayerMask >> gLocalPlayer) & 1)
     {
         TaskStop();
-        gCurTask->unk28 = -1;
-        gCurTask->unk2C = 0;
+        gCurTask->goalGameCameraPlayerSlot = -1;
+        gCurTask->goalGameCameraOffsetY = 0;
         gCurTask->pixelX = 144;
         gCurTask->pixelY = gTasks[gLocalPlayer].pixelY;
         gCurTask->posX = gCurTask->pixelX << 16;
@@ -978,7 +978,7 @@ void Task_GoalGameCamera(void)
         TaskYieldTrampoline(1);
         gCurTask->velY = 0xFFF78000;
         {
-            u8 *t1 = (u8 *)gUnk_0873DD16;
+            u8 *t1 = (u8 *)gGoalGameCameraRiseDurations;
 
             TaskYieldTrampoline(t1[gTasks[gLocalPlayer].playerGoalGameLaunchPower]);
         }
@@ -986,7 +986,7 @@ void Task_GoalGameCamera(void)
         TaskYieldTrampoline(32);
         TaskStop();
         {
-            u8 *t2 = (u8 *)gUnk_0873DD30;
+            u8 *t2 = (u8 *)gGoalGameCameraPauseDurations;
 
             TaskYieldTrampoline(t2[gTasks[gLocalPlayer].playerGoalGameLaunchPower]);
         }
@@ -1003,11 +1003,11 @@ void Task_GoalGameCamera(void)
         {
             if ((gActivePlayerMask >> gUnk_030023D4) & 1)
             {
-                gCurTask->unk28 = gUnk_030023D4;
+                gCurTask->goalGameCameraPlayerSlot = gUnk_030023D4;
                 break;
             }
         }
-        gCurTask->unk2C = 0;
+        gCurTask->goalGameCameraOffsetY = 0;
         GoalGameCameraFollowPlayer();
     }
 }
@@ -1016,36 +1016,36 @@ void GoalGameCameraFollowPlayer(void)
 {
     TaskStop();
     gCurTask->pixelX = 144;
-    gCurTask->pixelY = gTasks[gCurTask->unk28].pixelY;
+    gCurTask->pixelY = gTasks[gCurTask->goalGameCameraPlayerSlot].pixelY;
     gCurTask->posX = gCurTask->pixelX << 16;
     gCurTask->posY = gCurTask->pixelY << 16;
-    while (gTasks[gCurTask->unk28].state <= 3)
+    while (gTasks[gCurTask->goalGameCameraPlayerSlot].state <= 3)
     {
-        gCurTask->pixelY = gTasks[gCurTask->unk28].pixelY;
+        gCurTask->pixelY = gTasks[gCurTask->goalGameCameraPlayerSlot].pixelY;
         gCurTask->posY = gCurTask->pixelY << 16;
         TaskYieldTrampoline(1);
     }
-    gCurTask->pixelY = gTasks[gCurTask->unk28].pixelY;
+    gCurTask->pixelY = gTasks[gCurTask->goalGameCameraPlayerSlot].pixelY;
     gCurTask->posY = gCurTask->pixelY << 16;
     TaskYieldTrampoline(1);
     gCurTask->velY = 0xFFF78000;
     {
-        u8 *t1 = (u8 *)gUnk_0873DD16;
+        u8 *t1 = (u8 *)gGoalGameCameraRiseDurations;
 
-        TaskYieldTrampoline(t1[gTasks[gCurTask->unk28].unk34]
-                            - (s16)gTasks[gCurTask->unk28].unk70 + 1);
+        TaskYieldTrampoline(t1[gTasks[gCurTask->goalGameCameraPlayerSlot].playerGoalGameLaunchPower]
+                            - (s16)gTasks[gCurTask->goalGameCameraPlayerSlot].playerGoalGameFlightFrames + 1);
     }
     gCurTask->accelY = 136 << 7;
     TaskYieldTrampoline(32);
     TaskStop();
     {
-        u8 *t2 = (u8 *)gUnk_0873DD30;
+        u8 *t2 = (u8 *)gGoalGameCameraPauseDurations;
 
-        TaskYieldTrampoline(t2[gTasks[gCurTask->unk28].unk34]);
+        TaskYieldTrampoline(t2[gTasks[gCurTask->goalGameCameraPlayerSlot].playerGoalGameLaunchPower]);
     }
     gCurTask->accelY = 128 << 7;
     while (gCurTask->pixelY
-           < gGoalGameLayerHeights[gTasks[gCurTask->unk28].unk30] - 2)
+           < gGoalGameLayerHeights[gTasks[gCurTask->goalGameCameraPlayerSlot].playerGoalGameLayer] - 2)
         TaskYieldTrampoline(1);
     TaskStop();
     TaskSleepForever();
@@ -1057,37 +1057,37 @@ void GoalGameCameraUpdate(void)
     u16 y;
 
     x = gCurTask->pixelX;
-    y = gCurTask->pixelY + gCurTask->unk2C;
+    y = gCurTask->pixelY + gCurTask->goalGameCameraOffsetY;
     if ((s16)y > 0x41C)
         y = 0x41C;
     SetCameraFocus((s16)x, (s16)y);
-    if (gCurTask->unk2C != 0)
+    if (gCurTask->goalGameCameraOffsetY != 0)
     {
-        if (gCurTask->unk2C > 0)
+        if (gCurTask->goalGameCameraOffsetY > 0)
         {
-            gCurTask->unk2C -= 4;
-            if (gCurTask->unk2C < 0)
-                gCurTask->unk2C = 0;
+            gCurTask->goalGameCameraOffsetY -= 4;
+            if (gCurTask->goalGameCameraOffsetY < 0)
+                gCurTask->goalGameCameraOffsetY = 0;
         }
         else
         {
-            gCurTask->unk2C += 4;
-            if (gCurTask->unk2C > 0)
-                gCurTask->unk2C = 0;
+            gCurTask->goalGameCameraOffsetY += 4;
+            if (gCurTask->goalGameCameraOffsetY > 0)
+                gCurTask->goalGameCameraOffsetY = 0;
         }
     }
-    if (gCurTask->unk28 >= 0)
+    if (gCurTask->goalGameCameraPlayerSlot >= 0)
     {
         for (gUnk_030023D4 = 0; gUnk_030023D4 < gPlayerCount; gUnk_030023D4++)
         {
-            if ((s16)gTasks[gCurTask->unk28].unk70 < 0)
+            if ((s16)gTasks[gCurTask->goalGameCameraPlayerSlot].playerGoalGameFlightFrames < 0)
             {
                 if (((gActivePlayerMask >> gUnk_030023D4) & 1)
-                    && gCurTask->unk28 != gUnk_030023D4
-                    && (s16)gTasks[gUnk_030023D4].unk70 >= 0)
+                    && gCurTask->goalGameCameraPlayerSlot != gUnk_030023D4
+                    && (s16)gTasks[gUnk_030023D4].playerGoalGameFlightFrames >= 0)
                 {
-                    gCurTask->unk2C = 0;
-                    gCurTask->unk28 = gUnk_030023D4;
+                    gCurTask->goalGameCameraOffsetY = 0;
+                    gCurTask->goalGameCameraPlayerSlot = gUnk_030023D4;
                     gCurTask->pixelY = gTasks[gUnk_030023D4].pixelY;
                     gCurTask->posY = gCurTask->pixelY << 16;
                     TaskSetEntry(GoalGameCameraFollowPlayer, gCurTaskIdx);
@@ -1096,14 +1096,14 @@ void GoalGameCameraUpdate(void)
             else
             {
                 if (((gActivePlayerMask >> gUnk_030023D4) & 1)
-                    && gCurTask->unk28 != gUnk_030023D4
-                    && (s16)gTasks[gUnk_030023D4].unk70 > 0
-                    && gTasks[gCurTask->unk28].unk34
-                           < gTasks[gUnk_030023D4].unk34)
+                    && gCurTask->goalGameCameraPlayerSlot != gUnk_030023D4
+                    && (s16)gTasks[gUnk_030023D4].playerGoalGameFlightFrames > 0
+                    && gTasks[gCurTask->goalGameCameraPlayerSlot].playerGoalGameLaunchPower
+                           < gTasks[gUnk_030023D4].playerGoalGameLaunchPower)
                 {
-                    gCurTask->unk2C = gCurTask->pixelY + gCurTask->unk2C
+                    gCurTask->goalGameCameraOffsetY = gCurTask->pixelY + gCurTask->goalGameCameraOffsetY
                                          - gTasks[gUnk_030023D4].pixelY;
-                    gCurTask->unk28 = gUnk_030023D4;
+                    gCurTask->goalGameCameraPlayerSlot = gUnk_030023D4;
                     gCurTask->pixelY = gTasks[gUnk_030023D4].pixelY;
                     gCurTask->posY = gCurTask->pixelY << 16;
                     TaskSetEntry(GoalGameCameraFollowPlayer, gCurTaskIdx);
@@ -1119,15 +1119,15 @@ void Task_GoalGameSpring(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 8;
     if (gActivePlayerCount == 1)
-        gCurTask->frameTable = gUnk_08754850;
+        gCurTask->frameTable = gGoalGameSpringFrames;
     else
         gCurTask->frameTable = (u32 *)gUnk_0873DD4C[gCurTask->variant];
     gCurTask->tileWord = 0x00009010;
     {
-        s16 *tbl = (s16 *)gUnk_0873DBAC;
+        s16 *tbl = (s16 *)gGoalGameLaneX;
 
         gCurTask->posX = tbl[(gActivePlayerCount << 2)
-            + gTasks[gCurTask->parent].unk2C] << 16;
+            + gTasks[gCurTask->parent].playerGoalGameActiveIndex] << 16;
     }
     gCurTask->posY = 131 << 19;
     while (1)
@@ -1143,7 +1143,7 @@ void Task_GoalGamePlayerMarker(void)
 {
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_0875488C;
+    gCurTask->frameTable = gGoalGamePlayerMarkerFrames;
     gCurTask->updateCallback = (u32)GoalGamePlayerMarkerFollowParent;
     gCurTask->tileWord = 0x0000A010;
     if (gLocalPlayer == gCurTask->variant)
@@ -1178,26 +1178,26 @@ void Task_GoalGameSign(void)
         gCurTask->posY = (t[gCurTask->variant] - 8) << 16;
     }
     gCurTask->tileWord = 0x00008010;
-    gCurTask->unk28 = 1;
-    gCurTask->unk2C = 0;
+    gCurTask->goalGameSignWaiting = 1;
+    gCurTask->goalGameSignIncomingMask = 0;
     gCurTask->frame = 0;
     do
     {
         TaskYieldTrampoline(1);
-    } while (gCurTask->unk28 != 0 || gCurTask->unk2C != 0);
-    gCurTask->unk46 = TaskCreateFrom(TASK_GOAL_GAME_HELPER_KIRBY, 32);
-    (gTasks + gCurTask->unk46)->unk74 = gCurTask->variant;
-    (gTasks + gCurTask->unk46)->unk28 = gUnk_02007D00[7];
+    } while (gCurTask->goalGameSignWaiting != 0 || gCurTask->goalGameSignIncomingMask != 0);
+    gCurTask->goalGameSignHelperKirbySlot = TaskCreateFrom(TASK_GOAL_GAME_HELPER_KIRBY, 32);
+    (gTasks + gCurTask->goalGameSignHelperKirbySlot)->goalGameHelperKirbyLayer = gCurTask->variant;
+    (gTasks + gCurTask->goalGameSignHelperKirbySlot)->goalGameHelperKirbyIndex = gUnk_02007D00[7];
     gUnk_02007D00[7]++;
     if (gCurTask->variant == 0)
     {
         TaskYieldTrampoline(24);
-        gCurTask->updateCallback = (u32)sub_0805ceec;
-        gCurTask->unk28 = 1;
+        gCurTask->updateCallback = (u32)GoalGameSignFollowHelperKirby;
+        gCurTask->goalGameSignWaiting = 1;
         do
         {
             TaskYieldTrampoline(1);
-        } while (gCurTask->unk28 != 0);
+        } while (gCurTask->goalGameSignWaiting != 0);
         gCurTask->goalGameSignLoopCount = 0;
         do
         {
@@ -1228,11 +1228,11 @@ void Task_GoalGameSign(void)
     }
     else
     {
-        gCurTask->unk28 = 1;
+        gCurTask->goalGameSignWaiting = 1;
         do
         {
             TaskYieldTrampoline(1);
-        } while (gCurTask->unk28 != 0);
+        } while (gCurTask->goalGameSignWaiting != 0);
         gCurTask->velY = 0xFFF8CD00;
         TaskYieldTrampoline(3);
         gCurTask->velY = 0xFFFB3300;
@@ -1256,10 +1256,10 @@ void Task_GoalGameSign(void)
     TaskSleepForever();
 }
 
-void sub_0805ceec(void)
+void GoalGameSignFollowHelperKirby(void)
 {
-    gCurTask->pixelX = (gTasks + gCurTask->unk46)->pixelX - 4;
-    gCurTask->pixelY = (gTasks + gCurTask->unk46)->pixelY - 16;
+    gCurTask->pixelX = (gTasks + gCurTask->goalGameSignHelperKirbySlot)->pixelX - 4;
+    gCurTask->pixelY = (gTasks + gCurTask->goalGameSignHelperKirbySlot)->pixelY - 16;
 }
 
 void Task_GoalGameHelperKirby(void)
@@ -1267,20 +1267,20 @@ void Task_GoalGameHelperKirby(void)
     gCurTask->updateCallback = (u32)GoalGameHelperKirbyUpdate;
     gCurTask->posX = 248 << 16;
     gCurTask->facing = 255;
-    gCurTask->unk2C = 0;
-    gCurTask->unk30 = 0;
-    gCurTask->unk24 = 0;
-    if (gCurTask->unk74 == 0)
+    gCurTask->goalGameHelperKirbyPlayerMask = 0;
+    gCurTask->goalGameHelperKirbyLaneCount = 0;
+    gCurTask->goalGameHelperKirbyTimer = 0;
+    if (gCurTask->goalGameHelperKirbyLayer == 0)
         gCurTask->variant = 1;
     else
         gCurTask->variant = 0;
-    GoalGameHelperKirbyInitSprite(gCurTask->unk28, gCurTask->variant);
+    GoalGameHelperKirbyInitSprite(gCurTask->goalGameHelperKirbyIndex, gCurTask->variant);
     gCurTask->layer = 8;
     switch (gCurTask->variant)
     {
     case 1:
         if (((gActivePlayerMask >> gLocalPlayer) & 1)
-            && (gTasks + gLocalPlayer)->unk30 != 0)
+            && (gTasks + gLocalPlayer)->playerGoalGameLayer != 0)
             gCurTask->drawCallback = 0;
         gCurTask->posX = 244 << 16;
         gCurTask->posY = 196 << 16;
@@ -1311,7 +1311,7 @@ void Task_GoalGameHelperKirby(void)
         TaskYieldTrampoline(60);
         TaskStartFrameScript((s32)gUnk_0873DD80);
         TaskStop();
-        (gTasks + gCurTask->parent)->unk28 = 0;
+        (gTasks + gCurTask->parent)->goalGameSignWaiting = 0;
         gCurTask->goalGameHelperKirbyLoopCount = 0;
         do
         {
@@ -1350,11 +1350,11 @@ void Task_GoalGameHelperKirby(void)
             if (((gActivePlayerMask >> (s16)gCurTask->goalGameHelperKirbyLoopCount) & 1)
                 && (gTasks + (s16)gCurTask->goalGameHelperKirbyLoopCount)->unk30 == 0)
             {
-                gCurTask->unk2C |= 1 << (s16)gCurTask->goalGameHelperKirbyLoopCount;
-                gCurTask->unk30++;
+                gCurTask->goalGameHelperKirbyPlayerMask |= 1 << (s16)gCurTask->goalGameHelperKirbyLoopCount;
+                gCurTask->goalGameHelperKirbyLaneCount++;
             }
         }
-        gCurTask->unk34 = gCurTask->unk30 - 1;
+        gCurTask->goalGameHelperKirbyLaneIndex = gCurTask->goalGameHelperKirbyLaneCount - 1;
         gCurTask->velX = 0xFFFF6600;
         TaskYieldTrampoline(5);
         gCurTask->velX = 0xFFFECD00;
@@ -1379,17 +1379,17 @@ void Task_GoalGameHelperKirby(void)
             gCurTask->goalGameHelperKirbyLoopCount = 0;
             do
             {
-                for (gCurTask->unk6E = 0;
-                     gCurTask->unk6E < gPlayerCount;
-                     gCurTask->unk6E++)
+                for (gCurTask->goalGameHelperKirbyLoopCount6E = 0;
+                     gCurTask->goalGameHelperKirbyLoopCount6E < gPlayerCount;
+                     gCurTask->goalGameHelperKirbyLoopCount6E++)
                 {
-                    if (((gActivePlayerMask >> gCurTask->unk6E) & 1)
-                        && ((u8 *)gUnk_02006A14)[gCurTask->unk6E] == 0)
+                    if (((gActivePlayerMask >> gCurTask->goalGameHelperKirbyLoopCount6E) & 1)
+                        && ((u8 *)gUnk_02006A14)[gCurTask->goalGameHelperKirbyLoopCount6E] == 0)
                     {
-                        gCurTask->unk46 = TaskCreateFrom(TASK_GOAL_GAME_ONE_UP, 32);
-                        (gTasks + gCurTask->unk46)->unk2C
-                            = gCurTask->unk6E;
-                        (gTasks + gCurTask->unk46)->variant = 1;
+                        gCurTask->goalGameHelperKirbyOneUpSlot = TaskCreateFrom(TASK_GOAL_GAME_ONE_UP, 32);
+                        (gTasks + gCurTask->goalGameHelperKirbyOneUpSlot)->goalGameOneUpPlayer
+                            = gCurTask->goalGameHelperKirbyLoopCount6E;
+                        (gTasks + gCurTask->goalGameHelperKirbyOneUpSlot)->variant = 1;
                     }
                 }
                 TaskYieldTrampoline(11);
@@ -1403,7 +1403,7 @@ void Task_GoalGameHelperKirby(void)
         {
             s16 *t = (s16 *)gGoalGameLayerHeights;
 
-            gCurTask->posY = (t[gCurTask->unk74] - 2) << 16;
+            gCurTask->posY = (t[gCurTask->goalGameHelperKirbyLayer] - 2) << 16;
         }
         TaskStartFrameScript((s32)gUnk_0873DDBE);
         gCurTask->velX = 0xFFFE0000;
@@ -1422,7 +1422,7 @@ void Task_GoalGameHelperKirby(void)
         } while ((s16)gCurTask->goalGameHelperKirbyLoopCount <= 3);
         TaskSetFrame(167);
         TaskYieldTrampoline(4);
-        (gTasks + gCurTask->parent)->unk28 = 0;
+        (gTasks + gCurTask->parent)->goalGameSignWaiting = 0;
         TaskSetFrame(165);
         TaskYieldTrampoline(2);
         TaskSetFrame(168);
@@ -1440,29 +1440,29 @@ void Task_GoalGameHelperKirby(void)
 void GoalGameHelperKirbyUpdate(void)
 {
     TaskUpdateFrameScript();
-    if (gCurTask->unk2C == 0)
+    if (gCurTask->goalGameHelperKirbyPlayerMask == 0)
         return;
     for (gCurTask->goalGameHelperKirbyLoopCount = gPlayerCount - 1;
          (s16)gCurTask->goalGameHelperKirbyLoopCount >= 0;
          gCurTask->goalGameHelperKirbyLoopCount--)
     {
         if (((gActivePlayerMask >> (s16)gCurTask->goalGameHelperKirbyLoopCount) & 1)
-            && ((gCurTask->unk2C >> (s16)gCurTask->goalGameHelperKirbyLoopCount) & 1)
-            && gCurTask->pixelX < gUnk_0873DBAC[(gCurTask->unk30 << 2) + gCurTask->unk34] - 6)
+            && ((gCurTask->goalGameHelperKirbyPlayerMask >> (s16)gCurTask->goalGameHelperKirbyLoopCount) & 1)
+            && gCurTask->pixelX < gGoalGameLaneX[(gCurTask->goalGameHelperKirbyLaneCount << 2) + gCurTask->goalGameHelperKirbyLaneIndex] - 6)
         {
             if (gUnk_02006A14[(s16)gCurTask->goalGameHelperKirbyLoopCount] != 0)
             {
-                gCurTask->unk46 = TaskCreateFrom(TASK_GOAL_GAME_ONE_UP, 32);
-                (gTasks + gCurTask->unk46)->unk2C = (s16)gCurTask->goalGameHelperKirbyLoopCount;
-                (gTasks + gCurTask->unk46)->unk30 = gCurTask->unk30;
-                (gTasks + gCurTask->unk46)->unk34 = gCurTask->unk34;
-                (gTasks + gCurTask->unk46)->variant = 0;
+                gCurTask->goalGameHelperKirbyOneUpSlot = TaskCreateFrom(TASK_GOAL_GAME_ONE_UP, 32);
+                (gTasks + gCurTask->goalGameHelperKirbyOneUpSlot)->goalGameOneUpPlayer = (s16)gCurTask->goalGameHelperKirbyLoopCount;
+                (gTasks + gCurTask->goalGameHelperKirbyOneUpSlot)->goalGameOneUpLaneCount = gCurTask->goalGameHelperKirbyLaneCount;
+                (gTasks + gCurTask->goalGameHelperKirbyOneUpSlot)->goalGameOneUpLaneIndex = gCurTask->goalGameHelperKirbyLaneIndex;
+                (gTasks + gCurTask->goalGameHelperKirbyOneUpSlot)->variant = 0;
             }
-            gCurTask->unk2C &= ~(1 << (s16)gCurTask->goalGameHelperKirbyLoopCount);
-            gCurTask->unk34--;
+            gCurTask->goalGameHelperKirbyPlayerMask &= ~(1 << (s16)gCurTask->goalGameHelperKirbyLoopCount);
+            gCurTask->goalGameHelperKirbyLaneIndex--;
         }
     }
-    gCurTask->unk24++;
+    gCurTask->goalGameHelperKirbyTimer++;
 }
 
 void sub_0805d564(void)
@@ -1491,7 +1491,7 @@ void sub_0805d5fc(void)
     TaskDrawWorld();
     if (TaskIsOnScreen() != 0)
     {
-        u32 *tbl = gUnk_0874CDF8;
+        u32 *tbl = gDoorOverlayFrames;
         struct Task *t = gCurTask;
 
         QueueSprite(14, tbl[(s16)t->unk6C], 0, 0,
@@ -1511,14 +1511,14 @@ void Task_GoalGameOneUp(void)
     switch (gCurTask->variant)
     {
     case 0:
-        gCurTask->posX = (gUnk_0873DBAC[(gCurTask->unk30 << 2)
-            + gCurTask->unk34] - 6) << 16;
+        gCurTask->posX = (gGoalGameLaneX[(gCurTask->goalGameOneUpLaneCount << 2)
+            + gCurTask->goalGameOneUpLaneIndex] - 6) << 16;
         gCurTask->posY = (gTasks + gCurTask->parent)->pixelY << 16;
-        gCurTask->unk24 = 44 - gTasks[gCurTask->parent].unk24;
-        if (gCurTask->unk24 & 1)
+        gCurTask->goalGameOneUpDelay = 44 - gTasks[gCurTask->parent].goalGameHelperKirbyTimer;
+        if (gCurTask->goalGameOneUpDelay & 1)
             TaskYieldTrampoline(1);
         gCurTask->velY = 0xFFFE0000;
-        TaskYieldTrampoline(gCurTask->unk24 >> 1);
+        TaskYieldTrampoline(gCurTask->goalGameOneUpDelay >> 1);
         gCurTask->velX = 128 << 8;
         gCurTask->velY = 0xFFFE0000;
         TaskYieldTrampoline(4);
@@ -1531,13 +1531,13 @@ void Task_GoalGameOneUp(void)
         gCurTask->velY = 128 << 9;
         TaskYieldTrampoline(8);
         gCurTask->velY = 128 << 10;
-        TaskYieldTrampoline(gCurTask->unk24 >> 1);
+        TaskYieldTrampoline(gCurTask->goalGameOneUpDelay >> 1);
         TaskYieldTrampoline(22);
         break;
     case 1:
         gCurTask->posX = gTasks[gCurTask->parent].pixelX << 16;
         gCurTask->posY = gTasks[gCurTask->parent].pixelY << 16;
-        gCurTask->velX = (gTasks[gCurTask->unk2C].pixelX
+        gCurTask->velX = (gTasks[gCurTask->goalGameOneUpPlayer].pixelX
             - gTasks[gCurTask->parent].pixelX) << 11;
         gCurTask->velY = 0xFFFC0000;
         TaskYieldTrampoline(4);
@@ -1559,9 +1559,9 @@ void Task_GoalGameOneUp(void)
         TaskYieldTrampoline(8);
         break;
     }
-    if (gCurTask->unk2C == gLocalPlayer)
+    if (gCurTask->goalGameOneUpPlayer == gLocalPlayer)
         PlaySfx(220);
-    AddPlayerLives(1, gCurTask->unk2C);
+    AddPlayerLives(1, gCurTask->goalGameOneUpPlayer);
     TaskExitTrampoline();
 }
 
@@ -1734,8 +1734,8 @@ void sub_0805dba0(void)
     t->frameTable = gPlayerFrames;
     TaskStop();
     u = gCurTask;
-    u->spriteFlags &= 0x7FFF;
-    u->player->unk42 &= 0xFFEF;
+    u->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
+    u->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     CallTableEntry(u->state, 2, gUnk_0873DEA0);
 }
 
@@ -1757,7 +1757,7 @@ void sub_0805dc18(void)
     t->updateCallback = (u32)sub_0805dd4c;
     t->facing = 1;
     u = gCurTask;
-    u->spriteFlags &= 0x7FFF;
+    u->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     switch ((s8)u->player->ability)
     {
     case ABILITY_NORMAL:
@@ -1766,7 +1766,7 @@ void sub_0805dc18(void)
     case ABILITY_LIGHT:
     case ABILITY_UFO:
         v = gCurTask;
-        v->spriteFlags |= 128 << 8;
+        v->spriteFlags |= SPRITE_FLAG_FLIP_X;
         break;
     case ABILITY_FIRE:
     case ABILITY_SPARK:
@@ -1881,12 +1881,12 @@ void PlayerWalkToDanceSpotUpdate(void)
     d = t->pixelX - gSpriteCameraX;
     if (t->facing == 1)
     {
-        if ((s16)d >= t->unk18)
+        if ((s16)d >= t->playerDanceSpotX)
             sub_0805df9c();
     }
     else
     {
-        if ((s16)d <= t->unk18)
+        if ((s16)d <= t->playerDanceSpotX)
             sub_0805df9c();
     }
 }
@@ -1916,7 +1916,7 @@ void PlayerSetDanceSpot(s32 a0)
         break;
     }
     w = (s16)v;
-    t->unk18 = w;
+    t->playerDanceSpotX = w;
     if (gUnk_0300244C == 0)
     {
         if (t->pixelX - w <= 0)
@@ -1982,7 +1982,7 @@ void PlayerDanceInGoalGame(void)
     if (*(s8 *)gDanceId < 0)
         *(s8 *)gDanceId = RandomRange(7);
     t = gCurTask;
-    if (t->unk30 != 0)
+    if (t->playerGoalGameLayer != 0)
     {
         if (gLocalPlayer == t->player->playerIndex)
             PlayBgm(14);
@@ -2003,11 +2003,11 @@ void PlayerDanceAfterStageClear(void)
     if (*(s8 *)gDanceId < 0)
     {
         *(s8 *)gDanceId = RandomRange(7) + 7;
-        gCurTask->unk34 = 1;
+        gCurTask->playerDanceLeader = 1;
     }
     else
     {
-        gCurTask->unk34 = 0;
+        gCurTask->playerDanceLeader = 0;
     }
     if (*(u8 *)gStageClearDanceBgmPlayed == 0)
     {
@@ -2016,14 +2016,14 @@ void PlayerDanceAfterStageClear(void)
     }
     CallTableEntry(*(s8 *)gDanceId, 14, gPlayerDances);
     TaskYieldTrampoline(60);
-    if (gCurTask->unk34 != 0)
+    if (gCurTask->playerDanceLeader != 0)
         ExitClearedStage();
 }
 
 void sub_0805e2d4(void)
 {
     TaskSetMotion(128 << 9, 0, 0x5A5A5A5A, 144 << 10, 0, 0x5A5A5A5A);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 147 << 1;
     TaskYieldTrampoline(1);
     gCurTask->velY = 0xFFFD8000;
@@ -2174,7 +2174,7 @@ void sub_0805e2d4(void)
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 0x92;
     TaskYieldTrampoline(0x15);
@@ -2184,7 +2184,7 @@ void PlayerDance1(void)
 {
     gCurTask->velY = 144 << 10;
     gCurTask->accelY = 0xFFFF8000;
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0;
     TaskYieldTrampoline(4);
     gCurTask->frame = 9;
@@ -2200,7 +2200,7 @@ void PlayerDance1(void)
     gCurTask->velY = 0xFFFF2000;
     TaskYieldTrampoline(3);
     gCurTask->velY = 188 << 11;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     TaskYieldTrampoline(1);
     gCurTask->velY = 128 << 6;
     TaskYieldTrampoline(3);
@@ -2210,7 +2210,7 @@ void PlayerDance1(void)
     gCurTask->frame = 5;
     TaskYieldTrampoline(4);
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     TaskYieldTrampoline(2);
     gCurTask->velX = 0xFFFC8000;
     gCurTask->frame = 97;
@@ -2224,7 +2224,7 @@ void PlayerDance1(void)
     gCurTask->velX = 0;
     gCurTask->frame = 40;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     TaskYieldTrampoline(1);
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
@@ -2264,10 +2264,10 @@ void PlayerDance1(void)
     TaskYieldTrampoline(2);
     gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 17;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 111;
     TaskYieldTrampoline(1);
     TaskStop();
@@ -2288,7 +2288,7 @@ void PlayerDance1(void)
     gCurTask->frame = 5;
     TaskYieldTrampoline(7);
     TaskStop();
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 146;
     TaskYieldTrampoline(21);
@@ -2308,14 +2308,14 @@ void PlayerDance2(s32 a0, s32 a1, s32 a2)
     TaskSetMotion(0xFFFFC000, 0, 0x5A5A5A5A, 0xFFFD4000, 128 << 8, 0x5A5A5A5A);
     gCurTask->frame = 0x133;
     TaskYieldTrampoline(10);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     TaskSetMotion(0, 0, 0x5A5A5A5A, 144 << 9, 0xFFFFC000, 0x5A5A5A5A);
     gCurTask->frame = 123;
     TaskYieldTrampoline(8);
     TaskSetMotion(0xFFFF8000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gCurTask->frame = 5;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->velX = 0xFFF80000;
     gCurTask->accelX = 128 << 9;
     gCurTask->frame = 100;
@@ -2331,7 +2331,7 @@ void PlayerDance2(s32 a0, s32 a1, s32 a2)
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFF0000, 0, 0x5A5A5A5A, 0xFFFD8000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 40;
     TaskYieldTrampoline(2);
     gCurTask->frame = 32;
@@ -2383,7 +2383,7 @@ void PlayerDance2(s32 a0, s32 a1, s32 a2)
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 146;
     TaskYieldTrampoline(21);
@@ -2469,7 +2469,7 @@ void PlayerDance3(void)
     gCurTask->accelY = 128 << 7;
     gCurTask->frame = 151 + 161;
     TaskYieldTrampoline(14);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x139;
     TaskYieldTrampoline(3);
     gCurTask->frame++;
@@ -2490,7 +2490,7 @@ void PlayerDance3(void)
     gCurTask->velX = 0xFFFEA000;
     gCurTask->accelX = 128 << 6;
     TaskYieldTrampoline(4);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     TaskYieldTrampoline(5);
     gCurTask->frame++;
     TaskYieldTrampoline(4);
@@ -2505,7 +2505,7 @@ void PlayerDance3(void)
     gCurTask->frame = 111;
     TaskYieldTrampoline(1);
     TaskStop();
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 146;
     TaskYieldTrampoline(21);
@@ -2514,7 +2514,7 @@ void PlayerDance3(void)
 void PlayerDance4(void)
 {
     gCurTask->velX = 128 << 9;
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 20;
     TaskYieldTrampoline(3);
     gCurTask->frame--;
@@ -2557,17 +2557,17 @@ void PlayerDance4(void)
     TaskYieldTrampoline(2);
     gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 17;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 111;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 110;
     TaskYieldTrampoline(2);
     gCurTask->velX = 128 << 9;
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 102;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -2586,15 +2586,15 @@ void PlayerDance4(void)
     TaskYieldTrampoline(1);
     gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 17;
     TaskYieldTrampoline(1);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 111;
     TaskYieldTrampoline(1);
     gCurTask->velX = 0xFFF38000;
     gCurTask->accelX = 0xFFFE8000;
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x10F7;
     TaskYieldTrampoline(1);
     gCurTask->velX = 160 << 10;
@@ -2608,7 +2608,7 @@ void PlayerDance4(void)
     TaskYieldTrampoline(2);
     gCurTask->velX = 200 << 12;
     gCurTask->accelX = 128 << 8;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x10F7;
     TaskYieldTrampoline(1);
     gCurTask->velX = 0xFFFD8000;
@@ -2620,10 +2620,10 @@ void PlayerDance4(void)
     gCurTask->velX = 0;
     gCurTask->velY = 0;
     TaskYieldTrampoline(1);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFF38000, 0xFFFE8000, 0x5A5A5A5A, 0xFFFE0000, 0, 0x5A5A5A5A);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x10F7;
     TaskYieldTrampoline(1);
     gCurTask->velX = 160 << 10;
@@ -2638,7 +2638,7 @@ void PlayerDance4(void)
     TaskYieldTrampoline(2);
     gCurTask->velX = 200 << 12;
     gCurTask->accelX = 128 << 8;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x10F7;
     TaskYieldTrampoline(1);
     gCurTask->velX = 0xFFFD8000;
@@ -2650,10 +2650,10 @@ void PlayerDance4(void)
     gCurTask->velX = 0;
     gCurTask->velY = 0;
     TaskYieldTrampoline(1);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFF38000, 0xFFFE8000, 0x5A5A5A5A, 0xFFFE0000, 0, 0x5A5A5A5A);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x10F7;
     TaskYieldTrampoline(1);
     gCurTask->velX = 0xFFFD8000;
@@ -2668,7 +2668,7 @@ void PlayerDance4(void)
     TaskYieldTrampoline(2);
     gCurTask->velX = 200 << 12;
     gCurTask->accelX = 128 << 8;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x10F7;
     TaskYieldTrampoline(1);
     gCurTask->velX = 0xFFFD8000;
@@ -2680,7 +2680,7 @@ void PlayerDance4(void)
     gCurTask->velX = 0;
     gCurTask->velY = 0;
     TaskYieldTrampoline(1);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 37;
     TaskYieldTrampoline(2);
     TaskSetMotion(128 << 8, 0, 0x5A5A5A5A, 0xFFFC6000, 128 << 7, 0x5A5A5A5A);
@@ -2708,7 +2708,7 @@ void PlayerDance4(void)
     gCurTask->frame = 5;
     TaskYieldTrampoline(7);
     TaskStop();
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 146;
     TaskYieldTrampoline(21);
@@ -2773,7 +2773,7 @@ void PlayerDance5(void)
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFFE000, 0, 0x5A5A5A5A, 0xFFFD8000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 40;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -2840,12 +2840,12 @@ void PlayerDance5(void)
     TaskSetMotion(0, 0, 0x5A5A5A5A, 224 << 8, 0xFFFFE000, 0x5A5A5A5A);
     gCurTask->frame = 123;
     TaskYieldTrampoline(13);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     TaskStopY();
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 146;
     TaskYieldTrampoline(21);
@@ -2854,7 +2854,7 @@ void PlayerDance5(void)
 void PlayerDance7(void)
 {
     TaskSetMotion(204 << 9, 0xFFFFE800, 0x5A5A5A5A, 0xFFFE7800, 224 << 6, 0x5A5A5A5A);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 13;
     TaskYieldTrampoline(4);
     gCurTask->frame++;
@@ -2908,7 +2908,7 @@ void PlayerDance7(void)
     TaskSetMotion(192 << 6, 0, 0x5A5A5A5A, 0xFFFD6000, 192 << 7, 0x5A5A5A5A);
     TaskSetFrameFlip(17);
     TaskYieldTrampoline(1);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 111;
     TaskYieldTrampoline(1);
     gCurTask->frame = 102;
@@ -2928,7 +2928,7 @@ void PlayerDance7(void)
     gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskSetMotion(192 << 6, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     gCurTask->frame = 40;
@@ -2985,13 +2985,13 @@ void PlayerDance7(void)
     TaskStop();
     gCurTask->frame = 5;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 146;
     TaskYieldTrampoline(19);
     gCurTask->frame = 0;
     TaskYieldTrampoline(2);
     TaskStop();
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0;
     TaskYieldTrampoline(2);
     gCurTask->velX = 0xFFFE2000;
@@ -3014,7 +3014,7 @@ void PlayerDance7(void)
     gCurTask->frame = 0;
     TaskYieldTrampoline(2);
     gCurTask->velY = 160 << 11;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 154 << 1;
     TaskYieldTrampoline(1);
     gCurTask->velY = 0;
@@ -3093,26 +3093,26 @@ void PlayerDance7(void)
     TaskYieldTrampoline(3);
     gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 16;
     TaskYieldTrampoline(3);
     gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 111;
     TaskYieldTrampoline(2);
     TaskSetMotion(144 << 8, 0xFFFFEE00, 0x5A5A5A5A, 242 << 7, 0xFFFFF500, 0x5A5A5A5A);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 123;
     TaskYieldTrampoline(8);
     gCurTask->velX = 0;
     gCurTask->accelX = 0;
     TaskYieldTrampoline(11);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 146;
     TaskYieldTrampoline(21);
@@ -3121,7 +3121,7 @@ void PlayerDance7(void)
 void PlayerDance8(void)
 {
     TaskSetMotion(0xFFFF8C00, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 15;
     TaskYieldTrampoline(2);
     gCurTask->velY = 0xFFFF4000;
@@ -3141,7 +3141,7 @@ void PlayerDance8(void)
     gCurTask->frame = 19;
     TaskYieldTrampoline(1);
     TaskSetMotion(0xFFFF8C00, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 20;
     TaskYieldTrampoline(2);
     gCurTask->velY = 0xFFFF4000;
@@ -3163,7 +3163,7 @@ void PlayerDance8(void)
     TaskStop();
     gCurTask->frame = 111;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 111;
     TaskYieldTrampoline(3);
     gCurTask->velX = 128 << 8;
@@ -3183,10 +3183,10 @@ void PlayerDance8(void)
     gCurTask->frame++;
     TaskYieldTrampoline(3);
     gCurTask->velX = 192 << 9;
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 111;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 111;
     TaskYieldTrampoline(3);
     gCurTask->velX = 128 << 8;
@@ -3272,7 +3272,7 @@ void PlayerDance8(void)
     TaskYieldTrampoline(2);
     gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     TaskSetMotion(128 << 8, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
@@ -3305,7 +3305,7 @@ void PlayerDance8(void)
     TaskYieldTrampoline(21);
     gCurTask->frame = 111;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 111;
     TaskYieldTrampoline(3);
     gCurTask->frame = 41;
@@ -3331,10 +3331,10 @@ void PlayerDance8(void)
     TaskYieldTrampoline(1);
     gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 111;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->velX = 128 << 8;
     gCurTask->frame = 111;
     TaskYieldTrampoline(2);
@@ -3344,11 +3344,11 @@ void PlayerDance8(void)
     gCurTask->velX = 128 << 8;
     gCurTask->frame = 111;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->velX = 0xFFFF8000;
     gCurTask->frame = 111;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->velX = 0xFFFF0000;
     gCurTask->frame = 109;
     TaskYieldTrampoline(1);
@@ -3372,11 +3372,11 @@ void PlayerDance8(void)
     gCurTask->velX = 128 << 8;
     gCurTask->frame = 111;
     TaskYieldTrampoline(1);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->velX = 0xFFFF8000;
     gCurTask->frame = 111;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->velX = 0xFFFF0000;
     gCurTask->frame = 109;
     TaskYieldTrampoline(2);
@@ -3440,7 +3440,7 @@ void PlayerDance8(void)
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     gCurTask->velY = 0xFFFD0000;
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 146;
     TaskYieldTrampoline(1);
@@ -3450,7 +3450,7 @@ void PlayerDance8(void)
 
 void PlayerDance9(void)
 {
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->velX = 0xFFFFC000;
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
@@ -3474,7 +3474,7 @@ void PlayerDance9(void)
     TaskSetMotion(0xFFFF4000, 192 << 3, 0x5A5A5A5A, 0xFFFE0800, 224 << 6, 0x5A5A5A5A);
     gCurTask->frame = 40;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 109;
     TaskYieldTrampoline(2);
     gCurTask->frame = 107;
@@ -3492,7 +3492,7 @@ void PlayerDance9(void)
     TaskSetMotion(0xFFFF8000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 16;
     TaskYieldTrampoline(2);
     gCurTask->velX = 0;
@@ -3601,14 +3601,14 @@ void PlayerDance9(void)
     gCurTask->velX = 0;
     gCurTask->frame = 100;
     TaskYieldTrampoline(1);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->velX = 192 << 11;
     gCurTask->frame = 146;
     TaskYieldTrampoline(1);
     gCurTask->velX = 0;
     gCurTask->frame = 146;
     TaskYieldTrampoline(20);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->velY = 160 << 9;
     gCurTask->accelY = 0xFFFFC000;
     gCurTask->frame = 123;
@@ -3624,7 +3624,7 @@ void PlayerDance9(void)
     gCurTask->accelY = 0;
     gCurTask->frame = 146;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     TaskSetMotion(0xFFFFE000, 0, 0x5A5A5A5A, 160 << 9, 0xFFFFC000, 0x5A5A5A5A);
     gCurTask->frame = 123;
     TaskYieldTrampoline(9);
@@ -3639,7 +3639,7 @@ void PlayerDance9(void)
     gCurTask->accelY = 0;
     gCurTask->frame = 146;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     TaskSetMotion(128 << 6, 0, 0x5A5A5A5A, 160 << 9, 0xFFFFC000, 0x5A5A5A5A);
     gCurTask->frame = 123;
     TaskYieldTrampoline(9);
@@ -3672,7 +3672,7 @@ void PlayerDance9(void)
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0xFFFF2000, 128 << 7, 0x5A5A5A5A);
     gCurTask->frame = 5;
     TaskYieldTrampoline(6);
-    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->velY = 0;
     gCurTask->accelY = 0;
     gCurTask->frame = 15;
@@ -3735,11 +3735,11 @@ void PlayerDance9(void)
 
 void PlayerDance10(void)
 {
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     TaskSetMotion(0xFFFF0000, 0, 0x5A5A5A5A, 0xFFFDC000, 0x4000, 0x5A5A5A5A);
     gCurTask->frame = 0x134;
     TaskYieldTrampoline(2);
@@ -3864,7 +3864,7 @@ void PlayerDance10(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 0x132;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     TaskSetMotion(0xFFFFC000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
@@ -3872,14 +3872,14 @@ void PlayerDance10(void)
     gCurTask->accelX = 0x800;
     gCurTask->frame = 5;
     TaskYieldTrampoline(5);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x6C;
     TaskYieldTrampoline(3);
     gCurTask->frame = 0x6D;
     TaskYieldTrampoline(3);
     gCurTask->frame = 0x6E;
     TaskYieldTrampoline(3);
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->velY = 0x6000;
     gCurTask->accelY = 0xFFFFE800;
     gCurTask->frame = 0x6F;
@@ -3915,7 +3915,7 @@ void PlayerDance10(void)
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     gCurTask->velY = 0xFFFDC000;
@@ -3941,14 +3941,14 @@ void PlayerDance10(void)
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     gCurTask->velY = 0xFFFB8000;
     gCurTask->accelY = 0x4000;
     gCurTask->frame = 0x28;
     TaskYieldTrampoline(10);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->velY = 0xFFFF7000;
     gCurTask->accelY = 0x1800;
     gCurTask->frame = 0x00000133;
@@ -4021,22 +4021,22 @@ void PlayerDance10(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 0x66;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x6E;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x6F;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x11;
     TaskYieldTrampoline(2);
     gCurTask->frame = 5;
     TaskYieldTrampoline(15);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 0x92;
     TaskYieldTrampoline(0x15);
@@ -4044,7 +4044,7 @@ void PlayerDance10(void)
 
 void PlayerDance11(void)
 {
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gCurTask->frame = 0;
     TaskYieldTrampoline(2);
@@ -4137,7 +4137,7 @@ void PlayerDance11(void)
     gCurTask->velY = 0xFFFF8000;
     gCurTask->frame = 0x00000133;
     TaskYieldTrampoline(5);
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->velY = 0xFFFEC000;
     gCurTask->frame = 0x28;
     TaskYieldTrampoline(1);
@@ -4163,7 +4163,7 @@ void PlayerDance11(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->velY = 0x14000;
     gCurTask->frame = 0x00000133;
     TaskYieldTrampoline(1);
@@ -4201,10 +4201,10 @@ void PlayerDance11(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 0x6D;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->velY = 0x38000;
     gCurTask->frame = 0x00000133;
     TaskYieldTrampoline(1);
@@ -4251,7 +4251,7 @@ void PlayerDance11(void)
     gCurTask->velY = 0;
     gCurTask->frame = 0x7B;
     TaskYieldTrampoline(10);
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->velX = 0x20000;
     gCurTask->accelX = 0xFFFFF000;
     gCurTask->frame = 0x12;
@@ -4284,7 +4284,7 @@ void PlayerDance11(void)
     gCurTask->velX = 0;
     gCurTask->frame = 0x13;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->velX = 0x10000;
     gCurTask->frame = 0x6D;
     TaskYieldTrampoline(2);
@@ -4307,7 +4307,7 @@ void PlayerDance11(void)
     gCurTask->velX = 0x4000;
     gCurTask->frame = 0x6F;
     TaskYieldTrampoline(2);
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     gCurTask->velX = 0;
     gCurTask->frame = 0x11;
     TaskYieldTrampoline(3);

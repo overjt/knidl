@@ -24,8 +24,8 @@ extern u8 gUnk_082030D8[];
 extern u32 gUnk_085B9B2C[];
 extern u32 gUnk_085B9B6C[];
 extern void (*gPlayerEffectVariants[])(void); /* task type #7's 49 variants, indexed by Task.unk18 >> 24 */
-extern s16 gUnk_0873B9EC[]; /* [6][8]: s16 x, y offsets, 8.8 velocities */
-extern u16 gUnk_0873BA4C[][4]; /* [8 + 4][4]: 8.8 velocity x, y, acceleration x, y */
+extern s16 gPlayerEffectStarTrajectories[]; /* [6][8]: s16 x, y offsets, 8.8 velocities */
+extern u16 gPlayerEffectDeathStarRingMotions[][4]; /* [8 + 4][4]: 8.8 velocity x, y, acceleration x, y */
 extern s16 gUnk_0873BA8C[][2][3]; /* {base, scale, amount} rows for RandomSpreadFacing */
 extern u16 gUnk_0873BAB0[][3]; /* per sub-state: 8.8 x velocity, 8.8 y acceleration, frame */
 extern u16 gUnk_0873BAE6[];
@@ -45,7 +45,7 @@ extern u8 gUnk_0873C2B4[];
 extern s8 gUnk_0873CB74[]; /* collision box passed to TerrainCollidePointStop */
 extern u32 gUnk_0873CC94[];
 extern u32 gUnk_0873CF8C[]; /* hit-box set, passed as (struct HitBoxSet *) */
-extern s16 gUnk_0873DBAC[];
+extern s16 gGoalGameLaneX[];
 extern s16 gGoalGameLayerHeights[];
 extern u32 gPlayerGoalGameStates[];
 extern u32 gPlayerGoalGameStateUpdates[];
@@ -55,11 +55,11 @@ extern u8 gUnk_0873DC66[];
 extern u8 gUnk_0873DC80[];
 extern u16 gGoalGameLayerScores[];
 extern u32 gUnk_0873DCA8[];
-extern u32 gUnk_0873DCC0[];
-extern u32 gUnk_0873DCC8[];
+extern u32 gGoalGameTrailStarOffsetX[];
+extern u32 gGoalGameTrailStarOffsetY[];
 extern u32 gGoalGameSpringDepths[];
-extern u32 gUnk_0873DD16[];
-extern u32 gUnk_0873DD30[];
+extern u32 gGoalGameCameraRiseDurations[];
+extern u32 gGoalGameCameraPauseDurations[];
 extern u32 gUnk_0873DD4C[];
 extern u32 gUnk_0873DD5C[];
 extern u32 gUnk_0873DD64[];
@@ -72,41 +72,41 @@ extern u32 gUnk_0873DEA0[];
 extern u16 gUnk_0873DEA8[];
 extern u32 gPlayerDances[];
 extern u32 gUnk_0874C600[];
-extern u32 gUnk_0874C648[];
+extern u32 gPlayerEffectBubbleFrames[];
 extern u32 gUnk_0874C67C[];
-extern u32 gUnk_0874C6F4[];
+extern u32 gPlayerEffectDeathStarRingFrames[];
 extern u32 gUnk_0874C718[];
-extern u32 gUnk_0874C780[];
+extern u32 gPlayerEffectLocalPlayerArrowFrames[];
 extern u32 gUnk_0874C784[];
-extern u32 gUnk_0874C7A4[];
+extern u32 gPlayerEffectHurtSparksFrames[];
 extern u32 gUnk_0874C7B4[];
-extern u32 gUnk_0874C804[];
+extern u32 gStarBurstFrames[];
 extern u32 gUnk_0874C828[];
-extern u32 gUnk_0874C890[];
-extern u32 gUnk_0874C930[];
+extern u32 gGoalGameStarFrames[];
+extern u32 gPlayerEffectHurtBurstFrames[];
 extern u32 gUnk_0874C960[];
 extern u32 gUnk_0874C980[];
-extern u32 gUnk_08751C44[];
+extern u32 gInhaleAirFrames[];
 extern u32 gUnk_08751C74[];
-extern u32 gUnk_08751CBC[];
-extern u32 gUnk_08751CEC[];
-extern u32 gUnk_08751CF0[];
+extern u32 gPlayerEffectSparkAuraFrames[];
+extern u32 gSparkleFrames[];
+extern u32 gPlayerEffectBurningFlamesFrames[];
 extern u32 gUnk_08751D50[];
 extern u32 gUnk_08751D80[];
-extern u32 gUnk_08751D88[];
-extern u32 gUnk_08751DB0[];
+extern u32 gPlayerEffectHammerDustFrames[];
+extern u32 gPlayerEffectParasolSparkleFrames[];
 extern u32 gUnk_08751DBC[];
-extern u32 gUnk_08751DD0[];
+extern u32 gPlayerEffectSleepBubbleFrames[];
 extern u32 gUnk_08751E00[];
-extern u32 gUnk_08751E7C[];
-extern u32 gUnk_08751ECC[];
+extern u32 gPlayerEffectFreezeAuraFrames[];
+extern u32 gPlayerEffectStonePuffFrames[];
 extern u32 gUnk_08751F0C[];
 extern u32 gUnk_08751F84[];
-extern u32 gUnk_08751FCC[];
-extern u32 gUnk_08752020[];
-extern u32 gUnk_08752090[];
-extern u32 gUnk_08754850[];
-extern u32 gUnk_0875488C[];
+extern u32 gPlayerEffectTornadoDustFrames[];
+extern u32 gPlayerEffectCrashBlastFrames[];
+extern u32 gPlayerEffectUFOChargeSparkleFrames[];
+extern u32 gGoalGameSpringFrames[];
+extern u32 gGoalGamePlayerMarkerFrames[];
 extern u32 gUnk_087548A0[];
 
 
@@ -120,7 +120,7 @@ void PlayerEffectInhaleAirDraw(void);
 void PlayerEffectCatchDust(void);
 void PlayerEffectSpitDust(void);
 void PlayerEffectAbilityGetSparkle(void);
-void sub_08053e34(void);
+void PlayerEffectAbilityGetSparkleUpdate(void);
 void PlayerEffectImpactStar(void);
 void PlayerEffectDeathStar(void);
 void PlayerEffectSkidDust(void);
@@ -134,7 +134,7 @@ void PlayerEffectSlideDustUpdate(void);
 void PlayerEffectSplash(void);
 void PlayerEffectLeaveWaterSplash(void);
 void PlayerEffectBubble(void);
-void sub_08054a44(void);
+void PlayerEffectBubbleUpdate(void);
 
 /* src/effect_54a80.c */
 void PlayerEffectDeathStarRing(void);
@@ -146,7 +146,7 @@ void sub_080552fc(void);
 void sub_080553d4(void);
 
 /* src/effect_55460.c */
-void sub_08055460(void);
+void PlayerEffectAbilityLoss(void);
 void sub_08055520(void);
 void PlayerEffectDanceStarBurst(void);
 void sub_0805574c(void);
@@ -273,7 +273,7 @@ void Task_GoalGameSpring(void);
 void Task_GoalGamePlayerMarker(void);
 s32 GoalGamePlayerMarkerFollowParent(void);
 void Task_GoalGameSign(void);
-void sub_0805ceec(void);
+void GoalGameSignFollowHelperKirby(void);
 void Task_GoalGameHelperKirby(void);
 void GoalGameHelperKirbyUpdate(void);
 void sub_0805d564(void);

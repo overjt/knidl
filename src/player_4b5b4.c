@@ -33,10 +33,10 @@ void PlayerActionLight(void)
         struct Task *t = gCurTask;
         t->playerActionDone28 = 0;
         t->unk2C = 0;
-        t->player->unk42 |= 0x700;
+        t->player->statusFlags |= (PLAYER_STATUS_NO_DRIFT | PLAYER_STATUS_NO_TERRAIN_DAMAGE | PLAYER_STATUS_NO_BOUNDS_DEATH);
         t->player->terrainBox = 0;
     }
-    FreezeOtherTasks(15);
+    FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
     CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_LIGHT_ORB, 0);
     gCurTask->playerLoopCount = 0;
     do {
@@ -102,7 +102,7 @@ void PlayerActionLight(void)
         struct Task *t = gCurTask;
         t->playerActionDone28++;
         gPauseDisabled = 0;
-        t->player->unk42 &= 0xF8FF;
+        t->player->statusFlags &= ~(PLAYER_STATUS_NO_DRIFT | PLAYER_STATUS_NO_TERRAIN_DAMAGE | PLAYER_STATUS_NO_BOUNDS_DEATH);
     }
     TaskSleepForever();
 }

@@ -79,6 +79,24 @@ REGISTERS = {
     "unk2C": 0x2C, "unk30": 0x30, "unk34": 0x34, "unk46": 0x46, "unk6C": 0x6C,
     "unk6E": 0x6E, "unk70": 0x70, "unk74": 0x74,
 }
+# Other structs' per-use scratch named the same way (#155 run 7): struct
+# PlayerState's unk14 / unk16, which each player action keeps for itself;
+# their family is the struct's name and their aliases start with `player`.
+STRUCT_REGISTERS = {
+    "PlayerState": {"unk14": 0x14, "unk16": 0x16},
+}
+STRUCT_OF = {f: s for s, regs in STRUCT_REGISTERS.items() for f in regs}
+STRUCT_PREFIX = {"PlayerState": "player"}
+OFFSETS = dict(REGISTERS)
+for _regs in STRUCT_REGISTERS.values():
+    OFFSETS.update(_regs)
+
+
+def struct_of(field):
+    """The struct whose member an alias of `field` names."""
+    return STRUCT_OF.get(field, "Task")
+
+
 TYPES = ("s32", "u32", "s16", "u16", "s8", "u8")
 ALIAS_RE = re.compile(r"^[a-z][A-Za-z0-9]*$")
 FAMILY_RE = re.compile(r"^[A-Z][A-Za-z0-9]*$")
@@ -192,7 +210,7 @@ def render_vars(blocks):
     for family, header, defs in sorted(blocks, key=lambda b: b[0].lower()):
         out.append("")
         out.extend(wrap("%s - %s */" % (family, header), "/* ", "   "))
-        for alias, field, typ, role in sorted(defs, key=lambda d: (REGISTERS[d[1]], d[0])):
+        for alias, field, typ, role in sorted(defs, key=lambda d: (OFFSETS[d[1]], d[0])):
             out.append("#define %s %s /* %s: %s */" % (alias, field, typ, role))
     return "\n".join(out) + "\n" + POSTAMBLE
 
@@ -223,10 +241,13 @@ def validate(defs, sites, blocks):
             problems.append("%s: family %r is not PascalCase" % (a, fam))
         if not ALIAS_RE.match(a):
             problems.append("%s: not lowerCamelCase" % a)
-        if not a.startswith(lcfirst(fam)) or len(a) == len(fam):
-            problems.append("%s: must start with %s and add a role" % (a, lcfirst(fam)))
-        if field not in REGISTERS:
+        prefix = STRUCT_PREFIX.get(fam, lcfirst(fam))
+        if not a.startswith(prefix) or len(a) == len(prefix):
+            problems.append("%s: must start with %s and add a role" % (a, prefix))
+        if field not in OFFSETS:
             problems.append("%s: %s is not a per-family register" % (a, field))
+        elif field in STRUCT_OF and fam != STRUCT_OF[field]:
+            problems.append("%s: %s's aliases belong to family %s" % (a, field, STRUCT_OF[field]))
         if r["type"] not in TYPES:
             problems.append("%s: type %r" % (a, r["type"]))
         if not r["role"].strip() or "*/" in r["role"] or "\n" in r["role"] or len(r["role"]) > 90:
@@ -355,7 +376,8 @@ def run(defs_path, sites_path, do_write):
     with open(RENAMES, "a", newline="", encoding="utf-8") as f:
         w = csv.writer(f, lineterminator="\n")
         for r in defs:
-            w.writerow(["Task." + r["field"], "Task." + r["alias"], "alias",
+            s = struct_of(r["field"])
+            w.writerow([s + "." + r["field"], s + "." + r["alias"], "alias",
                         r["evidence"], r.get("issue") or "155"])
     print("wrote %s and %d renames.csv rows; now: tools/task_alias.py --verify-cpp HEAD, "
           "--verify-types, make clean && make compare" % (rel(VARS_H), len(defs)))
@@ -448,18 +470,22 @@ def verify_types():
                             if not DEFINE_RE.match(ln)) + "\n")
     ct = os.path.join(WORK, "check", "include", "task.h")
     t = read(ct)
-    s = t.index("struct Task\n{")
-    e = t.index("\n};", s)
-    body = t[s:e]
-    for field, aliases in by_field.items():
-        m = re.search(r"(?m)^(\s*/\*0x[0-9A-F]+\*/ )(\w+) %s;$" % field, body)
-        if not m:
-            raise AliasError("struct Task has no plain member %s" % field)
-        typ = m.group(2)
-        union = "union { %s %s; %s };" % (
-            typ, field, " ".join("%s %s;" % (typ, a) for a in sorted(aliases)))
-        body = body[:m.start()] + m.group(1) + union + body[m.end():]
-    write(ct, t[:s] + body + t[e:])
+    for sname in sorted({struct_of(f) for f in by_field}):
+        s = t.index("struct %s\n{" % sname)
+        e = t.index("\n};", s)
+        body = t[s:e]
+        for field, aliases in by_field.items():
+            if struct_of(field) != sname:
+                continue
+            m = re.search(r"(?m)^(\s*/\*0x[0-9A-F]+\*/ )(\w+) %s;$" % field, body)
+            if not m:
+                raise AliasError("struct %s has no plain member %s" % (sname, field))
+            typ = m.group(2)
+            union = "union { %s %s; %s };" % (
+                typ, field, " ".join("%s %s;" % (typ, a) for a in sorted(aliases)))
+            body = body[:m.start()] + m.group(1) + union + body[m.end():]
+        t = t[:s] + body + t[e:]
+    write(ct, t)
     base = gcc_errors("base")
     check = gcc_errors("check")
     new = check - base
@@ -472,8 +498,8 @@ def verify_types():
     for e in sorted(gone)[:10]:
         print("  GONE: %s:%s:%s: %s" % e)
     if new or gone:
-        raise AliasError("an alias is used where struct Task's member is not")
-    print("verify-types: OK - every alias names a member of struct Task")
+        raise AliasError("an alias is used where its struct's member is not")
+    print("verify-types: OK - every alias names a member of its struct (struct Task, struct PlayerState)")
 
 
 def rename_alias(old, new, family, header, typ, role, evidence, do_write):

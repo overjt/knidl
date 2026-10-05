@@ -17,7 +17,7 @@
  * room-task variants 1 and 2 of task type #3 (RoomTaskHubInit, RoomTaskBigSwitchViewInit)
  * and their per-frame bodies (RoomTaskHubUpdateCamera ... RoomTaskBigSwitchViewLateUpdate).
  * LoadHubRoom and LoadBigSwitchViewRoom build their map in the second buffer
- * gHubRoomMapBuffer through sub_08027a6c instead of gRoomMapBuffer, spawn the
+ * gHubRoomMapBuffer through LoadHubRoomMap instead of gRoomMapBuffer, spawn the
  * door objects and set up the multi-player cameras; LoadGoalGameRoom loads
  * the fixed room gRoomTable[8][7][0] with the player at (136, 928) and
  * BGM 1.  Every loader ends with the per-player loop that refills health,
@@ -56,7 +56,7 @@ void LoadHubRoom(void)
     gBg3Border[0] = gCurRoomDef->bg3BorderX;
     gBg3Border[1] = gCurRoomDef->bg3BorderY;
     gRoomMap = gHubRoomMapBuffer;
-    sub_08027a6c();
+    LoadHubRoomMap();
     gRoomBgLayout = 0;
     gCurTileDrifts = gTileDrifts;
     *gUnk_02005574 = 0;
@@ -163,7 +163,7 @@ void LoadBigSwitchViewRoom(void)
     gRoomMap = gHubRoomMapBuffer;
     z = 0;
     w = 0;
-    sub_08027a6c();
+    LoadHubRoomMap();
     gRoomBgLayout = z;
     gCurTileDrifts = gTileDrifts;
     gUnk_02005574[0] = z;
@@ -177,8 +177,8 @@ void LoadBigSwitchViewRoom(void)
     CalcRoomBounds();
     InitDoors();
     SpawnDoorObjects();
-    sub_08029034();
-    sub_08026b60();
+    ClampRoomEntryAndAnchorCamera();
+    SetDoorsOpenNearRoomEntry();
     CreateBigSwitchUnlockPan();
     CameraResetBounds();
     CameraSnapBoundsToAnchor();

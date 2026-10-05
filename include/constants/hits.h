@@ -14,6 +14,7 @@
 #define HIT_KIND_DAMAGE     2
 #define HIT_KIND_INHALE     3 /* inhaled by a player */
 #define HIT_KIND_GRAB       4 /* grabbed and held by a player (Throw, Backdrop) */
+#define HIT_KIND_SLIDE      5 /* a slide kick (class-0x20 kind 4) */
 #define HIT_KIND_NO_DAMAGE  6 /* no damage on either side: the target is immune to the attack */
 #define HIT_KIND_CATCH      8 /* an actor's catch box caught a player */
 
@@ -21,5 +22,29 @@
 #define HIT_EFFECT_INHALE    1 /* sites only: Task.hitEffect means other things with other hit kinds */
 #define HIT_EFFECT_THROW     2
 #define HIT_EFFECT_BACKDROP  3
+
+/* Attack box immunities - AttackBox.immunityFlags, one bit each (R3): the hit results the box's owner is spared, tested by HitTestPlayerColliders (src/hitbox_1a8c8.c) and CalcHitDamageAndDirection (src/hitbox_1b7dc.c); the boxes are ROM records, so no code sets them */
+#define ATTACK_BOX_IMMUNITY_TOUCH       1      /* a vulnerable player's touch: NO_DAMAGE (effect 1) */
+#define ATTACK_BOX_IMMUNITY_DEFEAT      2      /* a defeating hit: NO_DAMAGE (effect 1) */
+#define ATTACK_BOX_IMMUNITY_PLAYERS     4      /* any player's touch: NO_DAMAGE (effect 11) */
+#define ATTACK_BOX_IMMUNITY_INVINCIBLE  8      /* an invincible player's touch: NO_DAMAGE (effect 12) */
+#define ATTACK_BOX_IMMUNITY_NO_RESULT   0x8000 /* no result at all from a player's touch */
+
+/* Attack box flags - AttackBox.attackFlags, one bit each (R3): how the box meets the colliders (src/hitbox_*.c); the boxes are ROM records, so no code sets them. Left as numbers: the field 0x300 (the defeated player's Task.hitEffect; 0x100 has no reader) and the mask 0x3E (one bit per collider hitEffect 1-5, read through a shift) */
+#define ATTACK_BOX_FLAG_NO_HIT_REACTION      1      /* the hitter gets no on-hit reaction */
+#define ATTACK_BOX_FLAG_SHIELDABLE           0x40   /* a shield body box blocks it */
+#define ATTACK_BOX_FLAG_NO_HIGH_FALL_BOUNCE  0x80   /* the high fall does not bounce off it */
+#define ATTACK_BOX_FLAG_NO_MIRROR            0x8000 /* placed the same way whatever the facing */
+
+/* Body box flags - BodyBox.bodyFlags, one bit each (R3): how a collider's body box meets an actor's attack box (src/hitbox_*.c). Left as numbers: 8 and 0x10 (what the NO_DAMAGE / kind-7 marks they spare do to a class-0x20 collider is not read), 1 / 2 / 4 (the on-hit bits, read only through the & 0x3FFF copy into Task.u76.unk76) */
+#define BODY_BOX_FLAG_SHIELD     0x4000 /* blocks shieldable attack boxes (the Parasol) */
+#define BODY_BOX_FLAG_NO_MIRROR  0x8000 /* placed the same way whatever the facing */
+
+/* Body box guard flags - BodyBox.guardFlags (R3): what the collider is protected from. Left as numbers: 2 and 4, tested only together (& 6: the player cannot be caught) and set by no ROM box read here */
+#define BODY_BOX_GUARD_NO_DAMAGE  0x8000 /* the collider's task takes no damage */
+
+/* Player hit effect bits - Task.hitEffect of a player task, beside the effect in its low nibble (sites only: an actor's Task.hitEffect is an index, gActorDefeatsByEffect) */
+#define HIT_EFFECT_TERRAIN_DAMAGE  0x80  /* hurt by the terrain */
+#define HIT_EFFECT_MID_BOSS        0x200 /* defeated by a mid-boss attack */
 
 #endif // GUARD_CONSTANTS_HITS_H

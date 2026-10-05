@@ -50,16 +50,16 @@
 struct Pair { u32 a, b; };
 
 struct Link {
-    /*0x000*/ u8 unk00, unk01, unk02, count;
+    /*0x000*/ u8 isMaster, state, localId, count;
     /*0x004*/ u16 recv[4];
-    /*0x00C*/ u8 unk0C, unk0D, unk0E, unk0F;
-    /*0x010*/ u8 unk10, unk11, unk12, unk13, unk14, unk15;
+    /*0x00C*/ u8 receivedNothing, serialIntrCounter, unk0E, unk0F;
+    /*0x010*/ u8 handshakeAsMaster, unk11, hardwareError, badChecksum, queueFull, lag;
     /*0x016*/ u16 chk;
-    /*0x018*/ u8 unk18, unk19, unk1A, unk1B;
+    /*0x018*/ u8 sendCmdIndex, recvCmdIndex, unk1A, unk1B;
     /*0x01C*/ u16 ring[4][30];
-    /*0x10C*/ u8 unk10C, unk10D, unk10E, unk10F;
+    /*0x10C*/ u8 sendQueuePos, sendQueueCount, unk10E, unk10F;
     /*0x110*/ u16 buf[4][4][30];
-    /*0x4D0*/ u8 unk4D0, unk4D1;
+    /*0x4D0*/ u8 recvQueuePos, recvQueueCount;
 };
 
 void LinkMain1(u16 *a, u16 *b, u16 *c);

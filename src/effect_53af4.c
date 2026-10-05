@@ -25,14 +25,14 @@
  * the functions after a body are the callbacks only it installs.  Variant 0
  * (PlayerEffectInhaleAir, spawned by M10) rides on its spawner and cycles frames
  * 0-11, hidden every other frame; PlayerEffectInhaleAirUpdate copies the spawner's
- * Task.skipMask with bit 2 cleared and kills it once PlayerState.unk40 bit 2
+ * Task.skipMask with bit 2 cleared and kills it once PlayerState.actionFlags bit 2
  * clears, and its draw hook PlayerEffectInhaleAirDraw draws through M11's PlayerDrawWorldLoadTilesAndPalette in
  * player mode 10 and kills it otherwise.  Variants 1 and 2 (M10) are short
  * puffs launched from 12 pixels behind the point they face, the sub-state
  * picking the facing; 3 (M13's ability get) shows for three frames at a
- * random offset from its spawner (sub_08053e34 is its empty Task.updateCallback
+ * random offset from its spawner (PlayerEffectAbilityGetSparkleUpdate is its empty Task.updateCallback
  * stub); 4 and 5 fly one of eight random trajectories of the s16 rows
- * gUnk_0873B9EC[6][8] (offsets and 8.8 velocities), 5 with TaskDrawScreen's
+ * gPlayerEffectStarTrajectories[6][8] (offsets and 8.8 velocities), 5 with TaskDrawScreen's
  * draw when PlayerState.unk37 == 2.  Variant 6 has two forms picked by the
  * third byte of Task.unk18: a loop that places a puff 6 pixels behind the
  * spawner and 8 below it and spawns the other form (a rising puff) each
@@ -68,17 +68,17 @@ void PlayerEffectInhaleAir(void)
     gCurTask->updateCallback = (u32)PlayerEffectInhaleAirUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_08751C44;
+    t->frameTable = gInhaleAirFrames;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 4;
     TaskSetPosXFacing(4);
     gCurTask->posY = 0x40000;
     for (;;)
     {
-        gCurTask->unk28 = 0;
+        gCurTask->playerEffectInhaleAirFrame = 0;
         gCurTask->playerEffectLoopCount = 0;
         do
         {
-            TaskSetFrame((s16)gCurTask->unk28++);
+            TaskSetFrame((s16)gCurTask->playerEffectInhaleAirFrame++);
             TaskYieldTrampoline(1);
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
@@ -89,8 +89,8 @@ void PlayerEffectInhaleAir(void)
 
 void PlayerEffectInhaleAirUpdate(void)
 {
-    gCurTask->skipMask = (gCurTask->u8C.parentTask)->skipMask & 0xFB;
-    if (!(gCurTask->player->unk40 & 4))
+    gCurTask->skipMask = (gCurTask->u8C.parentTask)->skipMask & ~TASK_SKIP_UPDATE;
+    if (!(gCurTask->player->actionFlags & PLAYER_ACTION_FLAG_CATCHING))
         TaskFree(gCurTaskIdx);
 }
 
@@ -163,14 +163,14 @@ void PlayerEffectAbilityGetSparkle(void)
     struct Task *t = gCurTask;
     s32 s;
 
-    t->updateCallback = (u32)sub_08053e34;
+    t->updateCallback = (u32)PlayerEffectAbilityGetSparkleUpdate;
     s = t->playerEffectSpawnWord & 15;
     if (s == 0)
     {
         t->moveCallback = (u32)TaskMoveRelativeToParent;
         t->drawCallback = (u32)TaskDrawWorld;
         t->layer = 5;
-        gCurTask->frameTable = gUnk_08751CEC;
+        gCurTask->frameTable = gSparkleFrames;
         gCurTask->posX = RandomSpreadFacing(-16, 1, 16) << 16;
         gCurTask->posY = (RandomSpread(-4, 1, 16) << 16) - 0x180000;
         gCurTask->frame = 0;
@@ -179,7 +179,7 @@ void PlayerEffectAbilityGetSparkle(void)
     TaskExitTrampoline();
 }
 
-void sub_08053e34(void)
+void PlayerEffectAbilityGetSparkleUpdate(void)
 {
 }
 
@@ -198,15 +198,15 @@ void PlayerEffectImpactStar(void)
     gCurTask->layer = 5;
     gCurTask->frameTable = gUnk_0874C500;
     n = RandomRange(8);
-    TaskStepForward(gUnk_0873B9EC[n]);
+    TaskStepForward(gPlayerEffectStarTrajectories[n]);
     t = gCurTask;
-    t->posY = (t->pixelY + (gUnk_0873B9EC + 8)[n] + 4) << 16;
-    a = (gUnk_0873B9EC + 16)[n];
+    t->posY = (t->pixelY + (gPlayerEffectStarTrajectories + 8)[n] + 4) << 16;
+    a = (gPlayerEffectStarTrajectories + 16)[n];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
     t->velX = b;
-    a = (gUnk_0873B9EC + 24)[n];
+    a = (gPlayerEffectStarTrajectories + 24)[n];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
@@ -216,12 +216,12 @@ void PlayerEffectImpactStar(void)
     gCurTask->frame++;
     TaskYieldTrampoline(1);
     v = gCurTask;
-    c = (gUnk_0873B9EC + 32)[n];
+    c = (gPlayerEffectStarTrajectories + 32)[n];
     b = c << 8;
     if (c & 0x8000)
         b |= 0xFF000000;
     v->velX = b;
-    a = (gUnk_0873B9EC + 40)[n];
+    a = (gPlayerEffectStarTrajectories + 40)[n];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
@@ -263,15 +263,15 @@ void PlayerEffectDeathStar(void)
     gCurTask->layer = 8;
     gCurTask->frameTable = gUnk_0874C500;
     n = RandomRange(8);
-    TaskStepForward(gUnk_0873B9EC[n]);
+    TaskStepForward(gPlayerEffectStarTrajectories[n]);
     t = gCurTask;
-    t->posY = (t->pixelY + (gUnk_0873B9EC + 8)[n] + 4) << 16;
-    a = (gUnk_0873B9EC + 16)[n];
+    t->posY = (t->pixelY + (gPlayerEffectStarTrajectories + 8)[n] + 4) << 16;
+    a = (gPlayerEffectStarTrajectories + 16)[n];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
     t->velX = b;
-    a = (gUnk_0873B9EC + 24)[n];
+    a = (gPlayerEffectStarTrajectories + 24)[n];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
@@ -281,12 +281,12 @@ void PlayerEffectDeathStar(void)
     gCurTask->frame++;
     TaskYieldTrampoline(1);
     v = gCurTask;
-    c = (gUnk_0873B9EC + 32)[n];
+    c = (gPlayerEffectStarTrajectories + 32)[n];
     d = c << 8;
     if (c & 0x8000)
         d |= 0xFF000000;
     v->velX = d;
-    a = (gUnk_0873B9EC + 40)[n];
+    a = (gPlayerEffectStarTrajectories + 40)[n];
     d = a << 8;
     if (a & 0x8000)
         d |= 0xFF000000;
@@ -318,8 +318,8 @@ void PlayerEffectSkidDust(void)
     {
     case 0:
         t->playerEffectStopRequested = 0;
-        t->unk2C = t->player->mode;
-        t->unk30 = t->playerEffectSpawnWord & 0xFF;
+        t->playerEffectStartMode = t->player->mode;
+        t->playerEffectFramesLeft = t->playerEffectSpawnWord & 0xFF;
         t->updateCallback = (u32)PlayerEffectSkidDustUpdate;
         do
         {
@@ -375,7 +375,7 @@ void PlayerEffectSkidDustUpdate(void)
     {
         u8 m = t->player->mode;
 
-        if (m != t->unk2C || m == 16)
+        if (m != t->playerEffectStartMode || m == 16)
         {
             t->playerEffectStopRequested = 1;
             return;
@@ -389,7 +389,7 @@ void PlayerEffectSkidDustUpdate(void)
         {
             struct Task *u = gCurTask;
 
-            if (((u8 *)u)[24] != 0 && --u->unk30 == 0)
+            if (((u8 *)u)[24] != 0 && --u->playerEffectFramesLeft == 0)
                 u->playerEffectStopRequested++;
             break;
         }

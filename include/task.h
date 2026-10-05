@@ -6,7 +6,9 @@
 #include "constants/actors.h"
 #include "constants/hits.h"
 #include "constants/player.h"
+#include "constants/sprites.h"
 #include "constants/states.h"
+#include "constants/task_skip.h"
 #include "constants/tasks.h"
 #include "constants/variants.h"
 
@@ -162,7 +164,7 @@ struct ActorDef
     /*0x0C*/ u8 ability;
     /*0x0D*/ u8 isItem;
     /*0x0E*/ u16 unk0E;
-    /*0x10*/ struct ActorAux *unk10;
+    /*0x10*/ struct ActorAux *aux;
     /*0x14*/ u32 attackBox;
     /*0x18*/ s32 terrainBox;
     /*0x1C*/ u32 terrainHandlers;
@@ -171,7 +173,7 @@ struct ActorDef
     /*0x28*/ void (*teardown)(void);
 };
 
-/* Block ActorDef.unk10 / Actor.unk60 point at (0x08068E04). */
+/* Block ActorDef.aux / Actor.aux point at (0x08068E04). */
 struct ActorAux
 {
     /*0x00*/ s8 hitDuration;
@@ -204,7 +206,7 @@ struct Actor
     /*0x01*/ u8 hitStunTimer;
     /*0x02*/ s8 healthBonus;
     /*0x03*/ s8 extraLayerOffset;
-    /*0x04*/ u8 unk04;
+    /*0x04*/ u8 attachEffect;
     /*0x05*/ u8 hitState;
     /*0x06*/ u8 hitterClass;
     /*0x07*/ u8 hitterKind;
@@ -213,7 +215,7 @@ struct Actor
     /*0x0A*/ u8 paletteOverridden;
     /*0x0B*/ u8 paletteLocked;
     /*0x0C*/ u8 paletteVariant;
-    /*0x0D*/ u8 unk0D;
+    /*0x0D*/ u8 keepExtraOnDefeat;
     /*0x0E*/ s16 hitterParent;
     /*0x10*/ s16 attachedTask;
     /*0x12*/ s16 attachedTaskLifetime;
@@ -241,7 +243,7 @@ struct Actor
     /*0x54*/ u32 terrainHandlers;
     /*0x58*/ u32 prevTerrainHandlers;
     /*0x5C*/ u32 hitReactions;
-    /*0x60*/ struct ActorAux *unk60;
+    /*0x60*/ struct ActorAux *aux;
     /*0x64*/ struct ActorTail gfx;
 };
 
@@ -311,8 +313,8 @@ struct PlayerState
     /*0x3D*/ u8 running;
     /*0x3E*/ u8 bumpKind;
     /*0x3F*/ u8 invulnerability;
-    /*0x40*/ u16 unk40;
-    /*0x42*/ u16 unk42;
+    /*0x40*/ u16 actionFlags;
+    /*0x42*/ u16 statusFlags;
     /*0x44*/ u8 blocksBroken;
     /*0x45*/ u8 hitsThisFrame;
     /*0x46*/ u8 savedWallSide;

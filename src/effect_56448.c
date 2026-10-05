@@ -8,7 +8,7 @@
  *
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
  * variants 26-28.  Variant 26 (PlayerEffectHurtBurst, M10) is a two-step animation
- * from gUnk_0874C930.  Variant 27 (sub_080564ac, M13) has three sub-states
+ * from gPlayerEffectHurtBurstFrames.  Variant 27 (sub_080564ac, M13) has three sub-states
  * (animation table gUnk_0874C828) and spawns its own sub-states.  Variant 28
  * (sub_08056770) is the most common ability effect (twenty call sites in
  * M11-M14): six sub-states over a jump table, some riding on the spawner and
@@ -28,7 +28,7 @@ void PlayerEffectHurtBurst(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_0874C930;
+    t->frameTable = gPlayerEffectHurtBurstFrames;
     t->frame = 0;
     TaskYieldTrampoline(1);
     gCurTask->playerEffectLoopCount = 0;

@@ -1136,3 +1136,47 @@ moved the record here; `AGENTS.md`'s `## Status` stays the current state.
   change moved a byte: `make compare` after every batch, `make shifttest`
   unchanged (16,961 unrelocated, 0 proven pointers, 0 unknown).  New
   lessons 3.528-3.529 and 4.171-4.172.
+- Names, run 7 (issue #155, closing it): **paired states, flag bits and
+  a census with a reason per symbol**.  The owner's decisions R1-R3,
+  applied: (R1) a verb that fits two states names both, each with the
+  qualifier the code proves - a direction, speed, phase or entering
+  condition, or a sequence number when the transitions prove the order
+  (`GipClimbUp` / `GipClimbDown` / `GipClimbUpFromFloor` /
+  `GipClimbDownFromLedge`, `MetaKnightJumpHigh` / `JumpLow`,
+  `MrTickTockDashWindUp` / `DashStart` / `DashLoop`,
+  `PoppyBrosSrHop1`-`Hop4`); (R2) a row no row word covers is named after
+  what sets it apart from its siblings (`TwizzyHopToChase`,
+  `SquishyJumpToWalk`, the Meta Knights' `FallIn` / `WalkInShort` rows),
+  else it keeps its position name; (R3) flag words get a field name
+  (`AttackBox.immunityFlags` / `attackFlags`, `BodyBox.bodyFlags`,
+  `PlayerState.actionFlags` / `statusFlags`) and one constant per proven
+  bit (38 bits: `ATTACK_BOX_*`, `BODY_BOX_*`, `PLAYER_ACTION_FLAG_*`,
+  `PLAYER_STATUS_*`, `PLAYER_HIT_*`, `SPRITE_FLAG_FLIP_X`, `TASK_SKIP_*`;
+  `tools/constants.py`'s `bits` positions), and, approved as a second
+  form, clears and masks are spelled `&= ~FLAG` and `(A | B)` (262 sites,
+  proven by the per-file assembly oracle; no site changed code).  Four
+  proposal agents read the code run 6 had left: the actor core, the
+  terrain probes, the cannon's launch kinds, the Warp Star, the link
+  driver's `struct Link` (pokeruby's names) and the link-setup records,
+  the ending and game-over variants, task body #88, every boss's and
+  enemy's paired states, the ROM records several functions read, the RAM
+  cells and every remaining field.  ROM records whose every use is one
+  engine API's argument are named by kind and consumer
+  (`gHeavyMoleYellowMissileFrames`, `gBubblesLandAttackBox`), and records
+  one slot of a named record holds get position names.  `tools/task_alias.py`
+  serves `PlayerState`'s per-action scratch too (`playerJumpPhaseTimer`).
+  The census: `docs/analysis/unnamed.csv` gives every `sub_*`, `gUnk_` RAM
+  cell and `unk*` field left its reason code (`pair`, `identity`,
+  `unnamed-input`, `no-verb`, `restates`, `dead`, `two-meanings`,
+  `never-accessed` ...), the functional ROM labels are classed by their
+  referrers, and `make audit` fails on a placeholder without a reason.
+  Figures (run 6 -> run 7): functions named 4,659 -> 4,937 of 5,348 (by
+  role 4,034 -> 4,597, by slot 625 -> 340); `make progress` 13,443 ->
+  14,208 of 34,017 symbols documented (39.52% -> 41.77%); task bodies 265
+  of 266 (#88: identity); `gUnk_` RAM cells 73 -> 62; functional ROM labels
+  2,739 -> 2,263; `unk*` fields 135 -> 92 (header) and 233 -> 141 (local
+  copies); register aliases 1,051 -> 1,186 in 205 families (about 9,000 ->
+  10,018 of the 10,455 register accesses); constants 1,473 -> 1,571 at
+  3,980 -> 4,637 sites; struct tags 33 -> 36.  No change moved a byte:
+  `make compare` after every batch, `make shifttest` unchanged.  New
+  lessons 3.530 and 4.173-4.176.

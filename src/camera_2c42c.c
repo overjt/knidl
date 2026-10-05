@@ -430,33 +430,33 @@ void CameraSnapToFocus(void)
 
 void StopScreenShake(void)
 {
-    gScreenShake.unk0 = 0;
-    gScreenShake.unk2 = 0;
-    gScreenShake.unk4 = 0;
-    gScreenShake.unk6 = 0;
+    gScreenShake.pattern = 0;
+    gScreenShake.offsetX = 0;
+    gScreenShake.offsetY = 0;
+    gScreenShake.step = 0;
 }
 
 void UpdateScreenShake(void)
 {
     u16 *p;
 
-    if (gScreenShake.unk0 != 0)
+    if (gScreenShake.pattern != 0)
     {
-        p = gScreenShakePatterns[gScreenShake.unk0];
-        switch (p[gScreenShake.unk6 * 2])
+        p = gScreenShakePatterns[gScreenShake.pattern];
+        switch (p[gScreenShake.step * 2])
         {
         case 0x8000:
-            gScreenShake.unk0 = 0;
-            gScreenShake.unk2 = 0;
-            gScreenShake.unk4 = 0;
-            gScreenShake.unk6 = 0;
+            gScreenShake.pattern = 0;
+            gScreenShake.offsetX = 0;
+            gScreenShake.offsetY = 0;
+            gScreenShake.step = 0;
             return;
         case 0x9999:
-            gScreenShake.unk6 = 0;
+            gScreenShake.step = 0;
         }
-        gScreenShake.unk2 = p[gScreenShake.unk6 * 2];
-        gScreenShake.unk4 = p[gScreenShake.unk6 * 2 + 1];
-        gScreenShake.unk6++;
+        gScreenShake.offsetX = p[gScreenShake.step * 2];
+        gScreenShake.offsetY = p[gScreenShake.step * 2 + 1];
+        gScreenShake.step++;
     }
 }
 
@@ -475,7 +475,7 @@ void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1)
             gScrollLock.x1 = gRoomBounds[1];
         flags = 1;
         mid = (gScrollLock.x0 + gScrollLock.x1) >> 1;
-        if (gScrollLock.unkA <= mid)
+        if (gScrollLock.lineX <= mid)
         {
             gScrollLockSpeedX = 2;
             gCameraBounds[1] = gScrollLock.x1;
@@ -502,7 +502,7 @@ void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1)
             gScrollLock.y1 = gRoomBounds[3];
         flags |= 2;
         mid = (gScrollLock.y0 + gScrollLock.y1) >> 1;
-        if (gScrollLock.unkC <= mid)
+        if (gScrollLock.lineY <= mid)
         {
             gScrollLockSpeedY = 1;
             gCameraBounds[3] = gScrollLock.y1;
@@ -523,7 +523,7 @@ void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1)
     {
         gCameraMode = CAMERA_MODE_SLIDE_TO_LOCK;
         gScrollLock.lockedAxes = flags;
-        gScrollLock.unk0 = 0;
+        gScrollLock.lockedPlayerMask = 0;
         if (gPlayerCount == 1)
         {
             if (flags & 1)
@@ -573,12 +573,12 @@ void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1)
         {
             LockPlayersPastScrollLine();
             if (gScrollLock.lockedAxes & 1)
-                gPlayerCameraPos[gPlayerCount].x = gScrollLock.unkA;
+                gPlayerCameraPos[gPlayerCount].x = gScrollLock.lineX;
             if (gScrollLock.lockedAxes & 2)
             {
                 struct CamPos *c = gPlayerCameraPos;
 
-                c[gPlayerCount].y = gScrollLock.unkC;
+                c[gPlayerCount].y = gScrollLock.lineY;
             }
         }
     }

@@ -19,10 +19,10 @@
  * through HealPlayerStep (src/hud_b2fe8.c), 2 gives one or two steps, 3
  * copies PlayerState.invincible/unk18.  sub_0803c9b4 (from M09's
  * sub_08033414, the twin of M04's sub_080109c8) steps and draws the
- * three spark records gUnk_02007E90[player][]; sub_0803cbd8 (M09's
- * sub_0803332c) steps the knock-back script
+ * three spark records gUnk_02007E90[player][]; PlayerStepOffsetScript (M09's
+ * PlayerLateUpdate) steps the knock-back script
  * gUnk_0873A994[PlayerState.offsetScript][PlayerState.offsetScriptStep] into the 8.8
- * offsets PlayerState.pixelOffsetX/unk26; sub_0803ccd8 (M09's PlayerActionFall)
+ * offsets PlayerState.pixelOffsetX/unk26; PlayerSetParasolDriftRow (M09's PlayerActionFall)
  * applies step n of the 8.8 motion table gUnk_0873AEBC. */
 
 /* Declared here, not through a header: the calls in this file pass other
@@ -41,7 +41,7 @@ u32 IsWorldPosOnScreen(s16 a, s16 b);        /* u8 in early_5d9c.c; u32 as in pl
    health gPlayerHealth[] through HealPlayerStep while it is below the maximum
    gMaxHealth (1: until full, 2: at most 1 or 2 steps by gExtraMode)
    or copies its own unk17/unk18 to the target (3); then it restores both
-   tasks' Task.layer/unk43 (saved on the stack), clears PlayerState.unk42
+   tasks' Task.layer/unk43 (saved on the stack), clears PlayerState.statusFlags
    bit 8 on both players and sets the target's bit in PlayerState.sharedMask. */
 void PlayerActionShareItem(void)
 {
@@ -63,10 +63,10 @@ void PlayerActionShareItem(void)
     if (gCurTask->playerShareReceiver == gCurTask->player->playerIndex)
     {
         gCurTask->layer = 5;
-        TaskSetSkipMask(14, gCurTaskIdx);
+        TaskSetSkipMask((TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), gCurTaskIdx);
         t = gCurTask;
-        t->player->unk42 |= 0x100;
-        t->player->unk42 &= 0xFFEF;
+        t->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
+        t->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
         if (!(t->waterFlags & 1))
         {
             t->playerBaseFrame = gUnk_0873DA62[t->player->ability][1];
@@ -124,15 +124,15 @@ void PlayerActionShareItem(void)
     }
     q = &gPlayerStates[gCurTask->playerShareReceiver];
     u = &gTasks[gCurTask->playerShareReceiver];
-    FreezeOtherTasks(15);
-    TaskSetSkipMask(12, gCurTaskIdx);
+    FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
+    TaskSetSkipMask((TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), gCurTaskIdx);
     TaskSetSkipMask(0, gCurTask->playerShareReceiver);
     a43 = gCurTask->facing;
     a42 = gCurTask->layer;
     PlayerStopAxes(3);
     t = gCurTask;
-    t->player->unk42 |= 0x100;
-    t->player->unk42 &= 0xFFEF;
+    t->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
+    t->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     if (u->pixelX - t->pixelX > 0)
         t->facing = 1;
     else
@@ -143,9 +143,9 @@ void PlayerActionShareItem(void)
     u->velX = u->accelX = u->speedLimitX = 0;
     u->velY = u->accelY = u->speedLimitY = 0;
     if ((u->facing = -gCurTask->facing) == 1)
-        u->spriteFlags &= 0x7FFF;
+        u->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     else
-        u->spriteFlags |= 0x8000;
+        u->spriteFlags |= SPRITE_FLAG_FLIP_X;
     t = gCurTask;
     if (!(t->waterFlags & 1))
     {
@@ -399,10 +399,10 @@ void PlayerActionShareItem(void)
     }
     gCurTask->facing = a43;
     gCurTask->layer = a42;
-    gCurTask->player->unk42 &= 0xFEFF;
+    gCurTask->player->statusFlags &= ~PLAYER_STATUS_NO_DRIFT;
     u->facing = b43;
     u->layer = b42;
-    gPlayerStates[gCurTask->playerShareReceiver].unk42 &= 0xFEFF;
+    gPlayerStates[gCurTask->playerShareReceiver].statusFlags &= ~PLAYER_STATUS_NO_DRIFT;
     u->taskClass--;
     FreezeOtherTasks(0);
     TaskSetSkipMask(0, gCurTaskIdx);
@@ -438,7 +438,7 @@ void sub_0803c9b4(s32 a)
     for (i = 0; i <= 2; i++)
     {
         p = &gUnk_02007E90[gCurTask->player->playerIndex][i];
-        if (gCurTask->skipMask & 1)
+        if (gCurTask->skipMask & TASK_SKIP_COROUTINE)
         {
             k = 0;
             if (a == 0)
@@ -513,7 +513,7 @@ void sub_0803c9b4(s32 a)
     }
 }
 
-void sub_0803cbd8(void)
+void PlayerStepOffsetScript(void)
 {
     struct OffsetScriptRow *e;
     if ((s8)--gCurTask->player->offsetScriptDelay > 0)
@@ -526,7 +526,7 @@ void sub_0803cbd8(void)
     if (e->flags != 0)
     {
         if (e->flags & 128)
-            TaskSetSkipMask(3, gCurTaskIdx);
+            TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE), gCurTaskIdx);
         if (e->flags & 64)
         {
             if (gCurTask->facing == 1)
@@ -545,12 +545,12 @@ void sub_0803cbd8(void)
     else
     {
         gCurTask->player->pixelOffsetX = gCurTask->player->pixelOffsetY = 0;
-        gCurTask->player->unk40 &= 0xFFFE;
+        gCurTask->player->actionFlags &= ~PLAYER_ACTION_FLAG_OFFSET_SCRIPT;
         TaskSetSkipMask(0, gCurTaskIdx);
     }
 }
 
-void sub_0803ccd8(s32 a)
+void PlayerSetParasolDriftRow(s32 a)
 {
     u16 *e = gUnk_0873AEBC[a];
     s32 x = e[1] << 8;
@@ -569,10 +569,10 @@ void sub_0803ccd8(s32 a)
         s32 v = e[0] << 8;
         if (e[0] & 0x8000)
             v |= 0xFF000000;
-        t->unk2C = v;
+        t->playerParasolSwayVelX = v;
     }
     else
     {
-        t->unk2C = -(e[0] & 0x8000 ? (e[0] << 8) | 0xFF000000 : e[0] << 8);
+        t->playerParasolSwayVelX = -(e[0] & 0x8000 ? (e[0] << 8) | 0xFF000000 : e[0] << 8);
     }
 }

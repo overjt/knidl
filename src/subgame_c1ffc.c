@@ -7,7 +7,7 @@
 
 /* subgame_c1ffc.c (0x080C1FFC-0x080C243B, issue #98).
  *
- * Sub-game 2 (gUnk_02007FCC == 2), the race screen: phase 0 of M35's
+ * Sub-game 2 (gExtraModeIndex == 2), the race screen: phase 0 of M35's
  * framework (M36's AirGrindMain dispatches gSubGamePhase through
  * gAirGrindPhases; entry 0 is AirGrindRace).
  * 
@@ -50,8 +50,8 @@ void CreateAirGrindRacers(void)
         airGrindObjectSlot = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 0);
         if (airGrindObjectSlot != -1) {
             airGrindObject = &gTasks[airGrindObjectSlot];
-            airGrindObject->unk18 = airGrindObjectSlot;
-            airGrindObject->unk1C = i;
+            airGrindObject->airGrindObjectRacerSlot = airGrindObjectSlot;
+            airGrindObject->airGrindObjectPlayer = i;
             airGrindObject->variant = AIR_GRIND_OBJECT_VARIANT_RACER;
         }
     }
@@ -78,10 +78,10 @@ void CreateAirGrindEffect(s32 a, s32 b, s32 c)
     airGrindObjectSlot = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 32);
     if (airGrindObjectSlot != -1) {
         airGrindObject = &gTasks[airGrindObjectSlot];
-        airGrindObject->unk18 = b;
-        airGrindObject->unk1C = a;
+        airGrindObject->airGrindObjectRacerSlot = b;
+        airGrindObject->airGrindObjectPlayer = a;
         airGrindObject->variant = AIR_GRIND_OBJECT_VARIANT_EFFECT;
-        airGrindObject->unk20 = c;
+        airGrindObject->airGrindObjectEffectKind = c;
     }
 }
 
@@ -126,11 +126,11 @@ void AirGrindRace(void)
     CreateAirGrindRacers();
     CreateAirGrindScenery(0);
     gCurTask->updateCallback = (u32)AirGrindRaceUpdate;
-    while (gAirGrindCoursePtr->scrollPos < gAirGrindCoursePtr->unk00C - 240)
+    while (gAirGrindCoursePtr->scrollPos < gAirGrindCoursePtr->startLine - 240)
         TaskYieldTrampoline(1);
-    AirGrindShowCourseSign(gAirGrindCoursePtr->unk00C);
+    AirGrindShowCourseSign(gAirGrindCoursePtr->startLine);
     while (1) {
-        if (gAirGrindCoursePtr->scrollPos >= gAirGrindCoursePtr->unk00C)
+        if (gAirGrindCoursePtr->scrollPos >= gAirGrindCoursePtr->startLine)
             break;
         TaskYieldTrampoline(1);
     }
@@ -139,7 +139,7 @@ void AirGrindRace(void)
     gCurTask->airGrindSignFadeSlot = AirGrindStartPaletteFade(gUnk_0860A042, 241, 10, 8, 15, 0);
     gCurTask->frame = 0;
     PlayBgm(0x82A);
-    while (gAirGrindCoursePtr->scrollPos < gAirGrindCoursePtr->unk00C + 240)
+    while (gAirGrindCoursePtr->scrollPos < gAirGrindCoursePtr->startLine + 240)
         TaskYieldTrampoline(1);
     gCurTask->lateUpdateCallback = 0;
     gCurTask->frame = 0xFFFF;

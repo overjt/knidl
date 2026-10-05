@@ -20,14 +20,14 @@
  * the block column under the box and breaks that row with attack id 6.
  * CanBreakBlock(x, y, id, player) decides whether the attack breaks the
  * block at a metatile - an 8-way switch on the block kind (id & 0xFF)
- * against the per-collision-byte tables gUnk_0873A494/gUnk_0873A5D4 and
+ * against the per-collision-byte tables gBlockHardness/gUnk_0873A5D4 and
  * the on-screen test sub_08031310 - and latches it into the cursor cells
  * gBlockCursorX/gBlockCursorY/gBlockCursorIndex (x, y, map index),
  * gBlockCursorPlayer (the player), gBlockCursorShake, gBlockCursorAttack (the kind) and
  * gBlockCursorTile (the collision byte); BreakBlockAtCursor then takes a free
  * record, points it at the BG map entry at 0x06002000, plays the sound
  * (PlaySfx), awards points to the player (AddPlayerScore) and starts
- * the animation script gUnk_0873A47C[kind].  BreakBlockAt (M08's map
+ * the animation script gBlockBreakScripts[kind].  BreakBlockAt (M08's map
  * events) and sub_08031738 (M07) break a block at a metatile directly;
  * IsUnbrokenBlockAt tests a metatile for an unbroken block. */
 
@@ -57,7 +57,7 @@ struct MapTile
    script (0x7FFF = free slot; bit 15 = already stepped this frame), unk8 =
    the metatile the cell shows next (RoomDef.blockMetatiles[] + the layer's low byte,
    advanced by one per drawn frame), unkC = its tile entry in the BG map,
-   unk10 = the script (gUnk_0873A47C[kind], {op, arg} pairs: 1 and 2 draw a
+   unk10 = the script (gBlockBreakScripts[kind], {op, arg} pairs: 1 and 2 draw a
    frame, 3 breaks the four neighbours, 4 waits arg frames, 0x8000/0x8001
    free the record), unk14 = the frames left to wait, unk16/unk18 = the
    metatile index and collision byte written back to the map, unk1A = the
@@ -105,8 +105,8 @@ extern u8 gBlockCursorPlayer;                /*   the player that hit it */
 extern u8 gBlockCursorShake;                /*   hit-box id bit 11 */
 extern u16 gBlockCursorAttack;               /*   the block kind (hit-box id low byte) */
 extern s16 gBlockCursorTile;               /*   the metatile's collision byte */
-extern s8 gUnk_0873A494[];
-extern u16 *gUnk_0873A47C[];            /* animation script per block kind */
+extern s8 gBlockHardness[];
+extern u16 *gBlockBreakScripts[];            /* animation script per block kind */
 extern s8 gUnk_0873A5D4[];
 extern s16 gViewRect[];
 extern u8 gUnk_0200B078;
@@ -446,7 +446,7 @@ s32 BreakBlockAt(u32 x, u32 y)
             gBlockCursorTile = gRoomMap[gBlockCursorIndex].collisionTile;
             gBlockCursorShake = 0;
             gBlockCursorAttack = 0;
-            if (gUnk_0873A494[gBlockCursorTile] <= 4)
+            if (gBlockHardness[gBlockCursorTile] <= 4)
             {
                 while (gBreakingBlocks[i].scriptPos != 0x7FFF)
                 {
@@ -462,7 +462,7 @@ s32 BreakBlockAt(u32 x, u32 y)
                 b->bgMapEntry = (u16 *)(BG_VRAM + 0x2000) + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
                 gBlockLayer[gBlockCursorIndex] |= 0x8000;
                 b->chainAttack = 0;
-                b->script = gUnk_0873A47C[0];
+                b->script = gBlockBreakScripts[0];
                 b->waitFrames = 0;
                 b->scriptPos = 0;
                 if (b->script[0] == 1)
@@ -494,23 +494,23 @@ s32 CanBreakBlock(s32 x, s32 y, s32 id, s32 e)
             {
             case 0:
             case 6:
-                if (gUnk_0873A494[gBlockCursorTile] > 4)
+                if (gBlockHardness[gBlockCursorTile] > 4)
                     return 0;
                 return 1;
             case 2:
-                if (!sub_08031310(gBlockCursorX, gBlockCursorY) || gUnk_0873A494[gBlockCursorTile] > 1)
+                if (!sub_08031310(gBlockCursorX, gBlockCursorY) || gBlockHardness[gBlockCursorTile] > 1)
                     return 0;
                 return 1;
             case 1:
-                if (!sub_08031310(gBlockCursorX, gBlockCursorY) || gUnk_0873A494[gBlockCursorTile] != 0)
+                if (!sub_08031310(gBlockCursorX, gBlockCursorY) || gBlockHardness[gBlockCursorTile] != 0)
                     return 0;
                 return 1;
             case 3:
-                if (!sub_08031310(gBlockCursorX, gBlockCursorY) || gUnk_0873A494[gBlockCursorTile] > 2)
+                if (!sub_08031310(gBlockCursorX, gBlockCursorY) || gBlockHardness[gBlockCursorTile] > 2)
                     return 0;
                 return 1;
             case 4:
-                if (!sub_08031310(gBlockCursorX, gBlockCursorY) || gUnk_0873A494[gBlockCursorTile] > 3)
+                if (!sub_08031310(gBlockCursorX, gBlockCursorY) || gBlockHardness[gBlockCursorTile] > 3)
                     return 0;
                 return 1;
             case 5:
@@ -696,7 +696,7 @@ s32 BreakBlockAtCursor(void)
     }
     if (gBlockCursorShake != 0)
         RequestScreenShake(1);
-    b->script = gUnk_0873A47C[k];
+    b->script = gBlockBreakScripts[k];
     b->waitFrames = 0;
     b->scriptPos = 0;
     if (b->script[0] == 1)
@@ -744,7 +744,7 @@ s32 sub_08031738(u32 x, u32 y, s32 n)
     gRoomMap[gBlockCursorIndex].metatile = b->metatile;
     gRoomMap[gBlockCursorIndex].collisionTile = b->collisionTile;
     b->chainAttack = 7;
-    b->script = gUnk_0873A47C[5];
+    b->script = gBlockBreakScripts[5];
     b->waitFrames = 0;
     b->scriptPos = 0;
     return i;

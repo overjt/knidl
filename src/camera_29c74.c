@@ -173,7 +173,7 @@ void SetCameraBoundsToGroupInScrollLock(void)
         switch (gPlayerCameraMode[i])
         {
         case 0:
-            if ((gScrollLock.unk0 >> i) & 1)
+            if ((gScrollLock.lockedPlayerMask >> i) & 1)
                 break;
             x = gTasks[i].pixelX;
             if (x < gCameraBounds[0])
@@ -223,20 +223,20 @@ void SetCameraBoundsToGroupInScrollLock(void)
     if (gScrollLock.lockedAxes & 1)
     {
         if (gScrollLockSpeedX > 0)
-            x1 = gScrollLock.unkA;
+            x1 = gScrollLock.lineX;
         else
-            x0 = gScrollLock.unkA;
+            x0 = gScrollLock.lineX;
     }
     if (gScrollLock.lockedAxes & 2)
     {
         if (gScrollLockSpeedY > 0)
-            y1 = gScrollLock.unkC;
+            y1 = gScrollLock.lineY;
         else
-            y0 = gScrollLock.unkC;
+            y0 = gScrollLock.lineY;
     }
     cx = (x0 + x1) >> 1;
     cy = (y0 + y1) >> 1;
-    if (!((gScrollLock.unk0 >> gPlayerCount) & 1) || !(gScrollLock.lockedAxes & 1))
+    if (!((gScrollLock.lockedPlayerMask >> gPlayerCount) & 1) || !(gScrollLock.lockedAxes & 1))
     {
         gCameraBounds[0] = t = cx - 80;
         gCameraBounds[1] = cx + 80;
@@ -245,7 +245,7 @@ void SetCameraBoundsToGroupInScrollLock(void)
         if (gRoomBounds[1] < gCameraBounds[1])
             gCameraBounds[1] = gRoomBounds[1];
     }
-    if (!((gScrollLock.unk0 >> gPlayerCount) & 1) || !(gScrollLock.lockedAxes & 2))
+    if (!((gScrollLock.lockedPlayerMask >> gPlayerCount) & 1) || !(gScrollLock.lockedAxes & 2))
     {
         gCameraBounds[2] = cy - 120;
         if (gUnk_0200B078 == 2)
@@ -253,7 +253,7 @@ void SetCameraBoundsToGroupInScrollLock(void)
             y1 = 0;
             for (i = 0; i < gPlayerCount; i++)
             {
-                if (gPlayerCameraMode[i] != 3 && !(((gScrollLock.unk0 & gActivePlayerMask) >> i) & 1)
+                if (gPlayerCameraMode[i] != 3 && !(((gScrollLock.lockedPlayerMask & gActivePlayerMask) >> i) & 1)
                     && y1 < gPlayerCameraPos[i].y)
                     y1 = gPlayerCameraPos[i].y;
             }
@@ -311,7 +311,7 @@ void UpdatePlayerCamerasInScrollLock(void)
         switch (gPlayerCameraMode[i])
         {
         case 0:
-            if ((gScrollLock.unk0 >> i) & 1)
+            if ((gScrollLock.lockedPlayerMask >> i) & 1)
                 break;
             gPlayerCameraPos[i].x = gTasks[i].pixelX;
             if (gPlayerCameraPos[i].x < gCameraBounds[0])
@@ -393,7 +393,7 @@ void SetPlayerBoundsFromCameraInScrollLock(void)
 
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (((gActivePlayerMask >> i) & 1) && !((gScrollLock.unk0 >> i) & 1))
+        if (((gActivePlayerMask >> i) & 1) && !((gScrollLock.lockedPlayerMask >> i) & 1))
         {
             gPlayerBounds[i].x0 = gCameraBounds[0] - 117;
             gPlayerBounds[i].x1 = gCameraBounds[1] + 117;
@@ -477,23 +477,23 @@ void LockPlayersPastScrollLine(void)
 {
     s32 i;
 
-    if ((gScrollLock.unk0 >> gPlayerCount) & 1)
+    if ((gScrollLock.lockedPlayerMask >> gPlayerCount) & 1)
         return;
     if (gScrollLock.lockedAxes & 1)
     {
         for (i = 0; i < gPlayerCount; i++)
         {
-            if (((gActivePlayerMask >> i) & 1) && !((gScrollLock.unk0 >> i) & 1))
+            if (((gActivePlayerMask >> i) & 1) && !((gScrollLock.lockedPlayerMask >> i) & 1))
             {
-                if (gScrollLockSpeedX > 0 && gScrollLock.unkA <= gPlayerCameraPos[i].x)
+                if (gScrollLockSpeedX > 0 && gScrollLock.lineX <= gPlayerCameraPos[i].x)
                 {
-                    gScrollLock.unk0 |= 1 << i;
+                    gScrollLock.lockedPlayerMask |= 1 << i;
                     gPlayerBounds[i].x0 = gPlayerCameraPos[i].x + 0xFF8B;
                     gPlayerBounds[i].x1 = gScrollLock.x1 + 117;
                 }
-                else if (gScrollLockSpeedX < 0 && gPlayerCameraPos[i].x <= gScrollLock.unkA)
+                else if (gScrollLockSpeedX < 0 && gPlayerCameraPos[i].x <= gScrollLock.lineX)
                 {
-                    gScrollLock.unk0 |= 1 << i;
+                    gScrollLock.lockedPlayerMask |= 1 << i;
                     gPlayerBounds[i].x0 = gScrollLock.x0 + 0xFF8B;
                     gPlayerBounds[i].x1 = gPlayerCameraPos[i].x + 117;
                 }
@@ -504,39 +504,39 @@ void LockPlayersPastScrollLine(void)
     {
         for (i = 0; i < gPlayerCount; i++)
         {
-            if (((gActivePlayerMask >> i) & 1) && !((gScrollLock.unk0 >> i) & 1))
+            if (((gActivePlayerMask >> i) & 1) && !((gScrollLock.lockedPlayerMask >> i) & 1))
             {
-                if (gScrollLockSpeedY > 0 && gScrollLock.unkC <= gPlayerCameraPos[i].y)
+                if (gScrollLockSpeedY > 0 && gScrollLock.lineY <= gPlayerCameraPos[i].y)
                 {
-                    gScrollLock.unk0 |= 1 << i;
+                    gScrollLock.lockedPlayerMask |= 1 << i;
                     gPlayerBounds[i].y0 = gPlayerCameraPos[i].y + 0xFFB4;
                     gPlayerBounds[i].y1 = gScrollLock.y1 + 104;
                 }
-                else if (gScrollLockSpeedY < 0 && gPlayerCameraPos[i].y <= gScrollLock.unkC)
+                else if (gScrollLockSpeedY < 0 && gPlayerCameraPos[i].y <= gScrollLock.lineY)
                 {
-                    gScrollLock.unk0 |= 1 << i;
+                    gScrollLock.lockedPlayerMask |= 1 << i;
                     gPlayerBounds[i].y0 = gScrollLock.y0 + 0xFFB4;
                     gPlayerBounds[i].y1 = gPlayerCameraPos[i].y + 104;
                 }
             }
         }
     }
-    if ((gScrollLock.unk0 & gActivePlayerMask) == gActivePlayerMask)
+    if ((gScrollLock.lockedPlayerMask & gActivePlayerMask) == gActivePlayerMask)
     {
-        gScrollLock.unk0 |= 1 << gPlayerCount;
+        gScrollLock.lockedPlayerMask |= 1 << gPlayerCount;
         if (gScrollLock.lockedAxes & 1)
         {
             if (gScrollLockSpeedX > 0)
-                gCameraBounds[0] = gScrollLock.unkA;
+                gCameraBounds[0] = gScrollLock.lineX;
             else
-                gCameraBounds[1] = gScrollLock.unkA;
+                gCameraBounds[1] = gScrollLock.lineX;
         }
         if (gScrollLock.lockedAxes & 2)
         {
             if (gScrollLockSpeedY > 0)
-                gCameraBounds[2] = gScrollLock.unkC;
+                gCameraBounds[2] = gScrollLock.lineY;
             else
-                gCameraBounds[3] = gScrollLock.unkC;
+                gCameraBounds[3] = gScrollLock.lineY;
         }
     }
 }

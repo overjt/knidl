@@ -38,7 +38,7 @@
 #define SE_CRASH_ATTACK      248
 #define SE_META_KNIGHT_JUMP  264
 
-/* Songs - the id PlayBgm takes (argument 0), named only where every call site plays it for the same scene and no room plays it (RoomDef.bgm, gUnk_087325A2) */
+/* Songs - the id PlayBgm takes (argument 0), named only where every call site plays it for the same scene and no room plays it (RoomDef.bgm, gRoomBgmRemap) */
 #define BGM_LOST_LIFE   3
 #define BGM_GAME_OVER   16
 #define BGM_INVINCIBLE  19

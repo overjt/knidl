@@ -92,35 +92,35 @@ u32 gMetaKnightWarpStarRideStateUpdates[7] ACTOR_TBL(0873fb04) = {
 /* ---- 0x0873FBAC-0x0873FCF8: 5 table(s), 83 function pointer(s), section .actor_tbl_0873fbac ---- */
 /* include/cutscene.h; CallTableEntry(i, 3, ...) in Task_WarpStar, WarpStarEnterState */
 u32 gWarpStarStates[3] ACTOR_TBL(0873fbac) = {
-    (u32)WarpStarState0,
-    (u32)WarpStarState1,
+    (u32)WarpStarHoverEmpty,
+    (u32)WarpStarHoverBoarded,
     (u32)WarpStarVanish,
 };
 /* include/cutscene.h; CallTableEntry(i, 3, ...) in WarpStarUpdate */
 u32 gWarpStarStateUpdates[3] ACTOR_TBL(0873fbac) = {
-    (u32)WarpStarState0Update,
-    (u32)WarpStarState1Update,
+    (u32)WarpStarHoverEmptyUpdate,
+    (u32)WarpStarHoverBoardedUpdate,
     (u32)sub_08071774,
 };
 /* include/cutscene.h; CallTableEntry(i, 26, ...) in WarpStarStartFlight, WarpStarFlightEnterState */
 u32 gWarpStarFlights[26] ACTOR_TBL(0873fbac) = {
-    (u32)sub_08071d60,
-    (u32)sub_08071e80,
-    (u32)sub_08071d60,
-    (u32)sub_08071e80,
-    (u32)sub_08074420,
+    (u32)WarpStarTakeOff,
+    (u32)WarpStarDescendSlow,
+    (u32)WarpStarTakeOff,
+    (u32)WarpStarDescendSlow,
+    (u32)WarpStarDescendFast,
     (u32)WarpStarFlight5,
     (u32)WarpStarFlight6,
-    (u32)sub_08071e80,
+    (u32)WarpStarDescendSlow,
     (u32)WarpStarFlight8,
-    (u32)sub_08071e80,
+    (u32)WarpStarDescendSlow,
     (u32)WarpStarFlight10,
     (u32)WarpStarFlight11,
     (u32)WarpStarFlight12,
     (u32)WarpStarFlight13,
     (u32)WarpStarFlight14,
     (u32)WarpStarFlight15,
-    (u32)sub_08071e80,
+    (u32)WarpStarDescendSlow,
     (u32)WarpStarFlight17,
     (u32)WarpStarFlight18,
     (u32)WarpStarFlight19,
@@ -129,27 +129,27 @@ u32 gWarpStarFlights[26] ACTOR_TBL(0873fbac) = {
     (u32)WarpStarFlight22,
     (u32)WarpStarFlight23,
     (u32)WarpStarFlight24,
-    (u32)sub_08074420,
+    (u32)WarpStarDescendFast,
 };
 /* include/cutscene.h; CallTableEntry(i, 26, ...) in WarpStarFlightUpdate */
 u32 gWarpStarFlightUpdates[26] ACTOR_TBL(0873fbac) = {
-    (u32)sub_08071e74,
-    (u32)sub_08071ebc,
-    (u32)sub_08071e74,
-    (u32)sub_08071ebc,
-    (u32)WarpStarFlight4Update,
+    (u32)WarpStarTakeOffUpdate,
+    (u32)WarpStarDescendSlowUpdate,
+    (u32)WarpStarTakeOffUpdate,
+    (u32)WarpStarDescendSlowUpdate,
+    (u32)WarpStarDescendFastUpdate,
     (u32)WarpStarFlight5Update,
     (u32)WarpStarFlight6Update,
-    (u32)sub_08071ebc,
+    (u32)WarpStarDescendSlowUpdate,
     (u32)WarpStarFlight8Update,
-    (u32)sub_08071ebc,
+    (u32)WarpStarDescendSlowUpdate,
     (u32)WarpStarFlight10Update,
     (u32)WarpStarFlight11Update,
     (u32)WarpStarFlight12Update,
     (u32)WarpStarFlight13Update,
     (u32)WarpStarFlight14Update,
     (u32)WarpStarFlight15Update,
-    (u32)sub_08071ebc,
+    (u32)WarpStarDescendSlowUpdate,
     (u32)WarpStarFlight17Update,
     (u32)WarpStarFlight18Update,
     (u32)WarpStarFlight19Update,
@@ -158,13 +158,13 @@ u32 gWarpStarFlightUpdates[26] ACTOR_TBL(0873fbac) = {
     (u32)WarpStarFlight22Update,
     (u32)WarpStarFlight23Update,
     (u32)WarpStarFlight24Update,
-    (u32)sub_080743f0,
+    (u32)WarpStarCheckExit,
 };
 /* include/cutscene.h; CallTableEntry(i, 25, ...) in Task_WarpStarCamera */
 u32 gWarpStarCameraPaths[25] ACTOR_TBL(0873fbac) = {
-    (u32)sub_080745dc,
+    (u32)WarpStarCameraTakeOff,
     (u32)sub_08074628,
-    (u32)sub_080745dc,
+    (u32)WarpStarCameraTakeOff,
     (u32)sub_08074628,
     (u32)WarpStarCameraFollowPlayer,
     (u32)WarpStarCameraPath5,
@@ -192,20 +192,20 @@ u32 gWarpStarCameraPaths[25] ACTOR_TBL(0873fbac) = {
 /* ---- 0x087400B0-0x087400E4: 3 table(s), 13 function pointer(s), section .actor_tbl_087400b0 ---- */
 /* include/cutscene.h; CallTableEntry(i, 6, ...) in PlayerCannonInit, PlayerCannonEnterState */
 u32 gPlayerCannonStates[6] ACTOR_TBL(087400b0) = {
-    (u32)PlayerCannonState0,
-    (u32)PlayerCannonState1,
-    (u32)PlayerCannonState2,
-    (u32)PlayerCannonState3,
-    (u32)PlayerCannonState4,
+    (u32)PlayerCannonWait,
+    (u32)PlayerCannonLaunchUp,
+    (u32)PlayerCannonLaunchUpRight,
+    (u32)PlayerCannonLaunchShort,
+    (u32)PlayerCannonArrive,
     (u32)PlayerCannonState5,
 };
 /* include/cutscene.h; CallTableEntry(i, 6, ...) in PlayerCannonUpdate */
 u32 gPlayerCannonStateUpdates[6] ACTOR_TBL(087400b0) = {
-    (u32)PlayerCannonState0Update,
-    (u32)PlayerCannonState1Update,
-    (u32)PlayerCannonState2Update,
-    (u32)PlayerCannonState3Update,
-    (u32)PlayerCannonState4Update,
+    (u32)PlayerCannonWaitUpdate,
+    (u32)PlayerCannonLaunchUpUpdate,
+    (u32)PlayerCannonLaunchUpRightUpdate,
+    (u32)PlayerCannonLaunchShortUpdate,
+    (u32)PlayerCannonArriveUpdate,
     (u32)PlayerCannonState5Update,
 };
 /* include/cutscene.h; CallTableEntry(i, 1, ...) in Task_Cannon */
@@ -217,16 +217,16 @@ u32 gCannonVariants[1] ACTOR_TBL(087400b0) = {
 /* include/cutscene.h; CallTableEntry(i, 4, ...) in CannonInit, CannonEnterState */
 u32 gCannonStates[4] ACTOR_TBL(08740100) = {
     (u32)CannonWait,
-    (u32)CannonState1,
-    (u32)CannonState2,
-    (u32)CannonState3,
+    (u32)CannonLaunchShort,
+    (u32)CannonLaunchUp,
+    (u32)CannonLaunchUpRight,
 };
 /* include/cutscene.h; CallTableEntry(i, 4, ...) in CannonUpdate */
 u32 gCannonStateUpdates[4] ACTOR_TBL(08740100) = {
     (u32)CannonWaitUpdate,
-    (u32)CannonState1Update,
-    (u32)CannonState2Update,
-    (u32)CannonState3Update,
+    (u32)CannonLaunchShortUpdate,
+    (u32)CannonLaunchUpUpdate,
+    (u32)CannonLaunchUpRightUpdate,
 };
 /* include/cutscene.h; CallTableEntry(i, 1, ...) in Task_CannonFuse */
 u32 gCannonFuseVariants[1] ACTOR_TBL(08740100) = {
@@ -238,13 +238,13 @@ u32 gCannonFuseVariants[1] ACTOR_TBL(08740100) = {
 u32 gCannonFuseStates[3] ACTOR_TBL(087402bc) = {
     (u32)CannonFuseWait,
     (u32)CannonFuseBurn,
-    (u32)CannonFuseState2,
+    (u32)CannonFuseRestore,
 };
 /* include/cutscene.h; CallTableEntry(i, 3, ...) in CannonFuseUpdate */
 u32 gCannonFuseStateUpdates[3] ACTOR_TBL(087402bc) = {
     (u32)CannonFuseWaitUpdate,
     (u32)CannonFuseBurnUpdate,
-    (u32)CannonFuseState2Update,
+    (u32)CannonFuseRestoreUpdate,
 };
 /* include/cutscene.h; CallTableEntry(i, 1, ...) in Task_BigSwitch */
 u32 gBigSwitchVariants[1] ACTOR_TBL(087402bc) = {
@@ -253,13 +253,13 @@ u32 gBigSwitchVariants[1] ACTOR_TBL(087402bc) = {
 /* include/cutscene.h; CallTableEntry(i, 3, ...) in BigSwitchInit, BigSwitchEnterState */
 u32 gBigSwitchStates[3] ACTOR_TBL(087402bc) = {
     (u32)BigSwitchWait,
-    (u32)BigSwitchState1,
+    (u32)BigSwitchPress,
     (u32)BigSwitchRefill,
 };
 /* include/cutscene.h; CallTableEntry(i, 3, ...) in BigSwitchUpdate */
 u32 gBigSwitchStateUpdates[3] ACTOR_TBL(087402bc) = {
     (u32)BigSwitchWaitUpdate,
-    (u32)BigSwitchState1Update,
+    (u32)BigSwitchPressUpdate,
     (u32)BigSwitchRefillUpdate,
 };
 /* include/cutscene.h; CallTableEntry(i, 1, ...) in Task_Stake */
@@ -498,8 +498,8 @@ u32 gSwordAndBladeKnightVariants[3] ACTOR_TBL(08740960) = {
 /* include/enemy.h; CallTableEntry(i, 8, ...) in SwordAndBladeKnightWalkInit, SwordAndBladeKnightWalkEnterState */
 u32 gSwordAndBladeKnightWalkStates[8] ACTOR_TBL(087409fc) = {
     (u32)SwordAndBladeKnightWalk,
-    (u32)SwordAndBladeKnightWalkState1,
-    (u32)SwordAndBladeKnightWalkState2,
+    (u32)SwordAndBladeKnightWalkSlashUpWindUp,
+    (u32)SwordAndBladeKnightWalkSlashDownWindUp,
     (u32)SwordAndBladeKnightWalkSlashUp,
     (u32)SwordAndBladeKnightWalkSlashDown,
     (u32)SwordAndBladeKnightWalkWalkBack,
@@ -509,8 +509,8 @@ u32 gSwordAndBladeKnightWalkStates[8] ACTOR_TBL(087409fc) = {
 /* include/enemy.h; CallTableEntry(i, 8, ...) in SwordAndBladeKnightWalkUpdate */
 u32 gSwordAndBladeKnightWalkStateUpdates[8] ACTOR_TBL(087409fc) = {
     (u32)SwordAndBladeKnightWalkState0Update,
-    (u32)SwordAndBladeKnightWalkState1Update,
-    (u32)SwordAndBladeKnightWalkState2Update,
+    (u32)SwordAndBladeKnightWalkSlashUpWindUpUpdate,
+    (u32)SwordAndBladeKnightWalkSlashDownWindUpUpdate,
     (u32)SwordAndBladeKnightWalkSlashUpUpdate,
     (u32)SwordAndBladeKnightWalkSlashDownUpdate,
     (u32)SwordAndBladeKnightWalkWalkBackUpdate,
@@ -527,21 +527,21 @@ u32 gSwordAndBladeKnightIdleStateUpdates[1] ACTOR_TBL(087409fc) = {
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in SwordAndBladeKnightStandInit, SwordAndBladeKnightStandEnterState */
 u32 gSwordAndBladeKnightStandStates[6] ACTOR_TBL(087409fc) = {
-    (u32)SwordAndBladeKnightStandState0,
-    (u32)SwordAndBladeKnightStandState1,
-    (u32)SwordAndBladeKnightStandState2,
+    (u32)SwordAndBladeKnightStandWaitForPlayer,
+    (u32)SwordAndBladeKnightStandSlashUpWindUp,
+    (u32)SwordAndBladeKnightStandSlashDownWindUp,
     (u32)SwordAndBladeKnightStandSlashUp,
     (u32)SwordAndBladeKnightStandSlashDown,
-    (u32)SwordAndBladeKnightStandState5,
+    (u32)SwordAndBladeKnightStandWaitAfterSlash,
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in SwordAndBladeKnightStandUpdate */
 u32 gSwordAndBladeKnightStandStateUpdates[6] ACTOR_TBL(087409fc) = {
-    (u32)SwordAndBladeKnightStandState0Update,
-    (u32)SwordAndBladeKnightStandState1Update,
-    (u32)SwordAndBladeKnightStandState2Update,
+    (u32)SwordAndBladeKnightStandWaitForPlayerUpdate,
+    (u32)SwordAndBladeKnightStandSlashUpWindUpUpdate,
+    (u32)SwordAndBladeKnightStandSlashDownWindUpUpdate,
     (u32)SwordAndBladeKnightStandSlashUpUpdate,
     (u32)SwordAndBladeKnightStandSlashDownUpdate,
-    (u32)SwordAndBladeKnightStandState5Update,
+    (u32)SwordAndBladeKnightStandWaitAfterSlashUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in Task_BlockStar */
 u32 gBlockStarVariants[1] ACTOR_TBL(087409fc) = {
@@ -558,18 +558,18 @@ u32 gNeedlousVariants[2] ACTOR_TBL(087409fc) = {
 u32 gNeedlousStates[6] ACTOR_TBL(08740ac8) = {
     (u32)NeedlousWalk,
     (u32)NeedlousFall,
-    (u32)NeedlousState2,
-    (u32)NeedlousState3,
-    (u32)NeedlousState4,
+    (u32)NeedlousBounce1,
+    (u32)NeedlousBounce2,
+    (u32)NeedlousBounce3,
     (u32)NeedlousDash,
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in NeedlousUpdate */
 u32 gNeedlousStateUpdates[6] ACTOR_TBL(08740ac8) = {
     (u32)NeedlousWalkUpdate,
     (u32)NeedlousFallUpdate,
-    (u32)NeedlousState2Update,
-    (u32)NeedlousState3Update,
-    (u32)NeedlousState4Update,
+    (u32)NeedlousBounce1Update,
+    (u32)NeedlousBounce2Update,
+    (u32)NeedlousBounce3Update,
     (u32)NeedlousDashUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in NeedlousIdleInit, NeedlousIdleEnterState */
@@ -682,17 +682,17 @@ u32 gRockyVariants[3] ACTOR_TBL(087411c0) = {
 u32 gRockyWalkStates[5] ACTOR_TBL(087411c0) = {
     (u32)RockyWalk,
     (u32)RockyWalkState1,
-    (u32)RockyWalkState2,
+    (u32)RockyWalkJump,
     (u32)RockyWalkState3,
-    (u32)RockyWalkState4,
+    (u32)RockyWalkFall,
 };
 /* include/enemy.h; CallTableEntry(i, 5, ...) in RockyWalkUpdate */
 u32 gRockyWalkStateUpdates[5] ACTOR_TBL(087411c0) = {
     (u32)RockyWalkState0Update,
     (u32)RockyWalkState1Update,
-    (u32)RockyWalkState2Update,
+    (u32)RockyWalkJumpUpdate,
     (u32)RockyWalkState3Update,
-    (u32)RockyWalkState4Update,
+    (u32)RockyWalkFallUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in RockyIdleInit, RockyIdleEnterState */
 u32 gRockyIdleStates[1] ACTOR_TBL(087411c0) = {
@@ -706,13 +706,13 @@ u32 gRockyIdleStateUpdates[1] ACTOR_TBL(087411c0) = {
 u32 gRockyStandStates[3] ACTOR_TBL(087411c0) = {
     (u32)RockyStandState0,
     (u32)RockyStandState1,
-    (u32)RockyStandState2,
+    (u32)RockyStandFall,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in RockyStandUpdate */
 u32 gRockyStandStateUpdates[3] ACTOR_TBL(087411c0) = {
     (u32)RockyStandState0Update,
     (u32)RockyStandState1Update,
-    (u32)RockyStandState2Update,
+    (u32)RockyStandFallUpdate,
 };
 
 /* ---- 0x08741220-0x08741298: 15 table(s), 30 function pointer(s), section .actor_tbl_08741220 ---- */
@@ -1098,8 +1098,8 @@ u32 gWheelieVariants[3] ACTOR_TBL(08741640) = {
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in WheelieInit, WheelieEnterState */
 u32 gWheelieStates[6] ACTOR_TBL(08741640) = {
-    (u32)WheelieState0,
-    (u32)WheelieState1,
+    (u32)WheelieRollStart,
+    (u32)WheelieRollLoop,
     (u32)WheelieSkid,
     (u32)WheelieWait,
     (u32)WheelieBounceOffWall,
@@ -1107,8 +1107,8 @@ u32 gWheelieStates[6] ACTOR_TBL(08741640) = {
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in WheelieUpdate */
 u32 gWheelieStateUpdates[6] ACTOR_TBL(08741640) = {
-    (u32)WheelieState0Update,
-    (u32)WheelieState1Update,
+    (u32)WheelieRollStartUpdate,
+    (u32)WheelieRollLoopUpdate,
     (u32)WheelieSkidUpdate,
     (u32)WheelieWaitUpdate,
     (u32)WheelieBounceOffWallUpdate,
@@ -1362,8 +1362,8 @@ u32 gTwizzyVariants[10] ACTOR_TBL(08742570) = {
     (u32)TwizzyDiagonalInit,
     (u32)TwizzyChaseInit,
     (u32)TwizzyTakeOffInit,
-    (u32)TwizzyVariant6,
-    (u32)TwizzyVariant7,
+    (u32)TwizzyHopInit,
+    (u32)TwizzyHopToChaseInit,
     (u32)TwizzyHoverInit,
     (u32)TwizzyIdle,
 };
@@ -1431,35 +1431,35 @@ u32 gTwizzyTakeOffStateUpdates[3] ACTOR_TBL(0874263c) = {
     (u32)TwizzyTakeOffState1Update,
     (u32)TwizzyTakeOffState2Update,
 };
-/* include/enemy.h; CallTableEntry(i, 3, ...) in TwizzyVariant6, sub_08087e60 */
-u32 gUnk_08742654[3] ACTOR_TBL(0874263c) = {
-    (u32)sub_08087eb4,
-    (u32)sub_08087f18,
-    (u32)sub_08087f8c,
+/* include/enemy.h; CallTableEntry(i, 3, ...) in TwizzyHopInit, TwizzyHopEnterState */
+u32 gTwizzyHopStates[3] ACTOR_TBL(0874263c) = {
+    (u32)TwizzyHopWait,
+    (u32)TwizzyHopJump,
+    (u32)TwizzyHopFall,
 };
-/* include/enemy.h; CallTableEntry(i, 3, ...) in sub_08087e84 */
-u32 gUnk_08742660[3] ACTOR_TBL(0874263c) = {
-    (u32)sub_08087ef0,
-    (u32)sub_08087f88,
-    (u32)sub_08087fc8,
+/* include/enemy.h; CallTableEntry(i, 3, ...) in TwizzyHopUpdate */
+u32 gTwizzyHopStateUpdates[3] ACTOR_TBL(0874263c) = {
+    (u32)TwizzyHopWaitUpdate,
+    (u32)TwizzyHopJumpUpdate,
+    (u32)TwizzyHopFallUpdate,
 };
-/* include/enemy.h; CallTableEntry(i, 6, ...) in TwizzyVariant7, sub_08088000 */
-u32 gUnk_0874266C[6] ACTOR_TBL(0874263c) = {
+/* include/enemy.h; CallTableEntry(i, 6, ...) in TwizzyHopToChaseInit, TwizzyHopToChaseEnterState */
+u32 gTwizzyHopToChaseStates[6] ACTOR_TBL(0874263c) = {
     (u32)sub_08088054,
-    (u32)sub_080881a0,
-    (u32)sub_080881e4,
-    (u32)sub_08088230,
-    (u32)sub_0808827c,
-    (u32)sub_08088320,
+    (u32)TwizzyHopToChaseJump,
+    (u32)TwizzyHopToChaseWaitShort,
+    (u32)TwizzyHopToChaseWaitLong,
+    (u32)TwizzyHopToChaseTakeOff,
+    (u32)TwizzyHopToChaseFall,
 };
-/* include/enemy.h; CallTableEntry(i, 6, ...) in sub_08088024 */
-u32 gUnk_08742684[6] ACTOR_TBL(0874263c) = {
+/* include/enemy.h; CallTableEntry(i, 6, ...) in TwizzyHopToChaseUpdate */
+u32 gTwizzyHopToChaseStateUpdates[6] ACTOR_TBL(0874263c) = {
     (u32)sub_080880fc,
-    (u32)sub_080881e0,
-    (u32)sub_08088208,
-    (u32)sub_08088254,
-    (u32)sub_080882f0,
-    (u32)sub_0808835c,
+    (u32)TwizzyHopToChaseJumpUpdate,
+    (u32)TwizzyHopToChaseWaitShortUpdate,
+    (u32)TwizzyHopToChaseWaitLongUpdate,
+    (u32)TwizzyHopToChaseTakeOffUpdate,
+    (u32)TwizzyHopToChaseFallUpdate,
 };
 
 /* ---- 0x087426AC-0x087426EC: 5 table(s), 16 function pointer(s), section .actor_tbl_087426ac ---- */
@@ -1475,10 +1475,10 @@ u32 gTwizzyHoverStateUpdates[1] ACTOR_TBL(087426ac) = {
 u32 gSquishyVariants[4] ACTOR_TBL(087426ac) = {
     (u32)SquishyWalkInit,
     (u32)SquishyVariant1,
-    (u32)SquishyVariant2,
+    (u32)SquishyJumpToWalkInit,
     (u32)SquishyIdle,
 };
-/* include/enemy.h; CallTableEntry(i, 5, ...) in SquishyWalkInit, SquishyWalkEnterState, SquishyVariant2 */
+/* include/enemy.h; CallTableEntry(i, 5, ...) in SquishyWalkInit, SquishyWalkEnterState, SquishyJumpToWalkInit */
 u32 gSquishyWalkStates[5] ACTOR_TBL(087426ac) = {
     (u32)SquishyWalk,
     (u32)SquishyWalkState1,
@@ -1508,17 +1508,17 @@ u32 gUnk_08742710[3] ACTOR_TBL(08742704) = {
     (u32)sub_08088ca0,
     (u32)sub_08088ce4,
 };
-/* include/enemy.h; CallTableEntry(i, 3, ...) in SquishyVariant2, sub_08088d58 */
-u32 gUnk_0874271C[3] ACTOR_TBL(08742704) = {
-    (u32)sub_08088dac,
+/* include/enemy.h; CallTableEntry(i, 3, ...) in SquishyJumpToWalkInit, SquishyJumpToWalkEnterState */
+u32 gSquishyJumpToWalkStates[3] ACTOR_TBL(08742704) = {
+    (u32)SquishyJumpToWalkJump,
     (u32)sub_08088efc,
-    (u32)sub_08088ea4,
+    (u32)SquishyJumpToWalkLand,
 };
-/* include/enemy.h; CallTableEntry(i, 3, ...) in sub_08088d7c */
-u32 gUnk_08742728[3] ACTOR_TBL(08742704) = {
-    (u32)sub_08088e78,
+/* include/enemy.h; CallTableEntry(i, 3, ...) in SquishyJumpToWalkUpdate */
+u32 gSquishyJumpToWalkStateUpdates[3] ACTOR_TBL(08742704) = {
+    (u32)SquishyJumpToWalkJumpUpdate,
     (u32)sub_08088f24,
-    (u32)sub_08088ed4,
+    (u32)SquishyJumpToWalkLandUpdate,
 };
 
 /* ---- 0x0874273C-0x0874276C: 3 table(s), 12 function pointer(s), section .actor_tbl_0874273c ---- */
@@ -1569,11 +1569,11 @@ u32 gSlippyVariants[2] ACTOR_TBL(087427b4) = {
 };
 /* include/enemy.h; CallTableEntry(i, 11, ...) in SlippyInit, SlippyEnterState */
 u32 gSlippyStates[11] ACTOR_TBL(087427b4) = {
-    (u32)SlippyState0,
-    (u32)SlippyState1,
+    (u32)SlippyWait,
+    (u32)SlippyLookAround,
     (u32)SlippyJump,
     (u32)SlippyHighJump,
-    (u32)SlippyState4,
+    (u32)SlippyLeap,
     (u32)SlippyState5,
     (u32)SlippyState6,
     (u32)SlippyState7,
@@ -1583,11 +1583,11 @@ u32 gSlippyStates[11] ACTOR_TBL(087427b4) = {
 };
 /* include/enemy.h; CallTableEntry(i, 11, ...) in SlippyUpdate */
 u32 gSlippyStateUpdates[11] ACTOR_TBL(087427b4) = {
-    (u32)SlippyState0Update,
-    (u32)SlippyState1Update,
+    (u32)SlippyWaitUpdate,
+    (u32)SlippyLookAroundUpdate,
     (u32)SlippyJumpUpdate,
     (u32)SlippyHighJumpUpdate,
-    (u32)SlippyState4Update,
+    (u32)SlippyLeapUpdate,
     (u32)SlippyState5Update,
     (u32)SlippyState6Update,
     (u32)SlippyState7Update,
@@ -1659,12 +1659,12 @@ u32 gGipStates[12] ACTOR_TBL(08742940) = {
     (u32)GipWalk,
     (u32)GipWalk,
     (u32)GipWait,
-    (u32)GipState4,
-    (u32)GipState5,
-    (u32)GipState6,
-    (u32)GipState7,
-    (u32)GipState8,
-    (u32)GipState9,
+    (u32)GipClimbUp,
+    (u32)GipClimbDown,
+    (u32)GipClimbUpFromFloor,
+    (u32)GipClimbDownFromLedge,
+    (u32)GipClimbOverTop,
+    (u32)GipLetGo,
     (u32)GipJump,
     (u32)GipShoot,
 };
@@ -1672,12 +1672,12 @@ u32 gGipStates[12] ACTOR_TBL(08742940) = {
 u32 gGipStateUpdates[8] ACTOR_TBL(08742940) = {
     (u32)GipWalkUpdate,
     (u32)GipWaitUpdate,
-    (u32)sub_0808c1d0,
-    (u32)sub_0808c3e8,
-    (u32)sub_0808c4bc,
-    (u32)sub_0808c538,
+    (u32)GipClimbUpUpdate,
+    (u32)GipClimbDownUpdate,
+    (u32)GipClimbOverTopUpdate,
+    (u32)GipLetGoUpdate,
     (u32)GipJumpUpdate,
-    (u32)sub_0808c684,
+    (u32)GipShootUpdate,
 };
 
 /* ---- 0x08743188-0x087431CC: 7 table(s), 17 function pointer(s), section .actor_tbl_08743188 ---- */
@@ -1922,21 +1922,21 @@ u32 gPoppyBrosSrVariants[1] ACTOR_TBL(08743984) = {
 /* include/enemy.h; CallTableEntry(i, 7, ...) in PoppyBrosSrInit, PoppyBrosSrEnterState */
 u32 gPoppyBrosSrStates[7] ACTOR_TBL(08743984) = {
     (u32)PoppyBrosSrIntro,
-    (u32)PoppyBrosSrState1,
-    (u32)PoppyBrosSrState2,
-    (u32)PoppyBrosSrState3,
-    (u32)PoppyBrosSrState4,
-    (u32)PoppyBrosSrState5,
+    (u32)PoppyBrosSrHop1,
+    (u32)PoppyBrosSrJumpThrow,
+    (u32)PoppyBrosSrHop2,
+    (u32)PoppyBrosSrHop3,
+    (u32)PoppyBrosSrHop4,
     (u32)PoppyBrosSrDefeat,
 };
 /* include/enemy.h; CallTableEntry(i, 7, ...) in PoppyBrosSrUpdate */
 u32 gPoppyBrosSrStateUpdates[7] ACTOR_TBL(08743984) = {
     (u32)PoppyBrosSrIntroUpdate,
-    (u32)PoppyBrosSrState1Update,
-    (u32)PoppyBrosSrState2Update,
-    (u32)PoppyBrosSrState3Update,
-    (u32)PoppyBrosSrState4Update,
-    (u32)PoppyBrosSrState5Update,
+    (u32)PoppyBrosSrHop1Update,
+    (u32)PoppyBrosSrJumpThrowUpdate,
+    (u32)PoppyBrosSrHop2Update,
+    (u32)PoppyBrosSrHop3Update,
+    (u32)PoppyBrosSrHop4Update,
     (u32)PoppyBrosSrDefeatUpdate,
 };
 
@@ -1951,14 +1951,14 @@ u32 gBugzzyStates[13] ACTOR_TBL(08743adc) = {
     (u32)BugzzyWalk,
     (u32)BugzzySummon,
     (u32)BugzzyCharge,
-    (u32)BugzzyState4,
-    (u32)BugzzyState5,
-    (u32)BugzzyState6,
+    (u32)BugzzyFlyUp,
+    (u32)BugzzyFlyForward,
+    (u32)BugzzyJump,
     (u32)BugzzyHop,
     (u32)BugzzyFall,
     (u32)BugzzyBounceOffWall,
     (u32)BugzzyBackdrop,
-    (u32)BugzzyState11,
+    (u32)BugzzyLand,
     (u32)BugzzyDefeat,
 };
 /* include/enemy.h; CallTableEntry(i, 13, ...) in BugzzyUpdate */
@@ -1967,14 +1967,14 @@ u32 gBugzzyStateUpdates[13] ACTOR_TBL(08743adc) = {
     (u32)BugzzyWalkUpdate,
     (u32)BugzzySummonUpdate,
     (u32)BugzzyChargeUpdate,
-    (u32)BugzzyState4Update,
-    (u32)BugzzyState5Update,
-    (u32)BugzzyState6Update,
+    (u32)BugzzyFlyUpUpdate,
+    (u32)BugzzyFlyForwardUpdate,
+    (u32)BugzzyJumpUpdate,
     (u32)BugzzyHopUpdate,
     (u32)BugzzyFallUpdate,
     (u32)BugzzyBounceOffWallUpdate,
     (u32)BugzzyBackdropUpdate,
-    (u32)BugzzyState11Update,
+    (u32)BugzzyLandUpdate,
     (u32)BugzzyDefeatUpdate,
 };
 
@@ -1985,11 +1985,11 @@ u32 gBonkersNutVariants[1] ACTOR_TBL(08744170) = {
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in BonkersNutInit */
 u32 gBonkersNutStates[1] ACTOR_TBL(08744170) = {
-    (u32)BonkersNutState0,
+    (u32)BonkersNutFlight,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in BonkersNutUpdate */
 u32 gBonkersNutStateUpdates[1] ACTOR_TBL(08744170) = {
-    (u32)BonkersNutState0Update,
+    (u32)BonkersNutFlightUpdate,
 };
 
 /* ---- 0x087441A4-0x087441BC: 3 table(s), 6 function pointer(s), section .actor_tbl_087441a4 ---- */
@@ -2016,11 +2016,11 @@ u32 gBugzzyLadybugVariants[1] ACTOR_TBL(087441cc) = {
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in BugzzyLadybugInit */
 u32 gBugzzyLadybugStates[1] ACTOR_TBL(087441cc) = {
-    (u32)BugzzyLadybugState0,
+    (u32)BugzzyLadybugFlight,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in BugzzyLadybugUpdate */
 u32 gBugzzyLadybugStateUpdates[1] ACTOR_TBL(087441cc) = {
-    (u32)BugzzyLadybugState0Update,
+    (u32)BugzzyLadybugFlightUpdate,
 };
 
 /* ---- 0x08744440-0x0874449C: 3 table(s), 23 function pointer(s), section .actor_tbl_08744440 ---- */
@@ -2031,12 +2031,12 @@ u32 gGrandWheelieVariants[1] ACTOR_TBL(08744440) = {
 /* include/enemy.h; CallTableEntry(i, 11, ...) in GrandWheelieInit, GrandWheelieEnterState */
 u32 gGrandWheelieStates[11] ACTOR_TBL(08744440) = {
     (u32)GrandWheelieFall,
-    (u32)GrandWheelieState1,
-    (u32)GrandWheelieState2,
+    (u32)GrandWheelieShowHpBar,
+    (u32)GrandWheelieWait,
     (u32)GrandWheelieHop,
     (u32)GrandWheelieCharge,
-    (u32)GrandWheelieState5,
-    (u32)GrandWheelieState6,
+    (u32)GrandWheelieSkidTurn,
+    (u32)GrandWheelieSkidStop,
     (u32)GrandWheelieState7,
     (u32)GrandWheelieSummon,
     (u32)GrandWheelieBounceOffWall,
@@ -2045,12 +2045,12 @@ u32 gGrandWheelieStates[11] ACTOR_TBL(08744440) = {
 /* include/enemy.h; CallTableEntry(i, 11, ...) in sub_080942b4, GrandWheelieUpdate */
 u32 gGrandWheelieStateUpdates[11] ACTOR_TBL(08744440) = {
     (u32)GrandWheelieFallUpdate,
-    (u32)GrandWheelieState1Update,
-    (u32)GrandWheelieState2Update,
+    (u32)GrandWheelieShowHpBarUpdate,
+    (u32)GrandWheelieWaitUpdate,
     (u32)GrandWheelieHopUpdate,
     (u32)GrandWheelieChargeUpdate,
-    (u32)GrandWheelieState5Update,
-    (u32)GrandWheelieState6Update,
+    (u32)GrandWheelieSkidTurnUpdate,
+    (u32)GrandWheelieSkidStopUpdate,
     (u32)GrandWheelieState7Update,
     (u32)GrandWheelieSummonUpdate,
     (u32)GrandWheelieBounceOffWallUpdate,
@@ -2058,15 +2058,15 @@ u32 gGrandWheelieStateUpdates[11] ACTOR_TBL(08744440) = {
 };
 
 /* ---- 0x087444E4-0x08744510: 1 table(s), 11 function pointer(s), section .actor_tbl_087444e4 ---- */
-/* include/enemy.h; CallTableEntry(i, 12, ...) in FireLionEnterState: the bound exceeds the 11 entries, so index 11 would read the next label, gUnk_08744510 */
+/* include/enemy.h; CallTableEntry(i, 12, ...) in FireLionEnterState: the bound exceeds the 11 entries, so index 11 would read the next label, gFireLionWaitAnim */
 u32 gFireLionStates[11] ACTOR_TBL(087444e4) = {
     (u32)FireLionDropIn,
-    (u32)sub_080959ec,
+    (u32)FireLionShowHpBar,
     (u32)FireLionWait,
     (u32)FireLionHop,
     (u32)FireLionHop,
-    (u32)sub_08095be8,
-    (u32)sub_08095be8,
+    (u32)FireLionLunge,
+    (u32)FireLionLunge,
     (u32)FireLionSlash,
     (u32)FireLionPounce,
     (u32)FireLionState9,
@@ -2079,14 +2079,14 @@ u32 gFireLionStateUpdates[13] ACTOR_TBL(08744564) = {
     (u32)FireLionDropInUpdate,
     (u32)sub_08095ad0,
     (u32)FireLionHopUpdate,
-    (u32)sub_08095d20,
+    (u32)FireLionLungeUpdate,
     (u32)FireLionSlashUpdate,
     (u32)FireLionPounceUpdate,
     (u32)FireLionChargeUpdate,
-    (u32)sub_080962ac,
+    (u32)FireLionChargeEndUpdate,
     (u32)sub_0809616c,
     (u32)sub_080963c0,
-    (u32)sub_08096920,
+    (u32)FireLionJumpBackUpdate,
     (u32)FireLionDefeatUpdate,
     (u32)sub_08096a28,
 };
@@ -2129,18 +2129,18 @@ u32 gMrFrostyStates[19] ACTOR_TBL(08745630) = {
     (u32)MrFrostyWalkBack,
     (u32)MrFrostyDash,
     (u32)MrFrostyBounceOffWall,
-    (u32)MrFrostyState5,
-    (u32)MrFrostyState6,
-    (u32)MrFrostyState7,
+    (u32)MrFrostyBounceFromWall,
+    (u32)MrFrostyShake,
+    (u32)MrFrostyWalkBackAtWall,
     (u32)MrFrostySpin,
-    (u32)MrFrostyState9,
-    (u32)MrFrostyState10,
-    (u32)MrFrostyState11,
-    (u32)MrFrostyState12,
+    (u32)MrFrostyTossIceCubeHopBack,
+    (u32)MrFrostyTossIceCubeHopAway,
+    (u32)MrFrostyTossIceCubeWalkBack,
+    (u32)MrFrostyKick,
     (u32)MrFrostyDefeat,
-    (u32)MrFrostyState14,
-    (u32)MrFrostyState15,
-    (u32)MrFrostyState16,
+    (u32)MrFrostyBounceFromDefeat,
+    (u32)MrFrostyDefeatEnd,
+    (u32)MrFrostyFall,
     (u32)MrFrostyState17,
     (u32)MrFrostyDropIn,
 };
@@ -2151,18 +2151,18 @@ u32 gMrFrostyStateUpdates[19] ACTOR_TBL(08745630) = {
     (u32)MrFrostyWalkBackUpdate,
     (u32)MrFrostyDashUpdate,
     (u32)MrFrostyBounceOffWallUpdate,
-    (u32)MrFrostyState5Update,
-    (u32)MrFrostyState6Update,
-    (u32)MrFrostyState7Update,
+    (u32)MrFrostyBounceFromWallUpdate,
+    (u32)MrFrostyShakeUpdate,
+    (u32)MrFrostyWalkBackAtWallUpdate,
     (u32)MrFrostySpinUpdate,
-    (u32)MrFrostyState9Update,
-    (u32)MrFrostyState10Update,
-    (u32)MrFrostyState11Update,
-    (u32)MrFrostyState12Update,
+    (u32)MrFrostyTossIceCubeHopBackUpdate,
+    (u32)MrFrostyTossIceCubeHopAwayUpdate,
+    (u32)MrFrostyTossIceCubeWalkBackUpdate,
+    (u32)MrFrostyKickUpdate,
     (u32)MrFrostyDefeatUpdate,
-    (u32)MrFrostyState14Update,
-    (u32)MrFrostyState15Update,
-    (u32)MrFrostyState16Update,
+    (u32)MrFrostyBounceFromDefeatUpdate,
+    (u32)MrFrostyDefeatEndUpdate,
+    (u32)MrFrostyFallUpdate,
     (u32)MrFrostyState17Update,
     (u32)MrFrostyDropInUpdate,
 };
@@ -2174,56 +2174,56 @@ u32 gMrTickTockVariants[1] ACTOR_TBL(0874574c) = {
 };
 /* include/enemy.h; CallTableEntry(i, 24, ...) in MrTickTockInit, MrTickTockEnterState */
 u32 gMrTickTockStates[24] ACTOR_TBL(0874574c) = {
-    (u32)MrTickTockWait,
+    (u32)MrTickTockWaitLong,
     (u32)MrTickTockPickMove,
     (u32)MrTickTockHop,
     (u32)MrTickTockWalkBack,
     (u32)MrTickTockJumpForward,
-    (u32)MrTickTockState5,
-    (u32)MrTickTockDash,
-    (u32)MrTickTockState7,
-    (u32)MrTickTockState8,
-    (u32)MrTickTockState9,
+    (u32)MrTickTockDashWindUp,
+    (u32)MrTickTockDashStart,
+    (u32)MrTickTockJumpHigh,
+    (u32)MrTickTockRingFromJump,
+    (u32)MrTickTockJumpLow,
     (u32)MrTickTockJumpBack,
     (u32)MrTickTockShootNotes,
-    (u32)MrTickTockState12,
-    (u32)MrTickTockState13,
-    (u32)MrTickTockState14,
+    (u32)MrTickTockDashLoop,
+    (u32)MrTickTockRingFromDash,
+    (u32)MrTickTockWaitShort,
     (u32)MrTickTockBounceOffWall,
-    (u32)MrTickTockState16,
-    (u32)MrTickTockState17,
-    (u32)MrTickTockState18,
+    (u32)MrTickTockShake,
+    (u32)MrTickTockPace,
+    (u32)MrTickTockPaceAtWall,
     (u32)MrTickTockDefeat,
-    (u32)MrTickTockState20,
-    (u32)MrTickTockState21,
-    (u32)MrTickTockState22,
+    (u32)MrTickTockBounceFromDefeat,
+    (u32)MrTickTockDefeatEnd,
+    (u32)MrTickTockFall,
     (u32)MrTickTockDropIn,
 };
 /* include/enemy.h; CallTableEntry(i, 24, ...) in MrTickTockUpdate */
 u32 gMrTickTockStateUpdates[24] ACTOR_TBL(0874574c) = {
-    (u32)MrTickTockWaitUpdate,
+    (u32)MrTickTockWaitLongUpdate,
     (u32)MrTickTockPickMoveUpdate,
     (u32)MrTickTockHopUpdate,
     (u32)MrTickTockWalkBackUpdate,
     (u32)MrTickTockJumpForwardUpdate,
-    (u32)MrTickTockState5Update,
-    (u32)MrTickTockDashUpdate,
-    (u32)MrTickTockState7Update,
-    (u32)MrTickTockState8Update,
-    (u32)MrTickTockState9Update,
+    (u32)MrTickTockDashWindUpUpdate,
+    (u32)MrTickTockDashStartUpdate,
+    (u32)MrTickTockJumpHighUpdate,
+    (u32)MrTickTockRingFromJumpUpdate,
+    (u32)MrTickTockJumpLowUpdate,
     (u32)MrTickTockJumpBackUpdate,
     (u32)MrTickTockShootNotesUpdate,
-    (u32)MrTickTockState12Update,
-    (u32)MrTickTockState13Update,
-    (u32)MrTickTockState14Update,
+    (u32)MrTickTockDashLoopUpdate,
+    (u32)MrTickTockRingFromDashUpdate,
+    (u32)MrTickTockWaitShortUpdate,
     (u32)MrTickTockBounceOffWallUpdate,
-    (u32)MrTickTockState16Update,
-    (u32)MrTickTockState17Update,
+    (u32)MrTickTockShakeUpdate,
+    (u32)MrTickTockPaceUpdate,
     (u32)sub_0809b210,
     (u32)MrTickTockDefeatUpdate,
-    (u32)MrTickTockState20Update,
-    (u32)MrTickTockState21Update,
-    (u32)MrTickTockState22Update,
+    (u32)MrTickTockBounceFromDefeatUpdate,
+    (u32)MrTickTockDefeatEndUpdate,
+    (u32)MrTickTockFallUpdate,
     (u32)MrTickTockDropInUpdate,
 };
 
@@ -2234,15 +2234,15 @@ u32 gMrFrostyIceCubeVariants[1] ACTOR_TBL(08745ae4) = {
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in MrFrostyIceCubeInit, MrFrostyIceCubeEnterState */
 u32 gMrFrostyIceCubeStates[3] ACTOR_TBL(08745ae4) = {
-    (u32)MrFrostyIceCubeState0,
+    (u32)MrFrostyIceCubePopUp,
     (u32)MrFrostyIceCubeFlight,
-    (u32)MrFrostyIceCubeState2,
+    (u32)MrFrostyIceCubeBurst,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in MrFrostyIceCubeUpdate */
 u32 gMrFrostyIceCubeStateUpdates[3] ACTOR_TBL(08745ae4) = {
-    (u32)MrFrostyIceCubeState0Update,
+    (u32)MrFrostyIceCubePopUpUpdate,
     (u32)MrFrostyIceCubeFlightUpdate,
-    (u32)MrFrostyIceCubeState2Update,
+    (u32)MrFrostyIceCubeBurstUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in Task_MrTickTockRing */
 u32 gMrTickTockRingVariants[1] ACTOR_TBL(08745ae4) = {
@@ -2250,11 +2250,11 @@ u32 gMrTickTockRingVariants[1] ACTOR_TBL(08745ae4) = {
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in MrTickTockRingInit, MrTickTockRingEnterState */
 u32 gMrTickTockRingStates[1] ACTOR_TBL(08745ae4) = {
-    (u32)MrTickTockRingState0,
+    (u32)MrTickTockRingExpand,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in MrTickTockRingUpdate */
 u32 gMrTickTockRingStateUpdates[1] ACTOR_TBL(08745ae4) = {
-    (u32)MrTickTockRingState0Update,
+    (u32)MrTickTockRingExpandUpdate,
 };
 
 /* ---- 0x08745B1C-0x08745B30: 3 table(s), 5 function pointer(s), section .actor_tbl_08745b1c ---- */
@@ -2276,10 +2276,10 @@ u32 gMrTickTockNoteStateUpdates[2] ACTOR_TBL(08745b1c) = {
 /* ---- 0x08747AA4-0x08747B10: 6 table(s), 27 function pointer(s), section .actor_tbl_08747aa4 ---- */
 /* include/enemy.h; CallTableEntry(i, 4, ...) in sub_0809c490 */
 u32 gAxeKnightVariants[4] ACTOR_TBL(08747aa4) = {
-    (u32)AxeKnightVariant0,
-    (u32)AxeKnightVariant1,
-    (u32)AxeKnightVariant2,
-    (u32)AxeKnightVariant3,
+    (u32)AxeKnightFallInInit,
+    (u32)AxeKnightSlashLoop,
+    (u32)AxeKnightWalkInShortInit,
+    (u32)AxeKnightWalkInLongInit,
 };
 /* include/enemy.h; CallTableEntry(i, 5, ...) in AxeKnightEnterState */
 u32 gAxeKnightStates[5] ACTOR_TBL(08747aa4) = {
@@ -2299,33 +2299,33 @@ u32 gAxeKnightStateUpdates[5] ACTOR_TBL(08747aa4) = {
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in sub_0809d13c */
 u32 gJavelinKnightVariants[2] ACTOR_TBL(08747aa4) = {
-    (u32)JavelinKnightVariant0,
-    (u32)JavelinKnightVariant1,
+    (u32)JavelinKnightInit,
+    (u32)JavelinKnightBounce,
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in JavelinKnightEnterState */
 u32 gJavelinKnightStates[6] ACTOR_TBL(08747aa4) = {
-    (u32)JavelinKnightState0,
+    (u32)JavelinKnightStartHop,
     (u32)JavelinKnightHop,
-    (u32)JavelinKnightState2,
+    (u32)JavelinKnightThrust,
     (u32)JavelinKnightJumpThrow,
     (u32)JavelinKnightJump,
-    (u32)JavelinKnightState5,
+    (u32)JavelinKnightLandFromJump,
 };
 /* include/enemy.h; CallTableEntry(i, 5, ...) in JavelinKnightUpdate */
 u32 gJavelinKnightStateUpdates[5] ACTOR_TBL(08747aa4) = {
     (u32)JavelinKnightState0Update,
-    (u32)sub_0809d42c,
-    (u32)sub_0809d568,
-    (u32)sub_0809d608,
-    (u32)sub_0809d6b4,
+    (u32)JavelinKnightThrustUpdate,
+    (u32)JavelinKnightJumpThrowUpdate,
+    (u32)JavelinKnightJumpUpdate,
+    (u32)JavelinKnightLandFromJumpUpdate,
 };
 
 /* ---- 0x08747BCC-0x08747C28: 7 table(s), 23 function pointer(s), section .actor_tbl_08747bcc ---- */
 /* include/enemy.h; CallTableEntry(i, 3, ...) in sub_0809dc7c */
 u32 gMaceKnightVariants[3] ACTOR_TBL(08747bcc) = {
     (u32)MaceKnightStand,
-    (u32)MaceKnightVariant1,
-    (u32)MaceKnightVariant2,
+    (u32)MaceKnightWalkInit,
+    (u32)MaceKnightSwing,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in MaceKnightEnterState */
 u32 gMaceKnightStates[2] ACTOR_TBL(08747bcc) = {
@@ -2339,16 +2339,16 @@ u32 gMaceKnightStateUpdates[2] ACTOR_TBL(08747bcc) = {
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in Task_MaceKnightMace */
 u32 gMaceKnightMaceVariants[3] ACTOR_TBL(08747bcc) = {
-    (u32)sub_0809e320,
-    (u32)sub_0809e320,
-    (u32)MaceKnightMaceVariant2,
+    (u32)MaceKnightMaceFlight,
+    (u32)MaceKnightMaceFlight,
+    (u32)MaceKnightMaceSwing,
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in sub_0809e824 */
 u32 gTridentKnightVariants[4] ACTOR_TBL(08747bcc) = {
-    (u32)TridentKnightVariant0,
-    (u32)TridentKnightVariant1,
-    (u32)TridentKnightVariant2,
-    (u32)TridentKnightVariant3,
+    (u32)TridentKnightFallInInit,
+    (u32)TridentKnightStand,
+    (u32)TridentKnightWalkInShortInit,
+    (u32)TridentKnightWalkInLongInit,
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in TridentKnightEnterState */
 u32 gTridentKnightStates[4] ACTOR_TBL(08747bcc) = {
@@ -2359,7 +2359,7 @@ u32 gTridentKnightStates[4] ACTOR_TBL(08747bcc) = {
 };
 /* include/enemy.h; CallTableEntry(i, 5, ...) in TridentKnightUpdate */
 u32 gTridentKnightStateUpdates[5] ACTOR_TBL(08747bcc) = {
-    (u32)sub_0809ea08,
+    (u32)TridentKnightWalkUpdate,
     (u32)TridentKnightJumpUpdate,
     (u32)TridentKnightThrowUpdate,
     (u32)TridentKnightJumpThrowUpdate,
@@ -2434,17 +2434,17 @@ u32 gMrShineAndMrBrightVariants[4] ACTOR_TBL(087484c4) = {
 /* ---- 0x08748624-0x08748764: 6 table(s), 80 function pointer(s), section .actor_tbl_08748624 ---- */
 /* include/enemy.h; CallTableEntry(i, 4, ...) in MrShineAndMrBrightInit, MrShineAndMrBrightEnterState */
 u32 gMrShineAndMrBrightStates[4] ACTOR_TBL(08748624) = {
-    (u32)MrShineAndMrBrightState0,
-    (u32)MrShineAndMrBrightState1,
-    (u32)MrShineAndMrBrightState2,
-    (u32)MrShineAndMrBrightState3,
+    (u32)MrShineAndMrBrightIntro,
+    (u32)MrShineAndMrBrightWaitForKnockOut,
+    (u32)MrShineAndMrBrightWaitForConvergeStart,
+    (u32)MrShineAndMrBrightWaitForConvergeEnd,
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in MrShineAndMrBrightUpdate */
 u32 gMrShineAndMrBrightStateUpdates[4] ACTOR_TBL(08748624) = {
-    (u32)MrShineAndMrBrightState0Update,
-    (u32)MrShineAndMrBrightState1Update,
-    (u32)MrShineAndMrBrightState2Update,
-    (u32)MrShineAndMrBrightState3Update,
+    (u32)MrShineAndMrBrightIntroUpdate,
+    (u32)MrShineAndMrBrightWaitForKnockOutUpdate,
+    (u32)MrShineAndMrBrightWaitForConvergeStartUpdate,
+    (u32)MrShineAndMrBrightWaitForConvergeEndUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 18, ...) in MrShineInit, MrShineEnterState */
 u32 gMrShineStates[18] ACTOR_TBL(08748624) = {
@@ -2452,7 +2452,7 @@ u32 gMrShineStates[18] ACTOR_TBL(08748624) = {
     (u32)MrShineWait,
     (u32)MrShineAscend,
     (u32)MrShineWaitToAttack,
-    (u32)MrShineState4,
+    (u32)MrShineWindUp,
     (u32)MrShineDropStars,
     (u32)MrShineChase,
     (u32)MrShineWaitToDescend,
@@ -2463,9 +2463,9 @@ u32 gMrShineStates[18] ACTOR_TBL(08748624) = {
     (u32)MrShineDash,
     (u32)MrShineRecoil,
     (u32)MrShineThrow,
-    (u32)MrShineState15,
-    (u32)MrShineState16,
-    (u32)MrShineState17,
+    (u32)MrShineWaitToConverge,
+    (u32)MrShineConvergeStart,
+    (u32)MrShineConvergeEnd,
 };
 /* include/enemy.h; CallTableEntry(i, 18, ...) in MrShineUpdate */
 u32 gMrShineStateUpdates[18] ACTOR_TBL(08748624) = {
@@ -2473,7 +2473,7 @@ u32 gMrShineStateUpdates[18] ACTOR_TBL(08748624) = {
     (u32)MrShineWaitUpdate,
     (u32)MrShineAscendUpdate,
     (u32)MrShineWaitToAttackUpdate,
-    (u32)MrShineState4Update,
+    (u32)MrShineWindUpUpdate,
     (u32)MrShineDropStarsUpdate,
     (u32)MrShineChaseUpdate,
     (u32)MrShineWaitToDescendUpdate,
@@ -2484,9 +2484,9 @@ u32 gMrShineStateUpdates[18] ACTOR_TBL(08748624) = {
     (u32)MrShineDashUpdate,
     (u32)MrShineRecoilUpdate,
     (u32)MrShineThrowUpdate,
-    (u32)MrShineState15Update,
-    (u32)sub_080a3ba0,
-    (u32)sub_080a3c08,
+    (u32)MrShineWaitToConvergeUpdate,
+    (u32)MrShineConvergeStartUpdate,
+    (u32)MrShineConvergeEndUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 18, ...) in MrBrightInit, MrBrightEnterState */
 u32 gMrBrightStates[18] ACTOR_TBL(08748624) = {
@@ -2494,8 +2494,8 @@ u32 gMrBrightStates[18] ACTOR_TBL(08748624) = {
     (u32)MrBrightWait,
     (u32)MrBrightAscend,
     (u32)MrBrightWaitToAttack,
-    (u32)MrBrightState4,
-    (u32)MrBrightState5,
+    (u32)MrBrightWindUp,
+    (u32)MrBrightFireBeam,
     (u32)MrBrightChase,
     (u32)MrBrightWaitToDescend,
     (u32)MrBrightDescend,
@@ -2505,9 +2505,9 @@ u32 gMrBrightStates[18] ACTOR_TBL(08748624) = {
     (u32)MrBrightDash,
     (u32)MrBrightRecoil,
     (u32)MrBrightThrow,
-    (u32)MrBrightState15,
-    (u32)MrBrightState16,
-    (u32)MrBrightState17,
+    (u32)MrBrightWaitToConverge,
+    (u32)MrBrightConvergeStart,
+    (u32)MrBrightConvergeEnd,
 };
 /* include/enemy.h; CallTableEntry(i, 18, ...) in MrBrightUpdate */
 u32 gMrBrightStateUpdates[18] ACTOR_TBL(08748624) = {
@@ -2515,8 +2515,8 @@ u32 gMrBrightStateUpdates[18] ACTOR_TBL(08748624) = {
     (u32)MrBrightWaitUpdate,
     (u32)MrBrightAscendUpdate,
     (u32)MrBrightWaitToAttackUpdate,
-    (u32)MrBrightState4Update,
-    (u32)MrBrightState5Update,
+    (u32)MrBrightWindUpUpdate,
+    (u32)MrBrightFireBeamUpdate,
     (u32)MrBrightChaseUpdate,
     (u32)MrBrightWaitToDescendUpdate,
     (u32)MrBrightDescendUpdate,
@@ -2526,9 +2526,9 @@ u32 gMrBrightStateUpdates[18] ACTOR_TBL(08748624) = {
     (u32)MrBrightDashUpdate,
     (u32)MrBrightRecoilUpdate,
     (u32)MrBrightThrowUpdate,
-    (u32)MrBrightState15Update,
-    (u32)sub_080a4658,
-    (u32)sub_080a46c0,
+    (u32)MrBrightWaitToConvergeUpdate,
+    (u32)MrBrightConvergeStartUpdate,
+    (u32)MrBrightConvergeEndUpdate,
 };
 
 /* ---- 0x087489B4-0x087489C0: 3 table(s), 3 function pointer(s), section .actor_tbl_087489b4 ---- */
@@ -2538,11 +2538,11 @@ u32 gKingDededeStarVariants[1] ACTOR_TBL(087489b4) = {
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in KingDededeStarInit, KingDededeStarEnterState */
 u32 gKingDededeStarStates[1] ACTOR_TBL(087489b4) = {
-    (u32)sub_080a4ac4,
+    (u32)KingDededeStarFlight,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in KingDededeStarUpdate */
 u32 gKingDededeStarStateUpdates[1] ACTOR_TBL(087489b4) = {
-    (u32)sub_080a4b1c,
+    (u32)KingDededeStarFlightUpdate,
 };
 
 /* ---- 0x087489D4-0x08748A00: 6 table(s), 11 function pointer(s), section .actor_tbl_087489d4 ---- */
@@ -2550,13 +2550,13 @@ u32 gKingDededeStarStateUpdates[1] ACTOR_TBL(087489b4) = {
 u32 gKingDededeAirPuffVariants[1] ACTOR_TBL(087489d4) = {
     (u32)KingDededeAirPuffInit,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in KingDededeAirPuffInit, sub_080a4c20 */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in KingDededeAirPuffInit, KingDededeAirPuffEnterState */
 u32 gKingDededeAirPuffStates[1] ACTOR_TBL(087489d4) = {
-    (u32)KingDededeAirPuffState0,
+    (u32)KingDededeAirPuffFlight,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in KingDededeAirPuffUpdate */
 u32 gKingDededeAirPuffStateUpdates[1] ACTOR_TBL(087489d4) = {
-    (u32)KingDededeAirPuffState0Update,
+    (u32)KingDededeAirPuffFlightUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in Task_MrShineAndMrBrightAttack */
 u32 gMrShineAndMrBrightAttackVariants[4] ACTOR_TBL(087489d4) = {
@@ -2567,39 +2567,39 @@ u32 gMrShineAndMrBrightAttackVariants[4] ACTOR_TBL(087489d4) = {
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in MrShineCrescentInit, MrShineCrescentEnterState */
 u32 gMrShineCrescentStates[2] ACTOR_TBL(087489d4) = {
-    (u32)MrShineCrescentState0,
-    (u32)MrShineCrescentState1,
+    (u32)MrShineCrescentFlight,
+    (u32)MrShineCrescentDie,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in MrShineCrescentUpdate */
 u32 gMrShineCrescentStateUpdates[2] ACTOR_TBL(087489d4) = {
-    (u32)MrShineCrescentState0Update,
+    (u32)MrShineCrescentFlightUpdate,
     (u32)sub_080a4e10,
 };
 
 /* ---- 0x08748A28-0x08748A38: 2 table(s), 4 function pointer(s), section .actor_tbl_08748a28 ---- */
-/* include/enemy.h; CallTableEntry(i, 2, ...) in MrShineFallingStarInit, sub_080a4f24 */
+/* include/enemy.h; CallTableEntry(i, 2, ...) in MrShineFallingStarInit, MrShineFallingStarEnterState */
 u32 gMrShineFallingStarStates[2] ACTOR_TBL(08748a28) = {
-    (u32)MrShineFallingStarState0,
-    (u32)MrShineFallingStarState1,
+    (u32)MrShineFallingStarFlight,
+    (u32)MrShineFallingStarDie,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in MrShineFallingStarUpdate */
 u32 gMrShineFallingStarStateUpdates[2] ACTOR_TBL(08748a28) = {
-    (u32)MrShineFallingStarState0Update,
+    (u32)MrShineFallingStarFlightUpdate,
     (u32)sub_080a503c,
 };
 
 /* ---- 0x08748A54-0x08748A80: 5 table(s), 11 function pointer(s), section .actor_tbl_08748a54 ---- */
 /* include/enemy.h; CallTableEntry(i, 2, ...) in MrBrightFireballInit, MrBrightFireballEnterState */
 u32 gMrBrightFireballStates[2] ACTOR_TBL(08748a54) = {
-    (u32)MrBrightFireballState0,
-    (u32)MrBrightFireballState1,
+    (u32)MrBrightFireballFlight,
+    (u32)MrBrightFireballDie,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in MrBrightFireballUpdate */
 u32 gMrBrightFireballStateUpdates[2] ACTOR_TBL(08748a54) = {
-    (u32)MrBrightFireballState0Update,
+    (u32)MrBrightFireballFlightUpdate,
     (u32)sub_080a5184,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in MrBrightBeamInit, sub_080a5220 */
+/* include/enemy.h; CallTableEntry(i, 2, ...) in MrBrightBeamInit, MrBrightBeamEnterState */
 u32 gMrBrightBeamStates[2] ACTOR_TBL(08748a54) = {
     (u32)MrBrightBeamState0,
     (u32)MrBrightBeamState1,
@@ -2611,9 +2611,9 @@ u32 gMrBrightBeamStateUpdates[2] ACTOR_TBL(08748a54) = {
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in Task_MrBrightBeamEffect */
 u32 gMrBrightBeamEffectVariants[3] ACTOR_TBL(08748a54) = {
-    (u32)MrBrightBeamEffectVariant0,
-    (u32)MrBrightBeamEffectVariant1,
-    (u32)MrBrightBeamEffectVariant2,
+    (u32)MrBrightBeamEffectFlicker,
+    (u32)MrBrightBeamEffectDropSlow,
+    (u32)MrBrightBeamEffectDropFast,
 };
 
 /* ---- 0x08748EB8-0x08748F8C: 5 table(s), 53 function pointer(s), section .actor_tbl_08748eb8 ---- */
@@ -2625,55 +2625,55 @@ u32 gMetaKnightVariants[1] ACTOR_TBL(08748eb8) = {
 u32 gMetaKnightStates[24] ACTOR_TBL(08748eb8) = {
     (u32)MetaKnightIntro,
     (u32)MetaKnightFollow,
-    (u32)MetaKnightState2,
-    (u32)MetaKnightState3,
-    (u32)MetaKnightState4,
-    (u32)MetaKnightState5,
+    (u32)MetaKnightStartFollowAhead,
+    (u32)MetaKnightStartFollowOtherSide,
+    (u32)MetaKnightExtendFollow,
+    (u32)MetaKnightStartFollowBack,
     (u32)MetaKnightApproach,
     (u32)MetaKnightRun,
-    (u32)MetaKnightState8,
-    (u32)MetaKnightState9,
+    (u32)MetaKnightJumpHigh,
+    (u32)MetaKnightJumpLow,
     (u32)MetaKnightLand,
-    (u32)MetaKnightState11,
-    (u32)MetaKnightState12,
+    (u32)MetaKnightStartJumpForward,
+    (u32)MetaKnightStartJumpUp,
     (u32)MetaKnightSwordSpin,
-    (u32)MetaKnightState14,
+    (u32)MetaKnightStartJumpUpwardSlash,
     (u32)MetaKnightDownThrust,
-    (u32)MetaKnightState16,
-    (u32)MetaKnightState17,
-    (u32)MetaKnightState18,
-    (u32)MetaKnightState19,
+    (u32)MetaKnightStartJumpDownThrust,
+    (u32)MetaKnightUpwardSlashInAir,
+    (u32)MetaKnightUpwardSlashOnGround,
+    (u32)MetaKnightSlashShort,
     (u32)MetaKnightDoubleSlash,
-    (u32)MetaKnightState21,
-    (u32)MetaKnightState22,
-    (u32)MetaKnightState23,
+    (u32)MetaKnightSlashLong,
+    (u32)MetaKnightGuardHit,
+    (u32)MetaKnightGuardCatch,
 };
 /* include/enemy.h; CallTableEntry(i, 24, ...) in MetaKnightUpdate */
 u32 gMetaKnightStateUpdates[24] ACTOR_TBL(08748eb8) = {
     (u32)MetaKnightIntroUpdate,
     (u32)MetaKnightFollowUpdate,
-    (u32)MetaKnightState2Update,
-    (u32)MetaKnightState3Update,
-    (u32)MetaKnightState4Update,
-    (u32)MetaKnightState5Update,
+    (u32)MetaKnightStartFollowAheadUpdate,
+    (u32)MetaKnightStartFollowOtherSideUpdate,
+    (u32)MetaKnightExtendFollowUpdate,
+    (u32)MetaKnightStartFollowBackUpdate,
     (u32)MetaKnightApproachUpdate,
     (u32)MetaKnightRunUpdate,
-    (u32)MetaKnightState8Update,
-    (u32)MetaKnightState9Update,
+    (u32)MetaKnightJumpHighUpdate,
+    (u32)MetaKnightJumpLowUpdate,
     (u32)MetaKnightLandUpdate,
-    (u32)MetaKnightState11Update,
-    (u32)MetaKnightState12Update,
+    (u32)MetaKnightStartJumpForwardUpdate,
+    (u32)MetaKnightStartJumpUpUpdate,
     (u32)MetaKnightSwordSpinUpdate,
-    (u32)MetaKnightState14Update,
+    (u32)MetaKnightStartJumpUpwardSlashUpdate,
     (u32)MetaKnightDownThrustUpdate,
-    (u32)MetaKnightState16Update,
-    (u32)MetaKnightState17Update,
-    (u32)MetaKnightState18Update,
-    (u32)MetaKnightState19Update,
+    (u32)MetaKnightStartJumpDownThrustUpdate,
+    (u32)MetaKnightUpwardSlashInAirUpdate,
+    (u32)MetaKnightUpwardSlashOnGroundUpdate,
+    (u32)MetaKnightSlashShortUpdate,
     (u32)MetaKnightDoubleSlashUpdate,
-    (u32)MetaKnightState21Update,
-    (u32)MetaKnightState22Update,
-    (u32)MetaKnightState23Update,
+    (u32)MetaKnightSlashLongUpdate,
+    (u32)MetaKnightGuardHitUpdate,
+    (u32)MetaKnightGuardCatchUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in MetaKnightDefeatedInit, MetaKnightDefeatedEnterState */
 u32 gMetaKnightDefeatedStates[2] ACTOR_TBL(08748eb8) = {
@@ -2730,47 +2730,47 @@ u32 gNightmareWizardVariants[1] ACTOR_TBL(087493f4) = {
 };
 /* include/enemy.h; CallTableEntry(i, 12, ...) in NightmareWizardInit, NightmareWizardEnterState */
 u32 gNightmareWizardStates[12] ACTOR_TBL(087493f4) = {
-    (u32)NightmareWizardState0,
-    (u32)NightmareWizardState1,
-    (u32)NightmareWizardState2,
-    (u32)NightmareWizardState3,
+    (u32)NightmareWizardIntro,
+    (u32)NightmareWizardWait,
+    (u32)NightmareWizardTeleportEnd,
+    (u32)NightmareWizardTeleportStart,
     (u32)NightmareWizardState4,
     (u32)NightmareWizardOpenCloak,
     (u32)NightmareWizardOpenPalm,
     (u32)NightmareWizardPoint,
     (u32)NightmareWizardTwist,
     (u32)NightmareWizardSwoop,
-    (u32)NightmareWizardState10,
+    (u32)NightmareWizardTeleportLoop,
     (u32)NightmareWizardHurt,
 };
 /* include/enemy.h; CallTableEntry(i, 12, ...) in NightmareWizardUpdate */
 u32 gNightmareWizardStateUpdates[12] ACTOR_TBL(087493f4) = {
-    (u32)NightmareWizardState0Update,
-    (u32)NightmareWizardState1Update,
-    (u32)NightmareWizardState2Update,
-    (u32)NightmareWizardState3Update,
+    (u32)NightmareWizardIntroUpdate,
+    (u32)NightmareWizardWaitUpdate,
+    (u32)NightmareWizardTeleportEndUpdate,
+    (u32)NightmareWizardTeleportStartUpdate,
     (u32)NightmareWizardState4Update,
     (u32)NightmareWizardOpenCloakUpdate,
     (u32)NightmareWizardOpenPalmUpdate,
     (u32)NightmareWizardPointUpdate,
     (u32)NightmareWizardTwistUpdate,
     (u32)NightmareWizardSwoopUpdate,
-    (u32)NightmareWizardState10Update,
+    (u32)NightmareWizardTeleportLoopUpdate,
     (u32)NightmareWizardHurtUpdate,
 };
 
 /* ---- 0x08749B8C-0x08749BAC: 4 table(s), 8 function pointer(s), section .actor_tbl_08749b8c ---- */
 /* include/enemy.h; CallTableEntry(i, 3, ...) in Task_MetaKnightSword */
-u32 gUnk_08749B8C[3] ACTOR_TBL(08749b8c) = {
-    (u32)sub_080ac868,
+u32 gMetaKnightSwordStates[3] ACTOR_TBL(08749b8c) = {
+    (u32)MetaKnightSwordFall,
     (u32)sub_080ac950,
     (u32)sub_080aca3c,
 };
-/* include/enemy.h; CallTableEntry(i, 3, ...) in sub_080ac72c, sub_080ac82c, sub_080ac84c */
-u32 gUnk_08749B98[3] ACTOR_TBL(08749b8c) = {
-    (u32)sub_080ac94c,
+/* include/enemy.h; CallTableEntry(i, 3, ...) in MetaKnightSwordPickUpUpdate, sub_080ac82c, sub_080ac84c */
+u32 gMetaKnightSwordStateUpdates[3] ACTOR_TBL(08749b8c) = {
+    (u32)MetaKnightSwordFallUpdate,
     (u32)sub_080aca38,
-    (u32)sub_080aca60,
+    (u32)MetaKnightSwordCheckParent,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in Task_KrackoStarman */
 u32 gKrackoStarmanStates[1] ACTOR_TBL(08749b8c) = {
@@ -2784,11 +2784,11 @@ u32 gKrackoStarmanStateUpdates[1] ACTOR_TBL(08749b8c) = {
 /* ---- 0x08749BE4-0x08749BEC: 2 table(s), 2 function pointer(s), section .actor_tbl_08749be4 ---- */
 /* include/enemy.h; CallTableEntry(i, 1, ...) in Task_NightmareWizardStar */
 u32 gNightmareWizardStarStates[1] ACTOR_TBL(08749be4) = {
-    (u32)NightmareWizardStarState0,
+    (u32)NightmareWizardStarFlight,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in NightmareWizardStarUpdate */
 u32 gNightmareWizardStarStateUpdates[1] ACTOR_TBL(08749be4) = {
-    (u32)NightmareWizardStarState0Update,
+    (u32)NightmareWizardStarFlightUpdate,
 };
 
 /* ---- 0x08749D10-0x08749D1C: 1 table(s), 3 function pointer(s), section .actor_tbl_08749d10 ---- */
@@ -2927,7 +2927,7 @@ u32 gUnk_0874B07C[9] ACTOR_TBL(0874ad74) = {
     -2,
 };
 /* include/enemy.h; NightmarePowerOrbStartAnim installs it as Actor.animScript, NightmarePowerOrbStepAnim runs it: 9 words up to its -2 (restart) */
-u32 gUnk_0874B0A0[9] ACTOR_TBL(0874ad74) = {
+u32 gNightmarePowerOrbReturnAnim[9] ACTOR_TBL(0874ad74) = {
     4, 4,
     5, 4,
     6, 4,
@@ -2970,18 +2970,18 @@ u32 gUnk_0874B0C4[57] ACTOR_TBL(0874ad74) = {
 /* ---- 0x0874B1DC-0x0874B20C: 1 table(s), 12 function pointer(s), section .actor_tbl_0874b1dc ---- */
 /* include/enemy.h; CallTableEntry(i, 12, ...) in Task_NightmarePowerOrbStar */
 u32 gNightmarePowerOrbStarVariants[12] ACTOR_TBL(0874b1dc) = {
-    (u32)NightmarePowerOrbStarVariant0,
-    (u32)NightmarePowerOrbStarVariant1,
-    (u32)NightmarePowerOrbStarVariant2,
-    (u32)NightmarePowerOrbStarVariant3,
-    (u32)NightmarePowerOrbStarVariant4,
-    (u32)NightmarePowerOrbStarVariant5,
-    (u32)NightmarePowerOrbStarVariant6,
-    (u32)NightmarePowerOrbStarVariant7,
-    (u32)NightmarePowerOrbStarVariant8,
-    (u32)NightmarePowerOrbStarVariant9,
-    (u32)NightmarePowerOrbStarVariant10,
-    (u32)NightmarePowerOrbStarVariant11,
+    (u32)NightmarePowerOrbStarFanUpFar,
+    (u32)NightmarePowerOrbStarFanUpNear,
+    (u32)NightmarePowerOrbStarFanDownNear,
+    (u32)NightmarePowerOrbStarFanDownFar,
+    (u32)NightmarePowerOrbStarSpawnVolley,
+    (u32)NightmarePowerOrbStarStraightFast,
+    (u32)NightmarePowerOrbStarDiagonalUp,
+    (u32)NightmarePowerOrbStarStraightSlow,
+    (u32)NightmarePowerOrbStarDiagonalDown,
+    (u32)NightmarePowerOrbStarSplitUp,
+    (u32)NightmarePowerOrbStarSplitDown,
+    (u32)NightmarePowerOrbStarShot,
 };
 
 /* ---- 0x0874B540-0x0874B560: 1 table(s), 8 function pointer(s), section .actor_tbl_0874b540 ---- */
@@ -3000,21 +3000,21 @@ u32 gPaintRollerPaintingStates[8] ACTOR_TBL(0874b540) = {
 /* ---- 0x0874B5E4-0x0874B614: 2 table(s), 12 function pointer(s), section .actor_tbl_0874b5e4 ---- */
 /* include/enemy.h; CallTableEntry(i, 6, ...) in Task_HeavyMoleUpperArm, Task_HeavyMoleLowerArm, HeavyMoleArmEnterState */
 u32 gHeavyMoleArmStates[6] ACTOR_TBL(0874b5e4) = {
-    (u32)HeavyMoleArmState0,
-    (u32)HeavyMoleArmState1,
-    (u32)HeavyMoleArmState2,
-    (u32)HeavyMoleArmState3,
+    (u32)HeavyMoleArmSpinLoop,
+    (u32)HeavyMoleArmSpinWindUp,
+    (u32)HeavyMoleArmSwingSlow,
+    (u32)HeavyMoleArmSwingFast,
     (u32)HeavyMoleArmState4,
-    (u32)HeavyMoleArmState5,
+    (u32)HeavyMoleArmThrust,
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in HeavyMoleArmUpdate */
 u32 gHeavyMoleArmStateUpdates[6] ACTOR_TBL(0874b5e4) = {
-    (u32)HeavyMoleArmState0Update,
-    (u32)HeavyMoleArmState1Update,
-    (u32)HeavyMoleArmState2Update,
-    (u32)HeavyMoleArmState3Update,
+    (u32)HeavyMoleArmSpinLoopUpdate,
+    (u32)HeavyMoleArmSpinWindUpUpdate,
+    (u32)HeavyMoleArmSwingSlowUpdate,
+    (u32)HeavyMoleArmSwingFastUpdate,
     (u32)HeavyMoleArmState4Update,
-    (u32)HeavyMoleArmState5Update,
+    (u32)HeavyMoleArmThrustUpdate,
 };
 
 /* ---- 0x0874C12C-0x0874C158: 5 table(s), 11 function pointer(s), section .actor_tbl_0874c12c ---- */
@@ -3053,16 +3053,16 @@ u32 gWhispyWoodsAppleVariants[1] ACTOR_TBL(0874c21c) = {
 /* include/enemy.h; CallTableEntry(i, 4, ...) in WhispyWoodsAppleInit, WhispyWoodsAppleEnterState */
 u32 gWhispyWoodsAppleStates[4] ACTOR_TBL(0874c21c) = {
     (u32)WhispyWoodsAppleFall,
-    (u32)WhispyWoodsAppleState1,
-    (u32)WhispyWoodsAppleState2,
-    (u32)WhispyWoodsAppleState3,
+    (u32)WhispyWoodsAppleBounce1,
+    (u32)WhispyWoodsAppleBounce2,
+    (u32)WhispyWoodsAppleBounce3,
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in WhispyWoodsAppleUpdate */
 u32 gWhispyWoodsAppleStateUpdates[4] ACTOR_TBL(0874c21c) = {
     (u32)WhispyWoodsAppleFallUpdate,
-    (u32)WhispyWoodsAppleState1Update,
-    (u32)WhispyWoodsAppleState2Update,
-    (u32)WhispyWoodsAppleState3Update,
+    (u32)WhispyWoodsAppleBounce1Update,
+    (u32)WhispyWoodsAppleBounce2Update,
+    (u32)WhispyWoodsAppleBounce3Update,
 };
 
 /* ---- 0x0874C254-0x0874C260: 3 table(s), 3 function pointer(s), section .actor_tbl_0874c254 ---- */
@@ -3070,7 +3070,7 @@ u32 gWhispyWoodsAppleStateUpdates[4] ACTOR_TBL(0874c21c) = {
 u32 gWhispyWoodsAirPuffVariants[1] ACTOR_TBL(0874c254) = {
     (u32)WhispyWoodsAirPuffInit,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in WhispyWoodsAirPuffInit, sub_080b33bc */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in WhispyWoodsAirPuffInit, WhispyWoodsAirPuffEnterState */
 u32 gWhispyWoodsAirPuffStates[1] ACTOR_TBL(0874c254) = {
     (u32)WhispyWoodsAirPuffState0,
 };

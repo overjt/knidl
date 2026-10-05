@@ -97,12 +97,12 @@ void HubMain(void)
         case STAGE_REQUEST_MUSEUM:
         case STAGE_REQUEST_ARENA:
             gUnk_03001F2C = gStageRequest + 5;
-            gUnk_02006090 = gStageRequest - 9;
-            if (!((gExtraModeTitleSeen >> gUnk_02006090) & 1)) {
-                gUnk_02007FCC = gUnk_03001F2C - 14;
+            gExtraModeTitleIndex = gStageRequest - 9;
+            if (!((gExtraModeTitleSeen >> gExtraModeTitleIndex) & 1)) {
+                gExtraModeIndex = gUnk_03001F2C - 14;
                 gGameState = GAME_STATE_EXTRA_MODE_TITLE;
-                if (gUnk_02006090 > 2)
-                    gExtraModeTitleSeen |= 1 << gUnk_02006090;
+                if (gExtraModeTitleIndex > 2)
+                    gExtraModeTitleSeen |= 1 << gExtraModeTitleIndex;
             } else {
                 gGameState = gUnk_03001F2C;
             }

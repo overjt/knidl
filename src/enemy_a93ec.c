@@ -54,17 +54,17 @@ extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
 /* Module functions */
-void sub_080a2b2c();
+void MrBrightFlashPalette();
 void ReleaseRoomObject();
 s32 LoadRoomEnemyGfx();
 s32 LoadRoomMidBossGfx();
 s32 LoadRoomBossGfx();
 void LoadRoomMetaKnightsGfx();
-s32 sub_080b5a94();
+s32 LoadRoomStageObjectGfx();
 s32 SpawnRoomEnemy();
-s32 sub_080b5d84();
+s32 SpawnRoomMapEvent();
 
-s32 sub_080a93ec(void)
+s32 KrackoJrIsPlayerAbove(void)
 {
     if ((u8)TaskGetYDirBitTo(gUnk_02007D00[5]) == 2)
     {
@@ -97,7 +97,7 @@ void sub_080a9434(struct Task *pt)
     gCurTask->krackoJrPhase = 4;
 }
 
-void sub_080a94d4(void)
+void KrackoJrPickMoveAxis(void)
 {
     if (TaskGetDxTo(gUnk_02007D00[5]) < 0)
         gUnk_03001F2C = 0;
@@ -131,7 +131,7 @@ void sub_080a94d4(void)
     gCurTask->velY = gUnk_030023D4;
 }
 
-s32 sub_080a95dc(void)
+s32 KrackoJrTrySwitchMoveAxis(void)
 {
     struct Task *t;
 
@@ -187,7 +187,7 @@ void sub_080a96a4(void)
     }
 }
 
-void sub_080a96dc(void)
+void KrackoJrSteerTowardPlayer(void)
 {
     s32 *q;
     s32 *p;
@@ -229,13 +229,13 @@ void KrackoLookAtNearestPlayer(void)
 
 s32 KrackoReactToDamage(void)
 {
-    BossStartHitStun(13, (u32)sub_080a9794, (u32)gUnk_082FD438, 48, 0);
+    BossStartHitStun(13, (u32)KrackoHitStunUpdate, (u32)gUnk_082FD438, 48, 0);
     gUnk_02007D00[1] = gUnk_02007D00[0];
     gUnk_02007D00[0] = 2;
     return 0;
 }
 
-void sub_080a9794(void)
+void KrackoHitStunUpdate(void)
 {
     if (gFrameCount & 1)
         gCurTask->frame = (gCurTask->frame + 1) & 7;
@@ -249,7 +249,7 @@ s32 KrackoReactToDefeat(void)
 {
     ResetFadeAndBlend();
     TaskStop();
-    ActorSetHitReactions((u32)gUnk_08749B48);
+    ActorSetHitReactions((u32)gKrackoReactToDefeatHitReactions);
     gCurTask->krackoDefeatStage = 1;
     ResetBgPaletteBlend();
     TaskSetEntry(ActorDie, gCurTaskIdx);
@@ -334,7 +334,7 @@ void Task_KrackoCloud(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 12;
     gCurTask->frameTable = gUnk_08754418;
-    gCurTask->updateCallback = (u32)sub_080a9ba0;
+    gCurTask->updateCallback = (u32)KrackoCloudFollowBody;
     gCurTask->facing = 1;
     gCurTask->frame = 10;
     TaskYieldTrampoline(6);
@@ -410,7 +410,7 @@ void Task_KrackoCloud(void)
     }
 }
 
-void sub_080a9ba0(void)
+void KrackoCloudFollowBody(void)
 {
     vs16 *arr;
     struct Task *t;
@@ -443,9 +443,9 @@ void Task_KrackoLightningTop(void)
     gCurTask->updateCallback = (u32)KrackoLightningUpdate;
     gCurTask->facing = 1;
     gCurTask->frame = RandomRange(12);
-    gCurTask->pixelX += RandomRange(16) + (u16)(0xFFF8 + gUnk_087491E4[gCurTask->frame]);
+    gCurTask->pixelX += RandomRange(16) + (u16)(0xFFF8 + gKrackoLightningShiftX[gCurTask->frame]);
     gCurTask->posX = gCurTask->pixelX << 16;
-    gCurTask->krackoLightningTopMiddleSlot = CreateChildTaskAtOffsetFacing(TASK_KRACKO_LIGHTNING_MIDDLE, gUnk_087491FC[gCurTask->frame], 16, 1);
+    gCurTask->krackoLightningTopMiddleSlot = CreateChildTaskAtOffsetFacing(TASK_KRACKO_LIGHTNING_MIDDLE, gKrackoLightningNextX[gCurTask->frame], 16, 1);
     gTasks[gCurTask->krackoLightningTopMiddleSlot].parent = gCurTask->parent;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
@@ -460,9 +460,9 @@ void Task_KrackoLightningMiddle(void)
     gCurTask->updateCallback = (u32)KrackoLightningUpdate;
     gCurTask->facing = 1;
     gCurTask->frame = RandomRange(12);
-    gCurTask->pixelX += gUnk_087491E4[gCurTask->frame];
+    gCurTask->pixelX += gKrackoLightningShiftX[gCurTask->frame];
     gCurTask->posX = gCurTask->pixelX << 16;
-    gCurTask->krackoLightningMiddleBottomSlot = CreateChildTaskAtOffsetFacing(TASK_KRACKO_LIGHTNING_BOTTOM, gUnk_087491FC[gCurTask->frame], 12, 1);
+    gCurTask->krackoLightningMiddleBottomSlot = CreateChildTaskAtOffsetFacing(TASK_KRACKO_LIGHTNING_BOTTOM, gKrackoLightningNextX[gCurTask->frame], 12, 1);
     gTasks[gCurTask->krackoLightningMiddleBottomSlot].parent = gCurTask->parent;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
@@ -511,7 +511,7 @@ s32 KrackoDefeatSweepFilter(s32 a)
     return 1;
 }
 
-void sub_080a9ea4(void)
+void KrackoDefeatHook(void)
 {
     vs16 *arr;
     s16 i;

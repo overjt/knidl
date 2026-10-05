@@ -19,7 +19,7 @@
  * stage's flag) and place the player at the matching door of the hub
  * room gRoomTable[8][stage][0]; BossEnduranceSetStart (AgbMain) resets level,
  * stage and room; sub_08022f98/ClearRoomBgmStarted are M02's screen-setup hooks;
- * LoadRoom and sub_080233e0 are the loaders of M02's first screen
+ * LoadRoom and LoadRoomAfterBigSwitchView are the loaders of M02's first screen
  * setup StageInit (see level_242d0.c); CreateRoomTask spawns task type
  * #3 with its variant index. */
 
@@ -44,9 +44,9 @@ void ResetLevelStateAtHub(void)
     gHubUnlockSource = 0;
     gBigSwitchPressActive = 0;
     gUnk_0200B038 = 0;
-    gUnk_02007FF0 = 0;
-    gUnk_02007D60 = 0;
-    gUnk_0200AF0C = -1;
+    gBossRetryCount = 0;
+    gMidBossRetryCount = 0;
+    gMidBossRetryRoom = -1;
     gWarpStarStationLevels = 0;
     for (i = 0; i <= 7; i++)
         for (j = 7; j >= 0; j--)
@@ -134,9 +134,9 @@ void ResetLevelStateForContinue(void)
     gHubUnlockSource = 0;
     gBigSwitchPressActive = 0;
     gUnk_0200B038 = 0;
-    gUnk_02007FF0 = 0;
-    gUnk_02007D60 = 0;
-    gUnk_0200AF0C = -1;
+    gBossRetryCount = 0;
+    gMidBossRetryCount = 0;
+    gMidBossRetryRoom = -1;
     gWarpStarStationLevels = 0;
     for (i = 0; i <= 7; i++)
         for (j = 7; j >= 0; j--)
@@ -398,12 +398,12 @@ void LoadRoom(void)
     }
 }
 
-void sub_080233e0(void)
+void LoadRoomAfterBigSwitchView(void)
 {
     u32 a;
 
     TaskSetSkipMask(0, gPressedBigSwitchSlot);
-    TaskSetOthersSkipMask(15, gPressedBigSwitchSlot);
+    TaskSetOthersSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), gPressedBigSwitchSlot);
     BigSwitchStartRefill(gPressedBigSwitchSlot);
     gInHub = 0;
     gCurLevel = gLevelIndex;
@@ -435,7 +435,7 @@ void sub_080233e0(void)
     StopScreenShake();
     CalcBg3Parallax();
     CalcRoomBounds();
-    sub_08028130();
+    InitRoomBgLayoutAfterBigSwitchView();
     LoadRoomObjectGfx();
     InitDoors();
     StartBlockAnims();

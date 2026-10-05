@@ -36,23 +36,23 @@ void Task_AirGrindObject(void)
 
 void AirGrindRacer(void)
 {
-    s32 player = gCurTask->unk1C;
+    s32 player = gCurTask->airGrindObjectPlayer;
     s32 src;
 
     gCurTask->drawCallback = (u32)AirGrindRacerDraw;
     gCurTask->moveCallback = (u32)AirGrindRacerMove;
-    gCurTask->frameTable = (u32 *)gUnk_08755F54;
-    gCurTask->spriteFlags &= 0x7FFF;
-    gCurTask->tileWord = gUnk_080CFE2C[gAirGrindPtr->localPlayer][player] << 12;
+    gCurTask->frameTable = (u32 *)gAirGrindRacerFrames;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
+    gCurTask->tileWord = gAirGrindLocalPlayerSlots[gAirGrindPtr->localPlayer][player] << 12;
     gCurTask->updateCallback = (u32)AirGrindRacerUpdate;
     gCurTask->lateUpdateCallback = (u32)AirGrindRacerIdleUpdate;
     gCurTask->state = 0;
-    gCurTask->unk28 = 256;
+    gCurTask->airGrindObjectDepth = 256;
     gAirGrindPtr->players[player].liftY = 0x80000;
     gAirGrindPtr->players[player].offsetX = 0;
     gAirGrindPtr->players[player].animStep = 0;
     gAirGrindPtr->players[player].penaltyTimer = 0;
-    gAirGrindPtr->players[player].unk0C = 0;
+    gAirGrindPtr->players[player].dashTimer = 0;
     gAirGrindPtr->players[player].boostCooldown = 0;
     gAirGrindPtr->players[player].grinding = 0;
     gAirGrindPtr->players[player].segmentEndDistance = -9999;
@@ -103,7 +103,7 @@ void AirGrindRacer(void)
             }
         }
     } else {
-        src = gUnk_080CFE2C[gAirGrindPtr->localPlayer][player];
+        src = gAirGrindLocalPlayerSlots[gAirGrindPtr->localPlayer][player];
         if (src >= gAirGrindPtr->playerCount) {
             gAirGrindPtr->players[player].cpuMode = src;
             if (src == 2) {
@@ -121,7 +121,7 @@ void AirGrindRacer(void)
     if (gAirGrindPtr->players[player].cpuMode != 0)
         AirGrindCpuRollTarget(player);
     gAirGrindPtr->players[player].unk21 = 1;
-    while (gAirGrindCoursePtr->scrollPos < gAirGrindCoursePtr->unk00C)
+    while (gAirGrindCoursePtr->scrollPos < gAirGrindCoursePtr->startLine)
         TaskYieldTrampoline(1);
     gCurTask->state = 1;
     gCurTask->lateUpdateCallback = (u32)AirGrindRacerRaceUpdate;
@@ -184,7 +184,7 @@ s32 AirGrindCpuHoldsA(s32 player, s32 pos)
 
 void AirGrindRacerUpdate(void)
 {
-    s32 player = gCurTask->unk1C;
+    s32 player = gCurTask->airGrindObjectPlayer;
     s32 pos = gCurTask->posX >> 16;
     u16 prev = gAirGrindPtr->players[player].heldKeys;
     s32 src;
@@ -193,8 +193,8 @@ void AirGrindRacerUpdate(void)
         gAirGrindPtr->players[player].penaltyTimer--;
     if (gAirGrindPtr->players[player].boostCooldown != 0)
         gAirGrindPtr->players[player].boostCooldown--;
-    if (gAirGrindPtr->players[player].unk0C != 0)
-        gAirGrindPtr->players[player].unk0C--;
+    if (gAirGrindPtr->players[player].dashTimer != 0)
+        gAirGrindPtr->players[player].dashTimer--;
     if (pos > gAirGrindCoursePtr->finishLine + 240)
         pos = gAirGrindCoursePtr->finishLine + 240;
     if (gCurTask->state == 1) {
@@ -209,7 +209,7 @@ void AirGrindRacerUpdate(void)
                 gAirGrindPtr->players[player].heldKeys = keys;
             }
         } else {
-            src = gUnk_080CFE2C[gAirGrindPtr->localPlayer][player];
+            src = gAirGrindLocalPlayerSlots[gAirGrindPtr->localPlayer][player];
             if (src < gAirGrindPtr->playerCount) {
                 gAirGrindPtr->players[player].heldKeys = gPlayerHeldKeys[src];
                 gAirGrindPtr->players[player].pressedKeys = gPlayerPressedKeys[src];

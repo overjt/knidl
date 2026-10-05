@@ -12,7 +12,7 @@
  * with random frames (RandomRange); its callback PlayerEffectFireBreathFlamesUpdate sets
  * Task.unk28 once the player leaves mode 13 or its facing no longer matches
  * the spawner's, and kills it when the ability is no longer 1 or when
- * PlayerState.unk40 bit 8 is clear while the spawner's Task.waterFlags bit 0 is
+ * PlayerState.actionFlags bit 8 is clear while the spawner's Task.waterFlags bit 0 is
  * set.  Variant 30 (PlayerEffectSparkAura, M11/M13) rides on its spawner with the
  * draw hook TaskDrawWorldLoadTiles (sub-state 0) or TaskDrawWorldTilesLoaded and re-rolls its
  * position every two frames from the {base, scale, amount} rows
@@ -21,7 +21,7 @@
  * Task.unk28 is clear, registers the collider row gUnk_0873C038 (M05's
  * RegisterCollider) and tests the block hit-box set gUnk_0873CC94 (M09's
  * TaskBreakBlocksAt) at the spawner's position.  Variant 31 (PlayerEffectSwordSparkle, M12)
- * is a single animation on its spawner (gUnk_08751CEC). */
+ * is a single animation on its spawner (gSparkleFrames). */
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
@@ -41,7 +41,7 @@ void PlayerEffectFireBreathFlames(void)
     gCurTask->updateCallback = (u32)PlayerEffectFireBreathFlamesUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_08751CA4;
+    t->frameTable = gFireBreathFlameFrames;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 12;
     t->playerEffectStopRequested = 0;
     switch (t->playerEffectSpawnWord & 15)
@@ -125,7 +125,7 @@ void PlayerEffectFireBreathFlamesUpdate(void)
     {
         struct Task *t = gCurTask;
 
-        if (!(t->player->unk40 & 0x100) && ((t->u8C.parentTask)->waterFlags & 1))
+        if (!(t->player->actionFlags & PLAYER_ACTION_FLAG_GET_ABILITY) && ((t->u8C.parentTask)->waterFlags & 1))
             TaskFree(gCurTaskIdx);
     }
     if (gCurTask->player->ability != ABILITY_FIRE)
@@ -142,14 +142,14 @@ void PlayerEffectSparkAura(void)
     gCurTask->updateCallback = (u32)PlayerEffectSparkAuraUpdate;
     gCurTask->layer = 8;
     t = gCurTask;
-    t->frameTable = gUnk_08751CBC;
+    t->frameTable = gPlayerEffectSparkAuraFrames;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x800) | 12;
-    if ((t->unk28 = t->playerEffectSpawnWord & 15) == 0)
+    if ((t->playerEffectAuraIndex = t->playerEffectSpawnWord & 15) == 0)
         t->drawCallback = (u32)TaskDrawWorldLoadTiles;
     else
         t->drawCallback = (u32)TaskDrawWorldTilesLoaded;
-    x = gUnk_0873BA8C[gCurTask->unk28][0];
-    y = gUnk_0873BA8C[gCurTask->unk28][1];
+    x = gUnk_0873BA8C[gCurTask->playerEffectAuraIndex][0];
+    y = gUnk_0873BA8C[gCurTask->playerEffectAuraIndex][1];
     for (;;)
     {
         gCurTask->posX = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
@@ -208,7 +208,7 @@ void PlayerEffectSparkAuraUpdate(void)
     {
         TaskFree(gCurTaskIdx);
     }
-    else if (t->unk28 == 0)
+    else if (t->playerEffectAuraIndex == 0)
     {
         RegisterCollider(gCurTaskIdx, p->pixelX, p->pixelY, gUnk_0873C038);
         TaskBreakBlocksAt((struct HitBoxSet *)gUnk_0873CC94, (gCurTask->u8C.parentTask)->pixelX,
@@ -223,7 +223,7 @@ void PlayerEffectSwordSparkle(void)
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 5;
-    gCurTask->frameTable = gUnk_08751CEC;
+    gCurTask->frameTable = gSparkleFrames;
     gCurTask->posX = RandomSpreadFacing(-32, 1, 16) << 16;
     gCurTask->posY = RandomSpread(-4, 1, 16) << 16;
     gCurTask->frame = 0;

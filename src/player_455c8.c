@@ -11,7 +11,7 @@
  * Player action bodies, part 13: actions 36-37 and per-frame handlers
  * 33-34.  PlayerActionBurning (action 36, mode 13) is a four-state machine over
  * Task.variant: state 0 starts the move (velocity preset 34, effect 32,
- * animation 0x5CB) and installs the attack box gUnk_0873CCA4 in
+ * animation 0x5CB) and installs the attack box gPlayerBurningHitBoxSet in
  * PlayerState.hitBoxSet, state 1 swaps in the scripts gUnk_0873CB2C /
  * gUnk_0873BD3C (PlayerState.terrainBox/unk64) and cycles the hit-box row
  * Task.unk2C through 0-2, state 2 restores the default scripts
@@ -57,7 +57,7 @@ void PlayerActionBurning(void)
         TaskYieldTrampoline(1);
         PlayerStopAxes(2);
         TaskYieldTrampoline(3);
-        gCurTask->player->hitBoxSet = gUnk_0873CCA4;
+        gCurTask->player->hitBoxSet = gPlayerBurningHitBoxSet;
         PlayerSetMotionXPreset(11, 39);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
@@ -72,7 +72,7 @@ void PlayerActionBurning(void)
         gCurTask->player->terrainBox = (u32)gUnk_0873CB2C;
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
         gCurTask->player->bodyBox = (u32)gUnk_0873BD3C;
-        gCurTask->player->unk42 |= 16;
+        gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
         gCurTask->playerLoopCount = 0;
         gCurTask->playerBurningFadeStep = 0;
         TaskSetFrame(0x5CF);
@@ -126,7 +126,7 @@ void PlayerActionBurning(void)
         TaskSetFrame(0x5DF);
         TaskYieldTrampoline(2);
         gCurTask->playerBurningFadeStep = -1;
-        gCurTask->player->unk42 &= 0xFFEF;
+        gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->frame++;
@@ -163,7 +163,7 @@ void PlayerActionBurning(void)
     case 3:
         gCurTask->player->hitBoxSet = 0;
         SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
-        gCurTask->player->unk42 &= 0xFFEF;
+        gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
         PlayerStopSfx();
         gCurTask->onGround = 0;
         PlaySfxIfLocalPlayer(153, gCurTask->player->playerIndex);
@@ -238,7 +238,7 @@ void PlayerActionBurningUpdate(void)
     {
         struct PlayerState *p = gCurTask->player;
         if (p->requestedAction != PLAYER_ACTION_NONE)
-            p->unk42 &= 0xFFEF;
+            p->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     }
 }
 

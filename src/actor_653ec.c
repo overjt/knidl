@@ -769,14 +769,14 @@ s16 ActorComputeHealthSlot(u32 i)
     switch (t->actorKind)
     {
     case ACTOR_KIND_MID_BOSS:
-        m = gUnk_02007D60 & 15;
+        m = gMidBossRetryCount & 15;
         if (w > 30)
             adj = m << 2;
         else
             adj = m << 1;
         break;
     case ACTOR_KIND_BOSS:
-        m = gUnk_02007FF0 & 15;
+        m = gBossRetryCount & 15;
         if (w > 30)
             adj = m << 2;
         else
@@ -886,7 +886,7 @@ void BossStartHitStun(u32 p0, u32 p1, u32 p2, u16 p3, u8 p4)
 {
     struct Task *t;
 
-    TaskSetSkipMask(7, gCurTaskIdx);
+    TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE), gCurTaskIdx);
     t = gCurTask;
     t->lateUpdateCallback = (u32)BossHitStunLateUpdate;
     gUnk_02006190[0] = t->pixelX;
@@ -1062,7 +1062,7 @@ void ActorIntroPoseUntilHpBarFull(struct AnimCmd *p)
     struct Task *t;
 
     sub_08066544();
-    TaskSetSkipMask(8, gCurTaskIdx);
+    TaskSetSkipMask(TASK_SKIP_LATE_UPDATE, gCurTaskIdx);
     t = gCurTask;
     t->actorSavedUpdateCallback = t->updateCallback;
     t->updateCallback = (u32)ActorIntroPoseUpdate;
@@ -1085,7 +1085,7 @@ void sub_08066544(void)
     struct Actor *a;
 
     a = gCurTask->u8C.actor;
-    ActorSetAttackBox(a->unk60->altAttackBox);
+    ActorSetAttackBox(a->aux->altAttackBox);
     ActorShowHpBar();
 }
 
@@ -1170,8 +1170,8 @@ void ActorStartIntroPose(struct AnimCmd *p)
     ActorStopAnim();
     if (p != NULL)
         gCurTask->actorAnimDelay24 = ActorStartAnim(p);
-    TaskSetSkipMask(8, gCurTaskIdx);
-    ActorSetAttackBox(a->unk60->altAttackBox);
+    TaskSetSkipMask(TASK_SKIP_LATE_UPDATE, gCurTaskIdx);
+    ActorSetAttackBox(a->aux->altAttackBox);
 }
 
 void ActorEndIntroPose(void)
@@ -1239,7 +1239,7 @@ void ArenaDropMaximTomato(void)
         CreateItemAt(2, TASK_MAXIM_TOMATO, 0, 128, 0);
 }
 
-void sub_080667c0(u8 a, u16 b)
+void MidBossStartDefeat(u8 a, u16 b)
 {
     struct Task *t;
     struct Actor *p;
@@ -1250,14 +1250,14 @@ void sub_080667c0(u8 a, u16 b)
     if (t->drawCallback == (u32)ActorDrawStreamedFrameNearView || t->drawCallback == (u32)ActorDrawStreamedFrameNearViewOrDestroy)
         t->drawCallback = (u32)ActorDrawStreamedFrameNearViewOrDestroy;
     else
-        t->drawCallback = (u32)sub_08065350;
+        t->drawCallback = (u32)ActorDrawWorldNearViewOrDestroy;
     gCurTask->health += gUnk_0873E1B4[gActivePlayerCount - 1];
     p->hitState = 2;
     p->score = 0;
     ActorSetDefaultPalette(a);
     ActorFaceHitter();
     TaskSetFrame((s16)b);
-    sub_0806ae94();
+    MidBossDefeatFlash();
 }
 
 void EndMidBossFightWithReward(void)
@@ -1336,15 +1336,15 @@ void sub_08066988(u32 i)
 
     t = &gTasks[i];
     a = t->u8C.actor;
-    if (a->unk04 != 0)
+    if (a->attachEffect != 0)
     {
         p = t->player;
-        sub_0806be4c(i);
+        ActorAttachedReleaseCarrierSlot(i);
         t->posX = t->pixelX << 16;
         t->posY = t->pixelY << 16;
-        if (a->unk04 != 1)
+        if (a->attachEffect != 1)
         {
-            if ((u8)(p->unk16 + 2) <= 1)
+            if ((u8)(p->playerHoldPose + 2) <= 1)
             {
                 ActorDestroySlot(i);
                 return;
@@ -1516,7 +1516,7 @@ void ActorDropParasolOnLanding(u32 def)
 
     t = gCurTask;
     a = t->u8C.actor;
-    if (a->extraFrame != -1 && t->unk74 != 2)
+    if (a->extraFrame != -1 && t->actorSpawnArg != 2)
         ActorDropParasol(def, 1);
 }
 
@@ -1547,7 +1547,7 @@ void ActorDrawWorldInViewOrDestroyWithParasol(void)
                      t->pixelX - gSpriteCameraX,
                      (s16)(t->pixelY - gSpriteCameraY));
         u = gCurTask;
-        if ((u->skipMask & 7) == 0)
+        if ((u->skipMask & (TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE)) == 0)
         {
             if (u->frame == 3)
             {
@@ -1629,7 +1629,7 @@ void CreateDroppedParasol(u8 a)
     s16 x;
     s16 y;
 
-    if (gCurTask->unk74 == 1)
+    if (gCurTask->actorSpawnArg == 1)
         kind = 1;
     else
         kind = 0;
@@ -1643,11 +1643,11 @@ void CreateDroppedParasol(u8 a)
         u = &gTasks[i];
         s = gCurTask;
         v = (s->hitterPlayer == -1) ? TaskFindNearestPlayer() : s->hitterPlayer;
-        u->unk1C = v;
-        u->unk28 = a;
+        u->parasolPlayerSlot = v;
+        u->parasolHittableAtOnce = a;
         if (gScreenAttackActive == 1)
         {
-            gCurTask->u8C.actor->unk0D = 1;
+            gCurTask->u8C.actor->keepExtraOnDefeat = 1;
             u->variant = 3;
             u->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
             u->layer = 11;
@@ -1786,7 +1786,7 @@ void InhalableStarInitVariant(void)
         break;
     case 2:
     case 3:
-        ActorSetAttackBox((u32)gUnk_0873F7E4);
+        ActorSetAttackBox((u32)gInhalableStarInitVariantAttackBox);
         break;
     }
     if (gCurTask->facing == 0)
@@ -1904,10 +1904,10 @@ void HeldPlayerInit(void)
     TaskStop();
     gCurTask->facing = 1;
     u = gCurTask;
-    u->spriteFlags &= 0x7FFF;
+    u->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     u->layer = 7;
     p = gCurTask->player;
-    p->unk42 &= 0xFFEF;
+    p->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     r = gCurTask->player;
     if (r->mouthState == 2)
         r->mouthState = 0;

@@ -9,7 +9,7 @@
 /* stage_273a0.c (0x080273A0-0x08027A6B, issue #93).
  *
  * Stage helpers, part 3.  ReturnToRestartPoint picks the arrival door after a
- * level change (the stage door kind in gUnk_02008054), sub_08027548 and
+ * level change (the stage door kind in gRestartPoint), sub_08027548 and
  * sub_08027588/sub_080275cc keep the two-player race record
  * gUnk_02006098 (flags|0x80, lo, hi, previous, direction),
  * HoldPlayerCamera/ReleaseDeadPlayerView/AreInactivePlayerCamerasParked/ArePlayerCamerasDoneGliding the per-player
@@ -19,7 +19,7 @@
 
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
-void sub_08009e2c(s32 a);
+void HudClearDeadPlayer(s32 a);
 
 void ReturnToRestartPoint(void)
 {
@@ -28,17 +28,17 @@ void ReturnToRestartPoint(void)
     s32 i;
     s32 k;
 
-    if (gUnk_02008054 & 0xFF00)
+    if (gRestartPoint & 0xFF00)
     {
-        if (gUnk_02008054 == 0x100)
+        if (gRestartPoint == 0x100)
         {
             gStageIndex = gLevelIndex;
             gLevelIndex = 8;
             gRoomIndex = 0;
             k = 2;
-            gUnk_02007FF0++;
-            if (gUnk_02007FF0 > 5)
-                gUnk_02007FF0 = 5;
+            gBossRetryCount++;
+            if (gBossRetryCount > 5)
+                gBossRetryCount = 5;
         }
         else
         {
@@ -63,13 +63,13 @@ void ReturnToRestartPoint(void)
     {
         if (gCurLevel == 7)
         {
-            gUnk_02007FF0++;
-            if (gUnk_02007FF0 > 5)
-                gUnk_02007FF0 = 5;
+            gBossRetryCount++;
+            if (gBossRetryCount > 5)
+                gBossRetryCount = 5;
         }
-        gRoomIndex = gUnk_02008054;
-        gRoomEntryX = gUnk_0200AFF4;
-        gRoomEntryY = gUnk_02008050;
+        gRoomIndex = gRestartPoint;
+        gRoomEntryX = gRestartPointX;
+        gRoomEntryY = gRestartPointY;
         gRoomEntrySet = 1;
         gEntryDoorEvent = 0;
         gRoomEntryMode = ROOM_ENTRY_NORMAL;
@@ -80,11 +80,11 @@ void sub_08027548(void)
 {
     if (gUnk_02007D64 != 4)
     {
-        if (gUnk_02007D60 & 0x8000)
-            gUnk_02007D60 &= 0x7FFF;
-        gUnk_02007D60++;
-        if (gUnk_02007D60 > 5)
-            gUnk_02007D60 = 5;
+        if (gMidBossRetryCount & 0x8000)
+            gMidBossRetryCount &= 0x7FFF;
+        gMidBossRetryCount++;
+        if (gMidBossRetryCount > 5)
+            gMidBossRetryCount = 5;
     }
 }
 
@@ -204,7 +204,7 @@ s32 ReleaseDeadPlayerView(s32 i)
             if (gPlayerLives[i] != 0)
                 HudShowAbilityAnimated(ABILITY_PICTURE_WAIT, gCurTask->player->playerIndex);
             else
-                sub_08009e2c(i);
+                HudClearDeadPlayer(i);
         }
     }
 }

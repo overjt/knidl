@@ -357,7 +357,7 @@ void ChillyIdle(void)
 {
     gCurTask->updateCallback = (u32)ChillyIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     while (1)
     {
@@ -493,7 +493,7 @@ void WaddleDooWalk(void)
     struct Task *u7;
 
     gCurTask->updateState = WADDLE_DOO_WALK_STATE_WALK;
-    TaskSetMotionXFacing(gUnk_08742010[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gWaddleDooWalkSpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     while (1)
     {
         TaskSetFrame(4);
@@ -598,7 +598,7 @@ void WaddleDooWalkShoot(void)
     TaskStop();
     u = gCurTask;
     u->waddleDooLoopCount = zero;
-    while ((s16)gCurTask->waddleDooLoopCount < gUnk_08742028[gCurTask->actorSpawnArg])
+    while ((s16)gCurTask->waddleDooLoopCount < gWaddleDooBeamChargeCounts[gCurTask->actorSpawnArg])
     {
         TaskSetFrame(6);
         TaskYieldTrampoline(2);
@@ -612,7 +612,7 @@ void WaddleDooWalkShoot(void)
     PlaySfx(110);
     TaskSetFrame(12);
     gCurTask->waddleDooLoopCount = zero2;
-    while ((s16)gCurTask->waddleDooLoopCount < gUnk_0874202C[gCurTask->actorSpawnArg])
+    while ((s16)gCurTask->waddleDooLoopCount < gWaddleDooBeamCounts[gCurTask->actorSpawnArg])
     {
         sp.subtype = 4;
         sp.taskType = TASK_WADDLE_DOO_BEAM;
@@ -688,7 +688,7 @@ void ParasolWaddleDooWalk(void)
     struct Task *u7;
 
     gCurTask->updateState = PARASOL_WADDLE_DOO_STATE_WALK;
-    TaskSetMotionXFacing(gUnk_08742010[1], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gWaddleDooWalkSpeeds[1], 0x5A5A5A5A);
     while (1)
     {
         TaskSetFrame(4);
@@ -793,7 +793,7 @@ void ParasolWaddleDooShoot(void)
     TaskStop();
     u = gCurTask;
     u->waddleDooLoopCount = zero;
-    while ((s16)gCurTask->waddleDooLoopCount < gUnk_08742028[1])
+    while ((s16)gCurTask->waddleDooLoopCount < gWaddleDooBeamChargeCounts[1])
     {
         TaskSetFrame(6);
         TaskYieldTrampoline(2);
@@ -807,7 +807,7 @@ void ParasolWaddleDooShoot(void)
     PlaySfx(110);
     TaskSetFrame(12);
     gCurTask->waddleDooLoopCount = zero2;
-    while ((s16)gCurTask->waddleDooLoopCount < gUnk_0874202C[gCurTask->actorSpawnArg])
+    while ((s16)gCurTask->waddleDooLoopCount < gWaddleDooBeamCounts[gCurTask->actorSpawnArg])
     {
         sp.subtype = 4;
         sp.taskType = TASK_WADDLE_DOO_BEAM;
@@ -844,7 +844,7 @@ void ParasolWaddleDooShootUpdate(void)
 void ParasolWaddleDooDrift(void)
 {
     gCurTask->updateState = PARASOL_WADDLE_DOO_STATE_DRIFT;
-    gCurTask->actorAnimDelay30 = ActorStartAnim(gUnk_08742050);
+    gCurTask->actorAnimDelay30 = ActorStartAnim(gParasolWaddleDooDriftAnim);
     TaskStartParasolDrift();
     while (1)
     {
@@ -869,7 +869,7 @@ void WaddleDooIdle(void)
     struct Task *u7;
 
     gCurTask->updateCallback = (u32)WaddleDooIdleUpdate;
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
     while (1)

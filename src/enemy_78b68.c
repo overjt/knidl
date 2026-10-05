@@ -35,7 +35,7 @@
  *     `SparkyStandDischarge` (row 2) (identical: a seventeen-step frame script followed by an
  *     eight-iteration palette flip between `0x08740DE4` and `0x0873F774`);
  *   * Task_Scarfy's `sub_0807a8fc`, the bank's only `mov pc` jump table (five
- *     cases over Task.variant), and `sub_0807a968`, which places Scarfy at an
+ *     cases over Task.variant), and `ScarfyPlaceNearPlayer`, which places Scarfy at an
  *     offset from the nearest player, clamping the point from
  *     `0x08740824` into the camera box `gViewRect[0..3]`.
  *
@@ -118,7 +118,7 @@ void WaddleDeeWalk(void)
 {
     gCurTask->updateState = WADDLE_DEE_WALK_STATE_WALK;
     TaskStop();
-    TaskSetMotionXFacing(gUnk_08740648[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gWaddleDeeWalkSpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     sub_08078b68();
 }
 
@@ -169,8 +169,8 @@ void WaddleDeePaceWalk(void)
     gCurTask->updateState = WADDLE_DEE_PACE_STATE_WALK;
     TaskStop();
     t = gCurTask;
-    t->waddleDeeTurnTimer = gUnk_08740668[t->actorSpawnArg];
-    TaskSetMotionXFacing(gUnk_08740648[t->actorSpawnArg], 0x5A5A5A5A);
+    t->waddleDeeTurnTimer = gWaddleDeePaceTurnTimes[t->actorSpawnArg];
+    TaskSetMotionXFacing(gWaddleDeeWalkSpeeds[t->actorSpawnArg], 0x5A5A5A5A);
     sub_08078b68();
 }
 
@@ -184,7 +184,7 @@ void WaddleDeePaceWalkUpdate(void)
 
         TaskTurnAroundAndReverseX();
         u = gCurTask;
-        u->waddleDeeTurnTimer = gUnk_08740668[u->actorSpawnArg];
+        u->waddleDeeTurnTimer = gWaddleDeePaceTurnTimes[u->actorSpawnArg];
     }
     else
     {
@@ -210,7 +210,7 @@ void WaddleDeeJumpInit(void)
     TaskFaceNearestPlayer();
     gCurTask->waddleDeeJumpTimer = 80;
     ActorSetState(WADDLE_DEE_JUMP_STATE_WALK);
-    gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_087406A0);
+    gCurTask->actorAnimDelay34 = ActorStartAnim(gWaddleDeeJumpAnim);
     CallTableEntry(gCurTask->state, 3, gWaddleDeeJumpStates);
 }
 
@@ -234,7 +234,7 @@ void WaddleDeeJumpWalk(void)
 {
     gCurTask->updateState = WADDLE_DEE_JUMP_STATE_WALK;
     TaskStop();
-    TaskSetMotionXFacing(gUnk_08740648[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gWaddleDeeWalkSpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     TaskSleepForever();
 }
 
@@ -309,7 +309,7 @@ void WaddleDeeJumpState1Update(void)
     {
         TaskStopY();
         gCurTask->waddleDeeJumpTimer = 30;
-        gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_087406A0);
+        gCurTask->actorAnimDelay34 = ActorStartAnim(gWaddleDeeJumpAnim);
         ActorSetState(WADDLE_DEE_JUMP_STATE_WALK);
         TaskSetEntry(WaddleDeeJumpEnterState, gCurTaskIdx);
     }
@@ -394,7 +394,7 @@ void WaddleDeeIdleInit(void)
 {
     gCurTask->updateCallback = (u32)WaddleDeeIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(WADDLE_DEE_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gWaddleDeeIdleStates);
@@ -662,7 +662,7 @@ void PengyWalk(void)
     t->u8C.actor->animScript = 0;
     t->updateState = PENGY_STATE_WALK;
     TaskStop();
-    gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_0874074C);
+    gCurTask->actorAnimDelay34 = ActorStartAnim(gPengyWalkAnim);
     idx = gCurTask->actorSpawnArg;
     cbase = gUnk_08740728;
     dbase = gUnk_08740740;
@@ -769,7 +769,7 @@ void PengyIdleInit(void)
 {
     gCurTask->updateCallback = (u32)PengyIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(PENGY_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gPengyIdleStates);
@@ -954,7 +954,7 @@ void BomberExplode(void)
     v = gScreenAttackActive;
     if (v == 0)
     {
-        ActorSetAttackBox(gUnk_0873F7AC);
+        ActorSetAttackBox(gBomberExplodeAttackBox);
         FreezeStage(15);
         gCurTask->bomberLoopCount = v;
         do
@@ -982,7 +982,7 @@ void BomberIdleInit(void)
 {
     gCurTask->updateCallback = (u32)BomberIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(BOMBER_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gBomberIdleStates);
@@ -1319,7 +1319,7 @@ void SparkyIdleInit(void)
 {
     gCurTask->updateCallback = (u32)SparkyIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(SPARKY_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gSparkyIdleStates);
@@ -1529,7 +1529,7 @@ void sub_0807a8fc(void)
     {
     case 0:
         gCurTask->scarfyWaveSign = -1;
-        gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_08740854);
+        gCurTask->actorAnimDelay34 = ActorStartAnim(gScarfyAnim);
         break;
     case 1:
         gCurTask->scarfyWaveSign = 1;
@@ -1544,7 +1544,7 @@ void sub_0807a8fc(void)
     }
 }
 
-void sub_0807a968(void)
+void ScarfyPlaceNearPlayer(void)
 {
     struct Task *t = gCurTask;
     s32 i = (t->variant - 1) * 3;
@@ -1573,7 +1573,7 @@ void ScarfyCheckTransform(void)
 
     if (t->hitKind == HIT_KIND_NO_DAMAGE && (u16)(t->hitEffect - 2) <= 1)
     {
-        ActorSetAttackBox(gUnk_08740E1C);
+        ActorSetAttackBox(gScarfyCheckTransformAttackBox);
         ActorSetState(SCARFY_STATE_TRANSFORM);
         TaskSetEntry(ScarfyEnterState, gCurTaskIdx);
     }

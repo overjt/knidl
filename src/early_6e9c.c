@@ -25,16 +25,16 @@
  * src/link.c (struct Link there), in an earlier revision: four command
  * words per frame and 30-entry queues. */
 struct Link {
-    /*0x000*/ u8 unk00, unk01, unk02, count;
+    /*0x000*/ u8 isMaster, state, localId, count;
     /*0x004*/ u16 recv[4];
-    /*0x00C*/ u8 unk0C, unk0D, unk0E, unk0F;
-    /*0x010*/ u8 unk10, unk11, unk12, unk13, unk14, unk15;
+    /*0x00C*/ u8 receivedNothing, serialIntrCounter, unk0E, unk0F;
+    /*0x010*/ u8 handshakeAsMaster, unk11, hardwareError, badChecksum, queueFull, lag;
     /*0x016*/ u16 chk;
-    /*0x018*/ u8 unk18, unk19, unk1A, unk1B;
+    /*0x018*/ u8 sendCmdIndex, recvCmdIndex, unk1A, unk1B;
     /*0x01C*/ u16 ring[4][30];
-    /*0x10C*/ u8 unk10C, unk10D, unk10E, unk10F;
+    /*0x10C*/ u8 sendQueuePos, sendQueueCount, unk10E, unk10F;
     /*0x110*/ u16 buf[4][4][30];
-    /*0x4D0*/ u8 unk4D0, unk4D1;
+    /*0x4D0*/ u8 recvQueuePos, recvQueueCount;
 };
 
 struct Pair { u32 a, b; };
@@ -62,43 +62,43 @@ void DoRecv(void)
     *(struct Pair *)gLinkRecvSnapshot = *(struct Pair *)&REG_SIOMULTI0;
     p = gLinkRecvSnapshot;
 
-    if (gLink.unk18 == 0)
+    if (gLink.sendCmdIndex == 0)
     {
         for (i = 0; i < gLink.count; i++)
             if (gLink.chk != *p++ && gChecksumAvailable)
-                gLink.unk13 = 1;
+                gLink.badChecksum = 1;
         gLink.chk = 0;
         gChecksumAvailable = 1;
         gLinkRecvVCount = REG_VCOUNT;
     }
     else
     {
-        index = gLink.unk4D0 + gLink.unk4D1;
+        index = gLink.recvQueuePos + gLink.recvQueueCount;
         if (index >= 30)
             index -= 30;
-        if (gLink.unk4D1 < 30)
+        if (gLink.recvQueueCount < 30)
         {
             for (i = 0; i < gLink.count; i++)
             {
                 gLink.chk += *p;
-                if ((gLinkCommand & 0xFF00) == 0x8800 && gLink.unk19 == 3
+                if ((gLinkCommand & 0xFF00) == 0x8800 && gLink.recvCmdIndex == 3
                  && *p > 4)
                 {
                     gLinkPauseFrames = 6;
                     gLinkDriverMode = 0;
                 }
                 gRecvNonzeroCheck |= *p;
-                gLink.buf[i][gLink.unk19][index] = *p++;
+                gLink.buf[i][gLink.recvCmdIndex][index] = *p++;
             }
         }
         else
         {
-            gLink.unk14 = 2;
+            gLink.queueFull = 2;
         }
-        gLink.unk19++;
-        if (gLink.unk19 == 4 && gRecvNonzeroCheck)
+        gLink.recvCmdIndex++;
+        if (gLink.recvCmdIndex == 4 && gRecvNonzeroCheck)
         {
-            gLink.unk4D1++;
+            gLink.recvQueueCount++;
             gRecvNonzeroCheck = 0;
         }
     }

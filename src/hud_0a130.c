@@ -227,7 +227,7 @@ void HudStopClock(void)
     gFrameEndCallback = 0;
 }
 
-void sub_0800a6a4(void)
+void HudUpdate(void)
 {
     u8 mode = gHudMode;
     s32 row;
@@ -251,10 +251,10 @@ void sub_0800a6a4(void)
                 if (gUnk_020055F0[1] == 0) {
                     if (gUnk_020055F0[0] == 2) {
                         gUnk_020055F0[0] = 1;
-                        sub_0800b230(gLifeRequests.requests[gLocalPlayer] >> 4, 1);
+                        HudDrawLifeRequestPanel(gLifeRequests.requests[gLocalPlayer] >> 4, 1);
                     } else {
                         gUnk_020055F0[0] = 2;
-                        sub_0800b230(gLocalPlayer, 2);
+                        HudDrawLifeRequestPanel(gLocalPlayer, 2);
                     }
                     gUnk_020055F0[1] = 90;
                 }

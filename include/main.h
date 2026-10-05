@@ -45,7 +45,7 @@ extern vu16 gOamAffineCount; /* affine matrix index */
 extern vu16 gUnk_03000B20;
 extern vu32 gSpriteLayerCounts[16]; /* per-lane counts (16 words, CpuFastSet-cleared) */
 extern vu16 gRepeatedKeys; /* keys pressed w/ auto-repeat */
-extern u32 gUnk_03000B74;
+extern u32 gHBlankDmaState;
 extern vs32 gBg3ScrollX; /* BG3HOFS shadow (16.16) */
 extern vu16 gUnk_03000B7C;
 extern vu8 gWinOut; /* transfer ring buffer end (0x03000B80 + 0x3FC) */

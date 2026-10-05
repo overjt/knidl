@@ -9,17 +9,17 @@
  *
  * Task type #6, variants 7-9, each variant body followed by the callbacks
  * only it installs.  Variant 7 (PlayerObjectIceBreath, animation tables
- * gUnk_08751B40/gUnk_08751E5C) switches on the sub-state Task.unk18 & 15
+ * gPlayerObjectIceBreathFrames/gIceBreathCloudFrames) switches on the sub-state Task.unk18 & 15
  * and installs M11's PlayerDrawWorldLoadTilesAndPalette and its own collision callback
  * PlayerObjectIceBreathUpdate, which registers the collider row gUnk_0873BE24 and runs the
  * hit test TaskBreakBlocksAt(gUnk_0873CC1C) at the spawner's position (Task.u8C.parentTask).
- * Variant 8 (PlayerObjectBeamOrb, gUnk_08751BB0) traces six-step paths from the
+ * Variant 8 (PlayerObjectBeamOrb, gPlayerObjectBeamOrbFrames) traces six-step paths from the
  * 8.8 velocity rows gUnk_0873B7C0[k] and the animation rows
  * gUnk_0873B808[k] (sound 129) with the callback PlayerObjectBeamOrbUpdate (collider row
  * gUnk_0873BE38, hit test gUnk_0873CC2C), which variant 10
  * (src/plobj_52f6c.c) installs too; both end in a `pop {r1}` epilogue
  * without setting r0, so they are declared s32 with no return.  Variant 9
- * (PlayerObjectLightOrb, gUnk_0875204C) is a copy of the spawner's sprite:
+ * (PlayerObjectLightOrb, gPlayerObjectLightOrbFrames) is a copy of the spawner's sprite:
  * sub-state 0 queues the tiles gUnk_08204B98 (four 320-byte rows) and the
  * palette gUnk_08204B78 into the spawner's OBJ slots through the VRAM
  * transfer queue RequestCopy, blinks, flies to the top centre of the
@@ -47,7 +47,7 @@ void PlayerObjectIceBreath(void)
         struct Task *t = gCurTask;
         t->moveCallback = (u32)TaskMove;
         t->updateCallback = (u32)PlayerObjectIceBreathUpdate;
-        t->unk28 = 0;
+        t->playerObjectBreathStopped = 0;
         t->u80.attackAbility = ABILITY_ICE;
     }
     {
@@ -56,7 +56,7 @@ void PlayerObjectIceBreath(void)
         {
         case 0:
             t->drawCallback = (u32)PlayerDrawWorldLoadTilesAndPalette;
-            t->frameTable = gUnk_08751B40;
+            t->frameTable = gPlayerObjectIceBreathFrames;
             t->layer = 7;
             {
                 struct Task *u = gCurTask;
@@ -64,7 +64,7 @@ void PlayerObjectIceBreath(void)
                 u->frame = 0xFFFF;
             }
             TaskYieldTrampoline(8);
-            while (gCurTask->unk28 == 0)
+            while (gCurTask->playerObjectBreathStopped == 0)
             {
                 {
                     s16 d = RandomSpreadFacing(24, 1, 8);
@@ -84,7 +84,7 @@ void PlayerObjectIceBreath(void)
                 }
                 gCurTask->frame += 2;
                 TaskYieldTrampoline(1);
-                if (gCurTask->unk28 != 0)
+                if (gCurTask->playerObjectBreathStopped != 0)
                     break;
                 {
                     s16 d = RandomSpreadFacing(24, 1, 8);
@@ -108,7 +108,7 @@ void PlayerObjectIceBreath(void)
             break;
         case 1:
             t->drawCallback = (u32)TaskDrawWorld;
-            t->frameTable = gUnk_08751E5C;
+            t->frameTable = gIceBreathCloudFrames;
             t->layer = 7;
             gCurTask->facing = (gCurTask->u8C.parentTask)->facing;
             {
@@ -147,7 +147,7 @@ void PlayerObjectIceBreath(void)
                 TaskYieldTrampoline(2);
                 gCurTask->frame++;
                 TaskYieldTrampoline(1);
-            } while (gCurTask->unk28 == 0);
+            } while (gCurTask->playerObjectBreathStopped == 0);
             break;
         }
     }
@@ -158,7 +158,7 @@ void PlayerObjectIceBreathUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (!(t->player->unk40 & 0x100) && ((t->u8C.parentTask)->waterFlags & 1))
+    if (!(t->player->actionFlags & PLAYER_ACTION_FLAG_GET_ABILITY) && ((t->u8C.parentTask)->waterFlags & 1))
     {
         TaskFree(gCurTaskIdx);
         return;
@@ -189,10 +189,10 @@ void PlayerObjectIceBreathUpdate(void)
     }
     {
         struct Task *u = gCurTask;
-        if (u->unk28 == 0)
+        if (u->playerObjectBreathStopped == 0)
         {
             if (u->player->mode != 13 || u->facing != (u->u8C.parentTask)->facing)
-                u->unk28 = 1;
+                u->playerObjectBreathStopped = 1;
         }
     }
 }
@@ -212,24 +212,24 @@ s32 PlayerObjectBeamOrb(void)
     }
     {
         struct Task *t = gCurTask;
-        t->frameTable = gUnk_08751BB0;
+        t->frameTable = gPlayerObjectBeamOrbFrames;
         t->u80.attackAbility = ABILITY_BEAM;
     }
     {
         struct Task *t = gCurTask;
         t->tileWord = (t->u8C.parentTask)->tileWord | 0xF008;
         if (t->facing == 1)
-            t->unk28 = 14;
+            t->playerObjectOrbOffsetX = 14;
         else
-            t->unk28 = -14;
+            t->playerObjectOrbOffsetX = -14;
     }
     {
         struct Task *t = gCurTask;
-        t->unk2C = 2;
+        t->playerObjectOrbOffsetY = 2;
         switch (t->playerObjectSpawnWord & 15)
         {
         case 0:
-            if (!(t->player->unk42 & 0x80))
+            if (!(t->player->statusFlags & PLAYER_STATUS_NO_ATTACK_SFX))
                 PlaySfxIfLocalPlayer(129, t->parent);
             xs = gUnk_0873B7C0[0][0];
             ys = gUnk_0873B7C0[0][1];
@@ -238,8 +238,8 @@ s32 PlayerObjectBeamOrb(void)
                 s32 v;
                 {
                     struct Task *u = gCurTask;
-                    u->posX = u->unk28 << 16;
-                    u->posY = u->unk2C << 16;
+                    u->posX = u->playerObjectOrbOffsetX << 16;
+                    u->posY = u->playerObjectOrbOffsetY << 16;
                     v = xs[(s16)u->playerObjectLoopCount] << 8;
                     if (xs[(s16)u->playerObjectLoopCount] & 0x8000)
                         v |= 0xFF000000;
@@ -252,13 +252,13 @@ s32 PlayerObjectBeamOrb(void)
                         v |= 0xFF000000;
                     u->velY = v;
                     e = gUnk_0873B808[0][(s16)u->playerObjectLoopCount];
-                    u->unk6E = 0;
+                    u->playerObjectLoopCount6E = 0;
                 }
                 do
                 {
-                    gCurTask->frame = e[gCurTask->unk6E];
+                    gCurTask->frame = e[gCurTask->playerObjectLoopCount6E];
                     TaskYieldTrampoline(1);
-                } while (++gCurTask->unk6E <= 4);
+                } while (++gCurTask->playerObjectLoopCount6E <= 4);
                 {
                     struct Task *u = gCurTask;
                     u->velX = 0;
@@ -276,8 +276,8 @@ s32 PlayerObjectBeamOrb(void)
                 s32 v;
                 {
                     struct Task *u = gCurTask;
-                    u->posX = u->unk28 << 16;
-                    u->posY = u->unk2C << 16;
+                    u->posX = u->playerObjectOrbOffsetX << 16;
+                    u->posY = u->playerObjectOrbOffsetY << 16;
                     v = xs[(s16)u->playerObjectLoopCount] << 8;
                     if (xs[(s16)u->playerObjectLoopCount] & 0x8000)
                         v |= 0xFF000000;
@@ -290,13 +290,13 @@ s32 PlayerObjectBeamOrb(void)
                         v |= 0xFF000000;
                     u->velY = v;
                     e = gUnk_0873B808[1][(s16)u->playerObjectLoopCount];
-                    u->unk6E = 0;
+                    u->playerObjectLoopCount6E = 0;
                 }
                 do
                 {
-                    gCurTask->frame = e[gCurTask->unk6E];
+                    gCurTask->frame = e[gCurTask->playerObjectLoopCount6E];
                     TaskYieldTrampoline(1);
-                } while (++gCurTask->unk6E <= 4);
+                } while (++gCurTask->playerObjectLoopCount6E <= 4);
                 {
                     struct Task *u = gCurTask;
                     u->velX = 0;
@@ -314,8 +314,8 @@ s32 PlayerObjectBeamOrb(void)
                 s32 v;
                 {
                     struct Task *u = gCurTask;
-                    u->posX = u->unk28 << 16;
-                    u->posY = u->unk2C << 16;
+                    u->posX = u->playerObjectOrbOffsetX << 16;
+                    u->posY = u->playerObjectOrbOffsetY << 16;
                     v = xs[(s16)u->playerObjectLoopCount] << 8;
                     if (xs[(s16)u->playerObjectLoopCount] & 0x8000)
                         v |= 0xFF000000;
@@ -328,13 +328,13 @@ s32 PlayerObjectBeamOrb(void)
                         v |= 0xFF000000;
                     u->velY = v;
                     e = gUnk_0873B808[2][(s16)u->playerObjectLoopCount];
-                    u->unk6E = 0;
+                    u->playerObjectLoopCount6E = 0;
                 }
                 do
                 {
-                    gCurTask->frame = e[gCurTask->unk6E];
+                    gCurTask->frame = e[gCurTask->playerObjectLoopCount6E];
                     TaskYieldTrampoline(1);
-                } while (++gCurTask->unk6E <= 4);
+                } while (++gCurTask->playerObjectLoopCount6E <= 4);
                 {
                     struct Task *u = gCurTask;
                     u->velX = 0;
@@ -370,7 +370,7 @@ void PlayerObjectLightOrb(void)
 
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)TaskDrawScreen;
-    t->frameTable = gUnk_0875204C;
+    t->frameTable = gPlayerObjectLightOrbFrames;
     switch (t->playerObjectSpawnWord & 15)
     {
     case 0:

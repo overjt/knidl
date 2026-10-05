@@ -202,7 +202,7 @@ u8 KingDededeLand(void)
     case 4:
         t->kingDededeFloatBumpTimer = 4;
         t->onGround = 0;
-        sub_0806d08c(24, 8, 32);
+        CreateLandingDustFacing(24, 8, 32);
         TaskSetFrame(23);
         u = gCurTask;
         TaskSetMotionY(-u->velY, -u->accelY, u->speedLimitY);
@@ -239,7 +239,7 @@ void sub_080a05c8(void)
     t = gCurTask;
     t->unk34 = 0;
     t->kingDededeSlamSetupCount = 0;
-    t->unk2C = 0;
+    t->kingDededeSkipWait = 0;
     t->unk28 = 0;
     t->unk24 = 0;
     t->unk20 = 0;
@@ -287,25 +287,25 @@ void KingDededeStartWait(void)
     if (sub_080a060c() != 0)
     {
         i = RandomRange(3);
-        n = ActorStartAnim(gUnk_08748384);
+        n = ActorStartAnim(gKingDededeWaitAnim);
         t = gCurTask;
         t->actorAnimDelay24 = n;
         if (t->health < (s16)t->kingDededeThirdHealth)
         {
             i += 3;
-            n2 = ActorStartAnim(gUnk_08748398);
+            n2 = ActorStartAnim(gKingDededeStartWaitAnim);
             gCurTask->actorAnimDelay24 = n2;
         }
         u = gCurTask;
-        if (u->unk2C != 0)
+        if (u->kingDededeSkipWait != 0)
             u->kingDededeWaitTimer = 0;
         else
             u->kingDededeWaitTimer = gUnk_08748374[i];
-        gCurTask->unk2C = 0;
+        gCurTask->kingDededeSkipWait = 0;
     }
     else
     {
-        n3 = ActorStartAnim(gUnk_08748398);
+        n3 = ActorStartAnim(gKingDededeStartWaitAnim);
         v = gCurTask;
         v->actorAnimDelay24 = n3;
         v->kingDededeWaitTimer = 1;
@@ -429,7 +429,7 @@ void KingDededeGroundSlam(void)
     }
 }
 
-void sub_080a094c(void)
+void KingDededeWalkLoop(void)
 {
     struct Task *t;
     struct Task *u;
@@ -536,10 +536,10 @@ void KingDededeIntro(void)
     t->updateState = z;
     TaskStop();
     ActorCollideTerrain();
-    ActorIntroPoseUntilScrollLocked(gUnk_08748384);
-    ActorIntroPoseUntilHpBarFull(gUnk_08748384);
-    ActorSetExtraAttackBox((u32)gUnk_08748820);
-    gCurTask->unk2C = z;
+    ActorIntroPoseUntilScrollLocked(gKingDededeWaitAnim);
+    ActorIntroPoseUntilHpBarFull(gKingDededeWaitAnim);
+    ActorSetExtraAttackBox((u32)gKingDededeIntroExtraAttackBox);
+    gCurTask->kingDededeSkipWait = z;
     KingDededeStartWait();
     TaskSleepForever();
 }
@@ -599,7 +599,7 @@ void KingDededeWalk(void)
     gCurTask->updateState = KING_DEDEDE_STATE_WALK;
     TaskStop();
     KingDededeStartWalk();
-    sub_080a094c();
+    KingDededeWalkLoop();
 }
 
 void KingDededeWalkUpdate(void)
@@ -935,7 +935,7 @@ void KingDededeInhale(void)
     u = gCurTask;
     u->frame++;
     TaskYieldTrampoline(20);
-    sub_080a0098();
+    KingDededeStartInhale();
     while (gUnk_02007D00[0] != 1)
     {
         TaskSetFrame(26);

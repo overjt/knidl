@@ -10,12 +10,12 @@
  *
  * Room start-up, part 1.  InitRoomBgLayout (the loaders' second step) sets up
  * the scroll speeds, the BG layout gRoomBgLayout/gUnk_0200B078 for the
- * room (a 7-way switch on RoomDef.unk54, table 0x08027F28), the
+ * room (a 7-way switch on RoomDef.setupKind, table 0x08027F28), the
  * metatile-map edits of the special rooms and the bottom bound
- * (sub_08025e0c); sub_08028130 is its reduced form for sub_080233e0,
+ * (sub_08025e0c); InitRoomBgLayoutAfterBigSwitchView is its reduced form for LoadRoomAfterBigSwitchView,
  * InitEndingRoomBgLayout its layout-only form for LoadEndingRoom, and
  * StartRoomBlockAnims picks the tile-upload routine for the layout.
- * sub_08027a6c, the first function of the range (the second map buffer
+ * LoadHubRoomMap, the first function of the range (the second map buffer
  * gHubRoomMapBuffer for LoadHubRoom/LoadBigSwitchViewRoom), landed separately as
  * src/level_27a6c.c. */
 
@@ -61,7 +61,7 @@ void InitRoomBgLayout(void)
         gRoomBgLayout = 1;
     else if (gBg3MapShape == 1)
         SetBg3ScreenSize(0x8000);
-    switch (gCurRoomDef->unk54)
+    switch (gCurRoomDef->setupKind)
     {
     case 1:
         gUnk_0200B078 = 1;
@@ -126,7 +126,7 @@ void InitRoomBgLayout(void)
         CreateMuseumAbilitySigns(gCurLevel);
 }
 
-void sub_08028130(void)
+void InitRoomBgLayoutAfterBigSwitchView(void)
 {
     s8 *e;
     struct RoomDef *next;
@@ -152,7 +152,7 @@ void sub_08028130(void)
         gRoomBgLayout = 1;
     else if (gBg3MapShape == 1)
         SetBg3ScreenSize(0x8000);
-    if (gCurRoomDef->unk54 != 0)
+    if (gCurRoomDef->setupKind != 0)
     {
         gUnk_0200B078 = 4;
         if (gUnk_02006098[0] == 1)

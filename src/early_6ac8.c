@@ -28,16 +28,16 @@
  * src/link.c (struct Link there), in an earlier revision: four command
  * words per frame and 30-entry queues. */
 struct Link {
-    /*0x000*/ u8 unk00, unk01, unk02, count;
+    /*0x000*/ u8 isMaster, state, localId, count;
     /*0x004*/ u16 recv[4];
-    /*0x00C*/ u8 unk0C, unk0D, unk0E, unk0F;
-    /*0x010*/ u8 unk10, unk11, unk12, unk13, unk14, unk15;
+    /*0x00C*/ u8 receivedNothing, serialIntrCounter, unk0E, unk0F;
+    /*0x010*/ u8 handshakeAsMaster, unk11, hardwareError, badChecksum, queueFull, lag;
     /*0x016*/ u16 chk;
-    /*0x018*/ u8 unk18, unk19, unk1A, unk1B;
+    /*0x018*/ u8 sendCmdIndex, recvCmdIndex, unk1A, unk1B;
     /*0x01C*/ u16 ring[4][30];
-    /*0x10C*/ u8 unk10C, unk10D, unk10E, unk10F;
+    /*0x10C*/ u8 sendQueuePos, sendQueueCount, unk10E, unk10F;
     /*0x110*/ u16 buf[4][4][30];
-    /*0x4D0*/ u8 unk4D0, unk4D1;
+    /*0x4D0*/ u8 recvQueuePos, recvQueueCount;
 };
 
 /* Not from link.h: this file's view of gLink differs (lesson 3.517). */
@@ -61,9 +61,9 @@ void EnqueueSendCmd(u16 *p)
     ie = REG_IE;
     REG_IE = 2;
     REG_IME = 1;
-    if (gLink.unk10D < 30)
+    if (gLink.sendQueueCount < 30)
     {
-        n = gLink.unk10C + gLink.unk10D;
+        n = gLink.sendQueuePos + gLink.sendQueueCount;
         if (n >= 30)
             n -= 30;
         for (i = 0; i < 4; i++)
@@ -76,17 +76,17 @@ void EnqueueSendCmd(u16 *p)
     }
     else
     {
-        gLink.unk14 = 1;
+        gLink.queueFull = 1;
     }
     if (gSendNonzeroCheck)
     {
-        gLink.unk10D++;
+        gLink.sendQueueCount++;
         gSendNonzeroCheck = 0;
     }
     REG_IME = 0;
     REG_IE = ie;
     REG_IME = gLinkSavedIme;
-    gLastSendQueueCount = gLink.unk10D;
+    gLastSendQueueCount = gLink.sendQueueCount;
 }
 
 /* Dequeue one 4x4 receive frame out of the receive ring (pokeruby's
@@ -105,23 +105,23 @@ void DequeueRecvCmds(u16 (*p)[4])
     ie = REG_IE;
     REG_IE = 2;
     REG_IME = 1;
-    if (gLink.unk4D1 == 0)
+    if (gLink.recvQueueCount == 0)
     {
         for (i = 0; i < 4; i++)
             for (j = 0; j < gLink.count; j++)
                 p[i][j] = 0;
-        gLink.unk0C = 1;
+        gLink.receivedNothing = 1;
     }
     else
     {
         for (i = 0; i < 4; i++)
             for (j = 0; j < gLink.count; j++)
-                p[i][j] = gLink.buf[j][i][gLink.unk4D0];
-        gLink.unk4D1--;
-        gLink.unk4D0++;
-        if (gLink.unk4D0 >= 30)
-            gLink.unk4D0 = 0;
-        gLink.unk0C = 0;
+                p[i][j] = gLink.buf[j][i][gLink.recvQueuePos];
+        gLink.recvQueueCount--;
+        gLink.recvQueuePos++;
+        if (gLink.recvQueuePos >= 30)
+            gLink.recvQueuePos = 0;
+        gLink.receivedNothing = 0;
     }
     REG_IME = 0;
     REG_IE = ie;

@@ -15,7 +15,7 @@
  * and sub_08033800, are dead exports nothing points at).  Then actions 1
  * and 2: PlayerActionStand enters mode 0 (per-frame handler 1, PlayerActionStandUpdate)
  * and PlayerActionWalk mode 1 (handler 2, PlayerActionWalkUpdate).  Their animations
- * come from gUnk_0873D0F8[ability][5] (column picked by M11's
+ * come from gPlayerStandFrames[ability][5] (column picked by M11's
  * PlayerGetFacingSlope, row 26 when PlayerState.mouthState == 1) and gUnk_0873D2E8. */
 
 void TaskSetEntry(void *a, u32 i);
@@ -66,7 +66,7 @@ void PlayerActionStand(void)
             t->player->savedWallSide = t->player->wallSide;
         gCurTask->player->running = 0;
         t2 = gCurTask;
-        t2->player->unk40 &= 0xFFEF;
+        t2->player->actionFlags &= ~PLAYER_ACTION_FLAG_RUN_PENDING;
         t2->player->runTapTimer = 0;
         PlayerPlayBump();
     }
@@ -75,9 +75,9 @@ void PlayerActionStand(void)
     p->blinkTimer = 0;
     p->blinkScriptPos = 0;
     if (gCurTask->player->mouthState == 1)
-        gCurTask->playerBaseFrame = gUnk_0873D0F8[26][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
+        gCurTask->playerBaseFrame = gPlayerStandFrames[26][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
     else
-        gCurTask->playerBaseFrame = gUnk_0873D0F8[gCurTask->player->ability][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
+        gCurTask->playerBaseFrame = gPlayerStandFrames[gCurTask->player->ability][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
     switch (gCurTask->player->ability)
     {
     case ABILITY_FIRE:
@@ -182,13 +182,13 @@ void PlayerActionStandUpdate(void)
             if (gMetaKnightmareMode == 0)
             {
                 if (gCurTask->player->mouthState == 1)
-                    gCurTask->playerBaseFrame = gUnk_0873D0F8[26][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
+                    gCurTask->playerBaseFrame = gPlayerStandFrames[26][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
                 else
-                    gCurTask->playerBaseFrame = gUnk_0873D0F8[gCurTask->player->ability][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
+                    gCurTask->playerBaseFrame = gPlayerStandFrames[gCurTask->player->ability][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
             }
             else
             {
-                gCurTask->playerBaseFrame = gUnk_0873D206[PlayerGetFacingSlope(gCurTask->player->playerIndex)];
+                gCurTask->playerBaseFrame = gMetaKnightStandFrames[PlayerGetFacingSlope(gCurTask->player->playerIndex)];
             }
             TaskSetFrame(gCurTask->playerBaseFrame);
             gCurTask->player->savedWallSide = 0;

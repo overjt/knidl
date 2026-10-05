@@ -43,7 +43,7 @@ void TerrainCollideBox(const s8 *p)
     if (gTerrainProbeResult.unkB & 0x80)
     {
         gTerrainProbeResult.unkB = 1;
-        gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom) >> 4;
+        gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom) >> 4;
     }
     if (gTerrainProbeResult.onGround != 0)
     {
@@ -91,7 +91,7 @@ void TerrainCollideBoxInCameraBounds(const s8 *p)
     if (gTerrainProbeResult.unkB & 0x80)
     {
         gTerrainProbeResult.unkB = 1;
-        gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom) >> 4;
+        gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom) >> 4;
     }
     TerrainClampBoxToCameraBounds();
     if (gTerrainProbeResult.onGround != 0)
@@ -141,7 +141,7 @@ void TerrainCollideBoxWalls(const s8 *p)
     if (gTerrainProbeResult.unkB & 0x80)
     {
         gTerrainProbeResult.unkB = 1;
-        gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
+        gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
     }
     v = gTerrainVelX;
     if (v != 0)
@@ -169,7 +169,7 @@ void TerrainCollideBoxCeilingAndFloor(const s8 *p)
     if (gTerrainProbeResult.unkB & 0x80)
     {
         gTerrainProbeResult.unkB = 1;
-        gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
+        gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
     }
     TerrainProbeCeilingNoSlopeLink();
     sub_0801f9b8();
@@ -191,7 +191,7 @@ void TerrainCollideBoxFloor(const s8 *p)
     if (gTerrainProbeResult.unkB & 0x80)
     {
         gTerrainProbeResult.unkB = 1;
-        gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
+        gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
     }
     if (gTerrainProbeResult.onGround != 0)
         TerrainProbeFloorNoSlopeLink();

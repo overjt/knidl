@@ -69,13 +69,13 @@ void FileSelectSlotUpdate(void)
         slot = gCurTask->fileSelectSlotIndex;
         s = gSaveSlots;
         i = slot * 256;
-        if (gSaveSlots[slot].completionPercent[1] != 0 && gSaveSlots[slot].unk04 != 0x99999999)
+        if (gSaveSlots[slot].completionPercent[1] != 0 && gSaveSlots[slot].slotIndex != 0x99999999)
             i++;
         MenuLoadSaveSlotPalette(slot, (s8)s->curLevel[i]);
         gCurTask->fileSelectSlotSavedCursor = gMenuCursor;
     }
 
-    if (gSaveSlots[gCurTask->fileSelectSlotIndex].completionPercent[1] != 0 && gSaveSlots[gCurTask->fileSelectSlotIndex].unk04 != 0x99999999) {
+    if (gSaveSlots[gCurTask->fileSelectSlotIndex].completionPercent[1] != 0 && gSaveSlots[gCurTask->fileSelectSlotIndex].slotIndex != 0x99999999) {
         t = gCurTask;
         QueueSprite(t->layer - 1, gUnk_08755620[t->fileSelectSlotIndex + 6], t->spriteFlags, t->tileWord, t->pixelX, t->pixelY);
     }

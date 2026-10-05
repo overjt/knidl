@@ -292,6 +292,13 @@ macros in `include/constants/<topic>.h`, as in pret and katam:
   `sound.h`.
 - **Use.**  Only where the parameter, field or variable belongs to that
   enumeration (docs/naming.md section 7); never as a count or a size.
+- **Flag bits** (#155 run 7, docs/naming.md 7.0): a flag word's bits are
+  defines of the same form (one plain literal each, `#define
+  ATTACK_BOX_IMMUNITY_DEFEAT 0x2`); a site that clears or tests several
+  bits writes the expression itself (`t->spriteFlags &= ~SPRITE_FLAG_X`,
+  `(SPRITE_FLAG_X | SPRITE_FLAG_Y)`), never a define of an expression.
+  Such a site is a token change: its proof is the per-file assembly
+  oracle, and a site whose code would change keeps its number.
 - **Proof.**  `tools/constants.py --verify-cpp REF` compares every
   translation unit's `cpp -P` tokens with REF's, integer literals by value;
   the per-file assembly oracle and `make compare` back it.  Every define

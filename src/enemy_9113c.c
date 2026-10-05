@@ -9,7 +9,7 @@
  * per-frame body PoppyBrosSrUpdate and the animation script gUnk_0874397C,
  * PoppyBrosSrUpdate dispatches Task.updateState and reloads the graphics record
  * gPoppyBrosSrGfx, and states 0-6 are <body, guard> pairs.  Two states shell out
- * to sub_08091954, which runs the boss's attack loop: it repeats Task.unk1C
+ * to PoppyBrosSrHopBackAndForth, which runs the boss's attack loop: it repeats Task.unk1C
  * times, flips Task.unk20 between the two step helpers sub_08091a30 and
  * sub_08091a98 (they walk Task.frame up and down while yielding Task.unk24
  * frames per step), and waits on Task.onGround between passes.
@@ -140,7 +140,7 @@ void PoppyBrosSrIntro(void)
         TaskStop();
     }
     sub_08066580();
-    ActorSetState(POPPY_BROS_SR_STATE_1);
+    ActorSetState(POPPY_BROS_SR_STATE_HOP1);
     TaskSleepForever();
 }
 
@@ -150,7 +150,7 @@ void PoppyBrosSrIntroUpdate(void)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void PoppyBrosSrState1(void)
+void PoppyBrosSrHop1(void)
 {
     struct Task *t;
     struct Task *u;
@@ -158,23 +158,23 @@ void PoppyBrosSrState1(void)
 
     t = gCurTask;
     zero = 0;
-    t->updateState = POPPY_BROS_SR_STATE_1;
+    t->updateState = POPPY_BROS_SR_STATE_HOP1;
     u = gCurTask;
     u->poppyBrosSrHopPhase = zero;
     gCurTask->poppyBrosSrHopsLeft =
         gUnk_087438DC[RandomRange(4) + gCurTask->actorSpawnArg * 4];
-    sub_08091954();
-    ActorSetState(POPPY_BROS_SR_STATE_2);
+    PoppyBrosSrHopBackAndForth();
+    ActorSetState(POPPY_BROS_SR_STATE_JUMP_THROW);
     TaskSleepForever();
 }
 
-void PoppyBrosSrState1Update(void)
+void PoppyBrosSrHop1Update(void)
 {
-    if (gCurTask->state != POPPY_BROS_SR_STATE_1)
+    if (gCurTask->state != POPPY_BROS_SR_STATE_HOP1)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void PoppyBrosSrState2(void)
+void PoppyBrosSrJumpThrow(void)
 {
     struct Task *t;
     struct Task *v;
@@ -186,7 +186,7 @@ void PoppyBrosSrState2(void)
 
     t = gCurTask;
     zero = 0;
-    t->updateState = POPPY_BROS_SR_STATE_2;
+    t->updateState = POPPY_BROS_SR_STATE_JUMP_THROW;
     gCurTask->onGround = zero;
     TaskSetMotionY(0xFFFD0000, 4096, 196608);
     if (abs(TaskGetNearestPlayerDy()) <= 63)
@@ -248,11 +248,11 @@ void PoppyBrosSrState2(void)
         TaskYieldTrampoline(1);
     TaskStop();
     PlaySfx(528);
-    ActorSetState(POPPY_BROS_SR_STATE_3);
+    ActorSetState(POPPY_BROS_SR_STATE_HOP2);
     TaskSleepForever();
 }
 
-void PoppyBrosSrState2Update(void)
+void PoppyBrosSrJumpThrowUpdate(void)
 {
     struct Task *t;
 
@@ -264,11 +264,11 @@ void PoppyBrosSrState2Update(void)
     t = gCurTask;
     if (t->velY > 0 && t->poppyBrosSrHeadAnimIndex == 2)
         t->poppyBrosSrHeadAnimIndex = 3;
-    if (gCurTask->state != POPPY_BROS_SR_STATE_2)
+    if (gCurTask->state != POPPY_BROS_SR_STATE_JUMP_THROW)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void PoppyBrosSrState3(void)
+void PoppyBrosSrHop2(void)
 {
     struct Task *t;
     struct Task *u;
@@ -276,29 +276,29 @@ void PoppyBrosSrState3(void)
 
     t = gCurTask;
     zero = 0;
-    t->updateState = POPPY_BROS_SR_STATE_3;
+    t->updateState = POPPY_BROS_SR_STATE_HOP2;
     u = gCurTask;
     u->poppyBrosSrHopPhase = zero;
     u->poppyBrosSrHopsLeft = 2;
-    sub_08091954();
-    ActorSetState(POPPY_BROS_SR_STATE_4);
+    PoppyBrosSrHopBackAndForth();
+    ActorSetState(POPPY_BROS_SR_STATE_HOP3);
     TaskSleepForever();
 }
 
-void PoppyBrosSrState3Update(void)
+void PoppyBrosSrHop2Update(void)
 {
-    if (gCurTask->state != POPPY_BROS_SR_STATE_3)
+    if (gCurTask->state != POPPY_BROS_SR_STATE_HOP2)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void PoppyBrosSrState4(void)
+void PoppyBrosSrHop3(void)
 {
     struct Task *t;
     u8 zero;
 
     t = gCurTask;
     zero = 0;
-    t->updateState = POPPY_BROS_SR_STATE_4;
+    t->updateState = POPPY_BROS_SR_STATE_HOP3;
     TaskFaceNearestPlayer();
     gCurTask->onGround = zero;
     TaskSetMotionXFacing(81920, 0x5A5A5A5A);
@@ -316,17 +316,17 @@ void PoppyBrosSrState4(void)
         TaskYieldTrampoline(1);
     TaskStop();
     PlaySfx(528);
-    ActorSetState(POPPY_BROS_SR_STATE_5);
+    ActorSetState(POPPY_BROS_SR_STATE_HOP4);
     TaskSleepForever();
 }
 
-void PoppyBrosSrState4Update(void)
+void PoppyBrosSrHop3Update(void)
 {
-    if (gCurTask->state != POPPY_BROS_SR_STATE_4)
+    if (gCurTask->state != POPPY_BROS_SR_STATE_HOP3)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void PoppyBrosSrState5(void)
+void PoppyBrosSrHop4(void)
 {
     struct Task *t;
     struct Task *u;
@@ -334,7 +334,7 @@ void PoppyBrosSrState5(void)
 
     t = gCurTask;
     zero = 0;
-    t->updateState = POPPY_BROS_SR_STATE_5;
+    t->updateState = POPPY_BROS_SR_STATE_HOP4;
     gCurTask->onGround = zero;
     TaskSetMotionXFacing(163840, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFE4000, 4096, 196608);
@@ -361,13 +361,13 @@ void PoppyBrosSrState5(void)
         TaskYieldTrampoline(1);
     TaskStop();
     PlaySfx(528);
-    ActorSetState(POPPY_BROS_SR_STATE_1);
+    ActorSetState(POPPY_BROS_SR_STATE_HOP1);
     TaskSleepForever();
 }
 
-void PoppyBrosSrState5Update(void)
+void PoppyBrosSrHop4Update(void)
 {
-    if (gCurTask->state != POPPY_BROS_SR_STATE_5)
+    if (gCurTask->state != POPPY_BROS_SR_STATE_HOP4)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
@@ -379,7 +379,7 @@ void PoppyBrosSrDefeat(void)
     t->updateState = POPPY_BROS_SR_STATE_DEFEAT;
     if (--gUnk_02007D00[0] == 0)
         EndMidBossFightWithReward();
-    sub_080667c0(0, 10);
+    MidBossStartDefeat(0, 10);
     CreateStarFlash(1, 0, 0);
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(0xFFFF0000, 0x5A5A5A5A);
@@ -410,7 +410,7 @@ void PoppyBrosSrDefeatUpdate(void)
         TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
-void sub_08091954(void)
+void PoppyBrosSrHopBackAndForth(void)
 {
     struct Task *u;
     struct Task *v;

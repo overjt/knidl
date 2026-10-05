@@ -12,7 +12,7 @@
  * tiles from the decompressed sheet in gUnk_02020000 to the task's OBJ tiles
  * (Task.tileWord & 0xFFF, less 16) and draws the frame at the task's position
  * less the BG3 scroll, choosing the layout by the task's animation table
- * Task.frameTable: gUnk_08755440 is a body plus four side pieces at -64/+64 and
+ * Task.frameTable: gFountainJetFrames is a body plus four side pieces at -64/+64 and
  * -96/+96 pixels (frames gUnk_087321C0/gUnk_087321EC), gUnk_0875546C and
  * gUnk_08755484 one sprite each (gUnk_085E24D8, gUnk_085E26E8).
  *
@@ -28,7 +28,7 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s16 f);
 s32 IsOnScreen(s16 x, s16 y);
 
-void sub_0801a3e4(void)
+void FountainSpriteDraw(void)
 {
     struct Task *t;
     struct Task *u;
@@ -55,7 +55,7 @@ void sub_0801a3e4(void)
     dst = OBJ_VRAM0 + base;
     dx = t->pixelX - (gBg3ScrollX >> 16);
     dy = t->pixelY - (gBg3ScrollY >> 16);
-    if (tbl == gUnk_08755440)
+    if (tbl == gFountainJetFrames)
     {
         RequestCopy(4, (u32)gUnk_02020000 + (gUnk_08732190[t->frame] << 5), dst,
                      128 << 2);

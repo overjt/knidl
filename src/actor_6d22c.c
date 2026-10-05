@@ -42,7 +42,7 @@ void Task_DustBurst(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_0874CB90;
+    u->frameTable = gDustFrames;
     u->updateCallback = (u32)DustBurstCheckParent;
     TaskFaceLikeParent();
 
@@ -226,7 +226,7 @@ void PlayRayBurstAnim(void)
 
     t = gCurTask;
     t->drawCallback = (u32)ActorDrawWorldInView;
-    t->frameTable = gUnk_0874C9D8;
+    t->frameTable = gRayBurstFrames;
     t->layer = 10;
     u = gCurTask;
     u->tileWord = 0;
@@ -253,7 +253,7 @@ void PlayStarScatterAnim(void)
 
     t = gCurTask;
     t->drawCallback = (u32)ActorDrawWorldInView;
-    t->frameTable = gUnk_0874CA78;
+    t->frameTable = gStarScatterFrames;
     t->layer = 10;
     gCurTask->tileWord = 0;
     for (i = 0; i < 23; i++)
@@ -270,12 +270,12 @@ void PlayExplosionAnim(void)
 
     t = gCurTask;
     t->drawCallback = (u32)ActorDrawWorldInView;
-    t->frameTable = gUnk_0874CA1C;
+    t->frameTable = gExplosionFrames;
     t->layer = 4;
     gCurTask->tileWord = 0;
     for (i = 0; i < 23; i++)
     {
-        gCurTask->frame = gUnk_0873E640[i];
+        gCurTask->frame = gExplosionAnimFrames[i];
         TaskYieldTrampoline(1);
     }
 }
@@ -394,7 +394,7 @@ void Task_RingStar(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_0874CC60;
+    u->frameTable = gRingStarFrames;
     u->updateCallback = (u32)RingStarUpdate;
     u->ringStarFrameTimer = 2;
     u->frame = 0;
@@ -499,7 +499,7 @@ void Task_CannonSmoke(void)
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInView;
-    t->frameTable = gUnk_08752E48;
+    t->frameTable = gCannonSmokeFrames;
     t->layer = 10;
     gCurTask->tileWord = 0;
     CannonSmokeInit();
@@ -608,7 +608,7 @@ void Task_CannonFuseSpark(void)
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)CannonFuseSparkDraw;
-    t->frameTable = gUnk_08752D20;
+    t->frameTable = gCannonFuseSparkFrames;
     t->layer = 10;
     u = gCurTask;
     u->updateCallback = (u32)CannonFuseSparkCheckParent;
@@ -642,7 +642,7 @@ void Task_TrailFlash(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)ActorDrawWorldInView;
-    t->frameTable = gUnk_0874CC84;
+    t->frameTable = gTrailFlashFrames;
     t->layer = 10;
     u = gCurTask;
     u->tileWord = 0;
@@ -713,7 +713,7 @@ void Task_HitFrost(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
     t->drawCallback = (u32)ActorDrawWorldInView;
-    t->frameTable = gUnk_0874CC48;
+    t->frameTable = gHitFrostFrames;
     t->layer = 6;
     u = gCurTask;
     u->updateCallback = (u32)HitFrostCheckParent;

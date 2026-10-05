@@ -1058,14 +1058,14 @@ gUnk_08731BA0:
 	.global	gUnk_08731C88
 gUnk_08731C88:
 	.incbin	"baserom.gba", 0x731C88, 0x40
-	.global	gUnk_08731CC8
-gUnk_08731CC8:
+	.global	gTitlePressStartLetterFrames
+gTitlePressStartLetterFrames:
 	.incbin	"baserom.gba", 0x731CC8, 0x14
 	.global	gUnk_08731CDC
 gUnk_08731CDC:
 	.incbin	"baserom.gba", 0x731CDC, 0xA
-	.global	gUnk_08731CE6
-gUnk_08731CE6:
+	.global	gIntroStorySceneDurations
+gIntroStorySceneDurations:
 	.incbin	"baserom.gba", 0x731CE6, 0x12
 	.global	gUnk_08731CF8
 gUnk_08731CF8:
@@ -1092,8 +1092,8 @@ gUnk_08731D28:
 	.global	gUnk_08731D58
 gUnk_08731D58:
 	.incbin	"baserom.gba", 0x731D58, 0x18
-	.global	gUnk_08731D70
-gUnk_08731D70:
+	.global	gMenuScreenTitleGfx
+gMenuScreenTitleGfx:
 	.incbin	"baserom.gba", 0x731D70, 0x30
 	.global	gBgScrollYPtrs
 gBgScrollYPtrs:
@@ -1128,11 +1128,11 @@ gUnk_08731E34:
 	.word	gUnk_0855AC40
 	.word	gUnk_0855B478
 	.word	gUnk_0855BDAC
-	.global	gUnk_08731E4C
-gUnk_08731E4C:
+	.global	gModeListCursorBaseY
+gModeListCursorBaseY:
 	.incbin	"baserom.gba", 0x731E4C, 0x6
-	.global	gUnk_08731E52
-gUnk_08731E52:
+	.global	gModeListCursorRowStep
+gModeListCursorRowStep:
 	.incbin	"baserom.gba", 0x731E52, 0x6
 	.global	gUnk_08731E58
 gUnk_08731E58:
@@ -1282,8 +1282,8 @@ gUnk_0873232C:
 	.global	gHubDoorUnlocks
 gHubDoorUnlocks:
 	.incbin	"baserom.gba", 0x732348, 0x7E
-	.global	gUnk_087323C6
-gUnk_087323C6:
+	.global	gWarpStarStationDoorCells
+gWarpStarStationDoorCells:
 	.incbin	"baserom.gba", 0x7323C6, 0x1C
 	.global	gUnk_087323E2
 gUnk_087323E2:
@@ -1306,8 +1306,8 @@ gUnk_087324A6:
 	.global	gUnk_087324DA
 gUnk_087324DA:
 	.incbin	"baserom.gba", 0x7324DA, 0xC8
-	.global	gUnk_087325A2
-gUnk_087325A2:
+	.global	gRoomBgmRemap
+gRoomBgmRemap:
 	.incbin	"baserom.gba", 0x7325A2, 0x72
 
 @ 0x08732614-0x08732630: C, row game_tbl_08732614 (src/data/game_tables.c section .game_tbl_08732614)
@@ -1324,8 +1324,8 @@ gUnk_08732630:
 	.global	gUnk_08732638
 gUnk_08732638:
 	.incbin	"baserom.gba", 0x732638, 0x14
-	.global	gUnk_0873264C
-gUnk_0873264C:
+	.global	gStarDoorOverlaySteps
+gStarDoorOverlaySteps:
 	.incbin	"baserom.gba", 0x73264C, 0xC
 	.global	gScreenShakePattern1
 gScreenShakePattern1:
@@ -1369,8 +1369,8 @@ game_rodata_087328bc:
 	.global	gUnk_087328BC
 gUnk_087328BC:
 	.incbin	"baserom.gba", 0x7328BC, 0x4
-	.global	gUnk_087328C0
-gUnk_087328C0:
+	.global	gMuseumAbilitySignX
+gMuseumAbilitySignX:
 	.incbin	"baserom.gba", 0x7328C0, 0x18
 
 @ 0x087328D8-0x087328F0: C, row game_tbl_087328d8 (src/data/game_tables.c section .game_tbl_087328d8)
@@ -1921,11 +1921,11 @@ gCollisionTileOneWay:
 	.global	gUnk_087337F0
 gUnk_087337F0:
 	.incbin	"baserom.gba", 0x7337F0, 0x100
-	.global	gUnk_087338F0
-gUnk_087338F0:
+	.global	gCollisionTileStepTile
+gCollisionTileStepTile:
 	.incbin	"baserom.gba", 0x7338F0, 0x100
-	.global	gUnk_087339F0
-gUnk_087339F0:
+	.global	gCollisionTileCollides
+gCollisionTileCollides:
 	.incbin	"baserom.gba", 0x7339F0, 0x100
 	.global	gCollisionTileDoor
 gCollisionTileDoor:
@@ -3479,37 +3479,37 @@ gTileDrifts:
 	.global	gTileDriftsDoubled
 gTileDriftsDoubled:
 	.incbin	"baserom.gba", 0x73A398, 0x80
-	.global	gUnk_0873A418
-gUnk_0873A418:
+	.global	gBlockBreakScript1
+gBlockBreakScript1:
 	.incbin	"baserom.gba", 0x73A418, 0x8
-	.global	gUnk_0873A420
-gUnk_0873A420:
+	.global	gBlockBreakScript0
+gBlockBreakScript0:
 	.incbin	"baserom.gba", 0x73A420, 0x8
-	.global	gUnk_0873A428
-gUnk_0873A428:
+	.global	gBlockBreakScript2
+gBlockBreakScript2:
 	.incbin	"baserom.gba", 0x73A428, 0x8
-	.global	gUnk_0873A430
-gUnk_0873A430:
+	.global	gBlockBreakScript3
+gBlockBreakScript3:
 	.incbin	"baserom.gba", 0x73A430, 0x10
-	.global	gUnk_0873A440
-gUnk_0873A440:
+	.global	gBlockBreakScript4
+gBlockBreakScript4:
 	.incbin	"baserom.gba", 0x73A440, 0x10
-	.global	gUnk_0873A450
-gUnk_0873A450:
+	.global	gBlockBreakScript5
+gBlockBreakScript5:
 	.incbin	"baserom.gba", 0x73A450, 0x8
 	.global	gUnk_0873A458
 gUnk_0873A458:
 	.incbin	"baserom.gba", 0x73A458, 0x24
-	.global	gUnk_0873A47C
-gUnk_0873A47C:
-	.word	gUnk_0873A420
-	.word	gUnk_0873A418
-	.word	gUnk_0873A428
-	.word	gUnk_0873A430
-	.word	gUnk_0873A440
-	.word	gUnk_0873A450
-	.global	gUnk_0873A494
-gUnk_0873A494:
+	.global	gBlockBreakScripts
+gBlockBreakScripts:
+	.word	gBlockBreakScript0
+	.word	gBlockBreakScript1
+	.word	gBlockBreakScript2
+	.word	gBlockBreakScript3
+	.word	gBlockBreakScript4
+	.word	gBlockBreakScript5
+	.global	gBlockHardness
+gBlockHardness:
 	.incbin	"baserom.gba", 0x73A494, 0x140
 	.global	gUnk_0873A5D4
 gUnk_0873A5D4:
@@ -3749,11 +3749,11 @@ gUnk_0873B8C6:
 	.section .game_rodata_0873b9ec, "a"
 	.global	game_rodata_0873b9ec
 game_rodata_0873b9ec:
-	.global	gUnk_0873B9EC
-gUnk_0873B9EC:
+	.global	gPlayerEffectStarTrajectories
+gPlayerEffectStarTrajectories:
 	.incbin	"baserom.gba", 0x73B9EC, 0x60
-	.global	gUnk_0873BA4C
-gUnk_0873BA4C:
+	.global	gPlayerEffectDeathStarRingMotions
+gPlayerEffectDeathStarRingMotions:
 	.incbin	"baserom.gba", 0x73BA4C, 0x40
 	.global	gUnk_0873BA8C
 gUnk_0873BA8C:
@@ -3794,8 +3794,8 @@ gPlayerDefaultBodyBox:
 	.global	gUnk_0873BD14
 gUnk_0873BD14:
 	.incbin	"baserom.gba", 0x73BD14, 0x14
-	.global	gUnk_0873BD28
-gUnk_0873BD28:
+	.global	gPlayerDuckBodyBox
+gPlayerDuckBodyBox:
 	.incbin	"baserom.gba", 0x73BD28, 0x14
 	.global	gUnk_0873BD3C
 gUnk_0873BD3C:
@@ -3803,8 +3803,8 @@ gUnk_0873BD3C:
 	.global	gUnk_0873BD50
 gUnk_0873BD50:
 	.incbin	"baserom.gba", 0x73BD50, 0x14
-	.global	gUnk_0873BD64
-gUnk_0873BD64:
+	.global	gPlayerAirPuffBodyBox
+gPlayerAirPuffBodyBox:
 	.incbin	"baserom.gba", 0x73BD64, 0x14
 	.global	gUnk_0873BD78
 gUnk_0873BD78:
@@ -3905,17 +3905,17 @@ gUnk_0873C0C0:
 	.global	gUnk_0873C128
 gUnk_0873C128:
 	.incbin	"baserom.gba", 0x73C128, 0x88
-	.global	gUnk_0873C1B0
-gUnk_0873C1B0:
+	.global	gPlayerNeedleBodyBox
+gPlayerNeedleBodyBox:
 	.incbin	"baserom.gba", 0x73C1B0, 0x14
-	.global	gUnk_0873C1C4
-gUnk_0873C1C4:
+	.global	gPlayerNeedleBodyBoxRects
+gPlayerNeedleBodyBoxRects:
 	.incbin	"baserom.gba", 0x73C1C4, 0x28
 	.global	gUnk_0873C1EC
 gUnk_0873C1EC:
 	.incbin	"baserom.gba", 0x73C1EC, 0x28
-	.global	gUnk_0873C214
-gUnk_0873C214:
+	.global	gPlayerFreezeCollider
+gPlayerFreezeCollider:
 	.incbin	"baserom.gba", 0x73C214, 0x14
 	.global	gUnk_0873C228
 gUnk_0873C228:
@@ -3953,14 +3953,14 @@ gUnk_0873C304:
 	.global	gUnk_0873C318
 gUnk_0873C318:
 	.incbin	"baserom.gba", 0x73C318, 0x40
-	.global	gUnk_0873C358
-gUnk_0873C358:
+	.global	gPlayerParasolBodyBox
+gPlayerParasolBodyBox:
 	.incbin	"baserom.gba", 0x73C358, 0x14
 	.global	gUnk_0873C36C
 gUnk_0873C36C:
 	.incbin	"baserom.gba", 0x73C36C, 0x6E8
-	.global	gUnk_0873CA54
-gUnk_0873CA54:
+	.global	gMetaKnightDefaultBodyBox
+gMetaKnightDefaultBodyBox:
 	.incbin	"baserom.gba", 0x73CA54, 0x14
 	.global	gUnk_0873CA68
 gUnk_0873CA68:
@@ -3968,17 +3968,17 @@ gUnk_0873CA68:
 	.global	gUnk_0873CA7C
 gUnk_0873CA7C:
 	.incbin	"baserom.gba", 0x73CA7C, 0x14
-	.global	gUnk_0873CA90
-gUnk_0873CA90:
+	.global	gMetaKnightActionSwordBodyBox
+gMetaKnightActionSwordBodyBox:
 	.incbin	"baserom.gba", 0x73CA90, 0x14
-	.global	gUnk_0873CAA4
-gUnk_0873CAA4:
+	.global	gMetaKnightActionSwordBodyBoxRects
+gMetaKnightActionSwordBodyBoxRects:
 	.incbin	"baserom.gba", 0x73CAA4, 0x78
 	.global	gPlayerDefaultTerrainBox
 gPlayerDefaultTerrainBox:
 	.incbin	"baserom.gba", 0x73CB1C, 0x8
-	.global	gUnk_0873CB24
-gUnk_0873CB24:
+	.global	gPlayerDuckTerrainBox
+gPlayerDuckTerrainBox:
 	.incbin	"baserom.gba", 0x73CB24, 0x8
 	.global	gUnk_0873CB2C
 gUnk_0873CB2C:
@@ -3989,23 +3989,23 @@ gUnk_0873CB34:
 	.global	gUnk_0873CB3C
 gUnk_0873CB3C:
 	.incbin	"baserom.gba", 0x73CB3C, 0x8
-	.global	gUnk_0873CB44
-gUnk_0873CB44:
+	.global	gPlayerAirPuffTerrainBox
+gPlayerAirPuffTerrainBox:
 	.incbin	"baserom.gba", 0x73CB44, 0x8
-	.global	gUnk_0873CB4C
-gUnk_0873CB4C:
+	.global	gPlayerStarObjectTerrainBox
+gPlayerStarObjectTerrainBox:
 	.incbin	"baserom.gba", 0x73CB4C, 0x8
-	.global	gUnk_0873CB54
-gUnk_0873CB54:
+	.global	gPlayerObjectCutterBladeTerrainBox
+gPlayerObjectCutterBladeTerrainBox:
 	.incbin	"baserom.gba", 0x73CB54, 0x8
-	.global	gUnk_0873CB5C
-gUnk_0873CB5C:
+	.global	gPlayerObjectLaserTerrainBox
+gPlayerObjectLaserTerrainBox:
 	.incbin	"baserom.gba", 0x73CB5C, 0x8
 	.global	gUnk_0873CB64
 gUnk_0873CB64:
 	.incbin	"baserom.gba", 0x73CB64, 0x8
-	.global	gUnk_0873CB6C
-gUnk_0873CB6C:
+	.global	gPlayerObjectUFOShotTerrainBox
+gPlayerObjectUFOShotTerrainBox:
 	.incbin	"baserom.gba", 0x73CB6C, 0x8
 	.global	gUnk_0873CB74
 gUnk_0873CB74:
@@ -4090,13 +4090,13 @@ gUnk_0873CC3C:
 gUnk_0873CC44:
 	.incbin	"baserom.gba", 0x73CC44, 0x4
 	.word	gUnk_0873CC34
-	.global	gUnk_0873CC4C
-gUnk_0873CC4C:
+	.global	gPlayerInhaleBlockBreakBoxBoxes
+gPlayerInhaleBlockBreakBoxBoxes:
 	.incbin	"baserom.gba", 0x73CC4C, 0x8
-	.global	gUnk_0873CC54
-gUnk_0873CC54:
+	.global	gPlayerInhaleBlockBreakBox
+gPlayerInhaleBlockBreakBox:
 	.incbin	"baserom.gba", 0x73CC54, 0x4
-	.word	gUnk_0873CC4C
+	.word	gPlayerInhaleBlockBreakBoxBoxes
 	.global	gUnk_0873CC5C
 gUnk_0873CC5C:
 	.incbin	"baserom.gba", 0x73CC5C, 0x8
@@ -4125,13 +4125,13 @@ gUnk_0873CC8C:
 gUnk_0873CC94:
 	.incbin	"baserom.gba", 0x73CC94, 0x4
 	.word	gUnk_0873CC8C
-	.global	gUnk_0873CC9C
-gUnk_0873CC9C:
+	.global	gPlayerBurningHitBoxSetBoxes
+gPlayerBurningHitBoxSetBoxes:
 	.incbin	"baserom.gba", 0x73CC9C, 0x8
-	.global	gUnk_0873CCA4
-gUnk_0873CCA4:
+	.global	gPlayerBurningHitBoxSet
+gPlayerBurningHitBoxSet:
 	.incbin	"baserom.gba", 0x73CCA4, 0x4
-	.word	gUnk_0873CC9C
+	.word	gPlayerBurningHitBoxSetBoxes
 	.global	gUnk_0873CCAC
 gUnk_0873CCAC:
 	.incbin	"baserom.gba", 0x73CCAC, 0x8
@@ -4169,22 +4169,22 @@ gUnk_0873CDFC:
 	.global	gUnk_0873CE64
 gUnk_0873CE64:
 	.incbin	"baserom.gba", 0x73CE64, 0x88
-	.global	gUnk_0873CEEC
-gUnk_0873CEEC:
+	.global	gPlayerNeedleHitBoxSet
+gPlayerNeedleHitBoxSet:
 	.incbin	"baserom.gba", 0x73CEEC, 0x8
-	.global	gUnk_0873CEF4
-gUnk_0873CEF4:
+	.global	gPlayerNeedleHitBoxRects
+gPlayerNeedleHitBoxRects:
 	.incbin	"baserom.gba", 0x73CEF4, 0x28
 	.global	gUnk_0873CF1C
 gUnk_0873CF1C:
 	.incbin	"baserom.gba", 0x73CF1C, 0x28
-	.global	gUnk_0873CF44
-gUnk_0873CF44:
+	.global	gPlayerFreezeBlockBreakBoxBoxes
+gPlayerFreezeBlockBreakBoxBoxes:
 	.incbin	"baserom.gba", 0x73CF44, 0x8
-	.global	gUnk_0873CF4C
-gUnk_0873CF4C:
+	.global	gPlayerFreezeBlockBreakBox
+gPlayerFreezeBlockBreakBox:
 	.incbin	"baserom.gba", 0x73CF4C, 0x4
-	.word	gUnk_0873CF44
+	.word	gPlayerFreezeBlockBreakBoxBoxes
 	.global	gUnk_0873CF54
 gUnk_0873CF54:
 	.incbin	"baserom.gba", 0x73CF54, 0x8
@@ -4213,8 +4213,8 @@ gUnk_0873CF84:
 gUnk_0873CF8C:
 	.incbin	"baserom.gba", 0x73CF8C, 0x4
 	.word	gUnk_0873CF84
-	.global	gUnk_0873CF94
-gUnk_0873CF94:
+	.global	gPlayerParasolHitBoxSet
+gPlayerParasolHitBoxSet:
 	.incbin	"baserom.gba", 0x73CF94, 0x8
 	.global	gUnk_0873CF9C
 gUnk_0873CF9C:
@@ -4226,20 +4226,20 @@ gUnk_0873D034:
 gUnk_0873D03C:
 	.incbin	"baserom.gba", 0x73D03C, 0x4
 	.word	gUnk_0873D034
-	.global	gUnk_0873D044
-gUnk_0873D044:
+	.global	gMetaKnightActionSwordHitBoxSet
+gMetaKnightActionSwordHitBoxSet:
 	.incbin	"baserom.gba", 0x73D044, 0x8
-	.global	gUnk_0873D04C
-gUnk_0873D04C:
+	.global	gMetaKnightActionSwordHitBoxRects
+gMetaKnightActionSwordHitBoxRects:
 	.incbin	"baserom.gba", 0x73D04C, 0x78
 	.global	gAbilityBButtonActions
 gAbilityBButtonActions:
 	.incbin	"baserom.gba", 0x73D0C4, 0x34
-	.global	gUnk_0873D0F8
-gUnk_0873D0F8:
+	.global	gPlayerStandFrames
+gPlayerStandFrames:
 	.incbin	"baserom.gba", 0x73D0F8, 0x10E
-	.global	gUnk_0873D206
-gUnk_0873D206:
+	.global	gMetaKnightStandFrames
+gMetaKnightStandFrames:
 	.incbin	"baserom.gba", 0x73D206, 0xA
 	.global	gUnk_0873D210
 gUnk_0873D210:
@@ -4256,14 +4256,14 @@ gUnk_0873D31C:
 	.global	gUnk_0873D350
 gUnk_0873D350:
 	.incbin	"baserom.gba", 0x73D350, 0x34
-	.global	gUnk_0873D384
-gUnk_0873D384:
+	.global	gPlayerJumpFrames
+gPlayerJumpFrames:
 	.incbin	"baserom.gba", 0x73D384, 0x34
-	.global	gUnk_0873D3B8
-gUnk_0873D3B8:
+	.global	gPlayerFallFrames
+gPlayerFallFrames:
 	.incbin	"baserom.gba", 0x73D3B8, 0x68
-	.global	gUnk_0873D420
-gUnk_0873D420:
+	.global	gPlayerHighFallFrames
+gPlayerHighFallFrames:
 	.incbin	"baserom.gba", 0x73D420, 0x9C
 	.global	gUnk_0873D4BC
 gUnk_0873D4BC:
@@ -4280,11 +4280,11 @@ gPlayerDoorAnims:
 	.global	gPlayerWaterDoorAnims
 gPlayerWaterDoorAnims:
 	.incbin	"baserom.gba", 0x73D79E, 0x46
-	.global	gUnk_0873D7E4
-gUnk_0873D7E4:
+	.global	gPlayerFloatFrames
+gPlayerFloatFrames:
 	.incbin	"baserom.gba", 0x73D7E4, 0x9C
-	.global	gUnk_0873D880
-gUnk_0873D880:
+	.global	gPlayerLadderFrames
+gPlayerLadderFrames:
 	.incbin	"baserom.gba", 0x73D880, 0x34
 	.global	gUnk_0873D8B4
 gUnk_0873D8B4:
@@ -4319,8 +4319,8 @@ gUnk_0873DB34:
 	.global	gUnk_0873DB44
 gUnk_0873DB44:
 	.incbin	"baserom.gba", 0x73DB44, 0x68
-	.global	gUnk_0873DBAC
-gUnk_0873DBAC:
+	.global	gGoalGameLaneX
+gGoalGameLaneX:
 	.incbin	"baserom.gba", 0x73DBAC, 0x28
 	.global	gGoalGameLayerHeights
 gGoalGameLayerHeights:
@@ -4355,20 +4355,20 @@ gGoalGameLayerScores:
 	.global	gUnk_0873DCA8
 gUnk_0873DCA8:
 	.incbin	"baserom.gba", 0x73DCA8, 0x18
-	.global	gUnk_0873DCC0
-gUnk_0873DCC0:
+	.global	gGoalGameTrailStarOffsetX
+gGoalGameTrailStarOffsetX:
 	.incbin	"baserom.gba", 0x73DCC0, 0x8
-	.global	gUnk_0873DCC8
-gUnk_0873DCC8:
+	.global	gGoalGameTrailStarOffsetY
+gGoalGameTrailStarOffsetY:
 	.incbin	"baserom.gba", 0x73DCC8, 0x4
 	.global	gGoalGameSpringDepths
 gGoalGameSpringDepths:
 	.incbin	"baserom.gba", 0x73DCCC, 0x4A
-	.global	gUnk_0873DD16
-gUnk_0873DD16:
+	.global	gGoalGameCameraRiseDurations
+gGoalGameCameraRiseDurations:
 	.incbin	"baserom.gba", 0x73DD16, 0x1A
-	.global	gUnk_0873DD30
-gUnk_0873DD30:
+	.global	gGoalGameCameraPauseDurations
+gGoalGameCameraPauseDurations:
 	.incbin	"baserom.gba", 0x73DD30, 0x1C
 	.global	gUnk_0873DD4C
 gUnk_0873DD4C:
@@ -4575,8 +4575,8 @@ gUnk_0873E5A4:
 	.section .game_rodata_0873e5f8, "a"
 	.global	game_rodata_0873e5f8
 game_rodata_0873e5f8:
-	.global	gUnk_0873E5F8
-gUnk_0873E5F8:
+	.global	gIceBlockBlinkTimes
+gIceBlockBlinkTimes:
 	.incbin	"baserom.gba", 0x73E5F8, 0x18
 	.global	gUnk_0873E610
 gUnk_0873E610:
@@ -4587,8 +4587,8 @@ gUnk_0873E620:
 	.global	gUnk_0873E634
 gUnk_0873E634:
 	.incbin	"baserom.gba", 0x73E634, 0xC
-	.global	gUnk_0873E640
-gUnk_0873E640:
+	.global	gExplosionAnimFrames
+gExplosionAnimFrames:
 	.incbin	"baserom.gba", 0x73E640, 0x30
 
 @ 0x0873E670-0x0873E698: C, row game_tbl_0873e670 (src/data/game_tables.c section .game_tbl_0873e670)

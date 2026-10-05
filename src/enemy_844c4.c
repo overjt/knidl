@@ -117,28 +117,28 @@ void NoddyWalk(void)
     while (1)
     {
         TaskSetFrame(9);
-        TaskYieldTrampoline(gUnk_08741FB4[gCurTask->actorSpawnArg]);
+        TaskYieldTrampoline(gNoddyWalkFrameDelays[gCurTask->actorSpawnArg]);
         u1 = gCurTask;
         u1->frame++;
-        TaskYieldTrampoline(gUnk_08741FB4[u1->actorSpawnArg]);
+        TaskYieldTrampoline(gNoddyWalkFrameDelays[u1->actorSpawnArg]);
         u2 = gCurTask;
         u2->frame++;
-        TaskYieldTrampoline(gUnk_08741FB4[u2->actorSpawnArg]);
+        TaskYieldTrampoline(gNoddyWalkFrameDelays[u2->actorSpawnArg]);
         u3 = gCurTask;
         u3->frame++;
-        TaskYieldTrampoline(gUnk_08741FB4[u3->actorSpawnArg]);
+        TaskYieldTrampoline(gNoddyWalkFrameDelays[u3->actorSpawnArg]);
         u4 = gCurTask;
         u4->frame++;
-        TaskYieldTrampoline(gUnk_08741FB4[u4->actorSpawnArg]);
+        TaskYieldTrampoline(gNoddyWalkFrameDelays[u4->actorSpawnArg]);
         u5 = gCurTask;
         u5->frame--;
-        TaskYieldTrampoline(gUnk_08741FB4[u5->actorSpawnArg]);
+        TaskYieldTrampoline(gNoddyWalkFrameDelays[u5->actorSpawnArg]);
         u6 = gCurTask;
         u6->frame--;
-        TaskYieldTrampoline(gUnk_08741FB4[u6->actorSpawnArg]);
+        TaskYieldTrampoline(gNoddyWalkFrameDelays[u6->actorSpawnArg]);
         u7 = gCurTask;
         u7->frame--;
-        TaskYieldTrampoline(gUnk_08741FB4[u7->actorSpawnArg]);
+        TaskYieldTrampoline(gNoddyWalkFrameDelays[u7->actorSpawnArg]);
     }
 }
 
@@ -177,28 +177,28 @@ void NoddyState5(void)
     while (1)
     {
         TaskSetFrame(9);
-        TaskYieldTrampoline(gUnk_08741FB4[gCurTask->actorSpawnArg]);
+        TaskYieldTrampoline(gNoddyWalkFrameDelays[gCurTask->actorSpawnArg]);
         u1 = gCurTask;
         u1->frame++;
-        TaskYieldTrampoline(gUnk_08741FB4[u1->actorSpawnArg]);
+        TaskYieldTrampoline(gNoddyWalkFrameDelays[u1->actorSpawnArg]);
         u2 = gCurTask;
         u2->frame++;
-        TaskYieldTrampoline(gUnk_08741FB4[u2->actorSpawnArg]);
+        TaskYieldTrampoline(gNoddyWalkFrameDelays[u2->actorSpawnArg]);
         u3 = gCurTask;
         u3->frame++;
-        TaskYieldTrampoline(gUnk_08741FB4[u3->actorSpawnArg]);
+        TaskYieldTrampoline(gNoddyWalkFrameDelays[u3->actorSpawnArg]);
         u4 = gCurTask;
         u4->frame++;
-        TaskYieldTrampoline(gUnk_08741FB4[u4->actorSpawnArg]);
+        TaskYieldTrampoline(gNoddyWalkFrameDelays[u4->actorSpawnArg]);
         u5 = gCurTask;
         u5->frame--;
-        TaskYieldTrampoline(gUnk_08741FB4[u5->actorSpawnArg]);
+        TaskYieldTrampoline(gNoddyWalkFrameDelays[u5->actorSpawnArg]);
         u6 = gCurTask;
         u6->frame--;
-        TaskYieldTrampoline(gUnk_08741FB4[u6->actorSpawnArg]);
+        TaskYieldTrampoline(gNoddyWalkFrameDelays[u6->actorSpawnArg]);
         u7 = gCurTask;
         u7->frame--;
-        TaskYieldTrampoline(gUnk_08741FB4[u7->actorSpawnArg]);
+        TaskYieldTrampoline(gNoddyWalkFrameDelays[u7->actorSpawnArg]);
     }
 }
 
@@ -366,7 +366,7 @@ void NoddyAsleep(void)
     struct Task *w;
 
     gCurTask->updateCallback = (u32)NoddyAsleepUpdate;
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
     while (1)

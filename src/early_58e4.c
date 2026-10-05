@@ -78,13 +78,13 @@ struct Task
     /*0x7D*/ u8 hitDirection;
     /*0x7E*/ s8 hitterSlot;
     /*0x7F*/ s8 hitterPlayer;
-    /*0x80*/ s8 unk80;
+    /*0x80*/ s8 u80;
     /*0x81*/ u8 unk81;
     /*0x82*/ u16 hitEffect;
     /*0x84*/ u16 unk84;
     /*0x86*/ u16 unk86;
     /*0x88*/ u32 player;
-    /*0x8C*/ u32 unk8C;
+    /*0x8C*/ u32 u8C;
 };
 
 /* 8 bytes per task type in ROM at 0x0872FF30. */

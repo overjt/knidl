@@ -27,7 +27,7 @@ void TerrainProbeFloor(void)
         gTerrainProbeResult.unkB |= 1;
         if (gCollisionTileSlope[gTerrainTile] != 0)
             goto floor;
-        if (gTerrainProbeResult.unkC <= (gTerrainProbeY + gTerrainBoxBottom) >> 4)
+        if (gTerrainProbeResult.floorRow <= (gTerrainProbeY + gTerrainBoxBottom) >> 4)
             goto floor;
     }
     if (gSlopeIndexTiles[gTerrainSlopeIndex] != 0)
@@ -84,12 +84,12 @@ floor:
 check:
     if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) != 0
         && (gCollisionTileOneWay[gTerrainTile] == 0 || gCollisionTileSlope[gTerrainTile] != 0
-            || gTerrainProbeResult.unkC <= (gTerrainProbeY + gTerrainBoxBottom) >> 4))
+            || gTerrainProbeResult.floorRow <= (gTerrainProbeY + gTerrainBoxBottom) >> 4))
     {
         gTerrainProbeResult.slope = gCollisionTileSlope[gTerrainTile];
         gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
     }
-    gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
+    gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
     return;
 
 slope:
@@ -146,14 +146,14 @@ sides:
         else
             gTerrainProbeResult.unkB = 32;
     }
-    gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
+    gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
     return;
 
 edges:
     dir = 0;
     if (TerrainQueryPixelAndBelow(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxBottom) != 0
         && (gCollisionTileOneWay[gTerrainTile] == 0 || gCollisionTileSlope[gTerrainTile] != 0
-            || (gTerrainProbeY + gTerrainBoxBottom) >> 4 >= gTerrainProbeResult.unkC))
+            || (gTerrainProbeY + gTerrainBoxBottom) >> 4 >= gTerrainProbeResult.floorRow))
     {
         gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
         tile = gTerrainTile;
@@ -168,7 +168,7 @@ edges:
         gTerrainProbeResult.unkB |= 2;
     if (TerrainQueryPixelAndBelow(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxBottom) != 0
         && (gCollisionTileOneWay[gTerrainTile] == 0 || gCollisionTileSlope[gTerrainTile] != 0
-            || (gTerrainProbeY + gTerrainBoxBottom) >> 4 >= gTerrainProbeResult.unkC))
+            || (gTerrainProbeY + gTerrainBoxBottom) >> 4 >= gTerrainProbeResult.floorRow))
     {
         gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
         tile2 = gTerrainTile;
@@ -195,7 +195,7 @@ edges:
             gTerrainProbeResult.unk3++;
         }
     }
-    gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
+    gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
     return;
 
 clear:

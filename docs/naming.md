@@ -216,8 +216,9 @@ Run 3 of #155 added these words, each defined by the whole body:
   state has changed is `<State>Update` (`BonkersWalkUpdate`), as run 2's
   `ScarfyChaseUpdate`.
 - Two species that share one script get a pair prefix
-  (`SwordAndBladeKnightWalkInit`, as `gMrShineAndMrBrightDef`); a verb
-  that fits two states of one family names neither of them.
+  (`SwordAndBladeKnightWalkInit`, as `gMrShineAndMrBrightDef`).  (Run 3
+  added "a verb that fits two states of one family names neither of
+  them"; run 7's R1, below, replaced it.)
 
 Run 4 of #155 named the state bodies with these words, each defined by the
 whole body (the agents' notes in the run-4 PR give every family's verb
@@ -260,6 +261,33 @@ list):
   (`ActorAttached<Move>Held` / `Flight` / `BounceOff`) are reused, with the
   captor's move as the row word, for the player a boss holds
   (`HeldPlayerBackdropHeld`, `HeldPlayerThrowFlightForward`).
+
+Run 7 of #155 (the owner's decisions R1 and R2) replaced two rules that
+had left states and rows unnamed:
+
+- **A verb that fits two states names both (R1).**  Run 3's "a verb that
+  fits two states of one family names neither of them" is withdrawn.
+  Each state takes the verb plus the qualifier that the code proves sets
+  it apart from its twin: a word where one exists - direction (`Up` /
+  `Down`, `Left` / `Right`, `Forward` / `Back`), speed or distance
+  (`Short` / `Long`, `Slow` / `Fast`), phase (`Start` / `Loop` / `End`,
+  `WindUp` / `Release`) or the condition that enters it (`OnGround` /
+  `InAir`, `Near` / `Far`, `Hurt`, `FromFloor`) - and a sequence qualifier
+  (`First` / `Second`, `Slash1` / `Slash2`) only when the transitions
+  prove the order (state A always enters state B) and no word separates
+  them.  The qualifier's evidence (the velocity sign, the timer value, the
+  transition that enters the state) is in the `renames.csv` row, and the
+  update a state selects follows it (`<Enemy><Verb><Qualifier>Update`).
+  Example: Gip's wall states are `GipClimbUp` / `GipClimbDown` (velY < 0 /
+  > 0, both picked by GipPickNextState), their entries
+  `GipClimbUpFromFloor` (GipHitWall during the walk) /
+  `GipClimbDownFromLedge` (GipStartFall: it turns back to the wall it
+  walked off), and the two ends `GipClimbOverTop` / `GipLetGo`.
+- **A row no row word covers whole (R2)** is named after what sets it
+  apart from its sibling rows - its spawn behaviour, its path, the ability
+  the variant carries - when renders or the code prove it
+  (`<Enemy><Distinction>Init`, `g<Enemy><Distinction>States`); otherwise it
+  keeps its `<Enemy>Variant<N>` position name.  No row word is invented.
 
 **A species identity needs three agreeing sources** (run 3): the local
 render (`visual:`), the behaviour and `ActorDef.ability` from the code
@@ -382,6 +410,22 @@ script, in their own commits.  A format-only chain (no code reads it;
 #161's `"proof": "format"`) may be named the same way; the census counts
 it apart.  Asset labels stay unnamed (section 5).
 
+**Records by consumer** (run 7).  A ROM record whose every use is one
+engine API's argument - stored in `Task.frameTable`, passed to
+`ActorSetAttackBox`, `ActorSetExtraAttackBox`, `ActorSetHitReactions`,
+`ActorSetTerrainBox`, or run as an animation script by `ActorStartAnim` /
+`ActorIntroPoseUntilHpBarFull` - has its kind proven by that API and its
+owner by the function that uses it: `g<Consumer><Kind>` after its one
+consuming function (`Task_` and a trailing `Init` dropped:
+`gHeavyMoleYellowMissileFrames`, `gMrBrightJumpAnim`,
+`gBubblesLandAttackBox`), or `g<Family><Kind>` when several functions of
+one family use it and it is the family's only record of that kind
+(`gMetaKnightExtraAttackBox`).  The kinds are `Frames`, `AttackBox`,
+`ExtraAttackBox`, `HitReactions`, `TerrainBox` and `Anim`.  A record that a
+`sub_*` or a slot-named function uses, or that two families share, keeps
+its placeholder until its consumer is named.  The evidence row names
+every consumer.
+
 **Class-value names** (run 4).  When the code sorts records by a value and
 no role word is true for every record in a group, the group is named by
 that value as the code writes it, which claims no role: the collider lists
@@ -478,9 +522,10 @@ Keep the placeholder when:
 
 Unnamed by design, for #37's audit:
 
-- **struct fields whose role changes with the task family** (section 2.2)
-  and the fields run 2 of #155 could not prove; the list of what is left is
-  in #155;
+- **struct fields whose role changes with the task family** (section 2.2;
+  named per family by the aliases) and the fields whose role no reader
+  proves; each one's reason is its row in `docs/analysis/unnamed.csv`
+  (section 5.1);
 - **assets** (graphics, palettes, tilemaps, samples, songs, level maps):
   their labels in `data/*.s` keep address names until a consumer's role
   gives them one (`docs/data.md`), and the data policy (AGENTS.md) still
@@ -512,25 +557,82 @@ from `data/*.s` (a segment with `"asset": true` holds assets), the fields
 from the struct definitions in `include/*.h` (header) and `src/*.c` (local
 copies and module-local records).
 
+Since run 7 (the run that closed #155) every placeholder has its own
+reason.  `docs/analysis/unnamed.csv` (`symbol,kind,reason,note`) gives
+each `sub_*`, `gUnk_` RAM cell and `unk*` field (keyed `Struct.unkXX`, a
+local copy sharing its header struct's row) one reason code, and the note
+says which twin, which unnamed input or which callers; the census groups by
+the code.  The functional ROM labels are classed by their referrers
+instead, mechanically (shared; reached only through an unnamed referrer;
+read by one function only; one slot of a named record; unreferenced), and
+only those that several named functions read need a row.  The audit fails
+on a placeholder with no row ("not examined" is not a reason), on a row
+whose symbol was renamed, and on an unknown code.  The codes:
+
+| code | the placeholder stays because |
+|---|---|
+| `pair` | one verb fits it and a sibling, and the code proves no qualifier (R1 tried) |
+| `identity` | its name needs an identity with fewer than three agreeing sources |
+| `unnamed-input` | its role rests on a cell, field or value that stays unnamed |
+| `no-verb` | no defined verb or noun fits the whole of it; only an ordinal or a vague word would |
+| `restates` | a thin helper whose name would only restate its body or its one caller's step |
+| `mixed` | several unrelated jobs chosen by a parameter or a sub-state |
+| `dead` | nothing references it (kept for the match) |
+| `library` | runtime or library code with no upstream name |
+| `two-meanings` | two encodings or meanings no single noun covers |
+| `local` | read and written by one function only |
+| `write-only` | written but never read, or only cleared |
+| `never-accessed` | no code reads or writes it |
+| `unproven-bits` | a flag word whose bits are not all proven (R3) |
+| `asset` | a graphic, palette, tilemap or text picture: out of #155 by the data policy |
+
 <!-- audit:placeholders:begin (generated by tools/audit.py --write; do not edit) -->
 
 | kind | placeholder | count | reason |
 |---|---|---:|---|
-| function | `sub_*` | 679 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
-| function | `sub_*` | 2 | tracked by #155: engine-zone helpers whose role is not settled |
-| function | `sub_*` | 8 | runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8) |
-| RAM cell | `gUnk_02*`, `gUnk_03*` | 73 | tracked by #155: role not proven; many are proven shared scratch or hold two encodings |
+| function | `sub_*` | 124 | its role rests on a cell, field or value that stays unnamed (the row names it) |
+| function | `sub_*` | 123 | no defined verb or noun fits the whole of it; only an ordinal or a vague word would (docs/naming.md 1) |
+| function | `sub_*` | 69 | a thin helper whose name would only restate its body or its one caller's step (docs/naming.md 5) |
+| function | `sub_*` | 35 | the name needs an identity (enemy, object, picture, scene) with fewer than three agreeing sources (docs/naming.md 2.3) |
+| function | `sub_*` | 33 | nothing references it: no call, table slot or data word (kept for the match) |
+| function | `sub_*` | 10 | several unrelated jobs chosen by a parameter or a sub-state; no one role |
+| function | `sub_*` | 8 | runtime or library code with no upstream name (docs/analysis/rom-map.md sections 6 and 8) |
+| function | `sub_*` | 6 | a flag word whose bits are not all proven (docs/naming.md 7.0, R3) |
+| function | `sub_*` | 3 | one verb fits it and a sibling state, and the code proves no qualifier that sets them apart (docs/naming.md 2.3, R1) |
+| RAM cell | `gUnk_02*`, `gUnk_03*` | 18 | written but never read, or only cleared |
+| RAM cell | `gUnk_02*`, `gUnk_03*` | 17 | two encodings or meanings that no single noun covers (docs/naming.md 5) |
+| RAM cell | `gUnk_02*`, `gUnk_03*` | 11 | its role rests on a cell, field or value that stays unnamed (the row names it) |
+| RAM cell | `gUnk_02*`, `gUnk_03*` | 10 | read and written by one function only; its meaning is local to that algorithm (docs/naming.md 5) |
+| RAM cell | `gUnk_02*`, `gUnk_03*` | 3 | nothing references it: no call, table slot or data word (kept for the match) |
+| RAM cell | `gUnk_02*`, `gUnk_03*` | 3 | the name needs an identity (enemy, object, picture, scene) with fewer than three agreeing sources (docs/naming.md 2.3) |
 | I/O register | `gUnk_04*` | 0 | none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and early_4734.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_* |
-| ROM label | `gUnk_08*` | 2739 | tracked by #155: functional data whose consumer does not settle a name |
+| ROM label | `gUnk_08*` | 717 | shared: two or more slots, records or consumers point at it, so no single slot or role is its identity (docs/naming.md section 2.4) |
+| ROM label | `gUnk_08*` | 683 | reached only through a record or consumer that is itself unnamed (a `gUnk_` record, a `sub_*`): it is named with that referrer |
+| ROM label | `gUnk_08*` | 793 | read by one function only: its meaning is local to that function's algorithm, as for RAM cells (docs/naming.md section 5) |
+| ROM label | `gUnk_08*` | 1 | no code or record names it: a record boundary the data census cut, reached by an offset from a named neighbour |
 | ROM label | `gUnk_08*` | 17073 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
-| ROM label | (named) | 5193 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
-| ROM label | (named) | 55 | documented by position in a format-only chain: a slot no code reads, such as the frame list a graphics descriptor's trailer word points at (docs/naming.md section 2.4, docs/data.md 5.3) |
+| ROM label | (named) | 5336 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
+| ROM label | (named) | 60 | documented by position in a format-only chain: a slot no code reads, such as the frame list a graphics descriptor's trailer word points at (docs/naming.md section 2.4, docs/data.md 5.3) |
+| ROM label | `gUnk_08*` | 30 | no defined verb or noun fits the whole of it; only an ordinal or a vague word would (docs/naming.md 1) |
+| ROM label | `gUnk_08*` | 14 | its role rests on a cell, field or value that stays unnamed (the row names it) |
+| ROM label | `gUnk_08*` | 12 | the name needs an identity (enemy, object, picture, scene) with fewer than three agreeing sources (docs/naming.md 2.3) |
+| ROM label | `gUnk_08*` | 7 | two encodings or meanings that no single noun covers (docs/naming.md 5) |
+| ROM label | `gUnk_08*` | 5 | several unrelated jobs chosen by a parameter or a sub-state; no one role |
+| ROM label | `gUnk_08*` | 1 | a flag word whose bits are not all proven (docs/naming.md 7.0, R3) |
 | struct field | `unk*` | 14 | per-family registers, named per family by the aliases in include/task_vars.h (docs/header-conventions.md; the member keeps its unk name, lessons and history cite it); `unk76` is u76's member for the player's bits |
-| struct field | `unk*` | 135 | tracked by #155: the field's role is not proven |
-| struct field | `unk*` | 233 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
+| struct field | `unk*` | 2 | struct PlayerState's per-action scratch: each player action keeps its own value there, named per action by the aliases in include/task_vars.h (#155 run 7; the member keeps its unk name) |
+| struct field | `unk*` | 28 | the per-family registers in the task engine's local copies of struct Task (src/early_58e4.c, early_5c4c.c): named per family by the aliases of include/task_vars.h, which the engine never uses |
+| struct field | `unk*` | 92 | no code reads or writes it |
+| struct field | `unk*` | 48 | two encodings or meanings that no single noun covers (docs/naming.md 5) |
+| struct field | `unk*` | 23 | its role rests on a cell, field or value that stays unnamed (the row names it) |
+| struct field | `unk*` | 13 | written but never read, or only cleared |
+| struct field | `unk*` | 8 | the name needs an identity (enemy, object, picture, scene) with fewer than three agreeing sources (docs/naming.md 2.3) |
+| struct field | `unk*` | 2 | read and written by one function only; its meaning is local to that algorithm (docs/naming.md 5) |
+| struct field | `unk*` | 2 | no defined verb or noun fits the whole of it; only an ordinal or a vague word would (docs/naming.md 1) |
+| struct field | `unk*` | 1 | a flag word whose bits are not all proven (docs/naming.md 7.0, R3) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 507 RAM cells by role and 24 by position, 2989 ROM labels by role and 5248 by position.
+Named for comparison: 518 RAM cells by role and 24 by position, 3317 ROM labels by role and 5396 by position.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 
@@ -539,52 +641,52 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | crt0 | cartridge header, crt0, master ISR and the ARM task switch | 6 | 1 |
 | engine | the engine zone: AgbInit, tasks, sprites, fades, sound front end, link | 184 | 2 |
 | M01 | AgbMain | 1 | 0 |
-| M02 | game-state bodies, title, screen loaders, pause, HUD | 109 | 13 |
-| M03 | main menu and its sprite tasks | 79 | 4 |
-| M04 | scripted-sequence director and scripts | 65 | 3 |
-| M05 | player animation bank and collision registry | 23 | 4 |
+| M02 | game-state bodies, title, screen loaders, pause, HUD | 109 | 3 |
+| M03 | main menu and its sprite tasks | 79 | 2 |
+| M04 | scripted-sequence director and scripts | 65 | 2 |
+| M05 | player animation bank and collision registry | 23 | 2 |
 | M06 | collision engine and hit tests | 55 | 5 |
-| M07 | level / room builder | 157 | 29 |
-| M08 | camera, BG streaming, map events, stage objects | 151 | 14 |
-| M09 | breakable blocks and the player task | 63 | 11 |
-| M10 | player action bodies, part 2 | 39 | 4 |
-| M11 | player mode machine and stage services | 121 | 16 |
+| M07 | level / room builder | 157 | 19 |
+| M08 | camera, BG streaming, map events, stage objects | 151 | 12 |
+| M09 | breakable blocks and the player task | 63 | 10 |
+| M10 | player action bodies, part 2 | 39 | 1 |
+| M11 | player mode machine and stage services | 121 | 14 |
 | M12 | player action bodies, part 3 | 21 | 0 |
 | M13 | player action bodies, part 4 | 24 | 0 |
 | M14 | player action bodies, part 5, and task type #6 | 82 | 2 |
-| M15 | the player's effect objects (task type #7) | 84 | 29 |
-| M16 | effect spawner (task types #81-#90) | 89 | 14 |
-| M17 | actor core | 245 | 13 |
-| M18 | actor core, part 2 | 256 | 25 |
-| M19 | cutscenes and ending sequences | 220 | 45 |
-| M20 | enemies, bank 1 | 414 | 27 |
+| M15 | the player's effect objects (task type #7) | 84 | 26 |
+| M16 | effect spawner (task types #81-#90) | 89 | 13 |
+| M17 | actor core | 245 | 9 |
+| M18 | actor core, part 2 | 256 | 8 |
+| M19 | cutscenes and ending sequences | 220 | 29 |
+| M20 | enemies, bank 1 | 414 | 26 |
 | M21 | enemies, bank 2 | 200 | 12 |
 | M22 | enemies, bank 3 | 125 | 4 |
-| M23 | enemies, bank 4, and two bosses | 297 | 68 |
+| M23 | enemies, bank 4, and two bosses | 297 | 37 |
 | M24 | enemies, bank 5 | 158 | 25 |
-| M25 | bosses | 121 | 8 |
-| M26 | enemies, bank 7 | 148 | 35 |
-| M27 | mid-bosses | 145 | 13 |
-| M28 | enemies, bank 9, and the player's death sequence | 204 | 57 |
-| M29 | enemies, bank 10 | 226 | 43 |
-| M30 | enemies, bank 11 | 131 | 20 |
-| M31 | enemies, bank 12 | 123 | 30 |
-| M32 | enemies, bank 13 | 135 | 35 |
-| M33 | HUD effects | 110 | 11 |
+| M25 | bosses | 121 | 2 |
+| M26 | enemies, bank 7 | 148 | 16 |
+| M27 | mid-bosses | 145 | 8 |
+| M28 | enemies, bank 9, and the player's death sequence | 204 | 16 |
+| M29 | enemies, bank 10 | 226 | 13 |
+| M30 | enemies, bank 11 | 131 | 8 |
+| M31 | enemies, bank 12 | 123 | 19 |
+| M32 | enemies, bank 13 | 135 | 20 |
+| M33 | HUD effects | 110 | 6 |
 | M34 | wavy scroll, save file, input recorder | 105 | 9 |
-| M35 | sub-game framework and Quick Draw | 196 | 9 |
+| M35 | sub-game framework and Quick Draw | 196 | 4 |
 | M36 | Bomb Rally | 117 | 2 |
 | M37 | Air Grind and game state 11 | 82 | 3 |
-| M38 | ending, staff credits, game over | 110 | 37 |
+| M38 | ending, staff credits, game over | 110 | 14 |
 | m4a | the m4a sound engine (asm core and C driver) | 95 | 3 |
 | sdk | SDK stubs: SWI thunks, SoftReset, SRAM driver, lib1funcs, trampolines, veneer | 32 | 4 |
-| all | | 5348 | 689 |
+| all | | 5348 | 411 |
 
-Register aliases (include/task_vars.h): 1051 in 198 families: AbilityReleaseFlash 1, AbilityStar 6, Actor 38, AirGrind 6, AirGrindDoorSign 1, ArenaDoorSign 1, Blipper 9, BombRally 10, BombRallyDoorSign 1, BombRallyObject 8, Bomber 2, Bonkers 10, BonkersHammerHitBox 1, BonkersNut 1, BossDoorSign 3, BrontoBurt 9, BroomHatter 4, Bubbles 2, Bugzzy 9, BugzzyAfterimage 3, BugzzyLadybug 5, Burst 1, Cannon 4, CannonFuse 8, CannonFuseSpark 2, CannonSmoke 3, Cappy 2, Chilly 3, ChillyFreeze 4, CutsceneActor 11, CutsceneDirector 1, DashFireTrail 2, DashFlame 2, DoorObject 1, DoorOpening 3, DustBurst 2, DustTrail 3, EndingEpilogue 12, EndingStarRodReturn 8, EraseConfirmDialog 3, EraseFileWipe 4, ExplosionScreenFlash 1, FileMenuHighlight 4, FileMenuSlot 4, FileSelectCursor 4, FileSelectSlot 2, FileSelectSlotLabel 1, FireLion 11, Flamer 12, FlamerFlame 1, GameOverChoice 2, GameOverObject 2, GameOverPalette 4, GameOverPlayer 5, GameOverSprite 1, Gip 5, Glunk 2, GlunkShot 1, GoalGameBigTrailStar 1, GoalGameHelperKirby 1, GoalGameLaunchStars 1, GoalGameSign 1, GoalGameSmallTrailStar 1, GrandWheelie 17, GrandWheelieMiniWheelie 2, HalveScore 2, HeavyMole 5, HeavyMoleArm 7, HeavyMoleEye 1, HeavyMoleRedMissile 1, HeavyMoleSmoke 3, HeavyMoleYellowMissile 1, HitFrost 2, HotHead 7, HotHeadFire 3, IceBlock 3, ImpactStar 1, InhalableStar 1, IntroStoryPicture 1, Kabu 13, KingDedede 20, KingDededeStar 2, Kracko 19, KrackoCloud 4, KrackoJrOrbs 3, KrackoLightningMiddle 1, KrackoLightningTop 1, KrackoStarman 1, LandingImpact 2, LaserBall 12, LevelDoorSign 1, LinkPlayCable 4, LinkPlayColorCycle 4, LinkPlayConsole 4, LinkPlayPalettePulse 6, LinkPlayPlayerList 9, MaceKnightMace 2, MapEvent 20, MenuBackground 4, MenuBgPaletteCycle 7, MenuScreenTitle 3, MetaKnight 10, MetaKnightCape 1, MetaKnightMask 1, MetaKnightMaskHalf 2, MetaKnightSword 4, MetaKnightSwordHitBox 1, MetaKnights 11, MetaKnightsKnight 16, ModeListCursor 4, ModePlayerCountPanel 3, MrFrosty 10, MrFrostyIceCube 4, MrShineAndMrBright 19, MrShineAndMrBrightAttack 6, MrTickTock 14, MrTickTockNote 1, MrTickTockRing 2, MuseumAbilitySign 1, Needlous 5, NightmarePowerOrb 6, NightmarePowerOrbEscape 1, NightmarePowerOrbEscapeStar 5, NightmarePowerOrbIntroScroll 1, NightmarePowerOrbStar 1, NightmarePowerOrbStarAfterimage 1, NightmarePowerOrbStarTrail 1, NightmarePowerOrbStarTrailDown 1, NightmarePowerOrbStarTrailUp 1, NightmareWizard 11, NightmareWizardCloakHands 2, NightmareWizardHitBox 1, NightmareWizardPalmTornado 1, NightmareWizardPointTornado 1, NightmareWizardStar 3, Noddy 4, NormalExtraPanel 3, PaintRoller 3, PaintRollerPainting 3, PaletteAnim 13, Parasol 5, Pengy 5, PengyIceBreath 1, PengyIceBreathSparkle 1, PhanPhan 6, PhanPhanApple 1, Player 121, PlayerCountPanel 3, PlayerEffect 3, PlayerObject 2, PoppyBrosJr 14, PoppyBrosSr 11, PoppyBrosSrBomb 1, PoppyBrosSrHand 8, PoppyBrosSrHead 3, QuickDraw 16, QuickDrawDoorSign 1, QuickDrawObject 22, RingStar 1, Rocky 3, RoomParticles 3, Scarfy 8, Shotzo 15, ShotzoCannonball 2, SirKibble 3, Slippy 4, SoundTestCursors 3, SoundTestPulse 5, Sparky 4, Squishy 4, StageDoorSign 4, StageEffect 1, StarFlashOnParent 3, StarRodPiece 2, Starman 11, SubGame 1, SwordAndBladeKnight 8, SwordAndBladeKnightSlash 1, TitlePalette 1, TitleSprites 4, TridentKnightTrident 1, Twister 7, Twizzy 11, UFO 8, WaddleDee 4, WaddleDoo 5, WaddleDooBeam 2, WarpStar 12, WarpStarStationDoorSign 1, WarpStarStationDoorSparkle 1, WarpStarStationLevelSign 1, WarpStarStationNumber 1, WarpStarTrailStar 3, Wheelie 10, WhispyWoods 5, WhispyWoodsAirPuff 3, WhispyWoodsApple 4, WhispyWoodsLeaves 4.
+Register aliases (include/task_vars.h): 1186 in 205 families: AbilityReleaseFlash 1, AbilityStar 6, Actor 44, AirGrind 6, AirGrindDoorSign 1, AirGrindObject 5, ArenaDoorSign 1, Blipper 9, BombRally 10, BombRallyDoorSign 1, BombRallyObject 37, Bomber 2, Bonkers 10, BonkersHammerHitBox 1, BonkersNut 1, BossDoorSign 3, BrontoBurt 9, BroomHatter 4, Bubbles 2, Bugzzy 9, BugzzyAfterimage 3, BugzzyLadybug 5, Burst 1, Cannon 4, CannonFuse 8, CannonFuseSpark 2, CannonSmoke 3, Cappy 2, Chilly 3, ChillyFreeze 4, CutsceneActor 11, CutsceneDirector 1, DashFireTrail 2, DashFlame 2, DoorObject 1, DoorOpening 3, DustBurst 2, DustTrail 3, EndingEpilogue 12, EndingStarRodReturn 8, EraseConfirmDialog 3, EraseFileWipe 4, ExplosionScreenFlash 1, ExtraModeTitleSprite 1, FileMenuHighlight 4, FileMenuSlot 4, FileSelectCursor 4, FileSelectSlot 2, FileSelectSlotLabel 1, FireLion 11, FireLionFlame 1, Flamer 12, FlamerFlame 1, GameOverChoice 3, GameOverObject 2, GameOverPalette 4, GameOverPlayer 5, GameOverSprite 1, Gip 5, Glunk 2, GlunkShot 1, GoalGameBigTrailStar 1, GoalGameCamera 2, GoalGameHelperKirby 9, GoalGameLaunchStars 1, GoalGameOneUp 4, GoalGameSign 4, GoalGameSmallTrailStar 1, GrandWheelie 17, GrandWheelieMiniWheelie 2, HalveScore 2, HeavyMole 5, HeavyMoleArm 7, HeavyMoleEye 1, HeavyMoleRedMissile 1, HeavyMoleSmoke 3, HeavyMoleYellowMissile 1, HitFrost 2, HotHead 7, HotHeadFire 3, IceBlock 3, ImpactStar 1, InhalableStar 1, IntroStoryPicture 1, Kabu 16, KingDedede 21, KingDededeStar 2, Kracko 20, KrackoCloud 4, KrackoJrOrbs 3, KrackoLightningMiddle 1, KrackoLightningTop 1, KrackoStarman 1, LandingImpact 2, LaserBall 12, LevelDoorSign 1, LinkPlayCable 4, LinkPlayColorCycle 4, LinkPlayConsole 4, LinkPlayPalettePulse 6, LinkPlayPlayerList 9, MaceKnightMace 2, MapEvent 20, MenuBackground 4, MenuBgPaletteCycle 7, MenuScreenTitle 3, MetaKnight 13, MetaKnightCape 1, MetaKnightMask 1, MetaKnightMaskHalf 2, MetaKnightSword 4, MetaKnightSwordHitBox 1, MetaKnights 11, MetaKnightsKnight 16, ModeListCursor 4, ModePlayerCountPanel 3, MrFrosty 10, MrFrostyIceCube 4, MrShineAndMrBright 19, MrShineAndMrBrightAttack 6, MrTickTock 14, MrTickTockNote 1, MrTickTockRing 2, MuseumAbilitySign 1, Needlous 5, NightmarePowerOrb 6, NightmarePowerOrbEscape 1, NightmarePowerOrbEscapeStar 5, NightmarePowerOrbIntroScroll 1, NightmarePowerOrbStar 1, NightmarePowerOrbStarAfterimage 1, NightmarePowerOrbStarTrail 1, NightmarePowerOrbStarTrailDown 1, NightmarePowerOrbStarTrailUp 1, NightmareWizard 11, NightmareWizardCloakHands 2, NightmareWizardDefeatFlash 1, NightmareWizardHitBox 1, NightmareWizardPalmTornado 1, NightmareWizardPointTornado 1, NightmareWizardStar 3, Noddy 4, NormalExtraPanel 3, PaintRoller 3, PaintRollerPainting 3, PaletteAnim 13, Parasol 5, Pengy 5, PengyIceBreath 1, PengyIceBreathSparkle 1, PhanPhan 6, PhanPhanApple 1, Player 131, PlayerCountPanel 3, PlayerEffect 20, PlayerObject 20, PlayerState 15, PoppyBrosJr 14, PoppyBrosSr 11, PoppyBrosSrBomb 1, PoppyBrosSrHand 8, PoppyBrosSrHead 3, QuickDraw 16, QuickDrawDoorSign 1, QuickDrawObject 26, RingStar 1, Rocky 3, RoomParticles 4, Scarfy 8, Shotzo 15, ShotzoCannonball 2, SirKibble 3, Slippy 4, SoundTestCursors 3, SoundTestPulse 5, Sparky 4, Squishy 4, StageDoorSign 4, StageEffect 1, StarFlashOnParent 3, StarRodPiece 2, Starman 11, SubGame 1, SwordAndBladeKnight 8, SwordAndBladeKnightSlash 1, TitlePalette 1, TitleSprites 4, TridentKnightTrident 1, Twister 7, Twizzy 11, UFO 8, WaddleDee 4, WaddleDoo 5, WaddleDooBeam 2, WarpStar 12, WarpStarStationDoorSign 1, WarpStarStationDoorSparkle 2, WarpStarStationLevelSign 1, WarpStarStationNumber 1, WarpStarTrailStar 3, Wheelie 10, WhispyWoods 5, WhispyWoodsAirPuff 3, WhispyWoodsApple 4, WhispyWoodsLeaves 4.
 
-Named constants (include/constants/, docs/naming.md section 7): 1473 in 11 headers, spelled at 3980 sites: `abilities.h` 27 (653 sites), `actors.h` 8 (120 sites), `camera.h` 6 (73 sites), `game_states.h` 37 (239 sites), `hits.h` 10 (94 sites), `player.h` 162 (286 sites), `rooms.h` 14 (87 sites), `sound.h` 30 (93 sites), `states.h` 677 (1680 sites), `tasks.h` 266 (406 sites), `variants.h` 236 (249 sites).  Integer literals left at a mechanical family's positions whose value has a constant: tasks 0, abilities 0, game_states 0, stage_requests 0, hits 0, actors 0, rooms 0, sound 0, songs 0, player_effect_variants 0, player_object_variants 0, camera 0.
+Named constants (include/constants/, docs/naming.md section 7): 1571 in 13 headers, spelled at 4637 sites: `abilities.h` 27 (653 sites), `actors.h` 8 (120 sites), `camera.h` 6 (73 sites), `game_states.h` 37 (239 sites), `hits.h` 25 (132 sites), `player.h` 180 (476 sites), `rooms.h` 14 (87 sites), `sound.h` 30 (93 sites), `sprites.h` 1 (239 sites), `states.h` 692 (1717 sites), `task_skip.h` 5 (147 sites), `tasks.h` 266 (406 sites), `variants.h` 280 (255 sites).  Integer literals left at a mechanical family's positions whose value has a constant: tasks 0, abilities 0, game_states 0, stage_requests 0, hits 0, actors 0, rooms 0, sound 0, songs 0, player_effect_variants 0, player_object_variants 0, attack_box_immunity 0, attack_box_flags 0, body_box_flags 0, body_box_guard 0, player_action_flags 0, player_status 0, sprite_flags 0, task_skip 0, camera 0.
 
-`unk*` fields by header struct: `Task` 17, `PlayerState` 10, `TerrainProbeResult` 9, `TerrainResult` 8, `AirGrindCourse` 7, `AttackBox` 7, `BodyBox` 7, `Actor` 6, `Door` 6, `AirGrindSceneryObject` 5, `AirGrindScenerySet` 5, `AirGrindResultsState` 4, `CannonFusePiece` 4, `RoomDef` 4, `ScreenShake` 4, `AirGrindCourseRacer` 3, `RoomParticleAnimFrame` 3, `ScrollLock` 3, `Unk03004B00` 3, `ActorDef` 2, `AirGrindRacerState` 2, `AirGrindScript` 2, `AirGrindState` 2, `BgMap` 2, `DoorState` 2, `M11Buf` 2, `PlayerHitBoxSet` 2, `RoomObjectGfxSlot` 2, `SaveSlot` 2, `Unk0873EAC0` 2, `ActorHandlers` 1, `ActorSpawn` 1, `BgAnim` 1, `BootLogoObject` 1, `GfxDesc` 1, `GfxHeader` 1, `GfxSrc` 1, `HitBoxSet` 1, `HudBar` 1, `InputRecording` 1, `M04Spark` 1, `RoomObjectGfx` 1.
+`unk*` fields by header struct: `Task` 17, `PlayerState` 8, `Door` 6, `TerrainProbeResult` 6, `TerrainResult` 6, `BodyBox` 5, `AirGrindCourse` 4, `Actor` 3, `AttackBox` 3, `CannonFusePiece` 3, `RoomDef` 3, `RoomParticleAnimFrame` 3, `Unk03004B00` 3, `AirGrindScenerySet` 2, `AirGrindScript` 2, `BgMap` 2, `PlayerHitBoxSet` 2, `ActorDef` 1, `ActorHandlers` 1, `ActorSpawn` 1, `AirGrindRacerState` 1, `BgAnim` 1, `BootLogoObject` 1, `GfxDesc` 1, `GfxHeader` 1, `GfxSrc` 1, `HitBoxSet` 1, `HudBar` 1, `M04Spark` 1, `RoomObjectGfx` 1, `SaveSlot` 1.
 
 <!-- audit:placeholders:end -->
 
@@ -687,6 +789,7 @@ tools/constants.py --defs defs.csv [--preambles p.json]   # dry run
 tools/constants.py --defs defs.csv --write   # headers + constants.csv rows
 tools/constants.py --scan tasks --out sites.csv   # a mechanical family's sites
 tools/constants.py --sites sites.csv --write      # respell the literals
+tools/constants.py --bitexprs FAMILY   # R3's complements / unions of bits
 tools/constants.py --verify-cpp HEAD   # same tokens after cpp, literals by value
 make clean && make compare
 tools/rename.py --verify-diff master   # covers the constants too
@@ -767,11 +870,42 @@ number (the counts are `tools/constants.py --census`'s):
 | `states.h` (task.h) | `<FAMILY>_STATE_<VERB>` / `_<N>` | the slots of every `g<Family>States` table | the `updateState` stores of unpaired tables (lesson 4.160); states in functions that run two machines |
 | `variants.h` (task.h) | `<TABLE>_VARIANT_<VERB>` | the role-named slots of every variant table | slots with position names, `sub_*`, shared entries; variants that come from room data |
 | `game_states.h` (room.h, mode.h) | `GAME_STATE_*`, `STAGE_REQUEST_*` | AgbMain's cases; the frame loops' request cases | game state 2 (no writer) |
-| `hits.h` (task.h, collision.h) | `HIT_KIND_*`, `HIT_EFFECT_*` | ActorReactToHitKind's cases and the hit tests that write them; ActorAttachToHitter's effects | hit kinds 5 and 7 (two views); effects beyond the attaching three |
+| `hits.h` (task.h, collision.h) | `HIT_KIND_*`, `HIT_EFFECT_*` | ActorReactToHitKind's cases and the hit tests that write them; ActorAttachToHitter's effects | hit kind 7 (two views); effects beyond the attaching three (run 7 named hit kind 5, the slide kick, and the player's hit-effect bits) |
 | `actors.h` (task.h) | `ACTOR_KIND_*` | CreateActorByKind's and ActorBindDefSlot's tables, CreateChildTask's child kinds | 3 (one family), 9 and 10 |
 | `camera.h` (room.h) | `CAMERA_MODE_*` | RoomTaskUpdateCamera's cases | the hub's 2-4 (its own meanings) |
 | `rooms.h` (room.h, save.h) | `ROOM_ENTRY_*`, `DOOR_KIND_*` | Task_Player's entry cases; EnterDoor's and SpawnDoorObjects' door kinds | door-object kinds 0-2 |
 | `sound.h` (sound.h, player.h) | `SE_<ROLE>`, `BGM_<ROLE>` | ids every call site plays for one thing | every id with two roles, the cutscene songs (they are room music too); the sounds and songs themselves are assets |
+
+### 7.0 Flag bits (run 7, the owner's decision R3)
+
+A flag word left as `unk*` because it holds one bit per meaning gets a
+field name where every bit is a flag of the same object (`flags`,
+`immunityFlags`, `statusFlags`) and one `#define` per proven bit, in the
+constants header of its subsystem (`hits.h` for the hit engine's boxes,
+`player.h` for `PlayerState`, `rooms.h` for doors and room headers, a new
+`sprites.h` for the sprite flags): `<STRUCT>_<WORD>_<BIT>`, the word taken
+from the field (`AttackBox.immunityFlags` gives `ATTACK_BOX_IMMUNITY_*`,
+a plain `flags` gives `<STRUCT>_FLAG_*`), valued as the code's masks spell
+the bit (`0x40`).
+
+- **Where.**  `tools/constants.py`'s `bits` positions (FAMILIES): a literal
+  that is the whole right operand of `&`, `|`, `^`, `&=`, `|=` or `^=` on
+  that field (`a->immunityFlags & 4`, `t->spriteFlags |= 0x8000`).  The
+  constant is used only on that field; the same value in another flag word
+  is another family.
+- **Proof.**  The literal form is D6's: `--verify-cpp` (tokens identical,
+  literals by value), the per-file `.s` oracle and `make compare`.
+- **Complements and masks of several bits** (`&= 0x7FFF`, `& 0x6000`)
+  cannot be spelled with the constant under that rule.  The owner's
+  coordinator approved a second form, in commits of its own: the clear
+  becomes `&= ~FLAG` and the mask `(FLAG_A | FLAG_B)`, only with bits that
+  are already proven, with no new cast or type change.  These are token
+  changes, so their proof is the per-file `.s` oracle (all units identical
+  to the parent commit), `make compare` and `tools/rename.py --verify-diff`;
+  a site whose assembly would change keeps its number (isolated per site),
+  and the block's note counts those sites and says why.
+- **Unproven bits** stay numbers, with the reason next to the block (a bit
+  no reader tests, a value the writers disagree on).
 
 ### 7.1 Struct tags and locals (run 6, the owner's decisions D7 and D8)
 

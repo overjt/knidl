@@ -9,7 +9,7 @@ extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 ActorReactToHit(void);
 
-void sub_0809cb90(void)
+void AxeKnightSlashLoopUpdate(void)
 {
     struct Task *t;
 
@@ -27,8 +27,8 @@ void sub_0809cb90(void)
     ActorCheckHits();
     ActorReactToHit();
     if ((u16)(gCurTask->frame - 22) <= 1)
-        ActorCheckHitsWithBox((s32)gUnk_08747EF4);
-    if (sub_0809f994() != 0)
+        ActorCheckHitsWithBox((s32)gAxeKnightSlashAttackBox);
+    if (MetaKnightsKnightIsAtEdge() != 0)
     {
         if (gCurTask->pixelX < ((s8 *)gCurTask->u8C.actor->terrainBox)[4] + 24)
             gCurTask->pixelX = ((s8 *)gCurTask->u8C.actor->terrainBox)[4] + 24;

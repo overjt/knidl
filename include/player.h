@@ -37,7 +37,7 @@ struct M04Spark
     /*0x0E*/ u16 unk0E;
 };
 
-struct M11Buf { u8 unk00[4]; u8 unk04[4]; };
+struct PlayerHitBoxList { u8 box[4]; u8 terminator[4]; };
 
 struct PlayerBodyBox { u32 w[5]; };
 
@@ -83,7 +83,7 @@ extern struct PlayerBodyBox gPlayerBodyBoxes[];
 extern u16 gBlockCursorAttack; /*   the block kind (hit-box id low byte) */
 extern s16 gBlockCursorTile; /*   the metatile's collision byte */
 extern u8 gUnk_020061E0;
-extern struct M11Buf gPlayerHitBoxLists[];
+extern struct PlayerHitBoxList gPlayerHitBoxLists[];
 extern u16 gBlockCursorX; /* the block CanBreakBlock accepted: x */
 extern struct M04Spark gUnk_02007E90[][3];
 extern u16 gUnk_02007F60[];
@@ -144,8 +144,8 @@ extern s16 gUnk_087321B2[];
 extern u32 gUnk_087321C0[];
 extern u32 gUnk_087321EC[];
 extern u16 gUnk_0873A458[];
-extern u16 *gUnk_0873A47C[]; /* animation script per block kind */
-extern s8 gUnk_0873A494[];
+extern u16 *gBlockBreakScripts[]; /* animation script per block kind */
+extern s8 gBlockHardness[];
 extern s8 gUnk_0873A5D4[];
 extern u16 gUnk_0873A6D4[][3];
 extern u16 gUnk_0873A6EC[][3][3];
@@ -190,10 +190,10 @@ extern u8 gUnk_0873B88A[][5];
 extern u16 gUnk_0873B8C6[][2][8];
 extern u32 gPlayerDefaultBodyBox[]; /* stored to PlayerState.bodyBox as (u32)gPlayerDefaultBodyBox */
 extern u32 gUnk_0873BD14[];
-extern u32 gUnk_0873BD28[];
+extern u32 gPlayerDuckBodyBox[];
 extern u32 gUnk_0873BD3C[];
 extern u32 gUnk_0873BD50[];
-extern u32 gUnk_0873BD64[]; /* collider row passed to RegisterCollider (4th arg) */
+extern u32 gPlayerAirPuffBodyBox[]; /* collider row passed to RegisterCollider (4th arg) */
 extern u32 gUnk_0873BD78[];
 extern u32 gUnk_0873BD8C[];
 extern u32 gUnk_0873BDA0[];
@@ -225,10 +225,10 @@ extern u32 gUnk_0873C060[];
 extern u32 gUnk_0873C074[];
 extern u32 gUnk_0873C0C0[];
 extern u32 gUnk_0873C128[];
-extern u32 gUnk_0873C1B0[];
-extern u32 gUnk_0873C1C4[];
+extern u32 gPlayerNeedleBodyBox[];
+extern u32 gPlayerNeedleBodyBoxRects[];
 extern u32 gUnk_0873C1EC[];
-extern u32 gUnk_0873C214[]; /* collider row passed to RegisterCollider (4th arg) */
+extern u32 gPlayerFreezeCollider[]; /* collider row passed to RegisterCollider (4th arg) */
 extern u32 gUnk_0873C228[];
 extern u32 gUnk_0873C264[];
 extern u32 gUnk_0873C278[];
@@ -238,24 +238,24 @@ extern u32 gUnk_0873C2C8[];
 extern u32 gUnk_0873C2DC[];
 extern u32 gUnk_0873C304[];
 extern u32 gUnk_0873C318[];
-extern u32 gUnk_0873C358[];
+extern u32 gPlayerParasolBodyBox[];
 extern u32 gUnk_0873C36C[];
-extern u32 gUnk_0873CA54[];
+extern u32 gMetaKnightDefaultBodyBox[];
 extern u32 gUnk_0873CA68[];
 extern u32 gUnk_0873CA7C[];
-extern u32 gUnk_0873CA90[];
-extern u32 gUnk_0873CAA4[];
+extern u32 gMetaKnightActionSwordBodyBox[];
+extern u32 gMetaKnightActionSwordBodyBoxRects[];
 extern u32 gPlayerDefaultTerrainBox[];
-extern u32 gUnk_0873CB24[];
+extern u32 gPlayerDuckTerrainBox[];
 extern u32 gUnk_0873CB2C[];
 extern u32 gUnk_0873CB34[];
 extern u32 gUnk_0873CB3C[];
-extern s8 gUnk_0873CB44[]; /* collision box passed to sub_0802205c / TerrainCollideBoxAlongVelocity */
-extern s8 gUnk_0873CB4C[];
-extern s8 gUnk_0873CB54[];
-extern s8 gUnk_0873CB5C[];
+extern s8 gPlayerAirPuffTerrainBox[]; /* collision box passed to sub_0802205c / TerrainCollideBoxAlongVelocity */
+extern s8 gPlayerStarObjectTerrainBox[];
+extern s8 gPlayerObjectCutterBladeTerrainBox[];
+extern s8 gPlayerObjectLaserTerrainBox[];
 extern s8 gUnk_0873CB64[];
-extern s8 gUnk_0873CB6C[];
+extern s8 gPlayerObjectUFOShotTerrainBox[];
 extern u32 gUnk_0873CB84[];
 extern u32 gUnk_0873CB94[];
 extern u32 gUnk_0873CBA4[];
@@ -269,11 +269,11 @@ extern u32 gUnk_0873CC1C[];
 extern u32 gUnk_0873CC2C[];
 extern u32 gUnk_0873CC3C[];
 extern u32 gUnk_0873CC44[];
-extern struct HitBoxSet gUnk_0873CC54;
+extern struct HitBoxSet gPlayerInhaleBlockBreakBox;
 extern u32 gUnk_0873CC64[]; /* hit-box set, passed as (struct HitBoxSet *) */
 extern u32 gUnk_0873CC74[];
 extern u32 gUnk_0873CC84[];
-extern u32 gUnk_0873CCA4[];
+extern u32 gPlayerBurningHitBoxSet[];
 extern u32 gUnk_0873CCAC[];
 extern u32 gUnk_0873CCB4[];
 extern u32 gUnk_0873CCFC[];
@@ -285,34 +285,34 @@ extern u32 gUnk_0873CDBC[];
 extern u32 gUnk_0873CDF4[];
 extern u32 gUnk_0873CDFC[];
 extern u32 gUnk_0873CE64[];
-extern u32 gUnk_0873CEEC[];
-extern u32 gUnk_0873CEF4[];
+extern u32 gPlayerNeedleHitBoxSet[];
+extern u32 gPlayerNeedleHitBoxRects[];
 extern u32 gUnk_0873CF1C[];
-extern u32 gUnk_0873CF4C[]; /* hit-box set, passed as (struct HitBoxSet *) */
+extern u32 gPlayerFreezeBlockBreakBox[]; /* hit-box set, passed as (struct HitBoxSet *) */
 extern u32 gUnk_0873CF5C[];
 extern u32 gUnk_0873CF6C[];
 extern u32 gUnk_0873CF7C[];
-extern u32 gUnk_0873CF94[];
+extern u32 gPlayerParasolHitBoxSet[];
 extern u32 gUnk_0873CF9C[];
 extern u32 gUnk_0873D03C[];
-extern u32 gUnk_0873D044[];
-extern u32 gUnk_0873D04C[];
+extern u32 gMetaKnightActionSwordHitBoxSet[];
+extern u32 gMetaKnightActionSwordHitBoxRects[];
 extern u8 gAbilityBButtonActions[];
-extern u16 gUnk_0873D0F8[][5];
-extern s16 gUnk_0873D206[];
+extern u16 gPlayerStandFrames[][5];
+extern s16 gMetaKnightStandFrames[];
 extern s16 gUnk_0873D210[];
 extern s16 gUnk_0873D2E0[];
 extern u16 gUnk_0873D2E8[];
 extern u16 gUnk_0873D31C[];
 extern u16 gUnk_0873D350[];
-extern s16 gUnk_0873D3B8[][2];
+extern s16 gPlayerFallFrames[][2];
 extern u16 gUnk_0873D4BC[][5];
 extern s16 gUnk_0873D5C0[];
 extern s16 gUnk_0873D5CA[][2];
 extern u16 gPlayerDoorAnims[][7];
 extern u16 gPlayerWaterDoorAnims[];
-extern s16 gUnk_0873D7E4[][3];
-extern s16 gUnk_0873D880[];
+extern s16 gPlayerFloatFrames[][3];
+extern s16 gPlayerLadderFrames[];
 extern u16 gUnk_0873D8B4[];
 extern u16 gUnk_0873D908[];
 extern u32 gUnk_0873D986[];
@@ -324,33 +324,33 @@ extern u16 gUnk_0873DADE[][2];
 extern u16 gUnk_0873DB0A[];
 extern s16 gUnk_0873DB34[];
 extern u16 gUnk_0873DB44[][2];
-extern u32 gUnk_0874C478[];
-extern u32 gUnk_0874C4E4[];
-extern u32 gUnk_0874C650[];
-extern u32 gUnk_0874C7CC[];
+extern u32 gPlayerObjectSpitMultiStarFrames[];
+extern u32 gPlayerObjectStarRodShotFrames[];
+extern u32 gPlayerObjectVanishFrames[];
+extern u32 gSmokePuffFrames[];
 extern u32 gUnk_0874CE90[];
 extern u32 gPlayerFrames[];
 extern u32 gUnk_08751990[];
 extern u32 gUnk_087519CC[];
-extern u32 gUnk_087519E8[];
-extern u32 gUnk_08751A28[];
-extern u32 gUnk_08751A98[];
-extern u32 gUnk_08751AF8[];
-extern u32 gUnk_08751B40[];
-extern u32 gUnk_08751BB0[];
-extern u32 gUnk_08751BF4[];
-extern u32 gUnk_08751CA4[];
-extern u32 gUnk_08751E5C[];
-extern u32 gUnk_0875204C[];
+extern u32 gPlayerObjectWaterShotFrames[];
+extern u32 gPlayerObjectFireBreathFrames[];
+extern u32 gPlayerObjectCutterBladeFrames[];
+extern u32 gPlayerObjectLaserBeamFrames[];
+extern u32 gPlayerObjectIceBreathFrames[];
+extern u32 gPlayerObjectBeamOrbFrames[];
+extern u32 gPlayerUFOShotFrames[];
+extern u32 gFireBreathFlameFrames[];
+extern u32 gIceBreathCloudFrames[];
+extern u32 gPlayerObjectLightOrbFrames[];
 extern u32 gUnk_087520A8[];
-extern u32 gUnk_08755068[];
-extern u32 gUnk_08755378[];
-extern u32 gUnk_087553DC[];
-extern u32 gUnk_087553FC[];
-extern u32 gUnk_08755440[];
+extern u32 gCutsceneFountainKirbyFrames[];
+extern u32 gCutsceneFountainKingDededeFrames[];
+extern u32 gCutsceneFountainNightmarePowerOrbFrames[];
+extern u32 gCutsceneFountainStarRodFrames[];
+extern u32 gFountainJetFrames[];
 extern u32 gUnk_0875546C[];
 extern u32 gUnk_08755484[];
-extern u8 gUnk_08757368[];
+extern u8 gKirbyFlashBlendRatios[];
 
 
 /* Functions (defined in the files named above each group). */
@@ -384,10 +384,10 @@ void CutsceneFountainActorScript62(void);
 /* src/player_1a07c.c */
 void CutsceneFountainActorScript56(void);
 void CutsceneFountainKirbyDraw(void);
-void sub_0801a310(void);
+void CutsceneActorDrawStreamedFrame(void);
 
 /* src/player_1a3e4.c */
-void sub_0801a3e4(void);
+void FountainSpriteDraw(void);
 
 /* src/player_1a76c.c */
 void sub_0801a76c(s32 i);
@@ -429,7 +429,7 @@ void Bg1BlockAnimBreakNeighbors(struct BreakingBlock *b);
 void Task_Player(void);
 void PlayerStartRequestedAction(void);
 void PlayerUpdate(void);
-void sub_0803332c(void);
+void PlayerLateUpdate(void);
 void sub_08033414(void);
 
 /* src/player_337f4.c */
@@ -485,7 +485,7 @@ void PlayerActionHurtUpdate(void);
 
 /* src/player_3919c.c */
 void PlayerActionDie(void);
-void sub_080396a4(void);
+void PlayerActionDieUpdate(void);
 void PlayerActionEnterDoor(void);
 
 /* src/player_39c24.c */
@@ -512,8 +512,8 @@ void PlayerActionRecoilUpdate(void);
 void PlayerActionShareItem(void);
 void PlayerActionShareItemUpdate(void);
 void sub_0803c9b4(s32 a);
-void sub_0803cbd8(void);
-void sub_0803ccd8(s32 a);
+void PlayerStepOffsetScript(void);
+void PlayerSetParasolDriftRow(s32 a);
 
 /* src/stage_3cd60.c */
 void PlayerPlayBump(void);
@@ -566,7 +566,7 @@ void PlayerStopAtCeilingAndWall(void);
 s32 PlayerStopAtWall(void);
 s32 PlayerCheckLanding(void);
 s32 PlayerCheckDie(void);
-void sub_0803fb54(void);
+void PlayerUpdateRunning(void);
 s32 PlayerHasCrossedWaterSurface(s32 a);
 s32 PlayerGetFacingSlope(s32 a0);
 s32 PlayerCheckSkid(void);
@@ -621,7 +621,7 @@ void MetaKnightActionLadderUpdate(void);
 void MetaKnightActionHurt(void);
 void MetaKnightActionHurtUpdate(void);
 void MetaKnightActionDie(void);
-void sub_08042c50(void);
+void MetaKnightActionDieUpdate(void);
 void MetaKnightActionRecoil(void);
 void MetaKnightActionRecoilUpdate(void);
 void MetaKnightActionEnterDoor(void);

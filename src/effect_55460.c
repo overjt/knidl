@@ -11,8 +11,8 @@
  * variants 16-21 (entry 16, PlayerEffectDanceStarBurst, sits after entries 17 and 18 in
  * the ROM).  Variants 16, 17 and 19 are spawned by M16 (16 also by M17's
  * actor core), 18 and 20 by M10, 21 by M11. 16 (PlayerEffectDanceStarBurst), 17
- * (sub_08055460) and 18 (sub_08055520) are animations that stay put
- * (TaskUpdatePixelPos), from gUnk_0874C804, gUnk_0874C960 and gUnk_0874C980; 19
+ * (PlayerEffectAbilityLoss) and 18 (sub_08055520) are animations that stay put
+ * (TaskUpdatePixelPos), from gStarBurstFrames, gUnk_0874C960 and gUnk_0874C980; 19
  * (sub_0805574c) has no draw hook and draws itself through its Task.updateCallback
  * callback sub_080557d4 (QueueSprite); 20 (sub_0805587c) is a
  * three-sub-state puff whose sub-states 0 and 1 (one differing store, then a
@@ -28,7 +28,7 @@ u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amoun
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
 
-void sub_08055460(void)
+void PlayerEffectAbilityLoss(void)
 {
     struct Task *t;
 
@@ -127,7 +127,7 @@ void PlayerEffectDanceStarBurst(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 8;
     t = gCurTask;
-    t->frameTable = gUnk_0874C804;
+    t->frameTable = gStarBurstFrames;
     t->frame = 0;
     TaskYieldTrampoline(1);
     gCurTask->frame++;
@@ -169,7 +169,7 @@ void sub_0805574c(void)
         TaskYieldTrampoline(4);
         gCurTask->playerEffectLoopCount++;
     } while ((s16)gCurTask->playerEffectLoopCount <= 6);
-    gCurTask->player->unk40 |= 0x80;
+    gCurTask->player->actionFlags |= 0x80;
     TaskExitTrampoline();
 }
 
@@ -252,7 +252,7 @@ void PlayerEffectLocalPlayerArrow(void)
     gCurTask->updateCallback = (u32)PlayerEffectLocalPlayerArrowUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_0874C780;
+    t->frameTable = gPlayerEffectLocalPlayerArrowFrames;
     t->posX = 0;
     t->posY = -0xC0000;
     t->playerEffectLoopCount = 0;

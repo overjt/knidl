@@ -28,7 +28,7 @@ void Task_IntroStoryPicture(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 8;
-    gCurTask->frameTable = gUnk_087555D8;
+    gCurTask->frameTable = gIntroStoryPictureFrames;
     gCurTask->tileWord = 0x800;
     gCurTask->posX = 0x300000;
     gCurTask->posY = 0x780000;
@@ -37,7 +37,7 @@ void Task_IntroStoryPicture(void)
     LZ77UnCompVram(h->tiles, gUnk_02020000);
     RequestCopy(3, (u32)gUnk_02020000, (u32)gObjVram, h->tileCount << 5);
     gCurTask->frame = gCurTask->introStoryPictureIndex;
-    TaskYieldTrampoline(gUnk_08731CE6[gCurTask->introStoryPictureIndex] + 67);
+    TaskYieldTrampoline(gIntroStorySceneDurations[gCurTask->introStoryPictureIndex] + 67);
     TaskExitTrampoline();
 }
 
@@ -75,7 +75,7 @@ void HudInit(s32 i)
 
     HudClearWholeTilemap();
     if (gInHub != 0)
-        sub_0800ab3c();
+        HudDrawLevelName();
     if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0) {
         gHudMode = 1;
         gHudAbilityPanelActive = 1;
@@ -130,7 +130,7 @@ void HudRedraw(s32 i)
     HudClearTilemap();
     HudLoadGfx();
     if (gInHub != 0)
-        sub_0800ab3c();
+        HudDrawLevelName();
     HudDrawPlayerIcon(i);
     HudDrawLives(gPlayerLives[i]);
     HudDrawHealth(gPlayerHealth[i] >> 3);
@@ -159,9 +159,9 @@ void HudRedraw(s32 i)
     }
     if (gUnk_020055F0[0] != 0) {
         if (gUnk_020055F0[0] == 2)
-            sub_0800b230(gLifeRequests.requests[i] >> 4, gUnk_020055F0[0]);
+            HudDrawLifeRequestPanel(gLifeRequests.requests[i] >> 4, gUnk_020055F0[0]);
         else
-            sub_0800b230(i, gUnk_020055F0[0]);
+            HudDrawLifeRequestPanel(i, gUnk_020055F0[0]);
     }
     HudFlushTilemap();
 }
@@ -176,13 +176,13 @@ void HudActivateAbilityPanel(void)
     gHudAbilityPanelActive = 1;
 }
 
-void sub_08009e2c(void)
+void HudClearDeadPlayer(void)
 {
     gHudMode = 2;
     gHudAbilityPanelActive = 0;
     HudClearTilemap();
     if (gInHub != 0)
-        sub_0800ab3c();
+        HudDrawLevelName();
 }
 
 s32 AddPlayerLives(s32 a, u32 b)

@@ -450,8 +450,8 @@ struct BgAnimCmd gRoomBgAnimSet6Script0[] BG_ANIM(0833fcc8) = {
     { 4, 0, NULL }, /* stop */
 };
 
-/* ---- 0x0833FE30-0x0833FE40: gUnk_0833FE30, section .bg_anim_0833fe30 ---- */
-struct BgAnimPaletteFade gUnk_0833FE30 BG_ANIM(0833fe30) = {
+/* ---- 0x0833FE30-0x0833FE40: gRoomBgAnimSet5Script0Cmd1PaletteFade, section .bg_anim_0833fe30 ---- */
+struct BgAnimPaletteFade gRoomBgAnimSet5Script0Cmd1PaletteFade BG_ANIM(0833fe30) = {
     .src = gUnk_0833FD30,
     .dst = gUnk_0833FDB0,
     .colorIndex = 0,
@@ -459,8 +459,8 @@ struct BgAnimPaletteFade gUnk_0833FE30 BG_ANIM(0833fe30) = {
     .rate = 874,
 };
 
-/* ---- 0x0833FF40-0x0833FF50: gUnk_0833FF40, section .bg_anim_0833ff40 ---- */
-struct BgAnimPaletteFade gUnk_0833FF40 BG_ANIM(0833ff40) = {
+/* ---- 0x0833FF40-0x0833FF50: gRoomBgAnimSet5Script0Cmd2PaletteFade, section .bg_anim_0833ff40 ---- */
+struct BgAnimPaletteFade gRoomBgAnimSet5Script0Cmd2PaletteFade BG_ANIM(0833ff40) = {
     .src = gUnk_0833FE40,
     .dst = gUnk_0833FEC0,
     .colorIndex = 0,
@@ -468,8 +468,8 @@ struct BgAnimPaletteFade gUnk_0833FF40 BG_ANIM(0833ff40) = {
     .rate = 874,
 };
 
-/* ---- 0x08340050-0x08340088: gUnk_08340050, gRoomBgAnimSet5Script0, section .bg_anim_08340050 ---- */
-struct BgAnimPaletteFade gUnk_08340050 BG_ANIM(08340050) = {
+/* ---- 0x08340050-0x08340088: gRoomBgAnimSet5Script0Cmd3PaletteFade, gRoomBgAnimSet5Script0, section .bg_anim_08340050 ---- */
+struct BgAnimPaletteFade gRoomBgAnimSet5Script0Cmd3PaletteFade BG_ANIM(08340050) = {
     .src = gUnk_0833FF50,
     .dst = gUnk_0833FFD0,
     .colorIndex = 0,
@@ -478,14 +478,14 @@ struct BgAnimPaletteFade gUnk_08340050 BG_ANIM(08340050) = {
 };
 struct BgAnimCmd gRoomBgAnimSet5Script0[] BG_ANIM(08340050) = {
     { 2, 65, NULL }, /* wait */
-    { 1, 75, &gUnk_0833FE30 }, /* palette fade */
-    { 1, 75, &gUnk_0833FF40 }, /* palette fade */
-    { 1, 75, &gUnk_08340050 }, /* palette fade */
+    { 1, 75, &gRoomBgAnimSet5Script0Cmd1PaletteFade }, /* palette fade */
+    { 1, 75, &gRoomBgAnimSet5Script0Cmd2PaletteFade }, /* palette fade */
+    { 1, 75, &gRoomBgAnimSet5Script0Cmd3PaletteFade }, /* palette fade */
     { 4, 0, NULL }, /* stop */
 };
 
-/* ---- 0x08340108-0x08340118: gUnk_08340108, section .bg_anim_08340108 ---- */
-struct BgAnimPaletteFade gUnk_08340108 BG_ANIM(08340108) = {
+/* ---- 0x08340108-0x08340118: gRoomBgAnimSet5Script1Cmd1PaletteFade, section .bg_anim_08340108 ---- */
+struct BgAnimPaletteFade gRoomBgAnimSet5Script1Cmd1PaletteFade BG_ANIM(08340108) = {
     .src = gUnk_08340088,
     .dst = gUnk_083400C8,
     .colorIndex = 64,
@@ -493,8 +493,8 @@ struct BgAnimPaletteFade gUnk_08340108 BG_ANIM(08340108) = {
     .rate = 874,
 };
 
-/* ---- 0x08340198-0x083401A8: gUnk_08340198, section .bg_anim_08340198 ---- */
-struct BgAnimPaletteFade gUnk_08340198 BG_ANIM(08340198) = {
+/* ---- 0x08340198-0x083401A8: gRoomBgAnimSet5Script1Cmd2PaletteFade, section .bg_anim_08340198 ---- */
+struct BgAnimPaletteFade gRoomBgAnimSet5Script1Cmd2PaletteFade BG_ANIM(08340198) = {
     .src = gUnk_08340118,
     .dst = gUnk_08340158,
     .colorIndex = 64,
@@ -502,8 +502,8 @@ struct BgAnimPaletteFade gUnk_08340198 BG_ANIM(08340198) = {
     .rate = 874,
 };
 
-/* ---- 0x08340228-0x08340260: gUnk_08340228, gRoomBgAnimSet5Script1, section .bg_anim_08340228 ---- */
-struct BgAnimPaletteFade gUnk_08340228 BG_ANIM(08340228) = {
+/* ---- 0x08340228-0x08340260: gRoomBgAnimSet5Script1Cmd3PaletteFade, gRoomBgAnimSet5Script1, section .bg_anim_08340228 ---- */
+struct BgAnimPaletteFade gRoomBgAnimSet5Script1Cmd3PaletteFade BG_ANIM(08340228) = {
     .src = gUnk_083401A8,
     .dst = gUnk_083401E8,
     .colorIndex = 64,
@@ -512,14 +512,14 @@ struct BgAnimPaletteFade gUnk_08340228 BG_ANIM(08340228) = {
 };
 struct BgAnimCmd gRoomBgAnimSet5Script1[] BG_ANIM(08340228) = {
     { 2, 65, NULL }, /* wait */
-    { 1, 75, &gUnk_08340108 }, /* palette fade */
-    { 1, 75, &gUnk_08340198 }, /* palette fade */
-    { 1, 75, &gUnk_08340228 }, /* palette fade */
+    { 1, 75, &gRoomBgAnimSet5Script1Cmd1PaletteFade }, /* palette fade */
+    { 1, 75, &gRoomBgAnimSet5Script1Cmd2PaletteFade }, /* palette fade */
+    { 1, 75, &gRoomBgAnimSet5Script1Cmd3PaletteFade }, /* palette fade */
     { 4, 0, NULL }, /* stop */
 };
 
-/* ---- 0x08340360-0x08340370: gUnk_08340360, section .bg_anim_08340360 ---- */
-struct BgAnimPaletteFade gUnk_08340360 BG_ANIM(08340360) = {
+/* ---- 0x08340360-0x08340370: gRoomBgAnimSet6Script1Cmd1PaletteFade, section .bg_anim_08340360 ---- */
+struct BgAnimPaletteFade gRoomBgAnimSet6Script1Cmd1PaletteFade BG_ANIM(08340360) = {
     .src = gUnk_08340260,
     .dst = gUnk_083402E0,
     .colorIndex = 0,
@@ -527,8 +527,8 @@ struct BgAnimPaletteFade gUnk_08340360 BG_ANIM(08340360) = {
     .rate = 656,
 };
 
-/* ---- 0x08340470-0x08340480: gUnk_08340470, section .bg_anim_08340470 ---- */
-struct BgAnimPaletteFade gUnk_08340470 BG_ANIM(08340470) = {
+/* ---- 0x08340470-0x08340480: gRoomBgAnimSet6Script1Cmd2PaletteFade, section .bg_anim_08340470 ---- */
+struct BgAnimPaletteFade gRoomBgAnimSet6Script1Cmd2PaletteFade BG_ANIM(08340470) = {
     .src = gUnk_08340370,
     .dst = gUnk_083403F0,
     .colorIndex = 0,
@@ -536,8 +536,8 @@ struct BgAnimPaletteFade gUnk_08340470 BG_ANIM(08340470) = {
     .rate = 656,
 };
 
-/* ---- 0x08340580-0x08340590: gUnk_08340580, section .bg_anim_08340580 ---- */
-struct BgAnimPaletteFade gUnk_08340580 BG_ANIM(08340580) = {
+/* ---- 0x08340580-0x08340590: gRoomBgAnimSet6Script1Cmd3PaletteFade, section .bg_anim_08340580 ---- */
+struct BgAnimPaletteFade gRoomBgAnimSet6Script1Cmd3PaletteFade BG_ANIM(08340580) = {
     .src = gUnk_08340480,
     .dst = gUnk_08340500,
     .colorIndex = 0,
@@ -545,8 +545,8 @@ struct BgAnimPaletteFade gUnk_08340580 BG_ANIM(08340580) = {
     .rate = 656,
 };
 
-/* ---- 0x08340690-0x083406D0: gUnk_08340690, gRoomBgAnimSet6Script1, section .bg_anim_08340690 ---- */
-struct BgAnimPaletteFade gUnk_08340690 BG_ANIM(08340690) = {
+/* ---- 0x08340690-0x083406D0: gRoomBgAnimSet6Script1Cmd4PaletteFade, gRoomBgAnimSet6Script1, section .bg_anim_08340690 ---- */
+struct BgAnimPaletteFade gRoomBgAnimSet6Script1Cmd4PaletteFade BG_ANIM(08340690) = {
     .src = gUnk_08340590,
     .dst = gUnk_08340610,
     .colorIndex = 0,
@@ -555,15 +555,15 @@ struct BgAnimPaletteFade gUnk_08340690 BG_ANIM(08340690) = {
 };
 struct BgAnimCmd gRoomBgAnimSet6Script1[] BG_ANIM(08340690) = {
     { 2, 64, NULL }, /* wait */
-    { 1, 100, &gUnk_08340360 }, /* palette fade */
-    { 1, 100, &gUnk_08340470 }, /* palette fade */
-    { 1, 100, &gUnk_08340580 }, /* palette fade */
-    { 1, 100, &gUnk_08340690 }, /* palette fade */
+    { 1, 100, &gRoomBgAnimSet6Script1Cmd1PaletteFade }, /* palette fade */
+    { 1, 100, &gRoomBgAnimSet6Script1Cmd2PaletteFade }, /* palette fade */
+    { 1, 100, &gRoomBgAnimSet6Script1Cmd3PaletteFade }, /* palette fade */
+    { 1, 100, &gRoomBgAnimSet6Script1Cmd4PaletteFade }, /* palette fade */
     { 4, 0, NULL }, /* stop */
 };
 
-/* ---- 0x08340750-0x08340760: gUnk_08340750, section .bg_anim_08340750 ---- */
-struct BgAnimPaletteFade gUnk_08340750 BG_ANIM(08340750) = {
+/* ---- 0x08340750-0x08340760: gRoomBgAnimSet6Script2Cmd1PaletteFade, section .bg_anim_08340750 ---- */
+struct BgAnimPaletteFade gRoomBgAnimSet6Script2Cmd1PaletteFade BG_ANIM(08340750) = {
     .src = gUnk_083406D0,
     .dst = gUnk_08340710,
     .colorIndex = 64,
@@ -571,8 +571,8 @@ struct BgAnimPaletteFade gUnk_08340750 BG_ANIM(08340750) = {
     .rate = 656,
 };
 
-/* ---- 0x083407E0-0x083407F0: gUnk_083407E0, section .bg_anim_083407e0 ---- */
-struct BgAnimPaletteFade gUnk_083407E0 BG_ANIM(083407e0) = {
+/* ---- 0x083407E0-0x083407F0: gRoomBgAnimSet6Script2Cmd2PaletteFade, section .bg_anim_083407e0 ---- */
+struct BgAnimPaletteFade gRoomBgAnimSet6Script2Cmd2PaletteFade BG_ANIM(083407e0) = {
     .src = gUnk_08340760,
     .dst = gUnk_083407A0,
     .colorIndex = 64,
@@ -580,8 +580,8 @@ struct BgAnimPaletteFade gUnk_083407E0 BG_ANIM(083407e0) = {
     .rate = 656,
 };
 
-/* ---- 0x08340870-0x08340880: gUnk_08340870, section .bg_anim_08340870 ---- */
-struct BgAnimPaletteFade gUnk_08340870 BG_ANIM(08340870) = {
+/* ---- 0x08340870-0x08340880: gRoomBgAnimSet6Script2Cmd3PaletteFade, section .bg_anim_08340870 ---- */
+struct BgAnimPaletteFade gRoomBgAnimSet6Script2Cmd3PaletteFade BG_ANIM(08340870) = {
     .src = gUnk_083407F0,
     .dst = gUnk_08340830,
     .colorIndex = 64,
@@ -589,8 +589,8 @@ struct BgAnimPaletteFade gUnk_08340870 BG_ANIM(08340870) = {
     .rate = 656,
 };
 
-/* ---- 0x08340900-0x08340940: gUnk_08340900, gRoomBgAnimSet6Script2, section .bg_anim_08340900 ---- */
-struct BgAnimPaletteFade gUnk_08340900 BG_ANIM(08340900) = {
+/* ---- 0x08340900-0x08340940: gRoomBgAnimSet6Script2Cmd4PaletteFade, gRoomBgAnimSet6Script2, section .bg_anim_08340900 ---- */
+struct BgAnimPaletteFade gRoomBgAnimSet6Script2Cmd4PaletteFade BG_ANIM(08340900) = {
     .src = gUnk_08340880,
     .dst = gUnk_083408C0,
     .colorIndex = 64,
@@ -599,10 +599,10 @@ struct BgAnimPaletteFade gUnk_08340900 BG_ANIM(08340900) = {
 };
 struct BgAnimCmd gRoomBgAnimSet6Script2[] BG_ANIM(08340900) = {
     { 2, 64, NULL }, /* wait */
-    { 1, 100, &gUnk_08340750 }, /* palette fade */
-    { 1, 100, &gUnk_083407E0 }, /* palette fade */
-    { 1, 100, &gUnk_08340870 }, /* palette fade */
-    { 1, 100, &gUnk_08340900 }, /* palette fade */
+    { 1, 100, &gRoomBgAnimSet6Script2Cmd1PaletteFade }, /* palette fade */
+    { 1, 100, &gRoomBgAnimSet6Script2Cmd2PaletteFade }, /* palette fade */
+    { 1, 100, &gRoomBgAnimSet6Script2Cmd3PaletteFade }, /* palette fade */
+    { 1, 100, &gRoomBgAnimSet6Script2Cmd4PaletteFade }, /* palette fade */
     { 4, 0, NULL }, /* stop */
 };
 

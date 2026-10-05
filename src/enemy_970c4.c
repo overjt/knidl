@@ -66,7 +66,7 @@ void Task_FireLionFlame(void)
     else
         gCurTask->facing = -1;
     v = gCurTask;
-    v->unk28 = 0;
+    v->fireLionFlamePuffCount = 0;
     v->updateCallback = (u32)FireLionFlameCheckParent;
     while (1) {
         gCurTask->frame = 0xFFFF;
@@ -131,9 +131,9 @@ void Task_FireLionFlame(void)
         z = gCurTask;
         z->posX = x << 16;
         z->posY = y << 16;
-        if ((z->unk28 & 1) != 0)
+        if ((z->fireLionFlamePuffCount & 1) != 0)
             z->facing = -z->facing;
-        gCurTask->unk28++;
+        gCurTask->fireLionFlamePuffCount++;
         TaskSetMotionXFacing(0x14000, -0x1C00);
         gCurTask->velY = -0x10000;
         TaskSetFrame(1);

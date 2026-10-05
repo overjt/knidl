@@ -104,7 +104,7 @@ one:
 }
 void InitNewSaveFile(s32 a)
 {
-    gSaveSlots[a].unk04 = a;
+    gSaveSlots[a].slotIndex = a;
     gSaveSlots[a].saveCount = 0;
     ResetProgress();
     WriteNewSaveFile(a);

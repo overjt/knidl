@@ -14,7 +14,7 @@
 /* player_3919c.c (0x0803919C-0x08039C23, issue #91).
  *
  * Player action bodies, part 7: actions 17 and 20.  PlayerActionDie (action
- * 17) is the player's death: it installs sub_080396a4 as the task's
+ * 17) is the player's death: it installs PlayerActionDieUpdate as the task's
  * per-frame callback Task.updateCallback (state 1 falls until the player is below
  * the screen, state 2 waits PlayerState.unk14 frames, state 4 leaves for
  * the results screen), counts the players whose health gPlayerHealth[] is
@@ -43,26 +43,26 @@ void PlayerActionDie(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 18;
-    gCurTask->updateCallback = (u32)sub_080396a4;
+    gCurTask->updateCallback = (u32)PlayerActionDieUpdate;
     gCurTask->lateUpdateCallback = 0;
     gCurTask->facing = 1;
     t = gCurTask;
-    t->spriteFlags &= 0x7FFF;
+    t->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gActivePlayerCount--;
     gActivePlayerMask &= ~(1 << t->player->playerIndex);
-    if (t->hitEffect == 0x200)
+    if (t->hitEffect == HIT_EFFECT_MID_BOSS)
         sub_08027548();
     u = gCurTask;
-    u->player->unk40 |= 8;
-    u->player->unk42 |= 0x100;
+    u->player->actionFlags |= 8;
+    u->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
     u->variant = 0;
-    gCurTask->player->unk42 &= 0xFFEF;
+    gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     PlayerStopAxes(3);
     gCurTask->player->mouthState = 0;
     SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     HoldPlayerCamera(gCurTask->player->playerIndex);
-    gCurTask->player->unk16 = 255;
+    gCurTask->player->playerHoldPose = 255;
     anim = gUnk_0873D9FA[gCurTask->player->ability];
     n = 0;
     for (i = 0; i < gPlayerCount; i++)
@@ -90,7 +90,7 @@ void PlayerActionDie(void)
         {
             StopAllSfx();
             StopAllSound();
-            FreezeOtherTasks(15);
+            FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
             SetRoomUpdateFlags(2);
             if (!(gDispCnt & 0x400))
             {
@@ -103,7 +103,7 @@ void PlayerActionDie(void)
             for (i = 4; i <= 63; i++)
             {
                 if (gTaskSlotTypes[i] != -1 && i != 63)
-                    TaskSetSkipMask(15, i);
+                    TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), i);
             }
             StopAllSfx();
             PauseRoom();
@@ -129,7 +129,7 @@ void PlayerActionDie(void)
             for (i = 4; i <= 63; i++)
             {
                 if (gTaskSlotTypes[i] != -1 && i != 63)
-                    TaskSetSkipMask(15, i);
+                    TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), i);
             }
             StopAllSfx();
             PauseRoom();
@@ -205,7 +205,7 @@ void PlayerActionDie(void)
     TaskSleepForever();
 }
 
-void sub_080396a4(void)
+void PlayerActionDieUpdate(void)
 {
     switch (gCurTask->variant)
     {
@@ -241,7 +241,7 @@ void sub_080396a4(void)
                 struct Task *u;
                 struct PlayerState *q;
 
-                gCurTask->player->unk14 = 90;
+                gCurTask->player->playerDieTimer = 90;
                 gCurTask->variant = 2;
                 PlayerStopAxes(2);
                 u = gCurTask;
@@ -251,7 +251,7 @@ void sub_080396a4(void)
                 gCurTask->drawCallback = 0;
             }
         }
-        if (!(gCurTask->player->unk42 & 32))
+        if (!(gCurTask->player->statusFlags & PLAYER_STATUS_TIMERS_FROZEN))
             PlayerUpdatePaletteFlash();
         break;
     }
@@ -259,7 +259,7 @@ void sub_080396a4(void)
     {
         struct Task *t = gCurTask;
 
-        if (--t->player->unk14 == 0)
+        if (--t->player->playerDieTimer == 0)
             t->variant = 3;
         break;
     }
@@ -282,11 +282,11 @@ void PlayerActionEnterDoor(void)
     gCurTask->lateUpdateCallback = 0;
     gCurTask->player->running = 0;
     PlayerStopAxes(3);
-    gCurTask->player->unk42 |= 0x100;
+    gCurTask->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
     RequestScreenShake(0);
     if (gInHub == 0)
     {
-        FreezeOtherTasks(15);
+        FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
         if (!(gDispCnt & 0x400))
         {
             gDispCnt &= 0xE0FF;
@@ -314,7 +314,7 @@ void PlayerActionEnterDoor(void)
     case 1:
         gCurTask->player->mouthState = 0;
         CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_AIR_PUFF, 0);
-        TaskSetFrame(gUnk_0873D7E4[gCurTask->player->ability][2]);
+        TaskSetFrame(gPlayerFloatFrames[gCurTask->player->ability][2]);
         TaskYieldTrampoline(6);
         gCurTask->frame--;
         TaskYieldTrampoline(2);

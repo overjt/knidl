@@ -34,7 +34,7 @@ void CreateExtraModeTitleSprites(void)
     s32 titleSpriteSlot;
     struct Task *titleSprite;
 
-    if (gUnk_02006090 <= 2) {
+    if (gExtraModeTitleIndex <= 2) {
         titleSpriteSlot = TaskCreateFrom(TASK_EXTRA_MODE_TITLE_SPRITE, 32);
         if (titleSpriteSlot != -1) {
             titleSprite = &gTasks[titleSpriteSlot];
@@ -57,7 +57,7 @@ void Task_ExtraModeTitleSprite(void)
     t->moveCallback = 0;
     t->drawCallback = 0;
     t->updateCallback = (u32)ExtraModeTitleSpriteUpdate;
-    t->unk2C = 0;
+    t->extraModeTitleSpriteBlendStep = 0;
     t->unk30 = 1;
     t->unk34 = 0;
     if (t->variant == 0)
@@ -76,7 +76,7 @@ void ExtraModeTitleSpriteUpdate(void)
 void ExtraModeTitleTransferIcon(void)
 {
     gCurTask->updateState = 0;
-    gCurTask->unk2C = 0;
+    gCurTask->extraModeTitleSpriteBlendStep = 0;
     for (;;) {
         if (gExtraModeTitlePhase == 0) {
             QueueSprite(8, (u32)gUnk_085B6AC0, 0, 0, 120, 88);
@@ -102,8 +102,8 @@ void ExtraModeTitleTransferIconUpdate(void)
             gBg0ScrollX -= 0x2000000; /* raw: 512 px in 16.16, not an address */
     }
     if (gExtraModeTitlePhase == 2) {
-        BlendColors(gUnk_085B6F98, gUnk_085B6F98 + 16, gUnk_0873079C[gCurTask->unk2C], 16, gObjPalette);
-        gCurTask->unk2C = (gCurTask->unk2C + 1) & 15;
+        BlendColors(gUnk_085B6F98, gUnk_085B6F98 + 16, gUnk_0873079C[gCurTask->extraModeTitleSpriteBlendStep], 16, gObjPalette);
+        gCurTask->extraModeTitleSpriteBlendStep = (gCurTask->extraModeTitleSpriteBlendStep + 1) & 15;
     }
 }
 

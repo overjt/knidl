@@ -178,7 +178,7 @@ void PlayerStarRodFlightIntroUpdate(void)
     {
         t->variant = 1;
         gCurTask->updateCallback = (u32)PlayerUpdate;
-        gCurTask->lateUpdateCallback = (u32)sub_0803332c;
+        gCurTask->lateUpdateCallback = (u32)PlayerLateUpdate;
         TaskSetEntry(PlayerActionStarRodFlightEnterVariant, gCurTaskIdx);
         gPauseDisabled = 0;
     }
@@ -189,7 +189,7 @@ void PlayerStarRodFlightFly(void)
     struct Task *t = gCurTask;
 
     t->playerStarRodFrameIndex = 0;
-    t->unk28 = 0;
+    t->playerStarRodFlightPoseRow = 0;
     TaskSleepForever();
 }
 
@@ -199,16 +199,16 @@ void PlayerStarRodFlightFlyUpdate(void)
     {
         u8 k = gUnk_0873B6DC[(gLatchedHeldKeys[gCurTask->player->playerIndex] & 0xF0) >> 4];
         struct Task *t = gCurTask;
-        u16 *row = gUnk_0873B6E8[t->unk28];
+        u16 *row = gUnk_0873B6E8[t->playerStarRodFlightPoseRow];
 
-        if (t->unk28 == 0)
+        if (t->playerStarRodFlightPoseRow == 0)
         {
             if (t->playerStarRodFrameIndex == 0)
-                t->unk28 = k;
+                t->playerStarRodFlightPoseRow = k;
             else
                 t->playerStarRodFrameIndex--;
         }
-        else if (t->unk28 == k)
+        else if (t->playerStarRodFlightPoseRow == k)
         {
             if (row[t->playerStarRodFrameIndex + 1] != 0xFFFF)
                 t->playerStarRodFrameIndex++;
@@ -218,7 +218,7 @@ void PlayerStarRodFlightFlyUpdate(void)
             if (t->playerStarRodFrameIndex != 0)
                 t->playerStarRodFrameIndex--;
             else
-                t->unk28 = k;
+                t->playerStarRodFlightPoseRow = k;
         }
         gCurTask->frame = row[gCurTask->playerStarRodFrameIndex];
     }
@@ -315,9 +315,9 @@ s32 PlayerStarRodFlightCheckShoot(void)
 {
     if (!(gLatchedPressedKeys[gCurTask->player->playerIndex] & 3)
         && (!(gLatchedHeldKeys[gCurTask->player->playerIndex] & 3)
-            || (s16)++gCurTask->player->unk14 != 10))
+            || (s16)++gCurTask->player->playerStarRodHoldFrames != 10))
         return 0;
-    gCurTask->player->unk14 = 0;
+    gCurTask->player->playerStarRodHoldFrames = 0;
     gCurTask->variant = 2;
     TaskSetEntry(PlayerActionStarRodFlightEnterVariant, gCurTaskIdx);
     return 1;
@@ -336,8 +336,8 @@ void PlayerStarRodFlightSteer(void)
             u16 *e;
             s32 v;
 
-            t->unk6E = k >> 4;
-            e = gUnk_0873B724[t->unk6E];
+            t->playerStarRodFlightDpad = k >> 4;
+            e = gUnk_0873B724[t->playerStarRodFlightDpad];
             v = e[0] << 8;
             if (e[0] & 0x8000)
                 v |= 0xFF000000;
@@ -355,7 +355,7 @@ void PlayerStarRodFlightSteer(void)
             u16 *e;
             s32 v;
 
-            e = gUnk_0873B724[t->unk6E];
+            e = gUnk_0873B724[t->playerStarRodFlightDpad];
             v = e[2] << 8;
             if (e[2] & 0x8000)
                 v |= 0xFF000000;

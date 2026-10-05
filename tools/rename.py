@@ -502,11 +502,14 @@ def verify_diff(ref):
         ref_defs = set()
     alias_field = {a: f for a, f in ref_defs}
     origin = {a: a for a in alias_field}  # final alias -> its name in REF
+    alias_tag = {}  # alias -> the struct whose member it names (#155 run 7: PlayerState)
     for r in aliases:
         tag, o = r["old"].split(".", 1)
         tag2, n = r["new"].split(".", 1)
-        if tag != "Task" or tag2 != "Task":
-            raise RenameError("alias %s -> %s is not a struct Task register" % (r["old"], r["new"]))
+        if tag != tag2 or tag not in ("Task", "PlayerState"):
+            raise RenameError("alias %s -> %s is not a struct Task or PlayerState register"
+                              % (r["old"], r["new"]))
+        alias_tag[n] = tag
         if o in alias_field:
             f = alias_field.pop(o)
             if alias_field.get(n, f) != f:
@@ -517,8 +520,8 @@ def verify_diff(ref):
         else:
             alias_field[n] = o
     # accepted token pairs (REF's token, the tree's token)
-    alias_pairs = {(f, a) for a, f in alias_field.items()}
-    alias_pairs |= {(old, a) for a, old in origin.items() if old != a}
+    alias_pairs = {(f, a): alias_tag.get(a, "Task") for a, f in alias_field.items()}
+    alias_pairs.update({(old, a): alias_tag.get(a, "Task") for a, old in origin.items() if old != a})
     field_uses = {}
     # Named constants (tools/constants.py, #155 run 6): `docs/analysis/
     # constants.csv` rows added since REF.  A C site may spell such a
@@ -680,6 +683,7 @@ def verify_diff(ref):
                 # change.  (make compare remains the byte-level proof.)
                 a, b = collapse_ws(a), collapse_ws(b)
                 if const_values and a != b:
+                    a, b = unbitexpr(a, b, const_values, const_uses)
                     a, b = unconst(a, b, const_values, const_uses)
             if a != b and not ((field_pairs or alias_pairs) and not is_asm
                                and fields_only_differ(a, b, field_pairs, field_uses,
@@ -800,6 +804,103 @@ def constant_defines_of(text):
     return out
 
 
+def unbitexpr(a, b, values, uses):
+    """(a, b') where b' is b with each bit expression of logged single-bit
+    constants (`~A`, `~(A | B)`, `(A | B)`; docs/naming.md 7.0, the second
+    form of R3) that stands where a (REF's text) has an integer literal of its
+    value respelled as that literal: the OR, or (`~`) the OR's complement in
+    a field of 8, 16 or 32 bits.  The per-file assembly oracle is the proof
+    of these sites; this only shows that nothing else changed."""
+    ta = [m for m in CONST_TOK_RE.finditer(a) if m.lastgroup != "ws"]
+    tb = [m for m in CONST_TOK_RE.finditer(b) if m.lastgroup != "ws"]
+    if len(ta) == len(tb):
+        return a, b
+
+    def bit(m):
+        if m.lastgroup != "id" or m.group(0) not in values:
+            return None
+        v = values[m.group(0)]
+        return v if v > 0 and not v & (v - 1) else None
+
+    def expr_at(j):
+        """(value, complemented?, token count) of a bit expression at tb[j]."""
+        comp = tb[j].group(0) == "~"
+        k = j + 1 if comp else j
+        if k < len(tb) and bit(tb[k]) is not None and comp:
+            return bit(tb[k]), True, k + 1 - j
+        if k < len(tb) and tb[k].group(0) == "(":
+            v, n, q = 0, 0, k + 1
+            while q < len(tb):
+                x = bit(tb[q])
+                if x is None or v & x:
+                    return None
+                v |= x
+                n += 1
+                if q + 1 < len(tb) and tb[q + 1].group(0) == "|":
+                    q += 2
+                    continue
+                if q + 1 < len(tb) and tb[q + 1].group(0) == ")" and n >= 2:
+                    return v, comp, q + 2 - j
+                return None
+        return None
+    out, pos, i, j = [], 0, 0, 0
+    while i < len(ta) and j < len(tb):
+        x, y = ta[i], tb[j]
+        if x.group(0) == y.group(0):
+            i += 1
+            j += 1
+            continue
+        if (x.lastgroup == "num" and i + 2 < len(ta) and ta[i + 1].group(0) == "<"
+                and ta[i + 2].group(0) == "<" and i + 3 < len(ta) and ta[i + 3].lastgroup == "num"):
+            # REF spells the value as a shift `N << M` (CONST_TOK_RE splits
+            # `<<` into two tokens): a constant or a bit expression may
+            # stand for the whole shift
+            sv = int_value(x.group(0)) << int_value(ta[i + 3].group(0))
+            e = expr_at(j)
+            if e is not None and not e[1] and e[0] == sv:
+                n = e[2]
+            elif bit(y) is not None and values[y.group(0)] == sv:
+                n = 1
+            else:
+                n = 0
+            if n:
+                out.append(b[pos:y.start()])
+                out.append(a[x.start():ta[i + 3].end()])
+                pos = tb[j + n - 1].end()
+                uses[0] += 1
+                i += 4
+                j += n
+                continue
+        if (x.lastgroup == "num" and y.lastgroup == "id" and y.group(0) in values
+                and int_value(x.group(0)) == values[y.group(0)]):
+            i += 1  # a plain constant: unconst's case
+            j += 1
+            continue
+        e = expr_at(j) if x.lastgroup == "num" else None
+        if e is None:
+            i += 1  # another kind of difference (a field, a symbol): left
+            j += 1  # to the checks that follow
+            continue
+        v, comp, n = e
+        lit = int_value(x.group(0))
+        ok = lit == v if not comp else any(
+            lit == (~v) & ((1 << w) - 1) for w in (8, 16, 32) if v < (1 << w))
+        if not ok or x.group(0) != x.group(0).rstrip("uUlL"):
+            i += 1
+            j += 1
+            continue
+        out.append(b[pos:y.start()])
+        out.append(x.group(0))
+        pos = tb[j + n - 1].end()
+        uses[0] += 1
+        i += 1
+        j += n
+    if i != len(ta) or j != len(tb):
+        return a, b
+    out.append(b[pos:])
+    return a, "".join(out)
+
+
 def unconst(a, b, values, uses):
     """(a, b') where b' is b with each logged constant that stands where a
     (REF's text) has an integer literal of the same value respelled as that
@@ -834,8 +935,8 @@ def fields_only_differ(a, b, pairs, uses, alias_pairs=()):
     by_pair = {}
     for (tag, o), n in pairs.items():
         by_pair.setdefault((o, n), set()).add(tag)
-    for o, n in alias_pairs:
-        by_pair.setdefault((o, n), set()).add("Task")
+    for (o, n), tag in dict(alias_pairs).items():
+        by_pair.setdefault((o, n), set()).add(tag)
     depth = 0
     stack = []      # (tag, depth of its body)
     pending = None  # tag of a `struct TAG` whose `{` may follow

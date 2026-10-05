@@ -727,7 +727,7 @@ void WarpStarFlight19Update(void)
     struct Task *t;
 
     WarpStarEmitTrailStars();
-    TerrainCollideBox(gUnk_0873F5CC);
+    TerrainCollideBox(gWarpStarTerrainBox);
     t = gCurTask;
     if (t->onGround & 1)
     {
@@ -967,7 +967,7 @@ void WarpStarFlight22Update(void)
     struct Task *t;
 
     WarpStarEmitTrailStars();
-    TerrainCollideBox(gUnk_0873F5CC);
+    TerrainCollideBox(gWarpStarTerrainBox);
     t = gCurTask;
     if (t->onGround & 1)
     {
@@ -1280,7 +1280,7 @@ void sub_080743cc(void)
     TaskSleepForever();
 }
 
-void sub_080743f0(void)
+void WarpStarCheckExit(void)
 {
     TaskGetScreenPos();
     if (gCurTask->warpStarExitRequested == 0 && gUnk_030023D4 <= 0)
@@ -1290,7 +1290,7 @@ void sub_080743f0(void)
     }
 }
 
-void sub_08074420(void)
+void WarpStarDescendFast(void)
 {
     {
         struct Task *t = gCurTask;
@@ -1316,12 +1316,12 @@ void sub_08074420(void)
     TaskSleepForever();
 }
 
-void WarpStarFlight4Update(void)
+void WarpStarDescendFastUpdate(void)
 {
     struct Task *t;
 
     WarpStarEmitTrailStars();
-    TerrainCollideBox(gUnk_0873F5CC);
+    TerrainCollideBox(gWarpStarTerrainBox);
     t = gCurTask;
     if (t->onGround & 1)
     {
@@ -1374,7 +1374,7 @@ void sub_080745d0(void)
     TaskExitTrampoline();
 }
 
-void sub_080745dc(void)
+void WarpStarCameraTakeOff(void)
 {
     TaskStop();
     TaskYieldTrampoline(48);

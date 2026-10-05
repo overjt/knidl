@@ -3,7 +3,7 @@
 
 /* level_27a6c.c (0x08027A6C-0x08027E27, issue #93).
  *
- * sub_08027a6c builds the room's map in the second buffer gHubRoomMapBuffer for
+ * LoadHubRoomMap builds the room's map in the second buffer gHubRoomMapBuffer for
  * the room loaders LoadHubRoom and LoadBigSwitchViewRoom (src/level_23948.c).  It
  * decompresses the room's metatile table (RoomDef +0x20) into gMetatileTiles
  * and its metatile map (+0x08) into gHubRoomMapBuffer (or CpuSet-copies it when
@@ -81,7 +81,7 @@ struct RoomDef
     /*0x4C*/ u8 filler4C[4];
     /*0x50*/ u16 entryX;
     /*0x52*/ u16 entryY;
-    /*0x54*/ u8 unk54;
+    /*0x54*/ u8 setupKind;
     /*0x55*/ u8 bg3FullShake;
     /*0x56*/ u8 unk56;
     /*0x57*/ u8 unk57;
@@ -109,7 +109,7 @@ extern u32 gUnk_0873232C[];
 extern s8 gFurthestLevel;
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
-void sub_08027a6c(void)
+void LoadHubRoomMap(void)
 {
     s32 y;
     s32 n;

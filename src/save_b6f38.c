@@ -18,7 +18,7 @@ struct InputRecording
     /*0x00E*/ u16 roomEntryX;
     /*0x010*/ u16 roomEntryY;
     /*0x012*/ u8 roomEntryMode;
-    /*0x013*/ u8 unk13;
+    /*0x013*/ u8 roomPlayerMode;
     /*0x014*/ u16 maxHealth;
     /*0x016*/ u16 playerLives[4];
     /*0x01E*/ u16 playerHealth[4];
@@ -81,7 +81,7 @@ void InputRecorderStart(void)
         gInputRecordingPtr->extraMode = gExtraMode;
         gInputRecordingPtr->playerCount = gPlayerCount;
         gInputRecordingPtr->roomEntryMode = gRoomEntryMode;
-        gInputRecordingPtr->unk13 = gRoomPlayerMode;
+        gInputRecordingPtr->roomPlayerMode = gRoomPlayerMode;
         gInputRecordingPtr->maxHealth = gMaxHealth;
         gInputRecordingPtr->warpStarStationLevels = gWarpStarStationLevels;
         gInputRecordingPtr->localPlayer = gLocalPlayer;

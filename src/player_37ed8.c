@@ -15,7 +15,7 @@
  * MetaKnightActionHurt: a goto loop around a seven-state switch over Task.variant.
  * State 5, the entry, picks the next state from Task.hitEffect (its low
  * nibble, or 4 when bit 7 is set) and, for a player holding an ability
- * (PlayerState.ability) with bit 1 of PlayerState.unk42 clear, releases it
+ * (PlayerState.ability) with bit 1 of PlayerState.statusFlags clear, releases it
  * through M17's CreateAbilityStar(PlayerState.ownStarSwallowCount) and M02's HUD
  * (SetPlayerAbility); states 0-4 play the ability's animations and state 6
  * leaves.  PlayerActionHurtUpdate, handler 16, steers every state into state 6 and
@@ -39,7 +39,7 @@ void PlayerActionHurt(void)
     p = t->player;
     if (p->prevMode != 17)
     {
-        p->unk42 &= 0xFEEF;
+        p->statusFlags &= ~(PLAYER_STATUS_PALETTE_LOCKED | PLAYER_STATUS_NO_DRIFT);
         t->variant = 5;
         if (gCurTask->player->mouthState == 2)
             gCurTask->player->mouthState = 0;
@@ -58,19 +58,19 @@ loop:
         {
             if (gCurTask->player->ability == ABILITY_SLEEP)
             {
-                gCurTask->player->unk42 &= 0xFFFD;
+                gCurTask->player->statusFlags &= ~PLAYER_STATUS_KEEP_ABILITY;
                 SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
             }
             u = gCurTask;
-            if (u->hitEffect & 128)
+            if (u->hitEffect & HIT_EFFECT_TERRAIN_DAMAGE)
                 u->variant = 4;
             else
                 u->variant = u->hitEffect & 15;
-            if (!(gCurTask->player->unk42 & 2) && gCurTask->player->unk37 == 0)
+            if (!(gCurTask->player->statusFlags & PLAYER_STATUS_KEEP_ABILITY) && gCurTask->player->unk37 == 0)
             {
                 if (gCurTask->player->ability != ABILITY_NORMAL)
                 {
-                    gCurTask->player->unk42 &= 0xFFFB;
+                    gCurTask->player->statusFlags &= 0xFFFB;
                     CreateAbilityStar(gCurTask->player->ownStarSwallowCount);
                     SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
                 }
@@ -240,7 +240,7 @@ loop:
                 PlayerSetMotionXPreset(10, 30);
             PlayerSetMotionYPreset(24);
         }
-        gCurTask->player->unk14 = 120;
+        gCurTask->player->playerHurtTimer = 120;
         if (gCurTask->player->mouthState == 0)
         {
             switch (gCurTask->playerHurtPhase)
@@ -307,10 +307,10 @@ loop:
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
                 }
-                gCurTask->player->unk14 = 1;
+                gCurTask->player->playerHurtTimer = 1;
                 break;
             default:
-                gCurTask->player->unk14 = 1;
+                gCurTask->player->playerHurtTimer = 1;
                 break;
             }
         }
@@ -403,11 +403,11 @@ loop:
                 TaskYieldTrampoline(2);
                 TaskSetFrame(384);
                 TaskYieldTrampoline(2);
-                gCurTask->player->unk14 = 1;
+                gCurTask->player->playerHurtTimer = 1;
                 break;
             case 4:
             default:
-                gCurTask->player->unk14 = 1;
+                gCurTask->player->playerHurtTimer = 1;
                 break;
             }
         }
@@ -425,7 +425,7 @@ loop:
                 PlayerSetMotionXPreset(10, 30);
             PlayerSetMotionYPreset(24);
         }
-        gCurTask->player->unk14 = 120;
+        gCurTask->player->playerHurtTimer = 120;
         if (gCurTask->player->mouthState == 0)
         {
             switch (gCurTask->playerHurtPhase)
@@ -466,7 +466,7 @@ loop:
                 gCurTask->frame--;
                 TaskYieldTrampoline(2);
                 PlayerSetMotionYPreset(26);
-                gCurTask->player->unk14 = 120;
+                gCurTask->player->playerHurtTimer = 120;
             case 2:
                 gCurTask->playerHurtPhase++;
                 TaskSetFrame(250);
@@ -482,10 +482,10 @@ loop:
                 }
                 gCurTask->frame++;
                 TaskYieldTrampoline(4);
-                gCurTask->player->unk14 = 1;
+                gCurTask->player->playerHurtTimer = 1;
                 break;
             default:
-                gCurTask->player->unk14 = 1;
+                gCurTask->player->playerHurtTimer = 1;
                 break;
             }
         }
@@ -507,7 +507,7 @@ loop:
             case 1:
                 gCurTask->playerHurtPhase++;
                 PlayerSetMotionYPreset(27);
-                gCurTask->player->unk14 = 120;
+                gCurTask->player->playerHurtTimer = 120;
             case 2:
                 gCurTask->playerHurtPhase++;
                 TaskSetFrame(0x191);
@@ -541,7 +541,7 @@ loop:
                 TaskSetFrame(402);
                 TaskYieldTrampoline(2);
                 PlayerSetMotionYPreset(28);
-                gCurTask->player->unk14 = 120;
+                gCurTask->player->playerHurtTimer = 120;
             case 3:
                 gCurTask->playerHurtPhase++;
                 TaskSetFrame(398);
@@ -574,13 +574,13 @@ loop:
                 if (gCurTask->onGround & 1)
                 {
                     PlayerSetMotionYPreset(29);
-                    gCurTask->player->unk14 = 120;
+                    gCurTask->player->playerHurtTimer = 120;
                     TaskSetFrame(410);
                     while (!(gCurTask->onGround & 1))
                         TaskYieldTrampoline(1);
                 }
             case 4:
-                gCurTask->player->unk14 = 1;
+                gCurTask->player->playerHurtTimer = 1;
                 break;
             }
         }
@@ -644,7 +644,7 @@ loop:
         if (gCurTask->waterFlags & 1)
             PlayerSetWaterMotionY();
         SetPlayerInvulnerability(1, 96, gCurTask->player->playerIndex);
-        gCurTask->player->unk42 |= 0x200;
+        gCurTask->player->statusFlags |= PLAYER_STATUS_NO_TERRAIN_DAMAGE;
         break;
     }
     TaskSleepForever();
@@ -672,7 +672,7 @@ void PlayerActionHurtUpdate(void)
             if (PlayerCheckLanding() != 0)
                 goto e1;
             t = gCurTask;
-            if (--t->player->unk14 != 0)
+            if (--t->player->playerHurtTimer != 0)
                 break;
             t->variant = 6;
             TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
@@ -702,7 +702,7 @@ void PlayerActionHurtUpdate(void)
                     goto e3;
             }
             t = gCurTask;
-            if (--t->player->unk14 != 0)
+            if (--t->player->playerHurtTimer != 0)
                 break;
             if (t->player->mouthState != 1)
             {

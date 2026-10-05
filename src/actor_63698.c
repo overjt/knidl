@@ -116,7 +116,7 @@ void ActorInitFromDefSlot(u32 i)
     t = &gTasks[i];
     a = t->u8C.actor;
     a->prevState = 0xFFFF;
-    a->unk04 = 0;
+    a->attachEffect = 0;
     a->hitState = 0;
     a->hitterClass = 0;
     a->hitterKind = 0;
@@ -144,7 +144,7 @@ void ActorInitFromDefSlot(u32 i)
     a->defeatSweepCallback = 0;
     a->unk34 = -1;
     a->sfxOverride = -1;
-    a->unk0D = 0;
+    a->keepExtraOnDefeat = 0;
     a->extraOffsetY = 0;
     a->unk16 = 0;
     a->extraLayerOffset = 0;
@@ -165,7 +165,7 @@ void ActorInitFromDefSlot(u32 i)
         if (a->def->initCallback != NULL)
             a->def->initCallback(i);
         a->teardown = a->def->teardown;
-        a->unk60 = a->def->unk10;
+        a->aux = a->def->aux;
     }
     else
     {
@@ -178,7 +178,7 @@ void ActorInitFromDefSlot(u32 i)
         a->ability = ABILITY_NORMAL;
         a->score = 0;
         t->health = 0;
-        a->unk60 = 0;
+        a->aux = 0;
         a->teardown = 0;
     }
 }
@@ -257,7 +257,7 @@ void ActorSetTerrainBox(u32 box)
 
 void ActorSetAux(struct ActorAux *v)
 {
-    gCurTask->u8C.actor->unk60 = v;
+    gCurTask->u8C.actor->aux = v;
 }
 
 void ActorSetExtraAttackBox(u32 v)
@@ -275,7 +275,7 @@ void ActorSetExtraAttackBoxSlot(u32 i, u32 v)
 
 /* Nearest task in slots 4..15 to the running one, along X. */
 /* Nearest task in slots 4..15 to the running one, along X. */
-s32 sub_08063a2c(void)
+s32 TaskFindNearestPlayerObject(void)
 {
     struct Task *o;
     s32 best;
@@ -1228,7 +1228,7 @@ void ActorAwardScore(u32 arg, s32 mul)
     }
     v *= mul;
     if (gCurTask->actorKind == ACTOR_KIND_ENEMY && gCurTask->u76.subtype == 40
-        && (u8)(a->unk04 - 2) <= 1)
+        && (u8)(a->attachEffect - 2) <= 1)
         v = 200;
     AddPlayerScore(v, arg);
 }
@@ -1266,7 +1266,7 @@ s32 CreateChildActor(struct ActorSpawn *p)
         t->actorKind = ACTOR_KIND_CHILD;
         t->u76.subtype = p->subtype;
         t->variant = p->variant;
-        t->unk74 = p->spawnArg;
+        t->actorSpawnArg = p->spawnArg;
         t->pixelX = p->x;
         t->pixelY = p->y;
         t->posX = p->x << 16;
@@ -1454,7 +1454,7 @@ s32 CreateItemOrObject(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
             t->actorKind = ACTOR_KIND_OBJECT;
         t->u76.subtype = sub;
         t->variant = 0;
-        t->unk74 = p2;
+        t->actorSpawnArg = p2;
         t->pixelX = x;
         t->pixelY = y;
         t->posX = x << 16;
@@ -1519,7 +1519,7 @@ s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
         t->actorKind = cls;
         t->u76.subtype = sub;
         t->variant = p3;
-        t->unk74 = p4;
+        t->actorSpawnArg = p4;
         t->pixelX = x;
         t->pixelY = y;
         t->posX = x << 16;
@@ -1661,7 +1661,7 @@ void ActorDrawWorldInViewOrDestroy(void)
     }
 }
 
-void sub_080652c8(void)
+void ActorDrawWorldNearView(void)
 {
     struct Task *p;
     struct Task *t;
@@ -1683,7 +1683,7 @@ void sub_080652c8(void)
                  (s16)(t->pixelY - gSpriteCameraY));
 }
 
-void sub_08065350(void)
+void ActorDrawWorldNearViewOrDestroy(void)
 {
     struct Task *p;
     struct Task *t;

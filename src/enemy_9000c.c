@@ -26,7 +26,7 @@
  *
  * The tail holds the pieces the states share - BonkersCreateSlamStar (fire a shot at
  * the boss's own position through CreateInhalableStar), BonkersChooseNextState (advance the
- * animation from gUnk_08743744[Task.unk28]), sub_08090e9c (the hover loop),
+ * animation from gUnk_08743744[Task.unk28]), BonkersShakeVertically (the hover loop),
  * the BonkersReactToDamage / BonkersReactToDefeat / BonkersHitWall hit hooks, the companion
  * task Task_BonkersHammerHitBox / BonkersHammerHitBoxUpdate that mirrors the boss's position while
  * gTaskSlotTypes[Task.parent] says the boss is alive - and Task_PoppyBrosSr, the
@@ -346,7 +346,7 @@ void BonkersDash(void)
         }
     }
     PlaySfx(502);
-    gCurTask->unk20 = ActorStartAnim(gUnk_087437C8[gCurTask->actorSpawnArg]);
+    gCurTask->actorAnimDelay20 = ActorStartAnim(gUnk_087437C8[gCurTask->actorSpawnArg]);
     TaskSetMotionXFacing(gUnk_08743750[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     y = gCurTask;
     zero = 0;
@@ -355,11 +355,11 @@ void BonkersDash(void)
     while ((s16)gCurTask->bonkersLoopCount < gCurTask->bonkersMoveLength)
     {
         TaskYieldTrampoline(1);
-        if (--gCurTask->unk20 == 0)
+        if (--gCurTask->actorAnimDelay20 == 0)
         {
             if ((++gCurTask->bonkersDashStepCount & 1) != 0)
                 CreateDustTrail(1, 1, -16, 8);
-            gCurTask->unk20 = ActorStepAnim();
+            gCurTask->actorAnimDelay20 = ActorStepAnim();
         }
         gCurTask->bonkersLoopCount++;
     }
@@ -586,7 +586,7 @@ void BonkersBounceOffWall(void)
         TaskYieldTrampoline(1);
     TaskStop();
     RequestScreenShake(2);
-    sub_08090e9c();
+    BonkersShakeVertically();
     BonkersChooseNextState();
     TaskSleepForever();
 }
@@ -605,7 +605,7 @@ void BonkersDefeat(void)
     t->updateState = BONKERS_STATE_DEFEAT;
     if (--gUnk_02007D00[0] == 0)
         EndMidBossFightWithReward();
-    sub_080667c0(1, 32);
+    MidBossStartDefeat(1, 32);
     CreateStarFlash(1, 0, 0);
     TaskStop();
     TaskSetFrame(32);
@@ -663,7 +663,7 @@ void BonkersChooseNextState(void)
         t->bonkersSequencePhase = 4;
 }
 
-void sub_08090e9c(void)
+void BonkersShakeVertically(void)
 {
     gCurTask->bonkersLoopCount = 0;
     do
@@ -775,7 +775,7 @@ void Task_PoppyBrosSr(void)
     ActorInitBossGfx(0);
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
-    t->drawCallback = (u32)sub_08065350;
+    t->drawCallback = (u32)ActorDrawWorldNearViewOrDestroy;
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gPoppyBrosSrFrames;

@@ -26,14 +26,14 @@
 /* The 6-byte directional record ActorGetTerrainBox fills on the stack: three raw
    bytes copied from Actor.terrainBox plus three that are negated when the task
    faces left (Task.facing == -1). */
-struct InputState
+struct TerrainCollisionBox
 {
-    /*0x00*/ u8 unk00;
-    /*0x01*/ u8 unk01;
-    /*0x02*/ u8 unk02;
-    /*0x03*/ u8 unk03;
-    /*0x04*/ u8 unk04;
-    /*0x05*/ u8 unk05;
+    /*0x00*/ u8 offsetX;
+    /*0x01*/ u8 offsetY;
+    /*0x02*/ u8 top;
+    /*0x03*/ u8 bottom;
+    /*0x04*/ u8 left;
+    /*0x05*/ u8 right;
 };
 
 /* Not from collision.h: this file's view of gTerrainResult differs (lesson
@@ -45,15 +45,15 @@ extern void PlaySfx(s32 id);
 extern void TaskSetEntry(void *fn, s32 i);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
-extern void TerrainCollideBox(struct InputState *p);
-extern void TerrainCollideBoxInCameraBounds(struct InputState *p);
-extern void TerrainCollideBoxWalls(struct InputState *p);
-extern void TerrainCollideBoxCeilingAndFloor(struct InputState *p);
-extern void TerrainCollideBoxFloor(struct InputState *p);
-extern void TerrainCollideBoxAlongVelocity(struct InputState *p);
-extern void TerrainCollidePointPushOut(struct InputState *p);
-extern u32 TerrainCollidePointStop(struct InputState *p);
-extern u32 sub_0802205c(struct InputState *p);
+extern void TerrainCollideBox(struct TerrainCollisionBox *p);
+extern void TerrainCollideBoxInCameraBounds(struct TerrainCollisionBox *p);
+extern void TerrainCollideBoxWalls(struct TerrainCollisionBox *p);
+extern void TerrainCollideBoxCeilingAndFloor(struct TerrainCollisionBox *p);
+extern void TerrainCollideBoxFloor(struct TerrainCollisionBox *p);
+extern void TerrainCollideBoxAlongVelocity(struct TerrainCollisionBox *p);
+extern void TerrainCollidePointPushOut(struct TerrainCollisionBox *p);
+extern u32 TerrainCollidePointStop(struct TerrainCollisionBox *p);
+extern u32 sub_0802205c(struct TerrainCollisionBox *p);
 extern void TaskInitWaterFlagsSlot(s32 i);
 extern void ActorSetState(u8 v);
 extern void ActorSetTerrainHandlers(u32 v);
@@ -71,7 +71,7 @@ u32 ActorCollideTerrain(void)
     u8 r;
     s8 k;
     s8 f;
-    struct InputState v;
+    struct TerrainCollisionBox v;
 
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
@@ -158,7 +158,7 @@ s3:
 
 u32 sub_080694e0(void)
 {
-    struct InputState v;
+    struct TerrainCollisionBox v;
 
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
@@ -168,7 +168,7 @@ u32 sub_080694e0(void)
 
 u32 ActorCollideTerrainAlongVelocity(void)
 {
-    struct InputState v;
+    struct TerrainCollisionBox v;
     u32 r;
 
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
@@ -186,7 +186,7 @@ u32 ActorCollideTerrainAlongVelocity(void)
 
 u32 ActorCollideTerrainCeilingAndFloor(void)
 {
-    struct InputState v;
+    struct TerrainCollisionBox v;
     u32 r;
 
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
@@ -204,7 +204,7 @@ u32 ActorCollideTerrainCeilingAndFloor(void)
 
 u32 ActorCollideTerrainWalls(void)
 {
-    struct InputState v;
+    struct TerrainCollisionBox v;
     u32 r;
 
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
@@ -222,7 +222,7 @@ u32 ActorCollideTerrainWalls(void)
 
 u32 ActorCollideTerrainPointPushOut(void)
 {
-    struct InputState v;
+    struct TerrainCollisionBox v;
     u32 r;
 
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
@@ -237,7 +237,7 @@ u32 ActorCollideTerrainPointPushOut(void)
 
 u32 ActorCollideTerrainPointStop(void)
 {
-    struct InputState v;
+    struct TerrainCollisionBox v;
     u32 r;
 
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
@@ -262,7 +262,7 @@ u32 ActorCollideTerrainInCameraBounds(void)
     u8 r;
     s8 k;
     s8 f;
-    struct InputState v;
+    struct TerrainCollisionBox v;
 
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
@@ -358,7 +358,7 @@ u32 ActorCollideTerrainFloor(void)
     u8 r;
     s8 k;
     s8 f;
-    struct InputState v;
+    struct TerrainCollisionBox v;
 
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
@@ -445,27 +445,27 @@ u32 ActorStepBackFromSlope(void)
     return 0;
 }
 
-void ActorGetTerrainBox(struct InputState *out)
+void ActorGetTerrainBox(struct TerrainCollisionBox *out)
 {
     struct Task *t;
     struct Actor *a;
 
     t = gCurTask;
     a = t->u8C.actor;
-    out->unk01 = ((struct InputState *)a->terrainBox)->unk01;
-    out->unk02 = ((struct InputState *)a->terrainBox)->unk02;
-    out->unk03 = ((struct InputState *)a->terrainBox)->unk03;
+    out->offsetY = ((struct TerrainCollisionBox *)a->terrainBox)->offsetY;
+    out->top = ((struct TerrainCollisionBox *)a->terrainBox)->top;
+    out->bottom = ((struct TerrainCollisionBox *)a->terrainBox)->bottom;
     if (t->facing == -1)
     {
-        out->unk00 = -((struct InputState *)a->terrainBox)->unk00;
-        out->unk04 = -((struct InputState *)a->terrainBox)->unk05;
-        out->unk05 = -((struct InputState *)a->terrainBox)->unk04;
+        out->offsetX = -((struct TerrainCollisionBox *)a->terrainBox)->offsetX;
+        out->left = -((struct TerrainCollisionBox *)a->terrainBox)->right;
+        out->right = -((struct TerrainCollisionBox *)a->terrainBox)->left;
     }
     else
     {
-        out->unk00 = ((struct InputState *)a->terrainBox)->unk00;
-        out->unk04 = ((struct InputState *)a->terrainBox)->unk04;
-        out->unk05 = ((struct InputState *)a->terrainBox)->unk05;
+        out->offsetX = ((struct TerrainCollisionBox *)a->terrainBox)->offsetX;
+        out->left = ((struct TerrainCollisionBox *)a->terrainBox)->left;
+        out->right = ((struct TerrainCollisionBox *)a->terrainBox)->right;
     }
 }
 
@@ -532,7 +532,7 @@ u32 PickupReactToHit(void)
     {
     case HIT_KIND_DEFEAT:
     case HIT_KIND_DAMAGE:
-    case 5:
+    case HIT_KIND_SLIDE:
     case 7:
         /* PickupCollect is void in the ROM but its result is consumed here:
            the original had no prototype in scope at this point, so the
@@ -664,7 +664,7 @@ void ActorStartHitStun(void)
 
     t = gCurTask;
     a = t->u8C.actor;
-    TaskSetSkipMask(7, gCurTaskIdx);
+    TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE), gCurTaskIdx);
     u = gCurTask;
     u->posX = u->pixelX << 16;
     u->posY = u->pixelY << 16;
@@ -767,7 +767,7 @@ void ActorHitStunLateUpdate(void)
     ActorHitStunShake();
 }
 
-void sub_08069fc8(void)
+void ActorPlayBurstDefeatAnim(void)
 {
     if (gTaskSlotTypes[gCurTaskIdx] == TASK_GLUNK_SHOT || gTaskSlotTypes[gCurTaskIdx] == TASK_SHOTZO_CANNONBALL
      || gTaskSlotTypes[gCurTaskIdx] == TASK_GIP_STAR)
@@ -845,7 +845,7 @@ void ActorStartDrown(s32 a)
     b->hitState = 2;
     ActorSetTerrainHandlers((u32)gActorDrownTerrainHandlers);
     if (gCurTask->onGround & 1)
-        ActorSetState(ACTOR_DROWN_STATE_1);
+        ActorSetState(ACTOR_DROWN_STATE_WAIT);
     else
         ActorSetState(ACTOR_DROWN_STATE_SINK);
     TaskSetEntry(ActorDrownInit, gCurTaskIdx);
@@ -938,7 +938,7 @@ u32 ActorReactToDefeat(void)
     {
         sub_0806ee2c();
     }
-    if (a->unk0D == 0)
+    if (a->keepExtraOnDefeat == 0)
         a->extraFrame = 0xFFFF;
     return r;
 }

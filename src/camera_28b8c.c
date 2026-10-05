@@ -17,8 +17,8 @@
  * or runs M08's multi-player updates; CalcRoomAndCameraBounds only sets the bounds.
  * SetRoomEntryPoint places the player at the room's start position
  * (RoomDef.entryX/unk52) unless a door already did, clamps it and records
- * the arrival for the next level change (gUnk_02008054, gUnk_0200AFF4,
- * gUnk_02008050).  sub_08029034 clamps the arrival position into the room
+ * the arrival for the next level change (gRestartPoint, gRestartPointX,
+ * gRestartPointY).  ClampRoomEntryAndAnchorCamera clamps the arrival position into the room
  * and makes it the camera target, CameraSetFocusToLocalPlayer copies the current
  * player's camera position into the player cells, CameraInitPos and
  * CameraUpdatePos/CameraUpdatePosNoParallax/CameraUpdatePosBg3AutoScrollX
@@ -166,16 +166,16 @@ void SetRoomEntryPoint(void)
         gRoomEntryY = v;
     if (gUnk_0200B038 == 0)
     {
-        gUnk_02008054 = gRoomIndex;
+        gRestartPoint = gRoomIndex;
         if (gRoomEntryMode == ROOM_ENTRY_WARP_STAR)
         {
-            gUnk_0200AFF4 = gCurRoomDef->entryX;
-            gUnk_02008050 = gCurRoomDef->entryY;
+            gRestartPointX = gCurRoomDef->entryX;
+            gRestartPointY = gCurRoomDef->entryY;
         }
         else
         {
-            gUnk_0200AFF4 = gRoomEntryX;
-            gUnk_02008050 = gRoomEntryY;
+            gRestartPointX = gRoomEntryX;
+            gRestartPointY = gRoomEntryY;
         }
         gUnk_0200B038 = 0;
     }
@@ -212,7 +212,7 @@ void SetRoomEntryPoint(void)
     }
 }
 
-void sub_08029034(void)
+void ClampRoomEntryAndAnchorCamera(void)
 {
     s32 v;
 
@@ -269,8 +269,8 @@ void PlayRoomBgm(void)
             cur = GetCurrentBgm();
             if (cur == -1 || cur != bgm)
             {
-                if (gUnk_087325A2[bgm] != -1)
-                    PlayBgm(gUnk_087325A2[bgm]);
+                if (gRoomBgmRemap[bgm] != -1)
+                    PlayBgm(gRoomBgmRemap[bgm]);
                 else
                     PlayBgm(bgm);
             }
@@ -357,7 +357,7 @@ void InitDoors(void)
     d = gCurRoomDef->doors;
     for (i = 0; i < gCurRoomDef->doorCount; i++)
     {
-        gDoorStates[i].unk1 = 1;
+        gDoorStates[i].isOpen = 1;
         /* The whole byte at +4 (unk4_0/unk4_4) cleared with one strb
            through the struct: two bit-field stores leave the -16 mask and a
            zero in the loop and change what loop.c hoists (0x22B8 then goes
@@ -367,21 +367,21 @@ void InitDoors(void)
         b = GetCollisionTile(d->unk2 + 1, d->unk4);
         if ((a == 16 && b == 55) || (a == 144 && b == 183))
         {
-            gDoorStates[i].unk0 = 1;
-            gDoorStates[i].unk4_0 = 8;
-            gDoorStates[i].unk4_4 = 3;
+            gDoorStates[i].overlayKind = 1;
+            gDoorStates[i].overlayFrame = 8;
+            gDoorStates[i].overlayTimer = 3;
         }
         else if (d->unk0 == 0x22B8)
         {
-            gDoorStates[i].unk0 = 2;
-            gDoorStates[i].unk4_0 = 2;
-            gDoorStates[i].unk4_4 = 3;
+            gDoorStates[i].overlayKind = 2;
+            gDoorStates[i].overlayFrame = 2;
+            gDoorStates[i].overlayTimer = 3;
         }
         else
         {
-            gDoorStates[i].unk0 = 0;
-            gDoorStates[i].unk4_0 = 0;
-            gDoorStates[i].unk4_4 = 3;
+            gDoorStates[i].overlayKind = 0;
+            gDoorStates[i].overlayFrame = 0;
+            gDoorStates[i].overlayTimer = 3;
         }
         d++;
     }

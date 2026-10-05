@@ -20,17 +20,17 @@
  * sequences; BugzzyCharge is the three-phase charge, BugzzyHop the
  * multi-hit dive, BugzzyBackdrop the four-way finisher whose case 3 spawns the
  * actor 154 at gUnk_030023B4/gUnk_030023D4, and BugzzyDefeat the defeat
- * sequence.  sub_080934b8 is the shake helper the first states yield to and
+ * sequence.  BugzzyFlapStep is the shake helper the first states yield to and
  * BugzzyChooseBackdrop is the collision probe: ten GetCollisionTileAtOffset samples along
- * gUnk_08743AB8, mapped through the terrain-class table gUnk_087339F0 into a
+ * gUnk_08743AB8, mapped through the terrain-class table gCollisionTileCollides into a
  * two-bit result that picks the next Task.unk28 direction from gUnk_08743AC2.
- * sub_0809364c / sub_080936a0 / sub_08093780 are the shared step sequences,
+ * BugzzySlamHeldPlayer / BugzzyJumpBack / BugzzyShakeVertically are the shared step sequences,
  * BugzzyHitWall the hit hook, BugzzyHitCeiling the four-instruction "stop moving"
  * leaf the census had missed, and BugzzyAfterimageUpdate the companion body.
  *
  * The fourth boss starts at Task_BonkersNut (table 0x087441A4, graphics
  * gBonkersNutFrames): BonkersNutInit installs BonkersNutUpdate as its body,
- * BonkersNutState0 is its one state, Task_PoppyBrosSrBomb / PoppyBrosSrBombInit are the second
+ * BonkersNutFlight is its one state, Task_PoppyBrosSrBomb / PoppyBrosSrBombInit are the second
  * entry pair (graphics gPoppyBrosSrBombFrames, Actor.sfxOverride = 0x20E), PoppyBrosSrBombHeld and
  * PoppyBrosSrBombFlight are the endless spawners that call CreateChildTaskAtOffsetFacing(181, -8, -8, 1)
  * every six frames, and PoppyBrosSrBombHeldUpdate / Task_PoppyBrosSrBombSpark / PoppyBrosSrBombLand are the
@@ -48,7 +48,7 @@
 /* ROM tables */
 /* Not from collision.h: this file's view of gTerrainResult differs (lesson
    3.517). */
-extern s8 gUnk_087339F0[];
+extern s8 gCollisionTileCollides[];
 extern vu8 gTerrainResult;
 
 /* Externals */
@@ -330,9 +330,9 @@ void BugzzyWalk(void)
         if (r < gUnk_08743A7C[gUnk_02007D00[5]])
             ActorSetState(BUGZZY_STATE_CHARGE);
         else if (r < gUnk_08743A82[gUnk_02007D00[5]])
-            ActorSetState(BUGZZY_STATE_4);
+            ActorSetState(BUGZZY_STATE_FLY_UP);
         else if (r < gUnk_08743A88[gUnk_02007D00[5]])
-            ActorSetState(BUGZZY_STATE_6);
+            ActorSetState(BUGZZY_STATE_JUMP);
         else
             ActorSetState(BUGZZY_STATE_HOP);
     }
@@ -474,7 +474,7 @@ void BugzzyCharge(void)
     PlaySfx(500);
     x = gCurTask;
     x->bugzzyBoxSet = 3;
-    gTasks[CreateChildTask(TASK_BUGZZY_AFTERIMAGE, x->pixelX, x->pixelY, ActorGetGfxTileWord())].unk74 =
+    gTasks[CreateChildTask(TASK_BUGZZY_AFTERIMAGE, x->pixelX, x->pixelY, ActorGetGfxTileWord())].bugzzyAfterimageSpawnArg =
         gCurTask->actorSpawnArg;
     gCurTask->bugzzyRushing = 1;
     TaskSetMotionXFacing(gUnk_08743A94[gCurTask->actorSpawnArg], 0x5A5A5A5A);
@@ -512,7 +512,7 @@ void BugzzyChargeUpdate(void)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void BugzzyState4(void)
+void BugzzyFlyUp(void)
 {
     struct Task *t;
     struct Task *u;
@@ -520,7 +520,7 @@ void BugzzyState4(void)
     struct Task *w;
 
     t = gCurTask;
-    t->updateState = BUGZZY_STATE_4;
+    t->updateState = BUGZZY_STATE_FLY_UP;
     TaskSetFrame(60);
     TaskYieldTrampoline(6);
     v = gCurTask;
@@ -549,7 +549,7 @@ void BugzzyState4(void)
         w->bugzzyLoopCount = 0;
         do
         {
-            sub_080934b8();
+            BugzzyFlapStep();
             TaskYieldTrampoline(1);
         } while ((s16)++gCurTask->bugzzyLoopCount <= 59);
     }
@@ -558,22 +558,22 @@ void BugzzyState4(void)
     else if (abs(TaskGetNearestPlayerDy()) <= 15)
         ActorSetState(BUGZZY_STATE_CHARGE);
     else
-        ActorSetState(BUGZZY_STATE_5);
+        ActorSetState(BUGZZY_STATE_FLY_FORWARD);
     TaskSleepForever();
 }
 
-void BugzzyState4Update(void)
+void BugzzyFlyUpUpdate(void)
 {
-    if (gCurTask->state != BUGZZY_STATE_4)
+    if (gCurTask->state != BUGZZY_STATE_FLY_UP)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void BugzzyState5(void)
+void BugzzyFlyForward(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateState = BUGZZY_STATE_5;
+    t->updateState = BUGZZY_STATE_FLY_FORWARD;
     TaskSetMotionXFacing(gUnk_08743AA4[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     if (TaskGetYDirBitToNearestPlayer() == 1)
         gCurTask->velY = 49152;
@@ -581,27 +581,27 @@ void BugzzyState5(void)
     gCurTask->bugzzyLoopCount = 0;
     do
     {
-        sub_080934b8();
+        BugzzyFlapStep();
         TaskYieldTrampoline(1);
     } while ((s16)++gCurTask->bugzzyLoopCount <= 119);
     ActorSetState(BUGZZY_STATE_FALL);
     TaskSleepForever();
 }
 
-void BugzzyState5Update(void)
+void BugzzyFlyForwardUpdate(void)
 {
-    if (gCurTask->state != BUGZZY_STATE_5)
+    if (gCurTask->state != BUGZZY_STATE_FLY_FORWARD)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void BugzzyState6(void)
+void BugzzyJump(void)
 {
     struct Task *t;
     struct Task *u;
     struct Task *v;
 
     t = gCurTask;
-    t->updateState = BUGZZY_STATE_6;
+    t->updateState = BUGZZY_STATE_JUMP;
     TaskFaceNearestPlayer();
     TaskSetFrame(60);
     TaskYieldTrampoline(4);
@@ -626,9 +626,9 @@ void BugzzyState6(void)
     TaskSleepForever();
 }
 
-void BugzzyState6Update(void)
+void BugzzyJumpUpdate(void)
 {
-    if (gCurTask->state != BUGZZY_STATE_6)
+    if (gCurTask->state != BUGZZY_STATE_JUMP)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 void BugzzyHop(void)
@@ -682,7 +682,7 @@ void BugzzyHop(void)
     TaskYieldTrampoline(3);
     p = &gTasks[TaskFindNearestPlayer()];
     if (p->onGround == 0)
-        ActorSetState(BUGZZY_STATE_4);
+        ActorSetState(BUGZZY_STATE_FLY_UP);
     else
         ActorSetState(BUGZZY_STATE_CHARGE);
     TaskSleepForever();
@@ -759,8 +759,8 @@ void BugzzyBounceOffWall(void)
     TaskSetMotionXFacing(0xFFFF8000, 0x5A5A5A5A);
     TaskYieldTrampoline(30);
     gCurTask->velX = 0;
-    sub_08093780();
-    ActorSetState(BUGZZY_STATE_11);
+    BugzzyShakeVertically();
+    ActorSetState(BUGZZY_STATE_LAND);
     TaskSleepForever();
 }
 
@@ -770,13 +770,13 @@ void BugzzyBounceOffWallUpdate(void)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void BugzzyState11(void)
+void BugzzyLand(void)
 {
     struct Task *t;
     struct Task *u;
 
     t = gCurTask;
-    t->updateState = BUGZZY_STATE_11;
+    t->updateState = BUGZZY_STATE_LAND;
     TaskSetMotionXFacing(0xFFFFC000, 0x5A5A5A5A);
     TaskSetFrame(48);
     TaskYieldTrampoline(4);
@@ -793,9 +793,9 @@ void BugzzyState11(void)
     TaskSleepForever();
 }
 
-void BugzzyState11Update(void)
+void BugzzyLandUpdate(void)
 {
-    if (gCurTask->state != BUGZZY_STATE_11)
+    if (gCurTask->state != BUGZZY_STATE_LAND)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 void BugzzyBackdrop(void)
@@ -859,8 +859,8 @@ void BugzzyBackdrop(void)
         TaskStop();
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        sub_0809364c();
-        sub_080936a0();
+        BugzzySlamHeldPlayer();
+        BugzzyJumpBack();
         break;
     case 2:
         s->onGround = 0;
@@ -880,8 +880,8 @@ void BugzzyBackdrop(void)
         while (gCurTask->onGround == 0)
             TaskYieldTrampoline(1);
         TaskStop();
-        sub_0809364c();
-        ActorSetState(BUGZZY_STATE_11);
+        BugzzySlamHeldPlayer();
+        ActorSetState(BUGZZY_STATE_LAND);
         break;
     case 3:
         s->bugzzyLoopCount = 0;
@@ -904,7 +904,7 @@ void BugzzyBackdrop(void)
             TaskYieldTrampoline(8);
         } while ((s16)++gCurTask->bugzzyLoopCount <= 5);
         SetHeldPlayerState(gCurTask->bugzzyHeldPlayerSlot, 4);
-        sub_080936a0();
+        BugzzyJumpBack();
         break;
     }
     TaskSleepForever();
@@ -932,7 +932,7 @@ void BugzzyDefeat(void)
     gUnk_02007D00[4] = 0;
     if (--gUnk_02007D00[7] == 0)
         EndMidBossFightWithReward();
-    sub_080667c0(1, 63);
+    MidBossStartDefeat(1, 63);
     CreateStarFlash(1, 0, 0);
     TaskStop();
     gCurTask->onGround = 0;
@@ -968,7 +968,7 @@ void BugzzyDefeatUpdate(void)
         TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
-void sub_080934b8(void)
+void BugzzyFlapStep(void)
 {
     struct Task *t;
 
@@ -1000,7 +1000,7 @@ void BugzzyChooseBackdrop(void)
         m = GetCollisionTileAtOffset(t->pixelX, t->pixelY, gUnk_08743AB8[i] * t->facing, 0);
         if (m == -1)
             m = 1;
-        if (gUnk_087339F0[m] != 0)
+        if (gCollisionTileCollides[m] != 0)
         {
             if (i > 4)
                 flags |= 1;
@@ -1064,18 +1064,18 @@ void BugzzyChooseBackdrop(void)
             w->bugzzyBackdropMove = gUnk_08743AC2[f - 1];
     }
 }
-void sub_0809364c(void)
+void BugzzySlamHeldPlayer(void)
 {
     SetHeldPlayerState(gCurTask->bugzzyHeldPlayerSlot, 4);
     RequestScreenShake(4);
     TaskGetPosSlot(gCurTask->bugzzyHeldPlayerSlot);
     CreateChildTaskAt(TASK_IMPACT_STAR, *(s16 *)&gUnk_030023B4, *(s16 *)&gUnk_030023D4, 0);
     BugzzyPlaySfxForHeldPlayer(504);
-    sub_08093780();
+    BugzzyShakeVertically();
     TaskStop();
 }
 
-void sub_080936a0(void)
+void BugzzyJumpBack(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1111,7 +1111,7 @@ void sub_080936a0(void)
     ActorSetState(BUGZZY_STATE_WALK);
 }
 
-void sub_08093780(void)
+void BugzzyShakeVertically(void)
 {
     gCurTask->bugzzyLoopCount = 0;
     do
@@ -1148,7 +1148,7 @@ s32 BugzzyHitWall(void)
             r = 1;
         }
         break;
-    case BUGZZY_STATE_6:
+    case BUGZZY_STATE_JUMP:
     case BUGZZY_STATE_FALL:
         TaskTurnAroundAndReverseX();
         break;
@@ -1275,7 +1275,7 @@ void BonkersNutInit(void)
     t = gCurTask;
     t->updateCallback = (u32)BonkersNutUpdate;
     TaskFaceLikeParent();
-    ActorSetState(BONKERS_NUT_STATE_0);
+    ActorSetState(BONKERS_NUT_STATE_FLIGHT);
     CallTableEntry(gCurTask->state, 1, gBonkersNutStates);
 }
 
@@ -1287,11 +1287,11 @@ void BonkersNutUpdate(void)
     ActorReactToHit();
 }
 
-void BonkersNutState0(void)
+void BonkersNutFlight(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = BONKERS_NUT_STATE_0;
+    gCurTask->updateState = BONKERS_NUT_STATE_FLIGHT;
     gCurTask->bonkersNutBounced = 0;
     TaskSetFrame(4);
     gCurTask->onGround = 0;
@@ -1309,18 +1309,18 @@ void BonkersNutState0(void)
     TaskSleepForever();
 }
 
-void BonkersNutState0Update(void)
+void BonkersNutFlightUpdate(void)
 {
     if (gCurTask->bonkersNutBounced != 0)
     {
-        ActorSetHitReactions(gUnk_0874430C);
+        ActorSetHitReactions(gBonkersNutDieHitReactions);
         TaskSetEntry(ActorDie, gCurTaskIdx);
     }
 }
 
 s32 BonkersNutHitWall(void)
 {
-    ActorSetHitReactions(gUnk_0874430C);
+    ActorSetHitReactions(gBonkersNutDieHitReactions);
     TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;
 }
@@ -1488,7 +1488,7 @@ void Task_PoppyBrosSrBombSpark(void)
 
 s32 PoppyBrosSrBombHitWall(void)
 {
-    ActorSetHitReactions(gUnk_08744324);
+    ActorSetHitReactions(gPoppyBrosSrBombDieHitReactions);
     TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;
 }
@@ -1502,7 +1502,7 @@ s32 PoppyBrosSrBombLand(void)
     t = gCurTask;
     if (--t->poppyBrosSrBombBouncesLeft == 0)
     {
-        ActorSetHitReactions(gUnk_08744324);
+        ActorSetHitReactions(gPoppyBrosSrBombDieHitReactions);
         TaskSetEntry(ActorDie, gCurTaskIdx);
         r = 1;
     }

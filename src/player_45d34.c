@@ -18,7 +18,7 @@
  * each with its own song (StopSfx) and sound; meanwhile it freezes
  * the stage (gPauseDisabled = 1), switches the DISPCNT shadow
  * gDispCnt to BG0, BG2, BG3 and OBJ unless BG2 is already on, raises
- * PlayerState.unk42 bits 8-10 and repeats the last loop until the effect
+ * PlayerState.statusFlags bits 8-10 and repeats the last loop until the effect
  * counter PlayerState.unk16 runs out.  With the last charge spent it
  * drops the ability (HudShowAbility) unless the ability is 7.  Its handler
  * PlayerActionMikeUpdate requests action 1 or 7 (on the ground or in the air) once
@@ -34,7 +34,7 @@ void PlayerActionMike(void)
     gCurTask->player->mode = 13;
     gCurTask->updateState = PLAYER_ACTION_HANDLER_MIKE;
     gCurTask->variant = gCurTask->player->abilityUses - 1;
-    gCurTask->player->unk42 &= 0xFFEF;
+    gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     if (--gCurTask->player->abilityUses == 0) {
         SetPlayerAbilityNoHud(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     } else {
@@ -43,16 +43,16 @@ void PlayerActionMike(void)
     }
     gPauseDisabled = 1;
     PlayerStopAxes(3);
-    FreezeOtherTasks(15);
+    FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
     if (!(gDispCnt & 0x400)) {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
     }
-    gCurTask->player->unk16 = 0;
+    gCurTask->player->playerMikeShoutCount = 0;
     CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 0);
     gCurTask->playerActionDone28 = 0;
     SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
-    gCurTask->player->unk42 |= 0x700;
+    gCurTask->player->statusFlags |= (PLAYER_STATUS_NO_DRIFT | PLAYER_STATUS_NO_TERRAIN_DAMAGE | PLAYER_STATUS_NO_BOUNDS_DEATH);
     switch (gCurTask->variant) {
     case 2:
         PlayerSetMotionXPreset(11, 42);
@@ -79,7 +79,7 @@ void PlayerActionMike(void)
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         PlaySfx(160);
-        gCurTask->player->unk16++;
+        gCurTask->player->playerMikeShoutCount++;
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
         CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 1);
@@ -91,7 +91,7 @@ void PlayerActionMike(void)
             gCurTask->frame++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->playerLoopCount <= 7);
-        while ((s8)gCurTask->player->unk16 != 0) {
+        while ((s8)gCurTask->player->playerMikeShoutCount != 0) {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x674);
             TaskYieldTrampoline(2);
@@ -114,7 +114,7 @@ void PlayerActionMike(void)
         StopSfx(160);
         TaskYieldTrampoline(1);
         PlaySfx(161);
-        gCurTask->player->unk16++;
+        gCurTask->player->playerMikeShoutCount++;
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
         CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 1);
@@ -126,7 +126,7 @@ void PlayerActionMike(void)
             gCurTask->frame++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->playerLoopCount <= 7);
-        while ((s8)gCurTask->player->unk16 != 0) {
+        while ((s8)gCurTask->player->playerMikeShoutCount != 0) {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x67D);
             TaskYieldTrampoline(2);
@@ -168,7 +168,7 @@ void PlayerActionMike(void)
         gCurTask->player->terrainBox = (u32)gPlayerDefaultTerrainBox;
         PlayerStopAxes(2);
         PlaySfx(162);
-        gCurTask->player->unk16++;
+        gCurTask->player->playerMikeShoutCount++;
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
         CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 1);
@@ -180,7 +180,7 @@ void PlayerActionMike(void)
             gCurTask->frame++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->playerLoopCount <= 7);
-        while ((s8)gCurTask->player->unk16 != 0) {
+        while ((s8)gCurTask->player->playerMikeShoutCount != 0) {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x689);
             TaskYieldTrampoline(2);
@@ -202,7 +202,7 @@ void PlayerActionMike(void)
     }
     gCurTask->playerActionDone28++;
     gPauseDisabled = 0;
-    gCurTask->player->unk42 &= 0xF8FF;
+    gCurTask->player->statusFlags &= ~(PLAYER_STATUS_NO_DRIFT | PLAYER_STATUS_NO_TERRAIN_DAMAGE | PLAYER_STATUS_NO_BOUNDS_DEATH);
     TaskSleepForever();
 }
 

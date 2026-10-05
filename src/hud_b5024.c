@@ -20,7 +20,7 @@ extern s8 gUnk_02005590[];
 struct RoomObjectEntry
 {
     /*0x00*/ s8 kind;
-    /*0x01*/ s8 unk1;
+    /*0x01*/ s8 subtype;
     /*0x02*/ s8 unk2;
     /*0x03*/ s8 unk3;
     /*0x04*/ u16 x;
@@ -37,9 +37,9 @@ extern u8 gUnk_02005E10[];
 extern u8 gRoomEntryMode;
 extern u32 gUsedRoomObjects[8][8];
 extern s16 gPlayerLives[];
-extern u16 gUnk_02007D60;
+extern u16 gMidBossRetryCount;
 extern u32 gUnk_02007D64[];
-extern s16 gUnk_0200AF0C;
+extern s16 gMidBossRetryRoom;
 extern u8 gWarpStarStationLevels;
 extern u8 gUnk_0200B078;
 extern u8 gMidBossFightState;
@@ -111,15 +111,15 @@ extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
 /* Module functions */
-void sub_080a2b2c();
+void MrBrightFlashPalette();
 void ReleaseRoomObject();
 s32 LoadRoomEnemyGfx();
 s32 LoadRoomMidBossGfx();
 s32 LoadRoomBossGfx();
 void LoadRoomMetaKnightsGfx();
-s32 sub_080b5a94();
+s32 LoadRoomStageObjectGfx();
 s32 SpawnRoomEnemy();
-s32 sub_080b5d84();
+s32 SpawnRoomMapEvent();
 
 void SpawnRoomObjectsOnLoad(void)
 {
@@ -146,23 +146,23 @@ void SpawnRoomObjectsOnLoad(void)
         case 7:
             break;
         case 3:
-            r = CreateActorByKind(ACTOR_KIND_BOSS, e->unk1, e->unk2, e->unk3, e->x, e->y,
-                             (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
+            r = CreateActorByKind(ACTOR_KIND_BOSS, e->subtype, e->unk2, e->unk3, e->x, e->y,
+                             (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].tileOffset * 2) + 16));
             gHudHpBarTasks[0] = r;
             gHudHpBarCount = gHudHpBarsLeft = 1;
             break;
         case 8:
             r = CreateActorByKind(3, 8, e->unk2, e->unk3, e->x, e->y,
-                             (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
+                             (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].tileOffset * 2) + 16));
             gHudHpBarTasks[0] = r;
             gHudHpBarCount = gHudHpBarsLeft = 1;
             break;
         case 5:
-            if (gUnk_08756178[e->unk1] == -1)
+            if (gStageObjectSubtypes[e->subtype] == -1)
                 continue;
-            d = gUnk_0873F180[gUnk_08756178[e->unk1]];
+            d = gStageObjectGfx[gStageObjectSubtypes[e->subtype]];
             gUnk_03001F2C = 0;
-            switch (e->unk1)
+            switch (e->subtype)
             {
             case 4:
                 if (gUnk_0200B078 == 3)
@@ -197,10 +197,10 @@ void SpawnRoomObjectsOnLoad(void)
             case 3:
             }
             if (d != NULL)
-                r = CreateActorByKind(ACTOR_KIND_OBJECT, gUnk_08756178[e->unk1], gUnk_03001F2C, 0, e->x, e->y,
-                                 (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
+                r = CreateActorByKind(ACTOR_KIND_OBJECT, gStageObjectSubtypes[e->subtype], gUnk_03001F2C, 0, e->x, e->y,
+                                 (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].tileOffset * 2) + 16));
             else
-                r = CreateActorByKind(ACTOR_KIND_OBJECT, gUnk_08756178[e->unk1], gUnk_03001F2C, 0, e->x, e->y, 0);
+                r = CreateActorByKind(ACTOR_KIND_OBJECT, gStageObjectSubtypes[e->subtype], gUnk_03001F2C, 0, e->x, e->y, 0);
             break;
         }
         if (r != -1)
@@ -272,7 +272,7 @@ s32 SpawnRoomObject(s32 i)
     case 6:
         if (*(s8 *)(e4 + 1) != 0)
             break;
-        res5 = sub_080b5d84(e4);
+        res5 = SpawnRoomMapEvent(e4);
         break;
     }
     pz = (u8 *)gRoomObjectTried + i6;
@@ -359,11 +359,11 @@ void sub_080b5558(void)
 
     mask = 0;
     CpuSet(gObjPaletteBank8, gUnk_02005E10, 96);
-    for (i = 0; i < 10 && gRoomObjectGfxSlots[i].unk0 != -1; i++)
+    for (i = 0; i < 10 && gRoomObjectGfxSlots[i].subtype != -1; i++)
     {
         if (!((mask >> gRoomObjectGfxSlots[i].paletteBank) & 1))
         {
-            sub_08065dd0(gRoomObjectGfxSlots[i].paletteBank, gRoomObjectGfxSlots[i].unk0);
+            sub_08065dd0(gRoomObjectGfxSlots[i].paletteBank, gRoomObjectGfxSlots[i].subtype);
             mask |= 1 << i;
         }
     }

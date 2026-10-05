@@ -50,7 +50,7 @@ void PlayerActionExitDoor(void)
             for (i = 0; i < gPlayerCount; i++)
             {
                 if (gPlayerHealth[i] == 0)
-                    TaskSetSkipMask(4, i);
+                    TaskSetSkipMask(TASK_SKIP_UPDATE, i);
             }
         }
     }
@@ -173,13 +173,13 @@ void PlayerActionExitDoor(void)
         PlayerStopAxes(1);
         if (gCurTask->playerEntryOrder == 0)
         {
-            sub_08026584();
+            ApplyEntryDoorEvent();
             CreateLocalPlayerArrow(gCurTask->player->playerIndex);
         }
         break;
     case 1:
         for (i = 0; i < gPlayerCount; i++)
-            gPlayerStates[i].unk42 |= 64;
+            gPlayerStates[i].statusFlags |= PLAYER_STATUS_INPUT_LOCKED;
         if (gCurTask->playerEntryOrder != 0)
         {
             switch (gCurTask->playerEntryOrder)
@@ -227,7 +227,7 @@ void PlayerActionExitDoor(void)
 
                 if (!(t->waterFlags & 1))
                 {
-                    TaskSetFrame((s16)gUnk_0873D0F8[t->player->ability][0]);
+                    TaskSetFrame((s16)gPlayerStandFrames[t->player->ability][0]);
                     TaskYieldTrampoline(1);
                 }
                 else
@@ -245,8 +245,8 @@ void PlayerActionExitDoor(void)
                 }
             }
             PlayerStopAxes(1);
-            gCurTask->player->unk42 &= 0xFFEF;
-            TaskSetSkipMask(15, gCurTaskIdx);
+            gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
+            TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), gCurTaskIdx);
             break;
         }
         LZ77UnCompWram(gUnk_080D07C8, gUnk_02020000);
@@ -375,8 +375,8 @@ void PlayerActionExitDoor(void)
                 TaskYieldTrampoline(24);
             }
         }
-        gCurTask->player->unk42 &= 0xFFEF;
-        TaskSetSkipMask(14, gCurTaskIdx);
+        gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
+        TaskSetSkipMask((TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), gCurTaskIdx);
         CreateStageUnlockPan();
         {
             struct Task *t = gCurTask;
@@ -434,7 +434,7 @@ void PlayerActionExitDoor(void)
 
             PlayerSetMotionYPreset(20);
             t = gCurTask;
-            t->playerBaseFrame = gUnk_0873D3B8[t->player->ability][1];
+            t->playerBaseFrame = gPlayerFallFrames[t->player->ability][1];
             switch (t->player->ability)
             {
             case ABILITY_NORMAL:
@@ -511,13 +511,13 @@ void PlayerActionExitDoor(void)
         gCurTask->player->bumpKind = 2;
         if (!(gCurTask->waterFlags & 1))
             PlayerPlayBump();
-        sub_08026584();
+        ApplyEntryDoorEvent();
         while (ArePlayerCamerasDoneGliding() == 0)
             TaskYieldTrampoline(1);
         CameraResumeFollowFocus();
         for (i = 0; i < gPlayerCount; i++)
         {
-            gPlayerStates[i].unk42 &= 0xFFBF;
+            gPlayerStates[i].statusFlags &= ~PLAYER_STATUS_INPUT_LOCKED;
             if (gPlayerHealth[i] != 0)
                 CreateLocalPlayerArrow(i);
             if (i != gCurTaskIdx)

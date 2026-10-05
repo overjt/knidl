@@ -16,11 +16,11 @@
  *       (EndingEpilogueLoadGraphics) and spawns variants 1, 6, 7, 9 and 10 from the list
  *       gEndingEpilogueObjectVariants (CreateEndingEpilogueObjects); variants 1-10 run gEndingEpilogueVariants[unk73].
  *   EndingEpilogueWarpStar / EndingEpilogueWarpStarDraw   variant 1, the scene's main sprite, and its
- *       scaling draw callback; sub_080c77cc spawns its four variant-2 helpers.
- *   sub_080c7810   variant 2: while the spawner is drawn (Task.unk34), one of
+ *       scaling draw callback; CreateEndingEpilogueWarpStarEffects spawns its four variant-2 helpers.
+ *   EndingEpilogueWarpStarEffect   variant 2: while the spawner is drawn (Task.unk34), one of
  *       four effects by Task.unk74 (a shaking sprite, drifting puffs, spark
  *       bursts, four variant-3 sprites).
- *   sub_080c7cc0   variant 3: a sprite that drifts right from its spawner and
+ *   EndingEpilogueTrailStar   variant 3: a sprite that drifts right from its spawner and
  *       plays one of three animations five times. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
@@ -88,7 +88,7 @@ void CreateEndingEpilogueObjects(void)
 }
 
 /* Task type #100 variant 1, the scene's main sprite: spawns variant 4 and
-   the four variant-2 helpers (sub_080c77cc), draws itself through the
+   the four variant-2 helpers (CreateEndingEpilogueWarpStarEffects), draws itself through the
    scaling callback EndingEpilogueWarpStarDraw, runs its timed motion phases and ends the
    scene by clearing gEndingSceneActive, which M37's EndingEpilogueScene waits for. */
 void EndingEpilogueWarpStar(void)
@@ -96,12 +96,12 @@ void EndingEpilogueWarpStar(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)EndingEpilogueWarpStarDraw;
     gCurTask->layer = 8;
-    gCurTask->frameTable = gUnk_08755708;
+    gCurTask->frameTable = gEndingEpilogueFrames;
     gCurTask->tileWord = 0x8810;
     gCurTask->endingEpilogueChildSlot = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
     gTasks[gCurTask->endingEpilogueChildSlot].variant = 4;
     gTasks[gCurTask->endingEpilogueChildSlot].parent = gCurTaskIdx;
-    sub_080c77cc();
+    CreateEndingEpilogueWarpStarEffects();
     gCurTask->endingEpilogueChildGate = 0;
     gCurTask->unk24 = 0;
     gCurTask->posX = 0x600000;
@@ -443,7 +443,7 @@ void EndingEpilogueWarpStar(void)
 
 /* Task type #100 variant 1's draw callback: grow the scale Task.unk18 by
    Task.unk28 (clamped to 0 .. 127 in 16.16), alternate two animation frames
-   every three calls and draw the sprite, scaled through gUnk_0873FF98[] when
+   every three calls and draw the sprite, scaled through gSpriteScaleSteps[] when
    the scale is not 1.0 (0x100). */
 void EndingEpilogueWarpStarDraw(void)
 {
@@ -466,7 +466,7 @@ void EndingEpilogueWarpStarDraw(void)
         t = gCurTask;
         if ((u16)(t->pixelX + 63) <= 366 && t->pixelY > -64 && t->pixelY < 224) {
             tbl = t->frameTable;
-            scale = gUnk_0873FF98[t->endingEpilogueScale >> 16];
+            scale = gSpriteScaleSteps[t->endingEpilogueScale >> 16];
             if ((u16)scale != 0x100)
                 QueueSprite(gCurTask->layer, DrawAffineSprite(tbl[t->frame + n], scale, scale, 0),
                              gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->pixelX,
@@ -479,7 +479,7 @@ void EndingEpilogueWarpStarDraw(void)
 
 /* Spawn the four task type #100 variant-2 helpers of variant 1 (Task.unk74
    = 0..3, Task.parent = the calling task). */
-void sub_080c77cc(void)
+void CreateEndingEpilogueWarpStarEffects(void)
 {
     s32 i;
     s32 id;
@@ -488,22 +488,22 @@ void sub_080c77cc(void)
     for (i = 0; i <= 3; i++) {
         id = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
         t = &gTasks[id];
-        t->variant = 2;
+        t->variant = ENDING_EPILOGUE_VARIANT_WARP_STAR_EFFECT;
         t->endingEpilogueIndex = i;
         t->parent = gCurTaskIdx;
     }
 }
 
 /* Task type #100 variant 2 (four of them, spawned by variant 1's
-   sub_080c77cc with Task.unk74 = 0..3 and Task.parent = variant 1's task):
+   CreateEndingEpilogueWarpStarEffects with Task.unk74 = 0..3 and Task.parent = variant 1's task):
    while the spawner has graphics (Task.unk34), each one plays its own
    effect relative to it - 0 a shaking sprite, 1 two drifting puffs, 2
    three bursts of sparks, 3 spawns four variant 3 sprites. */
-void sub_080c7810(void)
+void EndingEpilogueWarpStarEffect(void)
 {
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
-    gCurTask->frameTable = gUnk_0874CF28;
+    gCurTask->frameTable = gEndingEffectFrames;
     gCurTask->tileWord = 0;
     for (;;) {
         if (gTasks[gCurTask->parent].endingEpilogueChildGate == 0) {
@@ -650,12 +650,12 @@ void sub_080c7810(void)
 /* Task type #100 variant 3: a sprite that starts at the spawning task's
    (Task.parent) position, 0-15 pixels lower, moves right and plays one of
    three four-frame animations (Task.unk74) five times. */
-void sub_080c7cc0(void)
+void EndingEpilogueTrailStar(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_0874CF28;
+    gCurTask->frameTable = gEndingEffectFrames;
     gCurTask->tileWord = 0;
     gCurTask->posX = gTasks[gCurTask->parent].pixelX << 16;
     gCurTask->posY = (gTasks[gCurTask->parent].pixelY + RandomRange(16) - 8) << 16;

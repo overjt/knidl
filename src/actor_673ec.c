@@ -63,7 +63,7 @@ void HeldPlayerUpdate(void)
 {
     CallTableEntry(gCurTask->updateState, 11, gHeldPlayerStateUpdates);
     PlayerUpdateInvulnerability();
-    if ((gCurTask->player->unk42 & 32) == 0)
+    if ((gCurTask->player->statusFlags & PLAYER_STATUS_TIMERS_FROZEN) == 0)
         PlayerUpdatePaletteFlash();
     if (gLocalPlayer == gCurTask->player->playerIndex)
         SetCameraFocus(gCurTask->pixelX, gCurTask->pixelY);
@@ -389,9 +389,9 @@ void HeldPlayerState5Update(void)
         TaskSetFrame(0x1243);
         u = gCurTask;
         if (u->facing == 1)
-            u->spriteFlags |= 0x8000;
+            u->spriteFlags |= SPRITE_FLAG_FLIP_X;
         else
-            u->spriteFlags &= 0x7FFF;
+            u->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         TaskSleepForever();
     }
 }
@@ -607,9 +607,9 @@ void HeldPlayerThrowFlightForward(void)
     TaskSetFrame(0x123C);
     x = gCurTask;
     if (x->facing == 1)
-        x->spriteFlags |= 0x8000;
+        x->spriteFlags |= SPRITE_FLAG_FLIP_X;
     else
-        x->spriteFlags &= 0x7FFF;
+        x->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     TaskSleepForever();
     TaskSleepForever();
 }
@@ -687,9 +687,9 @@ void HeldPlayerThrowFlightBackward(void)
     TaskSetFrame(0x123C);
     t = gCurTask;
     if (t->facing == 1)
-        t->spriteFlags |= 0x8000;
+        t->spriteFlags |= SPRITE_FLAG_FLIP_X;
     else
-        t->spriteFlags &= 0x7FFF;
+        t->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     TaskSleepForever();
     TaskSleepForever();
 }
@@ -1092,7 +1092,7 @@ void ReleaseHeldPlayer(s32 i, u8 d)
     t->actorKind = ACTOR_KIND_ENEMY;
     TaskStopSlot(i);
     PlayerResumeControl(i, 6, 0, 0);
-    p->unk14 = 4;
+    p->playerJumpPhaseTimer = 4;
 }
 s32 HeldPlayerDamage(s32 a, s32 b)
 {
@@ -1128,17 +1128,17 @@ void PlayerSuspendControl(s32 i, u8 flag)
     t->u76.unk76 = 0;
     t->variant = 0;
     t->hitKind = HIT_KIND_NONE;
-    if (p->unk40 & 1)
+    if (p->actionFlags & PLAYER_ACTION_FLAG_OFFSET_SCRIPT)
     {
         gCurTask->player->pixelOffsetY = 0;
         p->pixelOffsetX = 0;
         p->blockBreakCooldown = 0;
         p->offsetScriptDelay = 0;
         p->offsetScriptStep = 0;
-        p->unk40 &= 0xFFFE;
+        p->actionFlags &= ~PLAYER_ACTION_FLAG_OFFSET_SCRIPT;
         t->skipMask = 0;
     }
-    p->unk42 &= 0xFFEF;
+    p->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     t->accelY = 0;
     t->accelX = 0;
     t->velY = 0;
@@ -1154,7 +1154,7 @@ void PlayerSuspendControl(s32 i, u8 flag)
     p->prevMode = a;
     p->mode = 16;
     gPlayerStates[i].hitsThisFrame = b;
-    p->unk16 = 255;
+    p->playerHoldPose = 255;
     DisablePause();
 }
 void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)
@@ -1173,7 +1173,7 @@ void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)
     t->parent = i;
     t->moveCallback = (u32)PlayerMove;
     t->updateCallback = (u32)PlayerUpdate;
-    t->lateUpdateCallback = (u32)sub_0803332c;
+    t->lateUpdateCallback = (u32)PlayerLateUpdate;
     if (b == 0)
     {
         if (t->waterFlags == 0)
@@ -1308,11 +1308,11 @@ u32 ActorCheckHits(void)
     gAttackLastHitterClass = a->hitterClass;
     gAttackHitTimer = v->hitTimer;
     gAttackFacing = v->facing;
-    if (a->unk60 != NULL)
+    if (a->aux != NULL)
     {
-        gAttackHitDuration = a->unk60->hitDuration;
-        if (v->hitTimer > (a->unk60->hitDuration >> 1))
-            gAttackBox = a->unk60->altAttackBox;
+        gAttackHitDuration = a->aux->hitDuration;
+        if (v->hitTimer > (a->aux->hitDuration >> 1))
+            gAttackBox = a->aux->altAttackBox;
         else
             gAttackBox = a->attackBox;
     }
@@ -1362,11 +1362,11 @@ u32 ActorCheckHitsWithExtraBox(void)
         gAttackLastHitterClass = a->hitterClass;
         gAttackHitTimer = v->hitTimer;
         gAttackFacing = v->facing;
-        if (a->unk60 != NULL)
+        if (a->aux != NULL)
         {
-            gAttackHitDuration = a->unk60->hitDuration;
-            if (v->hitTimer > (a->unk60->hitDuration >> 1))
-                gAttackBox = a->unk60->altAttackBox;
+            gAttackHitDuration = a->aux->hitDuration;
+            if (v->hitTimer > (a->aux->hitDuration >> 1))
+                gAttackBox = a->aux->altAttackBox;
             else
                 gAttackBox = a->attackBox;
         }
@@ -1387,11 +1387,11 @@ u32 ActorCheckHitsWithExtraBox(void)
     w = gCurTask;
     gAttackY = w->pixelY;
     PlaceAttackBox();
-    if (a->unk60 != NULL)
+    if (a->aux != NULL)
     {
-        gAttackHitDuration = a->unk60->hitDuration;
-        if (gCurTask->hitTimer > (a->unk60->hitDuration >> 1))
-            gAttackBox = a->unk60->altAttackBox;
+        gAttackHitDuration = a->aux->hitDuration;
+        if (gCurTask->hitTimer > (a->aux->hitDuration >> 1))
+            gAttackBox = a->aux->altAttackBox;
         else
             gAttackBox = a->extraAttackBox;
     }
@@ -1426,8 +1426,8 @@ u32 ActorCheckPlayerHitsWithBox(s32 a)
     gAttackLastHitter = u->hitterPlayer;
     gAttackHitTimer = u->hitTimer;
     gAttackFacing = u->facing;
-    if (b->unk60 != NULL)
-        gAttackHitDuration = b->unk60->hitDuration;
+    if (b->aux != NULL)
+        gAttackHitDuration = b->aux->hitDuration;
     else
         gAttackHitDuration = 30;
     gAttackBox = a;

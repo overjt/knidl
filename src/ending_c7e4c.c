@@ -16,13 +16,13 @@
  *   EndingEpilogueStarRod   variant 5, an effect drifting away from its spawner.
  *   EndingEpilogueKingDedede / EndingEpilogueKingDededeDraw   variant 6: hidden for 2278 frames, then a
  *       sprite that drifts in, shrinks while it fades in and falls away.
- *   sub_080c88f0   variant 7: after 240 frames spawns the nine variant-8
- *       sprites (sub_080c8924) and calls M07's sub_080269e8.
- *   sub_080c8958   variant 8, nine sprites: the centre one flickers, the
+ *   EndingEpilogueExplosion   variant 7: after 240 frames spawns the nine variant-8
+ *       sprites (CreateEndingEpilogueExplosionSprites) and calls M07's EndingEpilogueBreakBlocks.
+ *   EndingEpilogueExplosionSprite   variant 8, nine sprites: the centre one flickers, the
  *       other eight fly outwards along gUnk_08757374[]..gUnk_087573D4[].
- *   sub_080c8cd4 / sub_080c8e88   variant 9, an invisible task the camera
+ *   EndingEpilogueCamera / EndingEpilogueCameraUpdate   variant 9, an invisible task the camera
  *       follows (M07's SetCameraFocusOrAnchor) that shakes vertically.
- *   sub_080c8ea8   variant 10: after 900 frames, eleven times, copy the next
+ *   EndingEpilogueStoryText   variant 10: after 900 frames, eleven times, copy the next
  *       4 KiB of BG tiles from the decompression buffer, blend them in, hold
  *       and blend them out; then turn BG0 off. */
 
@@ -58,7 +58,7 @@ void EndingEpilogueKirby(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)EndingEpilogueKirbyDraw;
     gCurTask->layer = 7;
-    gCurTask->frameTable = gUnk_08755708;
+    gCurTask->frameTable = gEndingEpilogueFrames;
     gCurTask->tileWord = 0x8810;
     gCurTask->endingEpilogueFollowParent = 1;
     TaskYieldTrampoline(200);
@@ -267,13 +267,13 @@ void EndingEpilogueKirbyDraw(void)
             gCurTask->endingEpilogueFlashPhase = 0;
         if (gCurTask->endingEpilogueFlashPhase > 10)
             gCurTask->endingEpilogueFlashPhase = 0;
-        BlendColors(gUnk_0859A0B0, gUnk_0859A0D0, gUnk_08757368[gCurTask->endingEpilogueFlashPhase], 16,
+        BlendColors(gUnk_0859A0B0, gUnk_0859A0D0, gKirbyFlashBlendRatios[gCurTask->endingEpilogueFlashPhase], 16,
                      &gObjPalette[((gCurTask->tileWord >> 12) + 2) * 16]);
     }
     t = gCurTask;
     if ((u16)(t->pixelX + 63) <= 366 && t->pixelY > -64 && t->pixelY <= 223) {
         tbl = t->frameTable;
-        s = gUnk_0873FF98[p->endingEpilogueScale >> 16];
+        s = gSpriteScaleSteps[p->endingEpilogueScale >> 16];
         if ((u16)s != 0x100)
             QueueSprite(gCurTask->layer, DrawAffineSprite(tbl[t->frame + k], s, s, 0),
                          gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->pixelX, gCurTask->pixelY);
@@ -302,7 +302,7 @@ void EndingEpilogueStarRod(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreenOrFree;
     gCurTask->layer = 8;
-    gCurTask->frameTable = gUnk_0875581C;
+    gCurTask->frameTable = gEndingEpilogueStarRodFrames;
     gCurTask->tileWord = 0xA000;
     gCurTask->posX = (gTasks[gCurTask->parent].pixelX - 8) << 16;
     gCurTask->posY = (gTasks[gCurTask->parent].pixelY - 4) << 16;
@@ -352,7 +352,7 @@ void EndingEpilogueKingDedede(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)EndingEpilogueKingDededeDraw;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08755708;
+    gCurTask->frameTable = gEndingEpilogueFrames;
     gCurTask->tileWord = 0x8810;
     gCurTask->frame = 0xFFFF;
     TaskYieldTrampoline(200);
@@ -442,7 +442,7 @@ void EndingEpilogueKingDededeDraw(void)
     t = gCurTask;
     if ((u16)(t->pixelX + 63) <= 366 && t->pixelY > -64 && t->pixelY <= 223) {
         tbl = t->frameTable;
-        s = gUnk_0873FF98[t->endingEpilogueScale >> 16];
+        s = gSpriteScaleSteps[t->endingEpilogueScale >> 16];
         if ((u16)s != 0x100)
             QueueSprite(gCurTask->layer, DrawAffineSprite(tbl[t->frame + k], s, s, 0),
                          gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->pixelX, gCurTask->pixelY);
@@ -452,20 +452,20 @@ void EndingEpilogueKingDededeDraw(void)
 }
 
 /* Task type #100 variant 7. */
-void sub_080c88f0(void)
+void EndingEpilogueExplosion(void)
 {
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = 0;
     TaskYieldTrampoline(240);
-    sub_080c8924();
+    CreateEndingEpilogueExplosionSprites();
     PlaySfx(282);
     TaskYieldTrampoline(12);
-    sub_080269e8();
+    EndingEpilogueBreakBlocks();
     TaskExitTrampoline();
 }
 
 /* Spawn the nine task type #100 variant-8 sprites (Task.unk74 = 0..8). */
-void sub_080c8924(void)
+void CreateEndingEpilogueExplosionSprites(void)
 {
     s32 i;
     s32 id;
@@ -474,16 +474,16 @@ void sub_080c8924(void)
     for (i = 0; i <= 8; i++) {
         id = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
         t = &gTasks[id];
-        t->variant = 8;
+        t->variant = ENDING_EPILOGUE_VARIANT_EXPLOSION_SPRITE;
         t->endingEpilogueIndex = i;
     }
 }
 
 /* Task type #100 variant 8 (nine of them, Task.unk74 = 0 .. 8, spawned by
-   sub_080c8924): at (103, 52) the centre one (0) flickers through its
+   CreateEndingEpilogueExplosionSprites): at (103, 52) the centre one (0) flickers through its
    frames, the other eight fly outwards along gUnk_08757374[] ..
    gUnk_087573D4[] while their frames blink. */
-void sub_080c8958(void)
+void EndingEpilogueExplosionSprite(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -615,12 +615,12 @@ void sub_080c8958(void)
 
 /* Task type #100 variant 9: an invisible task at the camera's (120, 80)
    that shakes vertically with a growing and then shrinking amplitude
-   (Task.updateCallback = sub_080c8e88 follows it), with a 4-frame flash between. */
-void sub_080c8cd4(void)
+   (Task.updateCallback = EndingEpilogueCameraUpdate follows it), with a 4-frame flash between. */
+void EndingEpilogueCamera(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = 0;
-    gCurTask->updateCallback = (u32)sub_080c8e88;
+    gCurTask->updateCallback = (u32)EndingEpilogueCameraUpdate;
     gCurTask->posX = (gSpriteCameraX + 120) << 16;
     gCurTask->posY = (gSpriteCameraY + 80) << 16;
     TaskStop();
@@ -681,7 +681,7 @@ void sub_080c8cd4(void)
 
 /* Task type #100 variant 9's per-frame hook: move the camera target to
    the task's position (M07's SetCameraFocusOrAnchor). */
-void sub_080c8e88(void)
+void EndingEpilogueCameraUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -692,7 +692,7 @@ void sub_080c8e88(void)
    4 KiB of BG tiles from the decompression buffer, blend them in over 32
    frames, hold 224 frames and blend them out again; then clear the
    blend registers and turn BG0 off. */
-void sub_080c8ea8(void)
+void EndingEpilogueStoryText(void)
 {
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = 0;

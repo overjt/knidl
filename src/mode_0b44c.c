@@ -43,7 +43,7 @@ void ResetLevelStateAtHub(void);
 void sub_08022f98(void);
 void ClearRoomBgmStarted(void);
 void LoadRoom(void);
-void sub_080233e0(void);
+void LoadRoomAfterBigSwitchView(void);
 void LoadHubRoom(void);
 void LoadBigSwitchViewRoom(void);
 
@@ -151,12 +151,12 @@ void StageInit(void)
     ResetBgScroll();
     ClearColliderLists();
     LoadGfxSet(0);
-    sub_08008c7c();
+    LoadMetaKnightmareOneUpTiles();
     gBossSubtype = -1;
     if (gBigSwitchPressActive == 0)
         LoadRoom();
     else
-        sub_080233e0();
+        LoadRoomAfterBigSwitchView();
     if ((u8)(gRoomPlayerMode - 2) <= 1)
         sub_08008cb8();
     /* The ROM loads these four addresses before the clear loop below; only
@@ -188,7 +188,7 @@ void StageInit(void)
         gPlayerHeldKeys[player] = gPlayerPressedKeys[player] = gLatchedHeldKeys[player] = gLatchedPressedKeys[player] = 0;
     gStageRequest = STAGE_REQUEST_NONE;
     if (gUnk_0300244C != 0) {
-        b2 = gUnk_02007CF4;
+        b2 = gAbilityStarInMouth;
         zero2 = 0;
         p2 = b2 + 3;
         do {
@@ -212,7 +212,7 @@ void HubInit(void)
     gBg0ScrollX = gBg1ScrollX = gBg2ScrollX = gBg3ScrollX = 0;
     gBg0ScrollY = gBg1ScrollY = gBg2ScrollY = gBg3ScrollY = 0;
     LoadGfxSet(0);
-    sub_08008c7c();
+    LoadMetaKnightmareOneUpTiles();
     LoadHubRoom();
     b = gPaletteAnimRefCounts;
     zero = 0;
@@ -241,7 +241,7 @@ void BigSwitchViewInit(void)
     ResetFadeAndBlend();
     ResetBgScroll();
     LoadGfxSet(0);
-    sub_08008c7c();
+    LoadMetaKnightmareOneUpTiles();
     LoadBigSwitchViewRoom();
     /* A reversed clear loop only strength-reduces as a do/while over a
      * signed pointer compare with a zero variable (lesson 3.30). */

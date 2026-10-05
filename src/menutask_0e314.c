@@ -130,7 +130,7 @@ void Task_ModeListCursor(void)
     gCurTask->modeListCursorBlendRatio = 0;
     gCurTask->posX = 0x680000;
     while (1) {
-        gCurTask->posY = (gUnk_08731E4C[gModeListExtraRows] + gUnk_08731E52[gModeListExtraRows] * gMenuCursor) << 16;
+        gCurTask->posY = (gModeListCursorBaseY[gModeListExtraRows] + gModeListCursorRowStep[gModeListExtraRows] * gMenuCursor) << 16;
         if (gMenuScreen == 1 || gMenuScreen == 8)
             break;
         TaskYieldTrampoline(1);
@@ -201,7 +201,7 @@ void Task_ModePlayerCountPanel(void)
     gCurTask->modePlayerCountPanelBlendTo = 1;
     gCurTask->modePlayerCountPanelBlendRatio = 0;
     gCurTask->posX = 0xA80000;
-    gCurTask->posY = (gUnk_08731E4C[gModeListExtraRows] + gUnk_08731E52[gModeListExtraRows] * gMenuCursor) << 16;
+    gCurTask->posY = (gModeListCursorBaseY[gModeListExtraRows] + gModeListCursorRowStep[gModeListExtraRows] * gMenuCursor) << 16;
     while (gMenuScreen == 5)
         TaskYieldTrampoline(1);
     TaskExitTrampoline();

@@ -17,7 +17,7 @@
  * gUnk_0873CF5C with effects 42 x4 and sound 174 and runs velocity
  * presets 38, 0 and 1, and states 3-4 hand the player over to mode 5
  * with handler 7 (animation 0xAD2, then the ability's loop from
- * gUnk_0873D3B8[ability][1]).  Its handler PlayerActionHiJumpUpdate
+ * gPlayerFallFrames[ability][1]).  Its handler PlayerActionHiJumpUpdate
  * flashes the palette gUnk_081F59F0 (the VRAM transfer queue
  * RequestCopy) in state 1, re-binds state 3 on a newly-pressed B after
  * the PlayerState.unk14 frames, registers the collider gUnk_0873C228,
@@ -74,7 +74,7 @@ void PlayerActionHiJump(void)
     case 2:
         {
             struct Task *t = gCurTask;
-            t->player->unk42 &= 0xFFEF;
+            t->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
             SetPlayerInvulnerability(255, 0, t->player->playerIndex);
         }
         TaskYieldTrampoline(13);
@@ -83,7 +83,7 @@ void PlayerActionHiJump(void)
         gCurTask->variant = 3;
         /* fallthrough */
     case 3:
-        gCurTask->player->unk42 &= 0xFFEF;
+        gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
         PlayerSetMotionYPreset(2);
         gCurTask->player->prevMode = gCurTask->player->mode;
         gCurTask->player->mode = 5;
@@ -103,7 +103,7 @@ void PlayerActionHiJump(void)
         {
             struct Task *t = gCurTask;
             struct PlayerState *p;
-            t->player->unk42 &= 0xFFEF;
+            t->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
             p = t->player;
             if (p->mode != 5) {
                 p->prevMode = p->mode;
@@ -116,7 +116,7 @@ void PlayerActionHiJump(void)
         {
             struct Task *t = gCurTask;
             t->player->unk14 = 30;
-            t->unk46 = gUnk_0873D3B8[t->player->ability][1];
+            t->unk46 = gPlayerFallFrames[t->player->ability][1];
         }
         while (1) {
             TaskSetFrame(gCurTask->unk46);
@@ -133,10 +133,10 @@ void PlayerActionHiJumpUpdate(void)
 
     switch (t->variant) {
     case 1:
-        t->player->unk42 &= 0xFFEF;
+        t->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
         if ((gFrameCount & 7) <= 3) {
             RequestCopy(2, gUnk_081F59F0, gObjPalette + (t->tileWord >> 12) * 32, 64);
-            gCurTask->player->unk42 |= 16;
+            gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
         }
         /* fallthrough */
     case 2:
@@ -222,6 +222,6 @@ void PlayerActionHiJumpUpdate(void)
     {
         struct PlayerState *p = gCurTask->player;
         if (p->requestedAction != PLAYER_ACTION_NONE)
-            p->unk42 &= 0xFFEF;
+            p->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     }
 }

@@ -28,7 +28,7 @@ void PlayerBallJump(void)
     {
         struct Task *t = gCurTask;
         t->playerActionDone = 0;
-        t->player->unk14 = 0xFFFF;
+        t->player->playerJumpPhaseTimer = 0xFFFF;
         t->player->running = 1;
     }
     {
@@ -46,10 +46,10 @@ void PlayerBallJump(void)
         PlaySfxIfLocalPlayer(170, (u16)t->player->playerIndex);
     }
     PlayerSetMotionYPreset(43);
-    gCurTask->player->unk14 = 23;
+    gCurTask->player->playerJumpPhaseTimer = 23;
     while (1)
     {
-        if (--gCurTask->player->unk14 == 0 || !(gLatchedHeldKeys[gCurTask->player->playerIndex] & 1))
+        if (--gCurTask->player->playerJumpPhaseTimer == 0 || !(gLatchedHeldKeys[gCurTask->player->playerIndex] & 1))
             break;
         PlayerBallStepRoll();
         TaskYieldTrampoline(1);
@@ -67,7 +67,7 @@ void PlayerBallJump(void)
 
 void PlayerBallJumpUpdate(void)
 {
-    if ((s16)gCurTask->player->unk14 == -1)
+    if ((s16)gCurTask->player->playerJumpPhaseTimer == -1)
         return;
     PlayerTurnToHeldDirection();
     while (!PlayerBallCheckVariant(3) && !PlayerBallCheckVariant(2))
@@ -326,7 +326,7 @@ void PlayerBallRevert(void)
         {
             PlayerStopAxes(3);
             RequestScreenShake(0);
-            FreezeOtherTasks(15);
+            FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
         }
     }
     if (gCurTask->onGround & 1)

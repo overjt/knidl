@@ -17,8 +17,8 @@
  * Task.unk28 has run out and B is released, and state 2 winds down.
  * PlayerActionFreeze (action 45) is M11's PlayerActionSpark likewise (animations
  * 0xA86/0xA8E, effect 41 x4, sound 141); its handler PlayerActionFreezeUpdate also
- * registers the collider gUnk_0873C214 and tests the block hit-box set
- * gUnk_0873CF4C every frame in state 1. */
+ * registers the collider gPlayerFreezeCollider and tests the block hit-box set
+ * gPlayerFreezeBlockBreakBox every frame in state 1. */
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
@@ -61,7 +61,7 @@ void PlayerActionIce(void)
     case 1:
         {
             struct PlayerState *p = gCurTask->player;
-            if ((p->unk42 & 128) == 0)
+            if ((p->statusFlags & PLAYER_STATUS_NO_ATTACK_SFX) == 0)
                 PlayerStartSfx(SE_ICE_ATTACK, p->playerIndex);
         }
         CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_ICE_BREATH, 0);
@@ -181,8 +181,8 @@ void PlayerActionFreezeUpdate(void)
             t->playerAttackHoldTimer--;
         }
         RegisterCollider((u8)gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
-                     gUnk_0873C214);
-        TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CF4C, gCurTask->player->playerIndex);
+                     gPlayerFreezeCollider);
+        TaskBreakBlocks((struct HitBoxSet *)gPlayerFreezeBlockBreakBox, gCurTask->player->playerIndex);
         break;
     case 2:
         break;

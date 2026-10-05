@@ -10,14 +10,14 @@
  *
  * Task types #229-#235 (class 3) and the spawner of #236, in the same
  * spawner / body / callback layout as obj_2eac8.c.  The draw callbacks
- * (sub_0802f718, sub_0802f93c, sub_0802fd98, DoorObjectDraw, SubGameDoorSignDrawUsed;
+ * (DoorSignDrawWithDoor, sub_0802f93c, sub_0802fd98, DoorObjectDraw, SubGameDoorSignDrawUsed;
  * several types share the last two) draw the frame Task.frame of the
  * Task.frameTable table through QueueWorldSprite, and a second sprite from
  * Task.unk34 at Task.velX/unk58 where the type has one.  #231
  * (Task_WarpStarStationDoorSparkle) flies a fixed path, eight velocity changes per lap.
  * CreateWarpStarStationNumber is also called from M33 (src/hud_b5024.c), and
  * CreateMuseumAbilitySigns spawns up to two #235 objects from the table
- * gUnk_087328C0. */
+ * gMuseumAbilitySignX. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
@@ -28,8 +28,8 @@ void Task_StageDoorSign(void)
 
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
-    t->drawCallback = (u32)sub_0802f718;
-    t->frameTable = gUnk_08755948;
+    t->drawCallback = (u32)DoorSignDrawWithDoor;
+    t->frameTable = gStageDoorSignFrames;
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
@@ -49,7 +49,7 @@ void StageDoorSignBlinkSignAndDoor(void)
     struct Task *v;
 
     t = gCurTask;
-    t->stageDoorSignDoorFrames = (s32)gUnk_087558DC;
+    t->stageDoorSignDoorFrames = (s32)gDoorSignDoorFrames;
     for (;;)
     {
         u = gCurTask;
@@ -68,7 +68,7 @@ void StageDoorSignBlinkDoor(void)
     struct Task *t;
 
     t = gCurTask;
-    t->stageDoorSignDoorFrames = (s32)gUnk_087558DC;
+    t->stageDoorSignDoorFrames = (s32)gDoorSignDoorFrames;
     t->frame = t->stageDoorSignIndex << 1;
     for (;;)
     {
@@ -90,7 +90,7 @@ void StageDoorSignShowStill(void)
     TaskSleepForever();
 }
 
-void sub_0802f718(void)
+void DoorSignDrawWithDoor(void)
 {
     struct Task *t;
     struct Task *u;
@@ -104,7 +104,7 @@ void sub_0802f718(void)
     }
     u = gCurTask;
     tbl = (u32 *)u->unk34;
-    if (gDoorStates[u->u76.doorIndex].unk1 != 0)
+    if (gDoorStates[u->u76.doorIndex].isOpen != 0)
         QueueWorldSprite(u->layer, tbl[u->unk28], u->spriteFlags, u->tileWord, u->velX, u->velY);
     else
         QueueWorldSprite(u->layer, tbl[2], u->spriteFlags, u->tileWord, u->velX, u->velY);
@@ -185,16 +185,16 @@ void sub_0802f93c(void)
 
     t = gCurTask;
     if (t->unk18 != 0)
-        QueueWorldSprite(t->layer + 1, gUnk_087558D0[1], t->spriteFlags, t->tileWord, t->velX, t->velY);
-    else if (gDoorStates[t->u76.doorIndex].unk1 != 0)
-        QueueWorldSprite(t->layer + 1, gUnk_087558D0[0], t->spriteFlags, t->tileWord, t->velX, t->velY);
+        QueueWorldSprite(t->layer + 1, gDoorMarkerFrames[1], t->spriteFlags, t->tileWord, t->velX, t->velY);
+    else if (gDoorStates[t->u76.doorIndex].isOpen != 0)
+        QueueWorldSprite(t->layer + 1, gDoorMarkerFrames[0], t->spriteFlags, t->tileWord, t->velX, t->velY);
     else
-        QueueWorldSprite(t->layer + 1, gUnk_087558D0[2], t->spriteFlags, t->tileWord, t->velX, t->velY);
+        QueueWorldSprite(t->layer + 1, gDoorMarkerFrames[2], t->spriteFlags, t->tileWord, t->velX, t->velY);
     u = gCurTask;
     if (u->frame != -1)
     {
         tbl = u->frameTable;
-        QueueWorldSprite(u->layer, tbl[u->frame], gUnk_020055D4, u->tileWord, u->pixelX, u->pixelY);
+        QueueWorldSprite(u->layer, tbl[u->frame], gDoorMarkerSpriteFlags, u->tileWord, u->pixelX, u->pixelY);
     }
 }
 
@@ -211,7 +211,7 @@ s32 CreateWarpStarStationDoorSparkle(s32 x, s32 y, s32 a, s32 b)
         doorSparkle->posX = doorSparkle->pixelX << 16;
         doorSparkle->pixelY = y - 28;
         doorSparkle->posY = doorSparkle->pixelY << 16;
-        doorSparkle->unk24 = a;
+        doorSparkle->warpStarStationDoorSparkleIndex = a;
         doorSparkle->warpStarStationDoorSparkleWaitReveal = b;
         gWarpStarStationDoorRevealed = 0;
     }
@@ -237,7 +237,7 @@ void Task_WarpStarStationDoorSparkle(void)
     if (v->warpStarStationDoorSparkleWaitReveal != 0)
         while (gWarpStarStationDoorRevealed == 0)
             TaskYieldTrampoline(1);
-    if (gCurTask->unk24 != 0)
+    if (gCurTask->warpStarStationDoorSparkleIndex != 0)
     {
         gCurTask->taskClass = 3;
         gCurTask->velX = -0x10000;
@@ -366,7 +366,7 @@ void sub_0802fd98(void)
     if (t->frame != -1)
     {
         tbl = t->frameTable;
-        QueueWorldSprite(t->layer, tbl[t->frame], gUnk_020055D4, t->tileWord, t->pixelX, t->pixelY);
+        QueueWorldSprite(t->layer, tbl[t->frame], gDoorMarkerSpriteFlags, t->tileWord, t->pixelX, t->pixelY);
     }
 }
 
@@ -400,7 +400,7 @@ void Task_LevelDoorSign(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)DoorObjectDraw;
-    t->frameTable = gUnk_0875599C;
+    t->frameTable = gLevelDoorSignFrames;
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
@@ -413,10 +413,10 @@ void DoorObjectDraw(void)
     struct Task *u;
     u32 *tbl;
 
-    if (gDoorStates[gCurTask->u76.doorIndex].unk1 != 0)
-        QueueWorldSprite(gCurTask->layer, gUnk_087558D0[0], gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->velX, gCurTask->velY);
+    if (gDoorStates[gCurTask->u76.doorIndex].isOpen != 0)
+        QueueWorldSprite(gCurTask->layer, gDoorMarkerFrames[0], gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->velX, gCurTask->velY);
     else
-        QueueWorldSprite(gCurTask->layer, gUnk_087558D0[2], gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->velX, gCurTask->velY);
+        QueueWorldSprite(gCurTask->layer, gDoorMarkerFrames[2], gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->velX, gCurTask->velY);
     u = gCurTask;
     if (u->frame != -1)
     {
@@ -436,7 +436,7 @@ void SubGameDoorSignDrawUsed(void)
         tbl = t->frameTable;
         QueueWorldSprite(15, tbl[t->frame], t->spriteFlags, t->tileWord, t->pixelX, t->pixelY);
     }
-    QueueWorldSprite(15, gUnk_087558D0[1], gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->velX, gCurTask->velY);
+    QueueWorldSprite(15, gDoorMarkerFrames[1], gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->velX, gCurTask->velY);
 }
 
 s32 CreateWarpStarStationNumber(s32 a, s32 x, s32 y)
@@ -516,7 +516,7 @@ s32 CreateMuseumAbilitySigns(u8 a)
         LoadMuseumAbilitySignGfx(a);
         for (i = 0; i <= 1; i++)
         {
-            if (gUnk_087328C0[a][i] != -1)
+            if (gMuseumAbilitySignX[a][i] != -1)
                 CreateMuseumAbilitySign(a, i);
         }
     }
@@ -531,7 +531,7 @@ s32 CreateMuseumAbilitySign(u8 a, s32 b)
     if (museumAbilitySignSlot != -1)
     {
         museumAbilitySign = &gTasks[museumAbilitySignSlot];
-        museumAbilitySign->pixelX = gUnk_087328C0[a][b];
+        museumAbilitySign->pixelX = gMuseumAbilitySignX[a][b];
         museumAbilitySign->pixelY = 96;
         museumAbilitySign->posX = museumAbilitySign->pixelX << 16;
         museumAbilitySign->posY = museumAbilitySign->pixelY << 16;

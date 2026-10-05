@@ -118,7 +118,7 @@ void Task_HotHeadFlame(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->updateCallback = (u32)HotHeadFlameCheckParent;
     t->layer = 10;
-    gCurTask->frameTable = gUnk_0874CBD0;
+    gCurTask->frameTable = gFlameFrames;
     while (1)
     {
         o = &gTasks[gCurTask->parent];
@@ -706,7 +706,7 @@ void StarmanIdleInit(void)
 
     t->updateCallback = (u32)StarmanIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(STARMAN_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gStarmanIdleStates);
@@ -911,7 +911,7 @@ void PoppyBrosJrHop(void)
         TaskSetFrame(7);
         TaskYieldTrampoline(4);
         gCurTask->onGround = 0;
-        TaskSetMotionXFacing(gUnk_087415AC[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+        TaskSetMotionXFacing(gPoppyBrosJrSpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
         t = gCurTask;
         t->velY = 0xFFFF3300;
         t->poppyBrosJrHopPhase = 0;
@@ -961,7 +961,7 @@ void PoppyBrosJrWalk(void)
     gCurTask->updateState = POPPY_BROS_JR_STATE_WALK;
     TaskStopY();
     TaskYieldTrampoline(6);
-    TaskSetMotionXFacing(gUnk_087415AC[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gPoppyBrosJrSpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     while (1)
     {
         TaskSetFrame(7);
@@ -1024,7 +1024,7 @@ void PoppyBrosJrStandInit(void)
 
     t->updateCallback = (u32)PoppyBrosJrStandUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(POPPY_BROS_JR_STAND_STATE_HOP);
     CallTableEntry(gCurTask->state, 1, gPoppyBrosJrStandStates);

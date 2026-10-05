@@ -17,7 +17,7 @@
  * #0 (Task_BootLogo) runs every frame.  State 3 (TitleMain) alternates
  * the title screen TitleScreen - task type #1 (Task_TitlePalette) animates the
  * title palette, task type #2 (Task_TitleSprites) spawns ten sprite children
- * (sub_08009640) - with the nine-scene intro story IntroStory. */
+ * (TitleSpritesLetter) - with the nine-scene intro story IntroStory. */
 
 u32 BeginFade(u16 steps, u16 delta, u16 *mask);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
@@ -169,12 +169,12 @@ void Task_TitlePalette(void)
 void Task_TitleSprites(void)
 {
     if (gCurTask->titleSpritesIndex == -1)
-        sub_080095e4();
+        TitleSpritesCreateLetters();
     else
-        sub_08009640();
+        TitleSpritesLetter();
 }
 
-void sub_080095e4(void)
+void TitleSpritesCreateLetters(void)
 {
     struct Task *t;
     s32 idx;
@@ -190,7 +190,7 @@ void sub_080095e4(void)
     TaskExitTrampoline();
 }
 
-void sub_08009640(void)
+void TitleSpritesLetter(void)
 {
     struct Task *t, *u, *v;
 
@@ -214,7 +214,7 @@ void sub_08009640(void)
     gCurTask->frame--;
     TaskYieldTrampoline(1);
     v = gCurTask;
-    v->frame = gUnk_08731CC8[v->titleSpritesIndex];
+    v->frame = gTitlePressStartLetterFrames[v->titleSpritesIndex];
     TaskSleepForever();
 }
 
@@ -312,7 +312,7 @@ void IntroStory(void)
             if (IntroStoryWait(2))
                 goto end;
         }
-        if (IntroStoryWait(gUnk_08731CE6[i]))
+        if (IntroStoryWait(gIntroStorySceneDurations[i]))
             break;
         if (i == 8)
             break;

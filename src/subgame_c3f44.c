@@ -30,14 +30,14 @@ u32 AirGrindScaleSprite(u16 *src, s16 scale);                    /* callers pass
 
 void AirGrindEffect(void)
 {
-    struct Task *u = &gTasks[gCurTask->unk18];
+    struct Task *u = &gTasks[gCurTask->airGrindObjectRacerSlot];
     s32 scale;
     s32 x;
     s32 y;
     s32 vx;
     s32 vy;
 
-    switch (gCurTask->unk20) {
+    switch (gCurTask->airGrindObjectEffectKind) {
     case 1:
         gCurTask->unk6E = 3;
         gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
@@ -46,7 +46,7 @@ void AirGrindEffect(void)
         gCurTask->updateCallback = (u32)sub_080c44bc;
         break;
     case 2:
-        gCurTask->unk6C = 0;
+        gCurTask->airGrindObjectFrameTimer = 0;
         gCurTask->unk6E = 0;
         gCurTask->updateState = 0;
         gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
@@ -55,7 +55,7 @@ void AirGrindEffect(void)
         gAirGrindPtr->pressEffectShown = 1;
         break;
     case 5:
-        gCurTask->unk6C = 2;
+        gCurTask->airGrindObjectFrameTimer = 2;
         gCurTask->unk6E = 2;
         gCurTask->updateState = 1;
         gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
@@ -66,18 +66,18 @@ void AirGrindEffect(void)
         gAirGrindPtr->releaseEffectShown = 1;
         break;
     case 0:
-        scale = AirGrindGetDepthScale(gAirGrindCoursePtr->players[gCurTask->unk18].depth);
+        scale = AirGrindGetDepthScale(gAirGrindCoursePtr->players[gCurTask->airGrindObjectRacerSlot].depth);
         gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
         gCurTask->layer = u->layer;
         gCurTask->spriteFlags = u->spriteFlags & 0x6000;
         gCurTask->moveCallback = (u32)TaskMove;
         gCurTask->velX = -u->velX;
-        gCurTask->unk28 = u->unk28;
+        gCurTask->airGrindObjectDepth = u->unk28;
         x = u->pixelX - scale / 32;
         y = u->pixelY + (s32)((AirGrindRandom(4) & 7) - 3) * scale / 256;
         gCurTask->posX = x << 16;
         gCurTask->posY = y << 16;
-        gCurTask->unk6C = 2;
+        gCurTask->airGrindObjectFrameTimer = 2;
         gCurTask->unk6E = 18;
         gCurTask->frameTable = gUnk_08755FC4;
         gCurTask->frame = 3;
@@ -85,24 +85,24 @@ void AirGrindEffect(void)
         break;
     case 3:
     case 4:
-        scale = AirGrindGetDepthScale(gAirGrindCoursePtr->players[gCurTask->unk18].depth);
+        scale = AirGrindGetDepthScale(gAirGrindCoursePtr->players[gCurTask->airGrindObjectRacerSlot].depth);
         gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
         gCurTask->moveCallback = (u32)TaskMove;
         gCurTask->layer = u->layer;
         gCurTask->spriteFlags = u->spriteFlags & 0x6000;
         vx = (s32)(AirGrindRandom(4) & 0xFFF) * (scale << 6) / 256;
-        if (gCurTask->unk20 == 3)
+        if (gCurTask->airGrindObjectEffectKind == 3)
             vx = -vx;
         vy = -((s32)((AirGrindRandom(4) & 0xFFF) * 48 + 0x10000) * scale) / 256;
         gCurTask->velX = vx;
         gCurTask->velY = vy;
         gCurTask->accelY = scale << 6;
-        gCurTask->unk28 = u->unk28;
+        gCurTask->airGrindObjectDepth = u->unk28;
         x = u->pixelX + (s32)((AirGrindRandom(4) & 31) - 15) * scale / 256;
         y = u->pixelY - scale / 32;
         gCurTask->posX = x << 16;
         gCurTask->posY = y << 16;
-        gCurTask->unk6C = 2;
+        gCurTask->airGrindObjectFrameTimer = 2;
         gCurTask->unk6E = 50;
         gCurTask->frameTable = gUnk_08755FC4;
         gCurTask->frame = 3;
@@ -120,11 +120,11 @@ void AirGrindEffect(void)
         gCurTask->velX = 0x10000;
         gCurTask->unk6E = 40;
         gCurTask->frameTable = gUnk_08755FEC;
-        gCurTask->frame = gCurTask->unk20 == 6 ? 15 : 14;
+        gCurTask->frame = gCurTask->airGrindObjectEffectKind == 6 ? 15 : 14;
         gCurTask->updateCallback = (u32)AirGrindBoostRatingUpdate;
         break;
     case 8:
-        gCurTask->unk6C = 12;
+        gCurTask->airGrindObjectFrameTimer = 12;
         gCurTask->unk6E = 9;
         gCurTask->updateState = 0;
         gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
@@ -133,42 +133,42 @@ void AirGrindEffect(void)
         gCurTask->updateCallback = (u32)AirGrindPenaltyEffectUpdate;
         break;
     }
-    TaskSetSkipMask(1, gCurTaskIdx);
+    TaskSetSkipMask(TASK_SKIP_COROUTINE, gCurTaskIdx);
     TaskSleepForever();
 }
 
 void AirGrindEffectFollowRacer(s32 layer)
 {
-    struct Task *u = &gTasks[gCurTask->unk18];
+    struct Task *u = &gTasks[gCurTask->airGrindObjectRacerSlot];
 
-    gCurTask->unk28 = u->unk28;
+    gCurTask->airGrindObjectDepth = u->unk28;
     gCurTask->layer = u->layer + layer;
     gCurTask->spriteFlags = u->spriteFlags & 0x6000;
     if (gCurTask->updateState == 0) {
         gCurTask->pixelX = u->pixelX;
         gCurTask->pixelY = u->pixelY;
     } else {
-        gCurTask->pixelX = gAirGrindCoursePtr->players[gCurTask->unk18].screenX;
-        gCurTask->pixelY = gAirGrindCoursePtr->players[gCurTask->unk18].screenY;
+        gCurTask->pixelX = gAirGrindCoursePtr->players[gCurTask->airGrindObjectRacerSlot].screenX;
+        gCurTask->pixelY = gAirGrindCoursePtr->players[gCurTask->airGrindObjectRacerSlot].screenY;
     }
 }
 
 void sub_080c4364(void)
 {
-    struct Task *u = &gTasks[gCurTask->unk18];
+    struct Task *u = &gTasks[gCurTask->airGrindObjectRacerSlot];
 
     gCurTask->layer = u->layer;
     gCurTask->spriteFlags = u->spriteFlags & 0x6000;
-    gCurTask->unk28 += 14;
+    gCurTask->airGrindObjectDepth += 14;
     if (--gCurTask->unk6E < 0) {
         TaskFree(gCurTaskIdx);
     } else {
-        if ((s16)gCurTask->unk6C <= 0) {
-            gCurTask->unk6C = 2;
+        if ((s16)gCurTask->airGrindObjectFrameTimer <= 0) {
+            gCurTask->airGrindObjectFrameTimer = 2;
             if (--gCurTask->frame < 0)
                 gCurTask->frame = 3;
         }
-        gCurTask->unk6C--;
+        gCurTask->airGrindObjectFrameTimer--;
     }
 }
 
@@ -178,18 +178,18 @@ void AirGrindPenaltyScatterEffectUpdate(void)
         TaskFree(gCurTaskIdx);
         return;
     }
-    if ((s16)gCurTask->unk6C <= 0) {
-        gCurTask->unk6C = 2;
+    if ((s16)gCurTask->airGrindObjectFrameTimer <= 0) {
+        gCurTask->airGrindObjectFrameTimer = 2;
         if (--gCurTask->frame < 0)
             gCurTask->frame = 3;
     }
-    gCurTask->unk6C--;
+    gCurTask->airGrindObjectFrameTimer--;
     if ((u16)(gCurTask->pixelX + 63) <= 366
         && gCurTask->pixelY > -64 && gCurTask->pixelY < 224) {
         u32 *tbl = gCurTask->frameTable;
 
         QueueSprite(gCurTask->layer,
-                     AirGrindScaleSprite((u16 *)tbl[gCurTask->frame], gCurTask->unk28),
+                     AirGrindScaleSprite((u16 *)tbl[gCurTask->frame], gCurTask->airGrindObjectDepth),
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->pixelX, gCurTask->pixelY);
     } else
@@ -209,8 +209,8 @@ void AirGrindPressEffectUpdate(void)
     struct Task *t = gCurTask;
 
     /* Task.unk6C is u16 in task.h; this callback counts it as s16 */
-    if ((*(s16 *)&t->unk6C)-- <= 0) {
-        t->unk6C = 2;
+    if ((*(s16 *)&t->airGrindObjectFrameTimer)-- <= 0) {
+        t->airGrindObjectFrameTimer = 2;
         if (gUnk_080CFF52[++t->unk6E] != -1) {
             t->frame = gUnk_080CFF52[t->unk6E];
         } else {
@@ -224,15 +224,15 @@ void AirGrindPressEffectUpdate(void)
 
 void AirGrindReleaseEffectUpdate(void)
 {
-    if ((s16)gCurTask->unk6C <= 0) {
-        gCurTask->unk6C = 2;
+    if ((s16)gCurTask->airGrindObjectFrameTimer <= 0) {
+        gCurTask->airGrindObjectFrameTimer = 2;
         if (++gCurTask->frame > gCurTask->unk6E) {
             gAirGrindPtr->releaseEffectShown = 0;
             TaskFree(gCurTaskIdx);
             return;
         }
     }
-    gCurTask->unk6C--;
+    gCurTask->airGrindObjectFrameTimer--;
     AirGrindEffectFollowRacer(0);
 }
 
@@ -245,7 +245,7 @@ void AirGrindBoostRatingUpdate(void)
 void AirGrindPenaltyEffectUpdate(void)
 {
     /* Task.unk6C is u16 in task.h; this callback counts it as s16 */
-    if ((*(s16 *)&gCurTask->unk6C)-- <= 0)
+    if ((*(s16 *)&gCurTask->airGrindObjectFrameTimer)-- <= 0)
         TaskFree(gCurTaskIdx);
     else
         AirGrindEffectFollowRacer(-1);

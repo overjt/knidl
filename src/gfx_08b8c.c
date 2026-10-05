@@ -67,7 +67,7 @@ void LoadGfxSet(u16 set)
     RequestCopyList(gUnk_0873185C[set]);
 }
 
-void sub_08008c7c(void)
+void LoadMetaKnightmareOneUpTiles(void)
 {
     u32 src;
 
@@ -90,7 +90,7 @@ void sub_08008cb8(void)
     RequestCopy(3, src + 672, OBJ_VRAM0 + 0x7CE0, 224);
 }
 
-void sub_08008d10(s32 a0, s32 a1)
+void SubGameLoadObjTiles(s32 a0, s32 a1)
 {
     if (gUnk_08731980[a0][a1][0] != 0) {
         LZ77UnCompWram((void *)gUnk_08731980[a0][a1][0], gUnk_02020000);
@@ -102,7 +102,7 @@ void sub_08008d10(s32 a0, s32 a1)
     }
 }
 
-void sub_08008d98(s32 a0)
+void CutsceneLoadBgGraphics(s32 a0)
 {
     RequestCopy(6, 0, BG_VRAM + 0x1000, 0x800);
     RequestCopy(6, 0, BG_VRAM + 0x1800, 0x800);
@@ -120,7 +120,7 @@ void ExtraModeTitleLoadPicture(s32 a0)
     LZ77UnCompVram((void *)gExtraModeTitlePictures[a0][2], (void *)(BG_VRAM + 0x3000));
 }
 
-void sub_08008e6c(s32 a0)
+void HudLoadLevelName(s32 a0)
 {
     RequestCopy(2, (u32)gUnk_085A4904 + (a0 << 5), (u32)gBgPaletteBank10, 32);
     RequestCopy(8, (u32)gUnk_085A49E8, (u32)gUnk_02020000, 0);

@@ -22,7 +22,7 @@
  * 0) and PlayerObjectUFOShotLateUpdate (a six-step trail drawn with QueueSprite).
  * Variants 11 and 12 (PlayerObjectStarRodShot, PlayerObjectStarRodFlightShot) are two projectiles
  * that move 4 pixels a frame in the facing direction (animation table
- * gUnk_0874C4E4, M14's shared callback sub_08050f80); their per-frame
+ * gPlayerObjectStarRodShotFrames, M14's shared callback sub_08050f80); their per-frame
  * callbacks PlayerObjectStarRodShotUpdate and PlayerObjectStarRodFlightShotUpdate register the collider and hand
  * over to PlayerObjectVanish on contact (variant 11 bounces back once on
  * collision result 6).  CreatePlayerObject and CreatePlayerObjectLowSlot are the spawners
@@ -85,7 +85,7 @@ void PlayerObjectUFOShot(void)
                 u->updateCallback = (u32)PlayerObjectBeamOrbUpdate;
                 u->layer = 5;
                 u = gCurTask;
-                u->frameTable = gUnk_08751BF4;
+                u->frameTable = gPlayerUFOShotFrames;
                 if (u->facing == 1)
                     u->unk28 = 10;
                 else
@@ -139,7 +139,7 @@ void PlayerObjectUFOShot(void)
                 u->drawCallback = (u32)TaskDrawWorldInViewOrFree;
                 u->layer = 7;
                 u = gCurTask;
-                u->frameTable = gUnk_08751BF4;
+                u->frameTable = gPlayerUFOShotFrames;
                 u->posY = (u->pixelY + 4) << 16;
                 if (u->facing == 1)
                 {
@@ -152,7 +152,7 @@ void PlayerObjectUFOShot(void)
                     u->unk28 = 3;
                 }
                 gCurTask->unk2C = 3;
-                sub_0802233c(gUnk_0873CB5C);
+                sub_0802233c(gPlayerObjectLaserTerrainBox);
                 gCurTask->u80.attackAbility = ABILITY_LASER;
             }
             else
@@ -208,8 +208,8 @@ void PlayerObjectUFOShot(void)
             u->lateUpdateCallback = (u32)PlayerObjectUFOShotLateUpdate;
             u->layer = 7;
         }
-            gCurTask->frameTable = gUnk_08751BF4;
-            sub_0802205c(gUnk_0873CB6C);
+            gCurTask->frameTable = gPlayerUFOShotFrames;
+            sub_0802205c(gPlayerObjectUFOShotTerrainBox);
             {
                 struct Task *u = gCurTask;
                 if (u->facing == 1)
@@ -255,7 +255,7 @@ void PlayerObjectUFOShotUpdate(void)
         if (TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CC3C, t->parent))
             gCurTask->hitKind = 1;
         else
-            TerrainCollideBoxAlongVelocity(gUnk_0873CB6C);
+            TerrainCollideBoxAlongVelocity(gPlayerObjectUFOShotTerrainBox);
         hit = 0;
         if ((gCurTask->onGround & 1) || *(u16 *)&gTerrainResult != 0 || gCurTask->hitKind != 0)
             hit++;
@@ -264,7 +264,7 @@ void PlayerObjectUFOShotUpdate(void)
             if (gTerrainResult.ceilingHits != 0 || (gCurTask->onGround & 1) || gTerrainResult.unk0 != 0)
                 PlaySfxIfLocalPlayer(125, gCurTask->parent);
             TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
-            gCurTask->unk24 = (s32)gUnk_0873BE4C;
+            gCurTask->playerObjectVanishBox = (s32)gUnk_0873BE4C;
         }
         RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873BE4C);
         break;
@@ -313,8 +313,8 @@ void PlayerObjectStarRodShot(void)
         t->updateCallback = (u32)PlayerObjectStarRodShotUpdate;
         t->layer = 5;
     }
-    gCurTask->frameTable = gUnk_0874C4E4;
-    sub_0802205c(gUnk_0873CB4C);
+    gCurTask->frameTable = gPlayerObjectStarRodShotFrames;
+    sub_0802205c(gPlayerStarObjectTerrainBox);
     {
         struct Task *t = gCurTask;
         t->posY = (t->pixelY + 4) << 16;
@@ -325,13 +325,13 @@ void PlayerObjectStarRodShot(void)
     }
     {
         struct Task *t = gCurTask;
-        t->unk28 = 0;
+        t->playerObjectTrailStep = 0;
         if (t->facing == 1)
-            t->unk2C = -0x40000;
+            t->playerObjectTrailOffsetX = -0x40000;
         else
-            t->unk2C = 0x40000;
+            t->playerObjectTrailOffsetX = 0x40000;
     }
-    gCurTask->unk30 = 0;
+    gCurTask->playerObjectTrailVelX = 0;
     TaskSetMotionXFacing(0x40000, 0x5A5A5A5A);
     gCurTask->frame = 0;
     TaskYieldTrampoline(3);
@@ -387,7 +387,7 @@ void PlayerObjectStarRodShotUpdate(void)
     case 4:
         break;
     }
-    TerrainCollideBoxAlongVelocity(gUnk_0873CB4C);
+    TerrainCollideBoxAlongVelocity(gPlayerStarObjectTerrainBox);
     {
         struct Task *t = gCurTask;
         if ((t->onGround & 1) || *(u16 *)&gTerrainResult != 0)
@@ -407,14 +407,14 @@ void PlayerObjectStarRodFlightShot(void)
     t->updateCallback = (u32)PlayerObjectStarRodFlightShotUpdate;
     t->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_0874C4E4;
+    t->frameTable = gPlayerObjectStarRodShotFrames;
     t->posX = (t->pixelX + 24) << 16;
-    t->unk28 = 0;
+    t->playerObjectTrailStep = 0;
     if (t->facing == 1)
-        t->unk2C = -0x40000;
+        t->playerObjectTrailOffsetX = -0x40000;
     else
-        t->unk2C = 0x40000;
-    gCurTask->unk30 = 0;
+        t->playerObjectTrailOffsetX = 0x40000;
+    gCurTask->playerObjectTrailVelX = 0;
     TaskSetMotionXFacing(0x40000, 0x5A5A5A5A);
     gCurTask->frame = 0;
     TaskYieldTrampoline(3);
@@ -482,7 +482,7 @@ s32 CreatePlayerObject(s8 player, u8 variant, s32 arg)
     if (idx != -1)
     {
         struct Task *t = &gTasks[idx];
-        t->unk18 = (variant << 24) | (arg & 0xFFFFFF);
+        t->playerObjectSpawnWord = (variant << 24) | (arg & 0xFFFFFF);
         t->posX = gCurTask->posX;
         t->pixelX = gCurTask->pixelX;
         t->posY = gCurTask->posY;

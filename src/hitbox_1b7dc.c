@@ -22,7 +22,7 @@ void PlaceAttackBox(void)
 {
     s32 y;
 
-    if (gAttackBox->unk1A & 0x8000)
+    if (gAttackBox->attackFlags & ATTACK_BOX_FLAG_NO_MIRROR)
     {
         s32 x;
         gAttackX = x = gAttackBox->offsetX + gAttackX;
@@ -57,7 +57,7 @@ void CalcHitDamageAndDirection(void)
     gHitHealthLeft = gAttackHealth - gColliderBodyBox->damage;
     if ((s16)gHitHealthLeft <= 0)
     {
-        if (gAttackBox->unk0A & 2)
+        if (gAttackBox->immunityFlags & ATTACK_BOX_IMMUNITY_DEFEAT)
         {
             gHitKind = HIT_KIND_NO_DAMAGE;
             gHitEffect = 1;

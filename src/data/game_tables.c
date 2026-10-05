@@ -150,7 +150,7 @@ void (*gRoomTaskVariants[7])(void) GAME_TBL(08732614) = {
 /* include/camera.h; CallTableEntry(i, 7, ...) in Task_MapEvent */
 void (*gMapEventVariants[7])(void) GAME_TBL(087328a0) = {
     MapEventMidBossFight,
-    sub_0802d6cc,
+    MapEventFadeToNextRoomPalettes,
     MapEventBreakTwoBlocks,
     MapEventBreakThreeBlocks,
     sub_0802d96c,
@@ -439,7 +439,7 @@ void (*gPlayerEffectVariants[49])(void) GAME_TBL(0873b928) = {
     sub_08054de8,
     sub_08054fe4,
     PlayerEffectDanceStarBurst,
-    sub_08055460,
+    PlayerEffectAbilityLoss,
     sub_08055520,
     sub_0805574c,
     sub_0805587c,
@@ -593,7 +593,7 @@ u32 gActorDefeats[11] GAME_TBL(0873e5bc) = {
     (u32)ActorDefeatAbilityStar,
     (u32)ActorDefeatMidBoss,
     (u32)ActorDefeatBoss,
-    (u32)ActorDefeat8,
+    (u32)ActorDefeatBurstByEffect,
     (u32)ActorDefeat9,
     (u32)ActorDefeatPickup,
 };
@@ -610,7 +610,7 @@ u32 gActorDefeatsByEffect[4] GAME_TBL(0873e5bc) = {
 u32 gActorDefeatFrozenStates[3] GAME_TBL(0873e670) = {
     (u32)ActorDefeatFrozenShake,
     (u32)ActorDefeatFrozenSlide,
-    (u32)ActorDefeatFrozenState2,
+    (u32)ActorDefeatFrozenBurst,
 };
 /* include/actor.h; CallTableEntry(i, 3, ...) in ActorDefeatFrozenUpdate */
 u32 gActorDefeatFrozenStateUpdates[3] GAME_TBL(0873e670) = {
@@ -621,23 +621,23 @@ u32 gActorDefeatFrozenStateUpdates[3] GAME_TBL(0873e670) = {
 /* include/actor.h; CallTableEntry(i, 4, ...) in ActorDefeatExplodeByEffect */
 u32 gActorExplodeDefeatsByEffect[4] GAME_TBL(0873e670) = {
     (u32)ActorDefeatExplode,
-    (u32)ActorExplodeDefeat1,
-    (u32)ActorExplodeDefeat2,
-    (u32)ActorExplodeDefeat3,
+    (u32)ActorExplodeDefeatBurning,
+    (u32)ActorExplodeDefeatShocked,
+    (u32)ActorExplodeDefeatFrozen,
 };
 
 /* ---- 0x0873E734-0x0873E7A4: 5 table(s), 25 function pointer(s), section .game_tbl_0873e734 ---- */
 /* include/actor.h; read by BossRunDefeatHook */
 u32 gUnk_0873E734[9] GAME_TBL(0873e734) = {
-    (u32)sub_080a1618,
+    (u32)KingDededeDefeatHook,
     0,
-    (u32)sub_080a7d20,
+    (u32)MetaKnightDefeatHook,
     0,
-    (u32)sub_080a46e0,
-    (u32)sub_080b2884,
-    (u32)sub_080a9ea4,
+    (u32)MrShineAndMrBrightDefeatHook,
+    (u32)WhispyWoodsDefeatHook,
+    (u32)KrackoDefeatHook,
     0,
-    (u32)sub_080ac678,
+    (u32)NightmareWizardDefeatHook,
 };
 /* include/actor.h; CallTableEntry(i, 9, ...) in ActorDefeatBoss */
 u32 gUnk_0873E758[9] GAME_TBL(0873e734) = {
@@ -651,24 +651,24 @@ u32 gUnk_0873E758[9] GAME_TBL(0873e734) = {
     (u32)sub_080af308,
     (u32)NightmareWizardDefeat,
 };
-/* include/actor.h; CallTableEntry(i, 4, ...) in ActorDefeat8 */
-u32 gUnk_0873E77C[4] GAME_TBL(0873e734) = {
-    (u32)sub_0806b1a8,
-    (u32)sub_0806b1c4,
-    (u32)sub_0806b1f4,
-    (u32)sub_0806b224,
+/* include/actor.h; CallTableEntry(i, 4, ...) in ActorDefeatBurstByEffect */
+u32 gActorBurstDefeatsByEffect[4] GAME_TBL(0873e734) = {
+    (u32)ActorBurstDefeatPlain,
+    (u32)ActorBurstDefeatBurning,
+    (u32)ActorBurstDefeatShocked,
+    (u32)ActorBurstDefeatFrozen,
 };
 /* include/actor.h; CallTableEntry(i, 3, ...) in ActorDrownInit, ActorDrownEnterState */
 u32 gActorDrownStates[3] GAME_TBL(0873e734) = {
     (u32)ActorDrownSink,
-    (u32)ActorDrownState1,
-    (u32)ActorDrownState2,
+    (u32)ActorDrownWait,
+    (u32)ActorDrownBurst,
 };
 /* include/actor.h; CallTableEntry(i, 3, ...) in ActorDrownUpdate */
 u32 gActorDrownStateUpdates[3] GAME_TBL(0873e734) = {
     (u32)ActorDrownSinkUpdate,
-    (u32)ActorDrownState1Update,
-    (u32)ActorDrownState2Update,
+    (u32)ActorDrownWaitUpdate,
+    (u32)ActorDrownBurstUpdate,
 };
 
 /* ---- 0x0873EAA0-0x0873EAC0: 1 table(s), 8 function pointer(s), section .game_tbl_0873eaa0 ---- */
@@ -687,7 +687,7 @@ u32 gActorAttachedStates[8] GAME_TBL(0873eaa0) = {
 /* ---- 0x0873ECE0-0x0873ECEC: 1 table(s), 3 function pointer(s), section .game_tbl_0873ece0 ---- */
 /* include/actor.h; CallTableEntry(i, 3, ...) in Task_LandingImpact */
 u32 gLandingImpactVariants[3] GAME_TBL(0873ece0) = {
-    (u32)LandingImpactVariant0,
-    (u32)LandingImpactVariant1,
-    (u32)LandingImpactVariant2,
+    (u32)LandingImpactCenter,
+    (u32)LandingImpactLeft,
+    (u32)LandingImpactRight,
 };

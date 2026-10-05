@@ -293,7 +293,7 @@ void LaserBallIdleInit(void)
 {
     gCurTask->updateCallback = (u32)LaserBallIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(LASER_BALL_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gLaserBallIdleStates);
@@ -448,14 +448,14 @@ void CoconutFall(void)
 
 void CoconutExplode(void)
 {
-    ActorSetHitReactions(gUnk_08743558);
+    ActorSetHitReactions(gCoconutExplodeHitReactions);
     ActorDie();
 }
 
 void CoconutIdleInit(void)
 {
     gCurTask->updateCallback = (u32)CoconutIdleUpdate;
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(COCONUT_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gCoconutIdleStates);
@@ -749,10 +749,10 @@ void CreateShotzoCannonball(void)
     sp.variant = 0;
     sp.spawnArg = gCurTask->shotzoSpeedLevel;
     sp.x = gUnk_0874324C[gCurTask->shotzoTargetBarrelDir];
-    sp.y = gUnk_08743251[gCurTask->shotzoTargetBarrelDir];
+    sp.y = gShotzoBarrelOffsetY[gCurTask->shotzoTargetBarrelDir];
     sp.checkTerrain = 1;
     CreateActorFromDescAtOffsetFacing(&sp, 0);
-    gCurTask->shotzoSmokeRingSlot = CreateChildTaskAtOffsetFacing(TASK_SMOKE_RING, gUnk_0874324C[gCurTask->shotzoTargetBarrelDir], gUnk_08743251[gCurTask->shotzoTargetBarrelDir], 0);
+    gCurTask->shotzoSmokeRingSlot = CreateChildTaskAtOffsetFacing(TASK_SMOKE_RING, gUnk_0874324C[gCurTask->shotzoTargetBarrelDir], gShotzoBarrelOffsetY[gCurTask->shotzoTargetBarrelDir], 0);
 }
 
 void CreateShotzoFixedCannonball(void)
@@ -764,10 +764,10 @@ void CreateShotzoFixedCannonball(void)
     sp.variant = 0;
     sp.spawnArg = 4;
     sp.x = gUnk_08743256[gCurTask->shotzoBarrelDir];
-    sp.y = gUnk_08743251[gCurTask->shotzoBarrelDir];
+    sp.y = gShotzoBarrelOffsetY[gCurTask->shotzoBarrelDir];
     sp.checkTerrain = 1;
     CreateActorFromDescAtOffsetFacing(&sp, 0);
-    gCurTask->shotzoSmokeRingSlot = CreateChildTaskAtOffsetFacing(TASK_SMOKE_RING, gUnk_08743256[gCurTask->shotzoBarrelDir], gUnk_08743251[gCurTask->shotzoBarrelDir], 0);
+    gCurTask->shotzoSmokeRingSlot = CreateChildTaskAtOffsetFacing(TASK_SMOKE_RING, gUnk_08743256[gCurTask->shotzoBarrelDir], gShotzoBarrelOffsetY[gCurTask->shotzoBarrelDir], 0);
 }
 
 void ShotzoAimBarrel(void)
@@ -813,7 +813,7 @@ void ShotzoAimBarrel(void)
         TaskSetFrameFlip(4);
         break;
     }
-    TaskYieldTrampoline(gUnk_08743248[gCurTask->shotzoSpeedLevel]);
+    TaskYieldTrampoline(gShotzoAimTimes[gCurTask->shotzoSpeedLevel]);
 }
 
 void ShotzoCheckShoot(u16 a, void *b)
@@ -824,7 +824,7 @@ void ShotzoCheckShoot(u16 a, void *b)
     t = gCurTask;
     if (--t->shotzoAimTimer <= 0)
     {
-        t->shotzoAimTimer = gUnk_08743248[t->shotzoSpeedLevel];
+        t->shotzoAimTimer = gShotzoAimTimes[t->shotzoSpeedLevel];
         ShotzoTargetNearestPlayer();
         ShotzoTestBarrelOnTarget();
         u = gCurTask;
@@ -929,7 +929,7 @@ void ShotzoAim(void)
 
     gCurTask->updateState = SHOTZO_AIM_STATE_AIM;
     t = gCurTask;
-    t->shotzoAimTimer = gUnk_08743248[t->shotzoSpeedLevel];
+    t->shotzoAimTimer = gShotzoAimTimes[t->shotzoSpeedLevel];
     TaskStopY();
     while (1)
         ShotzoAimBarrel();

@@ -54,15 +54,15 @@ extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
 /* Module functions */
-void sub_080a2b2c();
+void MrBrightFlashPalette();
 void ReleaseRoomObject();
 s32 LoadRoomEnemyGfx();
 s32 LoadRoomMidBossGfx();
 s32 LoadRoomBossGfx();
 void LoadRoomMetaKnightsGfx();
-s32 sub_080b5a94();
+s32 LoadRoomStageObjectGfx();
 s32 SpawnRoomEnemy();
-s32 sub_080b5d84();
+s32 SpawnRoomMapEvent();
 
 void KrackoInit(void)
 {
@@ -126,8 +126,8 @@ void KrackoIntro(void)
     while (gHudHpBarFilled == 0)
         TaskYieldTrampoline(1);
     ActorResetAttackBox();
-    ActorSetAttackBox((u32)gUnk_08749720);
-    ActorSetExtraAttackBox((u32)gUnk_08749758);
+    ActorSetAttackBox((u32)gKrackoIntroAttackBox);
+    ActorSetExtraAttackBox((u32)gKrackoIntroExtraAttackBox);
     ActorSetState(KRACKO_STATE_PICK_MOVE);
     TaskSleepForever();
 }
@@ -218,7 +218,7 @@ st3:
             break;
         case 2:
             ActorSetState(KRACKO_STATE_WAIT);
-            gCurTask->posX = (gUnk_087490E4[gCurTask->krackoSide] + gViewRect[0]) << 16;
+            gCurTask->posX = (gKrackoSideX[gCurTask->krackoSide] + gViewRect[0]) << 16;
             gCurTask->posY = (gViewRect[2] + 48) << 16;
             gCurTask->krackoPickPhase = 3;
             break;
@@ -240,7 +240,7 @@ void KrackoWait(void)
     gCurTask->krackoLoopCount = 0;
     do
     {
-        gCurTask->velY = gUnk_087490E8[(s16)gCurTask->krackoLoopCount];
+        gCurTask->velY = gKrackoBobVelY[(s16)gCurTask->krackoLoopCount];
         TaskYieldTrampoline(8);
         gCurTask->krackoLoopCount++;
     } while ((s16)gCurTask->krackoLoopCount <= 5);
@@ -270,13 +270,13 @@ void KrackoCross(void)
         gCurTask->krackoSide = 1;
         gCurTask->velX = -0x14000;
     }
-    gCurTask->unk24 = 0;
+    gCurTask->krackoCrossArrived = 0;
     for (;;)
     {
         gCurTask->krackoLoopCount = 0;
         do
         {
-            gCurTask->velY = gUnk_087490E8[(s16)gCurTask->krackoLoopCount];
+            gCurTask->velY = gKrackoBobVelY[(s16)gCurTask->krackoLoopCount];
             TaskYieldTrampoline(6);
             gCurTask->krackoLoopCount++;
         } while ((s16)gCurTask->krackoLoopCount <= 5);
@@ -294,15 +294,15 @@ void KrackoCrossUpdate(void)
         if (gUnk_030023B4 > 167)
         {
             t->posX = (gViewRect[0] + 168) << 16;
-            t->unk24++;
+            t->krackoCrossArrived++;
         }
     }
     else if (gUnk_030023B4 <= 72)
     {
         t->posX = (gViewRect[0] + 72) << 16;
-        t->unk24++;
+        t->krackoCrossArrived++;
     }
-    if (gCurTask->unk24 != 0)
+    if (gCurTask->krackoCrossArrived != 0)
     {
         struct Task *u = gCurTask;
 

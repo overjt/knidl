@@ -2628,7 +2628,7 @@ gQuickDrawWaddleDooGfx:
 	.incbin	"baserom.gba", 0x5EEE20, 0x8
 	.word	gQuickDrawWaddleDooGfxPalette
 	.word	gQuickDrawWaddleDooGfxTiles
-	.word	gUnk_087E3038
+	.word	gQuickDrawWaddleDooGfxFrameList
 	.global	gQuickDrawWheelieGfxPalette
 gQuickDrawWheelieGfxPalette:
 	.incbin	"baserom.gba", 0x5EEE34, 0x40
@@ -2652,7 +2652,7 @@ gQuickDrawWheelieGfx:
 	.incbin	"baserom.gba", 0x5EF874, 0x8
 	.word	gQuickDrawWheelieGfxPalette
 	.word	gQuickDrawWheelieGfxTiles
-	.word	gUnk_087E3048
+	.word	gQuickDrawWheelieGfxFrameList
 	.global	gQuickDrawChefKawasakiGfxPalette
 gQuickDrawChefKawasakiGfxPalette:
 	.incbin	"baserom.gba", 0x5EF888, 0x40
@@ -2676,7 +2676,7 @@ gQuickDrawChefKawasakiGfx:
 	.incbin	"baserom.gba", 0x5F07FC, 0x8
 	.word	gQuickDrawChefKawasakiGfxPalette
 	.word	gQuickDrawChefKawasakiGfxTiles
-	.word	gUnk_087E3058
+	.word	gQuickDrawChefKawasakiGfxFrameList
 	.global	gQuickDrawMetaKnightGfxPalette
 gQuickDrawMetaKnightGfxPalette:
 	.incbin	"baserom.gba", 0x5F0810, 0x40
@@ -2700,7 +2700,7 @@ gQuickDrawMetaKnightGfx:
 	.incbin	"baserom.gba", 0x5F1520, 0x8
 	.word	gQuickDrawMetaKnightGfxPalette
 	.word	gQuickDrawMetaKnightGfxTiles
-	.word	gUnk_087E3068
+	.word	gQuickDrawMetaKnightGfxFrameList
 	.global	gQuickDrawKingDededeGfxPalette
 gQuickDrawKingDededeGfxPalette:
 	.incbin	"baserom.gba", 0x5F1534, 0x40
@@ -2724,7 +2724,7 @@ gQuickDrawKingDededeGfx:
 	.incbin	"baserom.gba", 0x5F2B18, 0x8
 	.word	gQuickDrawKingDededeGfxPalette
 	.word	gQuickDrawKingDededeGfxTiles
-	.word	gUnk_087E3078
+	.word	gQuickDrawKingDededeGfxFrameList
 	.global	gUnk_085F2B2C
 gUnk_085F2B2C:
 	.incbin	"baserom.gba", 0x5F2B2C, 0x10

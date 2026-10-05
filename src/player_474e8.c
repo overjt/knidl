@@ -17,11 +17,11 @@
  * has finished (Task.unk28 != 0) and requests action 23 when
  * PlayerHasCrossedWaterSurface(0) fires while Task.velY > 0.  PlayerActionSleep (action 42)
  * is a long scripted sequence (animations 0x8E5-0x8F7, sounds 180 and 274, effect
- * 38 steps 0-3) that holds PlayerState.unk42 bit 1 and releases it with
+ * 38 steps 0-3) that holds PlayerState.statusFlags bit 1 and releases it with
  * the HUD call SetPlayerAbility(0, -1, player); its handler PlayerActionSleepUpdate does
  * the same release when the ability PlayerState.ability is 11.
  * PlayerActionNeedle (action 43) is a re-entrant three-state machine: state 0
- * installs the hit boxes gUnk_0873C1B0 and gUnk_0873CEEC in the player
+ * installs the hit boxes gPlayerNeedleBodyBox and gPlayerNeedleHitBoxSet in the player
  * records gPlayerBodyBoxes[]/gPlayerHitBoxSets[] and steps the frame index
  * Task.unk46, state 1 plays frames 5-10 and waits while B is held,
  * state 2 plays the release.  Its handler PlayerActionNeedleUpdate shows frame
@@ -45,14 +45,14 @@ void PlayerActionParasol(void)
         struct Task *t = gCurTask;
         t->playerActionDone28 = 0;
         if (t->waterFlags & 1)
-            t->unk2C = 1;
+            t->playerAttackInWater2C = 1;
         else
-            t->unk2C = 0;
+            t->playerAttackInWater2C = 0;
     }
     gCurTask->u80.attackAbility = ABILITY_PARASOL;
     PlayerSetMotionXPreset(0, 72);
     PlaySfxIfLocalPlayer(SE_PARASOL_ATTACK, gCurTask->player->playerIndex);
-    if (gCurTask->unk2C == 0) {
+    if (gCurTask->playerAttackInWater2C == 0) {
         TaskSetFrame(0x8D2);
         TaskYieldTrampoline(4);
         if (gCurTask->onGround & 1)
@@ -150,7 +150,7 @@ void PlayerActionSleep(void)
     gCurTask->player->mode = 13;
     gCurTask->updateState = PLAYER_ACTION_HANDLER_SLEEP;
     gCurTask->playerActionDone28 = 0;
-    gCurTask->player->unk42 |= 2;
+    gCurTask->player->statusFlags |= PLAYER_STATUS_KEEP_ABILITY;
     PlayerSetMotionXPreset(0, 72);
     TaskSetFrame(0x8E5);
     TaskYieldTrampoline(16);
@@ -226,7 +226,7 @@ void PlayerActionSleep(void)
     TaskYieldTrampoline(4);
     gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->player->unk42 &= 0xFFFD;
+    gCurTask->player->statusFlags &= ~PLAYER_STATUS_KEEP_ABILITY;
     SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     gCurTask->frame--;
     TaskYieldTrampoline(32);
@@ -260,7 +260,7 @@ void PlayerActionSleepUpdate(void)
     if (sub_0803e55c() != 0) {
         struct Task *t = gCurTask;
         if (t->player->ability == ABILITY_SLEEP) {
-            t->player->unk42 &= 0xFFFD;
+            t->player->statusFlags &= ~PLAYER_STATUS_KEEP_ABILITY;
             SetPlayerAbility(ABILITY_NORMAL, -1, t->player->playerIndex);
         }
     } else if (gCurTask->playerActionDone28 != 0) {
@@ -285,9 +285,9 @@ void PlayerActionNeedle(void)
         {
             struct Task *t = gCurTask;
             t->playerAttackStep = -1;
-            gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C1B0;
+            gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gPlayerNeedleBodyBox;
         }
-        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CEEC;
+        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gPlayerNeedleHitBoxSet;
         gCurTask->playerNeedleOnGround = gCurTask->onGround;
         gCurTask->playerNeedleStep = 0;
         TaskYieldTrampoline(8);
@@ -357,9 +357,9 @@ void PlayerActionNeedleUpdate(void)
         if (gCurTask->playerAttackStep >= 0) {
             if (gCurTask->playerNeedleOnGround != 0) {
                 LoadPlayerBodyBoxRect(gCurTask->player->playerIndex,
-                             (u8 *)gUnk_0873C1C4 + gCurTask->playerAttackStep * 8);
+                             (u8 *)gPlayerNeedleBodyBoxRects + gCurTask->playerAttackStep * 8);
                 LoadPlayerHitBoxSet(gCurTask->player->playerIndex,
-                             (s32)((u8 *)gUnk_0873CEF4 + gCurTask->playerAttackStep * 8));
+                             (s32)((u8 *)gPlayerNeedleHitBoxRects + gCurTask->playerAttackStep * 8));
             } else {
                 LoadPlayerBodyBoxRect(gCurTask->player->playerIndex,
                              (u8 *)gUnk_0873C1EC + gCurTask->playerAttackStep * 8);

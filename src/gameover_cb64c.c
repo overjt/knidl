@@ -28,7 +28,7 @@ void TaskSetEntry(void *a, u32 i);
 /* Task type #264 variant 0, sub-state 0. */
 void GameOverPlayerWait(void)
 {
-    gCurTask->frameTable = gUnk_08754914;
+    gCurTask->frameTable = gGameOverPlayerFrames;
     gCurTask->updateState = 0;
     gCurTask->posX = 120 << 16;
     gCurTask->posY = 129 << 16;

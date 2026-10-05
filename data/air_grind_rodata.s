@@ -8,11 +8,11 @@
 	.section .air_grind_rodata, "a"
 	.global	air_grind_rodata
 air_grind_rodata:
-	.global	gUnk_080CFE2C
-gUnk_080CFE2C:
+	.global	gAirGrindLocalPlayerSlots
+gAirGrindLocalPlayerSlots:
 	.incbin	"baserom.gba", 0xCFE2C, 0x10
-	.global	gUnk_080CFE3C
-gUnk_080CFE3C:
+	.global	gAirGrindRacerSpeeds
+gAirGrindRacerSpeeds:
 	.incbin	"baserom.gba", 0xCFE3C, 0x24
 	.global	gUnk_080CFE60
 gUnk_080CFE60:
@@ -26,8 +26,8 @@ gUnk_080CFEA2:
 	.global	gUnk_080CFEC3
 gUnk_080CFEC3:
 	.incbin	"baserom.gba", 0xCFEC3, 0x21
-	.global	gUnk_080CFEE4
-gUnk_080CFEE4:
+	.global	gAirGrindRacerFrameSteps
+gAirGrindRacerFrameSteps:
 	.incbin	"baserom.gba", 0xCFEE4, 0x5
 	.global	gUnk_080CFEE9
 gUnk_080CFEE9:
@@ -77,8 +77,8 @@ gUnk_080D0198:
 	.global	gAirGrindSineTable
 gAirGrindSineTable:
 	.incbin	"baserom.gba", 0xD0398, 0x202
-	.global	gUnk_080D059A
-gUnk_080D059A:
+	.global	gAirGrindDepthScales
+gAirGrindDepthScales:
 	.incbin	"baserom.gba", 0xD059A, 0x1C0
 	.global	gUnk_080D075A
 gUnk_080D075A:

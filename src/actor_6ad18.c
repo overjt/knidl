@@ -4,7 +4,7 @@
  *   ./tools/fnmatch.sh 0x0806AD18 0x0806B2E4 src/actor_6ad18.c --newpb
  *
  * The screen-transition half of the module. ActorShakeVertically nudges the carried
- * actor one frame either way; sub_0806adb0 and BossDefeatScreenFlash are the two
+ * actor one frame either way; MidBossDefeatScreenFlash and BossDefeatScreenFlash are the two
  * DISPCNT-shadow fades (gDispCnt masked to 0xE0FF and re-ORed with the
  * BG-enable pattern, alternating a ROM window descriptor with a copy of
  * gBgPalette on the stack); ActorDefeatMidBoss plays the six-step
@@ -69,7 +69,7 @@ void ActorShakeVertically(void)
     gCurTask->u8C.actor->extraFrame = 0xFFFF;
 }
 
-void sub_0806adb0(void)
+void MidBossDefeatScreenFlash(void)
 {
     struct Task *t;
     u16 v;
@@ -105,11 +105,11 @@ void sub_0806adb0(void)
     ThawStage();
 }
 
-void sub_0806ae94(void)
+void MidBossDefeatFlash(void)
 {
     PlaySfx(0x200);
-    TaskSetSkipMask(14, gCurTaskIdx);
-    sub_0806adb0();
+    TaskSetSkipMask((TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), gCurTaskIdx);
+    MidBossDefeatScreenFlash();
     TaskSetSkipMask(0, gCurTaskIdx);
 }
 
@@ -133,7 +133,7 @@ void ActorDefeatMidBoss(void)
     TaskStop();
     t = gCurTask;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-    t->frameTable = gUnk_0874CA78;
+    t->frameTable = gStarScatterFrames;
     t->tileWord = 0;
     RequestScreenShake(4);
     ActorPlaySfx(0x1F9, 0);
@@ -240,51 +240,51 @@ void ActorDefeatBoss(void)
     CallTableEntry(gCurTask->u76.subtype, 9, gUnk_0873E758);
 }
 
-void ActorDefeat8(void)
+void ActorDefeatBurstByEffect(void)
 {
     struct Task *t;
 
     t = gCurTask;
     if (t->hitEffect > 3)
         t->hitEffect = 0;
-    CallTableEntry(gCurTask->hitEffect, 4, gUnk_0873E77C);
+    CallTableEntry(gCurTask->hitEffect, 4, gActorBurstDefeatsByEffect);
 }
 
-void sub_0806b1a8(void)
+void ActorBurstDefeatPlain(void)
 {
     TaskStop();
     TaskSetFrame(0);
     ActorPlaySfx(212, 0);
-    sub_08069fc8();
+    ActorPlayBurstDefeatAnim();
 }
 
-void sub_0806b1c4(void)
-{
-    struct Task *t;
-
-    TaskStop();
-    TaskSetFrame(0);
-    t = gCurTask;
-    t->frameTable = gUnk_0874C9D8;
-    t->tileWord = 0;
-    ActorPlaySfx(212, 0);
-    sub_08069fc8();
-}
-
-void sub_0806b1f4(void)
+void ActorBurstDefeatBurning(void)
 {
     struct Task *t;
 
     TaskStop();
     TaskSetFrame(0);
     t = gCurTask;
-    t->frameTable = gUnk_0874C9D8;
+    t->frameTable = gRayBurstFrames;
     t->tileWord = 0;
     ActorPlaySfx(212, 0);
-    sub_08069fc8();
+    ActorPlayBurstDefeatAnim();
 }
 
-void sub_0806b224(void)
+void ActorBurstDefeatShocked(void)
+{
+    struct Task *t;
+
+    TaskStop();
+    TaskSetFrame(0);
+    t = gCurTask;
+    t->frameTable = gRayBurstFrames;
+    t->tileWord = 0;
+    ActorPlaySfx(212, 0);
+    ActorPlayBurstDefeatAnim();
+}
+
+void ActorBurstDefeatFrozen(void)
 {
     ActorDefeatFrozen();
 }
@@ -301,7 +301,7 @@ void ActorDefeat9(void)
 
 s32 ActorDrownLand(void)
 {
-    ActorSetState(ACTOR_DROWN_STATE_1);
+    ActorSetState(ACTOR_DROWN_STATE_WAIT);
     TaskSetEntry(ActorDrownEnterState, gCurTaskIdx);
     return 1;
 }
@@ -323,7 +323,7 @@ void ActorDrownUpdate(void)
 {
     if (ActorCollideTerrain() == 0)
         CallTableEntry(gCurTask->updateState, 3, gActorDrownStateUpdates);
-    if (gCurTask->state != ACTOR_DROWN_STATE_2)
+    if (gCurTask->state != ACTOR_DROWN_STATE_BURST)
     {
         ActorCheckHits();
         ActorReactToHit();

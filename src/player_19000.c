@@ -21,7 +21,7 @@ void CutsceneFountainNightmarePowerOrb(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_087553DC;
+    gCurTask->frameTable = gCutsceneFountainNightmarePowerOrbFrames;
     gCurTask->updateCallback = (u32)CutsceneFountainNightmarePowerOrbUpdate;
     gCurTask->cutsceneActorPalettePhase = 0;
     gCurTask->tileWord = 0x9210;
@@ -257,7 +257,7 @@ void CutsceneFountainNightmarePowerOrbUpdate(void)
     if ((s16)t->cutsceneActorPalettePhase > 23)
         t->cutsceneActorPalettePhase = 0;
     BlendColors((s32)gUnk_082FE0E4, (s32)gUnk_082FE104,
-                 gUnk_0874AD44[(s16)gCurTask->cutsceneActorPalettePhase], 16, (void *)(IWRAM_START + 0x1590));
+                 gNightmarePowerOrbBlendWeights[(s16)gCurTask->cutsceneActorPalettePhase], 16, (void *)(IWRAM_START + 0x1590));
     gCurTask->cutsceneActorPalettePhase++;
 }
 
@@ -266,9 +266,9 @@ void CutsceneFountainStarRod(void)
     struct Task *t = gCurTask;
 
     t->moveCallback = (u32)TaskMove;
-    t->drawCallback = (u32)sub_0801a310;
+    t->drawCallback = (u32)CutsceneActorDrawStreamedFrame;
     t->layer = 6;
-    gCurTask->frameTable = gUnk_087553FC;
+    gCurTask->frameTable = gCutsceneFountainStarRodFrames;
     gCurTask->tileWord = 0xA310;
     gCurTask->posX = 240 << 15;
     gCurTask->posY = 192 << 14;
@@ -483,9 +483,9 @@ void CutsceneFountainJet(void)
     struct Task *t = gCurTask;
 
     t->moveCallback = (u32)TaskMove;
-    t->drawCallback = (u32)sub_0801a3e4;
+    t->drawCallback = (u32)FountainSpriteDraw;
     t->layer = 15;
-    gCurTask->frameTable = gUnk_08755440;
+    gCurTask->frameTable = gFountainJetFrames;
     gCurTask->tileWord = 0xD350;
     RequestCopy(2, (u32)gUnk_085E0070, (u32)gObjPaletteBank13, 32);
     gCurTask->posX = 160 << 17;
@@ -528,7 +528,7 @@ void CutsceneFountainActorScript59(void)
     struct Task *t = gCurTask;
 
     t->moveCallback = (u32)TaskMove;
-    t->drawCallback = (u32)sub_0801a3e4;
+    t->drawCallback = (u32)FountainSpriteDraw;
     t->layer = 15;
     gCurTask->frameTable = gUnk_0875546C;
     gCurTask->tileWord = 0xD350;
@@ -568,7 +568,7 @@ void CutsceneFountainActorScript60(void)
     struct Task *t = gCurTask;
 
     t->moveCallback = (u32)TaskMove;
-    t->drawCallback = (u32)sub_0801a3e4;
+    t->drawCallback = (u32)FountainSpriteDraw;
     t->layer = 14;
     gCurTask->frameTable = gUnk_08755484;
     gCurTask->tileWord = 0xD350;

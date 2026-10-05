@@ -16,7 +16,7 @@
  * re-uploads (ActorFlashPalette) or drops (ActorClearPaletteOverride) the 16-byte graphics
  * record gUnk_08274840 while Task.unk18 is set, dispatches Task.updateState through
  * the 19-word body table gMrFrostyStateUpdates that follows it, and finishes with the
- * animation-row selector sub_08098de4 plus ActorCheckHitsWithExtraBox / ActorReactToHit.
+ * animation-row selector MrFrostyUpdateAttackBoxes plus ActorCheckHitsWithExtraBox / ActorReactToHit.
  * MrFrostyEnterState is the re-arm hook every guard installs through
  * TaskSetEntry(fn, gCurTaskIdx).
  *
@@ -29,7 +29,7 @@
  * RandomRange-gated transitions at Task.unk30 == 120 / 60 / 45, CreateMrFrostyIceCube
  * spawns the actor 13 through CreateActorFromDescAtOffsetFacing and MrFrostyCheckNearIceCube is the "close
  * enough" probe (|TaskGetDxTo(Task.unk1C)| <= 10).  MrFrostyBounceOffWallUpdate and
- * MrFrostyState16Update are empty state handlers, and MrFrostyDropInUpdate is the timer leaf
+ * MrFrostyFallUpdate are empty state handlers, and MrFrostyDropInUpdate is the timer leaf
  * the guard table word at 0x087456C8 points at.
  */
 #include "gba/gba.h"
@@ -73,25 +73,25 @@ u8 MrFrostyLand(void)
     case MR_FROSTY_STATE_BOUNCE_OFF_WALL:
         sub_0809a080(1);
         gCurTask->onGround = 0;
-        ActorSetTerrainBox(gUnk_08745A14);
-        ActorSetState(MR_FROSTY_STATE_5);
+        ActorSetTerrainBox(gMrFrostyLandTerrainBox);
+        ActorSetState(MR_FROSTY_STATE_BOUNCE_FROM_WALL);
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
         return 1;
-    case MR_FROSTY_STATE_5:
+    case MR_FROSTY_STATE_BOUNCE_FROM_WALL:
         gCurTask->velY = -65536;
         break;
     case MR_FROSTY_STATE_DEFEAT:
         sub_0809a080(0);
-        ActorSetTerrainBox(gUnk_08745A14);
-        ActorSetState(MR_FROSTY_STATE_14);
+        ActorSetTerrainBox(gMrFrostyLandTerrainBox);
+        ActorSetState(MR_FROSTY_STATE_BOUNCE_FROM_DEFEAT);
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
         return 1;
-    case MR_FROSTY_STATE_16:
+    case MR_FROSTY_STATE_FALL:
         sub_0809a080(1);
         ActorSetState(MR_FROSTY_STATE_WAIT);
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
         return 1;
-    case MR_FROSTY_STATE_10:
+    case MR_FROSTY_STATE_TOSS_ICE_CUBE_HOP_AWAY:
         sub_0809a080(1);
         TaskSetFrame(19);
         break;
@@ -110,25 +110,25 @@ u8 MrFrostyHitWall(void)
     switch (gCurTask->state)
     {
     case MR_FROSTY_STATE_WALK_BACK:
-        ActorSetState(MR_FROSTY_STATE_7);
+        ActorSetState(MR_FROSTY_STATE_WALK_BACK_AT_WALL);
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
         return 1;
     case MR_FROSTY_STATE_DASH:
         ActorSetState(MR_FROSTY_STATE_BOUNCE_OFF_WALL);
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
         return 1;
-    case MR_FROSTY_STATE_5:
+    case MR_FROSTY_STATE_BOUNCE_FROM_WALL:
         gCurTask->onGround = 1;
         TaskStopY();
-        ActorSetState(MR_FROSTY_STATE_6);
+        ActorSetState(MR_FROSTY_STATE_SHAKE);
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
         return 1;
     case MR_FROSTY_STATE_BOUNCE_OFF_WALL:
     case MR_FROSTY_STATE_DEFEAT:
         gCurTask->velX = 0;
         return 0;
-    case MR_FROSTY_STATE_14:
-        ActorSetState(MR_FROSTY_STATE_15);
+    case MR_FROSTY_STATE_BOUNCE_FROM_DEFEAT:
+        ActorSetState(MR_FROSTY_STATE_DEFEAT_END);
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
         return 1;
     }
@@ -245,19 +245,19 @@ void sub_08098c54(void)
     }
 }
 
-void sub_08098cf4(void)
+void MrFrostyPickToss(void)
 {
     IntToDigits((s16)RandomRange(30));
     switch ((s8)gDigits[1])
     {
     case 0:
-        ActorSetState(MR_FROSTY_STATE_9);
+        ActorSetState(MR_FROSTY_STATE_TOSS_ICE_CUBE_HOP_BACK);
         break;
     case 1:
-        ActorSetState(MR_FROSTY_STATE_10);
+        ActorSetState(MR_FROSTY_STATE_TOSS_ICE_CUBE_HOP_AWAY);
         break;
     case 2:
-        ActorSetState(MR_FROSTY_STATE_11);
+        ActorSetState(MR_FROSTY_STATE_TOSS_ICE_CUBE_WALK_BACK);
         break;
     default:
         sub_0806ee2c();
@@ -301,13 +301,13 @@ u8 MrFrostyCheckNearIceCube(void)
     return 0;
 }
 
-void sub_08098de4(void)
+void MrFrostyUpdateAttackBoxes(void)
 {
     switch (gCurTask->state)
     {
     case MR_FROSTY_STATE_DEFEAT:
-    case MR_FROSTY_STATE_14:
-    case MR_FROSTY_STATE_15:
+    case MR_FROSTY_STATE_BOUNCE_FROM_DEFEAT:
+    case MR_FROSTY_STATE_DEFEAT_END:
         ActorSetAttackBox(gUnk_087458F4);
         ActorSetExtraAttackBox(gUnk_08745910);
         break;
@@ -319,7 +319,7 @@ void sub_08098de4(void)
         ActorSetAttackBox(gUnk_0874592C);
         ActorSetExtraAttackBox(gUnk_08745948);
     default:
-        ActorSetAttackBox(gUnk_08745868);
+        ActorSetAttackBox(gMrFrostyAttackBox);
         ActorSetExtraAttackBox(gUnk_08745884);
         break;
     }
@@ -402,7 +402,7 @@ void MrFrostyUpdate(void)
     {
         CallTableEntry(u->updateState, 19, gMrFrostyStateUpdates);
     }
-    sub_08098de4();
+    MrFrostyUpdateAttackBoxes();
     ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
@@ -608,7 +608,7 @@ void MrFrostyBounceOffWallUpdate(void)
 {
 }
 
-void MrFrostyState5(void)
+void MrFrostyBounceFromWall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -616,7 +616,7 @@ void MrFrostyState5(void)
 
     t = gCurTask;
     t->mrFrostyTimer = 32;
-    t->updateState = MR_FROSTY_STATE_5;
+    t->updateState = MR_FROSTY_STATE_BOUNCE_FROM_WALL;
     TaskStop();
     u = gCurTask;
     u->accelY = 0x8000;
@@ -631,7 +631,7 @@ void MrFrostyState5(void)
     TaskSleepForever();
 }
 
-void MrFrostyState5Update(void)
+void MrFrostyBounceFromWallUpdate(void)
 {
     struct Task *t;
 
@@ -639,12 +639,12 @@ void MrFrostyState5Update(void)
     if (--t->mrFrostyTimer < 0)
     {
         TaskStopY();
-        ActorSetState(MR_FROSTY_STATE_6);
+        ActorSetState(MR_FROSTY_STATE_SHAKE);
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
     }
 }
 
-void MrFrostyState6(void)
+void MrFrostyShake(void)
 {
     struct Task *t;
     struct Task *u;
@@ -653,7 +653,7 @@ void MrFrostyState6(void)
 
     t = gCurTask;
     t->mrFrostyTimer = 20;
-    t->updateState = MR_FROSTY_STATE_6;
+    t->updateState = MR_FROSTY_STATE_SHAKE;
     TaskStop();
     TaskSetFrame(24);
     while (1)
@@ -669,7 +669,7 @@ void MrFrostyState6(void)
     }
 }
 
-void MrFrostyState6Update(void)
+void MrFrostyShakeUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -680,13 +680,13 @@ void MrFrostyState6Update(void)
         t->onGround = 1;
         u = gCurTask;
         u->mrFrostyTimer = 30;
-        ActorSetTerrainBox(gUnk_08745A0C);
+        ActorSetTerrainBox(gMrFrostyTerrainBox);
         ActorSetState(MR_FROSTY_STATE_WAIT);
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
     }
 }
 
-void MrFrostyState7(void)
+void MrFrostyWalkBackAtWall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -694,7 +694,7 @@ void MrFrostyState7(void)
 
     t = gCurTask;
     zero = 0;
-    t->updateState = MR_FROSTY_STATE_7;
+    t->updateState = MR_FROSTY_STATE_WALK_BACK_AT_WALL;
     u = gCurTask;
     u->mrFrostyStatePhase = zero;
     while (1)
@@ -716,7 +716,7 @@ void MrFrostyState7(void)
     }
 }
 
-void MrFrostyState7Update(void)
+void MrFrostyWalkBackAtWallUpdate(void)
 {
     if (gCurTask->mrFrostyStatePhase != 0)
     {
@@ -768,17 +768,17 @@ void MrFrostySpinUpdate(void)
 
     t = gCurTask;
     if (--t->mrFrostyTimer < 0)
-        sub_08098cf4();
+        MrFrostyPickToss();
 }
 
-void MrFrostyState9(void)
+void MrFrostyTossIceCubeHopBack(void)
 {
     struct Task *t;
     struct Task *u;
     struct Task *v;
 
     t = gCurTask;
-    t->updateState = MR_FROSTY_STATE_9;
+    t->updateState = MR_FROSTY_STATE_TOSS_ICE_CUBE_HOP_BACK;
     u = gCurTask;
     u->mrFrostyTimer = 48;
     u->onGround = 0;
@@ -806,7 +806,7 @@ void MrFrostyState9(void)
     }
 }
 
-void MrFrostyState9Update(void)
+void MrFrostyTossIceCubeHopBackUpdate(void)
 {
     struct Task *t;
 
@@ -815,20 +815,20 @@ void MrFrostyState9Update(void)
     {
         if (MrFrostyCheckNearIceCube() == 0)
         {
-            ActorSetState(MR_FROSTY_STATE_12);
+            ActorSetState(MR_FROSTY_STATE_KICK);
             TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
         }
     }
 }
 
-void MrFrostyState10(void)
+void MrFrostyTossIceCubeHopAway(void)
 {
     struct Task *t;
     struct Task *u;
     struct Task *v;
 
     t = gCurTask;
-    t->updateState = MR_FROSTY_STATE_10;
+    t->updateState = MR_FROSTY_STATE_TOSS_ICE_CUBE_HOP_AWAY;
     u = gCurTask;
     u->mrFrostyTimer = 48;
     u->onGround = 0;
@@ -858,7 +858,7 @@ void MrFrostyState10(void)
     }
 }
 
-void MrFrostyState10Update(void)
+void MrFrostyTossIceCubeHopAwayUpdate(void)
 {
     struct Task *t;
 
@@ -868,19 +868,19 @@ void MrFrostyState10Update(void)
         TaskTurnAround();
         if (MrFrostyCheckNearIceCube() == 0)
         {
-            ActorSetState(MR_FROSTY_STATE_12);
+            ActorSetState(MR_FROSTY_STATE_KICK);
             TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
         }
     }
 }
 
-void MrFrostyState11(void)
+void MrFrostyTossIceCubeWalkBack(void)
 {
     struct Task *t;
     struct Task *u;
 
     t = gCurTask;
-    t->updateState = MR_FROSTY_STATE_11;
+    t->updateState = MR_FROSTY_STATE_TOSS_ICE_CUBE_WALK_BACK;
     u = gCurTask;
     u->mrFrostyTimer = 48;
     TaskSetMotionXFacing(-32768, 0x5A5A5A5A);
@@ -899,7 +899,7 @@ void MrFrostyState11(void)
     }
 }
 
-void MrFrostyState11Update(void)
+void MrFrostyTossIceCubeWalkBackUpdate(void)
 {
     struct Task *t;
 
@@ -908,19 +908,19 @@ void MrFrostyState11Update(void)
     {
         if (MrFrostyCheckNearIceCube() == 0)
         {
-            ActorSetState(MR_FROSTY_STATE_12);
+            ActorSetState(MR_FROSTY_STATE_KICK);
             TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
         }
     }
 }
 
-void MrFrostyState12(void)
+void MrFrostyKick(void)
 {
     struct Task *t;
     struct Task *u;
 
     t = gCurTask;
-    t->updateState = MR_FROSTY_STATE_12;
+    t->updateState = MR_FROSTY_STATE_KICK;
     u = gCurTask;
     u->mrFrostyTimer = 18;
     TaskStop();
@@ -942,7 +942,7 @@ void MrFrostyState12(void)
     }
 }
 
-void MrFrostyState12Update(void)
+void MrFrostyKickUpdate(void)
 {
     struct Task *t;
 
@@ -970,7 +970,7 @@ void MrFrostyDefeat(void)
     u->onGround = zero;
     if (--gUnk_02007D00[0] <= 0)
         EndMidBossFightWithReward();
-    sub_080667c0(1, 24);
+    MidBossStartDefeat(1, 24);
     TaskSetMotionXFacing(-65536, 0x5A5A5A5A);
     v = gCurTask;
     v->velY = -196608;
@@ -985,14 +985,14 @@ void MrFrostyDefeatUpdate(void)
     ActorFlashPalette(&gUnk_08274840, 16);
 }
 
-void MrFrostyState14(void)
+void MrFrostyBounceFromDefeat(void)
 {
     struct Task *t;
     struct Task *u;
     struct Task *v;
 
     t = gCurTask;
-    t->updateState = MR_FROSTY_STATE_14;
+    t->updateState = MR_FROSTY_STATE_BOUNCE_FROM_DEFEAT;
     u = gCurTask;
     u->mrFrostyTimer = 32;
     CreateStarFlash(1, 0, 0);
@@ -1006,7 +1006,7 @@ void MrFrostyState14(void)
     TaskSleepForever();
 }
 
-void MrFrostyState14Update(void)
+void MrFrostyBounceFromDefeatUpdate(void)
 {
     struct Task *t;
 
@@ -1014,12 +1014,12 @@ void MrFrostyState14Update(void)
     t = gCurTask;
     if (--t->mrFrostyTimer < 0)
     {
-        ActorSetState(MR_FROSTY_STATE_15);
+        ActorSetState(MR_FROSTY_STATE_DEFEAT_END);
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
     }
 }
 
-void MrFrostyState15(void)
+void MrFrostyDefeatEnd(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1029,7 +1029,7 @@ void MrFrostyState15(void)
 
     t = gCurTask;
     zero = 0;
-    t->updateState = MR_FROSTY_STATE_15;
+    t->updateState = MR_FROSTY_STATE_DEFEAT_END;
     u = gCurTask;
     u->mrFrostyDefeatDone = zero;
     CreateStarFlash(1, 0, 0);
@@ -1044,7 +1044,7 @@ void MrFrostyState15(void)
     TaskSleepForever();
 }
 
-void MrFrostyState15Update(void)
+void MrFrostyDefeatEndUpdate(void)
 {
     struct Task *t;
 
@@ -1057,13 +1057,13 @@ void MrFrostyState15Update(void)
     }
 }
 
-void MrFrostyState16(void)
+void MrFrostyFall(void)
 {
     struct Task *t;
 
     t = gCurTask;
     t->accelY = 0x5000;
-    t->updateState = MR_FROSTY_STATE_16;
+    t->updateState = MR_FROSTY_STATE_FALL;
     while (1)
     {
         TaskSetFrame(6);
@@ -1077,7 +1077,7 @@ void MrFrostyState16(void)
     }
 }
 
-void MrFrostyState16Update(void)
+void MrFrostyFallUpdate(void)
 {
 }
 
@@ -1142,9 +1142,9 @@ void MrFrostyDropInUpdate(void)
 
 u8 MrTickTockStartFall(void)
 {
-    if (gCurTask->state == MR_TICK_TOCK_STATE_WAIT)
+    if (gCurTask->state == MR_TICK_TOCK_STATE_WAIT_LONG)
     {
-        ActorSetState(MR_TICK_TOCK_STATE_22);
+        ActorSetState(MR_TICK_TOCK_STATE_FALL);
         TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     }

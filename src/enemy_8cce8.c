@@ -399,9 +399,9 @@ void sub_0808d460(void)
 
     t = gCurTask;
     if (t->facing == 1)
-        t->spriteFlags |= 0x8000;
+        t->spriteFlags |= SPRITE_FLAG_FLIP_X;
     else
-        t->spriteFlags &= 0x7FFF;
+        t->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
 }
 
 void sub_0808d494(void)
@@ -934,7 +934,7 @@ void BroomHatterIdleInit(void)
 {
     gCurTask->updateCallback = (u32)BroomHatterIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(BROOM_HATTER_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gBroomHatterIdleStates);

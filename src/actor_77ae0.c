@@ -85,14 +85,14 @@ void CannonFuseBurnUpdate(void)
     }
     else if (gCannonFuseState == 0)
     {
-        ActorSetState(CANNON_FUSE_STATE_2);
+        ActorSetState(CANNON_FUSE_STATE_RESTORE);
         TaskSetEntry(CannonFuseEnterState, gCurTaskIdx);
     }
 }
 
-void CannonFuseState2(void)
+void CannonFuseRestore(void)
 {
-    gCurTask->updateState = CANNON_FUSE_STATE_2;
+    gCurTask->updateState = CANNON_FUSE_STATE_RESTORE;
     TaskStop();
     gCurTask->cannonFuseBurnDir = -1;
     CannonFuseInitBurn();
@@ -105,11 +105,11 @@ void CannonFuseState2(void)
     TaskSleepForever();
 }
 
-void CannonFuseState2Update(void)
+void CannonFuseRestoreUpdate(void)
 {
     if (gCurTask->cannonFusePieceKind != -1)
-        sub_08077980();
-    if (gCurTask->state != CANNON_FUSE_STATE_2)
+        CannonFuseRestoreStep();
+    if (gCurTask->state != CANNON_FUSE_STATE_RESTORE)
         TaskSetEntry(CannonFuseEnterState, gCurTaskIdx);
 }
 
@@ -227,16 +227,16 @@ void BigSwitchWaitUpdate(void)
         BigSwitchStartPress();
 }
 
-void BigSwitchState1(void)
+void BigSwitchPress(void)
 {
-    gCurTask->updateState = BIG_SWITCH_STATE_1;
+    gCurTask->updateState = BIG_SWITCH_STATE_PRESS;
     TaskYieldTrampoline(8);
     FadeOutSfx(16);
     PressBigSwitch(gCurTaskIdx);
     TaskSleepForever();
 }
 
-void BigSwitchState1Update(void)
+void BigSwitchPressUpdate(void)
 {
 }
 
@@ -398,7 +398,7 @@ void RoomParticleInit(struct RoomParticle *p, u8 a, u8 b)
     }
     p->pixelY = RandomRange(132) + 8;
     p->animStep = RandomRange(10);
-    p->animRow = gUnk_08740620[gCurTask->unk28];
+    p->animRow = gUnk_08740620[gCurTask->roomParticlesIndex];
 }
 
 void RoomParticleDrawFixed(struct RoomParticle *p)
@@ -430,10 +430,10 @@ void RoomParticleDrawScrolled(struct RoomParticle *p)
 
 void RoomParticleDrawRepeated(struct RoomParticle *p)
 {
-    gCurTask->unk2C = 0;
+    gCurTask->roomParticlesCopyIndex = 0;
     do
     {
-        if (RoomParticleIsOnScreen(p->pixelX - gSpriteCameraX + gCurTask->unk2C * 192,
+        if (RoomParticleIsOnScreen(p->pixelX - gSpriteCameraX + gCurTask->roomParticlesCopyIndex * 192,
                          p->pixelY))
         {
             struct Task *t = gCurTask;
@@ -441,11 +441,11 @@ void RoomParticleDrawRepeated(struct RoomParticle *p)
             QueueSprite(t->layer,
                          gUnk_08752E00[gUnk_087404A0[p->animRow][p->animStep].frame],
                          t->spriteFlags, t->tileWord,
-                         p->pixelX - gSpriteCameraX + t->unk2C * 192,
+                         p->pixelX - gSpriteCameraX + t->roomParticlesCopyIndex * 192,
                          p->pixelY);
         }
-        gCurTask->unk2C++;
-    } while (gCurTask->unk2C <= 4);
+        gCurTask->roomParticlesCopyIndex++;
+    } while (gCurTask->roomParticlesCopyIndex <= 4);
 }
 
 u8 RoomParticleIsOnScreen(s16 x, s16 y)
@@ -837,7 +837,7 @@ s32 WaddleDeeLand(void)
             if (t->waddleDeeJumpTimer <= 0)
                 t->waddleDeeJumpTimer = 30;
         }
-        gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_087406A0);
+        gCurTask->actorAnimDelay34 = ActorStartAnim(gWaddleDeeJumpAnim);
         ActorSetState(0);
         TaskSetEntry(WaddleDeeJumpEnterState, gCurTaskIdx);
         r = 1;

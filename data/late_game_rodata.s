@@ -36,8 +36,8 @@ gUnk_087560C0:
 	.section .late_game_rodata_087560ec, "a"
 	.global	late_game_rodata_087560ec
 late_game_rodata_087560ec:
-	.global	gUnk_087560EC
-gUnk_087560EC:
+	.global	gStarRodPieceAnim
+gStarRodPieceAnim:
 	.incbin	"baserom.gba", 0x7560EC, 0x64
 
 @ 0x08756150-0x08756178: C, row late_tbl_08756150 (src/data/late_game_tables.c section .late_tbl_08756150)
@@ -47,8 +47,8 @@ gUnk_087560EC:
 	.section .late_game_rodata_08756178, "a"
 	.global	late_game_rodata_08756178
 late_game_rodata_08756178:
-	.global	gUnk_08756178
-gUnk_08756178:
+	.global	gStageObjectSubtypes
+gStageObjectSubtypes:
 	.incbin	"baserom.gba", 0x756178, 0xC
 	.global	gUnk_08756184
 gUnk_08756184:
@@ -163,8 +163,8 @@ gUnk_08756460:
 	.section .late_game_rodata_08756498, "a"
 	.global	late_game_rodata_08756498
 late_game_rodata_08756498:
-	.global	gUnk_08756498
-gUnk_08756498:
+	.global	gQuickDrawShakeAmplitudes
+gQuickDrawShakeAmplitudes:
 	.incbin	"baserom.gba", 0x756498, 0x8
 	.global	gUnk_087564A0
 gUnk_087564A0:
@@ -209,11 +209,11 @@ gBombRallySeatScrollX:
 	.global	gBombRallySeatScrollY
 gBombRallySeatScrollY:
 	.incbin	"baserom.gba", 0x756550, 0x10
-	.global	gUnk_08756560
-gUnk_08756560:
+	.global	gBombRallyStarBurstOffsetX
+gBombRallyStarBurstOffsetX:
 	.incbin	"baserom.gba", 0x756560, 0x4
-	.global	gUnk_08756564
-gUnk_08756564:
+	.global	gBombRallyStarBurstOffsetY
+gBombRallyStarBurstOffsetY:
 	.incbin	"baserom.gba", 0x756564, 0x4
 
 @ 0x08756568-0x08756570: C, row late_tbl_08756568 (src/data/late_game_tables.c section .late_tbl_08756568)
@@ -292,11 +292,11 @@ gBombRallyBubblesFrames:
 	.word	gUnk_08755DD8
 	.word	gBombRallyBubblesFrame2
 	.word	gUnk_08755DD8
-	.global	gUnk_0875672C
-gUnk_0875672C:
+	.global	gBombRallySeatX
+gBombRallySeatX:
 	.incbin	"baserom.gba", 0x75672C, 0x8
-	.global	gUnk_08756734
-gUnk_08756734:
+	.global	gBombRallySeatY
+gBombRallySeatY:
 	.incbin	"baserom.gba", 0x756734, 0x8
 	.global	gUnk_0875673C
 gUnk_0875673C:
@@ -319,8 +319,8 @@ gUnk_0875675C:
 	.global	gUnk_0875676C
 gUnk_0875676C:
 	.incbin	"baserom.gba", 0x75676C, 0x4
-	.global	gUnk_08756770
-gUnk_08756770:
+	.global	gBombRallyBombScales
+gBombRallyBombScales:
 	.incbin	"baserom.gba", 0x756770, 0x8
 	.global	gUnk_08756778
 gUnk_08756778:
@@ -523,8 +523,8 @@ late_game_rodata_0875735c:
 	.global	gEndingEpilogueObjectVariants
 gEndingEpilogueObjectVariants:
 	.incbin	"baserom.gba", 0x75735C, 0xC
-	.global	gUnk_08757368
-gUnk_08757368:
+	.global	gKirbyFlashBlendRatios
+gKirbyFlashBlendRatios:
 	.incbin	"baserom.gba", 0x757368, 0xC
 	.global	gUnk_08757374
 gUnk_08757374:

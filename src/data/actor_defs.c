@@ -111,7 +111,7 @@ struct ActorDef *const gChildActorDefs[] = {
     &gHeavyMoleRedMissileDef,
     &gWhispyWoodsAppleDef,
     &gWhispyWoodsAirPuffDef,
-    &gUnk_08748B08,
+    &gChildActorDef24,
     &gKrackoStarmanDef,
     &gAxeKnightAxeDef,
     &gMaceKnightMaceDef,
@@ -133,7 +133,7 @@ struct ActorDef *const gObjectDefs[] = {
     &gCannonFuseDef,
     &gBigSwitchDef,
     &gStakeDef,
-    &gUnk_0873F49C,
+    &gObjectDef5,
 };
 
 /* every other kind */
@@ -143,5 +143,5 @@ struct ActorDef *const gItemDefs[] = {
     &gMaximTomatoDef,
     &gInvincibleCandyDef,
     &gEnergyDrinkDef,
-    &gUnk_0873F394,
+    &gItemDef5,
 };

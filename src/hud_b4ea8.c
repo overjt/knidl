@@ -18,7 +18,7 @@
 struct RoomObjectEntry
 {
     /*0x00*/ s8 kind;
-    /*0x01*/ s8 unk1;
+    /*0x01*/ s8 subtype;
     /*0x02*/ s8 unk2;
     /*0x03*/ s8 unk3;
     /*0x04*/ u16 x;
@@ -65,15 +65,15 @@ extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
 /* Module functions */
-void sub_080a2b2c();
+void MrBrightFlashPalette();
 void ReleaseRoomObject();
 s32 LoadRoomEnemyGfx();
 s32 LoadRoomMidBossGfx();
 s32 LoadRoomBossGfx();
 void LoadRoomMetaKnightsGfx();
-s32 sub_080b5a94();
+s32 LoadRoomStageObjectGfx();
 s32 SpawnRoomEnemy();
-s32 sub_080b5d84();
+s32 SpawnRoomMapEvent();
 
 void LoadRoomObjectGfx(void)
 {
@@ -102,7 +102,7 @@ void LoadRoomObjectGfx(void)
                 n++;
             break;
         case 5:
-            if (sub_080b5a94(e, i, n) != 0)
+            if (LoadRoomStageObjectGfx(e, i, n) != 0)
                 n++;
             break;
         case 2:
@@ -110,7 +110,7 @@ void LoadRoomObjectGfx(void)
                 n++;
             break;
         case 6:
-            if (e->unk1 == 0)
+            if (e->subtype == 0)
             {
                 f = &gRoomObjectList.entries[e->unk2];
                 for (j = e->unk2; j < e->unk2 + e->unk3; f++, j++)

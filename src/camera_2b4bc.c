@@ -213,7 +213,7 @@ void CameraSlideToScrollLock(void)
             {
                 for (i = 0; i < gPlayerCount; i++)
                 {
-                    if (((gScrollLock.unk0 >> i) & 1) && ((gActivePlayerMask >> i) & 1))
+                    if (((gScrollLock.lockedPlayerMask >> i) & 1) && ((gActivePlayerMask >> i) & 1))
                     {
                         gPlayerCameraPos[i].x += gScrollLockSpeedX;
                         if (gScrollLock.x0 <= gPlayerCameraPos[i].x)
@@ -228,7 +228,7 @@ void CameraSlideToScrollLock(void)
                     if (gScrollLock.x1 < gPlayerCameraPos[gPlayerCount].x)
                         gPlayerCameraPos[gPlayerCount].x = gScrollLock.x1;
                 }
-                if ((gScrollLock.unk0 >> gPlayerCount) & 1)
+                if ((gScrollLock.lockedPlayerMask >> gPlayerCount) & 1)
                 {
                     gCameraBounds[0] += gScrollLockSpeedX;
                     if (gScrollLock.x0 <= gCameraBounds[0])
@@ -244,7 +244,7 @@ void CameraSlideToScrollLock(void)
             {
                 for (i = 0; i < gPlayerCount; i++)
                 {
-                    if (((gScrollLock.unk0 >> i) & 1) && ((gActivePlayerMask >> i) & 1))
+                    if (((gScrollLock.lockedPlayerMask >> i) & 1) && ((gActivePlayerMask >> i) & 1))
                     {
                         gPlayerCameraPos[i].x += gScrollLockSpeedX;
                         if (gPlayerCameraPos[i].x <= gScrollLock.x1)
@@ -259,7 +259,7 @@ void CameraSlideToScrollLock(void)
                     if (gPlayerCameraPos[gPlayerCount].x < gScrollLock.x0)
                         gPlayerCameraPos[gPlayerCount].x = gScrollLock.x0;
                 }
-                if ((gScrollLock.unk0 >> gPlayerCount) & 1)
+                if ((gScrollLock.lockedPlayerMask >> gPlayerCount) & 1)
                 {
                     gCameraBounds[1] += gScrollLockSpeedX;
                     if (gCameraBounds[1] <= gScrollLock.x1)
@@ -284,7 +284,7 @@ void CameraSlideToScrollLock(void)
             {
                 for (i = 0; i < gPlayerCount; i++)
                 {
-                    if (((gScrollLock.unk0 >> i) & 1) && ((gActivePlayerMask >> i) & 1))
+                    if (((gScrollLock.lockedPlayerMask >> i) & 1) && ((gActivePlayerMask >> i) & 1))
                     {
                         gPlayerCameraPos[i].y += gScrollLockSpeedY;
                         if (gScrollLock.y0 <= gPlayerCameraPos[i].y)
@@ -299,7 +299,7 @@ void CameraSlideToScrollLock(void)
                     if (gScrollLock.y1 < gPlayerCameraPos[gPlayerCount].y)
                         gPlayerCameraPos[gPlayerCount].y = gScrollLock.y1;
                 }
-                if ((gScrollLock.unk0 >> gPlayerCount) & 1)
+                if ((gScrollLock.lockedPlayerMask >> gPlayerCount) & 1)
                 {
                     gCameraBounds[2] += gScrollLockSpeedY;
                     if (gScrollLock.y0 <= gCameraBounds[2])
@@ -315,7 +315,7 @@ void CameraSlideToScrollLock(void)
             {
                 for (i = 0; i < gPlayerCount; i++)
                 {
-                    if (((gScrollLock.unk0 >> i) & 1) && ((gActivePlayerMask >> i) & 1))
+                    if (((gScrollLock.lockedPlayerMask >> i) & 1) && ((gActivePlayerMask >> i) & 1))
                     {
                         gPlayerCameraPos[i].y += gScrollLockSpeedY;
                         if (gPlayerCameraPos[i].y <= gScrollLock.y1)
@@ -330,7 +330,7 @@ void CameraSlideToScrollLock(void)
                     if (gPlayerCameraPos[gPlayerCount].y < gScrollLock.y0)
                         gPlayerCameraPos[gPlayerCount].y = gScrollLock.y0;
                 }
-                if ((gScrollLock.unk0 >> gPlayerCount) & 1)
+                if ((gScrollLock.lockedPlayerMask >> gPlayerCount) & 1)
                 {
                     gCameraBounds[3] += gScrollLockSpeedY;
                     if (gCameraBounds[3] <= gScrollLock.y1)
@@ -347,7 +347,7 @@ void CameraSlideToScrollLock(void)
         SetPlayerBoundsFromCameraInScrollLock();
         if ((gActivePlayerMask >> gLocalPlayer) & 1)
         {
-            if ((gScrollLock.unk0 >> gLocalPlayer) & 1)
+            if ((gScrollLock.lockedPlayerMask >> gLocalPlayer) & 1)
             {
                 if (gScrollLock.lockedAxes & 1)
                 {

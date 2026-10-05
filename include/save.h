@@ -36,7 +36,7 @@ struct InputRecording
     /*0x00E*/ u16 roomEntryX;
     /*0x010*/ u16 roomEntryY;
     /*0x012*/ u8 roomEntryMode;
-    /*0x013*/ u8 unk13;
+    /*0x013*/ u8 roomPlayerMode;
     /*0x014*/ u16 maxHealth;
     /*0x016*/ u16 playerLives[4];
     /*0x01E*/ u16 playerHealth[4];
@@ -64,7 +64,7 @@ struct InputRecording
 struct SaveSlot
 {
     /*0x00*/ u32 unk00;
-    /*0x04*/ s32 unk04;
+    /*0x04*/ s32 slotIndex;
     /*0x08*/ u32 generation;
     /*0x0C*/ s32 saveCount;
     /*0x10*/ u16 milestoneFlags;

@@ -26,9 +26,9 @@ struct AirGrindCourseRacer
     /*0x10*/ s32 screenY;
     /*0x14*/ s32 onEvenSegment;
     /*0x18*/ s32 depthRank;
-    /*0x1C*/ s32 unk1C;
-    /*0x20*/ s32 unk20;
-    /*0x24*/ s32 unk24;
+    /*0x1C*/ s32 laneLean;
+    /*0x20*/ s32 segmentBitsPassed;
+    /*0x24*/ s32 segmentBitsHoldingA;
     /*0x28*/ s32 segmentEnd;
     /*0x2C*/ s32 segmentIndex;
     /*0x30*/ s32 prevHoldingA;
@@ -43,11 +43,11 @@ struct AirGrindCourse
     /*0x000*/ s32 scrollPos;
     /*0x004*/ s32 unk004;
     /*0x008*/ s32 unk008;
-    /*0x00C*/ s32 unk00C;
+    /*0x00C*/ s32 startLine;
     /*0x010*/ s32 finishLine;
-    /*0x014*/ s32 unk014;
+    /*0x014*/ s32 oddSegmentCount;
     /*0x018*/ struct AirGrindCourseRacer players[4];
-    /*0x108*/ s32 unk108;
+    /*0x108*/ s32 prevScrollPos;
     /*0x10C*/ s32 unk10C;
     /*0x110*/ s32 unk110;
 };
@@ -62,7 +62,7 @@ struct AirGrindRacerState
     /*0x06*/ s16 animStep;
     /*0x08*/ s16 penaltyTimer;
     /*0x0A*/ s16 boostCooldown;
-    /*0x0C*/ s16 unk0C;
+    /*0x0C*/ s16 dashTimer;
     /*0x0E*/ u16 aToggleCount;
     /*0x10*/ s32 segmentEndDistance;
     /*0x14*/ s32 liftY;
@@ -77,14 +77,14 @@ struct AirGrindRacerState
     /*0x30*/ s32 cpuTarget;
 };
 
-/* 16-byte object records, AirGrindScenerySet.unk04[7] (AirGrindRollSceneryObject, AirGrindSceneryUpdate) */
+/* 16-byte object records, AirGrindScenerySet.objects[7] (AirGrindRollSceneryObject, AirGrindSceneryUpdate) */
 struct AirGrindSceneryObject
 {
-    /*0x00*/ s16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ s32 unk4;
-    /*0x08*/ s32 unk8;          /* 16.16; the ROM also reads its high half */
-    /*0x0C*/ s32 unkC;          /* 16.16; the ROM also reads its high half */
+    /*0x00*/ s16 frame;
+    /*0x02*/ u16 tileWord;
+    /*0x04*/ s32 baseY;
+    /*0x08*/ s32 posX;          /* 16.16; the ROM also reads its high half */
+    /*0x0C*/ s32 posY;          /* 16.16; the ROM also reads its high half */
 };
 
 /* AirGrindState.scenery (0xB8 bytes with the compiler's 2-byte tail pad): task
@@ -94,9 +94,9 @@ struct AirGrindSceneryObject
    AirGrindSetupRace fills end it exactly at AirGrindState.randomStates. */
 struct AirGrindScenerySet
 {
-    /*0x00*/ s32 unk00;         /* the scroll position last frame */
-    /*0x04*/ struct AirGrindSceneryObject unk04[7];
-    /*0x74*/ s16 unk74;         /* the last object's sprite id */
+    /*0x00*/ s32 prevScrollPos;         /* the scroll position last frame */
+    /*0x04*/ struct AirGrindSceneryObject objects[7];
+    /*0x74*/ s16 lastBaseY;         /* the last object's sprite id */
     /*0x76*/ u16 unk76[16];     /* AirGrindState + 0x162 */
     /*0x96*/ u16 unk96[16];     /* AirGrindState + 0x182 */
 };
@@ -116,8 +116,8 @@ struct AirGrindState
     /*0x2FC*/ u16 backdropColor;
     /*0x2FE*/ u8 pad2FE[2];
     /*0x300*/ u32 frameCount;       /* frame counter */
-    /*0x304*/ s16 unk304;       /* AirGrindScaleSprite's OAM list: entry count */
-    /*0x306*/ s16 unk306[160];  /* ... and entries */
+    /*0x304*/ s16 scaledOamCount;       /* AirGrindScaleSprite's OAM list: entry count */
+    /*0x306*/ s16 scaledOam[160];  /* ... and entries */
     /*0x446*/ u16 localPlayer;       /* gLocalPlayer */
     /*0x448*/ u16 playerCount;       /* gLinkPlayerCount */
     /*0x44A*/ u8 pad44A[2];
@@ -131,16 +131,16 @@ struct AirGrindState
 struct AirGrindResultsState
 {
     /*0x00*/ s8 state;          /* state */
-    /*0x01*/ s8 unk01;
-    /*0x02*/ s8 unk02;
-    /*0x03*/ s8 unk03;
+    /*0x01*/ s8 symbolsShown;
+    /*0x02*/ s8 symbolsLeft;
+    /*0x03*/ s8 symbolSteps;
     /*0x04*/ u8 rankedPlayers[4];       /* the players, sorted by score */
     /*0x08*/ u8 playerRank[4];       /* each player's index into unk04 */
     /*0x0C*/ u8 rankPlace[4];       /* the places, ties shared */
     /*0x10*/ s32 winnerScale;         /* the winner's pulsing scale */
     /*0x14*/ s32 winnerScaleStep;
     /*0x18*/ s32 timer;         /* frame timer */
-    /*0x1C*/ s32 unk1C[4];
+    /*0x1C*/ s32 score[4];
 };
 
 /* gAirGrindScript: a cursor into one of the u16-pair scripts gUnk_087572EC[]
@@ -205,13 +205,13 @@ extern u16 gObjPaletteBank5[];
 extern struct AirGrindScript gAirGrindScript;
 
 /* ROM */
-extern u8 gUnk_080CFE2C[][4];
-extern s32 gUnk_080CFE3C[][3];
+extern u8 gAirGrindLocalPlayerSlots[][4];
+extern s32 gAirGrindRacerSpeeds[][3];
 extern u8 gUnk_080CFE60[11][3];
 extern u8 gUnk_080CFE81[11][3];
 extern u8 gUnk_080CFEA2[11][3];
 extern u8 gUnk_080CFEC3[11][3];
-extern u8 gUnk_080CFEE4[];
+extern u8 gAirGrindRacerFrameSteps[];
 extern u8 gUnk_080CFEE9[];
 extern s8 gUnk_080CFF01[];
 extern u16 gUnk_080CFF1C[];
@@ -221,7 +221,7 @@ extern s16 gUnk_080CFF70[];
 extern u8 gUnk_080CFF76[4][4][2]; /* OBJ shape/size -> {width, height} */
 extern u16 gUnk_080D0198[];
 extern s16 gAirGrindSineTable[];
-extern s16 gUnk_080D059A[];
+extern s16 gAirGrindDepthScales[];
 extern s16 gUnk_080D075A[];
 extern s16 gUnk_080D0760[];
 extern s16 gUnk_080D0766[];
@@ -238,8 +238,8 @@ extern u32 gQuickDrawDigitFrames[];
 extern u32 gQuickDrawWinCountFrames[];
 extern u32 gQuickDrawRankFrames[];
 extern u32 gQuickDrawRedrawFrames[];
-extern u32 gUnk_08755A7C[];
-extern u32 gUnk_08755A88[];
+extern u32 gQuickDrawSlashFrames[];
+extern u32 gQuickDrawDefeatedFrames[];
 extern u32 gQuickDrawPlayerTagFrames[];
 extern u32 gQuickDrawFalseStartMarkFrames[];
 extern u32 gQuickDrawSweatDropFrames[];
@@ -263,12 +263,12 @@ extern u32 gUnk_08755EFC[];
 extern u32 gBombRallyResultsPoseFrames[];
 extern u32 gBombRallyContinueItemFrames[];
 extern u32 gBombRallyLevelItemFrames[];
-extern u16 *gUnk_08755F54[];
+extern u16 *gAirGrindRacerFrames[];
 extern u32 gUnk_08755FA8[];
 extern u32 gUnk_08755FBC[];
 extern u32 gUnk_08755FC4[];
 extern u32 gUnk_08755FEC[];
-extern u32 gUnk_0875602C[];
+extern u32 gAirGrindResultsStepFrames[];
 extern u32 gUnk_0875603C[];
 extern u32 gSubGameBgLayouts[][2];
 extern u16 gSubGameGfxSets[];
@@ -294,7 +294,7 @@ extern s16 gUnk_08756458[];
 extern s16 gUnk_08756460[];
 extern u32 gQuickDrawPlayerStates[];
 extern u32 gQuickDrawPlayerStateUpdates[];
-extern u16 gUnk_08756498[];
+extern u16 gQuickDrawShakeAmplitudes[];
 extern u32 gUnk_087564A0[];
 extern s16 gQuickDrawOpponentReactionTimes[];
 extern struct GfxDesc *const gQuickDrawOpponentGfx[];
@@ -306,8 +306,8 @@ extern u32 gUnk_08756528[];
 extern u16 gUnk_08756538[];
 extern s32 gBombRallySeatScrollX[];
 extern s32 gBombRallySeatScrollY[];
-extern s8 gUnk_08756560[];
-extern s8 gUnk_08756564[];
+extern s8 gBombRallyStarBurstOffsetX[];
+extern s8 gBombRallyStarBurstOffsetY[];
 extern u32 gBombRallyPhases[];
 extern u8 gBombRallyBeatFrames[];
 extern u8 gUnk_087565E0[];
@@ -325,8 +325,8 @@ extern u32 gBombRallyPlayerStates[];
 extern u32 gBombRallyPlayerStateUpdates[];
 extern u32 *gBombRallyPlayerFrames[];
 extern u32 *gBombRallyBubblesFrames[];
-extern s16 gUnk_0875672C[];
-extern s16 gUnk_08756734[];
+extern s16 gBombRallySeatX[];
+extern s16 gBombRallySeatY[];
 extern s8 gUnk_0875673C[];
 extern s8 gUnk_08756740[];
 extern s8 gUnk_08756744[];
@@ -334,7 +334,7 @@ extern s8 gUnk_08756748[];
 extern u32 gUnk_0875674C[];
 extern u32 gUnk_0875675C[];
 extern u8 gUnk_0875676C[];
-extern s16 gUnk_08756770[];
+extern s16 gBombRallyBombScales[];
 extern u16 gUnk_08756778[];
 extern u32 gBombRallyBombStates[];
 extern u32 gBombRallyBombStateUpdates[];
@@ -473,14 +473,14 @@ void CreateQuickDrawBonus(u8 a0, s16 a1, s16 a2, s8 a3);
 void CreateQuickDrawRankLabel(u8 a0, s16 a1, s16 a2, s8 a3);
 void QuickDrawPlaceRankLabel(u8 a0, s8 a1);
 void QuickDrawCreateRankLabels(void);
-void sub_080bb930(u8 a0, s8 a1);
+void QuickDrawCreateRankBonus(u8 a0, s8 a1);
 void sub_080bb9b4(void);
 void sub_080bb9cc(void);
 void sub_080bb9f0(void);
-void sub_080bba1c(void);
+void QuickDrawCreateNextBonusByRank(void);
 void QuickDrawPickResultsSong(void);
 void QuickDrawSetupResultsLink(void);
-void sub_080bbbb8(void);
+void QuickDrawCreateNextBonusVsCpu(void);
 void QuickDrawSetupResultsVsCpu(void);
 void CreateQuickDrawDefeatedLabel(void);
 void CreateQuickDrawBestTimeLabel(void);
@@ -515,7 +515,7 @@ void CreateQuickDrawFalseStartMark(void);
 void CreateQuickDrawSweatDrop(void);
 void CreateQuickDrawPlayerTag(void);
 void CreateQuickDrawWinCountLabel(void);
-void sub_080bc70c(void);
+void QuickDrawPlayerSetReady(void);
 void QuickDrawSetPlayerState(s32 a0, u16 a1);
 void QuickDrawSetAllPlayersState(u16 a0);
 u8 QuickDrawIsTaskOnScreen(void);
@@ -536,7 +536,7 @@ void QuickDrawPlayerFalseStartUpdate(void);
 void QuickDrawPlayerResults(void);
 void QuickDrawPlayerResultsUpdate(void);
 void QuickDrawLabelDraw(void);
-void sub_080bccbc(void);
+void QuickDrawLabelShow(void);
 void QuickDrawLabel(void);
 void QuickDrawTimerInit(void);
 void QuickDrawTimerCount(void);

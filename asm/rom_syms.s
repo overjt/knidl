@@ -111,8 +111,8 @@ gRoomBgmStarted = 0x020055C8
 gExtraModeTitleSeen = 0x020055CC
 	.global	gHudHpBarCount
 gHudHpBarCount = 0x020055D0
-	.global	gUnk_020055D4
-gUnk_020055D4 = 0x020055D4
+	.global	gDoorMarkerSpriteFlags
+gDoorMarkerSpriteFlags = 0x020055D4
 	.global	gRoomObjectList
 gRoomObjectList = 0x020055D8
 	.global	gRoomEntryX
@@ -147,8 +147,8 @@ gUnk_02006040 = 0x02006040
 gHudClock = 0x02006068
 	.global	gBgScrollSpeeds
 gBgScrollSpeeds = 0x02006070
-	.global	gUnk_02006090
-gUnk_02006090 = 0x02006090
+	.global	gExtraModeTitleIndex
+gExtraModeTitleIndex = 0x02006090
 	.global	gCannonFuseState
 gCannonFuseState = 0x02006094
 	.global	gUnk_02006098
@@ -223,8 +223,8 @@ gGameOverDone = 0x02007BE0
 gUsedRoomObjects = 0x02007BF0
 	.global	gRoomExitKind
 gRoomExitKind = 0x02007CF0
-	.global	gUnk_02007CF4
-gUnk_02007CF4 = 0x02007CF4
+	.global	gAbilityStarInMouth
+gAbilityStarInMouth = 0x02007CF4
 	.global	gUnk_02007D00
 gUnk_02007D00 = 0x02007D00
 	.global	gGameOverPlayerTask
@@ -247,8 +247,8 @@ gPlayerLives = 0x02007D48
 gBigSwitchReturnRoom = 0x02007D50
 	.global	gUsedSubGameDoors
 gUsedSubGameDoors = 0x02007D58
-	.global	gUnk_02007D60
-gUnk_02007D60 = 0x02007D60
+	.global	gMidBossRetryCount
+gMidBossRetryCount = 0x02007D60
 	.global	gUnk_02007D64
 gUnk_02007D64 = 0x02007D64
 	.global	gBlockCursorX
@@ -283,12 +283,12 @@ gCutscenePending = 0x02007FC0
 gWarpStarStationDoorRevealed = 0x02007FC4
 	.global	gUnk_02007FC8
 gUnk_02007FC8 = 0x02007FC8
-	.global	gUnk_02007FCC
-gUnk_02007FCC = 0x02007FCC
+	.global	gExtraModeIndex
+gExtraModeIndex = 0x02007FCC
 	.global	gBlockAnimScratchRecord
 gBlockAnimScratchRecord = 0x02007FD0
-	.global	gUnk_02007FF0
-gUnk_02007FF0 = 0x02007FF0
+	.global	gBossRetryCount
+gBossRetryCount = 0x02007FF0
 	.global	gContinueStage
 gContinueStage = 0x02007FF8
 	.global	gBigSwitchReturnLevel
@@ -305,10 +305,10 @@ gEndingSceneActive = 0x02008018
 gUnk_0200801C = 0x0200801C
 	.global	gRoomObjectTried
 gRoomObjectTried = 0x02008020
-	.global	gUnk_02008050
-gUnk_02008050 = 0x02008050
-	.global	gUnk_02008054
-gUnk_02008054 = 0x02008054
+	.global	gRestartPointY
+gRestartPointY = 0x02008050
+	.global	gRestartPoint
+gRestartPoint = 0x02008054
 	.global	gPauseSavedBgPalette
 gPauseSavedBgPalette = 0x02008060
 	.global	gBlockLayer
@@ -329,8 +329,8 @@ gEntryDoorEvent = 0x0200AF00
 gSkipNextHubBgm = 0x0200AF04
 	.global	gHubUnlockFlags
 gHubUnlockFlags = 0x0200AF08
-	.global	gUnk_0200AF0C
-gUnk_0200AF0C = 0x0200AF0C
+	.global	gMidBossRetryRoom
+gMidBossRetryRoom = 0x0200AF0C
 	.global	gBombRallyOutMask
 gBombRallyOutMask = 0x0200AF10
 	.global	gPlayerAbilityUses
@@ -343,8 +343,8 @@ gHubUnlockBlocks = 0x0200AFE0
 gPlayerBubbleTimers = 0x0200AFE8
 	.global	gBombRallyOutCount
 gBombRallyOutCount = 0x0200AFF0
-	.global	gUnk_0200AFF4
-gUnk_0200AFF4 = 0x0200AFF4
+	.global	gRestartPointX
+gRestartPointX = 0x0200AFF4
 	.global	gHudHpBarFilled
 gHudHpBarFilled = 0x0200AFF8
 	.global	gScreenAttackTasks
@@ -589,8 +589,8 @@ gUnk_03000B24 = 0x03000B24
 gSpriteLayerCounts = 0x03000B30
 	.global	gRepeatedKeys
 gRepeatedKeys = 0x03000B70
-	.global	gUnk_03000B74
-gUnk_03000B74 = 0x03000B74
+	.global	gHBlankDmaState
+gHBlankDmaState = 0x03000B74
 	.global	gBg3ScrollX
 gBg3ScrollX = 0x03000B78
 	.global	gUnk_03000B7C

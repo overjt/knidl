@@ -30,25 +30,25 @@ extern void ReleaseHeldPlayer(s32 i, s32 d);
 extern void ActorCheckHitsWithExtraBox(void);
 extern u32 ActorReactToHit(void);
 
-void sub_0809fbd0(void)
+void MetaKnightsLockPlayers(void)
 {
     s32 i;
 
     for (i = 0; i <= 3; i++)
     {
         if (((gActivePlayerMask >> i) & 1) != 0)
-            gPlayerStates[i].unk42 |= 64;
+            gPlayerStates[i].statusFlags |= PLAYER_STATUS_INPUT_LOCKED;
     }
 }
 
-void sub_0809fc08(void)
+void MetaKnightsUnlockPlayers(void)
 {
     s32 i;
 
     for (i = 0; i <= 3; i++)
     {
         if (((gActivePlayerMask >> i) & 1) != 0)
-            gPlayerStates[i].unk42 &= 0xFFBF;
+            gPlayerStates[i].statusFlags &= ~PLAYER_STATUS_INPUT_LOCKED;
     }
 }
 
@@ -82,7 +82,7 @@ void KingDededeStartHitStun(void)
     s32 one;
 
     RequestScreenShake(4);
-    TaskSetSkipMask(7, gCurTaskIdx);
+    TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE), gCurTaskIdx);
     t = gCurTask;
     t->lateUpdateCallback = (u32)KingDededeHitStunLateUpdate;
     gUnk_02006190[0] = t->pixelX;
@@ -121,11 +121,11 @@ u8 KingDededeReactToDefeat(void)
     ActorSetHitReactions(gKingDededeDefeatedHitReactions);
     TaskSetFrame(9);
     t = gCurTask;
-    p = &t->unk46;
+    p = &t->kingDededeChildSlot;
     if (*p != -1)
     {
         TaskFree(*p);
-        gCurTask->unk46 = 0xFFFF;
+        gCurTask->kingDededeChildSlot = 0xFFFF;
     }
     if (gUnk_02007D00[8] != -1 && gUnk_02007D00[1] != -1)
     {
@@ -174,7 +174,7 @@ u8 KingDededeReactToDamage(void)
         }
         else
         {
-            u->unk2C = 1;
+            u->kingDededeSkipWait = 1;
             gUnk_02006190[2] = 4;
             ActorSetState(KING_DEDEDE_STATE_WAIT);
         }
@@ -191,7 +191,7 @@ u8 KingDededeReactToDamage(void)
         }
         else
         {
-            v->unk2C = 1;
+            v->kingDededeSkipWait = 1;
             gUnk_02006190[2] = 4;
             ActorSetState(KING_DEDEDE_STATE_WAIT);
         }
@@ -199,7 +199,7 @@ u8 KingDededeReactToDamage(void)
         goto install;
     case KING_DEDEDE_STATE_SLAM:
         w = gCurTask;
-        if (w->unk24 == 2)
+        if (w->kingDededeSlamKind == 2)
         {
             if (gUnk_0300244C != 0)
                 gUnk_02006190[2] = 43;
@@ -209,7 +209,7 @@ u8 KingDededeReactToDamage(void)
         }
         else
         {
-            w->unk2C = 1;
+            w->kingDededeSkipWait = 1;
             gUnk_02006190[2] = 4;
             ActorSetState(KING_DEDEDE_STATE_WAIT);
         }
@@ -217,10 +217,10 @@ u8 KingDededeReactToDamage(void)
         goto install;
     case KING_DEDEDE_STATE_WALK:
         x = gCurTask;
-        x->unk2C = 1;
+        x->kingDededeSkipWait = 1;
         gUnk_02006190[2] = 4;
         ActorSetState(KING_DEDEDE_STATE_WAIT);
-        a->prevState = gCurTask->unk1C;
+        a->prevState = gCurTask->kingDededeNextState;
     install:
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
         break;
@@ -236,7 +236,7 @@ u8 KingDededeReactToDamage(void)
         gCurTask->state = KING_DEDEDE_STATE_WAIT;
     case KING_DEDEDE_STATE_WAIT:
         z = gCurTask;
-        z->unk2C = 1;
+        z->kingDededeSkipWait = 1;
         gUnk_02006190[2] = 4;
         ActorSetState(KING_DEDEDE_STATE_WAIT);
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
@@ -281,7 +281,7 @@ void CreateKingDededeStar(void)
     PlaySfx(0x21D);
 }
 
-void sub_080a0098(void)
+void KingDededeStartInhale(void)
 {
     struct Task **tp;
     s32 *p;

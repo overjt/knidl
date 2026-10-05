@@ -90,13 +90,13 @@ void MetaKnightActionStand(void)
             t->player->savedWallSide = t->player->wallSide;
         gCurTask->player->running = 0;
         t2 = gCurTask;
-        t2->player->unk40 &= 0xFFEF;
+        t2->player->actionFlags &= ~PLAYER_ACTION_FLAG_RUN_PENDING;
         t2->player->runTapTimer = 0;
         PlayerPlayBump();
     }
 
     {
-        s16 *p = (s16 *)gUnk_0873D206;
+        s16 *p = (s16 *)gMetaKnightStandFrames;
 
         TaskSetFrame(p[PlayerGetFacingSlope(gCurTask->player->playerIndex)]);
     }
@@ -189,7 +189,7 @@ void MetaKnightActionRun(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 2;
     gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_RUN;
-    gCurTask->unk28 = 0;
+    gCurTask->playerCrossingGap = 0;
     PlayerSetMotionXPreset(3, 72);
     if (gCurTask->player->prevMode != 2)
     {
@@ -233,23 +233,23 @@ void MetaKnightActionRunUpdate(void)
     s32 m3;
 
     t = gCurTask;
-    if (t->unk28 == 0)
+    if (t->playerCrossingGap == 0)
     {
         m2 = gTerrainResult[13];
         if (m2 != 0)
         {
-            t->player->unk14 = 5;
-            t->unk28 = 1;
+            t->player->playerOverGapTimer = 5;
+            t->playerCrossingGap = 1;
         }
         else
         {
-            t->player->unk14 = m2;
+            t->player->playerOverGapTimer = m2;
         }
     }
     else
     {
         p = t->player;
-        if ((s16)p->unk14 == 0)
+        if ((s16)p->playerOverGapTimer == 0)
         {
             if (IsFullBlockAtPixel(((u16 *)t)[36],
                              (y = ((u16 *)t)[37], m3 = -16, m3 &= y, m3 + 16)) != 0)
@@ -257,18 +257,18 @@ void MetaKnightActionRunUpdate(void)
         }
         else
         {
-            p->unk14--;
+            p->playerOverGapTimer--;
         }
     }
     t = gCurTask;
     if ((t->onGround & 1) != 0 || (((u8 *)t->player)[72] & 3) != 0)
     {
-        t->unk28 = 0;
-        t->player->unk14 = 0;
+        t->playerCrossingGap = 0;
+        t->player->playerOverGapTimer = 0;
     }
     while (PlayerCheckSkid() == 0 && PlayerCheckJump() == 0)
     {
-        if (gCurTask->unk28 == 0 && PlayerCheckFallOrWater() != 0)
+        if (gCurTask->playerCrossingGap == 0 && PlayerCheckFallOrWater() != 0)
             break;
         if (PlayerCheckEnterDoor() != 0)
             break;
@@ -330,18 +330,18 @@ void MetaKnightActionJump(void)
     t = gCurTask;
     if (t->player->prevMode != 4)
     {
-        t->unk28 = 1;
+        t->playerJumpFallAllowed = 1;
         p = t->player;
         if (p->prevMode == 9)
         {
-            p->unk14 = 4;
+            p->playerJumpPhaseTimer = 4;
         }
         else
         {
             t->variant = 0;
             TaskSetFrame(0x11ED);
             TaskYieldTrampoline(3);
-            gCurTask->player->unk14 = 20;
+            gCurTask->player->playerJumpPhaseTimer = 20;
         }
         PlayerSetMotionYPreset(4);
         PlaySfx(SE_META_KNIGHT_JUMP);
@@ -351,7 +351,7 @@ void MetaKnightActionJump(void)
     PlayerPlayBump();
     TaskSetFrame(0x11E4);
     TaskYieldTrampoline(8);
-    gCurTask->unk28 = 0;
+    gCurTask->playerJumpFallAllowed = 0;
     TaskSetFrame(0x11E5);
     TaskYieldTrampoline(3);
     gCurTask->playerLoopCount = 0;
@@ -361,7 +361,7 @@ void MetaKnightActionJump(void)
         TaskYieldTrampoline(3);
         gCurTask->playerLoopCount++;
     } while ((s16)gCurTask->playerLoopCount <= 5);
-    gCurTask->unk28 = 1;
+    gCurTask->playerJumpFallAllowed = 1;
     TaskSleepForever();
 }
 
@@ -400,14 +400,14 @@ void MetaKnightActionJumpUpdate(void)
         if (k == 1)
         {
             p = t->player;
-            p->unk14--;
-            if (p->unk14 == 0 || (k &= gLatchedHeldKeys[t->player->playerIndex]) == 0)
+            p->playerJumpPhaseTimer--;
+            if (p->playerJumpPhaseTimer == 0 || (k &= gLatchedHeldKeys[t->player->playerIndex]) == 0)
             {
                 t->variant = 2;
                 PlayerSetMotionYPreset(5);
             }
         }
-        else if (t->unk28 != 0 && t->velY >= 0)
+        else if (t->playerJumpFallAllowed != 0 && t->velY >= 0)
         {
             PlayerSetMotionYPreset(6);
             gCurTask->player->requestedAction = META_KNIGHT_ACTION_FALL;
@@ -581,8 +581,8 @@ void MetaKnightActionDuck(void)
     t = gCurTask;
     if (t->player->prevMode != 6)
     {
-        ((u32 **)t->player)[25] = gUnk_0873BD28;
-        ((u32 **)t->player)[26] = gUnk_0873CB24;
+        ((u32 **)t->player)[25] = gPlayerDuckBodyBox;
+        ((u32 **)t->player)[26] = gPlayerDuckTerrainBox;
         t->playerPoseSlope = ((u8 *)t->player)[75];
         PlayerSetMotionXPreset(0, 72);
     }
@@ -618,7 +618,7 @@ void MetaKnightActionSlide(void)
         /* fallthrough */
     case 1:
         gCurTask->u80.attackAbility = ABILITY_SWORD;
-        gCurTask->player->unk14 = 10;
+        gCurTask->player->playerSlideBrakeTimer = 10;
         PlayerSetMotionXPreset(11, 0);
         gCurTask->player->hitBoxSet = gUnk_0873D03C;
         PlayerStartSfx(118, gCurTask->player->playerIndex);
@@ -666,10 +666,10 @@ void MetaKnightActionSlideUpdate(void)
                 break;
             }
             p = t->player;
-            if ((s16)p->unk14 != 0)
+            if ((s16)p->playerSlideBrakeTimer != 0)
             {
-                p->unk14--;
-                if (p->unk14 == 0)
+                p->playerSlideBrakeTimer--;
+                if (p->playerSlideBrakeTimer == 0)
                     PlayerSetMotionXPreset(5, 72);
             }
             t2 = gCurTask;
@@ -737,7 +737,7 @@ void MetaKnightActionLadder(void)
         PlayerStopAxes(3);
         gCurTask->facing = 1;
         h1 = gCurTask;
-        h1->spriteFlags &= 0x7FFF;
+        h1->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         h1->player->running = 0;
         ((u8 *)gCurTask->player)[80] = 1;
         q = gLatchedHeldKeys;
@@ -789,7 +789,7 @@ void MetaKnightActionLadder(void)
     case 2:
         c2 = gCurTask;
         c2->playerLadderDir = c2->variant;
-        c2->player->unk14 = 0;
+        c2->player->playerLadderSfxTimer = 0;
         PlaySfx(124);
         for (;;)
         {
@@ -867,15 +867,15 @@ void MetaKnightActionLadderUpdate(void)
         break;
     case 2:
         p = t->player;
-        k &= p->unk14;
+        k &= p->playerLadderSfxTimer;
         if (k != 0)
         {
             PlaySfx(124);
-            gCurTask->player->unk14 = 0;
+            gCurTask->player->playerLadderSfxTimer = 0;
         }
         else
         {
-            p->unk14++;
+            p->playerLadderSfxTimer++;
         }
         qb = gLatchedHeldKeys;
         tb = gCurTask;
@@ -937,7 +937,7 @@ void MetaKnightActionLadderUpdate(void)
     {
         te->facing = te->playerLadderSavedFacing;
         tf = gCurTask;
-        tf->spriteFlags &= 0x7FFF;
+        tf->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         if (tf->velY != 0)
             PlayerStopAxes(2);
         PlayerRequestLocomotion();
@@ -969,7 +969,7 @@ void MetaKnightActionHurt(void)
     p = t->player;
     if (p->prevMode != 17)
     {
-        p->unk42 &= 0xFFEF;
+        p->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
         t->variant = 5;
     }
     while (1)
@@ -980,7 +980,7 @@ void MetaKnightActionHurt(void)
             gCurTask->player->running = 0;
             RequestScreenShake(2);
             t5 = gCurTask;
-            if (t5->hitEffect & 128)
+            if (t5->hitEffect & HIT_EFFECT_TERRAIN_DAMAGE)
                 t5->variant = 4;
             else
                 t5->variant = t5->hitEffect & 15;
@@ -1131,7 +1131,7 @@ void MetaKnightActionHurtUpdate(void)
 }
 
 /* Stage entry (issue #85).  Clears the player's bit in gActivePlayerMask,
-   decrements gActivePlayerCount, installs sub_08042c50 as Task.updateCallback, spawns five
+   decrements gActivePlayerCount, installs MetaKnightActionDieUpdate as Task.updateCallback, spawns five
    sub-tasks through CreatePlayerEffect (id 12 four times, then id 13) and picks a
    random signed 8.8 value into Task.velX from the camera x (gSpriteCameraX)
    and gFrameCount.
@@ -1174,16 +1174,16 @@ void MetaKnightActionDie(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 18;
-    gCurTask->updateCallback = (u32)sub_08042c50;
+    gCurTask->updateCallback = (u32)MetaKnightActionDieUpdate;
     gCurTask->lateUpdateCallback = 0;
     gActivePlayerCount--;
     gActivePlayerMask &= ~(1 << gCurTask->player->playerIndex);
-    if (gCurTask->hitEffect == 512)
+    if (gCurTask->hitEffect == HIT_EFFECT_MID_BOSS)
         sub_08027548();
-    gCurTask->player->unk40 |= 8;
-    gCurTask->player->unk42 |= 0x100;
+    gCurTask->player->actionFlags |= 8;
+    gCurTask->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
     gCurTask->variant = 0;
-    gCurTask->player->unk42 &= 0xFFEF;
+    gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     ((u8 *)gCurTask->player)[23] = 0;
     ((u16 *)gCurTask->player)[12] = 0;
@@ -1197,7 +1197,7 @@ void MetaKnightActionDie(void)
     StopAllSound();
     gPauseDisabled = 1;
     TaskSetFrame(0x123B);
-    FreezeOtherTasks(15);
+    FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
     SetRoomUpdateFlags(2);
     if ((gDispCnt & 0x400) == 0)
     {
@@ -1250,7 +1250,7 @@ void MetaKnightActionDie(void)
     TaskSleepForever();
 }
 
-void sub_08042c50(void)
+void MetaKnightActionDieUpdate(void)
 {
     switch (gCurTask->variant)
     {
@@ -1263,15 +1263,15 @@ void sub_08042c50(void)
             if (gCurTask->pixelY - gSpriteCameraY > 199)
             {
                 PlayerStopAxes(2);
-                gCurTask->player->unk14 = 90;
+                gCurTask->player->playerDieTimer = 90;
                 gCurTask->variant = 2;
             }
         }
-        if ((gCurTask->player->unk42 & 32) == 0)
+        if ((gCurTask->player->statusFlags & PLAYER_STATUS_TIMERS_FROZEN) == 0)
             PlayerUpdatePaletteFlash();
         break;
     case 2:
-        if (--gCurTask->player->unk14 == 0)
+        if (--gCurTask->player->playerDieTimer == 0)
         {
             gStageRequest = STAGE_REQUEST_LOST_LIFE;
             TaskFree(gCurTaskIdx);
@@ -1305,12 +1305,12 @@ void MetaKnightActionEnterDoor(void)
     gCurTask->player->running = 0;
     gPauseDisabled = 1;
     PlayerStopAxes(3);
-    gCurTask->player->unk42 |= 0x100;
+    gCurTask->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
     RequestScreenShake(0);
     if (gInHub == 0)
     {
         StopAllSfx();
-        FreezeOtherTasks(15);
+        FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
         if ((gDispCnt & 0x400) == 0)
         {
             gDispCnt &= 0xE0FF;
@@ -1383,12 +1383,12 @@ void MetaKnightActionExitDoor(void)
     TaskSetFrameByFacing(0x1208);
     TaskYieldTrampoline(2);
     {
-        s16 *p = (s16 *)gUnk_0873D206;
+        s16 *p = (s16 *)gMetaKnightStandFrames;
         TaskSetFrame(p[((s32 (*)(s32))PlayerGetFacingSlope)((s8)gCurTask->player->playerIndex)]);
     }
     if (gEntryDoorEvent == 1)
     {
-        TaskSetSkipMask(14, gCurTaskIdx);
+        TaskSetSkipMask((TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), gCurTaskIdx);
         CreateStageUnlockPan();
         while (gCameraPanDone == 0)
             TaskYieldTrampoline(1);
@@ -1396,7 +1396,7 @@ void MetaKnightActionExitDoor(void)
         TaskSetSkipMask(0, gCurTaskIdx);
     }
     gCurTask->spriteFlags = 0x4000;
-    ((void (*)(void))sub_08026584)();
+    ((void (*)(void))ApplyEntryDoorEvent)();
     gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
@@ -1493,7 +1493,7 @@ void MetaKnightActionSwim(void)
     case 2:
         PlayerSetMotionYPreset(14);
         PlayerSetMotionXPreset(11, 4);
-        gCurTask->player->unk14 = 15;
+        gCurTask->player->playerSwimStrokeTimer = 15;
         TaskSetFrame(0x1239);
         TaskYieldTrampoline(3);
         gCurTask->frame++;
@@ -1513,7 +1513,7 @@ void MetaKnightActionSwim(void)
             PlayerSetMotionYPreset(13);
             gCurTask->unk28 = 10;
         }
-        gCurTask->player->unk14 = 15;
+        gCurTask->player->playerSwimStrokeTimer = 15;
         while (1)
         {
             PlaySfx(120);

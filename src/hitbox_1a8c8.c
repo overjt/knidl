@@ -40,14 +40,14 @@ struct AttackBox
     /*0x07*/ u8 unk07;
     /*0x08*/ u8 damage;
     /*0x09*/ u8 hitEffect;
-    /*0x0A*/ u16 unk0A;
-    /*0x0C*/ u16 unk0C;
+    /*0x0A*/ u16 immunityFlags;
+    /*0x0C*/ u16 playerHarmlessMask;
     /*0x0E*/ u16 class10ImmuneMask;
-    /*0x10*/ u16 unk10;
+    /*0x10*/ u16 class10HarmlessMask;
     /*0x12*/ u16 unk12;
     /*0x14*/ u32 class20ImmuneMask;
     /*0x18*/ u16 unk18;
-    /*0x1A*/ u16 unk1A;
+    /*0x1A*/ u16 attackFlags;
 };
 
 /* A player's body box, pointed to by each entry of the hit list
@@ -69,8 +69,8 @@ struct BodyBox
     /*0x0B*/ u8 unk0B;
     /*0x0C*/ u8 damage;
     /*0x0D*/ u8 hitEffect;
-    /*0x0E*/ u16 unk0E;
-    /*0x10*/ u16 unk10;
+    /*0x0E*/ u16 guardFlags;
+    /*0x10*/ u16 bodyFlags;
 };
 
 /* One entry of a collider list (src/player_1a76c.c's struct Collider,
@@ -167,7 +167,7 @@ u8 HitTestPlayerColliders(void)
         gColliderPlayer = gColliderPlayerState->playerIndex;
         gColliderBodyBox = e->bodyBox;
         /* the list entry's position is unsigned (ldrh) */
-        if (gColliderBodyBox->unk10 & 0x8000)
+        if (gColliderBodyBox->bodyFlags & BODY_BOX_FLAG_NO_MIRROR)
         {
             s32 x;
             gColliderX = x = gColliderBodyBox->offsetX + e->x;
@@ -209,15 +209,15 @@ u8 HitTestPlayerColliders(void)
                 continue;
             if (ps->invincible == 1)
             {
-                if (gAttackBox->unk0A & 0x8000)
+                if (gAttackBox->immunityFlags & ATTACK_BOX_IMMUNITY_NO_RESULT)
                     continue;
-                if (gAttackBox->unk0A & 8)
+                if (gAttackBox->immunityFlags & ATTACK_BOX_IMMUNITY_INVINCIBLE)
                 {
                     gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 12;
                     gHitHealthLeft = gAttackHealth;
                 }
-                else if (gAttackBox->unk0A & 4)
+                else if (gAttackBox->immunityFlags & ATTACK_BOX_IMMUNITY_PLAYERS)
                 {
                     gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 11;
@@ -227,13 +227,13 @@ u8 HitTestPlayerColliders(void)
                 {
                     gHitKind = HIT_KIND_DAMAGE;
                     CalcHitDamageAndDirection();
-                    t->u76.unk76 = (t->u76.unk76 & 0x4000) | 1;
+                    t->u76.unk76 = (t->u76.unk76 & PLAYER_HIT_SHIELDED) | PLAYER_HIT_LANDED;
                 }
             }
             else if (s == 0)
             {
-                if (!(gAttackBox->unk0C & 0x4005)
-                    && !((gAttackBox->unk1A & 0x40) && (t->u76.unk76 & 0x4000)))
+                if (!(gAttackBox->playerHarmlessMask & 0x4005)
+                    && !((gAttackBox->attackFlags & ATTACK_BOX_FLAG_SHIELDABLE) && (t->u76.unk76 & PLAYER_HIT_SHIELDED)))
                 {
                     t->hitEffect = gAttackBox->hitEffect;
                     /* the actor's x is read signed here (ldrsh) */
@@ -246,22 +246,22 @@ u8 HitTestPlayerColliders(void)
                     if (gPlayerHealth[gColliderPlayer] <= 0)
                     {
                         t->hitKind = HIT_KIND_DEFEAT;
-                        t->hitEffect = gAttackBox->unk1A & 0x300;
+                        t->hitEffect = gAttackBox->attackFlags & 0x300;
                     }
                     else
                     {
                         t->hitKind = HIT_KIND_DAMAGE;
                     }
                 }
-                if (gAttackBox->unk0A & 0x8000)
+                if (gAttackBox->immunityFlags & ATTACK_BOX_IMMUNITY_NO_RESULT)
                     continue;
-                if (gAttackBox->unk0A & 4)
+                if (gAttackBox->immunityFlags & ATTACK_BOX_IMMUNITY_PLAYERS)
                 {
                     gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 11;
                     gHitHealthLeft = gAttackHealth;
                 }
-                else if (gAttackBox->unk0A & 1)
+                else if (gAttackBox->immunityFlags & ATTACK_BOX_IMMUNITY_TOUCH)
                 {
                     gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 1;
@@ -275,9 +275,9 @@ u8 HitTestPlayerColliders(void)
             }
             else if (s == 1 || s == 3)
             {
-                if (gAttackBox->unk0A & 0x8000)
+                if (gAttackBox->immunityFlags & ATTACK_BOX_IMMUNITY_NO_RESULT)
                     continue;
-                if (gAttackBox->unk0A & 4)
+                if (gAttackBox->immunityFlags & ATTACK_BOX_IMMUNITY_PLAYERS)
                 {
                     gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 11;
@@ -305,7 +305,7 @@ u8 HitTestPlayerColliders(void)
                 continue;
             gHitEffect = 0;
             /* the body box's halfword at 0x0E (ldrh) */
-            if (!(gColliderBodyBox->unk0E & 6))
+            if (!(gColliderBodyBox->guardFlags & 6))
             {
                 ps->hitsThisFrame++;
                 gHitKind = HIT_KIND_CATCH;
@@ -372,7 +372,7 @@ u8 HitTestColliderClass10(void)
             continue;
         }
         /* the list entry's position is unsigned (ldrh) */
-        if (gColliderBodyBox->unk10 & 0x8000)
+        if (gColliderBodyBox->bodyFlags & BODY_BOX_FLAG_NO_MIRROR)
         {
             s32 x;
             gColliderX = x = gColliderBodyBox->offsetX + e->x;
@@ -405,9 +405,9 @@ u8 HitTestColliderClass10(void)
             continue;
         if (gAttackBoxBottom < gColliderTop)
             continue;
-        if (gAttackBox->unk1A & 0x3E)
+        if (gAttackBox->attackFlags & 0x3E)
         {
-            if (!((gAttackBox->unk1A >> gColliderBodyBox->hitEffect) & 1))
+            if (!((gAttackBox->attackFlags >> gColliderBodyBox->hitEffect) & 1))
                 continue;
             gHitKind = 7;
             gHitHealthLeft = gAttackHealth;
@@ -417,7 +417,7 @@ u8 HitTestColliderClass10(void)
         k = (u32)(gColliderBodyBox->classKind << 28) >> 28;
         mask = gColliderClass10KindBits[k] | 0x4000;
         /* the body box's halfword at 0x0E (ldrh) */
-        if (!(gColliderBodyBox->unk0E & 0x8000) && !(mask & gAttackBox->unk10))
+        if (!(gColliderBodyBox->guardFlags & BODY_BOX_GUARD_NO_DAMAGE) && !(mask & gAttackBox->class10HarmlessMask))
         {
             t->hitEffect = gAttackBox->hitEffect;
             t->health -= gAttackBox->damage;
@@ -426,10 +426,10 @@ u8 HitTestColliderClass10(void)
             else
                 t->hitKind = HIT_KIND_DAMAGE;
             u = &gTasks[gColliderPlayer];
-            if (!(gAttackBox->unk1A & 1))
+            if (!(gAttackBox->attackFlags & ATTACK_BOX_FLAG_NO_HIT_REACTION))
             {
-                u->u76.unk76 &= 0x4000;
-                u->u76.unk76 |= gColliderBodyBox->unk10 & 0x3FFF;
+                u->u76.unk76 &= PLAYER_HIT_SHIELDED;
+                u->u76.unk76 |= gColliderBodyBox->bodyFlags & ~(BODY_BOX_FLAG_SHIELD | BODY_BOX_FLAG_NO_MIRROR);
             }
         }
         if (!(gAttackBox->class10ImmuneMask & 0x8000))

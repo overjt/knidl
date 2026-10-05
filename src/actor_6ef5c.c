@@ -93,7 +93,7 @@ void PlayerWarpStarRideState1(void)
     LoadAbilityTiles();
     gCurTask->drawCallback = (u32)sub_0803ddc0;
     gCurTask->layer = 7;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     PlayerStartTumble();
     switch (gCurTask->player->playerIndex)
     {
@@ -149,16 +149,16 @@ void PlayerWarpStarRideState1Update(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    TerrainCollideBox(gUnk_0873F5D4);
+    TerrainCollideBox(gWarpStarRiderTerrainBox);
     if (gCurTask->onGround & 1)
     {
         gCurTask->onGround = 0;
         u = gCurTask;
         u->playerRideLandCount++;
         if (u->playerRideLandCount == 2)
-            sub_08070264();
+            PlayerStartHighFallPose();
     }
-    sub_0807042c();
+    PlayerStepRideBouncePose();
 }
 
 void PlayerWarpStarRideState3(void)
@@ -174,7 +174,7 @@ void PlayerWarpStarRideState3(void)
     LoadAbilityTiles();
     gCurTask->drawCallback = (u32)sub_0803ddc0;
     gCurTask->layer = 7;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     PlayerStartTumble();
     switch (gCurTask->player->playerIndex)
     {
@@ -230,16 +230,16 @@ void PlayerWarpStarRideState3Update(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    TerrainCollideBox(gUnk_0873F5D4);
+    TerrainCollideBox(gWarpStarRiderTerrainBox);
     if (gCurTask->onGround & 1)
     {
         gCurTask->onGround = 0;
         u = gCurTask;
         u->playerRideLandCount++;
         if (u->playerRideLandCount == 2)
-            sub_08070264();
+            PlayerStartHighFallPose();
     }
-    sub_0807042c();
+    PlayerStepRideBouncePose();
 }
 
 void PlayerWarpStarRideState4(void)
@@ -256,7 +256,7 @@ void PlayerWarpStarRideState4(void)
     gCurTask->drawCallback = (u32)sub_0803ddc0;
     gCurTask->layer = 7;
     gCurTask->facing = -1;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     PlayerStartTumble();
     switch (gCurTask->player->playerIndex)
     {
@@ -324,7 +324,7 @@ void PlayerWarpStarRideState4Update(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    TerrainCollideBox(gUnk_0873F5D4);
+    TerrainCollideBox(gWarpStarRiderTerrainBox);
     if (gCurTask->onGround & 1)
     {
         gCurTask->onGround = 0;
@@ -333,10 +333,10 @@ void PlayerWarpStarRideState4Update(void)
         if (u->playerRideLandCount == 2)
         {
             u->facing = 1;
-            sub_08070264();
+            PlayerStartHighFallPose();
         }
     }
-    sub_0807042c();
+    PlayerStepRideBouncePose();
 }
 
 void PlayerWarpStarRideState5(void)
@@ -373,7 +373,7 @@ void PlayerWarpStarRideState5(void)
     if (k == 10)
         TaskSetFrame(0x841);
     else
-        TaskSetFrame(gUnk_0873D3B8[k][1]);
+        TaskSetFrame(gPlayerFallFrames[k][1]);
     gCurTask->velY = 0xFFFD0000;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -414,7 +414,7 @@ void PlayerWarpStarRideState5(void)
     {
     case ABILITY_SWORD:
     case ABILITY_HAMMER:
-        TaskSetFrame(gUnk_0873D3B8[gCurTask->player->ability][1]);
+        TaskSetFrame(gPlayerFallFrames[gCurTask->player->ability][1]);
         gCurTask->velY = 0x8000;
         TaskYieldTrampoline(2);
         gCurTask->frame++;
@@ -446,19 +446,19 @@ void PlayerWarpStarRideState5(void)
         TaskYieldTrampoline(2);
         break;
     default:
-        TaskSetFrame((s16)(gUnk_0873D384[gCurTask->player->ability] + 6));
+        TaskSetFrame((s16)(gPlayerJumpFrames[gCurTask->player->ability] + 6));
         gCurTask->velY = 0x8000;
         TaskYieldTrampoline(2);
-        TaskSetFrame((s16)(gUnk_0873D384[gCurTask->player->ability] + 5));
+        TaskSetFrame((s16)(gPlayerJumpFrames[gCurTask->player->ability] + 5));
         TaskYieldTrampoline(2);
-        TaskSetFrame((s16)(gUnk_0873D384[gCurTask->player->ability] + 4));
+        TaskSetFrame((s16)(gPlayerJumpFrames[gCurTask->player->ability] + 4));
         TaskYieldTrampoline(2);
-        TaskSetFrame((s16)(gUnk_0873D384[gCurTask->player->ability] + 3));
+        TaskSetFrame((s16)(gPlayerJumpFrames[gCurTask->player->ability] + 3));
         TaskYieldTrampoline(2);
-        TaskSetFrame((s16)(gUnk_0873D384[gCurTask->player->ability] + 2));
+        TaskSetFrame((s16)(gPlayerJumpFrames[gCurTask->player->ability] + 2));
         gCurTask->velY = 0x10000;
         TaskYieldTrampoline(2);
-        TaskSetFrame((s16)(gUnk_0873D384[gCurTask->player->ability] + 1));
+        TaskSetFrame((s16)(gPlayerJumpFrames[gCurTask->player->ability] + 1));
         TaskYieldTrampoline(2);
         break;
     }
@@ -466,7 +466,7 @@ void PlayerWarpStarRideState5(void)
     if (k == 10)
         TaskSetFrame(0x841);
     else
-        TaskSetFrame(gUnk_0873D3B8[k][1]);
+        TaskSetFrame(gPlayerFallFrames[k][1]);
     TaskYieldTrampoline(2);
     gCurTask->frame++;
     TaskYieldTrampoline(2);
@@ -504,7 +504,7 @@ void PlayerWarpStarRideState5Update(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    TerrainCollideBox(gUnk_0873F5D4);
+    TerrainCollideBox(gWarpStarRiderTerrainBox);
     if (gCurTask->onGround & 1)
     {
         gCurTask->onGround = 0;
@@ -525,7 +525,7 @@ void PlayerWarpStarRideState6(void)
     LoadAbilityTiles();
     gCurTask->drawCallback = (u32)sub_0803ddc0;
     gCurTask->layer = 7;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     PlayerStartTumble();
     switch (gCurTask->player->playerIndex)
     {
@@ -581,16 +581,16 @@ void PlayerWarpStarRideState6Update(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    TerrainCollideBox(gUnk_0873F5D4);
+    TerrainCollideBox(gWarpStarRiderTerrainBox);
     if (gCurTask->onGround & 1)
     {
         gCurTask->onGround = 0;
         u = gCurTask;
         u->playerRideLandCount++;
         if (u->playerRideLandCount == 2)
-            sub_08070264();
+            PlayerStartHighFallPose();
     }
-    sub_0807042c();
+    PlayerStepRideBouncePose();
 }
 
 void PlayerWarpStarRideState7(void)
@@ -607,7 +607,7 @@ void PlayerWarpStarRideState7(void)
     LoadAbilityTiles();
     gCurTask->drawCallback = (u32)sub_0803ddc0;
     gCurTask->layer = 7;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->playerRideLandCount = 1;
     gCurTask->playerRideIsCannon = 0;
     PlayerStartTumble();
@@ -678,7 +678,7 @@ void PlayerWarpStarRideState7(void)
     TaskYieldTrampoline(8);
     TaskStop();
     gCurTask->playerRideLandCount++;
-    sub_08070264();
+    PlayerStartHighFallPose();
     TaskStop();
     gCurTask->playerLoopCount = 0;
     do

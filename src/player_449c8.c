@@ -14,7 +14,7 @@
  * Task.unk28 down and re-binds the coroutine to state 2 once B is no
  * longer held, and over the animation frames 0x36B-0x372 it blends the
  * player's palettes gUnk_081BE6BC[player] into the OBJ palette buffer
- * (BlendColors, raising PlayerState.unk42 bit 4 while it does).
+ * (BlendColors, raising PlayerState.statusFlags bit 4 while it does).
  * PlayerActionCutter (action 34, mode 13) is a linear yield script (animation
  * 0x3E9, effect 28 on the ground, M14's CreatePlayerObjectLowSlot, sound 144); its
  * handler PlayerActionCutterUpdate re-enters it on a newly-pressed B and requests
@@ -48,7 +48,7 @@ void PlayerActionSparkUpdate(void)
         case 0x370:
             {
                 struct Task *u = gCurTask;
-                u->player->unk42 &= 0xFFEF;
+                u->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
                 u->playerNextBankBlendRatio = 0;
                 u->playerBankBlendRatio = 0;
             }
@@ -84,7 +84,7 @@ void PlayerActionSparkUpdate(void)
                              u->playerNextBankBlendRatio, 16,
                              (u16 *)(gObjPalette + (((u->tileWord >> 12) + 1) << 5)));
             }
-            gCurTask->player->unk42 |= 16;
+            gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
             break;
         }
         break;
@@ -98,7 +98,7 @@ void PlayerActionSparkUpdate(void)
     {
         struct PlayerState *p = gCurTask->player;
         if (p->requestedAction != PLAYER_ACTION_NONE)
-            p->unk42 &= 0xFFEF;
+            p->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     }
 }
 

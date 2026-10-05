@@ -11,7 +11,7 @@
  * variants 22-25, spawned by M10's action 16 (PlayerActionHurt) and by M11.
  * Each is a loop of short animations around its spawner (22-24 at random
  * offsets from RandomSpread/RandomSpreadFacing; tables gUnk_0874C718,
- * gUnk_0874C7A4, gUnk_0874C7B4, gUnk_0874C7CC) that ends once its companion
+ * gPlayerEffectHurtSparksFrames, gUnk_0874C7B4, gSmokePuffFrames) that ends once its companion
  * sets Task.unk28: PlayerEffectHurtFlamesUpdate, PlayerEffectHurtSparksUpdate, sub_08056300 and sub_08056428
  * do so when the player leaves mode 17 (in sub-state 0 of 22 and 23 also
  * when the spawner's Task.onGround is set).  Variant 24 (sub_0805614c) sets its
@@ -117,7 +117,7 @@ void PlayerEffectHurtSparks(void)
     gCurTask->updateCallback = (u32)PlayerEffectHurtSparksUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_0874C7A4;
+    t->frameTable = gPlayerEffectHurtSparksFrames;
     t->playerEffectStopRequested = 0;
     TaskStop();
     if ((gCurTask->playerEffectSpawnWord & 15) == 0)
@@ -218,13 +218,13 @@ void sub_0805614c(void)
         TaskSetMotion(0x4000, -0x700, 0x5A5A5A5A, -0x4000, -0x1000, 0x5A5A5A5A);
         gCurTask->frame = 0;
         TaskYieldTrampoline(3);
-        gCurTask->unk6E = 0;
+        gCurTask->playerEffectLoopCount6E = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk6E++;
-        } while (gCurTask->unk6E <= 4);
+            gCurTask->playerEffectLoopCount6E++;
+        } while (gCurTask->playerEffectLoopCount6E <= 4);
         if (gCurTask->playerEffectStopRequested != 0)
             break;
         gCurTask->posX = (RandomSpread(-12, 1, 24) + (gCurTask->u8C.parentTask)->pixelX) << 16;
@@ -232,13 +232,13 @@ void sub_0805614c(void)
         TaskSetMotion(-0x4000, 0x700, 0x5A5A5A5A, -0x4000, -0x1000, 0x5A5A5A5A);
         gCurTask->frame = 0;
         TaskYieldTrampoline(3);
-        gCurTask->unk6E = 0;
+        gCurTask->playerEffectLoopCount6E = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk6E++;
-        } while (gCurTask->unk6E <= 4);
+            gCurTask->playerEffectLoopCount6E++;
+        } while (gCurTask->playerEffectLoopCount6E <= 4);
     }
     TaskExitTrampoline();
 }
@@ -260,7 +260,7 @@ void sub_08056320(void)
     gCurTask->updateCallback = (u32)sub_08056428;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_0874C7CC;
+    t->frameTable = gSmokePuffFrames;
     t->playerEffectStopRequested = 0;
     TaskStop();
     if (gFrameCount & 1)

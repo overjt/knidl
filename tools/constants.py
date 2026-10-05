@@ -55,6 +55,14 @@ integer literal and the tree a constant of the same value, the new headers,
 the new #include lines), so a branch of renames, aliases and constants
 verifies in one pass.
 
+--bitexprs FAMILY prints the SITES rows of a `bits` family's complements
+and unions of its proven bits (`&= 0x7FFF` -> `~A`, `& 0x6000` -> `(A | B)`;
+#155 run 7, docs/naming.md 7.0's second form): a SITES row's `constant` may
+be such an expression, which --sites checks against the literal (the OR, or
+its complement in 8, 16 or 32 bits).  These are token changes: their proof
+is the per-file assembly oracle (every unit identical to the parent), make
+compare and tools/rename.py --verify-diff, which accepts them.
+
 --census counts the constants per header, the sites that spell them, and
 the literals left at a mechanical family's positions whose value has a
 constant (tools/audit.py prints it in docs/naming.md section 5.1).
@@ -101,6 +109,18 @@ MAX_VALUE = 0x7FFFFFFF
 #            (`x.member = N`, `x->member == N`, `!=`)
 #   indexed: arrays whose element is compared with a literal
 #            (`gTaskSlotTypes[i] == N`)
+#   bits:    flag-word members whose single bits are the family's values
+#            (#155 run 7, R3): a literal is at a position when it is the whole
+#            right operand of `&`, `|`, `^`, `&=`, `|=` or `^=` whose left
+#            operand is the member (`x->immunityFlags & 4`,
+#            `t->spriteFlags |= 0x8000`); complements and masks of several
+#            bits are not values of the family and stay out of the scan
+#   bit_vars: the same for plain variables
+#   bit_calls: {function: argument index} whose argument is such a flag word
+#            (a single bit there takes the constant, a union of bits the
+#            second form's `(A | B)`)
+#   width:   the flag word's width in bits (16 when not given), for the
+#            complements of the second form
 #   prefix:  only the header's constants with this prefix (a header may hold
 #            two enumerations: GAME_STATE_ and STAGE_REQUEST_)
 #   skip_files / skip_sites: where the same member or variable holds another
@@ -178,6 +198,49 @@ FAMILIES = {
         "header": "variants",
         "prefix": "PLAYER_OBJECT_VARIANT_",
         "calls": {"CreatePlayerObject": 1, "CreatePlayerObjectLowSlot": 1},
+    },
+    "attack_box_immunity": {
+        "header": "hits",
+        "prefix": "ATTACK_BOX_IMMUNITY_",
+        "bits": ["immunityFlags"],
+    },
+    "attack_box_flags": {
+        "header": "hits",
+        "prefix": "ATTACK_BOX_FLAG_",
+        "bits": ["attackFlags"],
+    },
+    "body_box_flags": {
+        "header": "hits",
+        "prefix": "BODY_BOX_FLAG_",
+        "bits": ["bodyFlags"],
+    },
+    "body_box_guard": {
+        "header": "hits",
+        "prefix": "BODY_BOX_GUARD_",
+        "bits": ["guardFlags"],
+    },
+    "player_action_flags": {
+        "header": "player",
+        "prefix": "PLAYER_ACTION_FLAG_",
+        "bits": ["actionFlags"],
+    },
+    "player_status": {
+        "header": "player",
+        "prefix": "PLAYER_STATUS_",
+        "bits": ["statusFlags"],
+    },
+    "sprite_flags": {
+        "header": "sprites",
+        "prefix": "SPRITE_FLAG_",
+        "bits": ["spriteFlags"],
+    },
+    "task_skip": {
+        "header": "task_skip",
+        "prefix": "TASK_SKIP_",
+        "bits": ["skipMask"],
+        "bit_calls": {"TaskSetSkipMask": 0, "TaskSetOthersSkipMask": 0, "TaskSetAllSkipMask": 0,
+                      "TaskFreezeOrThawOthers": 0, "FreezeOtherTasks": 0},
+        "width": 8,
     },
     "camera": {
         "header": "camera",
@@ -489,6 +552,38 @@ def add_include(text, topic):
     return text[:pos] + inc + "\n" + text[pos:]
 
 
+BIT_EXPR_RE = re.compile(r"^(~)?(?:([A-Z][A-Z0-9_]*)|\(([A-Z][A-Z0-9_]*(?: \| [A-Z][A-Z0-9_]*)+)\))$")
+BIT_WIDTHS = (8, 16, 32)
+
+
+def bit_expr_value(expr, consts):
+    """(value of the OR, complemented?, topic) of a bit expression `~A`,
+    `~(A | B)` or `(A | B)` whose constants are single bits of one header;
+    None otherwise."""
+    m = BIT_EXPR_RE.match(expr)
+    if not m or (not m.group(1) and m.group(2)):
+        return None
+    names = [m.group(2)] if m.group(2) else m.group(3).split(" | ")
+    value, topics = 0, set()
+    for n in names:
+        c = consts.get(n)
+        if c is None or c[0] <= 0 or c[0] & (c[0] - 1) or value & c[0]:
+            return None
+        value |= c[0]
+        topics.add(c[1])
+    if len(topics) != 1 or names != sorted(names, key=lambda n: consts[n][0]):
+        return None
+    return value, bool(m.group(1)), topics.pop()
+
+
+def bit_expr_matches(literal, value, comp):
+    """True if an integer literal equals the bit expression: the OR itself,
+    or (complemented) the OR's complement in a field of 8, 16 or 32 bits."""
+    if not comp:
+        return literal == value
+    return any(literal == (~value) & ((1 << w) - 1) for w in BIT_WIDTHS if value < (1 << w))
+
+
 def apply_sites(rows, do_write, consts=None):
     consts = dict(consts or all_constants())
     by_file = {}
@@ -508,20 +603,58 @@ def apply_sites(rows, do_write, consts=None):
             ln, col = int(r["line"]), int(r["col"])
             off = starts[ln - 1] + col - 1
             tok = toks.get(off)
-            if not tok or tok[0] != "num" or tok[1] != r["literal"]:
+            shift = re.match(r"^(0[xX][0-9A-Fa-f]+|[0-9]+) << (0[xX][0-9A-Fa-f]+|[0-9]+)$", r["literal"])
+            if shift:
+                # a shift `N << M` spelling one value (the second form)
+                if text[off:off + len(r["literal"])] != r["literal"]:
+                    problems.append("%s:%d:%d: no %s there" % (path, ln, col, r["literal"]))
+                    continue
+            elif not tok or tok[0] != "num" or tok[1] != r["literal"]:
                 problems.append("%s:%d:%d: no literal %s there" % (path, ln, col, r["literal"]))
                 continue
-            c = consts.get(r["constant"])
-            if c is None:
-                problems.append("%s:%d: unknown constant %s" % (path, ln, r["constant"]))
-                continue
-            v, suffix = int_value(r["literal"])
-            if v != c[0] or suffix:
-                problems.append("%s:%d: %s is %d, %s is %d" % (path, ln, r["literal"], v,
-                                                               r["constant"], c[0]))
-                continue
+            if shift:
+                v = int_value(shift.group(1))[0] << int_value(shift.group(2))[0]
+                c = consts.get(r["constant"])
+                if c is not None:
+                    if v != c[0]:
+                        problems.append("%s:%d: %s is %d, %s is %d" % (path, ln, r["literal"], v,
+                                                                       r["constant"], c[0]))
+                        continue
+                    topic = c[1]
+                else:
+                    ev = bit_expr_value(r["constant"], consts)
+                    if ev is None or ev[1] or ev[0] != v:
+                        problems.append("%s:%d: %s does not equal %s" % (path, ln, r["literal"],
+                                                                         r["constant"]))
+                        continue
+                    topic = ev[2]
+            elif re.match(r"^[A-Z][A-Z0-9_]*$", r["constant"]):
+                c = consts.get(r["constant"])
+                if c is None:
+                    problems.append("%s:%d: unknown constant %s" % (path, ln, r["constant"]))
+                    continue
+                v, suffix = int_value(r["literal"])
+                if v != c[0] or suffix:
+                    problems.append("%s:%d: %s is %d, %s is %d" % (path, ln, r["literal"], v,
+                                                                   r["constant"], c[0]))
+                    continue
+                topic = c[1]
+            else:
+                # a bit expression (docs/naming.md 7.0, the second form):
+                # `~A`, `~(A | B)` or `(A | B)` of one header's constants
+                v, suffix = int_value(r["literal"])
+                ev = bit_expr_value(r["constant"], consts)
+                if ev is None or suffix:
+                    problems.append("%s:%d: %r is not a bit expression of known constants"
+                                    % (path, ln, r["constant"]))
+                    continue
+                value, comp, topic = ev
+                if not bit_expr_matches(v, value, comp):
+                    problems.append("%s:%d: %s does not equal %s" % (path, ln, r["literal"],
+                                                                     r["constant"]))
+                    continue
             spans.append((off, off + len(r["literal"]), r["constant"]))
-            topics.add(c[1])
+            topics.add(topic)
         if len(set(s[0] for s in spans)) != len(spans):
             problems.append("%s: a literal is listed twice" % path)
         for a, b, name in sorted(spans, reverse=True):
@@ -628,6 +761,30 @@ def _switch_cases(toks, open_brace):
         k += 1
 
 
+def call_argument(toks, i, want):
+    """(first, end) token range of argument `want` of the call whose name is
+    toks[i], or None (a declaration, or fewer arguments)."""
+    n = len(toks)
+    if i > 0 and toks[i - 1][0] == "id" and toks[i - 1][1] not in ("return", "else", "case"):
+        return None
+    depth, a0, args = 0, i + 2, []
+    j = i + 1
+    while j < n:
+        x = toks[j][1]
+        if x in ("(", "[", "{"):
+            depth += 1
+        elif x in (")", "]", "}"):
+            depth -= 1
+            if depth == 0:
+                args.append((a0, j))
+                break
+        elif x == "," and depth == 1:
+            args.append((a0, j))
+            a0 = j + 1
+        j += 1
+    return args[want] if want < len(args) else None
+
+
 def family_positions(fam, toks):
     """yield (token index of the literal, value) of every literal at the
     family's positions in the token list: the argument of a listed call,
@@ -640,6 +797,18 @@ def family_positions(fam, toks):
     members = set(spec.get("members", []))
     variables = set(spec.get("vars", []))
     indexed = set(spec.get("indexed", []))
+    bit_members = set(spec.get("bits", []))
+    bit_vars = set(spec.get("bit_vars", []))
+    bit_calls = spec.get("bit_calls", {})
+
+    def is_bit_operand(i):
+        k, t = toks[i][0], toks[i][1]
+        if k != "id":
+            return False
+        prev = toks[i - 1][1] if i > 0 else ""
+        if t in bit_members and prev in (".", "->"):
+            return True
+        return t in bit_vars and prev not in (".", "->")
 
     def is_operand(i):
         k, t = toks[i][0], toks[i][1]
@@ -656,6 +825,13 @@ def family_positions(fam, toks):
 
     for i in range(n):
         k, t = toks[i][0], toks[i][1]
+        if k == "id" and t in bit_calls and i + 1 < n and toks[i + 1][1] == "(":
+            arg = call_argument(toks, i, bit_calls[t])
+            if arg:
+                lit = literal_at(toks, *arg)
+                if lit and lit[1] > 0 and not lit[1] & (lit[1] - 1):
+                    yield lit[0], lit[1]
+            continue
         if k == "id" and t in calls and i + 1 < n and toks[i + 1][1] == "(":
             if i > 0 and toks[i - 1][0] == "id" and toks[i - 1][1] not in ("return", "else", "case"):
                 continue  # a declaration or definition
@@ -679,6 +855,12 @@ def family_positions(fam, toks):
                 lit = literal_at(toks, *args[want])
                 if lit:
                     yield lit[0], lit[1]
+        elif is_bit_operand(i):
+            j = _operand_end(toks, i) + 1
+            if j < n and toks[j][1] in ("&", "|", "^", "&=", "|=", "^="):
+                v = _value_after(toks, j)
+                if v and v[1] > 0 and v[1] & (v[1] - 1) == 0:
+                    yield v
         elif is_operand(i):
             j = _operand_end(toks, i) + 1
             if j < n and toks[j][1] in ("=", "==", "!="):
@@ -733,6 +915,88 @@ def function_spans(toks):
                 out.append((cur[0], cur[1], i))
                 cur = None
     return out
+
+
+def bit_expr_sites(fam):
+    """[(file, line, col, literal, expression)] of the literals at a bits
+    family's positions that are a complement or a union of its proven bits
+    (`&= 0x7FFF` -> `&= ~A`, `& 0x6000` -> `& (A | B)`; docs/naming.md 7.0,
+    the second form), and [(file, line, col, literal)] of those that are
+    not.  The spec's `width` is the field's width in bits."""
+    spec = FAMILIES[fam]
+    width = spec.get("width", 16)
+    mask = (1 << width) - 1
+    consts = all_constants()
+    bits = sorted((v, n) for n, (v, topic) in consts.items()
+                  if topic == spec["header"] and n.startswith(spec.get("prefix", ""))
+                  and v > 0 and not v & (v - 1))
+    allbits = 0
+    for v, _ in bits:
+        allbits |= v
+
+    def expr(v, comp):
+        names = [n for b, n in bits if v & b]
+        if len(names) == 1:
+            return ("~" if comp else "") + names[0]
+        return ("~" if comp else "") + "(" + " | ".join(names) + ")"
+    members = set(spec.get("bits", []))
+    variables = set(spec.get("bit_vars", []))
+    calls = spec.get("bit_calls", {})
+    ends = (";", ")", "&&", "||", ",", "?", "}")
+    rows, other = [], []
+
+    def operand(toks, j, text):
+        """(token index, end index, literal text, value) of the literal or
+        `N << M` shift that is the whole operand starting at toks[j]."""
+        if j + 1 < len(toks) and toks[j][0] == "num" and toks[j + 1][1] in ends:
+            return j, j, toks[j][1], int_value(toks[j][1])[0]
+        if (j + 3 < len(toks) and toks[j][0] == "num" and toks[j + 1][1] == "<<"
+                and toks[j + 2][0] == "num" and toks[j + 3][1] in ends):
+            a, b = int_value(toks[j][1])[0], int_value(toks[j + 2][1])[0]
+            return j, j + 2, text[toks[j][2]:toks[j + 2][2] + len(toks[j + 2][1])], a << b
+        return None
+    for path in src_files():
+        text = read(os.path.join(ROOT, path))
+        starts = line_starts(text)
+        toks = lex(text)
+        n = len(toks)
+        for i in range(n):
+            k, tk = toks[i][0], toks[i][1]
+            prev = toks[i - 1][1] if i > 0 else ""
+            op = None
+            if k == "id" and tk in calls and i + 1 < n and toks[i + 1][1] == "(":
+                arg = call_argument(toks, i, calls[tk])
+                if not arg:
+                    continue
+                o = operand(toks, arg[0], text)
+                if not o or o[1] + 1 != arg[1]:
+                    continue
+                op = "call"
+            elif k == "id" and ((tk in members and prev in (".", "->"))
+                                or (tk in variables and prev not in (".", "->"))):
+                j = _operand_end(toks, i) + 1
+                if j >= n or toks[j][1] not in ("&", "|", "^", "&=", "|=", "^="):
+                    continue
+                o = operand(toks, j + 1, text)
+                if not o:
+                    continue
+                op = toks[j][1]
+            else:
+                continue
+            pos, _end, lit, v = o
+            if v <= 0 or (not v & (v - 1) and pos == _end):
+                continue  # zero, or a single-bit literal: the first form
+            off = toks[pos][2]
+            ln = max(x for x in range(len(starts)) if starts[x] <= off)
+            where = (path, ln + 1, off - starts[ln] + 1, lit)
+            comp = (~v) & mask
+            if op in ("&", "&=") and comp and not comp & ~allbits and v <= mask:
+                rows.append(where + (expr(comp, True),))
+            elif not v & ~allbits:
+                rows.append(where + (expr(v, False),))
+            else:
+                other.append(where)
+    return rows, other
 
 
 def scan(fam):
@@ -930,6 +1194,7 @@ def main():
     ap.add_argument("--preambles", help="JSON {topic: preamble text} for new headers")
     ap.add_argument("--sites")
     ap.add_argument("--scan")
+    ap.add_argument("--bitexprs", help="a bits family: its complement / union sites (second form)")
     ap.add_argument("--out")
     ap.add_argument("--verify-cpp")
     ap.add_argument("--census", action="store_true")
@@ -950,6 +1215,17 @@ def main():
                     consts[r["constant"]] = (int_value(r["value"])[0], r["header"])
             if args.sites:
                 apply_sites(read_csv(args.sites), args.write, consts)
+        elif args.bitexprs:
+            rows, other = bit_expr_sites(args.bitexprs)
+            out = open(args.out, "w", newline="") if args.out else sys.stdout
+            w = csv.writer(out, lineterminator="\n")
+            w.writerow(["file", "line", "col", "literal", "constant"])
+            for r in rows:
+                w.writerow(r)
+            print("bitexprs %s: %d complement / union sites, %d other multi-bit literals"
+                  % (args.bitexprs, len(rows), len(other)), file=sys.stderr)
+            for o in other:
+                print("  not of proven bits: %s:%d:%d %s" % o, file=sys.stderr)
         elif args.scan:
             rows, missing = scan(args.scan)
             out = open(args.out, "w", newline="") if args.out else sys.stdout
