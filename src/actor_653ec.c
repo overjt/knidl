@@ -1643,8 +1643,8 @@ void CreateDroppedParasol(u8 a)
         u = &gTasks[i];
         s = gCurTask;
         v = (s->hitterPlayer == -1) ? TaskFindNearestPlayer() : s->hitterPlayer;
-        u->unk1C = v;
-        u->unk28 = a;
+        u->parasolPlayerSlot = v;
+        u->parasolHittableAtOnce = a;
         if (gScreenAttackActive == 1)
         {
             gCurTask->u8C.actor->keepExtraOnDefeat = 1;

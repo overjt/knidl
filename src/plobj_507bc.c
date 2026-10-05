@@ -29,7 +29,7 @@ void Task_PlayerObject(void)
         gCurTask->u80.attackAbility = ABILITY_NORMAL;
         gCurTask->u8C.parentTask = &gTasks[gCurTask->parent];
         gCurTask->health = 1;
-        gCurTask->unk24 = 0;
+        gCurTask->playerObjectVanishBox = 0;
     }
     CallTableEntry(((u8 *)gCurTask)[27], 13, gPlayerObjectVariants);
 }
@@ -50,8 +50,8 @@ void PlayerObjectVanish(void)
     t->frameTable = gPlayerObjectVanishFrames;
     t->spriteFlags = 0;
     t->tileWord = 0;
-    if (t->unk24 != 0)
-        RegisterCollider(gCurTaskIdx, t->pixelX, t->pixelY, (void *)t->unk24);
+    if (t->playerObjectVanishBox != 0)
+        RegisterCollider(gCurTaskIdx, t->pixelX, t->pixelY, (void *)t->playerObjectVanishBox);
     TaskStop();
     gCurTask->frame = 0;
     TaskYieldTrampoline(2);

@@ -219,13 +219,13 @@ s32 PlayerObjectBeamOrb(void)
         struct Task *t = gCurTask;
         t->tileWord = (t->u8C.parentTask)->tileWord | 0xF008;
         if (t->facing == 1)
-            t->unk28 = 14;
+            t->playerObjectOrbOffsetX = 14;
         else
-            t->unk28 = -14;
+            t->playerObjectOrbOffsetX = -14;
     }
     {
         struct Task *t = gCurTask;
-        t->unk2C = 2;
+        t->playerObjectOrbOffsetY = 2;
         switch (t->playerObjectSpawnWord & 15)
         {
         case 0:
@@ -238,8 +238,8 @@ s32 PlayerObjectBeamOrb(void)
                 s32 v;
                 {
                     struct Task *u = gCurTask;
-                    u->posX = u->unk28 << 16;
-                    u->posY = u->unk2C << 16;
+                    u->posX = u->playerObjectOrbOffsetX << 16;
+                    u->posY = u->playerObjectOrbOffsetY << 16;
                     v = xs[(s16)u->playerObjectLoopCount] << 8;
                     if (xs[(s16)u->playerObjectLoopCount] & 0x8000)
                         v |= 0xFF000000;
@@ -252,13 +252,13 @@ s32 PlayerObjectBeamOrb(void)
                         v |= 0xFF000000;
                     u->velY = v;
                     e = gUnk_0873B808[0][(s16)u->playerObjectLoopCount];
-                    u->unk6E = 0;
+                    u->playerObjectLoopCount6E = 0;
                 }
                 do
                 {
-                    gCurTask->frame = e[gCurTask->unk6E];
+                    gCurTask->frame = e[gCurTask->playerObjectLoopCount6E];
                     TaskYieldTrampoline(1);
-                } while (++gCurTask->unk6E <= 4);
+                } while (++gCurTask->playerObjectLoopCount6E <= 4);
                 {
                     struct Task *u = gCurTask;
                     u->velX = 0;
@@ -276,8 +276,8 @@ s32 PlayerObjectBeamOrb(void)
                 s32 v;
                 {
                     struct Task *u = gCurTask;
-                    u->posX = u->unk28 << 16;
-                    u->posY = u->unk2C << 16;
+                    u->posX = u->playerObjectOrbOffsetX << 16;
+                    u->posY = u->playerObjectOrbOffsetY << 16;
                     v = xs[(s16)u->playerObjectLoopCount] << 8;
                     if (xs[(s16)u->playerObjectLoopCount] & 0x8000)
                         v |= 0xFF000000;
@@ -290,13 +290,13 @@ s32 PlayerObjectBeamOrb(void)
                         v |= 0xFF000000;
                     u->velY = v;
                     e = gUnk_0873B808[1][(s16)u->playerObjectLoopCount];
-                    u->unk6E = 0;
+                    u->playerObjectLoopCount6E = 0;
                 }
                 do
                 {
-                    gCurTask->frame = e[gCurTask->unk6E];
+                    gCurTask->frame = e[gCurTask->playerObjectLoopCount6E];
                     TaskYieldTrampoline(1);
-                } while (++gCurTask->unk6E <= 4);
+                } while (++gCurTask->playerObjectLoopCount6E <= 4);
                 {
                     struct Task *u = gCurTask;
                     u->velX = 0;
@@ -314,8 +314,8 @@ s32 PlayerObjectBeamOrb(void)
                 s32 v;
                 {
                     struct Task *u = gCurTask;
-                    u->posX = u->unk28 << 16;
-                    u->posY = u->unk2C << 16;
+                    u->posX = u->playerObjectOrbOffsetX << 16;
+                    u->posY = u->playerObjectOrbOffsetY << 16;
                     v = xs[(s16)u->playerObjectLoopCount] << 8;
                     if (xs[(s16)u->playerObjectLoopCount] & 0x8000)
                         v |= 0xFF000000;
@@ -328,13 +328,13 @@ s32 PlayerObjectBeamOrb(void)
                         v |= 0xFF000000;
                     u->velY = v;
                     e = gUnk_0873B808[2][(s16)u->playerObjectLoopCount];
-                    u->unk6E = 0;
+                    u->playerObjectLoopCount6E = 0;
                 }
                 do
                 {
-                    gCurTask->frame = e[gCurTask->unk6E];
+                    gCurTask->frame = e[gCurTask->playerObjectLoopCount6E];
                     TaskYieldTrampoline(1);
-                } while (++gCurTask->unk6E <= 4);
+                } while (++gCurTask->playerObjectLoopCount6E <= 4);
                 {
                     struct Task *u = gCurTask;
                     u->velX = 0;

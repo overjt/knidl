@@ -636,7 +636,7 @@ void PlayerGoalGameWaitLateUpdate(void)
     struct Task *t;
 
     t = &gTasks[gUnk_02007D00[gCurTask->playerGoalGameLayer]];
-    if (t->unk2C == 0)
+    if (t->goalGameSignIncomingMask == 0)
     {
         gCurTask->state = PLAYER_GOAL_GAME_STATE_DANCE;
         TaskSetEntry(PlayerGoalGameEnterState, gCurTaskIdx);
@@ -1280,7 +1280,7 @@ void Task_GoalGameHelperKirby(void)
     {
     case 1:
         if (((gActivePlayerMask >> gLocalPlayer) & 1)
-            && (gTasks + gLocalPlayer)->unk30 != 0)
+            && (gTasks + gLocalPlayer)->playerGoalGameLayer != 0)
             gCurTask->drawCallback = 0;
         gCurTask->posX = 244 << 16;
         gCurTask->posY = 196 << 16;
@@ -1881,12 +1881,12 @@ void PlayerWalkToDanceSpotUpdate(void)
     d = t->pixelX - gSpriteCameraX;
     if (t->facing == 1)
     {
-        if ((s16)d >= t->unk18)
+        if ((s16)d >= t->playerDanceSpotX)
             sub_0805df9c();
     }
     else
     {
-        if ((s16)d <= t->unk18)
+        if ((s16)d <= t->playerDanceSpotX)
             sub_0805df9c();
     }
 }
@@ -1916,7 +1916,7 @@ void PlayerSetDanceSpot(s32 a0)
         break;
     }
     w = (s16)v;
-    t->unk18 = w;
+    t->playerDanceSpotX = w;
     if (gUnk_0300244C == 0)
     {
         if (t->pixelX - w <= 0)
@@ -1982,7 +1982,7 @@ void PlayerDanceInGoalGame(void)
     if (*(s8 *)gDanceId < 0)
         *(s8 *)gDanceId = RandomRange(7);
     t = gCurTask;
-    if (t->unk30 != 0)
+    if (t->playerGoalGameLayer != 0)
     {
         if (gLocalPlayer == t->player->playerIndex)
             PlayBgm(14);
@@ -2003,11 +2003,11 @@ void PlayerDanceAfterStageClear(void)
     if (*(s8 *)gDanceId < 0)
     {
         *(s8 *)gDanceId = RandomRange(7) + 7;
-        gCurTask->unk34 = 1;
+        gCurTask->playerDanceLeader = 1;
     }
     else
     {
-        gCurTask->unk34 = 0;
+        gCurTask->playerDanceLeader = 0;
     }
     if (*(u8 *)gStageClearDanceBgmPlayed == 0)
     {
@@ -2016,7 +2016,7 @@ void PlayerDanceAfterStageClear(void)
     }
     CallTableEntry(*(s8 *)gDanceId, 14, gPlayerDances);
     TaskYieldTrampoline(60);
-    if (gCurTask->unk34 != 0)
+    if (gCurTask->playerDanceLeader != 0)
         ExitClearedStage();
 }
 

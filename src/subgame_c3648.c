@@ -67,7 +67,7 @@ s32 AirGrindRacerTryBoost(s32 player)
     if (abs(gAirGrindPtr->players[player].segmentEndDistance) <= abs((speed * 3) >> 16)) {
         if (abs(gAirGrindPtr->players[player].segmentEndDistance) <= abs(speed >> 16)) {
             if (player == 0)
-                CreateAirGrindEffect(0, gCurTask->unk18, 6);
+                CreateAirGrindEffect(0, gCurTask->airGrindObjectRacerSlot, 6);
             gAirGrindPtr->players[player].fullBoostCount++;
             gCurTask->velX += 0x10000;
             if (gCurTask->velX > gAirGrindRacerSpeeds[gAirGrindPtr->level][0])
@@ -75,7 +75,7 @@ s32 AirGrindRacerTryBoost(s32 player)
             ret = 2;
         } else {
             if (player == 0)
-                CreateAirGrindEffect(0, gCurTask->unk18, 7);
+                CreateAirGrindEffect(0, gCurTask->airGrindObjectRacerSlot, 7);
             gCurTask->velX += 0x8000;
             if (gCurTask->velX > gAirGrindRacerSpeeds[gAirGrindPtr->level][0])
                 gCurTask->velX = gAirGrindRacerSpeeds[gAirGrindPtr->level][0];
@@ -125,7 +125,7 @@ void AirGrindRacerUpdateDepth(s32 player)
     if (rank > 2)
         rank = 2;
     gCurTask->spriteFlags = (rank << 13) & 0x6000;
-    gCurTask->unk28 = gAirGrindCoursePtr->players[player].depth;
+    gCurTask->airGrindObjectDepth = gAirGrindCoursePtr->players[player].depth;
 }
 
 void AirGrindRacerRaceStep(s32 player)
@@ -135,7 +135,7 @@ void AirGrindRacerRaceStep(s32 player)
     if (gAirGrindPtr->players[player].penaltyTimer != 0) {
         AirGrindRacerSlowDown();
         if (player == 0 && gAirGrindPtr->players[0].penaltyTimer > 19)
-            CreateAirGrindEffect(0, gCurTask->unk18, (gAirGrindPtr->players[0].penaltyTimer & 1) ? 3 : 4);
+            CreateAirGrindEffect(0, gCurTask->airGrindObjectRacerSlot, (gAirGrindPtr->players[0].penaltyTimer & 1) ? 3 : 4);
     } else if (gAirGrindPtr->players[player].heldKeys & 1) {
         if (gAirGrindCoursePtr->players[player].onEvenSegment != 0) {
             ret = 0;
@@ -148,15 +148,15 @@ void AirGrindRacerRaceStep(s32 player)
                 gCurTask->accelX = 0x8000;
             if (player == 0) {
                 if ((gAirGrindFrame & 3) == 0)
-                    CreateAirGrindEffect(0, gCurTask->unk18, 0);
+                    CreateAirGrindEffect(0, gCurTask->airGrindObjectRacerSlot, 0);
                 if ((gAirGrindFrame & 7) == 1)
-                    CreateAirGrindEffect(0, gCurTask->unk18, 1);
+                    CreateAirGrindEffect(0, gCurTask->airGrindObjectRacerSlot, 1);
             }
             if (gAirGrindPtr->players[player].boostCooldown == 0 && gAirGrindPtr->players[player].grinding == 0)
                 ret = AirGrindRacerTryBoost(player);
             if (gAirGrindPtr->players[player].pressedKeys & 1) {
                 if (player == 0 && gAirGrindPtr->pressEffectShown == 0)
-                    CreateAirGrindEffect(0, gCurTask->unk18, 2);
+                    CreateAirGrindEffect(0, gCurTask->airGrindObjectRacerSlot, 2);
                 gAirGrindPtr->players[player].dashTimer = 4;
                 if (ret == 1) {
                     gAirGrindPtr->players[player].dashTimer = 6;
@@ -176,7 +176,7 @@ void AirGrindRacerRaceStep(s32 player)
             gAirGrindPtr->players[player].penaltyTimer = 24;
             if (player == 0)
                 AirGrindStartScript(3);
-            CreateAirGrindEffect(player, gCurTask->unk18, 8);
+            CreateAirGrindEffect(player, gCurTask->airGrindObjectRacerSlot, 8);
             gAirGrindPtr->players[player].grinding = 0;
         }
         gAirGrindPtr->players[player].liftY -= 0x20000;
@@ -196,7 +196,7 @@ void AirGrindRacerRaceStep(s32 player)
             gAirGrindPtr->players[player].liftY = 0x80000;
         if (gAirGrindPtr->players[player].grinding == 1) {
             if (player == 0 && gAirGrindPtr->releaseEffectShown == 0)
-                CreateAirGrindEffect(0, gCurTask->unk18, 5);
+                CreateAirGrindEffect(0, gCurTask->airGrindObjectRacerSlot, 5);
             if (gAirGrindPtr->players[player].boostCooldown == 0)
                 AirGrindRacerTryBoost(player);
         }
@@ -287,7 +287,7 @@ void AirGrindRacerUpdateScreenPos(s32 player)
 
 void AirGrindRacerRaceUpdate(void)
 {
-    s32 player = gCurTask->unk1C;
+    s32 player = gCurTask->airGrindObjectPlayer;
 
     AirGrindRacerUpdateDepth(player);
     AirGrindRacerRaceStep(player);
@@ -296,7 +296,7 @@ void AirGrindRacerRaceUpdate(void)
 
 void AirGrindRacerIdleUpdate(void)
 {
-    s32 player = gCurTask->unk1C;
+    s32 player = gCurTask->airGrindObjectPlayer;
 
     AirGrindRacerUpdateDepth(player);
     AirGrindRacerIdleStep(player);

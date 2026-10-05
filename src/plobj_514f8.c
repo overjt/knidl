@@ -49,17 +49,17 @@ void PlayerObjectWaterShot(void)
         struct Task *t = gCurTask;
         t->frameTable = gPlayerObjectWaterShotFrames;
         t->tileWord = (t->u8C.parentTask)->tileWord | 0xE006;
-        t->unk28 = (t->u8C.parentTask)->unk28;
-        t->unk2C = 1;
+        t->unk28 = (t->u8C.parentTask)->playerWaterShotDir;
+        t->playerObjectWaterShotSfxTimer = 1;
         gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873BDA0;
     }
-    LoadPlayerBodyBoxRect(gCurTask->player->playerIndex, (u8 *)gUnk_0873BDB4 + gCurTask->unk28 * 8);
+    LoadPlayerBodyBoxRect(gCurTask->player->playerIndex, (u8 *)gUnk_0873BDB4 + gCurTask->playerObjectWaterShotDir * 8);
     {
         struct Task *t;
         gPlayerHitBoxSets[(t = gCurTask)->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CBAC;
         LoadPlayerHitBoxSet(t->player->playerIndex, (s32)((u8 *)gUnk_0873CBB4 + t->unk28 * 8));
     }
-    switch (gCurTask->unk28)
+    switch (gCurTask->playerObjectWaterShotDir)
     {
     case 3:
         while (1)
@@ -160,14 +160,14 @@ void PlayerObjectWaterShotUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->player->mode != 11 || t->unk28 != (t->u8C.parentTask)->unk28)
+    if (t->player->mode != 11 || t->playerObjectWaterShotDir != (t->u8C.parentTask)->playerWaterShotDir)
     {
         TaskFree(gCurTaskIdx);
         return;
     }
-    if (--t->unk2C == 0)
+    if (--t->playerObjectWaterShotSfxTimer == 0)
     {
-        t->unk2C = 4;
+        t->playerObjectWaterShotSfxTimer = 4;
         PlaySfxIfLocalPlayer(133, t->parent);
     }
     RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
@@ -338,14 +338,14 @@ void PlayerObjectCutterBlade(void)
             gCurTask->u80.attackAbility = ABILITY_CUTTER;
             {
                 struct Task *u = gCurTask;
-                u->unk28 = 0;
+                u->playerObjectCutterBounced = 0;
                 u->unk2C = 0;
             }
         }
     }
     {
         struct Task *t = gCurTask;
-        switch (t->unk28)
+        switch (t->playerObjectCutterBounced)
         {
         case 0:
             if (t->facing == 1)
@@ -398,7 +398,7 @@ void PlayerObjectCutterBladeUpdate(void)
         TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
         return;
     }
-    switch (t->unk28)
+    switch (t->playerObjectCutterBounced)
     {
     case 0:
         if (TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CBEC, t->parent))
@@ -418,7 +418,7 @@ void PlayerObjectCutterBladeUpdate(void)
                 else
                     u->facing = -1;
             }
-            gCurTask->unk28 = 1;
+            gCurTask->playerObjectCutterBounced = 1;
             TaskSetEntry(PlayerObjectCutterBlade, gCurTaskIdx);
             break;
         }
@@ -620,11 +620,11 @@ void PlayerObjectLaserBeamUpdate(void)
         {
         case 1:
         case 3:
-            gCurTask->unk24 = (s32)gUnk_0873BDFC;
+            gCurTask->playerObjectVanishBox = (s32)gUnk_0873BDFC;
             break;
         case 0:
         case 2:
-            gCurTask->unk24 = (s32)gUnk_0873BE10;
+            gCurTask->playerObjectVanishBox = (s32)gUnk_0873BE10;
             break;
         }
     }

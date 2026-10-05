@@ -45,14 +45,14 @@ void PlayerActionParasol(void)
         struct Task *t = gCurTask;
         t->playerActionDone28 = 0;
         if (t->waterFlags & 1)
-            t->unk2C = 1;
+            t->playerAttackInWater2C = 1;
         else
-            t->unk2C = 0;
+            t->playerAttackInWater2C = 0;
     }
     gCurTask->u80.attackAbility = ABILITY_PARASOL;
     PlayerSetMotionXPreset(0, 72);
     PlaySfxIfLocalPlayer(SE_PARASOL_ATTACK, gCurTask->player->playerIndex);
-    if (gCurTask->unk2C == 0) {
+    if (gCurTask->playerAttackInWater2C == 0) {
         TaskSetFrame(0x8D2);
         TaskYieldTrampoline(4);
         if (gCurTask->onGround & 1)

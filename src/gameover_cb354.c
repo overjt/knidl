@@ -132,8 +132,8 @@ void GameOverPlayer(void)
     gCurTask->updateCallback = (u32)GameOverPlayerUpdate;
     gCurTask->layer = 8;
     gCurTask->frameTable = gGameOverPlayerFrames;
-    gCurTask->unk24 = 0;
-    gCurTask->unk18 = 0;
+    gCurTask->gameOverPlayerReentered = 0;
+    gCurTask->gameOverPlayerLooped = 0;
     gCurTask->facing = 1;
     gCurTask->state = 0;
     CallTableEntry(gCurTask->state, 3, gGameOverPlayerStates);
@@ -150,6 +150,6 @@ void GameOverPlayerUpdate(void)
    body): Task.unk24 = 1, then sub-state gGameOverPlayerStates[Task.state]. */
 void GameOverPlayerEnterState(void)
 {
-    gCurTask->unk24 = 1;
+    gCurTask->gameOverPlayerReentered = 1;
     CallTableEntry(gCurTask->state, 3, gGameOverPlayerStates);
 }

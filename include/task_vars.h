@@ -39,10 +39,12 @@
 #define actorCarriedY unk1C /* s32: pixelY of the carried actor last frame (put back when the carry ends) */
 #define actorFreezeBlinkShown unk1C /* s32: 1 while the freeze blink shows the actor (frame 0), 0 while hidden; toggled */
 #define actorParasolSwayStep unk1C /* s32: step of a parasol drift's sway (0-11, index into gParasolDriftSwayVelX) */
+#define actorThrowTrailAnchorY unk1C /* s32: thrown actor's flash trail: the pixel y it is anchored at */
 #define actorAnimDelay20 unk20 /* s32: frames until the next step of the animation script (ActorStartAnim / ActorTickAnim) */
 #define actorCarriedX unk20 /* s32: pixelX of the carried actor last frame (put back when the carry ends) */
 #define actorFreezeBlinkTimer unk20 /* s32: frames left of the current freeze-blink toggle (gIceBlockBlinkTimes) */
 #define actorSavedUpdateCallback unk20 /* s32: the updateCallback saved while an intro-pose helper runs its own update */
+#define actorThrowTrailDriftY unk20 /* s32: thrown actor's flash trail: y drift from the anchor (+-2 a step by the throw direction) */
 #define actorAnimDelay24 unk24 /* s32: frames until the next animation-script step (ActorStartAnim / ActorTickAnim) */
 #define actorBurstDone unk24 /* s32: 1 once the defeat's burst effect was spawned (CreateBurstEffect(3, 6)) */
 #define actorFlatGroundY unk24 /* s32: low half: last pixelY; bit 16: on flat ground since it left the ground (slope guard) */
@@ -55,18 +57,22 @@
 #define actorExplosionTimer unk2C /* s32: frames the exploding defeat's attack box has been tested (16 in all) */
 #define actorKnockAwayBaseY unk2C /* s32: pixelY the knock-away defeat's shake is centred on (gUnk_0873E610 offsets) */
 #define actorPaletteRestoreDelay unk2C /* s32: frames before a caught actor's own palette bits come back (2) */
+#define actorThrowTrailFrame unk2C /* s32: thrown actor's flash trail: the gTrailFlashFrames frame 1-7 shown (-1 none) */
 #define actorAnimDelay30 unk30 /* s32: frames until the next animation-script step (ActorStartAnim / ActorTickAnim) in unk30 */
 #define actorBounceSurface unk30 /* s32: what a thrown or blown actor hit: 0 ceiling, 1 floor, 2 wall or slope */
 #define actorCarryOffsetY unk30 /* s32: y added to the carry pose table (gUnk_0873E7A4 per mid-boss subtype, else 0) */
 #define actorDefeatBlinkTimer unk30 /* s32: frames left of the defeat blink (14; palette 15 on even frames) */
 #define actorSwallowOrder unk30 /* s32: objects the mouth held before this one (PlayerState.heldCount): the score is 1 << it */
+#define actorThrowTrailAnchorX unk30 /* s32: thrown actor's flash trail: the pixel x it is anchored at (8 / 16 px behind the actor) */
 #define actorAnimDelay34 unk34 /* s32: frames until the next step of the animation script (ActorStartAnim / ActorStepAnim) */
 #define actorBounceEnded unk34 /* s32: 1 once a carried actor's 12-frame bounce is over: the update ends it (ActorAttachedDie) */
 #define actorBurstDelay unk34 /* s32: frames until the defeat's burst effect (14) */
 #define actorCarryOffsetX unk34 /* s32: x added to the carry pose table (gUnk_0873E7A4 per mid-boss subtype, else 0) */
+#define actorThrowTrailDriftX unk34 /* s32: thrown actor's flash trail: x drift from the anchor (2 px a step against the facing) */
 #define actorDustTrailSlot unk46 /* s16: the dust trail child (CreateDustTrail, task type #143); TaskFreeDustTrail frees it */
 #define actorIceBlockSlot unk46 /* s16: slot of the Task_IceBlock (task #171) around the frozen actor (-1 before it) */
 #define actorSwallowed unk46 /* s16: 1 once the swallowed actor is in the mouth: the late update scores and removes it */
+#define actorThrowTrailStep unk46 /* s16: thrown actor's flash trail: step 0-8 of its cycle (0 anchors it, 1-7 frames, 8 none) */
 #define actorLoopCount unk6C /* s16: the running core state's loop counter (shakes and flashes of the defeats) */
 #define actorEnteredMouth unk70 /* s16: 1 once ActorAttachedEnterMouth ran for the swallowed actor */
 #define actorSpawnArg unk74 /* u8: the spawn argument (CreateActor's p4, ActorSpawn.spawnArg), set once at creation */
@@ -83,6 +89,14 @@
 /* AirGrindDoorSign - Air Grind door sign (task type #227,
    Task_AirGrindDoorSign; made by CreateAirGrindDoorSign) */
 #define airGrindDoorSignAnimated unk1C /* s32: non-zero: the sign's frames loop; 0: the still sign (the creator's argument) */
+
+/* AirGrindObject - the Air Grind objects (task type #96, Task_AirGrindObject:
+   racers, scenery, effects) */
+#define airGrindObjectRacerSlot unk18 /* s32: the racer's task slot (racers take slots 0-3 = player index): its own, or its effect's */
+#define airGrindObjectPlayer unk1C /* s32: the player index the object belongs to (a racer's player; the first argument of an effect) */
+#define airGrindObjectEffectKind unk20 /* s32: an effect's kind 0-8 (CreateAirGrindEffect's third argument), AirGrindEffect's case */
+#define airGrindObjectDepth unk28 /* s32: the racer's depth (256 at the start); its effects copy it; draws scale by it */
+#define airGrindObjectFrameTimer unk6C /* s16: an effect's frame timer: frames until its next animation frame (reloaded to 2 / 12) */
 
 /* ArenaDoorSign - Arena door sign (task type #221, Task_ArenaDoorSign) */
 #define arenaDoorSignTileFrame unk28 /* s32: tile frame the update copies into OBJ VRAM next (-1: none pending) */
@@ -383,6 +397,11 @@
    Task_ExplosionScreenFlash) */
 #define explosionScreenFlashLoopCount unk6C /* s16: the flash loop's counter (3 backdrop flashes) */
 
+/* ExtraModeTitleSprite - the extra-mode title screen's sprites (task type
+   #265, Task_ExtraModeTitleSprite; gExtraModeTitleSpriteStates: 0 the
+   transfer icon, 1 the level bar) */
+#define extraModeTitleSpriteBlendStep unk2C /* s32: the transfer icon's palette pulse step (0-15, wraps) in phase 2: row of gUnk_0873079C */
+
 /* FileMenuHighlight - FileMenuHighlight (task type #242,
    Task_FileMenuHighlight) */
 #define fileMenuHighlightSavedCursor unk28 /* s32: gFileMenuCursor as last drawn; -1 = none yet / hidden */
@@ -451,6 +470,7 @@
    GameOverChoice; gGameOverChoiceStates) */
 #define gameOverChoiceShowPending unk20 /* s32: 1 when the choice animation reached the point where the player task shows the result */
 #define gameOverChoiceGiveUp unk24 /* s32: 1 when the cursor is on the second choice (give up), 0 on continue; up/down flips it */
+#define gameOverChoiceLoopCount unk6C /* s16: GameOverChoiceGiveUpEnd's loop counter: the glove's 3 frame cycles (frames 13-16) */
 
 /* GameOverObject - Game-over object (task type #264, Task_GameOverObject;
    gGameOverObjectVariants) */
@@ -1193,6 +1213,7 @@
    gMetaKnightActionHandlers, and the Warp Star, cannon and goal-game rides)
    */
 #define playerCannonCameraFollow unk18 /* s32: Cannon: 1 while the local camera follows the launched player (at playerCannonFocusX / Y) */
+#define playerDanceSpotX unk18 /* s32: Dance: the screen x of the player's dance spot (by player index and count) */
 #define playerHeldNextCaptor unk18 /* s32: slot of the task that called SetHeldPlayerState; the spit flight makes it the parent */
 #define playerLifeRequestCursor unk18 /* s32: Life request: the cursor row (state 0: the two choices; state 1: the giver list) */
 #define playerShareReceiver unk18 /* s32: Share item: the player index that receives the shared item, in both partners' tasks */
@@ -1231,6 +1252,7 @@
 #define playerHiJumpPhaseTimer unk28 /* s32: Hi-Jump: frames to the next step of the update's frame phase (2: a step every 3 frames) */
 #define playerHighFallPhase unk28 /* s32: High fall: 0 in the opening frames, 1 after; the update then registers the body collider */
 #define playerHurtPhase unk28 /* s32: Hurt: the step of the knock-back sequence (0 at the start, counted per stage) */
+#define playerJumpFallAllowed unk28 /* s32: Meta Knight jump: 1 while descending may turn into the fall action (0 during the flip) */
 #define playerLadderStep unk28 /* s32: Ladder: the climb step, a row of gUnk_0873D8B4 / D908 (up 0-9 or 0-15, down 10-13, 16-20) */
 #define playerNeedleOnGround unk28 /* s32: Needle: Task.onGround at the last update: ground or air frame and boxes; change re-enters */
 #define playerParasolSwayAccelX unk28 /* s32: Parasol falling: the X acceleration of the sway (+-0x400 / 0x800 by facing) */
@@ -1238,6 +1260,7 @@
 #define playerSlashOnGround unk28 /* s32: Meta Knight's Slash: Task.onGround at the swing's start; on the ground the swing slides */
 #define playerStandInWaterSavedWallSide unk28 /* s32: Stand in water: PlayerState.wallSide when the pose began; no walk into that wall */
 #define playerStandSavedClampedTopY unk28 /* s32: Stand: PlayerState.clampedTopY when the pose began (-1: none), tested at the bounds top */
+#define playerStarRodFlightPoseRow unk28 /* s32: Star Rod flight: direction row of gUnk_0873B6E8 the flight frames step along (0 = level) */
 #define playerThrowDir unk28 /* s32: Throw (holding): the throw the held d-pad picks: 0 up, 1 forward, 2 down */
 #define playerTornadoTurnTimer unk28 /* s32: Tornado: frames left before the spin may turn again (8 after a turn or a wall hit) */
 #define playerTumbleFrameTimer unk28 /* s32: tumble / wobble: frames to the next frame step (1 tumbling, 2 the wobble) */
@@ -1245,6 +1268,7 @@
 #define playerWarpStarRideFrame unk28 /* s32: Warp Star ride: the riding frame PlayerSetWarpStarRideFrame picked; state 2 shows it again */
 #define playerWaterShotDir unk28 /* s32: Water shot: the spray's direction 0 right, 1 down, 2 left, 3 up; -1 once a spray ends */
 #define playerWheelOnWater unk28 /* s32: Wheel: 1 while it rolls on a water surface, which counts as ground; 0 on land */
+#define playerAttackInWater2C unk2C /* s32: Parasol attack: 1 when it began in water (playerAttackInWater's role in unk2C) */
 #define playerAttackStep unk2C /* s32: an attack's hit-box step: the 8-byte row of its hit-box and body-box tables, -1 when off */
 #define playerBallBounceSavedRollFrame unk2C /* s32: Ball bounce: the roll frame kept while the squat frames show */
 #define playerBallRollSlope unk2C /* s32: Ball roll: the slope (PlayerState.slope) the roll began on; a change re-enters it */
@@ -1288,6 +1312,7 @@
 #define playerAttackEndFacing unk34 /* s32: Sword / Hammer: facing the air swing ends with (start facing; Hammer: last held side) */
 #define playerBallSkidDustSlot unk34 /* s32: Ball skid: task slot of its skid dust effect, stopped when the skid ends */
 #define playerCannonRiderCount unk34 /* s32: Cannon launch: how many players the cannon launched together (cannonRiderCount) */
+#define playerDanceLeader unk34 /* s32: Stage-clear dance: 1 for the player who picked the dance; it exits the stage after it */
 #define playerGoalGameLaunchPower unk34 /* s32: Goal game: the launch power 1..25 from the press timing, row of the launch tables */
 #define playerHeldBounceEnded unk34 /* s32: 1 once a bounce-off is over (or health is 0): the update drops the player */
 #define playerHeldSpitTimer unk34 /* s32: frames until the spat-out player is let go (48; 32 when its health is 0) */
@@ -1310,6 +1335,7 @@
 #define playerBankBlendRatio unk6E /* s16: Spark: ratio 0-256 (+128 a step) blending the sprite's palette bank to its charged colours */
 #define playerBurningFadeRatio unk6E /* s16: Burning: BlendColors ratio of the dash's palette fade (+ the fade row's rate, up to 256) */
 #define playerLoopCount6E unk6E /* s16: a second loop counter (the inner one when unk6C counts the outer), counted from 0 */
+#define playerStarRodFlightDpad unk6E /* s16: Star Rod flight steering: last held d-pad nibble, the row of gUnk_0873B724 (velocities) */
 #define playerActionDone unk70 /* s16: Ball / Star Rod: 1 once the action's body has finished; its update then hands over */
 #define playerCannonSmokeTimer unk70 /* s16: Cannon flight: frames (8) to the next cannon smoke puff */
 #define playerGoalGameFlightFrames unk70 /* u16: Goal game: -1 before the launch, 0 at the press, then frames of the launch flight */
@@ -1327,16 +1353,48 @@
 /* PlayerEffect - the player's effect objects (task type #7,
    Task_PlayerEffect; gPlayerEffectVariants) */
 #define playerEffectSpawnWord unk18 /* s32: variant << 24 | the spawner's 24-bit argument; the low bits pick the effect's form */
+#define playerEffectActive unk28 /* s32: effect 47 form 0: 1 while the player stays in mode 13, parent variant 4; 0 ends the loop */
+#define playerEffectAuraIndex unk28 /* s32: Spark aura: which aura sprite it is (spawn word & 15); 0 loads tiles, holds the collider */
+#define playerEffectBlastFade unk28 /* s32: Crash blast: the palette fade's phase (0 none, 1 toward the blast colours, 2 back) */
+#define playerEffectInhaleAirFrame unk28 /* s32: Inhale air: the next frame of the 12-frame swirl (0-11), stepped with the loop */
+#define playerEffectMikeX unk28 /* s32: Mike attack: the player's camera x the attack's collider is registered at */
+#define playerEffectMirrorOriginX unk28 /* s32: effect 42 form 5: world X the two mirrored sprites spread from (pixelX holds the offset) */
+#define playerEffectRingStarVelX unk28 /* s32: death-star ring: 16.16 X velocity of the task's first star (at pixelX / Y), motions row k */
+#define playerEffectStartAbility unk28 /* s32: effect 15: the player's ability when it began; another ability frees the effect */
 #define playerEffectStopRequested unk28 /* s32: set to 1 by the effect's update when its player condition ends; the body loops until then */
+#define playerEffectBlastBlend unk2C /* s32: Crash blast: the blend ratio 0-0x100 of the OBJ palettes toward the blast colours */
+#define playerEffectMikeY unk2C /* s32: Mike attack: the player's camera y the attack's collider is registered at */
+#define playerEffectMirrorOriginY unk2C /* s32: effect 42 form 5: world Y the two mirrored sprites spread from (pixelY holds the offset) */
+#define playerEffectRingStarVelY unk2C /* s32: death-star ring: 16.16 Y velocity of the task's first star (at pixelX / Y), motions row k */
+#define playerEffectStartMode unk2C /* s32: Skid dust: the player's mode when the dust started; a change of mode ends the dust */
+#define playerEffectFramesLeft unk30 /* s32: Skid dust: frames left (the spawn argument's low byte; 0 = until the condition ends) */
+#define playerEffectRingOppositeVelX unk30 /* s32: death-star ring: 16.16 X velocity of the opposite star (row k + 4, at posX / posY, pixels) */
+#define playerEffectRingOppositeVelY unk34 /* s32: death-star ring: 16.16 Y velocity of the opposite star (row k + 4, at posX / posY, pixels) */
 #define playerEffectLoopCount unk6C /* s16: the effect's loop counter (frame runs, puffs), counted from 0 */
+#define playerEffectLoopCount6E unk6E /* s16: the inner frame-step loop counter when playerEffectLoopCount counts the outer loop */
 
 /* PlayerObject - the player's objects (task type #6, Task_PlayerObject;
    gPlayerObjectVariants: air puff, spit stars, breath, beams ...) */
 #define playerObjectSpawnWord unk18 /* s32: variant << 24 | the spawner's 24-bit argument; the low bits pick the object's form */
+#define playerObjectVanishBox unk24 /* s32: the collider box PlayerObjectVanish keeps registering while the object vanishes (0 = none) */
 #define playerObjectBreathStopped unk28 /* s32: Fire / Ice breath: 1 once the player left the breath (mode 13) or turned; the puffs stop */
+#define playerObjectCutterBounced unk28 /* s32: Cutter blade: 0 while thrown, 1 once it hit terrain and drops away */
 #define playerObjectLaserDir unk28 /* s32: Laser beam: its direction 0-3 (1 right, 3 left), the row of gUnk_0873B7B0; slopes turn it */
+#define playerObjectMultiTrailStep unk28 /* s32: the multi-star's trail step, an 8-step cycle (6 at the start) */
+#define playerObjectOrbOffsetX unk28 /* s32: Beam orb: x offset from the player (+-14 by facing) */
+#define playerObjectTrailStep unk28 /* s32: the swing trail's step (0-6): sets the trail frame, restarts the swing past 5 */
+#define playerObjectWaterShotDir unk28 /* s32: Water shot: the player's spray direction (its playerWaterShotDir); a change ends it */
 #define playerObjectLaserBounces unk2C /* s32: Laser beam: slope bounces left (3); at 0 the next slope ends the beam */
+#define playerObjectMultiTrailFrame unk2C /* s32: the multi-star trail's frame (24-26, -1 = not drawn) */
+#define playerObjectOrbOffsetY unk2C /* s32: Beam orb: y offset from the player (2) */
+#define playerObjectTrailOffsetX unk2C /* s32: the swing trail's 16.16 x offset behind the shot (starts at -+4 px, swings back) */
+#define playerObjectWaterShotSfxTimer unk2C /* s32: Water shot: frames to the next spray sound (133, every 4 frames) */
+#define playerObjectMultiTrailAnchorX unk30 /* s32: the pixel x the multi-star trail is anchored at (8 px behind the star at step 0) */
+#define playerObjectTrailVelX unk30 /* s32: the swing trail's x speed (-+1 px more each frame, 0 at each restart) */
+#define playerObjectMultiTrailDriftX unk34 /* s32: the multi-star trail's drift from its anchor (one px a frame against the facing) */
+#define playerObjectTrailFrame unk34 /* s32: the swing trail's frame (4-6, or 8-10 outside room player modes 2 / 3) */
 #define playerObjectLoopCount unk6C /* s16: the object's loop counter (frame steps), counted from 0; the step reads its tables by it */
+#define playerObjectLoopCount6E unk6E /* s16: the frame-step loop counter kept in unk6E (playerObjectLoopCount's role) */
 
 /* PlayerState - PlayerState - the player's struct PlayerState (Task.player);
    unk14 / unk16 are per-action scratch, each alias used only inside the
@@ -1479,6 +1537,7 @@
 /* RoomParticles - Room particles (task type #79, Task_RoomParticles;
    gRoomParticlesVariants) */
 #define roomParticlesIndex unk28 /* s32: index of the particle the current loop is on (gRoomParticles[it]) */
+#define roomParticlesCopyIndex unk2C /* s32: RoomParticleDrawRepeated's copy loop (0-4): each copy drawn 192 px further right */
 #define roomParticlesCount unk30 /* s32: particles RoomParticlesDrawBelowLine draws (8, 3, 4 by variant) */
 #define roomParticlesLineY unk34 /* s32: world Y of the line the particles show below (0, 208, 64 by variant) */
 

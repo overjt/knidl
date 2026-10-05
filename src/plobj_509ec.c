@@ -171,10 +171,10 @@ void PlayerObjectSpitStar(void)
         {
             t->unk28 = 0;
             if (t->facing == 1)
-                t->unk2C = -0x40000;
+                t->playerObjectTrailOffsetX = -0x40000;
             else
-                t->unk2C = 0x40000;
-            gCurTask->unk30 = 0;
+                t->playerObjectTrailOffsetX = 0x40000;
+            gCurTask->playerObjectTrailVelX = 0;
             TaskSetMotionXFacing(0x40000, 0x5A5A5A5A);
             while (1)
             {
@@ -228,7 +228,7 @@ void PlayerObjectSpitStarUpdate(void)
         struct Task *t;
         TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
         t = gCurTask;
-        t->unk24 = (s32)gUnk_0873BD78;
+        t->playerObjectVanishBox = (s32)gUnk_0873BD78;
         if (gTerrainResult.ceilingHits != 0 || (t->onGround & 1) || gTerrainResult.unk0 != 0)
             PlaySfxIfLocalPlayer(125, gCurTask->parent);
     }
@@ -246,52 +246,52 @@ void sub_08050f80(void)
         dx = -8;
     else
         dx = 8;
-    switch (t->unk28)
+    switch (t->playerObjectTrailStep)
     {
     case 0:
     case 1:
         if (gRoomPlayerMode == 2 || gRoomPlayerMode == 3)
-            gCurTask->unk34 = 4;
+            gCurTask->playerObjectTrailFrame = 4;
         else
-            gCurTask->unk34 = 8;
+            gCurTask->playerObjectTrailFrame = 8;
         break;
     case 2:
     case 3:
         if (gRoomPlayerMode == 2 || gRoomPlayerMode == 3)
-            gCurTask->unk34 = 5;
+            gCurTask->playerObjectTrailFrame = 5;
         else
-            gCurTask->unk34 = 9;
+            gCurTask->playerObjectTrailFrame = 9;
         break;
     case 4:
     case 5:
         if (gRoomPlayerMode == 2 || gRoomPlayerMode == 3)
-            gCurTask->unk34 = 6;
+            gCurTask->playerObjectTrailFrame = 6;
         else
-            gCurTask->unk34 = 10;
+            gCurTask->playerObjectTrailFrame = 10;
         break;
     }
     t = gCurTask;
-    if (t->unk28++ > 5)
+    if (t->playerObjectTrailStep++ > 5)
     {
-        t->unk28 = 0;
+        t->playerObjectTrailStep = 0;
         if (t->facing == 1)
-            t->unk2C = -0x40000;
+            t->playerObjectTrailOffsetX = -0x40000;
         else
-            t->unk2C = 0x40000;
-        gCurTask->unk30 = 0;
+            t->playerObjectTrailOffsetX = 0x40000;
+        gCurTask->playerObjectTrailVelX = 0;
     }
     else
     {
         if (t->facing == 1)
-            t->unk30 += -0x10000;
+            t->playerObjectTrailVelX += -0x10000;
         else
-            t->unk30 += 0x10000;
-        gCurTask->unk2C += gCurTask->unk30;
+            t->playerObjectTrailVelX += 0x10000;
+        gCurTask->playerObjectTrailOffsetX += gCurTask->playerObjectTrailVelX;
     }
     t = gCurTask;
     if (t->player->unk37 != 2)
     {
-        x = t->pixelX + dx + ((s16 *)&t->unk2C)[1];
+        x = t->pixelX + dx + ((s16 *)&t->playerObjectTrailOffsetX)[1];
         y = t->pixelY;
         if (!IsWorldPosOnScreen(x, y))
             return;
@@ -300,12 +300,12 @@ void sub_08050f80(void)
     }
     else
     {
-        x = t->pixelX + dx + ((s16 *)&t->unk2C)[1];
+        x = t->pixelX + dx + ((s16 *)&t->playerObjectTrailOffsetX)[1];
         y = t->pixelY;
     }
     {
         u32 *tbl = gCurTask->frameTable;
-        QueueSprite(gCurTask->layer, tbl[gCurTask->unk34], 0, 0, x, y);
+        QueueSprite(gCurTask->layer, tbl[gCurTask->playerObjectTrailFrame], 0, 0, x, y);
     }
 }
 
@@ -328,8 +328,8 @@ void PlayerObjectSpitMultiStar(void)
     {
         struct Task *t = gCurTask;
         t->posY = (t->pixelY + 4) << 16;
-        t->unk28 = 6;
-        t->unk34 = 0;
+        t->playerObjectMultiTrailStep = 6;
+        t->playerObjectMultiTrailDriftX = 0;
         PlaySfxIfLocalPlayer(106, t->parent);
     }
     TaskSetMotionXFacing(0x40000, 0x5A5A5A5A);
@@ -400,7 +400,7 @@ void PlayerObjectSpitMultiStarUpdate(void)
         {
             PlaySfxIfLocalPlayer(125, t->parent);
             TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
-            gCurTask->unk24 = (s32)gUnk_0873BD8C;
+            gCurTask->playerObjectVanishBox = (s32)gUnk_0873BD8C;
         }
         else if (t->waterFlags & 1)
         {
@@ -416,49 +416,49 @@ void sub_080513d4(void)
 {
     struct Task *t;
 
-    switch (gCurTask->unk28)
+    switch (gCurTask->playerObjectMultiTrailStep)
     {
     case 0:
         {
             struct Task *u = gCurTask;
             if (u->facing == 1)
-                u->unk30 = u->pixelX - 8;
+                u->playerObjectMultiTrailAnchorX = u->pixelX - 8;
             else
-                u->unk30 = u->pixelX + 8;
+                u->playerObjectMultiTrailAnchorX = u->pixelX + 8;
         }
     case 1:
-        gCurTask->unk2C = 24;
+        gCurTask->playerObjectMultiTrailFrame = 24;
         break;
     case 2:
     case 3:
-        gCurTask->unk2C = 25;
+        gCurTask->playerObjectMultiTrailFrame = 25;
         break;
     case 4:
     case 5:
-        gCurTask->unk2C = 26;
+        gCurTask->playerObjectMultiTrailFrame = 26;
         break;
     case 6:
     case 7:
         {
             struct Task *v = gCurTask;
-            v->unk2C = -1;
-            v->unk34 = 0;
+            v->playerObjectMultiTrailFrame = -1;
+            v->playerObjectMultiTrailDriftX = 0;
         }
         break;
     }
     t = gCurTask;
-    t->unk28 = (t->unk28 + 1) & 7;
-    if (t->unk2C != -1)
+    t->playerObjectMultiTrailStep = (t->playerObjectMultiTrailStep + 1) & 7;
+    if (t->playerObjectMultiTrailFrame != -1)
     {
         if (t->facing == 1)
-            t->unk34--;
+            t->playerObjectMultiTrailDriftX--;
         else
-            t->unk34++;
-        if (IsWorldPosOnScreen(gCurTask->unk30 + gCurTask->unk34, gCurTask->pixelY))
+            t->playerObjectMultiTrailDriftX++;
+        if (IsWorldPosOnScreen(gCurTask->playerObjectMultiTrailAnchorX + gCurTask->playerObjectMultiTrailDriftX, gCurTask->pixelY))
         {
             u32 *tbl = gCurTask->frameTable;
-            QueueSprite(gCurTask->layer, tbl[gCurTask->unk2C], 0, 0,
-                         gCurTask->unk30 + gCurTask->unk34 - gSpriteCameraX,
+            QueueSprite(gCurTask->layer, tbl[gCurTask->playerObjectMultiTrailFrame], 0, 0,
+                         gCurTask->playerObjectMultiTrailAnchorX + gCurTask->playerObjectMultiTrailDriftX - gSpriteCameraX,
                          gCurTask->pixelY - gSpriteCameraY);
         }
     }

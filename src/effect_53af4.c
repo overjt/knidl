@@ -74,11 +74,11 @@ void PlayerEffectInhaleAir(void)
     gCurTask->posY = 0x40000;
     for (;;)
     {
-        gCurTask->unk28 = 0;
+        gCurTask->playerEffectInhaleAirFrame = 0;
         gCurTask->playerEffectLoopCount = 0;
         do
         {
-            TaskSetFrame((s16)gCurTask->unk28++);
+            TaskSetFrame((s16)gCurTask->playerEffectInhaleAirFrame++);
             TaskYieldTrampoline(1);
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
@@ -318,8 +318,8 @@ void PlayerEffectSkidDust(void)
     {
     case 0:
         t->playerEffectStopRequested = 0;
-        t->unk2C = t->player->mode;
-        t->unk30 = t->playerEffectSpawnWord & 0xFF;
+        t->playerEffectStartMode = t->player->mode;
+        t->playerEffectFramesLeft = t->playerEffectSpawnWord & 0xFF;
         t->updateCallback = (u32)PlayerEffectSkidDustUpdate;
         do
         {
@@ -375,7 +375,7 @@ void PlayerEffectSkidDustUpdate(void)
     {
         u8 m = t->player->mode;
 
-        if (m != t->unk2C || m == 16)
+        if (m != t->playerEffectStartMode || m == 16)
         {
             t->playerEffectStopRequested = 1;
             return;
@@ -389,7 +389,7 @@ void PlayerEffectSkidDustUpdate(void)
         {
             struct Task *u = gCurTask;
 
-            if (((u8 *)u)[24] != 0 && --u->unk30 == 0)
+            if (((u8 *)u)[24] != 0 && --u->playerEffectFramesLeft == 0)
                 u->playerEffectStopRequested++;
             break;
         }

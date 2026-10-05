@@ -428,7 +428,7 @@ void GameOverChoiceGiveUpEnd(void)
     gCurTask->frame++;
     TaskSetMotion(-0x10000, 0x2000, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(8);
-    gCurTask->unk6C = 0;
+    gCurTask->gameOverChoiceLoopCount = 0;
     do {
         gCurTask->frame = 13;
         TaskSetMotion(0x4000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
@@ -439,8 +439,8 @@ void GameOverChoiceGiveUpEnd(void)
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 2);
+        gCurTask->gameOverChoiceLoopCount++;
+    } while ((s16)gCurTask->gameOverChoiceLoopCount <= 2);
     gCurTask->frame = 12;
     TaskSetMotion(0x30000, 0x8000, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(2);

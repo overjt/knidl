@@ -569,10 +569,10 @@ void PlayerSetParasolDriftRow(s32 a)
         s32 v = e[0] << 8;
         if (e[0] & 0x8000)
             v |= 0xFF000000;
-        t->unk2C = v;
+        t->playerParasolSwayVelX = v;
     }
     else
     {
-        t->unk2C = -(e[0] & 0x8000 ? (e[0] << 8) | 0xFF000000 : e[0] << 8);
+        t->playerParasolSwayVelX = -(e[0] & 0x8000 ? (e[0] << 8) | 0xFF000000 : e[0] << 8);
     }
 }

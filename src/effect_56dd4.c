@@ -144,12 +144,12 @@ void PlayerEffectSparkAura(void)
     t = gCurTask;
     t->frameTable = gPlayerEffectSparkAuraFrames;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x800) | 12;
-    if ((t->unk28 = t->playerEffectSpawnWord & 15) == 0)
+    if ((t->playerEffectAuraIndex = t->playerEffectSpawnWord & 15) == 0)
         t->drawCallback = (u32)TaskDrawWorldLoadTiles;
     else
         t->drawCallback = (u32)TaskDrawWorldTilesLoaded;
-    x = gUnk_0873BA8C[gCurTask->unk28][0];
-    y = gUnk_0873BA8C[gCurTask->unk28][1];
+    x = gUnk_0873BA8C[gCurTask->playerEffectAuraIndex][0];
+    y = gUnk_0873BA8C[gCurTask->playerEffectAuraIndex][1];
     for (;;)
     {
         gCurTask->posX = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
@@ -208,7 +208,7 @@ void PlayerEffectSparkAuraUpdate(void)
     {
         TaskFree(gCurTaskIdx);
     }
-    else if (t->unk28 == 0)
+    else if (t->playerEffectAuraIndex == 0)
     {
         RegisterCollider(gCurTaskIdx, p->pixelX, p->pixelY, gUnk_0873C038);
         TaskBreakBlocksAt((struct HitBoxSet *)gUnk_0873CC94, (gCurTask->u8C.parentTask)->pixelX,

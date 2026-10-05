@@ -36,7 +36,7 @@ void Task_AirGrindObject(void)
 
 void AirGrindRacer(void)
 {
-    s32 player = gCurTask->unk1C;
+    s32 player = gCurTask->airGrindObjectPlayer;
     s32 src;
 
     gCurTask->drawCallback = (u32)AirGrindRacerDraw;
@@ -47,7 +47,7 @@ void AirGrindRacer(void)
     gCurTask->updateCallback = (u32)AirGrindRacerUpdate;
     gCurTask->lateUpdateCallback = (u32)AirGrindRacerIdleUpdate;
     gCurTask->state = 0;
-    gCurTask->unk28 = 256;
+    gCurTask->airGrindObjectDepth = 256;
     gAirGrindPtr->players[player].liftY = 0x80000;
     gAirGrindPtr->players[player].offsetX = 0;
     gAirGrindPtr->players[player].animStep = 0;
@@ -184,7 +184,7 @@ s32 AirGrindCpuHoldsA(s32 player, s32 pos)
 
 void AirGrindRacerUpdate(void)
 {
-    s32 player = gCurTask->unk1C;
+    s32 player = gCurTask->airGrindObjectPlayer;
     s32 pos = gCurTask->posX >> 16;
     u16 prev = gAirGrindPtr->players[player].heldKeys;
     s32 src;

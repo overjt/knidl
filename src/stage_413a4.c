@@ -330,7 +330,7 @@ void MetaKnightActionJump(void)
     t = gCurTask;
     if (t->player->prevMode != 4)
     {
-        t->unk28 = 1;
+        t->playerJumpFallAllowed = 1;
         p = t->player;
         if (p->prevMode == 9)
         {
@@ -351,7 +351,7 @@ void MetaKnightActionJump(void)
     PlayerPlayBump();
     TaskSetFrame(0x11E4);
     TaskYieldTrampoline(8);
-    gCurTask->unk28 = 0;
+    gCurTask->playerJumpFallAllowed = 0;
     TaskSetFrame(0x11E5);
     TaskYieldTrampoline(3);
     gCurTask->playerLoopCount = 0;
@@ -361,7 +361,7 @@ void MetaKnightActionJump(void)
         TaskYieldTrampoline(3);
         gCurTask->playerLoopCount++;
     } while ((s16)gCurTask->playerLoopCount <= 5);
-    gCurTask->unk28 = 1;
+    gCurTask->playerJumpFallAllowed = 1;
     TaskSleepForever();
 }
 
@@ -407,7 +407,7 @@ void MetaKnightActionJumpUpdate(void)
                 PlayerSetMotionYPreset(5);
             }
         }
-        else if (t->unk28 != 0 && t->velY >= 0)
+        else if (t->playerJumpFallAllowed != 0 && t->velY >= 0)
         {
             PlayerSetMotionYPreset(6);
             gCurTask->player->requestedAction = META_KNIGHT_ACTION_FALL;

@@ -638,7 +638,7 @@ void PlayerJumpOutOfCannon(s32 id)
     PlayerResumeControl(id, 6, 1, 0);
     p->playerJumpPhaseTimer = 8;
     HudShowAbility(p->ability, id);
-    if (u->unk1C > 0)
+    if (u->cannonRiderCount > 0)
         DisablePause();
 }
 

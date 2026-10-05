@@ -218,13 +218,13 @@ void sub_0805614c(void)
         TaskSetMotion(0x4000, -0x700, 0x5A5A5A5A, -0x4000, -0x1000, 0x5A5A5A5A);
         gCurTask->frame = 0;
         TaskYieldTrampoline(3);
-        gCurTask->unk6E = 0;
+        gCurTask->playerEffectLoopCount6E = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk6E++;
-        } while (gCurTask->unk6E <= 4);
+            gCurTask->playerEffectLoopCount6E++;
+        } while (gCurTask->playerEffectLoopCount6E <= 4);
         if (gCurTask->playerEffectStopRequested != 0)
             break;
         gCurTask->posX = (RandomSpread(-12, 1, 24) + (gCurTask->u8C.parentTask)->pixelX) << 16;
@@ -232,13 +232,13 @@ void sub_0805614c(void)
         TaskSetMotion(-0x4000, 0x700, 0x5A5A5A5A, -0x4000, -0x1000, 0x5A5A5A5A);
         gCurTask->frame = 0;
         TaskYieldTrampoline(3);
-        gCurTask->unk6E = 0;
+        gCurTask->playerEffectLoopCount6E = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk6E++;
-        } while (gCurTask->unk6E <= 4);
+            gCurTask->playerEffectLoopCount6E++;
+        } while (gCurTask->playerEffectLoopCount6E <= 4);
     }
     TaskExitTrampoline();
 }

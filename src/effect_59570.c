@@ -185,8 +185,8 @@ void sub_08059570(void)
         gCurTask->drawCallback = (u32)sub_08059b18;
         gCurTask->layer = 5;
         t = gCurTask;
-        t->unk28 = t->pixelX;
-        t->unk2C = t->pixelY;
+        t->playerEffectMirrorOriginX = t->pixelX;
+        t->playerEffectMirrorOriginY = t->pixelY;
         t->posX = 0;
         t->posY = 0x30000;
         t->velX = -0x40000;
@@ -245,20 +245,20 @@ void sub_08059b18(void)
 
     if (t->frame != -1)
     {
-        if (IsWorldPosOnScreen((s16)(t->unk28 + t->pixelX), (s16)(t->unk2C + t->pixelY)) != 0)
+        if (IsWorldPosOnScreen((s16)(t->playerEffectMirrorOriginX + t->pixelX), (s16)(t->playerEffectMirrorOriginY + t->pixelY)) != 0)
         {
             u = gCurTask;
             QueueSprite(u->layer, gUnk_0874C828[u->frame], 0, 0,
-                         u->unk28 + u->pixelX - gSpriteCameraX,
-                         (s16)(u->unk2C + u->pixelY - gSpriteCameraY));
+                         u->playerEffectMirrorOriginX + u->pixelX - gSpriteCameraX,
+                         (s16)(u->playerEffectMirrorOriginY + u->pixelY - gSpriteCameraY));
         }
         t = gCurTask;
-        if (IsWorldPosOnScreen((s16)(t->unk28 - t->pixelX), (s16)(t->unk2C + t->pixelY)) != 0)
+        if (IsWorldPosOnScreen((s16)(t->playerEffectMirrorOriginX - t->pixelX), (s16)(t->playerEffectMirrorOriginY + t->pixelY)) != 0)
         {
             u = gCurTask;
             QueueSprite(u->layer, gUnk_0874C828[(s16)(u->frame | 1)], 0, 0,
-                         u->unk28 - u->pixelX - gSpriteCameraX,
-                         (s16)(u->unk2C + u->pixelY - gSpriteCameraY));
+                         u->playerEffectMirrorOriginX - u->pixelX - gSpriteCameraX,
+                         (s16)(u->playerEffectMirrorOriginY + u->pixelY - gSpriteCameraY));
         }
     }
 }

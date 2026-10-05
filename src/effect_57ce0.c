@@ -169,8 +169,8 @@ void PlayerEffectMikeAttack(void)
         while ((s8)gCurTask->player->playerMikeShoutCount == 0)
             TaskYieldTrampoline(1);
         u = gCurTask;
-        u->unk28 = gPlayerCameraPos[u->parent].x;
-        u->unk2C = gPlayerCameraPos[u->parent].y;
+        u->playerEffectMikeX = gPlayerCameraPos[u->parent].x;
+        u->playerEffectMikeY = gPlayerCameraPos[u->parent].y;
         gScreenAttackActive = 0;
         for (i = 0; i < 20; i++)
             gScreenAttackTasks[i] |= 0xFFFF;
@@ -329,7 +329,7 @@ void PlayerEffectMikeAttackUpdate(void)
     if (t->player->mode != 13)
         TaskFree(gCurTaskIdx);
     else if ((s8)t->player->playerMikeShoutCount != 0)
-        RegisterCollider((u8)gCurTaskIdx, t->unk28, t->unk2C, gUnk_0873C04C);
+        RegisterCollider((u8)gCurTaskIdx, t->playerEffectMikeX, t->playerEffectMikeY, gUnk_0873C04C);
 }
 
 void PlayerEffectSleepBubble(void)

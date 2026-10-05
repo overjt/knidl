@@ -336,7 +336,7 @@ void sub_08057ad4(void)
             struct Task *v = gCurTask;
 
             v->posY = (v->u8C.parentTask)->pixelY << 16;
-            if ((v->u8C.parentTask)->unk28 == 0)
+            if ((v->u8C.parentTask)->playerWheelOnWater == 0)
             {
                 v->tileWord = ((v->u8C.parentTask)->tileWord + 0x1800) | 8;
                 TaskSetFrameByFacing(0);

@@ -931,7 +931,7 @@ void PickupInitSprite(void)
 
     a = gCurTask->u8C.actor;
     if (a->animScript == NULL)
-        gCurTask->unk34 = ActorStartAnim((struct AnimCmd *)gUnk_08756084);
+        gCurTask->actorAnimDelay34 = ActorStartAnim((struct AnimCmd *)gUnk_08756084);
     gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
     if (gMetaKnightmareMode == 1 && gCurTask->u76.subtype == 1)
         gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xE000;
@@ -1024,8 +1024,8 @@ void PickupUpdate(void)
 
     if (gCurTask->variant == 0 && (u8)ActorCollideTerrainFloor() == 0)
         CallTableEntry(gCurTask->updateState, 3, gPickupStateUpdates);
-    v = gCurTask->unk34;
-    gCurTask->unk34 = ActorTickAnim(v);
+    v = gCurTask->actorAnimDelay34;
+    gCurTask->actorAnimDelay34 = ActorTickAnim(v);
     if (v <= 0)
     {
         sub_080b3fcc();

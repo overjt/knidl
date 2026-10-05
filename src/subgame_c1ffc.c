@@ -50,8 +50,8 @@ void CreateAirGrindRacers(void)
         airGrindObjectSlot = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 0);
         if (airGrindObjectSlot != -1) {
             airGrindObject = &gTasks[airGrindObjectSlot];
-            airGrindObject->unk18 = airGrindObjectSlot;
-            airGrindObject->unk1C = i;
+            airGrindObject->airGrindObjectRacerSlot = airGrindObjectSlot;
+            airGrindObject->airGrindObjectPlayer = i;
             airGrindObject->variant = AIR_GRIND_OBJECT_VARIANT_RACER;
         }
     }
@@ -78,10 +78,10 @@ void CreateAirGrindEffect(s32 a, s32 b, s32 c)
     airGrindObjectSlot = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 32);
     if (airGrindObjectSlot != -1) {
         airGrindObject = &gTasks[airGrindObjectSlot];
-        airGrindObject->unk18 = b;
-        airGrindObject->unk1C = a;
+        airGrindObject->airGrindObjectRacerSlot = b;
+        airGrindObject->airGrindObjectPlayer = a;
         airGrindObject->variant = AIR_GRIND_OBJECT_VARIANT_EFFECT;
-        airGrindObject->unk20 = c;
+        airGrindObject->airGrindObjectEffectKind = c;
     }
 }
 

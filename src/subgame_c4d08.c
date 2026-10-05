@@ -59,10 +59,10 @@ void AirGrindRacerDraw(void)
                 break;
             }
             if (n != 0)
-                QueueSprite(gCurTask->layer, AirGrindScaleSprite((u16 *)p[n], gCurTask->unk28),
+                QueueSprite(gCurTask->layer, AirGrindScaleSprite((u16 *)p[n], gCurTask->airGrindObjectDepth),
                              gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->pixelX, gCurTask->pixelY);
         }
-        QueueSprite(gCurTask->layer, AirGrindScaleSprite((u16 *)p[gCurTask->frame], gCurTask->unk28),
+        QueueSprite(gCurTask->layer, AirGrindScaleSprite((u16 *)p[gCurTask->frame], gCurTask->airGrindObjectDepth),
                      gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->pixelX, gCurTask->pixelY);
     }
 }
@@ -74,7 +74,7 @@ void AirGrindEffectDrawOrFree(void)
 
     if (tbl != NULL && t->frame != -1) {
         if ((u16)(t->pixelX + 63) <= 366 && t->pixelY > -64 && t->pixelY < 224)
-            QueueSprite(gCurTask->layer, AirGrindScaleSprite((u16 *)tbl[t->frame], t->unk28),
+            QueueSprite(gCurTask->layer, AirGrindScaleSprite((u16 *)tbl[t->frame], t->airGrindObjectDepth),
                          gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->pixelX, gCurTask->pixelY);
         else
             TaskFree(gCurTaskIdx);
@@ -89,7 +89,7 @@ void AirGrindRacerMove(void)
     s32 v;
     s32 d;
 
-    if (n <= 1 || gAirGrindLocalPlayerSlots[g->localPlayer][gCurTask->unk1C] >= n) {
+    if (n <= 1 || gAirGrindLocalPlayerSlots[g->localPlayer][gCurTask->airGrindObjectPlayer] >= n) {
         gCurTask->velX += gCurTask->accelX;
     } else {
         t = gCurTask;

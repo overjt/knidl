@@ -264,7 +264,7 @@ void PlayerObjectUFOShotUpdate(void)
             if (gTerrainResult.ceilingHits != 0 || (gCurTask->onGround & 1) || gTerrainResult.unk0 != 0)
                 PlaySfxIfLocalPlayer(125, gCurTask->parent);
             TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
-            gCurTask->unk24 = (s32)gUnk_0873BE4C;
+            gCurTask->playerObjectVanishBox = (s32)gUnk_0873BE4C;
         }
         RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873BE4C);
         break;
@@ -325,13 +325,13 @@ void PlayerObjectStarRodShot(void)
     }
     {
         struct Task *t = gCurTask;
-        t->unk28 = 0;
+        t->playerObjectTrailStep = 0;
         if (t->facing == 1)
-            t->unk2C = -0x40000;
+            t->playerObjectTrailOffsetX = -0x40000;
         else
-            t->unk2C = 0x40000;
+            t->playerObjectTrailOffsetX = 0x40000;
     }
-    gCurTask->unk30 = 0;
+    gCurTask->playerObjectTrailVelX = 0;
     TaskSetMotionXFacing(0x40000, 0x5A5A5A5A);
     gCurTask->frame = 0;
     TaskYieldTrampoline(3);
@@ -409,12 +409,12 @@ void PlayerObjectStarRodFlightShot(void)
     t = gCurTask;
     t->frameTable = gPlayerObjectStarRodShotFrames;
     t->posX = (t->pixelX + 24) << 16;
-    t->unk28 = 0;
+    t->playerObjectTrailStep = 0;
     if (t->facing == 1)
-        t->unk2C = -0x40000;
+        t->playerObjectTrailOffsetX = -0x40000;
     else
-        t->unk2C = 0x40000;
-    gCurTask->unk30 = 0;
+        t->playerObjectTrailOffsetX = 0x40000;
+    gCurTask->playerObjectTrailVelX = 0;
     TaskSetMotionXFacing(0x40000, 0x5A5A5A5A);
     gCurTask->frame = 0;
     TaskYieldTrampoline(3);
@@ -482,7 +482,7 @@ s32 CreatePlayerObject(s8 player, u8 variant, s32 arg)
     if (idx != -1)
     {
         struct Task *t = &gTasks[idx];
-        t->unk18 = (variant << 24) | (arg & 0xFFFFFF);
+        t->playerObjectSpawnWord = (variant << 24) | (arg & 0xFFFFFF);
         t->posX = gCurTask->posX;
         t->pixelX = gCurTask->pixelX;
         t->posY = gCurTask->posY;

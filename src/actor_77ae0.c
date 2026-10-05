@@ -398,7 +398,7 @@ void RoomParticleInit(struct RoomParticle *p, u8 a, u8 b)
     }
     p->pixelY = RandomRange(132) + 8;
     p->animStep = RandomRange(10);
-    p->animRow = gUnk_08740620[gCurTask->unk28];
+    p->animRow = gUnk_08740620[gCurTask->roomParticlesIndex];
 }
 
 void RoomParticleDrawFixed(struct RoomParticle *p)
@@ -430,10 +430,10 @@ void RoomParticleDrawScrolled(struct RoomParticle *p)
 
 void RoomParticleDrawRepeated(struct RoomParticle *p)
 {
-    gCurTask->unk2C = 0;
+    gCurTask->roomParticlesCopyIndex = 0;
     do
     {
-        if (RoomParticleIsOnScreen(p->pixelX - gSpriteCameraX + gCurTask->unk2C * 192,
+        if (RoomParticleIsOnScreen(p->pixelX - gSpriteCameraX + gCurTask->roomParticlesCopyIndex * 192,
                          p->pixelY))
         {
             struct Task *t = gCurTask;
@@ -441,11 +441,11 @@ void RoomParticleDrawRepeated(struct RoomParticle *p)
             QueueSprite(t->layer,
                          gUnk_08752E00[gUnk_087404A0[p->animRow][p->animStep].frame],
                          t->spriteFlags, t->tileWord,
-                         p->pixelX - gSpriteCameraX + t->unk2C * 192,
+                         p->pixelX - gSpriteCameraX + t->roomParticlesCopyIndex * 192,
                          p->pixelY);
         }
-        gCurTask->unk2C++;
-    } while (gCurTask->unk2C <= 4);
+        gCurTask->roomParticlesCopyIndex++;
+    } while (gCurTask->roomParticlesCopyIndex <= 4);
 }
 
 u8 RoomParticleIsOnScreen(s16 x, s16 y)
