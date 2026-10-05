@@ -110,24 +110,24 @@ code only; naming and data readability are the figures below.
   headers, the actor records and seg 18's handler tables). Assets are never committed
   ([docs/data.md](docs/data.md)). The shift test proves the ROM movable and
   the boot test runs it moved (see "For modders").
-- **Names** (#155, open). 4,659 of the 5,348 functions and 265 of the 266
+- **Names** (#155, closed). 4,937 of the 5,348 functions and 265 of the 266
   task bodies have real names, each with its evidence in
   `docs/analysis/renames.csv` (convention: [docs/naming.md](docs/naming.md)).
-  13,443 symbols are documented: semantic names and position names (data
+  14,208 symbols are documented: semantic names and position names (data
   records, palette-buffer cells, the player's frame records, and state
   bodies and scripts named after their slot in a state or dispatch table).
-  `struct Task`'s per-family registers read by name in 198 families
-  through 1,051 alias macros (`include/task_vars.h`, as pret's
-  `#define tState data[0]`), and the code spells its magic numbers as
-  1,473 named constants (`include/constants/`, as in pret and katam:
-  `CreateChildTaskHere(TASK_FIRE_LION_FLAME, 0)`,
-  `ActorSetState(FIRE_LION_STATE_POUNCE)`, `gStageRequest =
-  STAGE_REQUEST_PAUSE`). Most of the undocumented symbols are ROM data
-  labels, 17,073 of them asset labels that stay unnamed by policy; the
-  long tail (689 `sub_*` functions, mostly enemy and boss states where one
-  verb would fit two of them, scripts that need identities, and helpers)
-  is #155's backlog. `make audit` keeps the census of what is left, and
-  why, in [docs/naming.md](docs/naming.md) section 5.1.
+  `struct Task`'s per-family registers and the player's per-action scratch
+  read by name through 1,186 alias macros (`include/task_vars.h`, as
+  pret's `#define tState data[0]`), and the code spells its magic numbers
+  and flag bits as 1,571 named constants (`include/constants/`, as in pret
+  and katam: `CreateChildTaskHere(TASK_FIRE_LION_FLAME, 0)`,
+  `ActorSetState(FIRE_LION_STATE_POUNCE)`, `t->spriteFlags &=
+  ~SPRITE_FLAG_FLIP_X`). Most of the undocumented symbols are ROM data
+  labels, 17,073 of them asset labels that stay unnamed by policy; every
+  other placeholder left (411 `sub_*` functions, 62 RAM cells, the
+  `unk*` fields and the functional ROM labels) has its reason in
+  `docs/analysis/unnamed.csv` or in its referrers, and `make audit` keeps
+  that census in [docs/naming.md](docs/naming.md) section 5.1.
 
 ## For modders
 
