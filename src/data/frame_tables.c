@@ -539,10 +539,10 @@ extern const struct TaskGfx
     gCutsceneFountainStarRodFrame10, gCutsceneFountainStarRodFrame11, gCutsceneFountainStarRodFrame12, gCutsceneFountainStarRodFrame13,
     gCutsceneFountainStarRodFrame14, gCutsceneFountainStarRodFrame15, gCutsceneFountainStarRodFrame16;
 
-/* struct TaskGfx records in player_frame_records: the player's, which
+/* struct TaskGfxExtended records in player_frame_records: the player's, which
  * PlayerLoadFrameTilesAndPalette (src/player_helpers.c) reads as one, bit 0 of
- * .oamTemplate tagging the 20-byte variant. */
-extern const struct TaskGfx
+ * .oamTemplate (TASK_GFX_EXTENDED) tagging the 20-byte form (include/task.h). */
+extern const struct TaskGfxExtended
     gPlayerFrame0, gUnk_08759DDC, gPlayerFrame1, gPlayerFrame6,
     gPlayerFrame2, gPlayerFrame7, gPlayerFrame3, gPlayerFrame8,
     gPlayerFrame4, gPlayerFrame9, gPlayerFrame10, gUnk_08759EA4,
@@ -3419,7 +3419,7 @@ u32 gUnk_0874CF94[] FRAME_TABLE = {
 /* gPlayerFrames.  Consumers: Task_Player (src/player_task.c:80),
  * PlayerWarpStarRideInit (src/actor_hit_effects.c:670), GoalGameHelperKirbyInitSprite
  * (src/effect_goal_game_dance.c:1665) and 2 more.  4713 words, the player's struct
- * TaskGfx records (tagged 20-byte variant); extent: the span to the next
+ * TaskGfx records (tagged: struct TaskGfxExtended); extent: the span to the next
  * label, every word such a target (pointer_tables 0x0874CFEC-0x08751990).
  * Declared include/player.h:331. */
 u32 gPlayerFrames[] FRAME_TABLE = {
@@ -13126,7 +13126,7 @@ u32 gCutsceneSingingFrames[] FRAME_TABLE = {
 };
 
 /* gCutsceneFountainKirbyFrames.  Consumer: CutsceneFountainKirby (src/cutscene_fountain_kirby_king_dedede.c:18).  196
- * words, the player's struct TaskGfx records (tagged 20-byte variant);
+ * words, the player's struct TaskGfx records (tagged: struct TaskGfxExtended);
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08755068-0x08755378).  Declared include/player.h:345. */
 u32 gCutsceneFountainKirbyFrames[] FRAME_TABLE = {

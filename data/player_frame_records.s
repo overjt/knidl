@@ -387,1233 +387,1233 @@ gPlayerFrame883:
 	.word	gPlayerFrame883OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD126
-	.word	gUnk_080DE780
+	.word	gPlayerFrame883NextBankPalette
+	.word	gPlayerFrame883UpperTiles
 	.global	gPlayerFrame888
 gPlayerFrame888:
 	.word	gPlayerFrame888OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD126
-	.word	gUnk_080DE886
+	.word	gPlayerFrame883NextBankPalette
+	.word	gPlayerFrame888UpperTiles
 	.global	gPlayerFrame884
 gPlayerFrame884:
 	.word	gPlayerFrame884OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD126
-	.word	gUnk_080DE780
+	.word	gPlayerFrame883NextBankPalette
+	.word	gPlayerFrame883UpperTiles
 	.global	gPlayerFrame889
 gPlayerFrame889:
 	.word	gPlayerFrame889OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD126
-	.word	gUnk_080DE886
+	.word	gPlayerFrame883NextBankPalette
+	.word	gPlayerFrame888UpperTiles
 	.global	gPlayerFrame885
 gPlayerFrame885:
 	.word	gPlayerFrame885OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD126
-	.word	gUnk_080DE780
+	.word	gPlayerFrame883NextBankPalette
+	.word	gPlayerFrame883UpperTiles
 	.global	gPlayerFrame890
 gPlayerFrame890:
 	.word	gPlayerFrame890OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD126
-	.word	gUnk_080DE886
+	.word	gPlayerFrame883NextBankPalette
+	.word	gPlayerFrame888UpperTiles
 	.global	gPlayerFrame886
 gPlayerFrame886:
 	.word	gPlayerFrame886OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD126
-	.word	gUnk_080DE780
+	.word	gPlayerFrame883NextBankPalette
+	.word	gPlayerFrame883UpperTiles
 	.global	gPlayerFrame891
 gPlayerFrame891:
 	.word	gPlayerFrame891OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD126
-	.word	gUnk_080DE886
+	.word	gPlayerFrame883NextBankPalette
+	.word	gPlayerFrame888UpperTiles
 	.global	gPlayerFrame887
 gPlayerFrame887:
 	.word	gPlayerFrame887OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD126
-	.word	gUnk_080DE780
+	.word	gPlayerFrame883NextBankPalette
+	.word	gPlayerFrame883UpperTiles
 	.global	gPlayerFrame892
 gPlayerFrame892:
 	.word	gPlayerFrame892OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD126
-	.word	gUnk_080DE886
+	.word	gPlayerFrame883NextBankPalette
+	.word	gPlayerFrame888UpperTiles
 	.global	gPlayerFrame893
 gPlayerFrame893:
 	.word	gPlayerFrame893OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame10Tiles
-	.word	gUnk_080DD126
-	.word	gUnk_080DE94C
+	.word	gPlayerFrame883NextBankPalette
+	.word	gPlayerFrame893UpperTiles
 	.global	gPlayerFrame1264
 gPlayerFrame1264:
 	.word	gPlayerFrame1264OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEA12
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1264UpperTiles
 	.global	gPlayerFrame1265
 gPlayerFrame1265:
 	.word	gPlayerFrame1265OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEB98
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1265UpperTiles
 	.global	gPlayerFrame1266
 gPlayerFrame1266:
 	.word	gPlayerFrame1266OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DED1E
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1266UpperTiles
 	.global	gPlayerFrame1267
 gPlayerFrame1267:
 	.word	gPlayerFrame1267OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEEA4
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1267UpperTiles
 	.global	gPlayerFrame1284
 gPlayerFrame1284:
 	.word	gPlayerFrame1284OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD148
-	.word	gUnk_080DEA12
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1264UpperTiles
 	.global	gPlayerFrame1285
 gPlayerFrame1285:
 	.word	gPlayerFrame1285OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD148
-	.word	gUnk_080DEB98
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1265UpperTiles
 	.global	gPlayerFrame1286
 gPlayerFrame1286:
 	.word	gPlayerFrame1286OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD148
-	.word	gUnk_080DED1E
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1266UpperTiles
 	.global	gPlayerFrame1287
 gPlayerFrame1287:
 	.word	gPlayerFrame1287OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD148
-	.word	gUnk_080DEEA4
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1267UpperTiles
 	.global	gPlayerFrame1268
 gPlayerFrame1268:
 	.word	gPlayerFrame1268OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEA12
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1264UpperTiles
 	.global	gPlayerFrame1269
 gPlayerFrame1269:
 	.word	gPlayerFrame1269OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEB98
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1265UpperTiles
 	.global	gPlayerFrame1270
 gPlayerFrame1270:
 	.word	gPlayerFrame1270OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DED1E
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1266UpperTiles
 	.global	gPlayerFrame1271
 gPlayerFrame1271:
 	.word	gPlayerFrame1271OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEEA4
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1267UpperTiles
 	.global	gPlayerFrame1272
 gPlayerFrame1272:
 	.word	gPlayerFrame1272OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEA12
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1264UpperTiles
 	.global	gPlayerFrame1273
 gPlayerFrame1273:
 	.word	gPlayerFrame1273OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEB98
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1265UpperTiles
 	.global	gPlayerFrame1274
 gPlayerFrame1274:
 	.word	gPlayerFrame1274OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DED1E
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1266UpperTiles
 	.global	gPlayerFrame1275
 gPlayerFrame1275:
 	.word	gPlayerFrame1275OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEEA4
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1267UpperTiles
 	.global	gPlayerFrame1288
 gPlayerFrame1288:
 	.word	gPlayerFrame1288OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEA12
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1264UpperTiles
 	.global	gPlayerFrame1289
 gPlayerFrame1289:
 	.word	gPlayerFrame1289OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEB98
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1265UpperTiles
 	.global	gPlayerFrame1290
 gPlayerFrame1290:
 	.word	gPlayerFrame1290OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DED1E
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1266UpperTiles
 	.global	gPlayerFrame1291
 gPlayerFrame1291:
 	.word	gPlayerFrame1291OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEEA4
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1267UpperTiles
 	.global	gPlayerFrame1292
 gPlayerFrame1292:
 	.word	gPlayerFrame1292OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEA12
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1264UpperTiles
 	.global	gPlayerFrame1293
 gPlayerFrame1293:
 	.word	gPlayerFrame1293OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEB98
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1265UpperTiles
 	.global	gPlayerFrame1294
 gPlayerFrame1294:
 	.word	gPlayerFrame1294OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DED1E
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1266UpperTiles
 	.global	gPlayerFrame1295
 gPlayerFrame1295:
 	.word	gPlayerFrame1295OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEEA4
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1267UpperTiles
 	.global	gPlayerFrame1276
 gPlayerFrame1276:
 	.word	gPlayerFrame1276OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEA12
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1264UpperTiles
 	.global	gPlayerFrame1277
 gPlayerFrame1277:
 	.word	gPlayerFrame1277OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEB98
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1265UpperTiles
 	.global	gPlayerFrame1278
 gPlayerFrame1278:
 	.word	gPlayerFrame1278OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DED1E
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1266UpperTiles
 	.global	gPlayerFrame1279
 gPlayerFrame1279:
 	.word	gPlayerFrame1279OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEEA4
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1267UpperTiles
 	.global	gPlayerFrame1280
 gPlayerFrame1280:
 	.word	gPlayerFrame1280OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEA12
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1264UpperTiles
 	.global	gPlayerFrame1281
 gPlayerFrame1281:
 	.word	gPlayerFrame1281OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEB98
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1265UpperTiles
 	.global	gPlayerFrame1282
 gPlayerFrame1282:
 	.word	gPlayerFrame1282OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DED1E
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1266UpperTiles
 	.global	gPlayerFrame1283
 gPlayerFrame1283:
 	.word	gPlayerFrame1283OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEEA4
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1267UpperTiles
 	.global	gPlayerFrame1296
 gPlayerFrame1296:
 	.word	gPlayerFrame1296OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEA12
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1264UpperTiles
 	.global	gPlayerFrame1297
 gPlayerFrame1297:
 	.word	gPlayerFrame1297OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEB98
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1265UpperTiles
 	.global	gPlayerFrame1298
 gPlayerFrame1298:
 	.word	gPlayerFrame1298OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DED1E
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1266UpperTiles
 	.global	gPlayerFrame1299
 gPlayerFrame1299:
 	.word	gPlayerFrame1299OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEEA4
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1267UpperTiles
 	.global	gPlayerFrame1300
 gPlayerFrame1300:
 	.word	gPlayerFrame1300OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEA12
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1264UpperTiles
 	.global	gPlayerFrame1301
 gPlayerFrame1301:
 	.word	gPlayerFrame1301OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEB98
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1265UpperTiles
 	.global	gPlayerFrame1302
 gPlayerFrame1302:
 	.word	gPlayerFrame1302OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DED1E
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1266UpperTiles
 	.global	gPlayerFrame1303
 gPlayerFrame1303:
 	.word	gPlayerFrame1303OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEEA4
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1267UpperTiles
 	.global	gPlayerFrame1304
 gPlayerFrame1304:
 	.word	gPlayerFrame1304OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame10Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEA12
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1264UpperTiles
 	.global	gPlayerFrame1305
 gPlayerFrame1305:
 	.word	gPlayerFrame1305OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame10Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEB98
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1265UpperTiles
 	.global	gPlayerFrame1306
 gPlayerFrame1306:
 	.word	gPlayerFrame1306OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame10Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DED1E
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1266UpperTiles
 	.global	gPlayerFrame1307
 gPlayerFrame1307:
 	.word	gPlayerFrame1307OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame10Tiles
-	.word	gUnk_080DD148
-	.word	gUnk_080DEEA4
+	.word	gPlayerFrame1264NextBankPalette
+	.word	gPlayerFrame1267UpperTiles
 	.global	gPlayerFrame1506
 gPlayerFrame1506:
 	.word	gPlayerFrame1506OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD16A
-	.word	gUnk_080DF02A
+	.word	gPlayerFrame1506NextBankPalette
+	.word	gPlayerFrame1506UpperTiles
 	.global	gPlayerFrame1511
 gPlayerFrame1511:
 	.word	gPlayerFrame1511OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD16A
-	.word	gUnk_080DF0D0
+	.word	gPlayerFrame1506NextBankPalette
+	.word	gPlayerFrame1511UpperTiles
 	.global	gPlayerFrame1507
 gPlayerFrame1507:
 	.word	gPlayerFrame1507OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD16A
-	.word	gUnk_080DF02A
+	.word	gPlayerFrame1506NextBankPalette
+	.word	gPlayerFrame1506UpperTiles
 	.global	gPlayerFrame1512
 gPlayerFrame1512:
 	.word	gPlayerFrame1512OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD16A
-	.word	gUnk_080DF0D0
+	.word	gPlayerFrame1506NextBankPalette
+	.word	gPlayerFrame1511UpperTiles
 	.global	gPlayerFrame1508
 gPlayerFrame1508:
 	.word	gPlayerFrame1508OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD16A
-	.word	gUnk_080DF02A
+	.word	gPlayerFrame1506NextBankPalette
+	.word	gPlayerFrame1506UpperTiles
 	.global	gPlayerFrame1513
 gPlayerFrame1513:
 	.word	gPlayerFrame1513OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD16A
-	.word	gUnk_080DF0D0
+	.word	gPlayerFrame1506NextBankPalette
+	.word	gPlayerFrame1511UpperTiles
 	.global	gPlayerFrame1509
 gPlayerFrame1509:
 	.word	gPlayerFrame1509OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD16A
-	.word	gUnk_080DF02A
+	.word	gPlayerFrame1506NextBankPalette
+	.word	gPlayerFrame1506UpperTiles
 	.global	gPlayerFrame1514
 gPlayerFrame1514:
 	.word	gPlayerFrame1514OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD16A
-	.word	gUnk_080DF0D0
+	.word	gPlayerFrame1506NextBankPalette
+	.word	gPlayerFrame1511UpperTiles
 	.global	gPlayerFrame1510
 gPlayerFrame1510:
 	.word	gPlayerFrame1510OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD16A
-	.word	gUnk_080DF02A
+	.word	gPlayerFrame1506NextBankPalette
+	.word	gPlayerFrame1506UpperTiles
 	.global	gPlayerFrame1515
 gPlayerFrame1515:
 	.word	gPlayerFrame1515OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD16A
-	.word	gUnk_080DF0D0
+	.word	gPlayerFrame1506NextBankPalette
+	.word	gPlayerFrame1511UpperTiles
 	.global	gPlayerFrame1516
 gPlayerFrame1516:
 	.word	gPlayerFrame1516OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame10Tiles
-	.word	gUnk_080DD16A
-	.word	gUnk_080DF02A
+	.word	gPlayerFrame1506NextBankPalette
+	.word	gPlayerFrame1506UpperTiles
 	.global	gPlayerFrame1675
 gPlayerFrame1675:
 	.word	gPlayerFrame1675OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD18C
-	.word	gUnk_080DF176
+	.word	gPlayerFrame1675NextBankPalette
+	.word	gPlayerFrame1675UpperTiles
 	.global	gPlayerFrame1680
 gPlayerFrame1680:
 	.word	gPlayerFrame1680OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD18C
-	.word	gUnk_080DF23C
+	.word	gPlayerFrame1675NextBankPalette
+	.word	gPlayerFrame1680UpperTiles
 	.global	gPlayerFrame1676
 gPlayerFrame1676:
 	.word	gPlayerFrame1676OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD18C
-	.word	gUnk_080DF176
+	.word	gPlayerFrame1675NextBankPalette
+	.word	gPlayerFrame1675UpperTiles
 	.global	gPlayerFrame1681
 gPlayerFrame1681:
 	.word	gPlayerFrame1681OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD18C
-	.word	gUnk_080DF23C
+	.word	gPlayerFrame1675NextBankPalette
+	.word	gPlayerFrame1680UpperTiles
 	.global	gPlayerFrame1677
 gPlayerFrame1677:
 	.word	gPlayerFrame1677OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD18C
-	.word	gUnk_080DF176
+	.word	gPlayerFrame1675NextBankPalette
+	.word	gPlayerFrame1675UpperTiles
 	.global	gPlayerFrame1682
 gPlayerFrame1682:
 	.word	gPlayerFrame1682OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD18C
-	.word	gUnk_080DF23C
+	.word	gPlayerFrame1675NextBankPalette
+	.word	gPlayerFrame1680UpperTiles
 	.global	gPlayerFrame1678
 gPlayerFrame1678:
 	.word	gPlayerFrame1678OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD18C
-	.word	gUnk_080DF176
+	.word	gPlayerFrame1675NextBankPalette
+	.word	gPlayerFrame1675UpperTiles
 	.global	gPlayerFrame1683
 gPlayerFrame1683:
 	.word	gPlayerFrame1683OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD18C
-	.word	gUnk_080DF23C
+	.word	gPlayerFrame1675NextBankPalette
+	.word	gPlayerFrame1680UpperTiles
 	.global	gPlayerFrame1679
 gPlayerFrame1679:
 	.word	gPlayerFrame1679OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD18C
-	.word	gUnk_080DF176
+	.word	gPlayerFrame1675NextBankPalette
+	.word	gPlayerFrame1675UpperTiles
 	.global	gPlayerFrame1684
 gPlayerFrame1684:
 	.word	gPlayerFrame1684OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD18C
-	.word	gUnk_080DF23C
+	.word	gPlayerFrame1675NextBankPalette
+	.word	gPlayerFrame1680UpperTiles
 	.global	gPlayerFrame1685
 gPlayerFrame1685:
 	.word	gPlayerFrame1685OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame10Tiles
-	.word	gUnk_080DD18C
-	.word	gUnk_080DF176
+	.word	gPlayerFrame1675NextBankPalette
+	.word	gPlayerFrame1675UpperTiles
 	.global	gPlayerFrame2296
 gPlayerFrame2296:
 	.word	gPlayerFrame2296OamTemplate+1
 	.word	gPlayerFrame2296Palette
 	.word	gPlayerFrame2296Tiles
-	.word	gUnk_080DD1D0
-	.word	gUnk_080DF302
+	.word	gPlayerFrame2296NextBankPalette
+	.word	gPlayerFrame2296UpperTiles
 	.global	gPlayerFrame2301
 gPlayerFrame2301:
 	.word	gPlayerFrame2301OamTemplate+1
 	.word	gPlayerFrame2296Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD1D0
-	.word	gUnk_080DF3E8
+	.word	gPlayerFrame2296NextBankPalette
+	.word	gPlayerFrame2301UpperTiles
 	.global	gPlayerFrame2297
 gPlayerFrame2297:
 	.word	gPlayerFrame2297OamTemplate+1
 	.word	gPlayerFrame2296Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD1D0
-	.word	gUnk_080DF302
+	.word	gPlayerFrame2296NextBankPalette
+	.word	gPlayerFrame2296UpperTiles
 	.global	gPlayerFrame2302
 gPlayerFrame2302:
 	.word	gPlayerFrame2302OamTemplate+1
 	.word	gPlayerFrame2296Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD1D0
-	.word	gUnk_080DF3E8
+	.word	gPlayerFrame2296NextBankPalette
+	.word	gPlayerFrame2301UpperTiles
 	.global	gPlayerFrame2298
 gPlayerFrame2298:
 	.word	gPlayerFrame2298OamTemplate+1
 	.word	gPlayerFrame2296Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD1D0
-	.word	gUnk_080DF302
+	.word	gPlayerFrame2296NextBankPalette
+	.word	gPlayerFrame2296UpperTiles
 	.global	gPlayerFrame2303
 gPlayerFrame2303:
 	.word	gPlayerFrame2303OamTemplate+1
 	.word	gPlayerFrame2296Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD1D0
-	.word	gUnk_080DF3E8
+	.word	gPlayerFrame2296NextBankPalette
+	.word	gPlayerFrame2301UpperTiles
 	.global	gPlayerFrame2299
 gPlayerFrame2299:
 	.word	gPlayerFrame2299OamTemplate+1
 	.word	gPlayerFrame2296Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD1D0
-	.word	gUnk_080DF302
+	.word	gPlayerFrame2296NextBankPalette
+	.word	gPlayerFrame2296UpperTiles
 	.global	gPlayerFrame2304
 gPlayerFrame2304:
 	.word	gPlayerFrame2304OamTemplate+1
 	.word	gPlayerFrame2296Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD1D0
-	.word	gUnk_080DF3E8
+	.word	gPlayerFrame2296NextBankPalette
+	.word	gPlayerFrame2301UpperTiles
 	.global	gPlayerFrame2300
 gPlayerFrame2300:
 	.word	gPlayerFrame2300OamTemplate+1
 	.word	gPlayerFrame2296Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD1D0
-	.word	gUnk_080DF302
+	.word	gPlayerFrame2296NextBankPalette
+	.word	gPlayerFrame2296UpperTiles
 	.global	gPlayerFrame2305
 gPlayerFrame2305:
 	.word	gPlayerFrame2305OamTemplate+1
 	.word	gPlayerFrame2296Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD1D0
-	.word	gUnk_080DF3E8
+	.word	gPlayerFrame2296NextBankPalette
+	.word	gPlayerFrame2301UpperTiles
 	.global	gPlayerFrame2306
 gPlayerFrame2306:
 	.word	gPlayerFrame2306OamTemplate+1
 	.word	gPlayerFrame2296Palette
 	.word	gPlayerFrame2306Tiles
-	.word	gUnk_080DD1D0
-	.word	gUnk_080DF302
+	.word	gPlayerFrame2296NextBankPalette
+	.word	gPlayerFrame2296UpperTiles
 	.global	gPlayerFrame2436
 gPlayerFrame2436:
 	.word	gPlayerFrame2436OamTemplate+1
 	.word	gPlayerFrame2436Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD214
-	.word	gUnk_080DF5B4
+	.word	gPlayerFrame2436NextBankPalette
+	.word	gPlayerFrame2436UpperTiles
 	.global	gPlayerFrame2441
 gPlayerFrame2441:
 	.word	gPlayerFrame2441OamTemplate+1
 	.word	gPlayerFrame2436Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD214
-	.word	gUnk_080DF5B4
+	.word	gPlayerFrame2436NextBankPalette
+	.word	gPlayerFrame2436UpperTiles
 	.global	gPlayerFrame2437
 gPlayerFrame2437:
 	.word	gPlayerFrame2437OamTemplate+1
 	.word	gPlayerFrame2436Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD214
-	.word	gUnk_080DF5B4
+	.word	gPlayerFrame2436NextBankPalette
+	.word	gPlayerFrame2436UpperTiles
 	.global	gPlayerFrame2442
 gPlayerFrame2442:
 	.word	gPlayerFrame2442OamTemplate+1
 	.word	gPlayerFrame2436Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD214
-	.word	gUnk_080DF5B4
+	.word	gPlayerFrame2436NextBankPalette
+	.word	gPlayerFrame2436UpperTiles
 	.global	gPlayerFrame2438
 gPlayerFrame2438:
 	.word	gPlayerFrame2438OamTemplate+1
 	.word	gPlayerFrame2436Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD214
-	.word	gUnk_080DF5B4
+	.word	gPlayerFrame2436NextBankPalette
+	.word	gPlayerFrame2436UpperTiles
 	.global	gPlayerFrame2443
 gPlayerFrame2443:
 	.word	gPlayerFrame2443OamTemplate+1
 	.word	gPlayerFrame2436Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD214
-	.word	gUnk_080DF5B4
+	.word	gPlayerFrame2436NextBankPalette
+	.word	gPlayerFrame2436UpperTiles
 	.global	gPlayerFrame2439
 gPlayerFrame2439:
 	.word	gPlayerFrame2439OamTemplate+1
 	.word	gPlayerFrame2436Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD214
-	.word	gUnk_080DF5B4
+	.word	gPlayerFrame2436NextBankPalette
+	.word	gPlayerFrame2436UpperTiles
 	.global	gPlayerFrame2444
 gPlayerFrame2444:
 	.word	gPlayerFrame2444OamTemplate+1
 	.word	gPlayerFrame2436Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD214
-	.word	gUnk_080DF5B4
+	.word	gPlayerFrame2436NextBankPalette
+	.word	gPlayerFrame2436UpperTiles
 	.global	gPlayerFrame2440
 gPlayerFrame2440:
 	.word	gPlayerFrame2440OamTemplate+1
 	.word	gPlayerFrame2436Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD214
-	.word	gUnk_080DF5B4
+	.word	gPlayerFrame2436NextBankPalette
+	.word	gPlayerFrame2436UpperTiles
 	.global	gPlayerFrame2445
 gPlayerFrame2445:
 	.word	gPlayerFrame2445OamTemplate+1
 	.word	gPlayerFrame2436Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD214
-	.word	gUnk_080DF5B4
+	.word	gPlayerFrame2436NextBankPalette
+	.word	gPlayerFrame2436UpperTiles
 	.global	gPlayerFrame2446
 gPlayerFrame2446:
 	.word	gPlayerFrame2446OamTemplate+1
 	.word	gPlayerFrame2436Palette
 	.word	gPlayerFrame10Tiles
-	.word	gUnk_080DD214
-	.word	gUnk_080DF5B4
+	.word	gPlayerFrame2436NextBankPalette
+	.word	gPlayerFrame2436UpperTiles
 	.global	gPlayerFrame2576
 gPlayerFrame2576:
 	.word	gPlayerFrame2576OamTemplate+1
 	.word	gPlayerFrame2576Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD258
-	.word	gUnk_080DF67A
+	.word	gPlayerFrame2576NextBankPalette
+	.word	gPlayerFrame2576UpperTiles
 	.global	gPlayerFrame2581
 gPlayerFrame2581:
 	.word	gPlayerFrame2581OamTemplate+1
 	.word	gPlayerFrame2576Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD258
-	.word	gUnk_080DF7A0
+	.word	gPlayerFrame2576NextBankPalette
+	.word	gPlayerFrame2581UpperTiles
 	.global	gPlayerFrame2577
 gPlayerFrame2577:
 	.word	gPlayerFrame2577OamTemplate+1
 	.word	gPlayerFrame2576Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD258
-	.word	gUnk_080DF67A
+	.word	gPlayerFrame2576NextBankPalette
+	.word	gPlayerFrame2576UpperTiles
 	.global	gPlayerFrame2582
 gPlayerFrame2582:
 	.word	gPlayerFrame2582OamTemplate+1
 	.word	gPlayerFrame2576Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD258
-	.word	gUnk_080DF7A0
+	.word	gPlayerFrame2576NextBankPalette
+	.word	gPlayerFrame2581UpperTiles
 	.global	gPlayerFrame2578
 gPlayerFrame2578:
 	.word	gPlayerFrame2578OamTemplate+1
 	.word	gPlayerFrame2576Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD258
-	.word	gUnk_080DF8A6
+	.word	gPlayerFrame2576NextBankPalette
+	.word	gPlayerFrame2578UpperTiles
 	.global	gPlayerFrame2583
 gPlayerFrame2583:
 	.word	gPlayerFrame2583OamTemplate+1
 	.word	gPlayerFrame2576Palette
 	.word	gPlayerFrame2583Tiles
-	.word	gUnk_080DD258
-	.word	gUnk_080DF7A0
+	.word	gPlayerFrame2576NextBankPalette
+	.word	gPlayerFrame2581UpperTiles
 	.global	gPlayerFrame2579
 gPlayerFrame2579:
 	.word	gPlayerFrame2579OamTemplate+1
 	.word	gPlayerFrame2576Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD258
-	.word	gUnk_080DF67A
+	.word	gPlayerFrame2576NextBankPalette
+	.word	gPlayerFrame2576UpperTiles
 	.global	gPlayerFrame2584
 gPlayerFrame2584:
 	.word	gPlayerFrame2584OamTemplate+1
 	.word	gPlayerFrame2576Palette
 	.word	gPlayerFrame2584Tiles
-	.word	gUnk_080DD258
-	.word	gUnk_080DF7A0
+	.word	gPlayerFrame2576NextBankPalette
+	.word	gPlayerFrame2581UpperTiles
 	.global	gPlayerFrame2580
 gPlayerFrame2580:
 	.word	gPlayerFrame2580OamTemplate+1
 	.word	gPlayerFrame2576Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD258
-	.word	gUnk_080DFB58
+	.word	gPlayerFrame2576NextBankPalette
+	.word	gPlayerFrame2580UpperTiles
 	.global	gPlayerFrame2585
 gPlayerFrame2585:
 	.word	gPlayerFrame2585OamTemplate+1
 	.word	gPlayerFrame2576Palette
 	.word	gPlayerFrame2585Tiles
-	.word	gUnk_080DD258
-	.word	gUnk_080DF7A0
+	.word	gPlayerFrame2576NextBankPalette
+	.word	gPlayerFrame2581UpperTiles
 	.global	gPlayerFrame2586
 gPlayerFrame2586:
 	.word	gPlayerFrame2586OamTemplate+1
 	.word	gPlayerFrame2576Palette
 	.word	gPlayerFrame10Tiles
-	.word	gUnk_080DD258
-	.word	gUnk_080DFD44
+	.word	gPlayerFrame2576NextBankPalette
+	.word	gPlayerFrame2586UpperTiles
 	.global	gPlayerFrame2703
 gPlayerFrame2703:
 	.word	gPlayerFrame2703OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080DFE6A
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2703UpperTiles
 	.global	gPlayerFrame2704
 gPlayerFrame2704:
 	.word	gPlayerFrame2704OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080DFF90
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2704UpperTiles
 	.global	gPlayerFrame2705
 gPlayerFrame2705:
 	.word	gPlayerFrame2705OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E0096
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2705UpperTiles
 	.global	gPlayerFrame2706
 gPlayerFrame2706:
 	.word	gPlayerFrame2706OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E01BC
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2706UpperTiles
 	.global	gPlayerFrame2723
 gPlayerFrame2723:
 	.word	gPlayerFrame2723OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD27A
-	.word	gUnk_080E02E2
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2723UpperTiles
 	.global	gPlayerFrame2724
 gPlayerFrame2724:
 	.word	gPlayerFrame2724OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD27A
-	.word	gUnk_080E03A8
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2724UpperTiles
 	.global	gPlayerFrame2725
 gPlayerFrame2725:
 	.word	gPlayerFrame2725OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD27A
-	.word	gUnk_080E046E
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2725UpperTiles
 	.global	gPlayerFrame2726
 gPlayerFrame2726:
 	.word	gPlayerFrame2726OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD27A
-	.word	gUnk_080E0534
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2726UpperTiles
 	.global	gPlayerFrame2707
 gPlayerFrame2707:
 	.word	gPlayerFrame2707OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E05FA
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2707UpperTiles
 	.global	gPlayerFrame2708
 gPlayerFrame2708:
 	.word	gPlayerFrame2708OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E0700
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2708UpperTiles
 	.global	gPlayerFrame2709
 gPlayerFrame2709:
 	.word	gPlayerFrame2709OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E07C6
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2709UpperTiles
 	.global	gPlayerFrame2710
 gPlayerFrame2710:
 	.word	gPlayerFrame2710OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E08AC
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2710UpperTiles
 	.global	gPlayerFrame2727
 gPlayerFrame2727:
 	.word	gPlayerFrame2727OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E09B2
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2727UpperTiles
 	.global	gPlayerFrame2728
 gPlayerFrame2728:
 	.word	gPlayerFrame2728OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E0A58
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2728UpperTiles
 	.global	gPlayerFrame2729
 gPlayerFrame2729:
 	.word	gPlayerFrame2729OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E0AFE
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2729UpperTiles
 	.global	gPlayerFrame2730
 gPlayerFrame2730:
 	.word	gPlayerFrame2730OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E0BA4
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2730UpperTiles
 	.global	gPlayerFrame2711
 gPlayerFrame2711:
 	.word	gPlayerFrame2711OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E0C4A
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2711UpperTiles
 	.global	gPlayerFrame2712
 gPlayerFrame2712:
 	.word	gPlayerFrame2712OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E0D50
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2712UpperTiles
 	.global	gPlayerFrame2713
 gPlayerFrame2713:
 	.word	gPlayerFrame2713OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E0E36
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2713UpperTiles
 	.global	gPlayerFrame2714
 gPlayerFrame2714:
 	.word	gPlayerFrame2714OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E0F1C
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2714UpperTiles
 	.global	gPlayerFrame2731
 gPlayerFrame2731:
 	.word	gPlayerFrame2731OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E09B2
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2727UpperTiles
 	.global	gPlayerFrame2732
 gPlayerFrame2732:
 	.word	gPlayerFrame2732OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E0A58
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2728UpperTiles
 	.global	gPlayerFrame2733
 gPlayerFrame2733:
 	.word	gPlayerFrame2733OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E1022
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2733UpperTiles
 	.global	gPlayerFrame2734
 gPlayerFrame2734:
 	.word	gPlayerFrame2734OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E10C8
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2734UpperTiles
 	.global	gPlayerFrame2719
 gPlayerFrame2719:
 	.word	gPlayerFrame2719OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E116E
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2719UpperTiles
 	.global	gPlayerFrame2720
 gPlayerFrame2720:
 	.word	gPlayerFrame2720OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E1274
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2716UpperTiles
 	.global	gPlayerFrame2721
 gPlayerFrame2721:
 	.word	gPlayerFrame2721OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E133A
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2717UpperTiles
 	.global	gPlayerFrame2722
 gPlayerFrame2722:
 	.word	gPlayerFrame2722OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E1420
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2722UpperTiles
 	.global	gPlayerFrame2739
 gPlayerFrame2739:
 	.word	gPlayerFrame2739OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E1526
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2735UpperTiles
 	.global	gPlayerFrame2740
 gPlayerFrame2740:
 	.word	gPlayerFrame2740OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E15CC
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2736UpperTiles
 	.global	gPlayerFrame2741
 gPlayerFrame2741:
 	.word	gPlayerFrame2741OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E1672
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2737UpperTiles
 	.global	gPlayerFrame2742
 gPlayerFrame2742:
 	.word	gPlayerFrame2742OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E1718
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2738UpperTiles
 	.global	gPlayerFrame2715
 gPlayerFrame2715:
 	.word	gPlayerFrame2715OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E17BE
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2715UpperTiles
 	.global	gPlayerFrame2716
 gPlayerFrame2716:
 	.word	gPlayerFrame2716OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E1274
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2716UpperTiles
 	.global	gPlayerFrame2717
 gPlayerFrame2717:
 	.word	gPlayerFrame2717OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E133A
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2717UpperTiles
 	.global	gPlayerFrame2718
 gPlayerFrame2718:
 	.word	gPlayerFrame2718OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E18C4
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2718UpperTiles
 	.global	gPlayerFrame2735
 gPlayerFrame2735:
 	.word	gPlayerFrame2735OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E1526
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2735UpperTiles
 	.global	gPlayerFrame2736
 gPlayerFrame2736:
 	.word	gPlayerFrame2736OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E15CC
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2736UpperTiles
 	.global	gPlayerFrame2737
 gPlayerFrame2737:
 	.word	gPlayerFrame2737OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E1672
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2737UpperTiles
 	.global	gPlayerFrame2738
 gPlayerFrame2738:
 	.word	gPlayerFrame2738OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E1718
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2738UpperTiles
 	.global	gPlayerFrame2743
 gPlayerFrame2743:
 	.word	gPlayerFrame2743OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2743Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E1AF0
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2743UpperTiles
 	.global	gPlayerFrame2744
 gPlayerFrame2744:
 	.word	gPlayerFrame2744OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2743Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E1BB6
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2744UpperTiles
 	.global	gPlayerFrame2745
 gPlayerFrame2745:
 	.word	gPlayerFrame2745OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2743Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E1C7C
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2745UpperTiles
 	.global	gPlayerFrame2746
 gPlayerFrame2746:
 	.word	gPlayerFrame2746OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2743Tiles
-	.word	gUnk_080DD27A
-	.word	gUnk_080E1D42
+	.word	gPlayerFrame2703NextBankPalette
+	.word	gPlayerFrame2746UpperTiles
 	.global	gPlayerFrame2882
 gPlayerFrame2882:
 	.word	gPlayerFrame2882OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD29C
-	.word	gUnk_080E1E08
+	.word	gPlayerFrame2882NextBankPalette
+	.word	gPlayerFrame2882UpperTiles
 	.global	gPlayerFrame2887
 gPlayerFrame2887:
 	.word	gPlayerFrame2887OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD29C
-	.word	gUnk_080E1ECE
+	.word	gPlayerFrame2882NextBankPalette
+	.word	gPlayerFrame2887UpperTiles
 	.global	gPlayerFrame2883
 gPlayerFrame2883:
 	.word	gPlayerFrame2883OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD29C
-	.word	gUnk_080E1E08
+	.word	gPlayerFrame2882NextBankPalette
+	.word	gPlayerFrame2882UpperTiles
 	.global	gPlayerFrame2888
 gPlayerFrame2888:
 	.word	gPlayerFrame2888OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD29C
-	.word	gUnk_080E1ECE
+	.word	gPlayerFrame2882NextBankPalette
+	.word	gPlayerFrame2887UpperTiles
 	.global	gPlayerFrame2884
 gPlayerFrame2884:
 	.word	gPlayerFrame2884OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD29C
-	.word	gUnk_080E1E08
+	.word	gPlayerFrame2882NextBankPalette
+	.word	gPlayerFrame2882UpperTiles
 	.global	gPlayerFrame2889
 gPlayerFrame2889:
 	.word	gPlayerFrame2889OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD29C
-	.word	gUnk_080E1ECE
+	.word	gPlayerFrame2882NextBankPalette
+	.word	gPlayerFrame2887UpperTiles
 	.global	gPlayerFrame2885
 gPlayerFrame2885:
 	.word	gPlayerFrame2885OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD29C
-	.word	gUnk_080E1E08
+	.word	gPlayerFrame2882NextBankPalette
+	.word	gPlayerFrame2882UpperTiles
 	.global	gPlayerFrame2890
 gPlayerFrame2890:
 	.word	gPlayerFrame2890OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD29C
-	.word	gUnk_080E1ECE
+	.word	gPlayerFrame2882NextBankPalette
+	.word	gPlayerFrame2887UpperTiles
 	.global	gPlayerFrame2886
 gPlayerFrame2886:
 	.word	gPlayerFrame2886OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD29C
-	.word	gUnk_080E1E08
+	.word	gPlayerFrame2882NextBankPalette
+	.word	gPlayerFrame2882UpperTiles
 	.global	gPlayerFrame2891
 gPlayerFrame2891:
 	.word	gPlayerFrame2891OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD29C
-	.word	gUnk_080E1ECE
+	.word	gPlayerFrame2882NextBankPalette
+	.word	gPlayerFrame2887UpperTiles
 	.global	gPlayerFrame2892
 gPlayerFrame2892:
 	.word	gPlayerFrame2892OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame10Tiles
-	.word	gUnk_080DD29C
-	.word	gUnk_080E1E08
+	.word	gPlayerFrame2882NextBankPalette
+	.word	gPlayerFrame2882UpperTiles
 	.global	gPlayerFrame3013
 gPlayerFrame3013:
 	.word	gPlayerFrame3013OamTemplate+1
 	.word	gPlayerFrame3013Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD2E0
-	.word	gUnk_080E1F94
+	.word	gPlayerFrame3013NextBankPalette
+	.word	gPlayerFrame3013UpperTiles
 	.global	gPlayerFrame3018
 gPlayerFrame3018:
 	.word	gPlayerFrame3018OamTemplate+1
 	.word	gPlayerFrame3013Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD2E0
-	.word	gUnk_080E207A
+	.word	gPlayerFrame3013NextBankPalette
+	.word	gPlayerFrame3018UpperTiles
 	.global	gPlayerFrame3014
 gPlayerFrame3014:
 	.word	gPlayerFrame3014OamTemplate+1
 	.word	gPlayerFrame3013Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD2E0
-	.word	gUnk_080E1F94
+	.word	gPlayerFrame3013NextBankPalette
+	.word	gPlayerFrame3013UpperTiles
 	.global	gPlayerFrame3019
 gPlayerFrame3019:
 	.word	gPlayerFrame3019OamTemplate+1
 	.word	gPlayerFrame3013Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD2E0
-	.word	gUnk_080E2160
+	.word	gPlayerFrame3013NextBankPalette
+	.word	gPlayerFrame3019UpperTiles
 	.global	gPlayerFrame3015
 gPlayerFrame3015:
 	.word	gPlayerFrame3015OamTemplate+1
 	.word	gPlayerFrame3013Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD2E0
-	.word	gUnk_080E1F94
+	.word	gPlayerFrame3013NextBankPalette
+	.word	gPlayerFrame3013UpperTiles
 	.global	gPlayerFrame3020
 gPlayerFrame3020:
 	.word	gPlayerFrame3020OamTemplate+1
 	.word	gPlayerFrame3013Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD2E0
-	.word	gUnk_080E2160
+	.word	gPlayerFrame3013NextBankPalette
+	.word	gPlayerFrame3019UpperTiles
 	.global	gPlayerFrame3016
 gPlayerFrame3016:
 	.word	gPlayerFrame3016OamTemplate+1
 	.word	gPlayerFrame3013Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD2E0
-	.word	gUnk_080E1F94
+	.word	gPlayerFrame3013NextBankPalette
+	.word	gPlayerFrame3013UpperTiles
 	.global	gPlayerFrame3021
 gPlayerFrame3021:
 	.word	gPlayerFrame3021OamTemplate+1
 	.word	gPlayerFrame3013Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD2E0
-	.word	gUnk_080E207A
+	.word	gPlayerFrame3013NextBankPalette
+	.word	gPlayerFrame3018UpperTiles
 	.global	gPlayerFrame3017
 gPlayerFrame3017:
 	.word	gPlayerFrame3017OamTemplate+1
 	.word	gPlayerFrame3013Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD2E0
-	.word	gUnk_080E1F94
+	.word	gPlayerFrame3013NextBankPalette
+	.word	gPlayerFrame3013UpperTiles
 	.global	gPlayerFrame3022
 gPlayerFrame3022:
 	.word	gPlayerFrame3022OamTemplate+1
 	.word	gPlayerFrame3013Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD2E0
-	.word	gUnk_080E207A
+	.word	gPlayerFrame3013NextBankPalette
+	.word	gPlayerFrame3018UpperTiles
 	.global	gPlayerFrame3023
 gPlayerFrame3023:
 	.word	gPlayerFrame3023OamTemplate+1
 	.word	gPlayerFrame3013Palette
 	.word	gPlayerFrame10Tiles
-	.word	gUnk_080DD2E0
-	.word	gUnk_080E1F94
+	.word	gPlayerFrame3013NextBankPalette
+	.word	gPlayerFrame3013UpperTiles
 	.global	gPlayerFrame3156
 gPlayerFrame3156:
 	.word	gPlayerFrame3156OamTemplate+1
@@ -1685,309 +1685,309 @@ gPlayerFrame3308:
 	.word	gPlayerFrame3308OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2D48
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3308UpperTiles
 	.global	gPlayerFrame3309
 gPlayerFrame3309:
 	.word	gPlayerFrame3309OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2E6E
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3309UpperTiles
 	.global	gPlayerFrame3310
 gPlayerFrame3310:
 	.word	gPlayerFrame3310OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2F74
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3310UpperTiles
 	.global	gPlayerFrame3311
 gPlayerFrame3311:
 	.word	gPlayerFrame3311OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame0Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E307A
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3311UpperTiles
 	.global	gPlayerFrame3328
 gPlayerFrame3328:
 	.word	gPlayerFrame3328OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD324
-	.word	gUnk_080E2D48
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3308UpperTiles
 	.global	gPlayerFrame3329
 gPlayerFrame3329:
 	.word	gPlayerFrame3329OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD324
-	.word	gUnk_080E31A0
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3313UpperTiles
 	.global	gPlayerFrame3330
 gPlayerFrame3330:
 	.word	gPlayerFrame3330OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD324
-	.word	gUnk_080E2F74
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3310UpperTiles
 	.global	gPlayerFrame3331
 gPlayerFrame3331:
 	.word	gPlayerFrame3331OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gUnk_080DD48E
-	.word	gUnk_080DD324
-	.word	gUnk_080E307A
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3311UpperTiles
 	.global	gPlayerFrame3312
 gPlayerFrame3312:
 	.word	gPlayerFrame3312OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2D48
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3308UpperTiles
 	.global	gPlayerFrame3313
 gPlayerFrame3313:
 	.word	gPlayerFrame3313OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E31A0
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3313UpperTiles
 	.global	gPlayerFrame3314
 gPlayerFrame3314:
 	.word	gPlayerFrame3314OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2F74
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3310UpperTiles
 	.global	gPlayerFrame3315
 gPlayerFrame3315:
 	.word	gPlayerFrame3315OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame1Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E307A
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3311UpperTiles
 	.global	gPlayerFrame3316
 gPlayerFrame3316:
 	.word	gPlayerFrame3316OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2D48
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3308UpperTiles
 	.global	gPlayerFrame3317
 gPlayerFrame3317:
 	.word	gPlayerFrame3317OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E31A0
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3313UpperTiles
 	.global	gPlayerFrame3318
 gPlayerFrame3318:
 	.word	gPlayerFrame3318OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E32A6
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3318UpperTiles
 	.global	gPlayerFrame3319
 gPlayerFrame3319:
 	.word	gPlayerFrame3319OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame2Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E307A
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3311UpperTiles
 	.global	gPlayerFrame3332
 gPlayerFrame3332:
 	.word	gPlayerFrame3332OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2D48
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3308UpperTiles
 	.global	gPlayerFrame3333
 gPlayerFrame3333:
 	.word	gPlayerFrame3333OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E31A0
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3313UpperTiles
 	.global	gPlayerFrame3334
 gPlayerFrame3334:
 	.word	gPlayerFrame3334OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2F74
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3310UpperTiles
 	.global	gPlayerFrame3335
 gPlayerFrame3335:
 	.word	gPlayerFrame3335OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame6Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E307A
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3311UpperTiles
 	.global	gPlayerFrame3336
 gPlayerFrame3336:
 	.word	gPlayerFrame3336OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2D48
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3308UpperTiles
 	.global	gPlayerFrame3337
 gPlayerFrame3337:
 	.word	gPlayerFrame3337OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E31A0
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3313UpperTiles
 	.global	gPlayerFrame3338
 gPlayerFrame3338:
 	.word	gPlayerFrame3338OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2F74
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3310UpperTiles
 	.global	gPlayerFrame3339
 gPlayerFrame3339:
 	.word	gPlayerFrame3339OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame7Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E307A
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3311UpperTiles
 	.global	gPlayerFrame3320
 gPlayerFrame3320:
 	.word	gPlayerFrame3320OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2D48
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3308UpperTiles
 	.global	gPlayerFrame3321
 gPlayerFrame3321:
 	.word	gPlayerFrame3321OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E31A0
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3313UpperTiles
 	.global	gPlayerFrame3322
 gPlayerFrame3322:
 	.word	gPlayerFrame3322OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2F74
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3310UpperTiles
 	.global	gPlayerFrame3323
 gPlayerFrame3323:
 	.word	gPlayerFrame3323OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame3Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E307A
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3311UpperTiles
 	.global	gPlayerFrame3324
 gPlayerFrame3324:
 	.word	gPlayerFrame3324OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2D48
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3308UpperTiles
 	.global	gPlayerFrame3325
 gPlayerFrame3325:
 	.word	gPlayerFrame3325OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E31A0
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3313UpperTiles
 	.global	gPlayerFrame3326
 gPlayerFrame3326:
 	.word	gPlayerFrame3326OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2F74
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3310UpperTiles
 	.global	gPlayerFrame3327
 gPlayerFrame3327:
 	.word	gPlayerFrame3327OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame4Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E307A
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3311UpperTiles
 	.global	gPlayerFrame3340
 gPlayerFrame3340:
 	.word	gPlayerFrame3340OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2D48
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3308UpperTiles
 	.global	gPlayerFrame3341
 gPlayerFrame3341:
 	.word	gPlayerFrame3341OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E31A0
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3313UpperTiles
 	.global	gPlayerFrame3342
 gPlayerFrame3342:
 	.word	gPlayerFrame3342OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2F74
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3310UpperTiles
 	.global	gPlayerFrame3343
 gPlayerFrame3343:
 	.word	gPlayerFrame3343OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame8Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E307A
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3311UpperTiles
 	.global	gPlayerFrame3344
 gPlayerFrame3344:
 	.word	gPlayerFrame3344OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2D48
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3308UpperTiles
 	.global	gPlayerFrame3345
 gPlayerFrame3345:
 	.word	gPlayerFrame3345OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E31A0
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3313UpperTiles
 	.global	gPlayerFrame3346
 gPlayerFrame3346:
 	.word	gPlayerFrame3346OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2F74
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3310UpperTiles
 	.global	gPlayerFrame3347
 gPlayerFrame3347:
 	.word	gPlayerFrame3347OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame9Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E307A
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3311UpperTiles
 	.global	gPlayerFrame3348
 gPlayerFrame3348:
 	.word	gPlayerFrame3348OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame10Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E2D48
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3308UpperTiles
 	.global	gPlayerFrame3349
 gPlayerFrame3349:
 	.word	gPlayerFrame3349OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame10Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E33AC
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3349UpperTiles
 	.global	gPlayerFrame3350
 gPlayerFrame3350:
 	.word	gPlayerFrame3350OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame10Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E32A6
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3318UpperTiles
 	.global	gPlayerFrame3351
 gPlayerFrame3351:
 	.word	gPlayerFrame3351OamTemplate+1
 	.word	gPlayerFrame883Palette
 	.word	gPlayerFrame10Tiles
-	.word	gUnk_080DD324
-	.word	gUnk_080E34B2
+	.word	gPlayerFrame3308NextBankPalette
+	.word	gPlayerFrame3351UpperTiles
 	.global	gUnk_0875B420
 gUnk_0875B420:
 	.word	gUnk_080E730A+1
@@ -2059,232 +2059,232 @@ gPlayerFrame1007:
 	.word	gPlayerFrame1007OamTemplate+1
 	.word	gPlayerFrame1007Palette
 	.word	gPlayerFrame1007Tiles
-	.word	gUnk_080E7436
-	.word	gUnk_080E7628
+	.word	gPlayerFrame1007NextBankPalette
+	.word	gPlayerFrame1007UpperTiles
 	.global	gPlayerFrame1012
 gPlayerFrame1012:
 	.word	gPlayerFrame1012OamTemplate+1
 	.word	gPlayerFrame1007Palette
 	.word	gUnk_080E77AE
-	.word	gUnk_080E7436
-	.word	gUnk_080E78B4
+	.word	gPlayerFrame1007NextBankPalette
+	.word	gPlayerFrame1012UpperTiles
 	.global	gPlayerFrame1008
 gPlayerFrame1008:
 	.word	gPlayerFrame1008OamTemplate+1
 	.word	gPlayerFrame1007Palette
 	.word	gPlayerFrame1008Tiles
-	.word	gUnk_080E7436
-	.word	gUnk_080E7628
+	.word	gPlayerFrame1007NextBankPalette
+	.word	gPlayerFrame1007UpperTiles
 	.global	gPlayerFrame1013
 gPlayerFrame1013:
 	.word	gPlayerFrame1013OamTemplate+1
 	.word	gPlayerFrame1007Palette
 	.word	gPlayerFrame1013Tiles
-	.word	gUnk_080E7436
-	.word	gUnk_080E7C46
+	.word	gPlayerFrame1007NextBankPalette
+	.word	gPlayerFrame1013UpperTiles
 	.global	gPlayerFrame1009
 gPlayerFrame1009:
 	.word	gPlayerFrame1009OamTemplate+1
 	.word	gPlayerFrame1007Palette
 	.word	gPlayerFrame1009Tiles
-	.word	gUnk_080E7436
-	.word	gUnk_080E7628
+	.word	gPlayerFrame1007NextBankPalette
+	.word	gPlayerFrame1007UpperTiles
 	.global	gPlayerFrame1014
 gPlayerFrame1014:
 	.word	gPlayerFrame1014OamTemplate+1
 	.word	gPlayerFrame1007Palette
 	.word	gPlayerFrame1014Tiles
-	.word	gUnk_080E7436
-	.word	gUnk_080E78B4
+	.word	gPlayerFrame1007NextBankPalette
+	.word	gPlayerFrame1012UpperTiles
 	.global	gPlayerFrame1010
 gPlayerFrame1010:
 	.word	gPlayerFrame1010OamTemplate+1
 	.word	gPlayerFrame1007Palette
 	.word	gPlayerFrame1010Tiles
-	.word	gUnk_080E7436
-	.word	gUnk_080E7628
+	.word	gPlayerFrame1007NextBankPalette
+	.word	gPlayerFrame1007UpperTiles
 	.global	gPlayerFrame1015
 gPlayerFrame1015:
 	.word	gPlayerFrame1015OamTemplate+1
 	.word	gPlayerFrame1007Palette
 	.word	gPlayerFrame1015Tiles
-	.word	gUnk_080E7436
-	.word	gUnk_080E7C46
+	.word	gPlayerFrame1007NextBankPalette
+	.word	gPlayerFrame1013UpperTiles
 	.global	gPlayerFrame1011
 gPlayerFrame1011:
 	.word	gPlayerFrame1011OamTemplate+1
 	.word	gPlayerFrame1007Palette
 	.word	gPlayerFrame1011Tiles
-	.word	gUnk_080E7436
-	.word	gUnk_080E7628
+	.word	gPlayerFrame1007NextBankPalette
+	.word	gPlayerFrame1007UpperTiles
 	.global	gPlayerFrame1016
 gPlayerFrame1016:
 	.word	gPlayerFrame1016OamTemplate+1
 	.word	gPlayerFrame1007Palette
 	.word	gPlayerFrame1016Tiles
-	.word	gUnk_080E7436
-	.word	gUnk_080E7C46
+	.word	gPlayerFrame1007NextBankPalette
+	.word	gPlayerFrame1013UpperTiles
 	.global	gPlayerFrame1017
 gPlayerFrame1017:
 	.word	gPlayerFrame1017OamTemplate+1
 	.word	gPlayerFrame1007Palette
 	.word	gPlayerFrame1017Tiles
-	.word	gUnk_080E7436
-	.word	gUnk_080E7628
+	.word	gPlayerFrame1007NextBankPalette
+	.word	gPlayerFrame1007UpperTiles
 	.global	gPlayerFrame1811
 gPlayerFrame1811:
 	.word	gPlayerFrame1811OamTemplate+1
 	.word	gPlayerFrame1811Palette
 	.word	gPlayerFrame1811Tiles
-	.word	gUnk_080E747A
-	.word	gUnk_080E85DC
+	.word	gPlayerFrame1811NextBankPalette
+	.word	gPlayerFrame1811UpperTiles
 	.global	gPlayerFrame1816
 gPlayerFrame1816:
 	.word	gPlayerFrame1816OamTemplate+1
 	.word	gPlayerFrame1811Palette
 	.word	gPlayerFrame1816Tiles
-	.word	gUnk_080E747A
-	.word	gUnk_080E85DC
+	.word	gPlayerFrame1811NextBankPalette
+	.word	gPlayerFrame1811UpperTiles
 	.global	gPlayerFrame1812
 gPlayerFrame1812:
 	.word	gPlayerFrame1812OamTemplate+1
 	.word	gPlayerFrame1811Palette
 	.word	gPlayerFrame1812Tiles
-	.word	gUnk_080E747A
-	.word	gUnk_080E85DC
+	.word	gPlayerFrame1811NextBankPalette
+	.word	gPlayerFrame1811UpperTiles
 	.global	gPlayerFrame1817
 gPlayerFrame1817:
 	.word	gPlayerFrame1817OamTemplate+1
 	.word	gPlayerFrame1811Palette
 	.word	gPlayerFrame1817Tiles
-	.word	gUnk_080E747A
-	.word	gUnk_080E85DC
+	.word	gPlayerFrame1811NextBankPalette
+	.word	gPlayerFrame1811UpperTiles
 	.global	gPlayerFrame1813
 gPlayerFrame1813:
 	.word	gPlayerFrame1813OamTemplate+1
 	.word	gPlayerFrame1811Palette
 	.word	gPlayerFrame1813Tiles
-	.word	gUnk_080E747A
-	.word	gUnk_080E85DC
+	.word	gPlayerFrame1811NextBankPalette
+	.word	gPlayerFrame1811UpperTiles
 	.global	gPlayerFrame1818
 gPlayerFrame1818:
 	.word	gPlayerFrame1818OamTemplate+1
 	.word	gPlayerFrame1811Palette
 	.word	gPlayerFrame1818Tiles
-	.word	gUnk_080E747A
-	.word	gUnk_080E85DC
+	.word	gPlayerFrame1811NextBankPalette
+	.word	gPlayerFrame1811UpperTiles
 	.global	gPlayerFrame1814
 gPlayerFrame1814:
 	.word	gPlayerFrame1814OamTemplate+1
 	.word	gPlayerFrame1811Palette
 	.word	gPlayerFrame1814Tiles
-	.word	gUnk_080E747A
-	.word	gUnk_080E85DC
+	.word	gPlayerFrame1811NextBankPalette
+	.word	gPlayerFrame1811UpperTiles
 	.global	gPlayerFrame1819
 gPlayerFrame1819:
 	.word	gPlayerFrame1819OamTemplate+1
 	.word	gPlayerFrame1811Palette
 	.word	gPlayerFrame1819Tiles
-	.word	gUnk_080E747A
-	.word	gUnk_080E85DC
+	.word	gPlayerFrame1811NextBankPalette
+	.word	gPlayerFrame1811UpperTiles
 	.global	gPlayerFrame1815
 gPlayerFrame1815:
 	.word	gPlayerFrame1815OamTemplate+1
 	.word	gPlayerFrame1811Palette
 	.word	gPlayerFrame1815Tiles
-	.word	gUnk_080E747A
-	.word	gUnk_080E85DC
+	.word	gPlayerFrame1811NextBankPalette
+	.word	gPlayerFrame1811UpperTiles
 	.global	gPlayerFrame1820
 gPlayerFrame1820:
 	.word	gPlayerFrame1820OamTemplate+1
 	.word	gPlayerFrame1811Palette
 	.word	gPlayerFrame1820Tiles
-	.word	gUnk_080E747A
-	.word	gUnk_080E85DC
+	.word	gPlayerFrame1811NextBankPalette
+	.word	gPlayerFrame1811UpperTiles
 	.global	gPlayerFrame1821
 gPlayerFrame1821:
 	.word	gPlayerFrame1821OamTemplate+1
 	.word	gPlayerFrame1811Palette
 	.word	gPlayerFrame1821Tiles
-	.word	gUnk_080E747A
-	.word	gUnk_080E85DC
+	.word	gPlayerFrame1811NextBankPalette
+	.word	gPlayerFrame1811UpperTiles
 	.global	gPlayerFrame2056
 gPlayerFrame2056:
 	.word	gPlayerFrame2056OamTemplate+1
 	.word	gUnk_080E749C
 	.word	gPlayerFrame1007Tiles
-	.word	gUnk_080E74BE
-	.word	gUnk_080E913E
+	.word	gPlayerFrame2056NextBankPalette
+	.word	gPlayerFrame2056UpperTiles
 	.global	gPlayerFrame2061
 gPlayerFrame2061:
 	.word	gPlayerFrame2061OamTemplate+1
 	.word	gUnk_080E749C
 	.word	gUnk_080E77AE
-	.word	gUnk_080E74BE
-	.word	gUnk_080E913E
+	.word	gPlayerFrame2056NextBankPalette
+	.word	gPlayerFrame2056UpperTiles
 	.global	gPlayerFrame2057
 gPlayerFrame2057:
 	.word	gPlayerFrame2057OamTemplate+1
 	.word	gUnk_080E749C
 	.word	gPlayerFrame1008Tiles
-	.word	gUnk_080E74BE
-	.word	gUnk_080E913E
+	.word	gPlayerFrame2056NextBankPalette
+	.word	gPlayerFrame2056UpperTiles
 	.global	gPlayerFrame2062
 gPlayerFrame2062:
 	.word	gPlayerFrame2062OamTemplate+1
 	.word	gUnk_080E749C
 	.word	gPlayerFrame1013Tiles
-	.word	gUnk_080E74BE
-	.word	gUnk_080E913E
+	.word	gPlayerFrame2056NextBankPalette
+	.word	gPlayerFrame2056UpperTiles
 	.global	gPlayerFrame2058
 gPlayerFrame2058:
 	.word	gPlayerFrame2058OamTemplate+1
 	.word	gUnk_080E749C
 	.word	gPlayerFrame1009Tiles
-	.word	gUnk_080E74BE
-	.word	gUnk_080E913E
+	.word	gPlayerFrame2056NextBankPalette
+	.word	gPlayerFrame2056UpperTiles
 	.global	gPlayerFrame2063
 gPlayerFrame2063:
 	.word	gPlayerFrame2063OamTemplate+1
 	.word	gUnk_080E749C
 	.word	gPlayerFrame1014Tiles
-	.word	gUnk_080E74BE
-	.word	gUnk_080E913E
+	.word	gPlayerFrame2056NextBankPalette
+	.word	gPlayerFrame2056UpperTiles
 	.global	gPlayerFrame2059
 gPlayerFrame2059:
 	.word	gPlayerFrame2059OamTemplate+1
 	.word	gUnk_080E749C
 	.word	gPlayerFrame1010Tiles
-	.word	gUnk_080E74BE
-	.word	gUnk_080E913E
+	.word	gPlayerFrame2056NextBankPalette
+	.word	gPlayerFrame2056UpperTiles
 	.global	gPlayerFrame2064
 gPlayerFrame2064:
 	.word	gPlayerFrame2064OamTemplate+1
 	.word	gUnk_080E749C
 	.word	gPlayerFrame1015Tiles
-	.word	gUnk_080E74BE
-	.word	gUnk_080E913E
+	.word	gPlayerFrame2056NextBankPalette
+	.word	gPlayerFrame2056UpperTiles
 	.global	gPlayerFrame2060
 gPlayerFrame2060:
 	.word	gPlayerFrame2060OamTemplate+1
 	.word	gUnk_080E749C
 	.word	gPlayerFrame1011Tiles
-	.word	gUnk_080E74BE
-	.word	gUnk_080E913E
+	.word	gPlayerFrame2056NextBankPalette
+	.word	gPlayerFrame2056UpperTiles
 	.global	gPlayerFrame2065
 gPlayerFrame2065:
 	.word	gPlayerFrame2065OamTemplate+1
 	.word	gUnk_080E749C
 	.word	gPlayerFrame1016Tiles
-	.word	gUnk_080E74BE
-	.word	gUnk_080E913E
+	.word	gPlayerFrame2056NextBankPalette
+	.word	gPlayerFrame2056UpperTiles
 	.global	gPlayerFrame2066
 gPlayerFrame2066:
 	.word	gPlayerFrame2066OamTemplate+1
 	.word	gUnk_080E749C
 	.word	gPlayerFrame1017Tiles
-	.word	gUnk_080E74BE
-	.word	gUnk_080E913E
+	.word	gPlayerFrame2056NextBankPalette
+	.word	gPlayerFrame2056UpperTiles
 	.global	gUnk_0875B790
 gUnk_0875B790:
 	.word	gUnk_080E9CB6+1
@@ -2538,890 +2538,890 @@ gPlayerFrame894:
 	.word	gPlayerFrame894OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame12Tiles
-	.word	gUnk_080E9DBE
-	.word	gUnk_080EC710
+	.word	gPlayerFrame894NextBankPalette
+	.word	gPlayerFrame894UpperTiles
 	.global	gPlayerFrame895
 gPlayerFrame895:
 	.word	gPlayerFrame895OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame13Tiles
-	.word	gUnk_080E9DBE
-	.word	gUnk_080EC836
+	.word	gPlayerFrame894NextBankPalette
+	.word	gPlayerFrame895UpperTiles
 	.global	gPlayerFrame896
 gPlayerFrame896:
 	.word	gPlayerFrame896OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame896Tiles
-	.word	gUnk_080E9DBE
-	.word	gUnk_080ECA42
+	.word	gPlayerFrame894NextBankPalette
+	.word	gPlayerFrame896UpperTiles
 	.global	gPlayerFrame897
 gPlayerFrame897:
 	.word	gPlayerFrame897OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame15Tiles
-	.word	gUnk_080E9DBE
-	.word	gUnk_080ECB48
+	.word	gPlayerFrame894NextBankPalette
+	.word	gPlayerFrame897UpperTiles
 	.global	gPlayerFrame898
 gPlayerFrame898:
 	.word	gPlayerFrame898OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame16Tiles
-	.word	gUnk_080E9DBE
-	.word	gUnk_080ECC2E
+	.word	gPlayerFrame894NextBankPalette
+	.word	gPlayerFrame898UpperTiles
 	.global	gPlayerFrame899
 gPlayerFrame899:
 	.word	gPlayerFrame899OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame17Tiles
-	.word	gUnk_080E9DBE
-	.word	gUnk_080ECCF4
+	.word	gPlayerFrame894NextBankPalette
+	.word	gPlayerFrame899UpperTiles
 	.global	gPlayerFrame900
 gPlayerFrame900:
 	.word	gPlayerFrame900OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame18Tiles
-	.word	gUnk_080E9DBE
-	.word	gUnk_080ECC2E
+	.word	gPlayerFrame894NextBankPalette
+	.word	gPlayerFrame898UpperTiles
 	.global	gPlayerFrame901
 gPlayerFrame901:
 	.word	gPlayerFrame901OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame901Tiles
-	.word	gUnk_080E9DBE
-	.word	gUnk_080ECEC0
+	.word	gPlayerFrame894NextBankPalette
+	.word	gPlayerFrame901UpperTiles
 	.global	gPlayerFrame902
 gPlayerFrame902:
 	.word	gPlayerFrame902OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame20Tiles
-	.word	gUnk_080E9DBE
-	.word	gUnk_080ECA42
+	.word	gPlayerFrame894NextBankPalette
+	.word	gPlayerFrame896UpperTiles
 	.global	gPlayerFrame903
 gPlayerFrame903:
 	.word	gPlayerFrame903OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame21Tiles
-	.word	gUnk_080E9DBE
-	.word	gUnk_080EC836
+	.word	gPlayerFrame894NextBankPalette
+	.word	gPlayerFrame895UpperTiles
 	.global	gPlayerFrame912
 gPlayerFrame912:
 	.word	gPlayerFrame912OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame30Tiles
-	.word	gUnk_080E9DBE
-	.word	gUnk_080ECFA6
+	.word	gPlayerFrame894NextBankPalette
+	.word	gPlayerFrame912UpperTiles
 	.global	gPlayerFrame1308
 gPlayerFrame1308:
 	.word	gPlayerFrame1308OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame1308Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080ED192
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1308UpperTiles
 	.global	gPlayerFrame1309
 gPlayerFrame1309:
 	.word	gPlayerFrame1309OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame1308Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080ED2B8
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1309UpperTiles
 	.global	gPlayerFrame1310
 gPlayerFrame1310:
 	.word	gPlayerFrame1310OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame1308Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080ED3DE
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1310UpperTiles
 	.global	gPlayerFrame1311
 gPlayerFrame1311:
 	.word	gPlayerFrame1311OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame1308Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080ED192
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1308UpperTiles
 	.global	gPlayerFrame1312
 gPlayerFrame1312:
 	.word	gPlayerFrame1312OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame13Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080ED504
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1312UpperTiles
 	.global	gPlayerFrame1313
 gPlayerFrame1313:
 	.word	gPlayerFrame1313OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame13Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080ED64A
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1313UpperTiles
 	.global	gPlayerFrame1314
 gPlayerFrame1314:
 	.word	gPlayerFrame1314OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame14Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080ED790
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1314UpperTiles
 	.global	gPlayerFrame1315
 gPlayerFrame1315:
 	.word	gPlayerFrame1315OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame15Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080ED956
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1315UpperTiles
 	.global	gPlayerFrame1316
 gPlayerFrame1316:
 	.word	gPlayerFrame1316OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame1316Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080EDC42
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1316UpperTiles
 	.global	gPlayerFrame1317
 gPlayerFrame1317:
 	.word	gPlayerFrame1317OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame1316Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080EDDE8
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1317UpperTiles
 	.global	gPlayerFrame1318
 gPlayerFrame1318:
 	.word	gPlayerFrame1318OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame1318Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080EE0B4
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1318UpperTiles
 	.global	gPlayerFrame1319
 gPlayerFrame1319:
 	.word	gPlayerFrame1319OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame1318Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080EE23A
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1319UpperTiles
 	.global	gPlayerFrame1320
 gPlayerFrame1320:
 	.word	gPlayerFrame1320OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame1318Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080EE3C0
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1320UpperTiles
 	.global	gPlayerFrame1321
 gPlayerFrame1321:
 	.word	gPlayerFrame1321OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame1318Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080EE546
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1321UpperTiles
 	.global	gPlayerFrame1322
 gPlayerFrame1322:
 	.word	gPlayerFrame1322OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame18Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080EE6CC
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1322UpperTiles
 	.global	gPlayerFrame1323
 gPlayerFrame1323:
 	.word	gPlayerFrame1323OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame18Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080EE872
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1323UpperTiles
 	.global	gPlayerFrame1324
 gPlayerFrame1324:
 	.word	gPlayerFrame1324OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame19Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080EEA18
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1324UpperTiles
 	.global	gPlayerFrame1325
 gPlayerFrame1325:
 	.word	gPlayerFrame1325OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame1325Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080EEBDE
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1325UpperTiles
 	.global	gPlayerFrame1326
 gPlayerFrame1326:
 	.word	gPlayerFrame1326OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame21Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080EEDA4
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1326UpperTiles
 	.global	gPlayerFrame1327
 gPlayerFrame1327:
 	.word	gPlayerFrame1327OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame21Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080ED504
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1312UpperTiles
 	.global	gPlayerFrame1336
 gPlayerFrame1336:
 	.word	gPlayerFrame1336OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame30Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080EEEEA
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1336UpperTiles
 	.global	gPlayerFrame1337
 gPlayerFrame1337:
 	.word	gPlayerFrame1337OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame30Tiles
-	.word	gUnk_080E9DE0
-	.word	gUnk_080EF070
+	.word	gPlayerFrame1308NextBankPalette
+	.word	gPlayerFrame1337UpperTiles
 	.global	gPlayerFrame1517
 gPlayerFrame1517:
 	.word	gPlayerFrame1517OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame12Tiles
-	.word	gUnk_080E9E02
-	.word	gUnk_080EF1F6
+	.word	gPlayerFrame1517NextBankPalette
+	.word	gPlayerFrame1517UpperTiles
 	.global	gPlayerFrame1518
 gPlayerFrame1518:
 	.word	gPlayerFrame1518OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame13Tiles
-	.word	gUnk_080E9E02
-	.word	gUnk_080EF2BC
+	.word	gPlayerFrame1517NextBankPalette
+	.word	gPlayerFrame1518UpperTiles
 	.global	gPlayerFrame1519
 gPlayerFrame1519:
 	.word	gPlayerFrame1519OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame896Tiles
-	.word	gUnk_080E9E02
-	.word	gUnk_080EF382
+	.word	gPlayerFrame1517NextBankPalette
+	.word	gPlayerFrame1519UpperTiles
 	.global	gPlayerFrame1520
 gPlayerFrame1520:
 	.word	gPlayerFrame1520OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame15Tiles
-	.word	gUnk_080E9E02
-	.word	gUnk_080EF448
+	.word	gPlayerFrame1517NextBankPalette
+	.word	gPlayerFrame1520UpperTiles
 	.global	gPlayerFrame1521
 gPlayerFrame1521:
 	.word	gPlayerFrame1521OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame16Tiles
-	.word	gUnk_080E9E02
-	.word	gUnk_080EF50E
+	.word	gPlayerFrame1517NextBankPalette
+	.word	gPlayerFrame1521UpperTiles
 	.global	gPlayerFrame1522
 gPlayerFrame1522:
 	.word	gPlayerFrame1522OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame17Tiles
-	.word	gUnk_080E9E02
-	.word	gUnk_080EF5D4
+	.word	gPlayerFrame1517NextBankPalette
+	.word	gPlayerFrame1522UpperTiles
 	.global	gPlayerFrame1523
 gPlayerFrame1523:
 	.word	gPlayerFrame1523OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame18Tiles
-	.word	gUnk_080E9E02
-	.word	gUnk_080EF50E
+	.word	gPlayerFrame1517NextBankPalette
+	.word	gPlayerFrame1521UpperTiles
 	.global	gPlayerFrame1524
 gPlayerFrame1524:
 	.word	gPlayerFrame1524OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame901Tiles
-	.word	gUnk_080E9E02
-	.word	gUnk_080EF69A
+	.word	gPlayerFrame1517NextBankPalette
+	.word	gPlayerFrame1524UpperTiles
 	.global	gPlayerFrame1525
 gPlayerFrame1525:
 	.word	gPlayerFrame1525OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame20Tiles
-	.word	gUnk_080E9E02
-	.word	gUnk_080EF760
+	.word	gPlayerFrame1517NextBankPalette
+	.word	gPlayerFrame1525UpperTiles
 	.global	gPlayerFrame1526
 gPlayerFrame1526:
 	.word	gPlayerFrame1526OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame21Tiles
-	.word	gUnk_080E9E02
-	.word	gUnk_080EF2BC
+	.word	gPlayerFrame1517NextBankPalette
+	.word	gPlayerFrame1518UpperTiles
 	.global	gPlayerFrame1535
 gPlayerFrame1535:
 	.word	gPlayerFrame1535OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame30Tiles
-	.word	gUnk_080E9E02
-	.word	gUnk_080EF826
+	.word	gPlayerFrame1517NextBankPalette
+	.word	gPlayerFrame1535UpperTiles
 	.global	gPlayerFrame1686
 gPlayerFrame1686:
 	.word	gPlayerFrame1686OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame12Tiles
-	.word	gUnk_080E9E24
-	.word	gUnk_080EF8AC
+	.word	gPlayerFrame1686NextBankPalette
+	.word	gPlayerFrame1686UpperTiles
 	.global	gPlayerFrame1687
 gPlayerFrame1687:
 	.word	gPlayerFrame1687OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame13Tiles
-	.word	gUnk_080E9E24
-	.word	gUnk_080EF972
+	.word	gPlayerFrame1686NextBankPalette
+	.word	gPlayerFrame1687UpperTiles
 	.global	gPlayerFrame1688
 gPlayerFrame1688:
 	.word	gPlayerFrame1688OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame896Tiles
-	.word	gUnk_080E9E24
-	.word	gUnk_080EFA38
+	.word	gPlayerFrame1686NextBankPalette
+	.word	gPlayerFrame1688UpperTiles
 	.global	gPlayerFrame1689
 gPlayerFrame1689:
 	.word	gPlayerFrame1689OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame15Tiles
-	.word	gUnk_080E9E24
-	.word	gUnk_080EFAFE
+	.word	gPlayerFrame1686NextBankPalette
+	.word	gPlayerFrame1689UpperTiles
 	.global	gPlayerFrame1690
 gPlayerFrame1690:
 	.word	gPlayerFrame1690OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame16Tiles
-	.word	gUnk_080E9E24
-	.word	gUnk_080EFBC4
+	.word	gPlayerFrame1686NextBankPalette
+	.word	gPlayerFrame1690UpperTiles
 	.global	gPlayerFrame1691
 gPlayerFrame1691:
 	.word	gPlayerFrame1691OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame17Tiles
-	.word	gUnk_080E9E24
-	.word	gUnk_080EFBC4
+	.word	gPlayerFrame1686NextBankPalette
+	.word	gPlayerFrame1690UpperTiles
 	.global	gPlayerFrame1692
 gPlayerFrame1692:
 	.word	gPlayerFrame1692OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame18Tiles
-	.word	gUnk_080E9E24
-	.word	gUnk_080EFAFE
+	.word	gPlayerFrame1686NextBankPalette
+	.word	gPlayerFrame1689UpperTiles
 	.global	gPlayerFrame1693
 gPlayerFrame1693:
 	.word	gPlayerFrame1693OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame901Tiles
-	.word	gUnk_080E9E24
-	.word	gUnk_080EFA38
+	.word	gPlayerFrame1686NextBankPalette
+	.word	gPlayerFrame1688UpperTiles
 	.global	gPlayerFrame1694
 gPlayerFrame1694:
 	.word	gPlayerFrame1694OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame20Tiles
-	.word	gUnk_080E9E24
-	.word	gUnk_080EF972
+	.word	gPlayerFrame1686NextBankPalette
+	.word	gPlayerFrame1687UpperTiles
 	.global	gPlayerFrame1695
 gPlayerFrame1695:
 	.word	gPlayerFrame1695OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame21Tiles
-	.word	gUnk_080E9E24
-	.word	gUnk_080EF8AC
+	.word	gPlayerFrame1686NextBankPalette
+	.word	gPlayerFrame1686UpperTiles
 	.global	gPlayerFrame1704
 gPlayerFrame1704:
 	.word	gPlayerFrame1704OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame30Tiles
-	.word	gUnk_080E9E24
-	.word	gUnk_080EFC8A
+	.word	gPlayerFrame1686NextBankPalette
+	.word	gPlayerFrame1704UpperTiles
 	.global	gPlayerFrame2307
 gPlayerFrame2307:
 	.word	gPlayerFrame2307OamTemplate+1
 	.word	gPlayerFrame2307Palette
 	.word	gPlayerFrame1308Tiles
-	.word	gUnk_080E9E68
-	.word	gUnk_080EFD30
+	.word	gPlayerFrame2307NextBankPalette
+	.word	gPlayerFrame2307UpperTiles
 	.global	gPlayerFrame2308
 gPlayerFrame2308:
 	.word	gPlayerFrame2308OamTemplate+1
 	.word	gPlayerFrame2307Palette
 	.word	gPlayerFrame2308Tiles
-	.word	gUnk_080E9E68
-	.word	gUnk_080EFE36
+	.word	gPlayerFrame2307NextBankPalette
+	.word	gPlayerFrame2308UpperTiles
 	.global	gPlayerFrame2309
 gPlayerFrame2309:
 	.word	gPlayerFrame2309OamTemplate+1
 	.word	gPlayerFrame2307Palette
 	.word	gPlayerFrame14Tiles
-	.word	gUnk_080E9E68
-	.word	gUnk_080EFF1C
+	.word	gPlayerFrame2307NextBankPalette
+	.word	gPlayerFrame2309UpperTiles
 	.global	gPlayerFrame2310
 gPlayerFrame2310:
 	.word	gPlayerFrame2310OamTemplate+1
 	.word	gPlayerFrame2307Palette
 	.word	gPlayerFrame15Tiles
-	.word	gUnk_080E9E68
-	.word	gUnk_080F0002
+	.word	gPlayerFrame2307NextBankPalette
+	.word	gPlayerFrame2310UpperTiles
 	.global	gPlayerFrame2311
 gPlayerFrame2311:
 	.word	gPlayerFrame2311OamTemplate+1
 	.word	gPlayerFrame2307Palette
 	.word	gPlayerFrame16Tiles
-	.word	gUnk_080E9E68
-	.word	gUnk_080F00C8
+	.word	gPlayerFrame2307NextBankPalette
+	.word	gPlayerFrame2311UpperTiles
 	.global	gPlayerFrame2312
 gPlayerFrame2312:
 	.word	gPlayerFrame2312OamTemplate+1
 	.word	gPlayerFrame2307Palette
 	.word	gPlayerFrame2312Tiles
-	.word	gUnk_080E9E68
-	.word	gUnk_080F01AE
+	.word	gPlayerFrame2307NextBankPalette
+	.word	gPlayerFrame2312UpperTiles
 	.global	gPlayerFrame2313
 gPlayerFrame2313:
 	.word	gPlayerFrame2313OamTemplate+1
 	.word	gPlayerFrame2307Palette
 	.word	gPlayerFrame2313Tiles
-	.word	gUnk_080E9E68
-	.word	gUnk_080F0294
+	.word	gPlayerFrame2307NextBankPalette
+	.word	gPlayerFrame2313UpperTiles
 	.global	gPlayerFrame2314
 gPlayerFrame2314:
 	.word	gPlayerFrame2314OamTemplate+1
 	.word	gPlayerFrame2307Palette
 	.word	gPlayerFrame19Tiles
-	.word	gUnk_080E9E68
-	.word	gUnk_080F037A
+	.word	gPlayerFrame2307NextBankPalette
+	.word	gPlayerFrame2314UpperTiles
 	.global	gPlayerFrame2315
 gPlayerFrame2315:
 	.word	gPlayerFrame2315OamTemplate+1
 	.word	gPlayerFrame2307Palette
 	.word	gPlayerFrame1325Tiles
-	.word	gUnk_080E9E68
-	.word	gUnk_080F0460
+	.word	gPlayerFrame2307NextBankPalette
+	.word	gPlayerFrame2315UpperTiles
 	.global	gPlayerFrame2316
 gPlayerFrame2316:
 	.word	gPlayerFrame2316OamTemplate+1
 	.word	gPlayerFrame2307Palette
 	.word	gPlayerFrame2316Tiles
-	.word	gUnk_080E9E68
-	.word	gUnk_080EFE36
+	.word	gPlayerFrame2307NextBankPalette
+	.word	gPlayerFrame2308UpperTiles
 	.global	gPlayerFrame2325
 gPlayerFrame2325:
 	.word	gPlayerFrame2325OamTemplate+1
 	.word	gPlayerFrame2307Palette
 	.word	gPlayerFrame2325Tiles
-	.word	gUnk_080E9E68
-	.word	gUnk_080F06D2
+	.word	gPlayerFrame2307NextBankPalette
+	.word	gPlayerFrame2325UpperTiles
 	.global	gPlayerFrame2447
 gPlayerFrame2447:
 	.word	gPlayerFrame2447OamTemplate+1
 	.word	gPlayerFrame2447Palette
 	.word	gPlayerFrame12Tiles
-	.word	gUnk_080E9EAC
-	.word	gUnk_080F07B8
+	.word	gPlayerFrame2447NextBankPalette
+	.word	gPlayerFrame2447UpperTiles
 	.global	gPlayerFrame2448
 gPlayerFrame2448:
 	.word	gPlayerFrame2448OamTemplate+1
 	.word	gPlayerFrame2447Palette
 	.word	gPlayerFrame13Tiles
-	.word	gUnk_080E9EAC
-	.word	gUnk_080F087E
+	.word	gPlayerFrame2447NextBankPalette
+	.word	gPlayerFrame2448UpperTiles
 	.global	gPlayerFrame2449
 gPlayerFrame2449:
 	.word	gPlayerFrame2449OamTemplate+1
 	.word	gPlayerFrame2447Palette
 	.word	gPlayerFrame896Tiles
-	.word	gUnk_080E9EAC
-	.word	gUnk_080F0944
+	.word	gPlayerFrame2447NextBankPalette
+	.word	gPlayerFrame2449UpperTiles
 	.global	gPlayerFrame2450
 gPlayerFrame2450:
 	.word	gPlayerFrame2450OamTemplate+1
 	.word	gPlayerFrame2447Palette
 	.word	gPlayerFrame15Tiles
-	.word	gUnk_080E9EAC
-	.word	gUnk_080F0A0A
+	.word	gPlayerFrame2447NextBankPalette
+	.word	gPlayerFrame2450UpperTiles
 	.global	gPlayerFrame2451
 gPlayerFrame2451:
 	.word	gPlayerFrame2451OamTemplate+1
 	.word	gPlayerFrame2447Palette
 	.word	gPlayerFrame16Tiles
-	.word	gUnk_080E9EAC
-	.word	gUnk_080F0AD0
+	.word	gPlayerFrame2447NextBankPalette
+	.word	gPlayerFrame2451UpperTiles
 	.global	gPlayerFrame2452
 gPlayerFrame2452:
 	.word	gPlayerFrame2452OamTemplate+1
 	.word	gPlayerFrame2447Palette
 	.word	gPlayerFrame17Tiles
-	.word	gUnk_080E9EAC
-	.word	gUnk_080F0B96
+	.word	gPlayerFrame2447NextBankPalette
+	.word	gPlayerFrame2452UpperTiles
 	.global	gPlayerFrame2453
 gPlayerFrame2453:
 	.word	gPlayerFrame2453OamTemplate+1
 	.word	gPlayerFrame2447Palette
 	.word	gPlayerFrame18Tiles
-	.word	gUnk_080E9EAC
-	.word	gUnk_080F0C5C
+	.word	gPlayerFrame2447NextBankPalette
+	.word	gPlayerFrame2453UpperTiles
 	.global	gPlayerFrame2454
 gPlayerFrame2454:
 	.word	gPlayerFrame2454OamTemplate+1
 	.word	gPlayerFrame2447Palette
 	.word	gPlayerFrame901Tiles
-	.word	gUnk_080E9EAC
-	.word	gUnk_080F0944
+	.word	gPlayerFrame2447NextBankPalette
+	.word	gPlayerFrame2449UpperTiles
 	.global	gPlayerFrame2455
 gPlayerFrame2455:
 	.word	gPlayerFrame2455OamTemplate+1
 	.word	gPlayerFrame2447Palette
 	.word	gPlayerFrame20Tiles
-	.word	gUnk_080E9EAC
-	.word	gUnk_080F087E
+	.word	gPlayerFrame2447NextBankPalette
+	.word	gPlayerFrame2448UpperTiles
 	.global	gPlayerFrame2456
 gPlayerFrame2456:
 	.word	gPlayerFrame2456OamTemplate+1
 	.word	gPlayerFrame2447Palette
 	.word	gPlayerFrame21Tiles
-	.word	gUnk_080E9EAC
-	.word	gUnk_080F0D22
+	.word	gPlayerFrame2447NextBankPalette
+	.word	gPlayerFrame2456UpperTiles
 	.global	gPlayerFrame2465
 gPlayerFrame2465:
 	.word	gPlayerFrame2465OamTemplate+1
 	.word	gPlayerFrame2447Palette
 	.word	gPlayerFrame30Tiles
-	.word	gUnk_080E9EAC
-	.word	gUnk_080F0DE8
+	.word	gPlayerFrame2447NextBankPalette
+	.word	gPlayerFrame2465UpperTiles
 	.global	gPlayerFrame2587
 gPlayerFrame2587:
 	.word	gPlayerFrame2587OamTemplate+1
 	.word	gPlayerFrame2587Palette
 	.word	gPlayerFrame12Tiles
-	.word	gUnk_080E9EF0
-	.word	gUnk_080F0E8E
+	.word	gPlayerFrame2587NextBankPalette
+	.word	gPlayerFrame2587UpperTiles
 	.global	gPlayerFrame2588
 gPlayerFrame2588:
 	.word	gPlayerFrame2588OamTemplate+1
 	.word	gPlayerFrame2587Palette
 	.word	gPlayerFrame13Tiles
-	.word	gUnk_080E9EF0
-	.word	gUnk_080F0F74
+	.word	gPlayerFrame2587NextBankPalette
+	.word	gPlayerFrame2588UpperTiles
 	.global	gPlayerFrame2589
 gPlayerFrame2589:
 	.word	gPlayerFrame2589OamTemplate+1
 	.word	gPlayerFrame2587Palette
 	.word	gPlayerFrame896Tiles
-	.word	gUnk_080E9EF0
-	.word	gUnk_080F107A
+	.word	gPlayerFrame2587NextBankPalette
+	.word	gPlayerFrame2589UpperTiles
 	.global	gPlayerFrame2590
 gPlayerFrame2590:
 	.word	gPlayerFrame2590OamTemplate+1
 	.word	gPlayerFrame2587Palette
 	.word	gPlayerFrame2590Tiles
-	.word	gUnk_080E9EF0
-	.word	gUnk_080F1246
+	.word	gPlayerFrame2587NextBankPalette
+	.word	gPlayerFrame2590UpperTiles
 	.global	gPlayerFrame2591
 gPlayerFrame2591:
 	.word	gPlayerFrame2591OamTemplate+1
 	.word	gPlayerFrame2587Palette
 	.word	gPlayerFrame16Tiles
-	.word	gUnk_080E9EF0
-	.word	gUnk_080F130C
+	.word	gPlayerFrame2587NextBankPalette
+	.word	gPlayerFrame2591UpperTiles
 	.global	gPlayerFrame2592
 gPlayerFrame2592:
 	.word	gPlayerFrame2592OamTemplate+1
 	.word	gPlayerFrame2587Palette
 	.word	gPlayerFrame17Tiles
-	.word	gUnk_080E9EF0
-	.word	gUnk_080F1412
+	.word	gPlayerFrame2587NextBankPalette
+	.word	gPlayerFrame2592UpperTiles
 	.global	gPlayerFrame2593
 gPlayerFrame2593:
 	.word	gPlayerFrame2593OamTemplate+1
 	.word	gPlayerFrame2587Palette
 	.word	gPlayerFrame18Tiles
-	.word	gUnk_080E9EF0
-	.word	gUnk_080F1518
+	.word	gPlayerFrame2587NextBankPalette
+	.word	gPlayerFrame2593UpperTiles
 	.global	gPlayerFrame2594
 gPlayerFrame2594:
 	.word	gPlayerFrame2594OamTemplate+1
 	.word	gPlayerFrame2587Palette
 	.word	gPlayerFrame19Tiles
-	.word	gUnk_080E9EF0
-	.word	gUnk_080F163E
+	.word	gPlayerFrame2587NextBankPalette
+	.word	gPlayerFrame2594UpperTiles
 	.global	gPlayerFrame2595
 gPlayerFrame2595:
 	.word	gPlayerFrame2595OamTemplate+1
 	.word	gPlayerFrame2587Palette
 	.word	gPlayerFrame20Tiles
-	.word	gUnk_080E9EF0
-	.word	gUnk_080F1744
+	.word	gPlayerFrame2587NextBankPalette
+	.word	gPlayerFrame2595UpperTiles
 	.global	gPlayerFrame2596
 gPlayerFrame2596:
 	.word	gPlayerFrame2596OamTemplate+1
 	.word	gPlayerFrame2587Palette
 	.word	gPlayerFrame2596Tiles
-	.word	gUnk_080E9EF0
-	.word	gUnk_080F1950
+	.word	gPlayerFrame2587NextBankPalette
+	.word	gPlayerFrame2596UpperTiles
 	.global	gPlayerFrame2605
 gPlayerFrame2605:
 	.word	gPlayerFrame2605OamTemplate+1
 	.word	gPlayerFrame2587Palette
 	.word	gPlayerFrame30Tiles
-	.word	gUnk_080E9EF0
-	.word	gUnk_080F1A56
+	.word	gPlayerFrame2587NextBankPalette
+	.word	gPlayerFrame2605UpperTiles
 	.global	gPlayerFrame2747
 gPlayerFrame2747:
 	.word	gPlayerFrame2747OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame12Tiles
-	.word	gUnk_080E9F12
-	.word	gUnk_080F1B5C
+	.word	gPlayerFrame2747NextBankPalette
+	.word	gPlayerFrame2747UpperTiles
 	.global	gPlayerFrame2748
 gPlayerFrame2748:
 	.word	gPlayerFrame2748OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame12Tiles
-	.word	gUnk_080E9F12
-	.word	gUnk_080F1C82
+	.word	gPlayerFrame2747NextBankPalette
+	.word	gPlayerFrame2748UpperTiles
 	.global	gPlayerFrame2749
 gPlayerFrame2749:
 	.word	gPlayerFrame2749OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame13Tiles
-	.word	gUnk_080E9F12
-	.word	gUnk_080F1DA8
+	.word	gPlayerFrame2747NextBankPalette
+	.word	gPlayerFrame2749UpperTiles
 	.global	gPlayerFrame2750
 gPlayerFrame2750:
 	.word	gPlayerFrame2750OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame896Tiles
-	.word	gUnk_080E9F12
-	.word	gUnk_080F1ECE
+	.word	gPlayerFrame2747NextBankPalette
+	.word	gPlayerFrame2750UpperTiles
 	.global	gPlayerFrame2751
 gPlayerFrame2751:
 	.word	gPlayerFrame2751OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame15Tiles
-	.word	gUnk_080E9F12
-	.word	gUnk_080F1FF4
+	.word	gPlayerFrame2747NextBankPalette
+	.word	gPlayerFrame2751UpperTiles
 	.global	gPlayerFrame2752
 gPlayerFrame2752:
 	.word	gPlayerFrame2752OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame16Tiles
-	.word	gUnk_080E9F12
-	.word	gUnk_080F211A
+	.word	gPlayerFrame2747NextBankPalette
+	.word	gPlayerFrame2752UpperTiles
 	.global	gPlayerFrame2753
 gPlayerFrame2753:
 	.word	gPlayerFrame2753OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame17Tiles
-	.word	gUnk_080E9F12
-	.word	gUnk_080F2260
+	.word	gPlayerFrame2747NextBankPalette
+	.word	gPlayerFrame2753UpperTiles
 	.global	gPlayerFrame2754
 gPlayerFrame2754:
 	.word	gPlayerFrame2754OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame17Tiles
-	.word	gUnk_080E9F12
-	.word	gUnk_080F23A6
+	.word	gPlayerFrame2747NextBankPalette
+	.word	gPlayerFrame2754UpperTiles
 	.global	gPlayerFrame2755
 gPlayerFrame2755:
 	.word	gPlayerFrame2755OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame18Tiles
-	.word	gUnk_080E9F12
-	.word	gUnk_080F24CC
+	.word	gPlayerFrame2747NextBankPalette
+	.word	gPlayerFrame2755UpperTiles
 	.global	gPlayerFrame2756
 gPlayerFrame2756:
 	.word	gPlayerFrame2756OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame901Tiles
-	.word	gUnk_080E9F12
-	.word	gUnk_080F25F2
+	.word	gPlayerFrame2747NextBankPalette
+	.word	gPlayerFrame2756UpperTiles
 	.global	gPlayerFrame2757
 gPlayerFrame2757:
 	.word	gPlayerFrame2757OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame20Tiles
-	.word	gUnk_080E9F12
-	.word	gUnk_080F2718
+	.word	gPlayerFrame2747NextBankPalette
+	.word	gPlayerFrame2757UpperTiles
 	.global	gPlayerFrame2758
 gPlayerFrame2758:
 	.word	gPlayerFrame2758OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame21Tiles
-	.word	gUnk_080E9F12
-	.word	gUnk_080F283E
+	.word	gPlayerFrame2747NextBankPalette
+	.word	gPlayerFrame2758UpperTiles
 	.global	gPlayerFrame2767
 gPlayerFrame2767:
 	.word	gPlayerFrame2767OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame2767Tiles
-	.word	gUnk_080E9F12
-	.word	gUnk_080F2A8A
+	.word	gPlayerFrame2747NextBankPalette
+	.word	gPlayerFrame2767UpperTiles
 	.global	gPlayerFrame2893
 gPlayerFrame2893:
 	.word	gPlayerFrame2893OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame12Tiles
-	.word	gUnk_080E9F34
-	.word	gUnk_080F2B70
+	.word	gPlayerFrame2893NextBankPalette
+	.word	gPlayerFrame2893UpperTiles
 	.global	gPlayerFrame2894
 gPlayerFrame2894:
 	.word	gPlayerFrame2894OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame12Tiles
-	.word	gUnk_080E9F34
-	.word	gUnk_080F2C76
+	.word	gPlayerFrame2893NextBankPalette
+	.word	gPlayerFrame2894UpperTiles
 	.global	gPlayerFrame2895
 gPlayerFrame2895:
 	.word	gPlayerFrame2895OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame13Tiles
-	.word	gUnk_080E9F34
-	.word	gUnk_080F2D7C
+	.word	gPlayerFrame2893NextBankPalette
+	.word	gPlayerFrame2895UpperTiles
 	.global	gPlayerFrame2896
 gPlayerFrame2896:
 	.word	gPlayerFrame2896OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame896Tiles
-	.word	gUnk_080E9F34
-	.word	gUnk_080F2E82
+	.word	gPlayerFrame2893NextBankPalette
+	.word	gPlayerFrame2896UpperTiles
 	.global	gPlayerFrame2897
 gPlayerFrame2897:
 	.word	gPlayerFrame2897OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame15Tiles
-	.word	gUnk_080E9F34
-	.word	gUnk_080F2F48
+	.word	gPlayerFrame2893NextBankPalette
+	.word	gPlayerFrame2897UpperTiles
 	.global	gPlayerFrame2898
 gPlayerFrame2898:
 	.word	gPlayerFrame2898OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame16Tiles
-	.word	gUnk_080E9F34
-	.word	gUnk_080F300E
+	.word	gPlayerFrame2893NextBankPalette
+	.word	gPlayerFrame2898UpperTiles
 	.global	gPlayerFrame2899
 gPlayerFrame2899:
 	.word	gPlayerFrame2899OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame17Tiles
-	.word	gUnk_080E9F34
-	.word	gUnk_080F30D4
+	.word	gPlayerFrame2893NextBankPalette
+	.word	gPlayerFrame2899UpperTiles
 	.global	gPlayerFrame2900
 gPlayerFrame2900:
 	.word	gPlayerFrame2900OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame17Tiles
-	.word	gUnk_080E9F34
-	.word	gUnk_080F319A
+	.word	gPlayerFrame2893NextBankPalette
+	.word	gPlayerFrame2900UpperTiles
 	.global	gPlayerFrame2901
 gPlayerFrame2901:
 	.word	gPlayerFrame2901OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame18Tiles
-	.word	gUnk_080E9F34
-	.word	gUnk_080F3260
+	.word	gPlayerFrame2893NextBankPalette
+	.word	gPlayerFrame2901UpperTiles
 	.global	gPlayerFrame2902
 gPlayerFrame2902:
 	.word	gPlayerFrame2902OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame901Tiles
-	.word	gUnk_080E9F34
-	.word	gUnk_080F3326
+	.word	gPlayerFrame2893NextBankPalette
+	.word	gPlayerFrame2902UpperTiles
 	.global	gPlayerFrame2903
 gPlayerFrame2903:
 	.word	gPlayerFrame2903OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame20Tiles
-	.word	gUnk_080E9F34
-	.word	gUnk_080F33EC
+	.word	gPlayerFrame2893NextBankPalette
+	.word	gPlayerFrame2903UpperTiles
 	.global	gPlayerFrame2904
 gPlayerFrame2904:
 	.word	gPlayerFrame2904OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame21Tiles
-	.word	gUnk_080E9F34
-	.word	gUnk_080F34B2
+	.word	gPlayerFrame2893NextBankPalette
+	.word	gPlayerFrame2904UpperTiles
 	.global	gPlayerFrame2913
 gPlayerFrame2913:
 	.word	gPlayerFrame2913OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame2913Tiles
-	.word	gUnk_080E9F34
-	.word	gUnk_080F369E
+	.word	gPlayerFrame2893NextBankPalette
+	.word	gPlayerFrame2913UpperTiles
 	.global	gPlayerFrame3024
 gPlayerFrame3024:
 	.word	gPlayerFrame3024OamTemplate+1
 	.word	gPlayerFrame3024Palette
 	.word	gPlayerFrame12Tiles
-	.word	gUnk_080E9F78
-	.word	gUnk_080F3764
+	.word	gPlayerFrame3024NextBankPalette
+	.word	gPlayerFrame3024UpperTiles
 	.global	gPlayerFrame3025
 gPlayerFrame3025:
 	.word	gPlayerFrame3025OamTemplate+1
 	.word	gPlayerFrame3024Palette
 	.word	gPlayerFrame12Tiles
-	.word	gUnk_080E9F78
-	.word	gUnk_080F386A
+	.word	gPlayerFrame3024NextBankPalette
+	.word	gPlayerFrame3025UpperTiles
 	.global	gPlayerFrame3026
 gPlayerFrame3026:
 	.word	gPlayerFrame3026OamTemplate+1
 	.word	gPlayerFrame3024Palette
 	.word	gPlayerFrame13Tiles
-	.word	gUnk_080E9F78
-	.word	gUnk_080F3970
+	.word	gPlayerFrame3024NextBankPalette
+	.word	gPlayerFrame3026UpperTiles
 	.global	gPlayerFrame3027
 gPlayerFrame3027:
 	.word	gPlayerFrame3027OamTemplate+1
 	.word	gPlayerFrame3024Palette
 	.word	gPlayerFrame896Tiles
-	.word	gUnk_080E9F78
-	.word	gUnk_080F3A76
+	.word	gPlayerFrame3024NextBankPalette
+	.word	gPlayerFrame3027UpperTiles
 	.global	gPlayerFrame3028
 gPlayerFrame3028:
 	.word	gPlayerFrame3028OamTemplate+1
 	.word	gPlayerFrame3024Palette
 	.word	gPlayerFrame15Tiles
-	.word	gUnk_080E9F78
-	.word	gUnk_080F3B5C
+	.word	gPlayerFrame3024NextBankPalette
+	.word	gPlayerFrame3028UpperTiles
 	.global	gPlayerFrame3029
 gPlayerFrame3029:
 	.word	gPlayerFrame3029OamTemplate+1
 	.word	gPlayerFrame3024Palette
 	.word	gPlayerFrame16Tiles
-	.word	gUnk_080E9F78
-	.word	gUnk_080F3C42
+	.word	gPlayerFrame3024NextBankPalette
+	.word	gPlayerFrame3029UpperTiles
 	.global	gPlayerFrame3030
 gPlayerFrame3030:
 	.word	gPlayerFrame3030OamTemplate+1
 	.word	gPlayerFrame3024Palette
 	.word	gPlayerFrame17Tiles
-	.word	gUnk_080E9F78
-	.word	gUnk_080F3D28
+	.word	gPlayerFrame3024NextBankPalette
+	.word	gPlayerFrame3030UpperTiles
 	.global	gPlayerFrame3031
 gPlayerFrame3031:
 	.word	gPlayerFrame3031OamTemplate+1
 	.word	gPlayerFrame3024Palette
 	.word	gPlayerFrame1318Tiles
-	.word	gUnk_080E9F78
-	.word	gUnk_080F3DEE
+	.word	gPlayerFrame3024NextBankPalette
+	.word	gPlayerFrame3031UpperTiles
 	.global	gPlayerFrame3032
 gPlayerFrame3032:
 	.word	gPlayerFrame3032OamTemplate+1
 	.word	gPlayerFrame3024Palette
 	.word	gPlayerFrame18Tiles
-	.word	gUnk_080E9F78
-	.word	gUnk_080F3B5C
+	.word	gPlayerFrame3024NextBankPalette
+	.word	gPlayerFrame3028UpperTiles
 	.global	gPlayerFrame3033
 gPlayerFrame3033:
 	.word	gPlayerFrame3033OamTemplate+1
 	.word	gPlayerFrame3024Palette
 	.word	gPlayerFrame901Tiles
-	.word	gUnk_080E9F78
-	.word	gUnk_080F3A76
+	.word	gPlayerFrame3024NextBankPalette
+	.word	gPlayerFrame3027UpperTiles
 	.global	gPlayerFrame3034
 gPlayerFrame3034:
 	.word	gPlayerFrame3034OamTemplate+1
 	.word	gPlayerFrame3024Palette
 	.word	gPlayerFrame20Tiles
-	.word	gUnk_080E9F78
-	.word	gUnk_080F3970
+	.word	gPlayerFrame3024NextBankPalette
+	.word	gPlayerFrame3026UpperTiles
 	.global	gPlayerFrame3035
 gPlayerFrame3035:
 	.word	gPlayerFrame3035OamTemplate+1
 	.word	gPlayerFrame3024Palette
 	.word	gPlayerFrame21Tiles
-	.word	gUnk_080E9F78
-	.word	gUnk_080F386A
+	.word	gPlayerFrame3024NextBankPalette
+	.word	gPlayerFrame3025UpperTiles
 	.global	gPlayerFrame3044
 gPlayerFrame3044:
 	.word	gPlayerFrame3044OamTemplate+1
 	.word	gPlayerFrame3024Palette
 	.word	gPlayerFrame30Tiles
-	.word	gUnk_080E9F78
-	.word	gUnk_080F3ED4
+	.word	gPlayerFrame3024NextBankPalette
+	.word	gPlayerFrame3044UpperTiles
 	.global	gPlayerFrame3167
 gPlayerFrame3167:
 	.word	gPlayerFrame3167OamTemplate+1
@@ -3493,155 +3493,155 @@ gPlayerFrame3352:
 	.word	gPlayerFrame3352OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame12Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F4C3C
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3352UpperTiles
 	.global	gPlayerFrame3353
 gPlayerFrame3353:
 	.word	gPlayerFrame3353OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame12Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F4D62
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3353UpperTiles
 	.global	gPlayerFrame3354
 gPlayerFrame3354:
 	.word	gPlayerFrame3354OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame12Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F4E88
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3354UpperTiles
 	.global	gPlayerFrame3355
 gPlayerFrame3355:
 	.word	gPlayerFrame3355OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame12Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F4FAE
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3355UpperTiles
 	.global	gPlayerFrame3356
 gPlayerFrame3356:
 	.word	gPlayerFrame3356OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame13Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F50D4
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3356UpperTiles
 	.global	gPlayerFrame3357
 gPlayerFrame3357:
 	.word	gPlayerFrame3357OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame13Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F51FA
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3357UpperTiles
 	.global	gPlayerFrame3358
 gPlayerFrame3358:
 	.word	gPlayerFrame3358OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame896Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F5320
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3358UpperTiles
 	.global	gPlayerFrame3359
 gPlayerFrame3359:
 	.word	gPlayerFrame3359OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame15Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F5446
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3359UpperTiles
 	.global	gPlayerFrame3360
 gPlayerFrame3360:
 	.word	gPlayerFrame3360OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame16Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F556C
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3360UpperTiles
 	.global	gPlayerFrame3361
 gPlayerFrame3361:
 	.word	gPlayerFrame3361OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame16Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F5692
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3361UpperTiles
 	.global	gPlayerFrame3362
 gPlayerFrame3362:
 	.word	gPlayerFrame3362OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame17Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F57B8
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3362UpperTiles
 	.global	gPlayerFrame3363
 gPlayerFrame3363:
 	.word	gPlayerFrame3363OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame17Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F58DE
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3363UpperTiles
 	.global	gPlayerFrame3364
 gPlayerFrame3364:
 	.word	gPlayerFrame3364OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame17Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F5A04
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3364UpperTiles
 	.global	gPlayerFrame3365
 gPlayerFrame3365:
 	.word	gPlayerFrame3365OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame17Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F5B2A
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3365UpperTiles
 	.global	gPlayerFrame3366
 gPlayerFrame3366:
 	.word	gPlayerFrame3366OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame18Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F5C50
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3366UpperTiles
 	.global	gPlayerFrame3367
 gPlayerFrame3367:
 	.word	gPlayerFrame3367OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame18Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F5D76
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3367UpperTiles
 	.global	gPlayerFrame3368
 gPlayerFrame3368:
 	.word	gPlayerFrame3368OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame901Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F5E9C
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3368UpperTiles
 	.global	gPlayerFrame3369
 gPlayerFrame3369:
 	.word	gPlayerFrame3369OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame20Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F5FC2
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3369UpperTiles
 	.global	gPlayerFrame3370
 gPlayerFrame3370:
 	.word	gPlayerFrame3370OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame21Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F60E8
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3370UpperTiles
 	.global	gPlayerFrame3371
 gPlayerFrame3371:
 	.word	gPlayerFrame3371OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame21Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F620E
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3371UpperTiles
 	.global	gPlayerFrame3380
 gPlayerFrame3380:
 	.word	gPlayerFrame3380OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame30Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F6334
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3380UpperTiles
 	.global	gPlayerFrame3381
 gPlayerFrame3381:
 	.word	gPlayerFrame3381OamTemplate+1
 	.word	gPlayerFrame894Palette
 	.word	gPlayerFrame30Tiles
-	.word	gUnk_080E9FBC
-	.word	gUnk_080F647A
+	.word	gPlayerFrame3352NextBankPalette
+	.word	gPlayerFrame3381UpperTiles
 	.global	gUnk_0875C6F4
 gUnk_0875C6F4:
 	.word	gUnk_080F97DE+1
@@ -3725,246 +3725,246 @@ gPlayerFrame1019:
 	.word	gPlayerFrame1019OamTemplate+1
 	.word	gPlayerFrame1019Palette
 	.word	gUnk_080F9A66
-	.word	gUnk_080F999A
-	.word	gUnk_080F9B8C
+	.word	gPlayerFrame1019NextBankPalette
+	.word	gPlayerFrame1019UpperTiles
 	.global	gPlayerFrame1020
 gPlayerFrame1020:
 	.word	gPlayerFrame1020OamTemplate+1
 	.word	gPlayerFrame1019Palette
 	.word	gUnk_080F9A66
-	.word	gUnk_080F999A
-	.word	gUnk_080F9CF2
+	.word	gPlayerFrame1019NextBankPalette
+	.word	gPlayerFrame1020UpperTiles
 	.global	gPlayerFrame1021
 gPlayerFrame1021:
 	.word	gPlayerFrame1021OamTemplate+1
 	.word	gPlayerFrame1019Palette
 	.word	gUnk_080F9E58
-	.word	gUnk_080F999A
-	.word	gUnk_080F9F7E
+	.word	gPlayerFrame1019NextBankPalette
+	.word	gPlayerFrame1021UpperTiles
 	.global	gPlayerFrame1022
 gPlayerFrame1022:
 	.word	gPlayerFrame1022OamTemplate+1
 	.word	gPlayerFrame1019Palette
 	.word	gUnk_080FA0E4
-	.word	gUnk_080F999A
-	.word	gUnk_080FA1EA
+	.word	gPlayerFrame1019NextBankPalette
+	.word	gPlayerFrame1022UpperTiles
 	.global	gPlayerFrame1023
 gPlayerFrame1023:
 	.word	gPlayerFrame1023OamTemplate+1
 	.word	gPlayerFrame1019Palette
 	.word	gUnk_080FA350
-	.word	gUnk_080F999A
-	.word	gUnk_080FA456
+	.word	gPlayerFrame1019NextBankPalette
+	.word	gPlayerFrame1023UpperTiles
 	.global	gPlayerFrame1024
 gPlayerFrame1024:
 	.word	gPlayerFrame1024OamTemplate+1
 	.word	gPlayerFrame1019Palette
 	.word	gUnk_080FA5DC
-	.word	gUnk_080F999A
-	.word	gUnk_080FA702
+	.word	gPlayerFrame1019NextBankPalette
+	.word	gPlayerFrame1024UpperTiles
 	.global	gPlayerFrame1025
 gPlayerFrame1025:
 	.word	gPlayerFrame1025OamTemplate+1
 	.word	gPlayerFrame1019Palette
 	.word	gPlayerFrame1025Tiles
-	.word	gUnk_080F999A
-	.word	gUnk_080FA9AE
+	.word	gPlayerFrame1019NextBankPalette
+	.word	gPlayerFrame1025UpperTiles
 	.global	gPlayerFrame1026
 gPlayerFrame1026:
 	.word	gPlayerFrame1026OamTemplate+1
 	.word	gPlayerFrame1019Palette
 	.word	gPlayerFrame1025Tiles
-	.word	gUnk_080F999A
-	.word	gUnk_080FAB14
+	.word	gPlayerFrame1019NextBankPalette
+	.word	gPlayerFrame1026UpperTiles
 	.global	gPlayerFrame1027
 gPlayerFrame1027:
 	.word	gPlayerFrame1027OamTemplate+1
 	.word	gPlayerFrame1019Palette
 	.word	gUnk_080FAC7A
-	.word	gUnk_080F999A
-	.word	gUnk_080FADA0
+	.word	gPlayerFrame1019NextBankPalette
+	.word	gPlayerFrame1027UpperTiles
 	.global	gPlayerFrame1028
 gPlayerFrame1028:
 	.word	gPlayerFrame1028OamTemplate+1
 	.word	gPlayerFrame1019Palette
 	.word	gUnk_080FAF26
-	.word	gUnk_080F999A
-	.word	gUnk_080FB02C
+	.word	gPlayerFrame1019NextBankPalette
+	.word	gPlayerFrame1028UpperTiles
 	.global	gPlayerFrame1029
 gPlayerFrame1029:
 	.word	gPlayerFrame1029OamTemplate+1
 	.word	gPlayerFrame1019Palette
 	.word	gUnk_080FB192
-	.word	gUnk_080F999A
-	.word	gUnk_080FB298
+	.word	gPlayerFrame1019NextBankPalette
+	.word	gPlayerFrame1029UpperTiles
 	.global	gPlayerFrame1030
 gPlayerFrame1030:
 	.word	gPlayerFrame1030OamTemplate+1
 	.word	gPlayerFrame1019Palette
 	.word	gPlayerFrame1030Tiles
-	.word	gUnk_080F999A
-	.word	gUnk_080FB524
+	.word	gPlayerFrame1019NextBankPalette
+	.word	gPlayerFrame1030UpperTiles
 	.global	gPlayerFrame1039
 gPlayerFrame1039:
 	.word	gPlayerFrame1039OamTemplate+1
 	.word	gPlayerFrame1019Palette
 	.word	gPlayerFrame1039Tiles
-	.word	gUnk_080F999A
-	.word	gUnk_080FB7B0
+	.word	gPlayerFrame1019NextBankPalette
+	.word	gPlayerFrame1039UpperTiles
 	.global	gPlayerFrame1823
 gPlayerFrame1823:
 	.word	gPlayerFrame1823OamTemplate+1
 	.word	gPlayerFrame1823Palette
 	.word	gPlayerFrame1823Tiles
-	.word	gUnk_080F99DE
-	.word	gUnk_080FBA5C
+	.word	gPlayerFrame1823NextBankPalette
+	.word	gPlayerFrame1823UpperTiles
 	.global	gPlayerFrame1824
 gPlayerFrame1824:
 	.word	gPlayerFrame1824OamTemplate+1
 	.word	gPlayerFrame1823Palette
 	.word	gPlayerFrame1824Tiles
-	.word	gUnk_080F99DE
-	.word	gUnk_080FBC68
+	.word	gPlayerFrame1823NextBankPalette
+	.word	gPlayerFrame1824UpperTiles
 	.global	gPlayerFrame1825
 gPlayerFrame1825:
 	.word	gPlayerFrame1825OamTemplate+1
 	.word	gPlayerFrame1823Palette
 	.word	gPlayerFrame1825Tiles
-	.word	gUnk_080F99DE
-	.word	gUnk_080FBE74
+	.word	gPlayerFrame1823NextBankPalette
+	.word	gPlayerFrame1825UpperTiles
 	.global	gPlayerFrame1826
 gPlayerFrame1826:
 	.word	gPlayerFrame1826OamTemplate+1
 	.word	gPlayerFrame1823Palette
 	.word	gPlayerFrame1826Tiles
-	.word	gUnk_080F99DE
-	.word	gUnk_080FC080
+	.word	gPlayerFrame1823NextBankPalette
+	.word	gPlayerFrame1826UpperTiles
 	.global	gPlayerFrame1827
 gPlayerFrame1827:
 	.word	gPlayerFrame1827OamTemplate+1
 	.word	gPlayerFrame1823Palette
 	.word	gPlayerFrame1827Tiles
-	.word	gUnk_080F99DE
-	.word	gUnk_080FC2AC
+	.word	gPlayerFrame1823NextBankPalette
+	.word	gPlayerFrame1827UpperTiles
 	.global	gPlayerFrame1828
 gPlayerFrame1828:
 	.word	gPlayerFrame1828OamTemplate+1
 	.word	gPlayerFrame1823Palette
 	.word	gPlayerFrame1828Tiles
-	.word	gUnk_080F99DE
-	.word	gUnk_080FC4D8
+	.word	gPlayerFrame1823NextBankPalette
+	.word	gPlayerFrame1828UpperTiles
 	.global	gPlayerFrame1829
 gPlayerFrame1829:
 	.word	gPlayerFrame1829OamTemplate+1
 	.word	gPlayerFrame1823Palette
 	.word	gPlayerFrame1829Tiles
-	.word	gUnk_080F99DE
-	.word	gUnk_080FC2AC
+	.word	gPlayerFrame1823NextBankPalette
+	.word	gPlayerFrame1827UpperTiles
 	.global	gPlayerFrame1830
 gPlayerFrame1830:
 	.word	gPlayerFrame1830OamTemplate+1
 	.word	gPlayerFrame1823Palette
 	.word	gPlayerFrame1830Tiles
-	.word	gUnk_080F99DE
-	.word	gUnk_080FC080
+	.word	gPlayerFrame1823NextBankPalette
+	.word	gPlayerFrame1826UpperTiles
 	.global	gPlayerFrame1831
 gPlayerFrame1831:
 	.word	gPlayerFrame1831OamTemplate+1
 	.word	gPlayerFrame1823Palette
 	.word	gPlayerFrame1831Tiles
-	.word	gUnk_080F99DE
-	.word	gUnk_080FBE74
+	.word	gPlayerFrame1823NextBankPalette
+	.word	gPlayerFrame1825UpperTiles
 	.global	gPlayerFrame1832
 gPlayerFrame1832:
 	.word	gPlayerFrame1832OamTemplate+1
 	.word	gPlayerFrame1823Palette
 	.word	gPlayerFrame1832Tiles
-	.word	gUnk_080F99DE
-	.word	gUnk_080FBC68
+	.word	gPlayerFrame1823NextBankPalette
+	.word	gPlayerFrame1824UpperTiles
 	.global	gPlayerFrame1841
 gPlayerFrame1841:
 	.word	gPlayerFrame1841OamTemplate+1
 	.word	gPlayerFrame1823Palette
 	.word	gPlayerFrame1841Tiles
-	.word	gUnk_080F99DE
-	.word	gUnk_080FC2AC
+	.word	gPlayerFrame1823NextBankPalette
+	.word	gPlayerFrame1827UpperTiles
 	.global	gPlayerFrame2068
 gPlayerFrame2068:
 	.word	gPlayerFrame2068OamTemplate+1
 	.word	gUnk_080F9A00
 	.word	gUnk_080F9A66
-	.word	gUnk_080F9A22
-	.word	gUnk_080FCB5C
+	.word	gPlayerFrame2068NextBankPalette
+	.word	gPlayerFrame2068UpperTiles
 	.global	gPlayerFrame2069
 gPlayerFrame2069:
 	.word	gPlayerFrame2069OamTemplate+1
 	.word	gUnk_080F9A00
 	.word	gUnk_080F9E58
-	.word	gUnk_080F9A22
-	.word	gUnk_080FCC82
+	.word	gPlayerFrame2068NextBankPalette
+	.word	gPlayerFrame2069UpperTiles
 	.global	gPlayerFrame2070
 gPlayerFrame2070:
 	.word	gPlayerFrame2070OamTemplate+1
 	.word	gUnk_080F9A00
 	.word	gUnk_080FA0E4
-	.word	gUnk_080F9A22
-	.word	gUnk_080FCDA8
+	.word	gPlayerFrame2068NextBankPalette
+	.word	gPlayerFrame2070UpperTiles
 	.global	gPlayerFrame2071
 gPlayerFrame2071:
 	.word	gPlayerFrame2071OamTemplate+1
 	.word	gUnk_080F9A00
 	.word	gUnk_080FA350
-	.word	gUnk_080F9A22
-	.word	gUnk_080FCECE
+	.word	gPlayerFrame2068NextBankPalette
+	.word	gPlayerFrame2071UpperTiles
 	.global	gPlayerFrame2072
 gPlayerFrame2072:
 	.word	gPlayerFrame2072OamTemplate+1
 	.word	gUnk_080F9A00
 	.word	gUnk_080FA5DC
-	.word	gUnk_080F9A22
-	.word	gUnk_080FCFF4
+	.word	gPlayerFrame2068NextBankPalette
+	.word	gPlayerFrame2072UpperTiles
 	.global	gPlayerFrame2073
 gPlayerFrame2073:
 	.word	gPlayerFrame2073OamTemplate+1
 	.word	gUnk_080F9A00
 	.word	gPlayerFrame1025Tiles
-	.word	gUnk_080F9A22
-	.word	gUnk_080FCFF4
+	.word	gPlayerFrame2068NextBankPalette
+	.word	gPlayerFrame2072UpperTiles
 	.global	gPlayerFrame2074
 gPlayerFrame2074:
 	.word	gPlayerFrame2074OamTemplate+1
 	.word	gUnk_080F9A00
 	.word	gUnk_080FAC7A
-	.word	gUnk_080F9A22
-	.word	gUnk_080FD11A
+	.word	gPlayerFrame2068NextBankPalette
+	.word	gPlayerFrame2074UpperTiles
 	.global	gPlayerFrame2075
 gPlayerFrame2075:
 	.word	gPlayerFrame2075OamTemplate+1
 	.word	gUnk_080F9A00
 	.word	gUnk_080FAF26
-	.word	gUnk_080F9A22
-	.word	gUnk_080FD240
+	.word	gPlayerFrame2068NextBankPalette
+	.word	gPlayerFrame2075UpperTiles
 	.global	gPlayerFrame2076
 gPlayerFrame2076:
 	.word	gPlayerFrame2076OamTemplate+1
 	.word	gUnk_080F9A00
 	.word	gUnk_080FB192
-	.word	gUnk_080F9A22
-	.word	gUnk_080FCC82
+	.word	gPlayerFrame2068NextBankPalette
+	.word	gPlayerFrame2069UpperTiles
 	.global	gPlayerFrame2077
 gPlayerFrame2077:
 	.word	gPlayerFrame2077OamTemplate+1
 	.word	gUnk_080F9A00
 	.word	gUnk_080FD366
-	.word	gUnk_080F9A22
-	.word	gUnk_080FCB5C
+	.word	gPlayerFrame2068NextBankPalette
+	.word	gPlayerFrame2068UpperTiles
 	.global	gPlayerFrame2086
 gPlayerFrame2086:
 	.word	gPlayerFrame2086OamTemplate+1
 	.word	gUnk_080F9A00
 	.word	gPlayerFrame2086Tiles
-	.word	gUnk_080F9A22
-	.word	gUnk_080FD5D2
+	.word	gPlayerFrame2068NextBankPalette
+	.word	gPlayerFrame2086UpperTiles
 	.global	gUnk_0875CAB4
 gUnk_0875CAB4:
 	.word	gUnk_080FEB9E+1
@@ -4111,14 +4111,14 @@ gPlayerFrame4097:
 	.word	gUnk_080F9A00
 	.word	gPlayerFrame1039Tiles
 	.word	gUnk_080F9A44
-	.word	gUnk_080FE1BA
+	.word	gPlayerFrame4097UpperTiles
 	.global	gPlayerFrame4228
 gPlayerFrame4228:
 	.word	gPlayerFrame4228OamTemplate+1
 	.word	gUnk_080F9A00
 	.word	gPlayerFrame1039Tiles
 	.word	gUnk_080F9A44
-	.word	gUnk_080FE240
+	.word	gPlayerFrame4228UpperTiles
 	.global	gPlayerFrame22
 gPlayerFrame22:
 	.word	gPlayerFrame22OamTemplate+1
@@ -4228,561 +4228,561 @@ gPlayerFrame904:
 	.word	gPlayerFrame904OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame22Tiles
-	.word	gUnk_080FF05E
-	.word	gUnk_081005E6
+	.word	gPlayerFrame904NextBankPalette
+	.word	gPlayerFrame904UpperTiles
 	.global	gPlayerFrame905
 gPlayerFrame905:
 	.word	gPlayerFrame905OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame23Tiles
-	.word	gUnk_080FF05E
-	.word	gUnk_081006EC
+	.word	gPlayerFrame904NextBankPalette
+	.word	gPlayerFrame905UpperTiles
 	.global	gPlayerFrame906
 gPlayerFrame906:
 	.word	gPlayerFrame906OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame24Tiles
-	.word	gUnk_080FF05E
-	.word	gUnk_081007F2
+	.word	gPlayerFrame904NextBankPalette
+	.word	gPlayerFrame906UpperTiles
 	.global	gPlayerFrame907
 gPlayerFrame907:
 	.word	gPlayerFrame907OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame25Tiles
-	.word	gUnk_080FF05E
-	.word	gUnk_081008F8
+	.word	gPlayerFrame904NextBankPalette
+	.word	gPlayerFrame907UpperTiles
 	.global	gPlayerFrame908
 gPlayerFrame908:
 	.word	gPlayerFrame908OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame26Tiles
-	.word	gUnk_080FF05E
-	.word	gUnk_081009FE
+	.word	gPlayerFrame904NextBankPalette
+	.word	gPlayerFrame908UpperTiles
 	.global	gPlayerFrame909
 gPlayerFrame909:
 	.word	gPlayerFrame909OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame27Tiles
-	.word	gUnk_080FF05E
-	.word	gUnk_081008F8
+	.word	gPlayerFrame904NextBankPalette
+	.word	gPlayerFrame907UpperTiles
 	.global	gPlayerFrame910
 gPlayerFrame910:
 	.word	gPlayerFrame910OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame28Tiles
-	.word	gUnk_080FF05E
-	.word	gUnk_081007F2
+	.word	gPlayerFrame904NextBankPalette
+	.word	gPlayerFrame906UpperTiles
 	.global	gPlayerFrame911
 gPlayerFrame911:
 	.word	gPlayerFrame911OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame29Tiles
-	.word	gUnk_080FF05E
-	.word	gUnk_081006EC
+	.word	gPlayerFrame904NextBankPalette
+	.word	gPlayerFrame905UpperTiles
 	.global	gPlayerFrame1328
 gPlayerFrame1328:
 	.word	gPlayerFrame1328OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame22Tiles
-	.word	gUnk_080FF080
-	.word	gUnk_08100B04
+	.word	gPlayerFrame1328NextBankPalette
+	.word	gPlayerFrame1328UpperTiles
 	.global	gPlayerFrame1329
 gPlayerFrame1329:
 	.word	gPlayerFrame1329OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame23Tiles
-	.word	gUnk_080FF080
-	.word	gUnk_08100CCA
+	.word	gPlayerFrame1328NextBankPalette
+	.word	gPlayerFrame1329UpperTiles
 	.global	gPlayerFrame1330
 gPlayerFrame1330:
 	.word	gPlayerFrame1330OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame24Tiles
-	.word	gUnk_080FF080
-	.word	gUnk_08100E90
+	.word	gPlayerFrame1328NextBankPalette
+	.word	gPlayerFrame1330UpperTiles
 	.global	gPlayerFrame1331
 gPlayerFrame1331:
 	.word	gPlayerFrame1331OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame25Tiles
-	.word	gUnk_080FF080
-	.word	gUnk_08101076
+	.word	gPlayerFrame1328NextBankPalette
+	.word	gPlayerFrame1331UpperTiles
 	.global	gPlayerFrame1332
 gPlayerFrame1332:
 	.word	gPlayerFrame1332OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame26Tiles
-	.word	gUnk_080FF080
-	.word	gUnk_0810123C
+	.word	gPlayerFrame1328NextBankPalette
+	.word	gPlayerFrame1332UpperTiles
 	.global	gPlayerFrame1333
 gPlayerFrame1333:
 	.word	gPlayerFrame1333OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame27Tiles
-	.word	gUnk_080FF080
-	.word	gUnk_08101402
+	.word	gPlayerFrame1328NextBankPalette
+	.word	gPlayerFrame1333UpperTiles
 	.global	gPlayerFrame1334
 gPlayerFrame1334:
 	.word	gPlayerFrame1334OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame28Tiles
-	.word	gUnk_080FF080
-	.word	gUnk_08100E90
+	.word	gPlayerFrame1328NextBankPalette
+	.word	gPlayerFrame1330UpperTiles
 	.global	gPlayerFrame1335
 gPlayerFrame1335:
 	.word	gPlayerFrame1335OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame29Tiles
-	.word	gUnk_080FF080
-	.word	gUnk_081015C8
+	.word	gPlayerFrame1328NextBankPalette
+	.word	gPlayerFrame1335UpperTiles
 	.global	gPlayerFrame1527
 gPlayerFrame1527:
 	.word	gPlayerFrame1527OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame22Tiles
-	.word	gUnk_080FF0A2
-	.word	gUnk_0810178E
+	.word	gPlayerFrame1527NextBankPalette
+	.word	gPlayerFrame1527UpperTiles
 	.global	gPlayerFrame1528
 gPlayerFrame1528:
 	.word	gPlayerFrame1528OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame23Tiles
-	.word	gUnk_080FF0A2
-	.word	gUnk_08101814
+	.word	gPlayerFrame1527NextBankPalette
+	.word	gPlayerFrame1528UpperTiles
 	.global	gPlayerFrame1529
 gPlayerFrame1529:
 	.word	gPlayerFrame1529OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame24Tiles
-	.word	gUnk_080FF0A2
-	.word	gUnk_0810189A
+	.word	gPlayerFrame1527NextBankPalette
+	.word	gPlayerFrame1529UpperTiles
 	.global	gPlayerFrame1530
 gPlayerFrame1530:
 	.word	gPlayerFrame1530OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame25Tiles
-	.word	gUnk_080FF0A2
-	.word	gUnk_08101920
+	.word	gPlayerFrame1527NextBankPalette
+	.word	gPlayerFrame1530UpperTiles
 	.global	gPlayerFrame1531
 gPlayerFrame1531:
 	.word	gPlayerFrame1531OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame26Tiles
-	.word	gUnk_080FF0A2
-	.word	gUnk_081019A6
+	.word	gPlayerFrame1527NextBankPalette
+	.word	gPlayerFrame1531UpperTiles
 	.global	gPlayerFrame1532
 gPlayerFrame1532:
 	.word	gPlayerFrame1532OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame27Tiles
-	.word	gUnk_080FF0A2
-	.word	gUnk_08101920
+	.word	gPlayerFrame1527NextBankPalette
+	.word	gPlayerFrame1530UpperTiles
 	.global	gPlayerFrame1533
 gPlayerFrame1533:
 	.word	gPlayerFrame1533OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame28Tiles
-	.word	gUnk_080FF0A2
-	.word	gUnk_08101A2C
+	.word	gPlayerFrame1527NextBankPalette
+	.word	gPlayerFrame1533UpperTiles
 	.global	gPlayerFrame1534
 gPlayerFrame1534:
 	.word	gPlayerFrame1534OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame29Tiles
-	.word	gUnk_080FF0A2
-	.word	gUnk_08101814
+	.word	gPlayerFrame1527NextBankPalette
+	.word	gPlayerFrame1528UpperTiles
 	.global	gPlayerFrame1696
 gPlayerFrame1696:
 	.word	gPlayerFrame1696OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame22Tiles
-	.word	gUnk_080FF0C4
-	.word	gUnk_08101AB2
+	.word	gPlayerFrame1696NextBankPalette
+	.word	gPlayerFrame1696UpperTiles
 	.global	gPlayerFrame1697
 gPlayerFrame1697:
 	.word	gPlayerFrame1697OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame23Tiles
-	.word	gUnk_080FF0C4
-	.word	gUnk_08101B58
+	.word	gPlayerFrame1696NextBankPalette
+	.word	gPlayerFrame1697UpperTiles
 	.global	gPlayerFrame1698
 gPlayerFrame1698:
 	.word	gPlayerFrame1698OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame24Tiles
-	.word	gUnk_080FF0C4
-	.word	gUnk_08101C1E
+	.word	gPlayerFrame1696NextBankPalette
+	.word	gPlayerFrame1698UpperTiles
 	.global	gPlayerFrame1699
 gPlayerFrame1699:
 	.word	gPlayerFrame1699OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame25Tiles
-	.word	gUnk_080FF0C4
-	.word	gUnk_08101CE4
+	.word	gPlayerFrame1696NextBankPalette
+	.word	gPlayerFrame1699UpperTiles
 	.global	gPlayerFrame1700
 gPlayerFrame1700:
 	.word	gPlayerFrame1700OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame26Tiles
-	.word	gUnk_080FF0C4
-	.word	gUnk_08101CE4
+	.word	gPlayerFrame1696NextBankPalette
+	.word	gPlayerFrame1699UpperTiles
 	.global	gPlayerFrame1701
 gPlayerFrame1701:
 	.word	gPlayerFrame1701OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame27Tiles
-	.word	gUnk_080FF0C4
-	.word	gUnk_08101DAA
+	.word	gPlayerFrame1696NextBankPalette
+	.word	gPlayerFrame1701UpperTiles
 	.global	gPlayerFrame1702
 gPlayerFrame1702:
 	.word	gPlayerFrame1702OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame28Tiles
-	.word	gUnk_080FF0C4
-	.word	gUnk_08101B58
+	.word	gPlayerFrame1696NextBankPalette
+	.word	gPlayerFrame1697UpperTiles
 	.global	gPlayerFrame1703
 gPlayerFrame1703:
 	.word	gPlayerFrame1703OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame29Tiles
-	.word	gUnk_080FF0C4
-	.word	gUnk_08101E70
+	.word	gPlayerFrame1696NextBankPalette
+	.word	gPlayerFrame1703UpperTiles
 	.global	gPlayerFrame2317
 gPlayerFrame2317:
 	.word	gPlayerFrame2317OamTemplate+1
 	.word	gPlayerFrame2317Palette
 	.word	gPlayerFrame2317Tiles
-	.word	gUnk_080FF108
-	.word	gUnk_0810201C
+	.word	gPlayerFrame2317NextBankPalette
+	.word	gPlayerFrame2317UpperTiles
 	.global	gPlayerFrame2318
 gPlayerFrame2318:
 	.word	gPlayerFrame2318OamTemplate+1
 	.word	gPlayerFrame2317Palette
 	.word	gPlayerFrame2318Tiles
-	.word	gUnk_080FF108
-	.word	gUnk_081021E8
+	.word	gPlayerFrame2317NextBankPalette
+	.word	gPlayerFrame2318UpperTiles
 	.global	gPlayerFrame2319
 gPlayerFrame2319:
 	.word	gPlayerFrame2319OamTemplate+1
 	.word	gPlayerFrame2317Palette
 	.word	gPlayerFrame2319Tiles
-	.word	gUnk_080FF108
-	.word	gUnk_081023B4
+	.word	gPlayerFrame2317NextBankPalette
+	.word	gPlayerFrame2319UpperTiles
 	.global	gPlayerFrame2320
 gPlayerFrame2320:
 	.word	gPlayerFrame2320OamTemplate+1
 	.word	gPlayerFrame2317Palette
 	.word	gPlayerFrame2320Tiles
-	.word	gUnk_080FF108
-	.word	gUnk_08102580
+	.word	gPlayerFrame2317NextBankPalette
+	.word	gPlayerFrame2320UpperTiles
 	.global	gPlayerFrame2321
 gPlayerFrame2321:
 	.word	gPlayerFrame2321OamTemplate+1
 	.word	gPlayerFrame2317Palette
 	.word	gPlayerFrame2321Tiles
-	.word	gUnk_080FF108
-	.word	gUnk_0810274C
+	.word	gPlayerFrame2317NextBankPalette
+	.word	gPlayerFrame2321UpperTiles
 	.global	gPlayerFrame2322
 gPlayerFrame2322:
 	.word	gPlayerFrame2322OamTemplate+1
 	.word	gPlayerFrame2317Palette
 	.word	gPlayerFrame2322Tiles
-	.word	gUnk_080FF108
-	.word	gUnk_08102918
+	.word	gPlayerFrame2317NextBankPalette
+	.word	gPlayerFrame2322UpperTiles
 	.global	gPlayerFrame2323
 gPlayerFrame2323:
 	.word	gPlayerFrame2323OamTemplate+1
 	.word	gPlayerFrame2317Palette
 	.word	gPlayerFrame2323Tiles
-	.word	gUnk_080FF108
-	.word	gUnk_081023B4
+	.word	gPlayerFrame2317NextBankPalette
+	.word	gPlayerFrame2319UpperTiles
 	.global	gPlayerFrame2324
 gPlayerFrame2324:
 	.word	gPlayerFrame2324OamTemplate+1
 	.word	gPlayerFrame2317Palette
 	.word	gPlayerFrame2324Tiles
-	.word	gUnk_080FF108
-	.word	gUnk_08102AE4
+	.word	gPlayerFrame2317NextBankPalette
+	.word	gPlayerFrame2324UpperTiles
 	.global	gPlayerFrame2457
 gPlayerFrame2457:
 	.word	gPlayerFrame2457OamTemplate+1
 	.word	gPlayerFrame2457Palette
 	.word	gPlayerFrame22Tiles
-	.word	gUnk_080FF14C
-	.word	gUnk_08102BAA
+	.word	gPlayerFrame2457NextBankPalette
+	.word	gPlayerFrame2457UpperTiles
 	.global	gPlayerFrame2458
 gPlayerFrame2458:
 	.word	gPlayerFrame2458OamTemplate+1
 	.word	gPlayerFrame2457Palette
 	.word	gPlayerFrame23Tiles
-	.word	gUnk_080FF14C
-	.word	gUnk_08102C70
+	.word	gPlayerFrame2457NextBankPalette
+	.word	gPlayerFrame2458UpperTiles
 	.global	gPlayerFrame2459
 gPlayerFrame2459:
 	.word	gPlayerFrame2459OamTemplate+1
 	.word	gPlayerFrame2457Palette
 	.word	gPlayerFrame24Tiles
-	.word	gUnk_080FF14C
-	.word	gUnk_08102D36
+	.word	gPlayerFrame2457NextBankPalette
+	.word	gPlayerFrame2459UpperTiles
 	.global	gPlayerFrame2460
 gPlayerFrame2460:
 	.word	gPlayerFrame2460OamTemplate+1
 	.word	gPlayerFrame2457Palette
 	.word	gPlayerFrame25Tiles
-	.word	gUnk_080FF14C
-	.word	gUnk_08102DFC
+	.word	gPlayerFrame2457NextBankPalette
+	.word	gPlayerFrame2460UpperTiles
 	.global	gPlayerFrame2461
 gPlayerFrame2461:
 	.word	gPlayerFrame2461OamTemplate+1
 	.word	gPlayerFrame2457Palette
 	.word	gPlayerFrame26Tiles
-	.word	gUnk_080FF14C
-	.word	gUnk_08102EC2
+	.word	gPlayerFrame2457NextBankPalette
+	.word	gPlayerFrame2461UpperTiles
 	.global	gPlayerFrame2462
 gPlayerFrame2462:
 	.word	gPlayerFrame2462OamTemplate+1
 	.word	gPlayerFrame2457Palette
 	.word	gPlayerFrame27Tiles
-	.word	gUnk_080FF14C
-	.word	gUnk_08102F88
+	.word	gPlayerFrame2457NextBankPalette
+	.word	gPlayerFrame2462UpperTiles
 	.global	gPlayerFrame2463
 gPlayerFrame2463:
 	.word	gPlayerFrame2463OamTemplate+1
 	.word	gPlayerFrame2457Palette
 	.word	gPlayerFrame28Tiles
-	.word	gUnk_080FF14C
-	.word	gUnk_0810304E
+	.word	gPlayerFrame2457NextBankPalette
+	.word	gPlayerFrame2463UpperTiles
 	.global	gPlayerFrame2464
 gPlayerFrame2464:
 	.word	gPlayerFrame2464OamTemplate+1
 	.word	gPlayerFrame2457Palette
 	.word	gPlayerFrame29Tiles
-	.word	gUnk_080FF14C
-	.word	gUnk_08103114
+	.word	gPlayerFrame2457NextBankPalette
+	.word	gPlayerFrame2464UpperTiles
 	.global	gPlayerFrame2597
 gPlayerFrame2597:
 	.word	gPlayerFrame2597OamTemplate+1
 	.word	gPlayerFrame2597Palette
 	.word	gPlayerFrame22Tiles
-	.word	gUnk_080FF190
-	.word	gUnk_081031DA
+	.word	gPlayerFrame2597NextBankPalette
+	.word	gPlayerFrame2597UpperTiles
 	.global	gPlayerFrame2598
 gPlayerFrame2598:
 	.word	gPlayerFrame2598OamTemplate+1
 	.word	gPlayerFrame2597Palette
 	.word	gPlayerFrame23Tiles
-	.word	gUnk_080FF190
-	.word	gUnk_081032A0
+	.word	gPlayerFrame2597NextBankPalette
+	.word	gPlayerFrame2598UpperTiles
 	.global	gPlayerFrame2599
 gPlayerFrame2599:
 	.word	gPlayerFrame2599OamTemplate+1
 	.word	gPlayerFrame2597Palette
 	.word	gPlayerFrame24Tiles
-	.word	gUnk_080FF190
-	.word	gUnk_081033A6
+	.word	gPlayerFrame2597NextBankPalette
+	.word	gPlayerFrame2599UpperTiles
 	.global	gPlayerFrame2600
 gPlayerFrame2600:
 	.word	gPlayerFrame2600OamTemplate+1
 	.word	gPlayerFrame2597Palette
 	.word	gPlayerFrame25Tiles
-	.word	gUnk_080FF190
-	.word	gUnk_081034AC
+	.word	gPlayerFrame2597NextBankPalette
+	.word	gPlayerFrame2600UpperTiles
 	.global	gPlayerFrame2601
 gPlayerFrame2601:
 	.word	gPlayerFrame2601OamTemplate+1
 	.word	gPlayerFrame2597Palette
 	.word	gPlayerFrame26Tiles
-	.word	gUnk_080FF190
-	.word	gUnk_081035B2
+	.word	gPlayerFrame2597NextBankPalette
+	.word	gPlayerFrame2601UpperTiles
 	.global	gPlayerFrame2602
 gPlayerFrame2602:
 	.word	gPlayerFrame2602OamTemplate+1
 	.word	gPlayerFrame2597Palette
 	.word	gPlayerFrame27Tiles
-	.word	gUnk_080FF190
-	.word	gUnk_081036B8
+	.word	gPlayerFrame2597NextBankPalette
+	.word	gPlayerFrame2602UpperTiles
 	.global	gPlayerFrame2603
 gPlayerFrame2603:
 	.word	gPlayerFrame2603OamTemplate+1
 	.word	gPlayerFrame2597Palette
 	.word	gPlayerFrame28Tiles
-	.word	gUnk_080FF190
-	.word	gUnk_081033A6
+	.word	gPlayerFrame2597NextBankPalette
+	.word	gPlayerFrame2599UpperTiles
 	.global	gPlayerFrame2604
 gPlayerFrame2604:
 	.word	gPlayerFrame2604OamTemplate+1
 	.word	gPlayerFrame2597Palette
 	.word	gPlayerFrame29Tiles
-	.word	gUnk_080FF190
-	.word	gUnk_081032A0
+	.word	gPlayerFrame2597NextBankPalette
+	.word	gPlayerFrame2598UpperTiles
 	.global	gPlayerFrame2759
 gPlayerFrame2759:
 	.word	gPlayerFrame2759OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame22Tiles
-	.word	gUnk_080FF1B2
-	.word	gUnk_081037BE
+	.word	gPlayerFrame2759NextBankPalette
+	.word	gPlayerFrame2759UpperTiles
 	.global	gPlayerFrame2760
 gPlayerFrame2760:
 	.word	gPlayerFrame2760OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame23Tiles
-	.word	gUnk_080FF1B2
-	.word	gUnk_081038C4
+	.word	gPlayerFrame2759NextBankPalette
+	.word	gPlayerFrame2760UpperTiles
 	.global	gPlayerFrame2761
 gPlayerFrame2761:
 	.word	gPlayerFrame2761OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame24Tiles
-	.word	gUnk_080FF1B2
-	.word	gUnk_081039CA
+	.word	gPlayerFrame2759NextBankPalette
+	.word	gPlayerFrame2761UpperTiles
 	.global	gPlayerFrame2762
 gPlayerFrame2762:
 	.word	gPlayerFrame2762OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame25Tiles
-	.word	gUnk_080FF1B2
-	.word	gUnk_08103AD0
+	.word	gPlayerFrame2759NextBankPalette
+	.word	gPlayerFrame2762UpperTiles
 	.global	gPlayerFrame2763
 gPlayerFrame2763:
 	.word	gPlayerFrame2763OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame26Tiles
-	.word	gUnk_080FF1B2
-	.word	gUnk_08103BD6
+	.word	gPlayerFrame2759NextBankPalette
+	.word	gPlayerFrame2763UpperTiles
 	.global	gPlayerFrame2764
 gPlayerFrame2764:
 	.word	gPlayerFrame2764OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame27Tiles
-	.word	gUnk_080FF1B2
-	.word	gUnk_08103CDC
+	.word	gPlayerFrame2759NextBankPalette
+	.word	gPlayerFrame2764UpperTiles
 	.global	gPlayerFrame2765
 gPlayerFrame2765:
 	.word	gPlayerFrame2765OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame28Tiles
-	.word	gUnk_080FF1B2
-	.word	gUnk_08103DE2
+	.word	gPlayerFrame2759NextBankPalette
+	.word	gPlayerFrame2765UpperTiles
 	.global	gPlayerFrame2766
 gPlayerFrame2766:
 	.word	gPlayerFrame2766OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame29Tiles
-	.word	gUnk_080FF1B2
-	.word	gUnk_08103EE8
+	.word	gPlayerFrame2759NextBankPalette
+	.word	gPlayerFrame2766UpperTiles
 	.global	gPlayerFrame2905
 gPlayerFrame2905:
 	.word	gPlayerFrame2905OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame22Tiles
-	.word	gUnk_080FF1D4
-	.word	gUnk_08103FEE
+	.word	gPlayerFrame2905NextBankPalette
+	.word	gPlayerFrame2905UpperTiles
 	.global	gPlayerFrame2906
 gPlayerFrame2906:
 	.word	gPlayerFrame2906OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame23Tiles
-	.word	gUnk_080FF1D4
-	.word	gUnk_081040F4
+	.word	gPlayerFrame2905NextBankPalette
+	.word	gPlayerFrame2906UpperTiles
 	.global	gPlayerFrame2907
 gPlayerFrame2907:
 	.word	gPlayerFrame2907OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame24Tiles
-	.word	gUnk_080FF1D4
-	.word	gUnk_081041FA
+	.word	gPlayerFrame2905NextBankPalette
+	.word	gPlayerFrame2907UpperTiles
 	.global	gPlayerFrame2908
 gPlayerFrame2908:
 	.word	gPlayerFrame2908OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame25Tiles
-	.word	gUnk_080FF1D4
-	.word	gUnk_08104300
+	.word	gPlayerFrame2905NextBankPalette
+	.word	gPlayerFrame2908UpperTiles
 	.global	gPlayerFrame2909
 gPlayerFrame2909:
 	.word	gPlayerFrame2909OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame26Tiles
-	.word	gUnk_080FF1D4
-	.word	gUnk_081043C6
+	.word	gPlayerFrame2905NextBankPalette
+	.word	gPlayerFrame2909UpperTiles
 	.global	gPlayerFrame2910
 gPlayerFrame2910:
 	.word	gPlayerFrame2910OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame27Tiles
-	.word	gUnk_080FF1D4
-	.word	gUnk_0810448C
+	.word	gPlayerFrame2905NextBankPalette
+	.word	gPlayerFrame2910UpperTiles
 	.global	gPlayerFrame2911
 gPlayerFrame2911:
 	.word	gPlayerFrame2911OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame28Tiles
-	.word	gUnk_080FF1D4
-	.word	gUnk_08104552
+	.word	gPlayerFrame2905NextBankPalette
+	.word	gPlayerFrame2911UpperTiles
 	.global	gPlayerFrame2912
 gPlayerFrame2912:
 	.word	gPlayerFrame2912OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame29Tiles
-	.word	gUnk_080FF1D4
-	.word	gUnk_08104618
+	.word	gPlayerFrame2905NextBankPalette
+	.word	gPlayerFrame2912UpperTiles
 	.global	gPlayerFrame3036
 gPlayerFrame3036:
 	.word	gPlayerFrame3036OamTemplate+1
 	.word	gPlayerFrame3036Palette
 	.word	gPlayerFrame22Tiles
-	.word	gUnk_080FF218
-	.word	gUnk_0810471E
+	.word	gPlayerFrame3036NextBankPalette
+	.word	gPlayerFrame3036UpperTiles
 	.global	gPlayerFrame3037
 gPlayerFrame3037:
 	.word	gPlayerFrame3037OamTemplate+1
 	.word	gPlayerFrame3036Palette
 	.word	gPlayerFrame23Tiles
-	.word	gUnk_080FF218
-	.word	gUnk_08104864
+	.word	gPlayerFrame3036NextBankPalette
+	.word	gPlayerFrame3037UpperTiles
 	.global	gPlayerFrame3038
 gPlayerFrame3038:
 	.word	gPlayerFrame3038OamTemplate+1
 	.word	gPlayerFrame3036Palette
 	.word	gPlayerFrame24Tiles
-	.word	gUnk_080FF218
-	.word	gUnk_081049AA
+	.word	gPlayerFrame3036NextBankPalette
+	.word	gPlayerFrame3038UpperTiles
 	.global	gPlayerFrame3039
 gPlayerFrame3039:
 	.word	gPlayerFrame3039OamTemplate+1
 	.word	gPlayerFrame3036Palette
 	.word	gPlayerFrame25Tiles
-	.word	gUnk_080FF218
-	.word	gUnk_08104AD0
+	.word	gPlayerFrame3036NextBankPalette
+	.word	gPlayerFrame3039UpperTiles
 	.global	gPlayerFrame3040
 gPlayerFrame3040:
 	.word	gPlayerFrame3040OamTemplate+1
 	.word	gPlayerFrame3036Palette
 	.word	gPlayerFrame26Tiles
-	.word	gUnk_080FF218
-	.word	gUnk_08104BF6
+	.word	gPlayerFrame3036NextBankPalette
+	.word	gPlayerFrame3040UpperTiles
 	.global	gPlayerFrame3041
 gPlayerFrame3041:
 	.word	gPlayerFrame3041OamTemplate+1
 	.word	gPlayerFrame3036Palette
 	.word	gPlayerFrame27Tiles
-	.word	gUnk_080FF218
-	.word	gUnk_08104D1C
+	.word	gPlayerFrame3036NextBankPalette
+	.word	gPlayerFrame3041UpperTiles
 	.global	gPlayerFrame3042
 gPlayerFrame3042:
 	.word	gPlayerFrame3042OamTemplate+1
 	.word	gPlayerFrame3036Palette
 	.word	gPlayerFrame28Tiles
-	.word	gUnk_080FF218
-	.word	gUnk_08104E42
+	.word	gPlayerFrame3036NextBankPalette
+	.word	gPlayerFrame3042UpperTiles
 	.global	gPlayerFrame3043
 gPlayerFrame3043:
 	.word	gPlayerFrame3043OamTemplate+1
 	.word	gPlayerFrame3036Palette
 	.word	gPlayerFrame29Tiles
-	.word	gUnk_080FF218
-	.word	gUnk_08104F88
+	.word	gPlayerFrame3036NextBankPalette
+	.word	gPlayerFrame3043UpperTiles
 	.global	gPlayerFrame3177
 gPlayerFrame3177:
 	.word	gPlayerFrame3177OamTemplate+1
@@ -4836,57 +4836,57 @@ gPlayerFrame3372:
 	.word	gPlayerFrame3372OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame22Tiles
-	.word	gUnk_080FF25C
-	.word	gUnk_081059FE
+	.word	gPlayerFrame3372NextBankPalette
+	.word	gPlayerFrame3372UpperTiles
 	.global	gPlayerFrame3373
 gPlayerFrame3373:
 	.word	gPlayerFrame3373OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame23Tiles
-	.word	gUnk_080FF25C
-	.word	gUnk_08105B24
+	.word	gPlayerFrame3372NextBankPalette
+	.word	gPlayerFrame3373UpperTiles
 	.global	gPlayerFrame3374
 gPlayerFrame3374:
 	.word	gPlayerFrame3374OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame24Tiles
-	.word	gUnk_080FF25C
-	.word	gUnk_08105C4A
+	.word	gPlayerFrame3372NextBankPalette
+	.word	gPlayerFrame3374UpperTiles
 	.global	gPlayerFrame3375
 gPlayerFrame3375:
 	.word	gPlayerFrame3375OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame25Tiles
-	.word	gUnk_080FF25C
-	.word	gUnk_08105D50
+	.word	gPlayerFrame3372NextBankPalette
+	.word	gPlayerFrame3375UpperTiles
 	.global	gPlayerFrame3376
 gPlayerFrame3376:
 	.word	gPlayerFrame3376OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame26Tiles
-	.word	gUnk_080FF25C
-	.word	gUnk_08105E56
+	.word	gPlayerFrame3372NextBankPalette
+	.word	gPlayerFrame3376UpperTiles
 	.global	gPlayerFrame3377
 gPlayerFrame3377:
 	.word	gPlayerFrame3377OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame27Tiles
-	.word	gUnk_080FF25C
-	.word	gUnk_08105F7C
+	.word	gPlayerFrame3372NextBankPalette
+	.word	gPlayerFrame3377UpperTiles
 	.global	gPlayerFrame3378
 gPlayerFrame3378:
 	.word	gPlayerFrame3378OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame28Tiles
-	.word	gUnk_080FF25C
-	.word	gUnk_08106082
+	.word	gPlayerFrame3372NextBankPalette
+	.word	gPlayerFrame3378UpperTiles
 	.global	gPlayerFrame3379
 gPlayerFrame3379:
 	.word	gPlayerFrame3379OamTemplate+1
 	.word	gPlayerFrame904Palette
 	.word	gPlayerFrame29Tiles
-	.word	gUnk_080FF25C
-	.word	gUnk_08106188
+	.word	gPlayerFrame3372NextBankPalette
+	.word	gPlayerFrame3379UpperTiles
 	.global	gUnk_0875D52C
 gUnk_0875D52C:
 	.word	gUnk_0810829E+1
@@ -4940,281 +4940,281 @@ gPlayerFrame1031:
 	.word	gPlayerFrame1031OamTemplate+1
 	.word	gPlayerFrame1031Palette
 	.word	gPlayerFrame1031Tiles
-	.word	gUnk_08108382
-	.word	gUnk_08108574
+	.word	gPlayerFrame1031NextBankPalette
+	.word	gPlayerFrame1031UpperTiles
 	.global	gPlayerFrame1032
 gPlayerFrame1032:
 	.word	gPlayerFrame1032OamTemplate+1
 	.word	gPlayerFrame1031Palette
 	.word	gPlayerFrame1032Tiles
-	.word	gUnk_08108382
-	.word	gUnk_08108820
+	.word	gPlayerFrame1031NextBankPalette
+	.word	gPlayerFrame1032UpperTiles
 	.global	gPlayerFrame1033
 gPlayerFrame1033:
 	.word	gPlayerFrame1033OamTemplate+1
 	.word	gPlayerFrame1031Palette
 	.word	gPlayerFrame1033Tiles
-	.word	gUnk_08108382
-	.word	gUnk_08108ACC
+	.word	gPlayerFrame1031NextBankPalette
+	.word	gPlayerFrame1033UpperTiles
 	.global	gPlayerFrame1034
 gPlayerFrame1034:
 	.word	gPlayerFrame1034OamTemplate+1
 	.word	gPlayerFrame1031Palette
 	.word	gPlayerFrame1034Tiles
-	.word	gUnk_08108382
-	.word	gUnk_08108D78
+	.word	gPlayerFrame1031NextBankPalette
+	.word	gPlayerFrame1034UpperTiles
 	.global	gPlayerFrame1035
 gPlayerFrame1035:
 	.word	gPlayerFrame1035OamTemplate+1
 	.word	gPlayerFrame1031Palette
 	.word	gPlayerFrame1035Tiles
-	.word	gUnk_08108382
-	.word	gUnk_08109024
+	.word	gPlayerFrame1031NextBankPalette
+	.word	gPlayerFrame1035UpperTiles
 	.global	gPlayerFrame1036
 gPlayerFrame1036:
 	.word	gPlayerFrame1036OamTemplate+1
 	.word	gPlayerFrame1031Palette
 	.word	gPlayerFrame1036Tiles
-	.word	gUnk_08108382
-	.word	gUnk_081092D0
+	.word	gPlayerFrame1031NextBankPalette
+	.word	gPlayerFrame1036UpperTiles
 	.global	gPlayerFrame1037
 gPlayerFrame1037:
 	.word	gPlayerFrame1037OamTemplate+1
 	.word	gPlayerFrame1031Palette
 	.word	gPlayerFrame1037Tiles
-	.word	gUnk_08108382
-	.word	gUnk_0810957C
+	.word	gPlayerFrame1031NextBankPalette
+	.word	gPlayerFrame1037UpperTiles
 	.global	gPlayerFrame1038
 gPlayerFrame1038:
 	.word	gPlayerFrame1038OamTemplate+1
 	.word	gPlayerFrame1031Palette
 	.word	gPlayerFrame1038Tiles
-	.word	gUnk_08108382
-	.word	gUnk_08109828
+	.word	gPlayerFrame1031NextBankPalette
+	.word	gPlayerFrame1038UpperTiles
 	.global	gPlayerFrame1833
 gPlayerFrame1833:
 	.word	gPlayerFrame1833OamTemplate+1
 	.word	gPlayerFrame1833Palette
 	.word	gPlayerFrame1833Tiles
-	.word	gUnk_081083C6
-	.word	gUnk_08109AD4
+	.word	gPlayerFrame1833NextBankPalette
+	.word	gPlayerFrame1833UpperTiles
 	.global	gPlayerFrame1834
 gPlayerFrame1834:
 	.word	gPlayerFrame1834OamTemplate+1
 	.word	gPlayerFrame1833Palette
 	.word	gPlayerFrame1834Tiles
-	.word	gUnk_081083C6
-	.word	gUnk_08109D00
+	.word	gPlayerFrame1833NextBankPalette
+	.word	gPlayerFrame1834UpperTiles
 	.global	gPlayerFrame1835
 gPlayerFrame1835:
 	.word	gPlayerFrame1835OamTemplate+1
 	.word	gPlayerFrame1833Palette
 	.word	gPlayerFrame1835Tiles
-	.word	gUnk_081083C6
-	.word	gUnk_08109F2C
+	.word	gPlayerFrame1833NextBankPalette
+	.word	gPlayerFrame1835UpperTiles
 	.global	gPlayerFrame1836
 gPlayerFrame1836:
 	.word	gPlayerFrame1836OamTemplate+1
 	.word	gPlayerFrame1833Palette
 	.word	gPlayerFrame1836Tiles
-	.word	gUnk_081083C6
-	.word	gUnk_0810A158
+	.word	gPlayerFrame1833NextBankPalette
+	.word	gPlayerFrame1836UpperTiles
 	.global	gPlayerFrame1837
 gPlayerFrame1837:
 	.word	gPlayerFrame1837OamTemplate+1
 	.word	gPlayerFrame1833Palette
 	.word	gPlayerFrame1837Tiles
-	.word	gUnk_081083C6
-	.word	gUnk_0810A384
+	.word	gPlayerFrame1833NextBankPalette
+	.word	gPlayerFrame1837UpperTiles
 	.global	gPlayerFrame1838
 gPlayerFrame1838:
 	.word	gPlayerFrame1838OamTemplate+1
 	.word	gPlayerFrame1833Palette
 	.word	gPlayerFrame1838Tiles
-	.word	gUnk_081083C6
-	.word	gUnk_0810A384
+	.word	gPlayerFrame1833NextBankPalette
+	.word	gPlayerFrame1837UpperTiles
 	.global	gPlayerFrame1839
 gPlayerFrame1839:
 	.word	gPlayerFrame1839OamTemplate+1
 	.word	gPlayerFrame1833Palette
 	.word	gPlayerFrame1839Tiles
-	.word	gUnk_081083C6
-	.word	gUnk_0810A158
+	.word	gPlayerFrame1833NextBankPalette
+	.word	gPlayerFrame1836UpperTiles
 	.global	gPlayerFrame1840
 gPlayerFrame1840:
 	.word	gPlayerFrame1840OamTemplate+1
 	.word	gPlayerFrame1833Palette
 	.word	gPlayerFrame1840Tiles
-	.word	gUnk_081083C6
-	.word	gUnk_08109F2C
+	.word	gPlayerFrame1833NextBankPalette
+	.word	gPlayerFrame1835UpperTiles
 	.global	gPlayerFrame2078
 gPlayerFrame2078:
 	.word	gPlayerFrame2078OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1031Tiles
-	.word	gUnk_0810840A
-	.word	gUnk_0810A7FC
+	.word	gPlayerFrame2078NextBankPalette
+	.word	gPlayerFrame2078UpperTiles
 	.global	gPlayerFrame2079
 gPlayerFrame2079:
 	.word	gPlayerFrame2079OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1032Tiles
-	.word	gUnk_0810840A
-	.word	gUnk_0810A7FC
+	.word	gPlayerFrame2078NextBankPalette
+	.word	gPlayerFrame2078UpperTiles
 	.global	gPlayerFrame2080
 gPlayerFrame2080:
 	.word	gPlayerFrame2080OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1033Tiles
-	.word	gUnk_0810840A
-	.word	gUnk_0810A922
+	.word	gPlayerFrame2078NextBankPalette
+	.word	gPlayerFrame2080UpperTiles
 	.global	gPlayerFrame2081
 gPlayerFrame2081:
 	.word	gPlayerFrame2081OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame2081Tiles
-	.word	gUnk_0810840A
-	.word	gUnk_0810AB6E
+	.word	gPlayerFrame2078NextBankPalette
+	.word	gPlayerFrame2081UpperTiles
 	.global	gPlayerFrame2082
 gPlayerFrame2082:
 	.word	gPlayerFrame2082OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1035Tiles
-	.word	gUnk_0810840A
-	.word	gUnk_0810AC94
+	.word	gPlayerFrame2078NextBankPalette
+	.word	gPlayerFrame2082UpperTiles
 	.global	gPlayerFrame2083
 gPlayerFrame2083:
 	.word	gPlayerFrame2083OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame2083Tiles
-	.word	gUnk_0810840A
-	.word	gUnk_0810AEE0
+	.word	gPlayerFrame2078NextBankPalette
+	.word	gPlayerFrame2083UpperTiles
 	.global	gPlayerFrame2084
 gPlayerFrame2084:
 	.word	gPlayerFrame2084OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame2084Tiles
-	.word	gUnk_0810840A
-	.word	gUnk_0810B12C
+	.word	gPlayerFrame2078NextBankPalette
+	.word	gPlayerFrame2084UpperTiles
 	.global	gPlayerFrame2085
 gPlayerFrame2085:
 	.word	gPlayerFrame2085OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1038Tiles
-	.word	gUnk_0810840A
-	.word	gUnk_0810A922
+	.word	gPlayerFrame2078NextBankPalette
+	.word	gPlayerFrame2080UpperTiles
 	.global	gPlayerFrame4089
 gPlayerFrame4089:
 	.word	gPlayerFrame4089OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1031Tiles
-	.word	gUnk_0810842C
-	.word	gUnk_0810B252
+	.word	gPlayerFrame4089NextBankPalette
+	.word	gPlayerFrame4089UpperTiles
 	.global	gPlayerFrame4220
 gPlayerFrame4220:
 	.word	gPlayerFrame4220OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1031Tiles
-	.word	gUnk_0810842C
-	.word	gUnk_0810B318
+	.word	gPlayerFrame4089NextBankPalette
+	.word	gPlayerFrame4220UpperTiles
 	.global	gPlayerFrame4090
 gPlayerFrame4090:
 	.word	gPlayerFrame4090OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1032Tiles
-	.word	gUnk_0810842C
-	.word	gUnk_0810B45E
+	.word	gPlayerFrame4089NextBankPalette
+	.word	gPlayerFrame4090UpperTiles
 	.global	gPlayerFrame4221
 gPlayerFrame4221:
 	.word	gPlayerFrame4221OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1032Tiles
-	.word	gUnk_0810842C
-	.word	gUnk_0810B504
+	.word	gPlayerFrame4089NextBankPalette
+	.word	gPlayerFrame4221UpperTiles
 	.global	gPlayerFrame4091
 gPlayerFrame4091:
 	.word	gPlayerFrame4091OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1033Tiles
-	.word	gUnk_0810842C
-	.word	gUnk_0810B62A
+	.word	gPlayerFrame4089NextBankPalette
+	.word	gPlayerFrame4091UpperTiles
 	.global	gPlayerFrame4222
 gPlayerFrame4222:
 	.word	gPlayerFrame4222OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1033Tiles
-	.word	gUnk_0810842C
-	.word	gUnk_0810B6D0
+	.word	gPlayerFrame4089NextBankPalette
+	.word	gPlayerFrame4222UpperTiles
 	.global	gPlayerFrame4092
 gPlayerFrame4092:
 	.word	gPlayerFrame4092OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1034Tiles
-	.word	gUnk_0810842C
-	.word	gUnk_0810B7F6
+	.word	gPlayerFrame4089NextBankPalette
+	.word	gPlayerFrame4092UpperTiles
 	.global	gPlayerFrame4223
 gPlayerFrame4223:
 	.word	gPlayerFrame4223OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1034Tiles
-	.word	gUnk_0810842C
-	.word	gUnk_0810B87C
+	.word	gPlayerFrame4089NextBankPalette
+	.word	gPlayerFrame4223UpperTiles
 	.global	gPlayerFrame4093
 gPlayerFrame4093:
 	.word	gPlayerFrame4093OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1035Tiles
-	.word	gUnk_0810842C
-	.word	gUnk_0810B7F6
+	.word	gPlayerFrame4089NextBankPalette
+	.word	gPlayerFrame4092UpperTiles
 	.global	gPlayerFrame4224
 gPlayerFrame4224:
 	.word	gPlayerFrame4224OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1035Tiles
-	.word	gUnk_0810842C
-	.word	gUnk_0810B87C
+	.word	gPlayerFrame4089NextBankPalette
+	.word	gPlayerFrame4223UpperTiles
 	.global	gPlayerFrame4094
 gPlayerFrame4094:
 	.word	gPlayerFrame4094OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame2083Tiles
-	.word	gUnk_0810842C
-	.word	gUnk_0810B7F6
+	.word	gPlayerFrame4089NextBankPalette
+	.word	gPlayerFrame4092UpperTiles
 	.global	gPlayerFrame4225
 gPlayerFrame4225:
 	.word	gPlayerFrame4225OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame2083Tiles
-	.word	gUnk_0810842C
-	.word	gUnk_0810B87C
+	.word	gPlayerFrame4089NextBankPalette
+	.word	gPlayerFrame4223UpperTiles
 	.global	gPlayerFrame4095
 gPlayerFrame4095:
 	.word	gPlayerFrame4095OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame2084Tiles
-	.word	gUnk_0810842C
-	.word	gUnk_0810B62A
+	.word	gPlayerFrame4089NextBankPalette
+	.word	gPlayerFrame4091UpperTiles
 	.global	gPlayerFrame4226
 gPlayerFrame4226:
 	.word	gPlayerFrame4226OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame2084Tiles
-	.word	gUnk_0810842C
-	.word	gUnk_0810B6D0
+	.word	gPlayerFrame4089NextBankPalette
+	.word	gPlayerFrame4222UpperTiles
 	.global	gPlayerFrame4096
 gPlayerFrame4096:
 	.word	gPlayerFrame4096OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1038Tiles
-	.word	gUnk_0810842C
-	.word	gUnk_0810B45E
+	.word	gPlayerFrame4089NextBankPalette
+	.word	gPlayerFrame4090UpperTiles
 	.global	gPlayerFrame4227
 gPlayerFrame4227:
 	.word	gPlayerFrame4227OamTemplate+1
 	.word	gPlayerFrame2078Palette
 	.word	gPlayerFrame1038Tiles
-	.word	gUnk_0810842C
-	.word	gUnk_0810B504
+	.word	gPlayerFrame4089NextBankPalette
+	.word	gPlayerFrame4221UpperTiles
 	.global	gUnk_0875D8EC
 gUnk_0875D8EC:
 	.word	gUnk_0811FF18+1
@@ -5468,1317 +5468,1317 @@ gPlayerFrame913:
 	.word	gPlayerFrame913OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C504
-	.word	gUnk_0810C2C2
-	.word	gUnk_0810F1DA
+	.word	gPlayerFrame913NextBankPalette
+	.word	gPlayerFrame913UpperTiles
 	.global	gPlayerFrame914
 gPlayerFrame914:
 	.word	gPlayerFrame914OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C62A
-	.word	gUnk_0810C2C2
-	.word	gUnk_0810F2C0
+	.word	gPlayerFrame913NextBankPalette
+	.word	gPlayerFrame914UpperTiles
 	.global	gPlayerFrame915
 gPlayerFrame915:
 	.word	gPlayerFrame915OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C750
-	.word	gUnk_0810C2C2
-	.word	gUnk_0810F3E6
+	.word	gPlayerFrame913NextBankPalette
+	.word	gPlayerFrame915UpperTiles
 	.global	gPlayerFrame916
 gPlayerFrame916:
 	.word	gPlayerFrame916OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C876
-	.word	gUnk_0810C2C2
-	.word	gUnk_0810F50C
+	.word	gPlayerFrame913NextBankPalette
+	.word	gPlayerFrame916UpperTiles
 	.global	gPlayerFrame917
 gPlayerFrame917:
 	.word	gPlayerFrame917OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C99C
-	.word	gUnk_0810C2C2
-	.word	gUnk_0810F612
+	.word	gPlayerFrame913NextBankPalette
+	.word	gPlayerFrame917UpperTiles
 	.global	gUnk_0875DC48
 gUnk_0875DC48:
 	.word	gUnk_08120700+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CAC2
-	.word	gUnk_0810C2C2
+	.word	gPlayerFrame913NextBankPalette
 	.word	gUnk_0810F6D8
 	.global	gUnk_0875DC5C
 gUnk_0875DC5C:
 	.word	gUnk_08120738+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CBE8
-	.word	gUnk_0810C2C2
+	.word	gPlayerFrame913NextBankPalette
 	.word	gUnk_0810F7FE
 	.global	gPlayerFrame922
 gPlayerFrame922:
 	.word	gPlayerFrame922OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CE34
-	.word	gUnk_0810C2C2
-	.word	gUnk_0810F8E4
+	.word	gPlayerFrame913NextBankPalette
+	.word	gPlayerFrame922UpperTiles
 	.global	gPlayerFrame923
 gPlayerFrame923:
 	.word	gPlayerFrame923OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CD0E
-	.word	gUnk_0810C2C2
-	.word	gUnk_0810F9CA
+	.word	gPlayerFrame913NextBankPalette
+	.word	gPlayerFrame923UpperTiles
 	.global	gPlayerFrame929
 gPlayerFrame929:
 	.word	gPlayerFrame929OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CF5A
-	.word	gUnk_0810C2C2
-	.word	gUnk_0810FAB0
+	.word	gPlayerFrame913NextBankPalette
+	.word	gPlayerFrame929UpperTiles
 	.global	gPlayerFrame920
 gPlayerFrame920:
 	.word	gPlayerFrame920OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D080
-	.word	gUnk_0810C2C2
-	.word	gUnk_0810FB96
+	.word	gPlayerFrame913NextBankPalette
+	.word	gPlayerFrame920UpperTiles
 	.global	gPlayerFrame921
 gPlayerFrame921:
 	.word	gPlayerFrame921OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D1A6
-	.word	gUnk_0810C2C2
-	.word	gUnk_0810FC9C
+	.word	gPlayerFrame913NextBankPalette
+	.word	gPlayerFrame921UpperTiles
 	.global	gPlayerFrame924
 gPlayerFrame924:
 	.word	gPlayerFrame924OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D2CC
-	.word	gUnk_0810C2C2
-	.word	gUnk_0810FDA2
+	.word	gPlayerFrame913NextBankPalette
+	.word	gPlayerFrame924UpperTiles
 	.global	gPlayerFrame925
 gPlayerFrame925:
 	.word	gPlayerFrame925OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D3F2
-	.word	gUnk_0810C2C2
-	.word	gUnk_0810FEA8
+	.word	gPlayerFrame913NextBankPalette
+	.word	gPlayerFrame925UpperTiles
 	.global	gPlayerFrame926
 gPlayerFrame926:
 	.word	gPlayerFrame926OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D4B8
-	.word	gUnk_0810C2C2
-	.word	gUnk_0810FF6E
+	.word	gPlayerFrame913NextBankPalette
+	.word	gPlayerFrame926UpperTiles
 	.global	gPlayerFrame927
 gPlayerFrame927:
 	.word	gPlayerFrame927OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D5DE
-	.word	gUnk_0810C2C2
-	.word	gUnk_08110054
+	.word	gPlayerFrame913NextBankPalette
+	.word	gPlayerFrame927UpperTiles
 	.global	gPlayerFrame928
 gPlayerFrame928:
 	.word	gPlayerFrame928OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D704
-	.word	gUnk_0810C2C2
-	.word	gUnk_0811013A
+	.word	gPlayerFrame913NextBankPalette
+	.word	gPlayerFrame928UpperTiles
 	.global	gPlayerFrame931
 gPlayerFrame931:
 	.word	gPlayerFrame931OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D82A
-	.word	gUnk_0810C2C2
-	.word	gUnk_08110200
+	.word	gPlayerFrame913NextBankPalette
+	.word	gPlayerFrame931UpperTiles
 	.global	gPlayerFrame1338
 gPlayerFrame1338:
 	.word	gPlayerFrame1338OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C504
-	.word	gUnk_0810C2E4
-	.word	gUnk_08110346
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1338UpperTiles
 	.global	gPlayerFrame1340
 gPlayerFrame1340:
 	.word	gPlayerFrame1340OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C62A
-	.word	gUnk_0810C2E4
-	.word	gUnk_081104CC
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1340UpperTiles
 	.global	gPlayerFrame1341
 gPlayerFrame1341:
 	.word	gPlayerFrame1341OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C750
-	.word	gUnk_0810C2E4
-	.word	gUnk_08110692
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1341UpperTiles
 	.global	gPlayerFrame1342
 gPlayerFrame1342:
 	.word	gPlayerFrame1342OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C876
-	.word	gUnk_0810C2E4
-	.word	gUnk_08110858
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1342UpperTiles
 	.global	gPlayerFrame1343
 gPlayerFrame1343:
 	.word	gPlayerFrame1343OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C99C
-	.word	gUnk_0810C2E4
-	.word	gUnk_081109DE
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1343UpperTiles
 	.global	gUnk_0875DDB0
 gUnk_0875DDB0:
 	.word	gUnk_08120AE0+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_08110B84
-	.word	gUnk_0810C2E4
+	.word	gPlayerFrame1338NextBankPalette
 	.word	gUnk_08110CAA
 	.global	gUnk_0875DDC4
 gUnk_0875DDC4:
 	.word	gUnk_08120B20+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CBE8
-	.word	gUnk_0810C2E4
+	.word	gPlayerFrame1338NextBankPalette
 	.word	gUnk_08110E50
 	.global	gPlayerFrame1348
 gPlayerFrame1348:
 	.word	gPlayerFrame1348OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CE34
-	.word	gUnk_0810C2E4
-	.word	gUnk_08110FD6
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1348UpperTiles
 	.global	gPlayerFrame1349
 gPlayerFrame1349:
 	.word	gPlayerFrame1349OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CD0E
-	.word	gUnk_0810C2E4
-	.word	gUnk_0811115C
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1349UpperTiles
 	.global	gPlayerFrame1356
 gPlayerFrame1356:
 	.word	gPlayerFrame1356OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CF5A
-	.word	gUnk_0810C2E4
-	.word	gUnk_081112E2
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1356UpperTiles
 	.global	gPlayerFrame1346
 gPlayerFrame1346:
 	.word	gPlayerFrame1346OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D080
-	.word	gUnk_0810C2E4
-	.word	gUnk_08111448
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1346UpperTiles
 	.global	gPlayerFrame1347
 gPlayerFrame1347:
 	.word	gPlayerFrame1347OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D1A6
-	.word	gUnk_0810C2E4
-	.word	gUnk_081115CE
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1347UpperTiles
 	.global	gPlayerFrame1350
 gPlayerFrame1350:
 	.word	gPlayerFrame1350OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D2CC
-	.word	gUnk_0810C2E4
-	.word	gUnk_08111754
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1350UpperTiles
 	.global	gPlayerFrame1352
 gPlayerFrame1352:
 	.word	gPlayerFrame1352OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D3F2
-	.word	gUnk_0810C2E4
-	.word	gUnk_081118DA
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1352UpperTiles
 	.global	gPlayerFrame1353
 gPlayerFrame1353:
 	.word	gPlayerFrame1353OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D4B8
-	.word	gUnk_0810C2E4
-	.word	gUnk_08110858
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1342UpperTiles
 	.global	gPlayerFrame1354
 gPlayerFrame1354:
 	.word	gPlayerFrame1354OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D5DE
-	.word	gUnk_0810C2E4
-	.word	gUnk_08111AA0
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1354UpperTiles
 	.global	gPlayerFrame1355
 gPlayerFrame1355:
 	.word	gPlayerFrame1355OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D704
-	.word	gUnk_0810C2E4
-	.word	gUnk_08111C26
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1355UpperTiles
 	.global	gPlayerFrame1358
 gPlayerFrame1358:
 	.word	gPlayerFrame1358OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D82A
-	.word	gUnk_0810C2E4
-	.word	gUnk_08111DAC
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1358UpperTiles
 	.global	gPlayerFrame1339
 gPlayerFrame1339:
 	.word	gPlayerFrame1339OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C504
-	.word	gUnk_0810C2E4
-	.word	gUnk_08111F32
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1339UpperTiles
 	.global	gPlayerFrame1351
 gPlayerFrame1351:
 	.word	gPlayerFrame1351OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D2CC
-	.word	gUnk_0810C2E4
-	.word	gUnk_081120B8
+	.word	gPlayerFrame1338NextBankPalette
+	.word	gPlayerFrame1351UpperTiles
 	.global	gPlayerFrame1536
 gPlayerFrame1536:
 	.word	gPlayerFrame1536OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C504
-	.word	gUnk_0810C306
-	.word	gUnk_0811223E
+	.word	gPlayerFrame1536NextBankPalette
+	.word	gPlayerFrame1536UpperTiles
 	.global	gPlayerFrame1537
 gPlayerFrame1537:
 	.word	gPlayerFrame1537OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C62A
-	.word	gUnk_0810C306
-	.word	gUnk_081122C4
+	.word	gPlayerFrame1536NextBankPalette
+	.word	gPlayerFrame1537UpperTiles
 	.global	gPlayerFrame1538
 gPlayerFrame1538:
 	.word	gPlayerFrame1538OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C750
-	.word	gUnk_0810C306
-	.word	gUnk_0811234A
+	.word	gPlayerFrame1536NextBankPalette
+	.word	gPlayerFrame1538UpperTiles
 	.global	gPlayerFrame1539
 gPlayerFrame1539:
 	.word	gPlayerFrame1539OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C876
-	.word	gUnk_0810C306
-	.word	gUnk_081123D0
+	.word	gPlayerFrame1536NextBankPalette
+	.word	gPlayerFrame1539UpperTiles
 	.global	gPlayerFrame1540
 gPlayerFrame1540:
 	.word	gPlayerFrame1540OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C99C
-	.word	gUnk_0810C306
-	.word	gUnk_08112456
+	.word	gPlayerFrame1536NextBankPalette
+	.word	gPlayerFrame1540UpperTiles
 	.global	gUnk_0875DF40
 gUnk_0875DF40:
 	.word	gUnk_08120EF8+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CAC2
-	.word	gUnk_0810C306
+	.word	gPlayerFrame1536NextBankPalette
 	.word	gUnk_081124DC
 	.global	gUnk_0875DF54
 gUnk_0875DF54:
 	.word	gUnk_08120F20+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CBE8
-	.word	gUnk_0810C306
+	.word	gPlayerFrame1536NextBankPalette
 	.word	gUnk_08112562
 	.global	gPlayerFrame1545
 gPlayerFrame1545:
 	.word	gPlayerFrame1545OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CD0E
-	.word	gUnk_0810C306
-	.word	gUnk_081125E8
+	.word	gPlayerFrame1536NextBankPalette
+	.word	gPlayerFrame1545UpperTiles
 	.global	gPlayerFrame1546
 gPlayerFrame1546:
 	.word	gPlayerFrame1546OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CE34
-	.word	gUnk_0810C306
-	.word	gUnk_081125E8
+	.word	gPlayerFrame1536NextBankPalette
+	.word	gPlayerFrame1545UpperTiles
 	.global	gPlayerFrame1552
 gPlayerFrame1552:
 	.word	gPlayerFrame1552OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CF5A
-	.word	gUnk_0810C306
-	.word	gUnk_0811266E
+	.word	gPlayerFrame1536NextBankPalette
+	.word	gPlayerFrame1552UpperTiles
 	.global	gPlayerFrame1543
 gPlayerFrame1543:
 	.word	gPlayerFrame1543OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D080
-	.word	gUnk_0810C306
-	.word	gUnk_081126F4
+	.word	gPlayerFrame1536NextBankPalette
+	.word	gPlayerFrame1543UpperTiles
 	.global	gPlayerFrame1544
 gPlayerFrame1544:
 	.word	gPlayerFrame1544OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D1A6
-	.word	gUnk_0810C306
-	.word	gUnk_0811277A
+	.word	gPlayerFrame1536NextBankPalette
+	.word	gPlayerFrame1544UpperTiles
 	.global	gPlayerFrame1547
 gPlayerFrame1547:
 	.word	gPlayerFrame1547OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D2CC
-	.word	gUnk_0810C306
-	.word	gUnk_081123D0
+	.word	gPlayerFrame1536NextBankPalette
+	.word	gPlayerFrame1539UpperTiles
 	.global	gPlayerFrame1548
 gPlayerFrame1548:
 	.word	gPlayerFrame1548OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D3F2
-	.word	gUnk_0810C306
-	.word	gUnk_08112800
+	.word	gPlayerFrame1536NextBankPalette
+	.word	gPlayerFrame1548UpperTiles
 	.global	gPlayerFrame1549
 gPlayerFrame1549:
 	.word	gPlayerFrame1549OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D4B8
-	.word	gUnk_0810C306
-	.word	gUnk_08112886
+	.word	gPlayerFrame1536NextBankPalette
+	.word	gPlayerFrame1549UpperTiles
 	.global	gPlayerFrame1550
 gPlayerFrame1550:
 	.word	gPlayerFrame1550OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D5DE
-	.word	gUnk_0810C306
-	.word	gUnk_0811290C
+	.word	gPlayerFrame1536NextBankPalette
+	.word	gPlayerFrame1550UpperTiles
 	.global	gPlayerFrame1551
 gPlayerFrame1551:
 	.word	gPlayerFrame1551OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D704
-	.word	gUnk_0810C306
-	.word	gUnk_08112992
+	.word	gPlayerFrame1536NextBankPalette
+	.word	gPlayerFrame1551UpperTiles
 	.global	gPlayerFrame1554
 gPlayerFrame1554:
 	.word	gPlayerFrame1554OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D82A
-	.word	gUnk_0810C306
-	.word	gUnk_08112A18
+	.word	gPlayerFrame1536NextBankPalette
+	.word	gPlayerFrame1554UpperTiles
 	.global	gPlayerFrame1705
 gPlayerFrame1705:
 	.word	gPlayerFrame1705OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C504
-	.word	gUnk_0810C328
-	.word	gUnk_08112A9E
+	.word	gPlayerFrame1705NextBankPalette
+	.word	gPlayerFrame1705UpperTiles
 	.global	gPlayerFrame1706
 gPlayerFrame1706:
 	.word	gPlayerFrame1706OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C62A
-	.word	gUnk_0810C328
-	.word	gUnk_08112B24
+	.word	gPlayerFrame1705NextBankPalette
+	.word	gPlayerFrame1706UpperTiles
 	.global	gPlayerFrame1707
 gPlayerFrame1707:
 	.word	gPlayerFrame1707OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C750
-	.word	gUnk_0810C328
-	.word	gUnk_08112BEA
+	.word	gPlayerFrame1705NextBankPalette
+	.word	gPlayerFrame1707UpperTiles
 	.global	gPlayerFrame1708
 gPlayerFrame1708:
 	.word	gPlayerFrame1708OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C876
-	.word	gUnk_0810C328
-	.word	gUnk_08112CF0
+	.word	gPlayerFrame1705NextBankPalette
+	.word	gPlayerFrame1708UpperTiles
 	.global	gPlayerFrame1709
 gPlayerFrame1709:
 	.word	gPlayerFrame1709OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C99C
-	.word	gUnk_0810C328
-	.word	gUnk_08112DD6
+	.word	gPlayerFrame1705NextBankPalette
+	.word	gPlayerFrame1709UpperTiles
 	.global	gUnk_0875E0A8
 gUnk_0875E0A8:
 	.word	gUnk_081211E8+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CAC2
-	.word	gUnk_0810C328
+	.word	gPlayerFrame1705NextBankPalette
 	.word	gUnk_08112E9C
 	.global	gUnk_0875E0BC
 gUnk_0875E0BC:
 	.word	gUnk_08121218+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CBE8
-	.word	gUnk_0810C328
+	.word	gPlayerFrame1705NextBankPalette
 	.word	gUnk_08112F62
 	.global	gPlayerFrame1714
 gPlayerFrame1714:
 	.word	gPlayerFrame1714OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CE34
-	.word	gUnk_0810C328
-	.word	gUnk_08113028
+	.word	gPlayerFrame1705NextBankPalette
+	.word	gPlayerFrame1714UpperTiles
 	.global	gPlayerFrame1715
 gPlayerFrame1715:
 	.word	gPlayerFrame1715OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CD0E
-	.word	gUnk_0810C328
-	.word	gUnk_081130EE
+	.word	gPlayerFrame1705NextBankPalette
+	.word	gPlayerFrame1715UpperTiles
 	.global	gPlayerFrame1721
 gPlayerFrame1721:
 	.word	gPlayerFrame1721OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CF5A
-	.word	gUnk_0810C328
-	.word	gUnk_081131B4
+	.word	gPlayerFrame1705NextBankPalette
+	.word	gPlayerFrame1721UpperTiles
 	.global	gPlayerFrame1712
 gPlayerFrame1712:
 	.word	gPlayerFrame1712OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D080
-	.word	gUnk_0810C328
-	.word	gUnk_0811327A
+	.word	gPlayerFrame1705NextBankPalette
+	.word	gPlayerFrame1712UpperTiles
 	.global	gPlayerFrame1713
 gPlayerFrame1713:
 	.word	gPlayerFrame1713OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D1A6
-	.word	gUnk_0810C328
-	.word	gUnk_08113340
+	.word	gPlayerFrame1705NextBankPalette
+	.word	gPlayerFrame1713UpperTiles
 	.global	gPlayerFrame1716
 gPlayerFrame1716:
 	.word	gPlayerFrame1716OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D2CC
-	.word	gUnk_0810C328
-	.word	gUnk_08113406
+	.word	gPlayerFrame1705NextBankPalette
+	.word	gPlayerFrame1716UpperTiles
 	.global	gPlayerFrame1717
 gPlayerFrame1717:
 	.word	gPlayerFrame1717OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D3F2
-	.word	gUnk_0810C328
-	.word	gUnk_081134CC
+	.word	gPlayerFrame1705NextBankPalette
+	.word	gPlayerFrame1717UpperTiles
 	.global	gPlayerFrame1718
 gPlayerFrame1718:
 	.word	gPlayerFrame1718OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D4B8
-	.word	gUnk_0810C328
-	.word	gUnk_08113552
+	.word	gPlayerFrame1705NextBankPalette
+	.word	gPlayerFrame1718UpperTiles
 	.global	gPlayerFrame1719
 gPlayerFrame1719:
 	.word	gPlayerFrame1719OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D5DE
-	.word	gUnk_0810C328
-	.word	gUnk_08113618
+	.word	gPlayerFrame1705NextBankPalette
+	.word	gPlayerFrame1719UpperTiles
 	.global	gPlayerFrame1720
 gPlayerFrame1720:
 	.word	gPlayerFrame1720OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D704
-	.word	gUnk_0810C328
-	.word	gUnk_081136DE
+	.word	gPlayerFrame1705NextBankPalette
+	.word	gPlayerFrame1720UpperTiles
 	.global	gPlayerFrame1723
 gPlayerFrame1723:
 	.word	gPlayerFrame1723OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D82A
-	.word	gUnk_0810C328
-	.word	gUnk_08113742
+	.word	gPlayerFrame1705NextBankPalette
+	.word	gPlayerFrame1723UpperTiles
 	.global	gPlayerFrame2326
 gPlayerFrame2326:
 	.word	gPlayerFrame2326OamTemplate+1
 	.word	gPlayerFrame2326Palette
 	.word	gUnk_0810C504
-	.word	gUnk_0810C36C
-	.word	gUnk_08113828
+	.word	gPlayerFrame2326NextBankPalette
+	.word	gPlayerFrame2326UpperTiles
 	.global	gPlayerFrame2327
 gPlayerFrame2327:
 	.word	gPlayerFrame2327OamTemplate+1
 	.word	gPlayerFrame2326Palette
 	.word	gPlayerFrame2327Tiles
-	.word	gUnk_0810C36C
-	.word	gUnk_0811390E
+	.word	gPlayerFrame2326NextBankPalette
+	.word	gPlayerFrame2327UpperTiles
 	.global	gPlayerFrame2328
 gPlayerFrame2328:
 	.word	gPlayerFrame2328OamTemplate+1
 	.word	gPlayerFrame2326Palette
 	.word	gPlayerFrame2328Tiles
-	.word	gUnk_0810C36C
-	.word	gUnk_08113AFA
+	.word	gPlayerFrame2326NextBankPalette
+	.word	gPlayerFrame2328UpperTiles
 	.global	gPlayerFrame2329
 gPlayerFrame2329:
 	.word	gPlayerFrame2329OamTemplate+1
 	.word	gPlayerFrame2326Palette
 	.word	gPlayerFrame2329Tiles
-	.word	gUnk_0810C36C
-	.word	gUnk_08113D26
+	.word	gPlayerFrame2326NextBankPalette
+	.word	gPlayerFrame2329UpperTiles
 	.global	gPlayerFrame2330
 gPlayerFrame2330:
 	.word	gPlayerFrame2330OamTemplate+1
 	.word	gPlayerFrame2326Palette
 	.word	gPlayerFrame2330Tiles
-	.word	gUnk_0810C36C
-	.word	gUnk_08113F52
+	.word	gPlayerFrame2326NextBankPalette
+	.word	gPlayerFrame2330UpperTiles
 	.global	gUnk_0875E210
 gUnk_0875E210:
 	.word	gUnk_08121570+1
 	.word	gPlayerFrame2326Palette
 	.word	gUnk_08114018
-	.word	gUnk_0810C36C
+	.word	gPlayerFrame2326NextBankPalette
 	.word	gUnk_0811415E
 	.global	gUnk_0875E224
 gUnk_0875E224:
 	.word	gUnk_081215B8+1
 	.word	gPlayerFrame2326Palette
 	.word	gUnk_08114264
-	.word	gUnk_0810C36C
+	.word	gPlayerFrame2326NextBankPalette
 	.word	gUnk_0811432A
 	.global	gPlayerFrame2335
 gPlayerFrame2335:
 	.word	gPlayerFrame2335OamTemplate+1
 	.word	gPlayerFrame2326Palette
 	.word	gPlayerFrame2335Tiles
-	.word	gUnk_0810C36C
-	.word	gUnk_081144F6
+	.word	gPlayerFrame2326NextBankPalette
+	.word	gPlayerFrame2335UpperTiles
 	.global	gPlayerFrame2336
 gPlayerFrame2336:
 	.word	gPlayerFrame2336OamTemplate+1
 	.word	gPlayerFrame2326Palette
 	.word	gPlayerFrame2336Tiles
-	.word	gUnk_0810C36C
-	.word	gUnk_081146A2
+	.word	gPlayerFrame2326NextBankPalette
+	.word	gPlayerFrame2336UpperTiles
 	.global	gPlayerFrame2342
 gPlayerFrame2342:
 	.word	gPlayerFrame2342OamTemplate+1
 	.word	gPlayerFrame2326Palette
 	.word	gPlayerFrame2342Tiles
-	.word	gUnk_0810C36C
-	.word	gUnk_0811484E
+	.word	gPlayerFrame2326NextBankPalette
+	.word	gPlayerFrame2342UpperTiles
 	.global	gPlayerFrame2333
 gPlayerFrame2333:
 	.word	gPlayerFrame2333OamTemplate+1
 	.word	gPlayerFrame2326Palette
 	.word	gUnk_0810D080
-	.word	gUnk_0810C36C
-	.word	gUnk_08114934
+	.word	gPlayerFrame2326NextBankPalette
+	.word	gPlayerFrame2333UpperTiles
 	.global	gPlayerFrame2334
 gPlayerFrame2334:
 	.word	gPlayerFrame2334OamTemplate+1
 	.word	gPlayerFrame2326Palette
 	.word	gPlayerFrame2334Tiles
-	.word	gUnk_0810C36C
-	.word	gUnk_08114B60
+	.word	gPlayerFrame2326NextBankPalette
+	.word	gPlayerFrame2334UpperTiles
 	.global	gPlayerFrame2337
 gPlayerFrame2337:
 	.word	gPlayerFrame2337OamTemplate+1
 	.word	gPlayerFrame2326Palette
 	.word	gUnk_0810D2CC
-	.word	gUnk_0810C36C
-	.word	gUnk_08114C86
+	.word	gPlayerFrame2326NextBankPalette
+	.word	gPlayerFrame2337UpperTiles
 	.global	gPlayerFrame2338
 gPlayerFrame2338:
 	.word	gPlayerFrame2338OamTemplate+1
 	.word	gPlayerFrame2326Palette
 	.word	gUnk_0810D3F2
-	.word	gUnk_0810C36C
-	.word	gUnk_08114DAC
+	.word	gPlayerFrame2326NextBankPalette
+	.word	gPlayerFrame2338UpperTiles
 	.global	gPlayerFrame2339
 gPlayerFrame2339:
 	.word	gPlayerFrame2339OamTemplate+1
 	.word	gPlayerFrame2326Palette
 	.word	gPlayerFrame2339Tiles
-	.word	gUnk_0810C36C
-	.word	gUnk_08114FB8
+	.word	gPlayerFrame2326NextBankPalette
+	.word	gPlayerFrame2339UpperTiles
 	.global	gPlayerFrame2340
 gPlayerFrame2340:
 	.word	gPlayerFrame2340OamTemplate+1
 	.word	gPlayerFrame2326Palette
 	.word	gPlayerFrame2340Tiles
-	.word	gUnk_0810C36C
-	.word	gUnk_081151E4
+	.word	gPlayerFrame2326NextBankPalette
+	.word	gPlayerFrame2340UpperTiles
 	.global	gPlayerFrame2341
 gPlayerFrame2341:
 	.word	gPlayerFrame2341OamTemplate+1
 	.word	gPlayerFrame2326Palette
 	.word	gPlayerFrame2341Tiles
-	.word	gUnk_0810C36C
-	.word	gUnk_08115390
+	.word	gPlayerFrame2326NextBankPalette
+	.word	gPlayerFrame2341UpperTiles
 	.global	gPlayerFrame2344
 gPlayerFrame2344:
 	.word	gPlayerFrame2344OamTemplate+1
 	.word	gPlayerFrame2326Palette
 	.word	gUnk_0810D82A
-	.word	gUnk_0810C36C
-	.word	gUnk_08115456
+	.word	gPlayerFrame2326NextBankPalette
+	.word	gPlayerFrame2344UpperTiles
 	.global	gPlayerFrame2466
 gPlayerFrame2466:
 	.word	gPlayerFrame2466OamTemplate+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810C504
-	.word	gUnk_0810C3B0
-	.word	gUnk_0811555C
+	.word	gPlayerFrame2466NextBankPalette
+	.word	gPlayerFrame2466UpperTiles
 	.global	gPlayerFrame2467
 gPlayerFrame2467:
 	.word	gPlayerFrame2467OamTemplate+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810C62A
-	.word	gUnk_0810C3B0
-	.word	gUnk_08115622
+	.word	gPlayerFrame2466NextBankPalette
+	.word	gPlayerFrame2467UpperTiles
 	.global	gPlayerFrame2468
 gPlayerFrame2468:
 	.word	gPlayerFrame2468OamTemplate+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810C750
-	.word	gUnk_0810C3B0
-	.word	gUnk_08115708
+	.word	gPlayerFrame2466NextBankPalette
+	.word	gPlayerFrame2468UpperTiles
 	.global	gPlayerFrame2469
 gPlayerFrame2469:
 	.word	gPlayerFrame2469OamTemplate+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810C876
-	.word	gUnk_0810C3B0
-	.word	gUnk_0811582E
+	.word	gPlayerFrame2466NextBankPalette
+	.word	gPlayerFrame2469UpperTiles
 	.global	gPlayerFrame2470
 gPlayerFrame2470:
 	.word	gPlayerFrame2470OamTemplate+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810C99C
-	.word	gUnk_0810C3B0
-	.word	gUnk_081158F4
+	.word	gPlayerFrame2466NextBankPalette
+	.word	gPlayerFrame2470UpperTiles
 	.global	gUnk_0875E378
 gUnk_0875E378:
 	.word	gUnk_081218F8+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810CAC2
-	.word	gUnk_0810C3B0
+	.word	gPlayerFrame2466NextBankPalette
 	.word	gUnk_0811597A
 	.global	gUnk_0875E38C
 gUnk_0875E38C:
 	.word	gUnk_08121928+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810CBE8
-	.word	gUnk_0810C3B0
+	.word	gPlayerFrame2466NextBankPalette
 	.word	gUnk_08115A20
 	.global	gPlayerFrame2475
 gPlayerFrame2475:
 	.word	gPlayerFrame2475OamTemplate+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810CE34
-	.word	gUnk_0810C3B0
-	.word	gUnk_08115AE6
+	.word	gPlayerFrame2466NextBankPalette
+	.word	gPlayerFrame2475UpperTiles
 	.global	gPlayerFrame2476
 gPlayerFrame2476:
 	.word	gPlayerFrame2476OamTemplate+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810CD0E
-	.word	gUnk_0810C3B0
-	.word	gUnk_08115B8C
+	.word	gPlayerFrame2466NextBankPalette
+	.word	gPlayerFrame2476UpperTiles
 	.global	gPlayerFrame2482
 gPlayerFrame2482:
 	.word	gPlayerFrame2482OamTemplate+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810CF5A
-	.word	gUnk_0810C3B0
-	.word	gUnk_08115C32
+	.word	gPlayerFrame2466NextBankPalette
+	.word	gPlayerFrame2482UpperTiles
 	.global	gPlayerFrame2473
 gPlayerFrame2473:
 	.word	gPlayerFrame2473OamTemplate+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810D080
-	.word	gUnk_0810C3B0
-	.word	gUnk_08115622
+	.word	gPlayerFrame2466NextBankPalette
+	.word	gPlayerFrame2467UpperTiles
 	.global	gPlayerFrame2474
 gPlayerFrame2474:
 	.word	gPlayerFrame2474OamTemplate+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810D1A6
-	.word	gUnk_0810C3B0
-	.word	gUnk_08115CB8
+	.word	gPlayerFrame2466NextBankPalette
+	.word	gPlayerFrame2474UpperTiles
 	.global	gPlayerFrame2477
 gPlayerFrame2477:
 	.word	gPlayerFrame2477OamTemplate+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810D2CC
-	.word	gUnk_0810C3B0
-	.word	gUnk_08115DDE
+	.word	gPlayerFrame2466NextBankPalette
+	.word	gPlayerFrame2477UpperTiles
 	.global	gPlayerFrame2478
 gPlayerFrame2478:
 	.word	gPlayerFrame2478OamTemplate+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810D3F2
-	.word	gUnk_0810C3B0
-	.word	gUnk_08115EA4
+	.word	gPlayerFrame2466NextBankPalette
+	.word	gPlayerFrame2478UpperTiles
 	.global	gPlayerFrame2479
 gPlayerFrame2479:
 	.word	gPlayerFrame2479OamTemplate+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810D4B8
-	.word	gUnk_0810C3B0
-	.word	gUnk_08115F6A
+	.word	gPlayerFrame2466NextBankPalette
+	.word	gPlayerFrame2479UpperTiles
 	.global	gPlayerFrame2480
 gPlayerFrame2480:
 	.word	gPlayerFrame2480OamTemplate+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810D5DE
-	.word	gUnk_0810C3B0
-	.word	gUnk_08116090
+	.word	gPlayerFrame2466NextBankPalette
+	.word	gPlayerFrame2480UpperTiles
 	.global	gPlayerFrame2481
 gPlayerFrame2481:
 	.word	gPlayerFrame2481OamTemplate+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810D704
-	.word	gUnk_0810C3B0
-	.word	gUnk_08116156
+	.word	gPlayerFrame2466NextBankPalette
+	.word	gPlayerFrame2481UpperTiles
 	.global	gPlayerFrame2484
 gPlayerFrame2484:
 	.word	gPlayerFrame2484OamTemplate+1
 	.word	gPlayerFrame2466Palette
 	.word	gUnk_0810D82A
-	.word	gUnk_0810C3B0
-	.word	gUnk_0811621C
+	.word	gPlayerFrame2466NextBankPalette
+	.word	gPlayerFrame2484UpperTiles
 	.global	gPlayerFrame2606
 gPlayerFrame2606:
 	.word	gPlayerFrame2606OamTemplate+1
 	.word	gPlayerFrame2606Palette
 	.word	gUnk_0810C504
-	.word	gUnk_0810C3F4
-	.word	gUnk_08116302
+	.word	gPlayerFrame2606NextBankPalette
+	.word	gPlayerFrame2606UpperTiles
 	.global	gPlayerFrame2607
 gPlayerFrame2607:
 	.word	gPlayerFrame2607OamTemplate+1
 	.word	gPlayerFrame2606Palette
 	.word	gPlayerFrame2327Tiles
-	.word	gUnk_0810C3F4
-	.word	gUnk_08116428
+	.word	gPlayerFrame2606NextBankPalette
+	.word	gPlayerFrame2607UpperTiles
 	.global	gPlayerFrame2608
 gPlayerFrame2608:
 	.word	gPlayerFrame2608OamTemplate+1
 	.word	gPlayerFrame2606Palette
 	.word	gUnk_0810C750
-	.word	gUnk_0810C3F4
-	.word	gUnk_0811652E
+	.word	gPlayerFrame2606NextBankPalette
+	.word	gPlayerFrame2608UpperTiles
 	.global	gPlayerFrame2609
 gPlayerFrame2609:
 	.word	gPlayerFrame2609OamTemplate+1
 	.word	gPlayerFrame2606Palette
 	.word	gPlayerFrame2609Tiles
-	.word	gUnk_0810C3F4
-	.word	gUnk_08116718
+	.word	gPlayerFrame2606NextBankPalette
+	.word	gPlayerFrame2609UpperTiles
 	.global	gPlayerFrame2610
 gPlayerFrame2610:
 	.word	gPlayerFrame2610OamTemplate+1
 	.word	gPlayerFrame2606Palette
 	.word	gUnk_0810C99C
-	.word	gUnk_0810C3F4
-	.word	gUnk_0811681E
+	.word	gPlayerFrame2606NextBankPalette
+	.word	gPlayerFrame2610UpperTiles
 	.global	gUnk_0875E4E0
 gUnk_0875E4E0:
 	.word	gUnk_08121C80+1
 	.word	gPlayerFrame2606Palette
 	.word	gUnk_081168E4
-	.word	gUnk_0810C3F4
+	.word	gPlayerFrame2606NextBankPalette
 	.word	gUnk_081169AA
 	.global	gUnk_0875E4F4
 gUnk_0875E4F4:
 	.word	gUnk_08121CA0+1
 	.word	gPlayerFrame2606Palette
 	.word	gUnk_08116A70
-	.word	gUnk_0810C3F4
+	.word	gPlayerFrame2606NextBankPalette
 	.word	gUnk_08116B76
 	.global	gPlayerFrame2615
 gPlayerFrame2615:
 	.word	gPlayerFrame2615OamTemplate+1
 	.word	gPlayerFrame2606Palette
 	.word	gUnk_0810CE34
-	.word	gUnk_0810C3F4
-	.word	gUnk_08116C5C
+	.word	gPlayerFrame2606NextBankPalette
+	.word	gPlayerFrame2615UpperTiles
 	.global	gPlayerFrame2616
 gPlayerFrame2616:
 	.word	gPlayerFrame2616OamTemplate+1
 	.word	gPlayerFrame2606Palette
 	.word	gUnk_0810CD0E
-	.word	gUnk_0810C3F4
-	.word	gUnk_08116D42
+	.word	gPlayerFrame2606NextBankPalette
+	.word	gPlayerFrame2616UpperTiles
 	.global	gPlayerFrame2622
 gPlayerFrame2622:
 	.word	gPlayerFrame2622OamTemplate+1
 	.word	gPlayerFrame2606Palette
 	.word	gPlayerFrame2622Tiles
-	.word	gUnk_0810C3F4
-	.word	gUnk_08116F4E
+	.word	gPlayerFrame2606NextBankPalette
+	.word	gPlayerFrame2622UpperTiles
 	.global	gPlayerFrame2613
 gPlayerFrame2613:
 	.word	gPlayerFrame2613OamTemplate+1
 	.word	gPlayerFrame2606Palette
 	.word	gPlayerFrame2613Tiles
-	.word	gUnk_0810C3F4
-	.word	gUnk_0811715A
+	.word	gPlayerFrame2606NextBankPalette
+	.word	gPlayerFrame2613UpperTiles
 	.global	gPlayerFrame2614
 gPlayerFrame2614:
 	.word	gPlayerFrame2614OamTemplate+1
 	.word	gPlayerFrame2606Palette
 	.word	gUnk_0810D1A6
-	.word	gUnk_0810C3F4
-	.word	gUnk_08117260
+	.word	gPlayerFrame2606NextBankPalette
+	.word	gPlayerFrame2614UpperTiles
 	.global	gPlayerFrame2617
 gPlayerFrame2617:
 	.word	gPlayerFrame2617OamTemplate+1
 	.word	gPlayerFrame2606Palette
 	.word	gPlayerFrame2617Tiles
-	.word	gUnk_0810C3F4
-	.word	gUnk_0811748C
+	.word	gPlayerFrame2606NextBankPalette
+	.word	gPlayerFrame2617UpperTiles
 	.global	gPlayerFrame2618
 gPlayerFrame2618:
 	.word	gPlayerFrame2618OamTemplate+1
 	.word	gPlayerFrame2606Palette
 	.word	gPlayerFrame2618Tiles
-	.word	gUnk_0810C3F4
-	.word	gUnk_08117638
+	.word	gPlayerFrame2606NextBankPalette
+	.word	gPlayerFrame2618UpperTiles
 	.global	gPlayerFrame2619
 gPlayerFrame2619:
 	.word	gPlayerFrame2619OamTemplate+1
 	.word	gPlayerFrame2606Palette
 	.word	gPlayerFrame2339Tiles
-	.word	gUnk_0810C3F4
-	.word	gUnk_081176FE
+	.word	gPlayerFrame2606NextBankPalette
+	.word	gPlayerFrame2619UpperTiles
 	.global	gPlayerFrame2620
 gPlayerFrame2620:
 	.word	gPlayerFrame2620OamTemplate+1
 	.word	gPlayerFrame2606Palette
 	.word	gPlayerFrame2620Tiles
-	.word	gUnk_0810C3F4
-	.word	gUnk_0811792A
+	.word	gPlayerFrame2606NextBankPalette
+	.word	gPlayerFrame2620UpperTiles
 	.global	gPlayerFrame2621
 gPlayerFrame2621:
 	.word	gPlayerFrame2621OamTemplate+1
 	.word	gPlayerFrame2606Palette
 	.word	gPlayerFrame2621Tiles
-	.word	gUnk_0810C3F4
-	.word	gUnk_08117B16
+	.word	gPlayerFrame2606NextBankPalette
+	.word	gPlayerFrame2621UpperTiles
 	.global	gPlayerFrame2624
 gPlayerFrame2624:
 	.word	gPlayerFrame2624OamTemplate+1
 	.word	gPlayerFrame2606Palette
 	.word	gPlayerFrame2624Tiles
-	.word	gUnk_0810C3F4
-	.word	gUnk_08117CE2
+	.word	gPlayerFrame2606NextBankPalette
+	.word	gPlayerFrame2624UpperTiles
 	.global	gPlayerFrame2768
 gPlayerFrame2768:
 	.word	gPlayerFrame2768OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C504
-	.word	gUnk_0810C416
-	.word	gUnk_08117DE8
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2768UpperTiles
 	.global	gPlayerFrame2770
 gPlayerFrame2770:
 	.word	gPlayerFrame2770OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C62A
-	.word	gUnk_0810C416
-	.word	gUnk_08117ECE
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2770UpperTiles
 	.global	gPlayerFrame2771
 gPlayerFrame2771:
 	.word	gPlayerFrame2771OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C750
-	.word	gUnk_0810C416
-	.word	gUnk_08117F94
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2771UpperTiles
 	.global	gPlayerFrame2772
 gPlayerFrame2772:
 	.word	gPlayerFrame2772OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C876
-	.word	gUnk_0810C416
-	.word	gUnk_0811809A
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2772UpperTiles
 	.global	gPlayerFrame2773
 gPlayerFrame2773:
 	.word	gPlayerFrame2773OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C99C
-	.word	gUnk_0810C416
-	.word	gUnk_081181A0
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2773UpperTiles
 	.global	gUnk_0875E648
 gUnk_0875E648:
 	.word	gUnk_08122048+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CAC2
-	.word	gUnk_0810C416
+	.word	gPlayerFrame2768NextBankPalette
 	.word	gUnk_081182C6
 	.global	gUnk_0875E65C
 gUnk_0875E65C:
 	.word	gUnk_08122088+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CBE8
-	.word	gUnk_0810C416
+	.word	gPlayerFrame2768NextBankPalette
 	.word	gUnk_081183EC
 	.global	gPlayerFrame2778
 gPlayerFrame2778:
 	.word	gPlayerFrame2778OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CE34
-	.word	gUnk_0810C416
-	.word	gUnk_081184F2
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2778UpperTiles
 	.global	gPlayerFrame2779
 gPlayerFrame2779:
 	.word	gPlayerFrame2779OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CD0E
-	.word	gUnk_0810C416
-	.word	gUnk_08118618
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2779UpperTiles
 	.global	gPlayerFrame2786
 gPlayerFrame2786:
 	.word	gPlayerFrame2786OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CF5A
-	.word	gUnk_0810C416
-	.word	gUnk_0811873E
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2786UpperTiles
 	.global	gPlayerFrame2776
 gPlayerFrame2776:
 	.word	gPlayerFrame2776OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D080
-	.word	gUnk_0810C416
-	.word	gUnk_08118864
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2776UpperTiles
 	.global	gPlayerFrame2777
 gPlayerFrame2777:
 	.word	gPlayerFrame2777OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D1A6
-	.word	gUnk_0810C416
-	.word	gUnk_08118A0A
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2777UpperTiles
 	.global	gPlayerFrame2780
 gPlayerFrame2780:
 	.word	gPlayerFrame2780OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D2CC
-	.word	gUnk_0810C416
-	.word	gUnk_08118BB0
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2780UpperTiles
 	.global	gPlayerFrame2782
 gPlayerFrame2782:
 	.word	gPlayerFrame2782OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D3F2
-	.word	gUnk_0810C416
-	.word	gUnk_08118CD6
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2782UpperTiles
 	.global	gPlayerFrame2783
 gPlayerFrame2783:
 	.word	gPlayerFrame2783OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D4B8
-	.word	gUnk_0810C416
-	.word	gUnk_08118D9C
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2783UpperTiles
 	.global	gPlayerFrame2784
 gPlayerFrame2784:
 	.word	gPlayerFrame2784OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D5DE
-	.word	gUnk_0810C416
-	.word	gUnk_08118EA2
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2784UpperTiles
 	.global	gPlayerFrame2785
 gPlayerFrame2785:
 	.word	gPlayerFrame2785OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D704
-	.word	gUnk_0810C416
-	.word	gUnk_08118F68
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2785UpperTiles
 	.global	gPlayerFrame2788
 gPlayerFrame2788:
 	.word	gPlayerFrame2788OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D82A
-	.word	gUnk_0810C416
-	.word	gUnk_0811906E
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2788UpperTiles
 	.global	gPlayerFrame2769
 gPlayerFrame2769:
 	.word	gPlayerFrame2769OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C504
-	.word	gUnk_0810C416
-	.word	gUnk_08119134
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2769UpperTiles
 	.global	gPlayerFrame2781
 gPlayerFrame2781:
 	.word	gPlayerFrame2781OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D2CC
-	.word	gUnk_0810C416
-	.word	gUnk_0811921A
+	.word	gPlayerFrame2768NextBankPalette
+	.word	gPlayerFrame2781UpperTiles
 	.global	gPlayerFrame2914
 gPlayerFrame2914:
 	.word	gPlayerFrame2914OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C504
-	.word	gUnk_0810C438
-	.word	gUnk_08119340
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2914UpperTiles
 	.global	gPlayerFrame2916
 gPlayerFrame2916:
 	.word	gPlayerFrame2916OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C62A
-	.word	gUnk_0810C438
-	.word	gUnk_08119426
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2916UpperTiles
 	.global	gPlayerFrame2917
 gPlayerFrame2917:
 	.word	gPlayerFrame2917OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C750
-	.word	gUnk_0810C438
-	.word	gUnk_0811954C
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2917UpperTiles
 	.global	gPlayerFrame2918
 gPlayerFrame2918:
 	.word	gPlayerFrame2918OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C876
-	.word	gUnk_0810C438
-	.word	gUnk_08119672
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2918UpperTiles
 	.global	gPlayerFrame2919
 gPlayerFrame2919:
 	.word	gPlayerFrame2919OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C99C
-	.word	gUnk_0810C438
-	.word	gUnk_08119798
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2919UpperTiles
 	.global	gUnk_0875E7D8
 gUnk_0875E7D8:
 	.word	gUnk_081224C0+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CAC2
-	.word	gUnk_0810C438
+	.word	gPlayerFrame2914NextBankPalette
 	.word	gUnk_0811985E
 	.global	gUnk_0875E7EC
 gUnk_0875E7EC:
 	.word	gUnk_08122500+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CBE8
-	.word	gUnk_0810C438
+	.word	gPlayerFrame2914NextBankPalette
 	.word	gUnk_08119964
 	.global	gPlayerFrame2924
 gPlayerFrame2924:
 	.word	gPlayerFrame2924OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CE34
-	.word	gUnk_0810C438
-	.word	gUnk_08119A2A
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2924UpperTiles
 	.global	gPlayerFrame2925
 gPlayerFrame2925:
 	.word	gPlayerFrame2925OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CD0E
-	.word	gUnk_0810C438
-	.word	gUnk_08119B50
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2925UpperTiles
 	.global	gPlayerFrame2932
 gPlayerFrame2932:
 	.word	gPlayerFrame2932OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CF5A
-	.word	gUnk_0810C438
-	.word	gUnk_08119C76
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2932UpperTiles
 	.global	gPlayerFrame2922
 gPlayerFrame2922:
 	.word	gPlayerFrame2922OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D080
-	.word	gUnk_0810C438
-	.word	gUnk_08119D7C
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2922UpperTiles
 	.global	gPlayerFrame2923
 gPlayerFrame2923:
 	.word	gPlayerFrame2923OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gPlayerFrame2923Tiles
-	.word	gUnk_0810C438
-	.word	gUnk_08119FA8
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2923UpperTiles
 	.global	gPlayerFrame2926
 gPlayerFrame2926:
 	.word	gPlayerFrame2926OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D2CC
-	.word	gUnk_0810C438
-	.word	gUnk_0811A0CE
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2926UpperTiles
 	.global	gPlayerFrame2928
 gPlayerFrame2928:
 	.word	gPlayerFrame2928OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D3F2
-	.word	gUnk_0810C438
-	.word	gUnk_0811A1F4
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2928UpperTiles
 	.global	gPlayerFrame2929
 gPlayerFrame2929:
 	.word	gPlayerFrame2929OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D4B8
-	.word	gUnk_0810C438
-	.word	gUnk_0811A31A
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2929UpperTiles
 	.global	gPlayerFrame2930
 gPlayerFrame2930:
 	.word	gPlayerFrame2930OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gPlayerFrame2930Tiles
-	.word	gUnk_0810C438
-	.word	gUnk_0811A506
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2930UpperTiles
 	.global	gPlayerFrame2931
 gPlayerFrame2931:
 	.word	gPlayerFrame2931OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D704
-	.word	gUnk_0810C438
-	.word	gUnk_0811A5CC
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2931UpperTiles
 	.global	gPlayerFrame2934
 gPlayerFrame2934:
 	.word	gPlayerFrame2934OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D82A
-	.word	gUnk_0810C438
-	.word	gUnk_0811A692
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2934UpperTiles
 	.global	gPlayerFrame2915
 gPlayerFrame2915:
 	.word	gPlayerFrame2915OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C504
-	.word	gUnk_0810C438
-	.word	gUnk_0811A798
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2915UpperTiles
 	.global	gPlayerFrame2927
 gPlayerFrame2927:
 	.word	gPlayerFrame2927OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D2CC
-	.word	gUnk_0810C438
-	.word	gUnk_0811A87E
+	.word	gPlayerFrame2914NextBankPalette
+	.word	gPlayerFrame2927UpperTiles
 	.global	gPlayerFrame3045
 gPlayerFrame3045:
 	.word	gPlayerFrame3045OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810C504
-	.word	gUnk_0810C47C
-	.word	gUnk_0811A9A4
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3045UpperTiles
 	.global	gPlayerFrame3047
 gPlayerFrame3047:
 	.word	gPlayerFrame3047OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810C62A
-	.word	gUnk_0810C47C
-	.word	gUnk_0811AAAA
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3047UpperTiles
 	.global	gPlayerFrame3048
 gPlayerFrame3048:
 	.word	gPlayerFrame3048OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810C750
-	.word	gUnk_0810C47C
-	.word	gUnk_0811ABB0
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3048UpperTiles
 	.global	gPlayerFrame3049
 gPlayerFrame3049:
 	.word	gPlayerFrame3049OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810C876
-	.word	gUnk_0810C47C
-	.word	gUnk_0811ACD6
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3049UpperTiles
 	.global	gPlayerFrame3050
 gPlayerFrame3050:
 	.word	gPlayerFrame3050OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810C99C
-	.word	gUnk_0810C47C
-	.word	gUnk_0811ADFC
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3050UpperTiles
 	.global	gUnk_0875E968
 gUnk_0875E968:
 	.word	gUnk_08122950+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810CAC2
-	.word	gUnk_0810C47C
+	.word	gPlayerFrame3045NextBankPalette
 	.word	gUnk_0811AF02
 	.global	gUnk_0875E97C
 gUnk_0875E97C:
 	.word	gUnk_08122990+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810CBE8
-	.word	gUnk_0810C47C
+	.word	gPlayerFrame3045NextBankPalette
 	.word	gUnk_0811B008
 	.global	gPlayerFrame3055
 gPlayerFrame3055:
 	.word	gPlayerFrame3055OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810CE34
-	.word	gUnk_0810C47C
-	.word	gUnk_0811B0EE
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3055UpperTiles
 	.global	gPlayerFrame3056
 gPlayerFrame3056:
 	.word	gPlayerFrame3056OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810CD0E
-	.word	gUnk_0810C47C
-	.word	gUnk_0811B234
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3056UpperTiles
 	.global	gPlayerFrame3063
 gPlayerFrame3063:
 	.word	gPlayerFrame3063OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810CF5A
-	.word	gUnk_0810C47C
-	.word	gUnk_0811B37A
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3063UpperTiles
 	.global	gPlayerFrame3053
 gPlayerFrame3053:
 	.word	gPlayerFrame3053OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810D080
-	.word	gUnk_0810C47C
-	.word	gUnk_0811B4A0
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3053UpperTiles
 	.global	gPlayerFrame3054
 gPlayerFrame3054:
 	.word	gPlayerFrame3054OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gPlayerFrame2923Tiles
-	.word	gUnk_0810C47C
-	.word	gUnk_0811B5A6
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3054UpperTiles
 	.global	gPlayerFrame3057
 gPlayerFrame3057:
 	.word	gPlayerFrame3057OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810D2CC
-	.word	gUnk_0810C47C
-	.word	gUnk_0811B6CC
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3057UpperTiles
 	.global	gPlayerFrame3059
 gPlayerFrame3059:
 	.word	gPlayerFrame3059OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810D3F2
-	.word	gUnk_0810C47C
-	.word	gUnk_0811B7D2
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3059UpperTiles
 	.global	gPlayerFrame3060
 gPlayerFrame3060:
 	.word	gPlayerFrame3060OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810D4B8
-	.word	gUnk_0810C47C
-	.word	gUnk_0811B8B8
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3060UpperTiles
 	.global	gPlayerFrame3061
 gPlayerFrame3061:
 	.word	gPlayerFrame3061OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810D5DE
-	.word	gUnk_0810C47C
-	.word	gUnk_0811B9DE
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3061UpperTiles
 	.global	gPlayerFrame3062
 gPlayerFrame3062:
 	.word	gPlayerFrame3062OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810D704
-	.word	gUnk_0810C47C
-	.word	gUnk_0811BB04
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3062UpperTiles
 	.global	gPlayerFrame3065
 gPlayerFrame3065:
 	.word	gPlayerFrame3065OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810D82A
-	.word	gUnk_0810C47C
-	.word	gUnk_0811BC2A
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3065UpperTiles
 	.global	gPlayerFrame3046
 gPlayerFrame3046:
 	.word	gPlayerFrame3046OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810C504
-	.word	gUnk_0810C47C
-	.word	gUnk_0811BD30
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3046UpperTiles
 	.global	gPlayerFrame3058
 gPlayerFrame3058:
 	.word	gPlayerFrame3058OamTemplate+1
 	.word	gPlayerFrame3045Palette
 	.word	gUnk_0810D2CC
-	.word	gUnk_0810C47C
-	.word	gUnk_0811BE36
+	.word	gPlayerFrame3045NextBankPalette
+	.word	gPlayerFrame3058UpperTiles
 	.global	gPlayerFrame3186
 gPlayerFrame3186:
 	.word	gPlayerFrame3186OamTemplate+1
@@ -6892,141 +6892,141 @@ gPlayerFrame3382:
 	.word	gPlayerFrame3382OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C504
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811D388
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3382UpperTiles
 	.global	gPlayerFrame3384
 gPlayerFrame3384:
 	.word	gPlayerFrame3384OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C62A
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811D44E
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3384UpperTiles
 	.global	gPlayerFrame3385
 gPlayerFrame3385:
 	.word	gPlayerFrame3385OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C750
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811D534
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3385UpperTiles
 	.global	gPlayerFrame3386
 gPlayerFrame3386:
 	.word	gPlayerFrame3386OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gPlayerFrame3386Tiles
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811D780
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3386UpperTiles
 	.global	gPlayerFrame3387
 gPlayerFrame3387:
 	.word	gPlayerFrame3387OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C99C
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811D8A6
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3387UpperTiles
 	.global	gUnk_0875EC60
 gUnk_0875EC60:
 	.word	gUnk_08123010+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CAC2
-	.word	gUnk_0810C4C0
+	.word	gPlayerFrame3382NextBankPalette
 	.word	gUnk_0811D96C
 	.global	gUnk_0875EC74
 gUnk_0875EC74:
 	.word	gUnk_08123048+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CBE8
-	.word	gUnk_0810C4C0
+	.word	gPlayerFrame3382NextBankPalette
 	.word	gUnk_0811DA92
 	.global	gPlayerFrame3392
 gPlayerFrame3392:
 	.word	gPlayerFrame3392OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CD0E
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811DB78
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3392UpperTiles
 	.global	gPlayerFrame3393
 gPlayerFrame3393:
 	.word	gPlayerFrame3393OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CE34
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811DC9E
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3393UpperTiles
 	.global	gPlayerFrame3400
 gPlayerFrame3400:
 	.word	gPlayerFrame3400OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810CF5A
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811DDC4
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3400UpperTiles
 	.global	gPlayerFrame3390
 gPlayerFrame3390:
 	.word	gPlayerFrame3390OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D080
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811DEEA
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3390UpperTiles
 	.global	gPlayerFrame3391
 gPlayerFrame3391:
 	.word	gPlayerFrame3391OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D1A6
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811E010
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3391UpperTiles
 	.global	gPlayerFrame3394
 gPlayerFrame3394:
 	.word	gPlayerFrame3394OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D2CC
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811D534
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3385UpperTiles
 	.global	gPlayerFrame3396
 gPlayerFrame3396:
 	.word	gPlayerFrame3396OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D3F2
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811E156
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3396UpperTiles
 	.global	gPlayerFrame3397
 gPlayerFrame3397:
 	.word	gPlayerFrame3397OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D4B8
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811E27C
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3397UpperTiles
 	.global	gPlayerFrame3398
 gPlayerFrame3398:
 	.word	gPlayerFrame3398OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D5DE
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811E3A2
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3398UpperTiles
 	.global	gPlayerFrame3399
 gPlayerFrame3399:
 	.word	gPlayerFrame3399OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D704
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811E468
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3399UpperTiles
 	.global	gPlayerFrame3402
 gPlayerFrame3402:
 	.word	gPlayerFrame3402OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D82A
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811E52E
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3402UpperTiles
 	.global	gPlayerFrame3383
 gPlayerFrame3383:
 	.word	gPlayerFrame3383OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810C504
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811E634
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3383UpperTiles
 	.global	gPlayerFrame3395
 gPlayerFrame3395:
 	.word	gPlayerFrame3395OamTemplate+1
 	.word	gPlayerFrame913Palette
 	.word	gUnk_0810D2CC
-	.word	gUnk_0810C4C0
-	.word	gUnk_0811E6FA
+	.word	gPlayerFrame3382NextBankPalette
+	.word	gPlayerFrame3395UpperTiles
 	.global	gUnk_0875ED8C
 gUnk_0875ED8C:
 	.word	gUnk_08123380+1
@@ -7152,337 +7152,337 @@ gPlayerFrame1040:
 	.word	gPlayerFrame1040OamTemplate+1
 	.word	gPlayerFrame1040Palette
 	.word	gUnk_081236EE
-	.word	gUnk_08123622
-	.word	gUnk_08123814
+	.word	gPlayerFrame1040NextBankPalette
+	.word	gPlayerFrame1040UpperTiles
 	.global	gPlayerFrame1042
 gPlayerFrame1042:
 	.word	gPlayerFrame1042OamTemplate+1
 	.word	gPlayerFrame1040Palette
 	.word	gUnk_081239BA
-	.word	gUnk_08123622
-	.word	gUnk_08123AE0
+	.word	gPlayerFrame1040NextBankPalette
+	.word	gPlayerFrame1042UpperTiles
 	.global	gPlayerFrame1045
 gPlayerFrame1045:
 	.word	gPlayerFrame1045OamTemplate+1
 	.word	gPlayerFrame1040Palette
 	.word	gUnk_08123C66
-	.word	gUnk_08123622
-	.word	gUnk_08123D8C
+	.word	gPlayerFrame1040NextBankPalette
+	.word	gPlayerFrame1045UpperTiles
 	.global	gPlayerFrame1046
 gPlayerFrame1046:
 	.word	gPlayerFrame1046OamTemplate+1
 	.word	gPlayerFrame1040Palette
 	.word	gUnk_08123F12
-	.word	gUnk_08123622
-	.word	gUnk_08124038
+	.word	gPlayerFrame1040NextBankPalette
+	.word	gPlayerFrame1046UpperTiles
 	.global	gPlayerFrame1043
 gPlayerFrame1043:
 	.word	gPlayerFrame1043OamTemplate+1
 	.word	gPlayerFrame1040Palette
 	.word	gUnk_081241BE
-	.word	gUnk_08123622
-	.word	gUnk_081242E4
+	.word	gPlayerFrame1040NextBankPalette
+	.word	gPlayerFrame1043UpperTiles
 	.global	gPlayerFrame1044
 gPlayerFrame1044:
 	.word	gPlayerFrame1044OamTemplate+1
 	.word	gPlayerFrame1040Palette
 	.word	gUnk_0812442A
-	.word	gUnk_08123622
-	.word	gUnk_08124550
+	.word	gPlayerFrame1040NextBankPalette
+	.word	gPlayerFrame1044UpperTiles
 	.global	gPlayerFrame1047
 gPlayerFrame1047:
 	.word	gPlayerFrame1047OamTemplate+1
 	.word	gPlayerFrame1040Palette
 	.word	gUnk_08124696
-	.word	gUnk_08123622
-	.word	gUnk_081247BC
+	.word	gPlayerFrame1040NextBankPalette
+	.word	gPlayerFrame1047UpperTiles
 	.global	gPlayerFrame1048
 gPlayerFrame1048:
 	.word	gPlayerFrame1048OamTemplate+1
 	.word	gPlayerFrame1040Palette
 	.word	gUnk_08124942
-	.word	gUnk_08123622
-	.word	gUnk_08124A08
+	.word	gPlayerFrame1040NextBankPalette
+	.word	gPlayerFrame1048UpperTiles
 	.global	gPlayerFrame1049
 gPlayerFrame1049:
 	.word	gPlayerFrame1049OamTemplate+1
 	.word	gPlayerFrame1040Palette
 	.word	gUnk_08124B6E
-	.word	gUnk_08123622
-	.word	gUnk_081247BC
+	.word	gPlayerFrame1040NextBankPalette
+	.word	gPlayerFrame1047UpperTiles
 	.global	gPlayerFrame1050
 gPlayerFrame1050:
 	.word	gPlayerFrame1050OamTemplate+1
 	.word	gPlayerFrame1040Palette
 	.word	gUnk_08124C94
-	.word	gUnk_08123622
-	.word	gUnk_08124DBA
+	.word	gPlayerFrame1040NextBankPalette
+	.word	gPlayerFrame1050UpperTiles
 	.global	gPlayerFrame1051
 gPlayerFrame1051:
 	.word	gPlayerFrame1051OamTemplate+1
 	.word	gPlayerFrame1040Palette
 	.word	gUnk_08124F60
-	.word	gUnk_08123622
-	.word	gUnk_08125086
+	.word	gPlayerFrame1040NextBankPalette
+	.word	gPlayerFrame1051UpperTiles
 	.global	gPlayerFrame1052
 gPlayerFrame1052:
 	.word	gPlayerFrame1052OamTemplate+1
 	.word	gPlayerFrame1040Palette
 	.word	gUnk_0812520C
-	.word	gUnk_08123622
-	.word	gUnk_08125332
+	.word	gPlayerFrame1040NextBankPalette
+	.word	gPlayerFrame1052UpperTiles
 	.global	gPlayerFrame1053
 gPlayerFrame1053:
 	.word	gPlayerFrame1053OamTemplate+1
 	.word	gPlayerFrame1040Palette
 	.word	gUnk_08125498
-	.word	gUnk_08123622
-	.word	gUnk_081255BE
+	.word	gPlayerFrame1040NextBankPalette
+	.word	gPlayerFrame1053UpperTiles
 	.global	gPlayerFrame1054
 gPlayerFrame1054:
 	.word	gPlayerFrame1054OamTemplate+1
 	.word	gPlayerFrame1040Palette
 	.word	gPlayerFrame1054Tiles
-	.word	gUnk_08123622
-	.word	gUnk_0812586A
+	.word	gPlayerFrame1040NextBankPalette
+	.word	gPlayerFrame1054UpperTiles
 	.global	gPlayerFrame1055
 gPlayerFrame1055:
 	.word	gPlayerFrame1055OamTemplate+1
 	.word	gPlayerFrame1040Palette
 	.word	gUnk_081259D0
-	.word	gUnk_08123622
-	.word	gUnk_08125AF6
+	.word	gPlayerFrame1040NextBankPalette
+	.word	gPlayerFrame1055UpperTiles
 	.global	gPlayerFrame1041
 gPlayerFrame1041:
 	.word	gPlayerFrame1041OamTemplate+1
 	.word	gPlayerFrame1040Palette
 	.word	gUnk_081236EE
-	.word	gUnk_08123622
-	.word	gUnk_08125C9C
+	.word	gPlayerFrame1040NextBankPalette
+	.word	gPlayerFrame1041UpperTiles
 	.global	gPlayerFrame1842
 gPlayerFrame1842:
 	.word	gPlayerFrame1842OamTemplate+1
 	.word	gPlayerFrame1842Palette
 	.word	gPlayerFrame1842Tiles
-	.word	gUnk_08123666
-	.word	gUnk_08125F68
+	.word	gPlayerFrame1842NextBankPalette
+	.word	gPlayerFrame1842UpperTiles
 	.global	gPlayerFrame1844
 gPlayerFrame1844:
 	.word	gPlayerFrame1844OamTemplate+1
 	.word	gPlayerFrame1842Palette
 	.word	gPlayerFrame1844Tiles
-	.word	gUnk_08123666
-	.word	gUnk_08126154
+	.word	gPlayerFrame1842NextBankPalette
+	.word	gPlayerFrame1844UpperTiles
 	.global	gPlayerFrame1847
 gPlayerFrame1847:
 	.word	gPlayerFrame1847OamTemplate+1
 	.word	gPlayerFrame1842Palette
 	.word	gPlayerFrame1847Tiles
-	.word	gUnk_08123666
-	.word	gUnk_08126320
+	.word	gPlayerFrame1842NextBankPalette
+	.word	gPlayerFrame1847UpperTiles
 	.global	gPlayerFrame1848
 gPlayerFrame1848:
 	.word	gPlayerFrame1848OamTemplate+1
 	.word	gPlayerFrame1842Palette
 	.word	gPlayerFrame1848Tiles
-	.word	gUnk_08123666
-	.word	gUnk_08126320
+	.word	gPlayerFrame1842NextBankPalette
+	.word	gPlayerFrame1847UpperTiles
 	.global	gPlayerFrame1845
 gPlayerFrame1845:
 	.word	gPlayerFrame1845OamTemplate+1
 	.word	gPlayerFrame1842Palette
 	.word	gPlayerFrame1845Tiles
-	.word	gUnk_08123666
-	.word	gUnk_08126652
+	.word	gPlayerFrame1842NextBankPalette
+	.word	gPlayerFrame1845UpperTiles
 	.global	gPlayerFrame1846
 gPlayerFrame1846:
 	.word	gPlayerFrame1846OamTemplate+1
 	.word	gPlayerFrame1842Palette
 	.word	gPlayerFrame1846Tiles
-	.word	gUnk_08123666
-	.word	gUnk_0812683E
+	.word	gPlayerFrame1842NextBankPalette
+	.word	gPlayerFrame1846UpperTiles
 	.global	gPlayerFrame1849
 gPlayerFrame1849:
 	.word	gPlayerFrame1849OamTemplate+1
 	.word	gPlayerFrame1842Palette
 	.word	gPlayerFrame1849Tiles
-	.word	gUnk_08123666
-	.word	gUnk_081269EA
+	.word	gPlayerFrame1842NextBankPalette
+	.word	gPlayerFrame1849UpperTiles
 	.global	gPlayerFrame1850
 gPlayerFrame1850:
 	.word	gPlayerFrame1850OamTemplate+1
 	.word	gPlayerFrame1842Palette
 	.word	gPlayerFrame1850Tiles
-	.word	gUnk_08123666
-	.word	gUnk_0812683E
+	.word	gPlayerFrame1842NextBankPalette
+	.word	gPlayerFrame1846UpperTiles
 	.global	gPlayerFrame1851
 gPlayerFrame1851:
 	.word	gPlayerFrame1851OamTemplate+1
 	.word	gPlayerFrame1842Palette
 	.word	gPlayerFrame1851Tiles
-	.word	gUnk_08123666
-	.word	gUnk_081269EA
+	.word	gPlayerFrame1842NextBankPalette
+	.word	gPlayerFrame1849UpperTiles
 	.global	gPlayerFrame1852
 gPlayerFrame1852:
 	.word	gPlayerFrame1852OamTemplate+1
 	.word	gPlayerFrame1842Palette
 	.word	gPlayerFrame1852Tiles
-	.word	gUnk_08123666
-	.word	gUnk_08126DC2
+	.word	gPlayerFrame1842NextBankPalette
+	.word	gPlayerFrame1852UpperTiles
 	.global	gPlayerFrame1853
 gPlayerFrame1853:
 	.word	gPlayerFrame1853OamTemplate+1
 	.word	gPlayerFrame1842Palette
 	.word	gPlayerFrame1853Tiles
-	.word	gUnk_08123666
-	.word	gUnk_08126FCE
+	.word	gPlayerFrame1842NextBankPalette
+	.word	gPlayerFrame1853UpperTiles
 	.global	gPlayerFrame1854
 gPlayerFrame1854:
 	.word	gPlayerFrame1854OamTemplate+1
 	.word	gPlayerFrame1842Palette
 	.word	gPlayerFrame1854Tiles
-	.word	gUnk_08123666
-	.word	gUnk_081271BA
+	.word	gPlayerFrame1842NextBankPalette
+	.word	gPlayerFrame1854UpperTiles
 	.global	gPlayerFrame1855
 gPlayerFrame1855:
 	.word	gPlayerFrame1855OamTemplate+1
 	.word	gPlayerFrame1842Palette
 	.word	gPlayerFrame1855Tiles
-	.word	gUnk_08123666
-	.word	gUnk_081273A6
+	.word	gPlayerFrame1842NextBankPalette
+	.word	gPlayerFrame1855UpperTiles
 	.global	gPlayerFrame1856
 gPlayerFrame1856:
 	.word	gPlayerFrame1856OamTemplate+1
 	.word	gPlayerFrame1842Palette
 	.word	gPlayerFrame1856Tiles
-	.word	gUnk_08123666
-	.word	gUnk_08127572
+	.word	gPlayerFrame1842NextBankPalette
+	.word	gPlayerFrame1856UpperTiles
 	.global	gPlayerFrame1857
 gPlayerFrame1857:
 	.word	gPlayerFrame1857OamTemplate+1
 	.word	gPlayerFrame1842Palette
 	.word	gPlayerFrame1857Tiles
-	.word	gUnk_08123666
-	.word	gUnk_0812771E
+	.word	gPlayerFrame1842NextBankPalette
+	.word	gPlayerFrame1857UpperTiles
 	.global	gPlayerFrame1843
 gPlayerFrame1843:
 	.word	gPlayerFrame1843OamTemplate+1
 	.word	gPlayerFrame1842Palette
 	.word	gPlayerFrame1842Tiles
-	.word	gUnk_08123666
-	.word	gUnk_08125F68
+	.word	gPlayerFrame1842NextBankPalette
+	.word	gPlayerFrame1842UpperTiles
 	.global	gPlayerFrame2087
 gPlayerFrame2087:
 	.word	gPlayerFrame2087OamTemplate+1
 	.word	gUnk_08123688
 	.word	gUnk_081236EE
-	.word	gUnk_081236AA
-	.word	gUnk_081277C4
+	.word	gPlayerFrame2087NextBankPalette
+	.word	gPlayerFrame2087UpperTiles
 	.global	gPlayerFrame2089
 gPlayerFrame2089:
 	.word	gPlayerFrame2089OamTemplate+1
 	.word	gUnk_08123688
 	.word	gUnk_081239BA
-	.word	gUnk_081236AA
-	.word	gUnk_0812788A
+	.word	gPlayerFrame2087NextBankPalette
+	.word	gPlayerFrame2089UpperTiles
 	.global	gPlayerFrame2113
 gPlayerFrame2113:
 	.word	gPlayerFrame2113OamTemplate+1
 	.word	gUnk_08123688
 	.word	gUnk_08123C66
-	.word	gUnk_081236AA
-	.word	gUnk_08127950
+	.word	gPlayerFrame2087NextBankPalette
+	.word	gPlayerFrame2113UpperTiles
 	.global	gPlayerFrame2114
 gPlayerFrame2114:
 	.word	gPlayerFrame2114OamTemplate+1
 	.word	gUnk_08123688
 	.word	gUnk_08123F12
-	.word	gUnk_081236AA
-	.word	gUnk_08127A76
+	.word	gPlayerFrame2087NextBankPalette
+	.word	gPlayerFrame2114UpperTiles
 	.global	gPlayerFrame2090
 gPlayerFrame2090:
 	.word	gPlayerFrame2090OamTemplate+1
 	.word	gUnk_08123688
 	.word	gPlayerFrame2090Tiles
-	.word	gUnk_081236AA
-	.word	gUnk_08127CC2
+	.word	gPlayerFrame2087NextBankPalette
+	.word	gPlayerFrame2090UpperTiles
 	.global	gPlayerFrame2091
 gPlayerFrame2091:
 	.word	gPlayerFrame2091OamTemplate+1
 	.word	gUnk_08123688
 	.word	gUnk_081241BE
-	.word	gUnk_081236AA
-	.word	gUnk_08127DE8
+	.word	gPlayerFrame2087NextBankPalette
+	.word	gPlayerFrame2091UpperTiles
 	.global	gPlayerFrame2092
 gPlayerFrame2092:
 	.word	gPlayerFrame2092OamTemplate+1
 	.word	gUnk_08123688
 	.word	gUnk_08124696
-	.word	gUnk_081236AA
-	.word	gUnk_081277C4
+	.word	gPlayerFrame2087NextBankPalette
+	.word	gPlayerFrame2087UpperTiles
 	.global	gPlayerFrame2093
 gPlayerFrame2093:
 	.word	gPlayerFrame2093OamTemplate+1
 	.word	gUnk_08123688
 	.word	gUnk_08124942
-	.word	gUnk_081236AA
-	.word	gUnk_081277C4
+	.word	gPlayerFrame2087NextBankPalette
+	.word	gPlayerFrame2087UpperTiles
 	.global	gPlayerFrame2094
 gPlayerFrame2094:
 	.word	gPlayerFrame2094OamTemplate+1
 	.word	gUnk_08123688
 	.word	gUnk_08124B6E
-	.word	gUnk_081236AA
-	.word	gUnk_08127DE8
+	.word	gPlayerFrame2087NextBankPalette
+	.word	gPlayerFrame2091UpperTiles
 	.global	gPlayerFrame2095
 gPlayerFrame2095:
 	.word	gPlayerFrame2095OamTemplate+1
 	.word	gUnk_08123688
 	.word	gUnk_08124C94
-	.word	gUnk_081236AA
-	.word	gUnk_08127EEE
+	.word	gPlayerFrame2087NextBankPalette
+	.word	gPlayerFrame2095UpperTiles
 	.global	gPlayerFrame2096
 gPlayerFrame2096:
 	.word	gPlayerFrame2096OamTemplate+1
 	.word	gUnk_08123688
 	.word	gUnk_08124F60
-	.word	gUnk_081236AA
-	.word	gUnk_08127EEE
+	.word	gPlayerFrame2087NextBankPalette
+	.word	gPlayerFrame2095UpperTiles
 	.global	gPlayerFrame2097
 gPlayerFrame2097:
 	.word	gPlayerFrame2097OamTemplate+1
 	.word	gUnk_08123688
 	.word	gUnk_0812520C
-	.word	gUnk_081236AA
-	.word	gUnk_08127FB4
+	.word	gPlayerFrame2087NextBankPalette
+	.word	gPlayerFrame2097UpperTiles
 	.global	gPlayerFrame2098
 gPlayerFrame2098:
 	.word	gPlayerFrame2098OamTemplate+1
 	.word	gUnk_08123688
 	.word	gUnk_08125498
-	.word	gUnk_081236AA
-	.word	gUnk_081280BA
+	.word	gPlayerFrame2087NextBankPalette
+	.word	gPlayerFrame2098UpperTiles
 	.global	gPlayerFrame2099
 gPlayerFrame2099:
 	.word	gPlayerFrame2099OamTemplate+1
 	.word	gUnk_08123688
 	.word	gUnk_08128180
-	.word	gUnk_081236AA
-	.word	gUnk_08127FB4
+	.word	gPlayerFrame2087NextBankPalette
+	.word	gPlayerFrame2097UpperTiles
 	.global	gPlayerFrame2100
 gPlayerFrame2100:
 	.word	gPlayerFrame2100OamTemplate+1
 	.word	gUnk_08123688
 	.word	gUnk_081259D0
-	.word	gUnk_081236AA
-	.word	gUnk_0812788A
+	.word	gPlayerFrame2087NextBankPalette
+	.word	gPlayerFrame2089UpperTiles
 	.global	gPlayerFrame2088
 gPlayerFrame2088:
 	.word	gPlayerFrame2088OamTemplate+1
 	.word	gUnk_08123688
 	.word	gUnk_081236EE
-	.word	gUnk_081236AA
-	.word	gUnk_081277C4
+	.word	gPlayerFrame2087NextBankPalette
+	.word	gPlayerFrame2087UpperTiles
 	.global	gUnk_0875F2DC
 gUnk_0875F2DC:
 	.word	gUnk_0812A076+1
@@ -7860,806 +7860,806 @@ gPlayerFrame933:
 	.word	gPlayerFrame933OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame51Tiles
-	.word	gUnk_0812A73E
-	.word	gUnk_0812C702
+	.word	gPlayerFrame933NextBankPalette
+	.word	gPlayerFrame933UpperTiles
 	.global	gPlayerFrame934
 gPlayerFrame934:
 	.word	gPlayerFrame934OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame52Tiles
-	.word	gUnk_0812A73E
-	.word	gUnk_0812C808
+	.word	gPlayerFrame933NextBankPalette
+	.word	gPlayerFrame934UpperTiles
 	.global	gPlayerFrame935
 gPlayerFrame935:
 	.word	gPlayerFrame935OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame53Tiles
-	.word	gUnk_0812A73E
-	.word	gUnk_0812C90E
+	.word	gPlayerFrame933NextBankPalette
+	.word	gPlayerFrame935UpperTiles
 	.global	gPlayerFrame936
 gPlayerFrame936:
 	.word	gPlayerFrame936OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame54Tiles
-	.word	gUnk_0812A73E
-	.word	gUnk_0812C9D4
+	.word	gPlayerFrame933NextBankPalette
+	.word	gPlayerFrame936UpperTiles
 	.global	gPlayerFrame937
 gPlayerFrame937:
 	.word	gPlayerFrame937OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame55Tiles
-	.word	gUnk_0812A73E
-	.word	gUnk_0812CADA
+	.word	gPlayerFrame933NextBankPalette
+	.word	gPlayerFrame937UpperTiles
 	.global	gPlayerFrame938
 gPlayerFrame938:
 	.word	gPlayerFrame938OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame56Tiles
-	.word	gUnk_0812A73E
-	.word	gUnk_0812CBE0
+	.word	gPlayerFrame933NextBankPalette
+	.word	gPlayerFrame938UpperTiles
 	.global	gPlayerFrame939
 gPlayerFrame939:
 	.word	gPlayerFrame939OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame939Tiles
-	.word	gUnk_0812A73E
-	.word	gUnk_0812CCE6
+	.word	gPlayerFrame933NextBankPalette
+	.word	gPlayerFrame939UpperTiles
 	.global	gPlayerFrame940
 gPlayerFrame940:
 	.word	gPlayerFrame940OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame940Tiles
-	.word	gUnk_0812A73E
-	.word	gUnk_0812CDCC
+	.word	gPlayerFrame933NextBankPalette
+	.word	gPlayerFrame940UpperTiles
 	.global	gPlayerFrame941
 gPlayerFrame941:
 	.word	gPlayerFrame941OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame941Tiles
-	.word	gUnk_0812A73E
-	.word	gUnk_0812CEF2
+	.word	gPlayerFrame933NextBankPalette
+	.word	gPlayerFrame941UpperTiles
 	.global	gPlayerFrame942
 gPlayerFrame942:
 	.word	gPlayerFrame942OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame942Tiles
-	.word	gUnk_0812A73E
-	.word	gUnk_0812CFD8
+	.word	gPlayerFrame933NextBankPalette
+	.word	gPlayerFrame942UpperTiles
 	.global	gPlayerFrame943
 gPlayerFrame943:
 	.word	gPlayerFrame943OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame943Tiles
-	.word	gUnk_0812A73E
-	.word	gUnk_0812D09E
+	.word	gPlayerFrame933NextBankPalette
+	.word	gPlayerFrame943UpperTiles
 	.global	gPlayerFrame1360
 gPlayerFrame1360:
 	.word	gPlayerFrame1360OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame51Tiles
-	.word	gUnk_0812A760
-	.word	gUnk_0812D164
+	.word	gPlayerFrame1360NextBankPalette
+	.word	gPlayerFrame1360UpperTiles
 	.global	gPlayerFrame1361
 gPlayerFrame1361:
 	.word	gPlayerFrame1361OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame51Tiles
-	.word	gUnk_0812A760
-	.word	gUnk_0812D30A
+	.word	gPlayerFrame1360NextBankPalette
+	.word	gPlayerFrame1361UpperTiles
 	.global	gPlayerFrame1362
 gPlayerFrame1362:
 	.word	gPlayerFrame1362OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame52Tiles
-	.word	gUnk_0812A760
-	.word	gUnk_0812D4B0
+	.word	gPlayerFrame1360NextBankPalette
+	.word	gPlayerFrame1362UpperTiles
 	.global	gPlayerFrame1363
 gPlayerFrame1363:
 	.word	gPlayerFrame1363OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame52Tiles
-	.word	gUnk_0812A760
-	.word	gUnk_0812D656
+	.word	gPlayerFrame1360NextBankPalette
+	.word	gPlayerFrame1363UpperTiles
 	.global	gPlayerFrame1364
 gPlayerFrame1364:
 	.word	gPlayerFrame1364OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame53Tiles
-	.word	gUnk_0812A760
-	.word	gUnk_0812D7FC
+	.word	gPlayerFrame1360NextBankPalette
+	.word	gPlayerFrame1364UpperTiles
 	.global	gPlayerFrame1365
 gPlayerFrame1365:
 	.word	gPlayerFrame1365OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame53Tiles
-	.word	gUnk_0812A760
-	.word	gUnk_0812D9A2
+	.word	gPlayerFrame1360NextBankPalette
+	.word	gPlayerFrame1365UpperTiles
 	.global	gPlayerFrame1366
 gPlayerFrame1366:
 	.word	gPlayerFrame1366OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame54Tiles
-	.word	gUnk_0812A760
-	.word	gUnk_0812DB48
+	.word	gPlayerFrame1360NextBankPalette
+	.word	gPlayerFrame1366UpperTiles
 	.global	gPlayerFrame1367
 gPlayerFrame1367:
 	.word	gPlayerFrame1367OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame55Tiles
-	.word	gUnk_0812A760
-	.word	gUnk_0812DCEE
+	.word	gPlayerFrame1360NextBankPalette
+	.word	gPlayerFrame1367UpperTiles
 	.global	gPlayerFrame1368
 gPlayerFrame1368:
 	.word	gPlayerFrame1368OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame55Tiles
-	.word	gUnk_0812A760
-	.word	gUnk_0812DE94
+	.word	gPlayerFrame1360NextBankPalette
+	.word	gPlayerFrame1368UpperTiles
 	.global	gPlayerFrame1369
 gPlayerFrame1369:
 	.word	gPlayerFrame1369OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame56Tiles
-	.word	gUnk_0812A760
-	.word	gUnk_0812E03A
+	.word	gPlayerFrame1360NextBankPalette
+	.word	gPlayerFrame1369UpperTiles
 	.global	gPlayerFrame1370
 gPlayerFrame1370:
 	.word	gPlayerFrame1370OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame56Tiles
-	.word	gUnk_0812A760
-	.word	gUnk_0812E1E0
+	.word	gPlayerFrame1360NextBankPalette
+	.word	gPlayerFrame1370UpperTiles
 	.global	gPlayerFrame1371
 gPlayerFrame1371:
 	.word	gPlayerFrame1371OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame939Tiles
-	.word	gUnk_0812A760
-	.word	gUnk_0812E386
+	.word	gPlayerFrame1360NextBankPalette
+	.word	gPlayerFrame1371UpperTiles
 	.global	gPlayerFrame1372
 gPlayerFrame1372:
 	.word	gPlayerFrame1372OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame940Tiles
-	.word	gUnk_0812A760
-	.word	gUnk_0812E52C
+	.word	gPlayerFrame1360NextBankPalette
+	.word	gPlayerFrame1372UpperTiles
 	.global	gPlayerFrame1373
 gPlayerFrame1373:
 	.word	gPlayerFrame1373OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame941Tiles
-	.word	gUnk_0812A760
-	.word	gUnk_0812E6D2
+	.word	gPlayerFrame1360NextBankPalette
+	.word	gPlayerFrame1373UpperTiles
 	.global	gPlayerFrame1374
 gPlayerFrame1374:
 	.word	gPlayerFrame1374OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame942Tiles
-	.word	gUnk_0812A760
-	.word	gUnk_0812E858
+	.word	gPlayerFrame1360NextBankPalette
+	.word	gPlayerFrame1374UpperTiles
 	.global	gPlayerFrame1375
 gPlayerFrame1375:
 	.word	gPlayerFrame1375OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame943Tiles
-	.word	gUnk_0812A760
-	.word	gUnk_0812E99E
+	.word	gPlayerFrame1360NextBankPalette
+	.word	gPlayerFrame1375UpperTiles
 	.global	gPlayerFrame1556
 gPlayerFrame1556:
 	.word	gPlayerFrame1556OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame51Tiles
-	.word	gUnk_0812A782
-	.word	gUnk_0812EAE4
+	.word	gPlayerFrame1556NextBankPalette
+	.word	gPlayerFrame1556UpperTiles
 	.global	gPlayerFrame1557
 gPlayerFrame1557:
 	.word	gPlayerFrame1557OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame52Tiles
-	.word	gUnk_0812A782
-	.word	gUnk_0812EB6A
+	.word	gPlayerFrame1556NextBankPalette
+	.word	gPlayerFrame1557UpperTiles
 	.global	gPlayerFrame1558
 gPlayerFrame1558:
 	.word	gPlayerFrame1558OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame53Tiles
-	.word	gUnk_0812A782
-	.word	gUnk_0812EBF0
+	.word	gPlayerFrame1556NextBankPalette
+	.word	gPlayerFrame1558UpperTiles
 	.global	gPlayerFrame1559
 gPlayerFrame1559:
 	.word	gPlayerFrame1559OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame54Tiles
-	.word	gUnk_0812A782
-	.word	gUnk_0812EC76
+	.word	gPlayerFrame1556NextBankPalette
+	.word	gPlayerFrame1559UpperTiles
 	.global	gPlayerFrame1560
 gPlayerFrame1560:
 	.word	gPlayerFrame1560OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame55Tiles
-	.word	gUnk_0812A782
-	.word	gUnk_0812ECFC
+	.word	gPlayerFrame1556NextBankPalette
+	.word	gPlayerFrame1560UpperTiles
 	.global	gPlayerFrame1561
 gPlayerFrame1561:
 	.word	gPlayerFrame1561OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame56Tiles
-	.word	gUnk_0812A782
-	.word	gUnk_0812ED82
+	.word	gPlayerFrame1556NextBankPalette
+	.word	gPlayerFrame1561UpperTiles
 	.global	gPlayerFrame1562
 gPlayerFrame1562:
 	.word	gPlayerFrame1562OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame939Tiles
-	.word	gUnk_0812A782
-	.word	gUnk_0812EE08
+	.word	gPlayerFrame1556NextBankPalette
+	.word	gPlayerFrame1562UpperTiles
 	.global	gPlayerFrame1563
 gPlayerFrame1563:
 	.word	gPlayerFrame1563OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame940Tiles
-	.word	gUnk_0812A782
-	.word	gUnk_0812EE8E
+	.word	gPlayerFrame1556NextBankPalette
+	.word	gPlayerFrame1563UpperTiles
 	.global	gPlayerFrame1564
 gPlayerFrame1564:
 	.word	gPlayerFrame1564OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame941Tiles
-	.word	gUnk_0812A782
-	.word	gUnk_0812EF14
+	.word	gPlayerFrame1556NextBankPalette
+	.word	gPlayerFrame1564UpperTiles
 	.global	gPlayerFrame1565
 gPlayerFrame1565:
 	.word	gPlayerFrame1565OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame942Tiles
-	.word	gUnk_0812A782
-	.word	gUnk_0812EF9A
+	.word	gPlayerFrame1556NextBankPalette
+	.word	gPlayerFrame1565UpperTiles
 	.global	gPlayerFrame1566
 gPlayerFrame1566:
 	.word	gPlayerFrame1566OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame943Tiles
-	.word	gUnk_0812A782
-	.word	gUnk_0812F020
+	.word	gPlayerFrame1556NextBankPalette
+	.word	gPlayerFrame1566UpperTiles
 	.global	gPlayerFrame1725
 gPlayerFrame1725:
 	.word	gPlayerFrame1725OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame51Tiles
-	.word	gUnk_0812A7A4
-	.word	gUnk_0812F0A6
+	.word	gPlayerFrame1725NextBankPalette
+	.word	gPlayerFrame1725UpperTiles
 	.global	gPlayerFrame1726
 gPlayerFrame1726:
 	.word	gPlayerFrame1726OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame52Tiles
-	.word	gUnk_0812A7A4
-	.word	gUnk_0812F14C
+	.word	gPlayerFrame1725NextBankPalette
+	.word	gPlayerFrame1726UpperTiles
 	.global	gPlayerFrame1727
 gPlayerFrame1727:
 	.word	gPlayerFrame1727OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame53Tiles
-	.word	gUnk_0812A7A4
-	.word	gUnk_0812F1F2
+	.word	gPlayerFrame1725NextBankPalette
+	.word	gPlayerFrame1727UpperTiles
 	.global	gPlayerFrame1728
 gPlayerFrame1728:
 	.word	gPlayerFrame1728OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame54Tiles
-	.word	gUnk_0812A7A4
-	.word	gUnk_0812F298
+	.word	gPlayerFrame1725NextBankPalette
+	.word	gPlayerFrame1728UpperTiles
 	.global	gPlayerFrame1729
 gPlayerFrame1729:
 	.word	gPlayerFrame1729OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame55Tiles
-	.word	gUnk_0812A7A4
-	.word	gUnk_0812F33E
+	.word	gPlayerFrame1725NextBankPalette
+	.word	gPlayerFrame1729UpperTiles
 	.global	gPlayerFrame1730
 gPlayerFrame1730:
 	.word	gPlayerFrame1730OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame56Tiles
-	.word	gUnk_0812A7A4
-	.word	gUnk_0812F0A6
+	.word	gPlayerFrame1725NextBankPalette
+	.word	gPlayerFrame1725UpperTiles
 	.global	gPlayerFrame1731
 gPlayerFrame1731:
 	.word	gPlayerFrame1731OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame939Tiles
-	.word	gUnk_0812A7A4
-	.word	gUnk_0812F3E4
+	.word	gPlayerFrame1725NextBankPalette
+	.word	gPlayerFrame1731UpperTiles
 	.global	gPlayerFrame1732
 gPlayerFrame1732:
 	.word	gPlayerFrame1732OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame940Tiles
-	.word	gUnk_0812A7A4
-	.word	gUnk_0812F48A
+	.word	gPlayerFrame1725NextBankPalette
+	.word	gPlayerFrame1732UpperTiles
 	.global	gPlayerFrame1733
 gPlayerFrame1733:
 	.word	gPlayerFrame1733OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame941Tiles
-	.word	gUnk_0812A7A4
-	.word	gUnk_0812F530
+	.word	gPlayerFrame1725NextBankPalette
+	.word	gPlayerFrame1733UpperTiles
 	.global	gPlayerFrame1734
 gPlayerFrame1734:
 	.word	gPlayerFrame1734OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame942Tiles
-	.word	gUnk_0812A7A4
-	.word	gUnk_0812F5D6
+	.word	gPlayerFrame1725NextBankPalette
+	.word	gPlayerFrame1734UpperTiles
 	.global	gPlayerFrame1735
 gPlayerFrame1735:
 	.word	gPlayerFrame1735OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame943Tiles
-	.word	gUnk_0812A7A4
-	.word	gUnk_0812F69C
+	.word	gPlayerFrame1725NextBankPalette
+	.word	gPlayerFrame1735UpperTiles
 	.global	gPlayerFrame2346
 gPlayerFrame2346:
 	.word	gPlayerFrame2346OamTemplate+1
 	.word	gPlayerFrame2346Palette
 	.word	gPlayerFrame51Tiles
-	.word	gUnk_0812A7E8
-	.word	gUnk_0812F742
+	.word	gPlayerFrame2346NextBankPalette
+	.word	gPlayerFrame2346UpperTiles
 	.global	gPlayerFrame2347
 gPlayerFrame2347:
 	.word	gPlayerFrame2347OamTemplate+1
 	.word	gPlayerFrame2346Palette
 	.word	gPlayerFrame52Tiles
-	.word	gUnk_0812A7E8
-	.word	gUnk_0812F808
+	.word	gPlayerFrame2346NextBankPalette
+	.word	gPlayerFrame2347UpperTiles
 	.global	gPlayerFrame2348
 gPlayerFrame2348:
 	.word	gPlayerFrame2348OamTemplate+1
 	.word	gPlayerFrame2346Palette
 	.word	gPlayerFrame53Tiles
-	.word	gUnk_0812A7E8
-	.word	gUnk_0812F8CE
+	.word	gPlayerFrame2346NextBankPalette
+	.word	gPlayerFrame2348UpperTiles
 	.global	gPlayerFrame2349
 gPlayerFrame2349:
 	.word	gPlayerFrame2349OamTemplate+1
 	.word	gPlayerFrame2346Palette
 	.word	gPlayerFrame54Tiles
-	.word	gUnk_0812A7E8
-	.word	gUnk_0812F994
+	.word	gPlayerFrame2346NextBankPalette
+	.word	gPlayerFrame2349UpperTiles
 	.global	gPlayerFrame2350
 gPlayerFrame2350:
 	.word	gPlayerFrame2350OamTemplate+1
 	.word	gPlayerFrame2346Palette
 	.word	gPlayerFrame55Tiles
-	.word	gUnk_0812A7E8
-	.word	gUnk_0812FA5A
+	.word	gPlayerFrame2346NextBankPalette
+	.word	gPlayerFrame2350UpperTiles
 	.global	gPlayerFrame2351
 gPlayerFrame2351:
 	.word	gPlayerFrame2351OamTemplate+1
 	.word	gPlayerFrame2346Palette
 	.word	gPlayerFrame56Tiles
-	.word	gUnk_0812A7E8
-	.word	gUnk_0812FB20
+	.word	gPlayerFrame2346NextBankPalette
+	.word	gPlayerFrame2351UpperTiles
 	.global	gPlayerFrame2352
 gPlayerFrame2352:
 	.word	gPlayerFrame2352OamTemplate+1
 	.word	gPlayerFrame2346Palette
 	.word	gPlayerFrame939Tiles
-	.word	gUnk_0812A7E8
-	.word	gUnk_0812FBE6
+	.word	gPlayerFrame2346NextBankPalette
+	.word	gPlayerFrame2352UpperTiles
 	.global	gPlayerFrame2353
 gPlayerFrame2353:
 	.word	gPlayerFrame2353OamTemplate+1
 	.word	gPlayerFrame2346Palette
 	.word	gPlayerFrame940Tiles
-	.word	gUnk_0812A7E8
-	.word	gUnk_0812FCAC
+	.word	gPlayerFrame2346NextBankPalette
+	.word	gPlayerFrame2353UpperTiles
 	.global	gPlayerFrame2354
 gPlayerFrame2354:
 	.word	gPlayerFrame2354OamTemplate+1
 	.word	gPlayerFrame2346Palette
 	.word	gPlayerFrame941Tiles
-	.word	gUnk_0812A7E8
-	.word	gUnk_0812FD72
+	.word	gPlayerFrame2346NextBankPalette
+	.word	gPlayerFrame2354UpperTiles
 	.global	gPlayerFrame2355
 gPlayerFrame2355:
 	.word	gPlayerFrame2355OamTemplate+1
 	.word	gPlayerFrame2346Palette
 	.word	gPlayerFrame942Tiles
-	.word	gUnk_0812A7E8
-	.word	gUnk_0812FE58
+	.word	gPlayerFrame2346NextBankPalette
+	.word	gPlayerFrame2355UpperTiles
 	.global	gPlayerFrame2356
 gPlayerFrame2356:
 	.word	gPlayerFrame2356OamTemplate+1
 	.word	gPlayerFrame2346Palette
 	.word	gPlayerFrame943Tiles
-	.word	gUnk_0812A7E8
-	.word	gUnk_0812FF1E
+	.word	gPlayerFrame2346NextBankPalette
+	.word	gPlayerFrame2356UpperTiles
 	.global	gPlayerFrame2486
 gPlayerFrame2486:
 	.word	gPlayerFrame2486OamTemplate+1
 	.word	gPlayerFrame2486Palette
 	.word	gPlayerFrame51Tiles
-	.word	gUnk_0812A82C
-	.word	gUnk_08130004
+	.word	gPlayerFrame2486NextBankPalette
+	.word	gPlayerFrame2486UpperTiles
 	.global	gPlayerFrame2487
 gPlayerFrame2487:
 	.word	gPlayerFrame2487OamTemplate+1
 	.word	gPlayerFrame2486Palette
 	.word	gPlayerFrame52Tiles
-	.word	gUnk_0812A82C
-	.word	gUnk_081300CA
+	.word	gPlayerFrame2486NextBankPalette
+	.word	gPlayerFrame2487UpperTiles
 	.global	gPlayerFrame2488
 gPlayerFrame2488:
 	.word	gPlayerFrame2488OamTemplate+1
 	.word	gPlayerFrame2486Palette
 	.word	gPlayerFrame53Tiles
-	.word	gUnk_0812A82C
-	.word	gUnk_08130190
+	.word	gPlayerFrame2486NextBankPalette
+	.word	gPlayerFrame2488UpperTiles
 	.global	gPlayerFrame2489
 gPlayerFrame2489:
 	.word	gPlayerFrame2489OamTemplate+1
 	.word	gPlayerFrame2486Palette
 	.word	gPlayerFrame54Tiles
-	.word	gUnk_0812A82C
-	.word	gUnk_08130256
+	.word	gPlayerFrame2486NextBankPalette
+	.word	gPlayerFrame2489UpperTiles
 	.global	gPlayerFrame2490
 gPlayerFrame2490:
 	.word	gPlayerFrame2490OamTemplate+1
 	.word	gPlayerFrame2486Palette
 	.word	gPlayerFrame55Tiles
-	.word	gUnk_0812A82C
-	.word	gUnk_0813031C
+	.word	gPlayerFrame2486NextBankPalette
+	.word	gPlayerFrame2490UpperTiles
 	.global	gPlayerFrame2491
 gPlayerFrame2491:
 	.word	gPlayerFrame2491OamTemplate+1
 	.word	gPlayerFrame2486Palette
 	.word	gPlayerFrame56Tiles
-	.word	gUnk_0812A82C
-	.word	gUnk_081303E2
+	.word	gPlayerFrame2486NextBankPalette
+	.word	gPlayerFrame2491UpperTiles
 	.global	gPlayerFrame2492
 gPlayerFrame2492:
 	.word	gPlayerFrame2492OamTemplate+1
 	.word	gPlayerFrame2486Palette
 	.word	gPlayerFrame939Tiles
-	.word	gUnk_0812A82C
-	.word	gUnk_081304A8
+	.word	gPlayerFrame2486NextBankPalette
+	.word	gPlayerFrame2492UpperTiles
 	.global	gPlayerFrame2493
 gPlayerFrame2493:
 	.word	gPlayerFrame2493OamTemplate+1
 	.word	gPlayerFrame2486Palette
 	.word	gPlayerFrame940Tiles
-	.word	gUnk_0812A82C
-	.word	gUnk_0813056E
+	.word	gPlayerFrame2486NextBankPalette
+	.word	gPlayerFrame2493UpperTiles
 	.global	gPlayerFrame2494
 gPlayerFrame2494:
 	.word	gPlayerFrame2494OamTemplate+1
 	.word	gPlayerFrame2486Palette
 	.word	gPlayerFrame941Tiles
-	.word	gUnk_0812A82C
-	.word	gUnk_08130634
+	.word	gPlayerFrame2486NextBankPalette
+	.word	gPlayerFrame2494UpperTiles
 	.global	gPlayerFrame2495
 gPlayerFrame2495:
 	.word	gPlayerFrame2495OamTemplate+1
 	.word	gPlayerFrame2486Palette
 	.word	gPlayerFrame942Tiles
-	.word	gUnk_0812A82C
-	.word	gUnk_081306FA
+	.word	gPlayerFrame2486NextBankPalette
+	.word	gPlayerFrame2495UpperTiles
 	.global	gPlayerFrame2496
 gPlayerFrame2496:
 	.word	gPlayerFrame2496OamTemplate+1
 	.word	gPlayerFrame2486Palette
 	.word	gPlayerFrame943Tiles
-	.word	gUnk_0812A82C
-	.word	gUnk_081307E0
+	.word	gPlayerFrame2486NextBankPalette
+	.word	gPlayerFrame2496UpperTiles
 	.global	gPlayerFrame2626
 gPlayerFrame2626:
 	.word	gPlayerFrame2626OamTemplate+1
 	.word	gPlayerFrame2626Palette
 	.word	gPlayerFrame51Tiles
-	.word	gUnk_0812A870
-	.word	gUnk_08130886
+	.word	gPlayerFrame2626NextBankPalette
+	.word	gPlayerFrame2626UpperTiles
 	.global	gPlayerFrame2627
 gPlayerFrame2627:
 	.word	gPlayerFrame2627OamTemplate+1
 	.word	gPlayerFrame2626Palette
 	.word	gPlayerFrame52Tiles
-	.word	gUnk_0812A870
-	.word	gUnk_08130A0C
+	.word	gPlayerFrame2626NextBankPalette
+	.word	gPlayerFrame2627UpperTiles
 	.global	gPlayerFrame2628
 gPlayerFrame2628:
 	.word	gPlayerFrame2628OamTemplate+1
 	.word	gPlayerFrame2626Palette
 	.word	gPlayerFrame53Tiles
-	.word	gUnk_0812A870
-	.word	gUnk_08130B92
+	.word	gPlayerFrame2626NextBankPalette
+	.word	gPlayerFrame2628UpperTiles
 	.global	gPlayerFrame2629
 gPlayerFrame2629:
 	.word	gPlayerFrame2629OamTemplate+1
 	.word	gPlayerFrame2626Palette
 	.word	gPlayerFrame54Tiles
-	.word	gUnk_0812A870
-	.word	gUnk_08130D18
+	.word	gPlayerFrame2626NextBankPalette
+	.word	gPlayerFrame2629UpperTiles
 	.global	gPlayerFrame2630
 gPlayerFrame2630:
 	.word	gPlayerFrame2630OamTemplate+1
 	.word	gPlayerFrame2626Palette
 	.word	gPlayerFrame55Tiles
-	.word	gUnk_0812A870
-	.word	gUnk_08130EBE
+	.word	gPlayerFrame2626NextBankPalette
+	.word	gPlayerFrame2630UpperTiles
 	.global	gPlayerFrame2631
 gPlayerFrame2631:
 	.word	gPlayerFrame2631OamTemplate+1
 	.word	gPlayerFrame2626Palette
 	.word	gPlayerFrame56Tiles
-	.word	gUnk_0812A870
-	.word	gUnk_08131044
+	.word	gPlayerFrame2626NextBankPalette
+	.word	gPlayerFrame2631UpperTiles
 	.global	gPlayerFrame2632
 gPlayerFrame2632:
 	.word	gPlayerFrame2632OamTemplate+1
 	.word	gPlayerFrame2626Palette
 	.word	gPlayerFrame939Tiles
-	.word	gUnk_0812A870
-	.word	gUnk_081311CA
+	.word	gPlayerFrame2626NextBankPalette
+	.word	gPlayerFrame2632UpperTiles
 	.global	gPlayerFrame2633
 gPlayerFrame2633:
 	.word	gPlayerFrame2633OamTemplate+1
 	.word	gPlayerFrame2626Palette
 	.word	gPlayerFrame940Tiles
-	.word	gUnk_0812A870
-	.word	gUnk_081312F0
+	.word	gPlayerFrame2626NextBankPalette
+	.word	gPlayerFrame2633UpperTiles
 	.global	gPlayerFrame2634
 gPlayerFrame2634:
 	.word	gPlayerFrame2634OamTemplate+1
 	.word	gPlayerFrame2626Palette
 	.word	gPlayerFrame941Tiles
-	.word	gUnk_0812A870
-	.word	gUnk_08131416
+	.word	gPlayerFrame2626NextBankPalette
+	.word	gPlayerFrame2634UpperTiles
 	.global	gPlayerFrame2635
 gPlayerFrame2635:
 	.word	gPlayerFrame2635OamTemplate+1
 	.word	gPlayerFrame2626Palette
 	.word	gPlayerFrame942Tiles
-	.word	gUnk_0812A870
-	.word	gUnk_0813151C
+	.word	gPlayerFrame2626NextBankPalette
+	.word	gPlayerFrame2635UpperTiles
 	.global	gPlayerFrame2636
 gPlayerFrame2636:
 	.word	gPlayerFrame2636OamTemplate+1
 	.word	gPlayerFrame2626Palette
 	.word	gPlayerFrame943Tiles
-	.word	gUnk_0812A870
-	.word	gUnk_08131642
+	.word	gPlayerFrame2626NextBankPalette
+	.word	gPlayerFrame2636UpperTiles
 	.global	gPlayerFrame2790
 gPlayerFrame2790:
 	.word	gPlayerFrame2790OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame51Tiles
-	.word	gUnk_0812A892
-	.word	gUnk_08131768
+	.word	gPlayerFrame2790NextBankPalette
+	.word	gPlayerFrame2790UpperTiles
 	.global	gPlayerFrame2791
 gPlayerFrame2791:
 	.word	gPlayerFrame2791OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame52Tiles
-	.word	gUnk_0812A892
-	.word	gUnk_0813182E
+	.word	gPlayerFrame2790NextBankPalette
+	.word	gPlayerFrame2791UpperTiles
 	.global	gPlayerFrame2792
 gPlayerFrame2792:
 	.word	gPlayerFrame2792OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame53Tiles
-	.word	gUnk_0812A892
-	.word	gUnk_081318F4
+	.word	gPlayerFrame2790NextBankPalette
+	.word	gPlayerFrame2792UpperTiles
 	.global	gPlayerFrame2793
 gPlayerFrame2793:
 	.word	gPlayerFrame2793OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame54Tiles
-	.word	gUnk_0812A892
-	.word	gUnk_081319BA
+	.word	gPlayerFrame2790NextBankPalette
+	.word	gPlayerFrame2793UpperTiles
 	.global	gPlayerFrame2794
 gPlayerFrame2794:
 	.word	gPlayerFrame2794OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame55Tiles
-	.word	gUnk_0812A892
-	.word	gUnk_08131AE0
+	.word	gPlayerFrame2790NextBankPalette
+	.word	gPlayerFrame2794UpperTiles
 	.global	gPlayerFrame2795
 gPlayerFrame2795:
 	.word	gPlayerFrame2795OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame56Tiles
-	.word	gUnk_0812A892
-	.word	gUnk_08131BA6
+	.word	gPlayerFrame2790NextBankPalette
+	.word	gPlayerFrame2795UpperTiles
 	.global	gPlayerFrame2796
 gPlayerFrame2796:
 	.word	gPlayerFrame2796OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame939Tiles
-	.word	gUnk_0812A892
-	.word	gUnk_08131C6C
+	.word	gPlayerFrame2790NextBankPalette
+	.word	gPlayerFrame2796UpperTiles
 	.global	gPlayerFrame2797
 gPlayerFrame2797:
 	.word	gPlayerFrame2797OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame940Tiles
-	.word	gUnk_0812A892
-	.word	gUnk_08131D72
+	.word	gPlayerFrame2790NextBankPalette
+	.word	gPlayerFrame2797UpperTiles
 	.global	gPlayerFrame2798
 gPlayerFrame2798:
 	.word	gPlayerFrame2798OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame941Tiles
-	.word	gUnk_0812A892
-	.word	gUnk_08131E18
+	.word	gPlayerFrame2790NextBankPalette
+	.word	gPlayerFrame2798UpperTiles
 	.global	gPlayerFrame2799
 gPlayerFrame2799:
 	.word	gPlayerFrame2799OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame942Tiles
-	.word	gUnk_0812A892
-	.word	gUnk_08131EFE
+	.word	gPlayerFrame2790NextBankPalette
+	.word	gPlayerFrame2799UpperTiles
 	.global	gPlayerFrame2800
 gPlayerFrame2800:
 	.word	gPlayerFrame2800OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame943Tiles
-	.word	gUnk_0812A892
-	.word	gUnk_08132004
+	.word	gPlayerFrame2790NextBankPalette
+	.word	gPlayerFrame2800UpperTiles
 	.global	gPlayerFrame2936
 gPlayerFrame2936:
 	.word	gPlayerFrame2936OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame51Tiles
-	.word	gUnk_0812A8B4
-	.word	gUnk_0813204A
+	.word	gPlayerFrame2936NextBankPalette
+	.word	gPlayerFrame2936UpperTiles
 	.global	gPlayerFrame2937
 gPlayerFrame2937:
 	.word	gPlayerFrame2937OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame52Tiles
-	.word	gUnk_0812A8B4
-	.word	gUnk_08132110
+	.word	gPlayerFrame2936NextBankPalette
+	.word	gPlayerFrame2937UpperTiles
 	.global	gPlayerFrame2938
 gPlayerFrame2938:
 	.word	gPlayerFrame2938OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame53Tiles
-	.word	gUnk_0812A8B4
-	.word	gUnk_081321D6
+	.word	gPlayerFrame2936NextBankPalette
+	.word	gPlayerFrame2938UpperTiles
 	.global	gPlayerFrame2939
 gPlayerFrame2939:
 	.word	gPlayerFrame2939OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame54Tiles
-	.word	gUnk_0812A8B4
-	.word	gUnk_0813229C
+	.word	gPlayerFrame2936NextBankPalette
+	.word	gPlayerFrame2939UpperTiles
 	.global	gPlayerFrame2940
 gPlayerFrame2940:
 	.word	gPlayerFrame2940OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame55Tiles
-	.word	gUnk_0812A8B4
-	.word	gUnk_08132362
+	.word	gPlayerFrame2936NextBankPalette
+	.word	gPlayerFrame2940UpperTiles
 	.global	gPlayerFrame2941
 gPlayerFrame2941:
 	.word	gPlayerFrame2941OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame56Tiles
-	.word	gUnk_0812A8B4
-	.word	gUnk_08132428
+	.word	gPlayerFrame2936NextBankPalette
+	.word	gPlayerFrame2941UpperTiles
 	.global	gPlayerFrame2942
 gPlayerFrame2942:
 	.word	gPlayerFrame2942OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame939Tiles
-	.word	gUnk_0812A8B4
-	.word	gUnk_081324EE
+	.word	gPlayerFrame2936NextBankPalette
+	.word	gPlayerFrame2942UpperTiles
 	.global	gPlayerFrame2943
 gPlayerFrame2943:
 	.word	gPlayerFrame2943OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame940Tiles
-	.word	gUnk_0812A8B4
-	.word	gUnk_081325B4
+	.word	gPlayerFrame2936NextBankPalette
+	.word	gPlayerFrame2943UpperTiles
 	.global	gPlayerFrame2944
 gPlayerFrame2944:
 	.word	gPlayerFrame2944OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame941Tiles
-	.word	gUnk_0812A8B4
-	.word	gUnk_0813267A
+	.word	gPlayerFrame2936NextBankPalette
+	.word	gPlayerFrame2944UpperTiles
 	.global	gPlayerFrame2945
 gPlayerFrame2945:
 	.word	gPlayerFrame2945OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame942Tiles
-	.word	gUnk_0812A8B4
-	.word	gUnk_08132740
+	.word	gPlayerFrame2936NextBankPalette
+	.word	gPlayerFrame2945UpperTiles
 	.global	gPlayerFrame2946
 gPlayerFrame2946:
 	.word	gPlayerFrame2946OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame943Tiles
-	.word	gUnk_0812A8B4
-	.word	gUnk_08132826
+	.word	gPlayerFrame2936NextBankPalette
+	.word	gPlayerFrame2946UpperTiles
 	.global	gPlayerFrame3067
 gPlayerFrame3067:
 	.word	gPlayerFrame3067OamTemplate+1
 	.word	gPlayerFrame3067Palette
 	.word	gPlayerFrame51Tiles
-	.word	gUnk_0812A8F8
-	.word	gUnk_081328CC
+	.word	gPlayerFrame3067NextBankPalette
+	.word	gPlayerFrame3067UpperTiles
 	.global	gPlayerFrame3068
 gPlayerFrame3068:
 	.word	gPlayerFrame3068OamTemplate+1
 	.word	gPlayerFrame3067Palette
 	.word	gPlayerFrame52Tiles
-	.word	gUnk_0812A8F8
-	.word	gUnk_08132992
+	.word	gPlayerFrame3067NextBankPalette
+	.word	gPlayerFrame3068UpperTiles
 	.global	gPlayerFrame3069
 gPlayerFrame3069:
 	.word	gPlayerFrame3069OamTemplate+1
 	.word	gPlayerFrame3067Palette
 	.word	gPlayerFrame53Tiles
-	.word	gUnk_0812A8F8
-	.word	gUnk_08132A78
+	.word	gPlayerFrame3067NextBankPalette
+	.word	gPlayerFrame3069UpperTiles
 	.global	gPlayerFrame3070
 gPlayerFrame3070:
 	.word	gPlayerFrame3070OamTemplate+1
 	.word	gPlayerFrame3067Palette
 	.word	gPlayerFrame54Tiles
-	.word	gUnk_0812A8F8
-	.word	gUnk_08132B5E
+	.word	gPlayerFrame3067NextBankPalette
+	.word	gPlayerFrame3070UpperTiles
 	.global	gPlayerFrame3071
 gPlayerFrame3071:
 	.word	gPlayerFrame3071OamTemplate+1
 	.word	gPlayerFrame3067Palette
 	.word	gPlayerFrame55Tiles
-	.word	gUnk_0812A8F8
-	.word	gUnk_08132C44
+	.word	gPlayerFrame3067NextBankPalette
+	.word	gPlayerFrame3071UpperTiles
 	.global	gPlayerFrame3072
 gPlayerFrame3072:
 	.word	gPlayerFrame3072OamTemplate+1
 	.word	gPlayerFrame3067Palette
 	.word	gPlayerFrame56Tiles
-	.word	gUnk_0812A8F8
-	.word	gUnk_08132D2A
+	.word	gPlayerFrame3067NextBankPalette
+	.word	gPlayerFrame3072UpperTiles
 	.global	gPlayerFrame3073
 gPlayerFrame3073:
 	.word	gPlayerFrame3073OamTemplate+1
 	.word	gPlayerFrame3067Palette
 	.word	gPlayerFrame939Tiles
-	.word	gUnk_0812A8F8
-	.word	gUnk_08132E10
+	.word	gPlayerFrame3067NextBankPalette
+	.word	gPlayerFrame3073UpperTiles
 	.global	gPlayerFrame3074
 gPlayerFrame3074:
 	.word	gPlayerFrame3074OamTemplate+1
 	.word	gPlayerFrame3067Palette
 	.word	gPlayerFrame940Tiles
-	.word	gUnk_0812A8F8
-	.word	gUnk_08132ED6
+	.word	gPlayerFrame3067NextBankPalette
+	.word	gPlayerFrame3074UpperTiles
 	.global	gPlayerFrame3075
 gPlayerFrame3075:
 	.word	gPlayerFrame3075OamTemplate+1
 	.word	gPlayerFrame3067Palette
 	.word	gPlayerFrame941Tiles
-	.word	gUnk_0812A8F8
-	.word	gUnk_08132F9C
+	.word	gPlayerFrame3067NextBankPalette
+	.word	gPlayerFrame3075UpperTiles
 	.global	gPlayerFrame3076
 gPlayerFrame3076:
 	.word	gPlayerFrame3076OamTemplate+1
 	.word	gPlayerFrame3067Palette
 	.word	gPlayerFrame942Tiles
-	.word	gUnk_0812A8F8
-	.word	gUnk_081330A2
+	.word	gPlayerFrame3067NextBankPalette
+	.word	gPlayerFrame3076UpperTiles
 	.global	gPlayerFrame3077
 gPlayerFrame3077:
 	.word	gPlayerFrame3077OamTemplate+1
 	.word	gPlayerFrame3067Palette
 	.word	gPlayerFrame943Tiles
-	.word	gUnk_0812A8F8
-	.word	gUnk_08133168
+	.word	gPlayerFrame3067NextBankPalette
+	.word	gPlayerFrame3077UpperTiles
 	.global	gPlayerFrame3206
 gPlayerFrame3206:
 	.word	gPlayerFrame3206OamTemplate+1
@@ -8731,113 +8731,113 @@ gPlayerFrame3404:
 	.word	gPlayerFrame3404OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame51Tiles
-	.word	gUnk_0812A93C
-	.word	gUnk_08133F30
+	.word	gPlayerFrame3404NextBankPalette
+	.word	gPlayerFrame3404UpperTiles
 	.global	gPlayerFrame3405
 gPlayerFrame3405:
 	.word	gPlayerFrame3405OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame51Tiles
-	.word	gUnk_0812A93C
-	.word	gUnk_08134056
+	.word	gPlayerFrame3404NextBankPalette
+	.word	gPlayerFrame3405UpperTiles
 	.global	gPlayerFrame3406
 gPlayerFrame3406:
 	.word	gPlayerFrame3406OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame52Tiles
-	.word	gUnk_0812A93C
-	.word	gUnk_0813417C
+	.word	gPlayerFrame3404NextBankPalette
+	.word	gPlayerFrame3406UpperTiles
 	.global	gPlayerFrame3407
 gPlayerFrame3407:
 	.word	gPlayerFrame3407OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame52Tiles
-	.word	gUnk_0812A93C
-	.word	gUnk_081342A2
+	.word	gPlayerFrame3404NextBankPalette
+	.word	gPlayerFrame3407UpperTiles
 	.global	gPlayerFrame3408
 gPlayerFrame3408:
 	.word	gPlayerFrame3408OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame53Tiles
-	.word	gUnk_0812A93C
-	.word	gUnk_081343A8
+	.word	gPlayerFrame3404NextBankPalette
+	.word	gPlayerFrame3408UpperTiles
 	.global	gPlayerFrame3409
 gPlayerFrame3409:
 	.word	gPlayerFrame3409OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame53Tiles
-	.word	gUnk_0812A93C
-	.word	gUnk_081344CE
+	.word	gPlayerFrame3404NextBankPalette
+	.word	gPlayerFrame3409UpperTiles
 	.global	gPlayerFrame3410
 gPlayerFrame3410:
 	.word	gPlayerFrame3410OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame54Tiles
-	.word	gUnk_0812A93C
-	.word	gUnk_081345D4
+	.word	gPlayerFrame3404NextBankPalette
+	.word	gPlayerFrame3410UpperTiles
 	.global	gPlayerFrame3411
 gPlayerFrame3411:
 	.word	gPlayerFrame3411OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame55Tiles
-	.word	gUnk_0812A93C
-	.word	gUnk_081346FA
+	.word	gPlayerFrame3404NextBankPalette
+	.word	gPlayerFrame3411UpperTiles
 	.global	gPlayerFrame3412
 gPlayerFrame3412:
 	.word	gPlayerFrame3412OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame55Tiles
-	.word	gUnk_0812A93C
-	.word	gUnk_08134800
+	.word	gPlayerFrame3404NextBankPalette
+	.word	gPlayerFrame3412UpperTiles
 	.global	gPlayerFrame3413
 gPlayerFrame3413:
 	.word	gPlayerFrame3413OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame56Tiles
-	.word	gUnk_0812A93C
-	.word	gUnk_08134906
+	.word	gPlayerFrame3404NextBankPalette
+	.word	gPlayerFrame3413UpperTiles
 	.global	gPlayerFrame3414
 gPlayerFrame3414:
 	.word	gPlayerFrame3414OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame56Tiles
-	.word	gUnk_0812A93C
-	.word	gUnk_08134A0C
+	.word	gPlayerFrame3404NextBankPalette
+	.word	gPlayerFrame3414UpperTiles
 	.global	gPlayerFrame3415
 gPlayerFrame3415:
 	.word	gPlayerFrame3415OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame939Tiles
-	.word	gUnk_0812A93C
-	.word	gUnk_08134B32
+	.word	gPlayerFrame3404NextBankPalette
+	.word	gPlayerFrame3415UpperTiles
 	.global	gPlayerFrame3416
 gPlayerFrame3416:
 	.word	gPlayerFrame3416OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame940Tiles
-	.word	gUnk_0812A93C
-	.word	gUnk_08134C58
+	.word	gPlayerFrame3404NextBankPalette
+	.word	gPlayerFrame3416UpperTiles
 	.global	gPlayerFrame3417
 gPlayerFrame3417:
 	.word	gPlayerFrame3417OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame941Tiles
-	.word	gUnk_0812A93C
-	.word	gUnk_08134D7E
+	.word	gPlayerFrame3404NextBankPalette
+	.word	gPlayerFrame3417UpperTiles
 	.global	gPlayerFrame3418
 gPlayerFrame3418:
 	.word	gPlayerFrame3418OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame942Tiles
-	.word	gUnk_0812A93C
-	.word	gUnk_08134E44
+	.word	gPlayerFrame3404NextBankPalette
+	.word	gPlayerFrame3418UpperTiles
 	.global	gPlayerFrame3419
 gPlayerFrame3419:
 	.word	gPlayerFrame3419OamTemplate+1
 	.word	gPlayerFrame933Palette
 	.word	gPlayerFrame943Tiles
-	.word	gUnk_0812A93C
-	.word	gUnk_08134F2A
+	.word	gPlayerFrame3404NextBankPalette
+	.word	gPlayerFrame3419UpperTiles
 	.global	gUnk_0876022C
 gUnk_0876022C:
 	.word	gUnk_08137E1A+1
@@ -8909,386 +8909,386 @@ gPlayerFrame1056:
 	.word	gPlayerFrame1056OamTemplate+1
 	.word	gPlayerFrame1056Palette
 	.word	gPlayerFrame1056Tiles
-	.word	gUnk_08137F9E
-	.word	gUnk_081381D0
+	.word	gPlayerFrame1056NextBankPalette
+	.word	gPlayerFrame1056UpperTiles
 	.global	gPlayerFrame1057
 gPlayerFrame1057:
 	.word	gPlayerFrame1057OamTemplate+1
 	.word	gPlayerFrame1056Palette
 	.word	gPlayerFrame1057Tiles
-	.word	gUnk_08137F9E
-	.word	gUnk_081384FC
+	.word	gPlayerFrame1056NextBankPalette
+	.word	gPlayerFrame1057UpperTiles
 	.global	gPlayerFrame1058
 gPlayerFrame1058:
 	.word	gPlayerFrame1058OamTemplate+1
 	.word	gPlayerFrame1056Palette
 	.word	gPlayerFrame1058Tiles
-	.word	gUnk_08137F9E
-	.word	gUnk_08138828
+	.word	gPlayerFrame1056NextBankPalette
+	.word	gPlayerFrame1058UpperTiles
 	.global	gPlayerFrame1059
 gPlayerFrame1059:
 	.word	gPlayerFrame1059OamTemplate+1
 	.word	gPlayerFrame1056Palette
 	.word	gPlayerFrame1059Tiles
-	.word	gUnk_08137F9E
-	.word	gUnk_08138B14
+	.word	gPlayerFrame1056NextBankPalette
+	.word	gPlayerFrame1059UpperTiles
 	.global	gPlayerFrame1060
 gPlayerFrame1060:
 	.word	gPlayerFrame1060OamTemplate+1
 	.word	gPlayerFrame1056Palette
 	.word	gPlayerFrame1060Tiles
-	.word	gUnk_08137F9E
-	.word	gUnk_08138B14
+	.word	gPlayerFrame1056NextBankPalette
+	.word	gPlayerFrame1059UpperTiles
 	.global	gPlayerFrame1061
 gPlayerFrame1061:
 	.word	gPlayerFrame1061OamTemplate+1
 	.word	gPlayerFrame1056Palette
 	.word	gPlayerFrame1061Tiles
-	.word	gUnk_08137F9E
-	.word	gUnk_08138F66
+	.word	gPlayerFrame1056NextBankPalette
+	.word	gPlayerFrame1061UpperTiles
 	.global	gPlayerFrame1062
 gPlayerFrame1062:
 	.word	gPlayerFrame1062OamTemplate+1
 	.word	gPlayerFrame1056Palette
 	.word	gPlayerFrame1062Tiles
-	.word	gUnk_08137F9E
-	.word	gUnk_08139252
+	.word	gPlayerFrame1056NextBankPalette
+	.word	gPlayerFrame1062UpperTiles
 	.global	gPlayerFrame1063
 gPlayerFrame1063:
 	.word	gPlayerFrame1063OamTemplate+1
 	.word	gPlayerFrame1056Palette
 	.word	gPlayerFrame1063Tiles
-	.word	gUnk_08137F9E
-	.word	gUnk_0813949E
+	.word	gPlayerFrame1056NextBankPalette
+	.word	gPlayerFrame1063UpperTiles
 	.global	gPlayerFrame1064
 gPlayerFrame1064:
 	.word	gPlayerFrame1064OamTemplate+1
 	.word	gPlayerFrame1056Palette
 	.word	gPlayerFrame1064Tiles
-	.word	gUnk_08137F9E
-	.word	gUnk_0813976A
+	.word	gPlayerFrame1056NextBankPalette
+	.word	gPlayerFrame1064UpperTiles
 	.global	gPlayerFrame1065
 gPlayerFrame1065:
 	.word	gPlayerFrame1065OamTemplate+1
 	.word	gPlayerFrame1056Palette
 	.word	gPlayerFrame1065Tiles
-	.word	gUnk_08137F9E
-	.word	gUnk_081399F6
+	.word	gPlayerFrame1056NextBankPalette
+	.word	gPlayerFrame1065UpperTiles
 	.global	gPlayerFrame1066
 gPlayerFrame1066:
 	.word	gPlayerFrame1066OamTemplate+1
 	.word	gPlayerFrame1056Palette
 	.word	gPlayerFrame1066Tiles
-	.word	gUnk_08137F9E
-	.word	gUnk_08139C42
+	.word	gPlayerFrame1056NextBankPalette
+	.word	gPlayerFrame1066UpperTiles
 	.global	gPlayerFrame1858
 gPlayerFrame1858:
 	.word	gPlayerFrame1858OamTemplate+1
 	.word	gPlayerFrame1858Palette
 	.word	gPlayerFrame1858Tiles
-	.word	gUnk_08137FE2
-	.word	gUnk_08139EEE
+	.word	gPlayerFrame1858NextBankPalette
+	.word	gPlayerFrame1858UpperTiles
 	.global	gPlayerFrame1859
 gPlayerFrame1859:
 	.word	gPlayerFrame1859OamTemplate+1
 	.word	gPlayerFrame1858Palette
 	.word	gPlayerFrame1859Tiles
-	.word	gUnk_08137FE2
-	.word	gUnk_08139EEE
+	.word	gPlayerFrame1858NextBankPalette
+	.word	gPlayerFrame1858UpperTiles
 	.global	gPlayerFrame1860
 gPlayerFrame1860:
 	.word	gPlayerFrame1860OamTemplate+1
 	.word	gPlayerFrame1858Palette
 	.word	gPlayerFrame1860Tiles
-	.word	gUnk_08137FE2
-	.word	gUnk_08139EEE
+	.word	gPlayerFrame1858NextBankPalette
+	.word	gPlayerFrame1858UpperTiles
 	.global	gPlayerFrame1861
 gPlayerFrame1861:
 	.word	gPlayerFrame1861OamTemplate+1
 	.word	gPlayerFrame1858Palette
 	.word	gPlayerFrame1861Tiles
-	.word	gUnk_08137FE2
-	.word	gUnk_08139EEE
+	.word	gPlayerFrame1858NextBankPalette
+	.word	gPlayerFrame1858UpperTiles
 	.global	gPlayerFrame1862
 gPlayerFrame1862:
 	.word	gPlayerFrame1862OamTemplate+1
 	.word	gPlayerFrame1858Palette
 	.word	gPlayerFrame1862Tiles
-	.word	gUnk_08137FE2
-	.word	gUnk_08139EEE
+	.word	gPlayerFrame1858NextBankPalette
+	.word	gPlayerFrame1858UpperTiles
 	.global	gPlayerFrame1863
 gPlayerFrame1863:
 	.word	gPlayerFrame1863OamTemplate+1
 	.word	gPlayerFrame1858Palette
 	.word	gPlayerFrame1863Tiles
-	.word	gUnk_08137FE2
-	.word	gUnk_08139EEE
+	.word	gPlayerFrame1858NextBankPalette
+	.word	gPlayerFrame1858UpperTiles
 	.global	gPlayerFrame1864
 gPlayerFrame1864:
 	.word	gPlayerFrame1864OamTemplate+1
 	.word	gPlayerFrame1858Palette
 	.word	gPlayerFrame1864Tiles
-	.word	gUnk_08137FE2
-	.word	gUnk_08139EEE
+	.word	gPlayerFrame1858NextBankPalette
+	.word	gPlayerFrame1858UpperTiles
 	.global	gPlayerFrame1865
 gPlayerFrame1865:
 	.word	gPlayerFrame1865OamTemplate+1
 	.word	gPlayerFrame1858Palette
 	.word	gPlayerFrame1865Tiles
-	.word	gUnk_08137FE2
-	.word	gUnk_08139EEE
+	.word	gPlayerFrame1858NextBankPalette
+	.word	gPlayerFrame1858UpperTiles
 	.global	gPlayerFrame1866
 gPlayerFrame1866:
 	.word	gPlayerFrame1866OamTemplate+1
 	.word	gPlayerFrame1858Palette
 	.word	gPlayerFrame1866Tiles
-	.word	gUnk_08137FE2
-	.word	gUnk_08139EEE
+	.word	gPlayerFrame1858NextBankPalette
+	.word	gPlayerFrame1858UpperTiles
 	.global	gPlayerFrame1867
 gPlayerFrame1867:
 	.word	gPlayerFrame1867OamTemplate+1
 	.word	gPlayerFrame1858Palette
 	.word	gPlayerFrame1867Tiles
-	.word	gUnk_08137FE2
-	.word	gUnk_08139EEE
+	.word	gPlayerFrame1858NextBankPalette
+	.word	gPlayerFrame1858UpperTiles
 	.global	gPlayerFrame1868
 gPlayerFrame1868:
 	.word	gPlayerFrame1868OamTemplate+1
 	.word	gPlayerFrame1858Palette
 	.word	gPlayerFrame1066Tiles
-	.word	gUnk_08137FE2
-	.word	gUnk_08139EEE
+	.word	gPlayerFrame1858NextBankPalette
+	.word	gPlayerFrame1858UpperTiles
 	.global	gPlayerFrame2115
 gPlayerFrame2115:
 	.word	gPlayerFrame2115OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1056Tiles
-	.word	gUnk_08138026
-	.word	gUnk_0813AA8A
+	.word	gPlayerFrame2115NextBankPalette
+	.word	gPlayerFrame2115UpperTiles
 	.global	gPlayerFrame2116
 gPlayerFrame2116:
 	.word	gPlayerFrame2116OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1057Tiles
-	.word	gUnk_08138026
-	.word	gUnk_0813AA8A
+	.word	gPlayerFrame2115NextBankPalette
+	.word	gPlayerFrame2115UpperTiles
 	.global	gPlayerFrame2117
 gPlayerFrame2117:
 	.word	gPlayerFrame2117OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1058Tiles
-	.word	gUnk_08138026
-	.word	gUnk_0813AA8A
+	.word	gPlayerFrame2115NextBankPalette
+	.word	gPlayerFrame2115UpperTiles
 	.global	gPlayerFrame2118
 gPlayerFrame2118:
 	.word	gPlayerFrame2118OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1059Tiles
-	.word	gUnk_08138026
-	.word	gUnk_0813AA8A
+	.word	gPlayerFrame2115NextBankPalette
+	.word	gPlayerFrame2115UpperTiles
 	.global	gPlayerFrame2119
 gPlayerFrame2119:
 	.word	gPlayerFrame2119OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1060Tiles
-	.word	gUnk_08138026
-	.word	gUnk_0813AA8A
+	.word	gPlayerFrame2115NextBankPalette
+	.word	gPlayerFrame2115UpperTiles
 	.global	gPlayerFrame2120
 gPlayerFrame2120:
 	.word	gPlayerFrame2120OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1061Tiles
-	.word	gUnk_08138026
-	.word	gUnk_0813AA8A
+	.word	gPlayerFrame2115NextBankPalette
+	.word	gPlayerFrame2115UpperTiles
 	.global	gPlayerFrame2121
 gPlayerFrame2121:
 	.word	gPlayerFrame2121OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1062Tiles
-	.word	gUnk_08138026
-	.word	gUnk_0813AA8A
+	.word	gPlayerFrame2115NextBankPalette
+	.word	gPlayerFrame2115UpperTiles
 	.global	gPlayerFrame2122
 gPlayerFrame2122:
 	.word	gPlayerFrame2122OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1063Tiles
-	.word	gUnk_08138026
-	.word	gUnk_0813AA8A
+	.word	gPlayerFrame2115NextBankPalette
+	.word	gPlayerFrame2115UpperTiles
 	.global	gPlayerFrame2123
 gPlayerFrame2123:
 	.word	gPlayerFrame2123OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1064Tiles
-	.word	gUnk_08138026
-	.word	gUnk_0813ABB0
+	.word	gPlayerFrame2115NextBankPalette
+	.word	gPlayerFrame2123UpperTiles
 	.global	gPlayerFrame2124
 gPlayerFrame2124:
 	.word	gPlayerFrame2124OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1065Tiles
-	.word	gUnk_08138026
-	.word	gUnk_0813ACD6
+	.word	gPlayerFrame2115NextBankPalette
+	.word	gPlayerFrame2124UpperTiles
 	.global	gPlayerFrame2125
 gPlayerFrame2125:
 	.word	gPlayerFrame2125OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1066Tiles
-	.word	gUnk_08138026
-	.word	gUnk_0813ACD6
+	.word	gPlayerFrame2115NextBankPalette
+	.word	gPlayerFrame2124UpperTiles
 	.global	gPlayerFrame4114
 gPlayerFrame4114:
 	.word	gPlayerFrame4114OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1056Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813ADFC
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4114UpperTiles
 	.global	gPlayerFrame4245
 gPlayerFrame4245:
 	.word	gPlayerFrame4245OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1056Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813AEC2
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4245UpperTiles
 	.global	gPlayerFrame4115
 gPlayerFrame4115:
 	.word	gPlayerFrame4115OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1057Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813ADFC
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4114UpperTiles
 	.global	gPlayerFrame4246
 gPlayerFrame4246:
 	.word	gPlayerFrame4246OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1057Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813AEC2
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4245UpperTiles
 	.global	gPlayerFrame4116
 gPlayerFrame4116:
 	.word	gPlayerFrame4116OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1058Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813ADFC
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4114UpperTiles
 	.global	gPlayerFrame4247
 gPlayerFrame4247:
 	.word	gPlayerFrame4247OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1058Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813AEC2
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4245UpperTiles
 	.global	gPlayerFrame4117
 gPlayerFrame4117:
 	.word	gPlayerFrame4117OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1059Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813ADFC
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4114UpperTiles
 	.global	gPlayerFrame4248
 gPlayerFrame4248:
 	.word	gPlayerFrame4248OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1059Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813AEC2
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4245UpperTiles
 	.global	gPlayerFrame4118
 gPlayerFrame4118:
 	.word	gPlayerFrame4118OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1060Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813ADFC
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4114UpperTiles
 	.global	gPlayerFrame4249
 gPlayerFrame4249:
 	.word	gPlayerFrame4249OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1060Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813AEC2
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4245UpperTiles
 	.global	gPlayerFrame4119
 gPlayerFrame4119:
 	.word	gPlayerFrame4119OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1061Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813ADFC
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4114UpperTiles
 	.global	gPlayerFrame4250
 gPlayerFrame4250:
 	.word	gPlayerFrame4250OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1061Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813AEC2
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4245UpperTiles
 	.global	gPlayerFrame4120
 gPlayerFrame4120:
 	.word	gPlayerFrame4120OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1062Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813B008
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4120UpperTiles
 	.global	gPlayerFrame4251
 gPlayerFrame4251:
 	.word	gPlayerFrame4251OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1062Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813B0AE
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4251UpperTiles
 	.global	gPlayerFrame4121
 gPlayerFrame4121:
 	.word	gPlayerFrame4121OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1063Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813ADFC
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4114UpperTiles
 	.global	gPlayerFrame4252
 gPlayerFrame4252:
 	.word	gPlayerFrame4252OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1063Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813AEC2
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4245UpperTiles
 	.global	gPlayerFrame4122
 gPlayerFrame4122:
 	.word	gPlayerFrame4122OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1064Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813ADFC
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4114UpperTiles
 	.global	gPlayerFrame4253
 gPlayerFrame4253:
 	.word	gPlayerFrame4253OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1064Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813AEC2
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4245UpperTiles
 	.global	gPlayerFrame4123
 gPlayerFrame4123:
 	.word	gPlayerFrame4123OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1065Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813B008
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4120UpperTiles
 	.global	gPlayerFrame4254
 gPlayerFrame4254:
 	.word	gPlayerFrame4254OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1065Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813B0AE
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4251UpperTiles
 	.global	gPlayerFrame4124
 gPlayerFrame4124:
 	.word	gPlayerFrame4124OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1066Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813B1D4
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4124UpperTiles
 	.global	gPlayerFrame4255
 gPlayerFrame4255:
 	.word	gPlayerFrame4255OamTemplate+1
 	.word	gPlayerFrame2115Palette
 	.word	gPlayerFrame1066Tiles
-	.word	gUnk_08138048
-	.word	gUnk_0813B25A
+	.word	gPlayerFrame4114NextBankPalette
+	.word	gPlayerFrame4255UpperTiles
 	.global	gPlayerFrame84
 gPlayerFrame84:
 	.word	gPlayerFrame84OamTemplate+1
@@ -9736,1184 +9736,1184 @@ gPlayerFrame944:
 	.word	gPlayerFrame944OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813BFA6
-	.word	gUnk_0813CF70
+	.word	gPlayerFrame944NextBankPalette
+	.word	gPlayerFrame944UpperTiles
 	.global	gPlayerFrame945
 gPlayerFrame945:
 	.word	gPlayerFrame945OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813BFA6
-	.word	gUnk_0813D096
+	.word	gPlayerFrame944NextBankPalette
+	.word	gPlayerFrame945UpperTiles
 	.global	gPlayerFrame946
 gPlayerFrame946:
 	.word	gPlayerFrame946OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813BFA6
-	.word	gUnk_0813D1BC
+	.word	gPlayerFrame944NextBankPalette
+	.word	gPlayerFrame946UpperTiles
 	.global	gPlayerFrame947
 gPlayerFrame947:
 	.word	gPlayerFrame947OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813BFA6
-	.word	gUnk_0813CF70
+	.word	gPlayerFrame944NextBankPalette
+	.word	gPlayerFrame944UpperTiles
 	.global	gPlayerFrame948
 gPlayerFrame948:
 	.word	gPlayerFrame948OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813BFA6
-	.word	gUnk_0813D2A2
+	.word	gPlayerFrame944NextBankPalette
+	.word	gPlayerFrame948UpperTiles
 	.global	gPlayerFrame949
 gPlayerFrame949:
 	.word	gPlayerFrame949OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813BFA6
-	.word	gUnk_0813CF70
+	.word	gPlayerFrame944NextBankPalette
+	.word	gPlayerFrame944UpperTiles
 	.global	gPlayerFrame950
 gPlayerFrame950:
 	.word	gPlayerFrame950OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813BFA6
-	.word	gUnk_0813D096
+	.word	gPlayerFrame944NextBankPalette
+	.word	gPlayerFrame945UpperTiles
 	.global	gPlayerFrame951
 gPlayerFrame951:
 	.word	gPlayerFrame951OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813BFA6
-	.word	gUnk_0813D1BC
+	.word	gPlayerFrame944NextBankPalette
+	.word	gPlayerFrame946UpperTiles
 	.global	gPlayerFrame952
 gPlayerFrame952:
 	.word	gPlayerFrame952OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813BFA6
-	.word	gUnk_0813CF70
+	.word	gPlayerFrame944NextBankPalette
+	.word	gPlayerFrame944UpperTiles
 	.global	gPlayerFrame953
 gPlayerFrame953:
 	.word	gPlayerFrame953OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813BFA6
-	.word	gUnk_0813D2A2
+	.word	gPlayerFrame944NextBankPalette
+	.word	gPlayerFrame948UpperTiles
 	.global	gPlayerFrame954
 gPlayerFrame954:
 	.word	gPlayerFrame954OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame94Tiles
-	.word	gUnk_0813BFA6
-	.word	gUnk_0813D3C8
+	.word	gPlayerFrame944NextBankPalette
+	.word	gPlayerFrame954UpperTiles
 	.global	gPlayerFrame955
 gPlayerFrame955:
 	.word	gPlayerFrame955OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813BFA6
-	.word	gUnk_0813D4AE
+	.word	gPlayerFrame944NextBankPalette
+	.word	gPlayerFrame955UpperTiles
 	.global	gPlayerFrame956
 gPlayerFrame956:
 	.word	gPlayerFrame956OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame96Tiles
-	.word	gUnk_0813BFA6
-	.word	gUnk_0813D594
+	.word	gPlayerFrame944NextBankPalette
+	.word	gPlayerFrame956UpperTiles
 	.global	gPlayerFrame1376
 gPlayerFrame1376:
 	.word	gPlayerFrame1376OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813D6BA
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1376UpperTiles
 	.global	gPlayerFrame1377
 gPlayerFrame1377:
 	.word	gPlayerFrame1377OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813D6BA
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1376UpperTiles
 	.global	gPlayerFrame1378
 gPlayerFrame1378:
 	.word	gPlayerFrame1378OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813D840
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1378UpperTiles
 	.global	gPlayerFrame1379
 gPlayerFrame1379:
 	.word	gPlayerFrame1379OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813D840
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1378UpperTiles
 	.global	gPlayerFrame1380
 gPlayerFrame1380:
 	.word	gPlayerFrame1380OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813D9C6
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1380UpperTiles
 	.global	gPlayerFrame1381
 gPlayerFrame1381:
 	.word	gPlayerFrame1381OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813D9C6
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1380UpperTiles
 	.global	gPlayerFrame1382
 gPlayerFrame1382:
 	.word	gPlayerFrame1382OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813DB4C
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1382UpperTiles
 	.global	gPlayerFrame1383
 gPlayerFrame1383:
 	.word	gPlayerFrame1383OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813DB4C
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1382UpperTiles
 	.global	gPlayerFrame1384
 gPlayerFrame1384:
 	.word	gPlayerFrame1384OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813DCD2
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1384UpperTiles
 	.global	gPlayerFrame1385
 gPlayerFrame1385:
 	.word	gPlayerFrame1385OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813DCD2
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1384UpperTiles
 	.global	gPlayerFrame1386
 gPlayerFrame1386:
 	.word	gPlayerFrame1386OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame1386Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813DF7E
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1386UpperTiles
 	.global	gPlayerFrame1387
 gPlayerFrame1387:
 	.word	gPlayerFrame1387OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813E104
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1387UpperTiles
 	.global	gPlayerFrame1388
 gPlayerFrame1388:
 	.word	gPlayerFrame1388OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame96Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813E28A
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1388UpperTiles
 	.global	gPlayerFrame1389
 gPlayerFrame1389:
 	.word	gPlayerFrame1389OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813E410
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1389UpperTiles
 	.global	gPlayerFrame1390
 gPlayerFrame1390:
 	.word	gPlayerFrame1390OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813E410
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1389UpperTiles
 	.global	gPlayerFrame1391
 gPlayerFrame1391:
 	.word	gPlayerFrame1391OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813E596
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1391UpperTiles
 	.global	gPlayerFrame1392
 gPlayerFrame1392:
 	.word	gPlayerFrame1392OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813E596
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1391UpperTiles
 	.global	gPlayerFrame1393
 gPlayerFrame1393:
 	.word	gPlayerFrame1393OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813E71C
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1393UpperTiles
 	.global	gPlayerFrame1394
 gPlayerFrame1394:
 	.word	gPlayerFrame1394OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813E71C
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1393UpperTiles
 	.global	gPlayerFrame1395
 gPlayerFrame1395:
 	.word	gPlayerFrame1395OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813E8A2
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1395UpperTiles
 	.global	gPlayerFrame1396
 gPlayerFrame1396:
 	.word	gPlayerFrame1396OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813E8A2
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1395UpperTiles
 	.global	gPlayerFrame1397
 gPlayerFrame1397:
 	.word	gPlayerFrame1397OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813EA28
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1397UpperTiles
 	.global	gPlayerFrame1398
 gPlayerFrame1398:
 	.word	gPlayerFrame1398OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813EA28
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1397UpperTiles
 	.global	gPlayerFrame1399
 gPlayerFrame1399:
 	.word	gPlayerFrame1399OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame1386Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813EBAE
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1399UpperTiles
 	.global	gPlayerFrame1400
 gPlayerFrame1400:
 	.word	gPlayerFrame1400OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813E28A
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1388UpperTiles
 	.global	gPlayerFrame1401
 gPlayerFrame1401:
 	.word	gPlayerFrame1401OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame96Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813DF7E
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1386UpperTiles
 	.global	gPlayerFrame1402
 gPlayerFrame1402:
 	.word	gPlayerFrame1402OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813ED34
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1402UpperTiles
 	.global	gPlayerFrame1403
 gPlayerFrame1403:
 	.word	gPlayerFrame1403OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813ED34
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1402UpperTiles
 	.global	gPlayerFrame1404
 gPlayerFrame1404:
 	.word	gPlayerFrame1404OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813EEBA
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1404UpperTiles
 	.global	gPlayerFrame1405
 gPlayerFrame1405:
 	.word	gPlayerFrame1405OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813EEBA
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1404UpperTiles
 	.global	gPlayerFrame1406
 gPlayerFrame1406:
 	.word	gPlayerFrame1406OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813F040
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1406UpperTiles
 	.global	gPlayerFrame1407
 gPlayerFrame1407:
 	.word	gPlayerFrame1407OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813F040
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1406UpperTiles
 	.global	gPlayerFrame1408
 gPlayerFrame1408:
 	.word	gPlayerFrame1408OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813F1C6
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1408UpperTiles
 	.global	gPlayerFrame1409
 gPlayerFrame1409:
 	.word	gPlayerFrame1409OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813F1C6
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1408UpperTiles
 	.global	gPlayerFrame1410
 gPlayerFrame1410:
 	.word	gPlayerFrame1410OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813F34C
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1410UpperTiles
 	.global	gPlayerFrame1411
 gPlayerFrame1411:
 	.word	gPlayerFrame1411OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813F34C
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1410UpperTiles
 	.global	gPlayerFrame1412
 gPlayerFrame1412:
 	.word	gPlayerFrame1412OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame1386Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813E104
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1387UpperTiles
 	.global	gPlayerFrame1413
 gPlayerFrame1413:
 	.word	gPlayerFrame1413OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813DF7E
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1386UpperTiles
 	.global	gPlayerFrame1414
 gPlayerFrame1414:
 	.word	gPlayerFrame1414OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame96Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813EBAE
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1399UpperTiles
 	.global	gPlayerFrame1415
 gPlayerFrame1415:
 	.word	gPlayerFrame1415OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813F4D2
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1415UpperTiles
 	.global	gPlayerFrame1416
 gPlayerFrame1416:
 	.word	gPlayerFrame1416OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813F4D2
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1415UpperTiles
 	.global	gPlayerFrame1417
 gPlayerFrame1417:
 	.word	gPlayerFrame1417OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813F658
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1417UpperTiles
 	.global	gPlayerFrame1418
 gPlayerFrame1418:
 	.word	gPlayerFrame1418OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813F658
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1417UpperTiles
 	.global	gPlayerFrame1419
 gPlayerFrame1419:
 	.word	gPlayerFrame1419OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813F7DE
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1419UpperTiles
 	.global	gPlayerFrame1420
 gPlayerFrame1420:
 	.word	gPlayerFrame1420OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813F7DE
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1419UpperTiles
 	.global	gPlayerFrame1421
 gPlayerFrame1421:
 	.word	gPlayerFrame1421OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813F964
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1421UpperTiles
 	.global	gPlayerFrame1422
 gPlayerFrame1422:
 	.word	gPlayerFrame1422OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813F964
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1421UpperTiles
 	.global	gPlayerFrame1423
 gPlayerFrame1423:
 	.word	gPlayerFrame1423OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813FAEA
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1423UpperTiles
 	.global	gPlayerFrame1424
 gPlayerFrame1424:
 	.word	gPlayerFrame1424OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813FAEA
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1423UpperTiles
 	.global	gPlayerFrame1425
 gPlayerFrame1425:
 	.word	gPlayerFrame1425OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame1386Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813E28A
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1388UpperTiles
 	.global	gPlayerFrame1426
 gPlayerFrame1426:
 	.word	gPlayerFrame1426OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813EBAE
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1399UpperTiles
 	.global	gPlayerFrame1427
 gPlayerFrame1427:
 	.word	gPlayerFrame1427OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame96Tiles
-	.word	gUnk_0813BFC8
-	.word	gUnk_0813E104
+	.word	gPlayerFrame1376NextBankPalette
+	.word	gPlayerFrame1387UpperTiles
 	.global	gPlayerFrame1567
 gPlayerFrame1567:
 	.word	gPlayerFrame1567OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813BFEA
-	.word	gUnk_0813FC70
+	.word	gPlayerFrame1567NextBankPalette
+	.word	gPlayerFrame1567UpperTiles
 	.global	gPlayerFrame1568
 gPlayerFrame1568:
 	.word	gPlayerFrame1568OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813BFEA
-	.word	gUnk_0813FCF6
+	.word	gPlayerFrame1567NextBankPalette
+	.word	gPlayerFrame1568UpperTiles
 	.global	gPlayerFrame1569
 gPlayerFrame1569:
 	.word	gPlayerFrame1569OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813BFEA
-	.word	gUnk_0813FD7C
+	.word	gPlayerFrame1567NextBankPalette
+	.word	gPlayerFrame1569UpperTiles
 	.global	gPlayerFrame1570
 gPlayerFrame1570:
 	.word	gPlayerFrame1570OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813BFEA
-	.word	gUnk_0813FE02
+	.word	gPlayerFrame1567NextBankPalette
+	.word	gPlayerFrame1570UpperTiles
 	.global	gPlayerFrame1571
 gPlayerFrame1571:
 	.word	gPlayerFrame1571OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813BFEA
-	.word	gUnk_0813FE88
+	.word	gPlayerFrame1567NextBankPalette
+	.word	gPlayerFrame1571UpperTiles
 	.global	gPlayerFrame1572
 gPlayerFrame1572:
 	.word	gPlayerFrame1572OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813BFEA
-	.word	gUnk_0813FF0E
+	.word	gPlayerFrame1567NextBankPalette
+	.word	gPlayerFrame1572UpperTiles
 	.global	gPlayerFrame1573
 gPlayerFrame1573:
 	.word	gPlayerFrame1573OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813BFEA
-	.word	gUnk_0813FF94
+	.word	gPlayerFrame1567NextBankPalette
+	.word	gPlayerFrame1573UpperTiles
 	.global	gPlayerFrame1574
 gPlayerFrame1574:
 	.word	gPlayerFrame1574OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813BFEA
-	.word	gUnk_0814001A
+	.word	gPlayerFrame1567NextBankPalette
+	.word	gPlayerFrame1574UpperTiles
 	.global	gPlayerFrame1575
 gPlayerFrame1575:
 	.word	gPlayerFrame1575OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813BFEA
-	.word	gUnk_081400A0
+	.word	gPlayerFrame1567NextBankPalette
+	.word	gPlayerFrame1575UpperTiles
 	.global	gPlayerFrame1576
 gPlayerFrame1576:
 	.word	gPlayerFrame1576OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813BFEA
-	.word	gUnk_08140126
+	.word	gPlayerFrame1567NextBankPalette
+	.word	gPlayerFrame1576UpperTiles
 	.global	gPlayerFrame1577
 gPlayerFrame1577:
 	.word	gPlayerFrame1577OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame94Tiles
-	.word	gUnk_0813BFEA
-	.word	gUnk_081401AC
+	.word	gPlayerFrame1567NextBankPalette
+	.word	gPlayerFrame1577UpperTiles
 	.global	gPlayerFrame1578
 gPlayerFrame1578:
 	.word	gPlayerFrame1578OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813BFEA
-	.word	gUnk_08140232
+	.word	gPlayerFrame1567NextBankPalette
+	.word	gPlayerFrame1578UpperTiles
 	.global	gPlayerFrame1579
 gPlayerFrame1579:
 	.word	gPlayerFrame1579OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame96Tiles
-	.word	gUnk_0813BFEA
-	.word	gUnk_081402B8
+	.word	gPlayerFrame1567NextBankPalette
+	.word	gPlayerFrame1579UpperTiles
 	.global	gPlayerFrame1736
 gPlayerFrame1736:
 	.word	gPlayerFrame1736OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C00C
-	.word	gUnk_0814033E
+	.word	gPlayerFrame1736NextBankPalette
+	.word	gPlayerFrame1736UpperTiles
 	.global	gPlayerFrame1737
 gPlayerFrame1737:
 	.word	gPlayerFrame1737OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C00C
-	.word	gUnk_08140444
+	.word	gPlayerFrame1736NextBankPalette
+	.word	gPlayerFrame1737UpperTiles
 	.global	gPlayerFrame1738
 gPlayerFrame1738:
 	.word	gPlayerFrame1738OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C00C
-	.word	gUnk_0814050A
+	.word	gPlayerFrame1736NextBankPalette
+	.word	gPlayerFrame1738UpperTiles
 	.global	gPlayerFrame1739
 gPlayerFrame1739:
 	.word	gPlayerFrame1739OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C00C
-	.word	gUnk_08140444
+	.word	gPlayerFrame1736NextBankPalette
+	.word	gPlayerFrame1737UpperTiles
 	.global	gPlayerFrame1740
 gPlayerFrame1740:
 	.word	gPlayerFrame1740OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C00C
-	.word	gUnk_081405D0
+	.word	gPlayerFrame1736NextBankPalette
+	.word	gPlayerFrame1740UpperTiles
 	.global	gPlayerFrame1741
 gPlayerFrame1741:
 	.word	gPlayerFrame1741OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C00C
-	.word	gUnk_0814033E
+	.word	gPlayerFrame1736NextBankPalette
+	.word	gPlayerFrame1736UpperTiles
 	.global	gPlayerFrame1742
 gPlayerFrame1742:
 	.word	gPlayerFrame1742OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C00C
-	.word	gUnk_08140444
+	.word	gPlayerFrame1736NextBankPalette
+	.word	gPlayerFrame1737UpperTiles
 	.global	gPlayerFrame1743
 gPlayerFrame1743:
 	.word	gPlayerFrame1743OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C00C
-	.word	gUnk_0814050A
+	.word	gPlayerFrame1736NextBankPalette
+	.word	gPlayerFrame1738UpperTiles
 	.global	gPlayerFrame1744
 gPlayerFrame1744:
 	.word	gPlayerFrame1744OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C00C
-	.word	gUnk_08140444
+	.word	gPlayerFrame1736NextBankPalette
+	.word	gPlayerFrame1737UpperTiles
 	.global	gPlayerFrame1745
 gPlayerFrame1745:
 	.word	gPlayerFrame1745OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C00C
-	.word	gUnk_081405D0
+	.word	gPlayerFrame1736NextBankPalette
+	.word	gPlayerFrame1740UpperTiles
 	.global	gPlayerFrame1746
 gPlayerFrame1746:
 	.word	gPlayerFrame1746OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame94Tiles
-	.word	gUnk_0813C00C
-	.word	gUnk_081406D6
+	.word	gPlayerFrame1736NextBankPalette
+	.word	gPlayerFrame1746UpperTiles
 	.global	gPlayerFrame1747
 gPlayerFrame1747:
 	.word	gPlayerFrame1747OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813C00C
-	.word	gUnk_0814079C
+	.word	gPlayerFrame1736NextBankPalette
+	.word	gPlayerFrame1747UpperTiles
 	.global	gPlayerFrame1748
 gPlayerFrame1748:
 	.word	gPlayerFrame1748OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame1748Tiles
-	.word	gUnk_0813C00C
-	.word	gUnk_0814050A
+	.word	gPlayerFrame1736NextBankPalette
+	.word	gPlayerFrame1738UpperTiles
 	.global	gPlayerFrame2357
 gPlayerFrame2357:
 	.word	gPlayerFrame2357OamTemplate+1
 	.word	gPlayerFrame2357Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C050
-	.word	gUnk_08140928
+	.word	gPlayerFrame2357NextBankPalette
+	.word	gPlayerFrame2357UpperTiles
 	.global	gPlayerFrame2358
 gPlayerFrame2358:
 	.word	gPlayerFrame2358OamTemplate+1
 	.word	gPlayerFrame2357Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C050
-	.word	gUnk_08140A4E
+	.word	gPlayerFrame2357NextBankPalette
+	.word	gPlayerFrame2358UpperTiles
 	.global	gPlayerFrame2359
 gPlayerFrame2359:
 	.word	gPlayerFrame2359OamTemplate+1
 	.word	gPlayerFrame2357Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C050
-	.word	gUnk_08140B74
+	.word	gPlayerFrame2357NextBankPalette
+	.word	gPlayerFrame2359UpperTiles
 	.global	gPlayerFrame2360
 gPlayerFrame2360:
 	.word	gPlayerFrame2360OamTemplate+1
 	.word	gPlayerFrame2357Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C050
-	.word	gUnk_08140A4E
+	.word	gPlayerFrame2357NextBankPalette
+	.word	gPlayerFrame2358UpperTiles
 	.global	gPlayerFrame2361
 gPlayerFrame2361:
 	.word	gPlayerFrame2361OamTemplate+1
 	.word	gPlayerFrame2357Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C050
-	.word	gUnk_08140C9A
+	.word	gPlayerFrame2357NextBankPalette
+	.word	gPlayerFrame2361UpperTiles
 	.global	gPlayerFrame2362
 gPlayerFrame2362:
 	.word	gPlayerFrame2362OamTemplate+1
 	.word	gPlayerFrame2357Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C050
-	.word	gUnk_08140928
+	.word	gPlayerFrame2357NextBankPalette
+	.word	gPlayerFrame2357UpperTiles
 	.global	gPlayerFrame2363
 gPlayerFrame2363:
 	.word	gPlayerFrame2363OamTemplate+1
 	.word	gPlayerFrame2357Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C050
-	.word	gUnk_08140A4E
+	.word	gPlayerFrame2357NextBankPalette
+	.word	gPlayerFrame2358UpperTiles
 	.global	gPlayerFrame2364
 gPlayerFrame2364:
 	.word	gPlayerFrame2364OamTemplate+1
 	.word	gPlayerFrame2357Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C050
-	.word	gUnk_08140B74
+	.word	gPlayerFrame2357NextBankPalette
+	.word	gPlayerFrame2359UpperTiles
 	.global	gPlayerFrame2365
 gPlayerFrame2365:
 	.word	gPlayerFrame2365OamTemplate+1
 	.word	gPlayerFrame2357Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C050
-	.word	gUnk_08140A4E
+	.word	gPlayerFrame2357NextBankPalette
+	.word	gPlayerFrame2358UpperTiles
 	.global	gPlayerFrame2366
 gPlayerFrame2366:
 	.word	gPlayerFrame2366OamTemplate+1
 	.word	gPlayerFrame2357Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C050
-	.word	gUnk_08140C9A
+	.word	gPlayerFrame2357NextBankPalette
+	.word	gPlayerFrame2361UpperTiles
 	.global	gPlayerFrame2367
 gPlayerFrame2367:
 	.word	gPlayerFrame2367OamTemplate+1
 	.word	gPlayerFrame2357Palette
 	.word	gPlayerFrame2367Tiles
-	.word	gUnk_0813C050
-	.word	gUnk_08140EC6
+	.word	gPlayerFrame2357NextBankPalette
+	.word	gPlayerFrame2367UpperTiles
 	.global	gPlayerFrame2368
 gPlayerFrame2368:
 	.word	gPlayerFrame2368OamTemplate+1
 	.word	gPlayerFrame2357Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813C050
-	.word	gUnk_08140FEC
+	.word	gPlayerFrame2357NextBankPalette
+	.word	gPlayerFrame2368UpperTiles
 	.global	gPlayerFrame2369
 gPlayerFrame2369:
 	.word	gPlayerFrame2369OamTemplate+1
 	.word	gPlayerFrame2357Palette
 	.word	gPlayerFrame96Tiles
-	.word	gUnk_0813C050
-	.word	gUnk_08141112
+	.word	gPlayerFrame2357NextBankPalette
+	.word	gPlayerFrame2369UpperTiles
 	.global	gPlayerFrame2497
 gPlayerFrame2497:
 	.word	gPlayerFrame2497OamTemplate+1
 	.word	gPlayerFrame2497Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C094
-	.word	gUnk_08141238
+	.word	gPlayerFrame2497NextBankPalette
+	.word	gPlayerFrame2497UpperTiles
 	.global	gPlayerFrame2498
 gPlayerFrame2498:
 	.word	gPlayerFrame2498OamTemplate+1
 	.word	gPlayerFrame2497Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C094
-	.word	gUnk_081412BE
+	.word	gPlayerFrame2497NextBankPalette
+	.word	gPlayerFrame2498UpperTiles
 	.global	gPlayerFrame2499
 gPlayerFrame2499:
 	.word	gPlayerFrame2499OamTemplate+1
 	.word	gPlayerFrame2497Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C094
-	.word	gUnk_08141384
+	.word	gPlayerFrame2497NextBankPalette
+	.word	gPlayerFrame2499UpperTiles
 	.global	gPlayerFrame2500
 gPlayerFrame2500:
 	.word	gPlayerFrame2500OamTemplate+1
 	.word	gPlayerFrame2497Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C094
-	.word	gUnk_081412BE
+	.word	gPlayerFrame2497NextBankPalette
+	.word	gPlayerFrame2498UpperTiles
 	.global	gPlayerFrame2501
 gPlayerFrame2501:
 	.word	gPlayerFrame2501OamTemplate+1
 	.word	gPlayerFrame2497Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C094
-	.word	gUnk_08141238
+	.word	gPlayerFrame2497NextBankPalette
+	.word	gPlayerFrame2497UpperTiles
 	.global	gPlayerFrame2502
 gPlayerFrame2502:
 	.word	gPlayerFrame2502OamTemplate+1
 	.word	gPlayerFrame2497Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C094
-	.word	gUnk_08141238
+	.word	gPlayerFrame2497NextBankPalette
+	.word	gPlayerFrame2497UpperTiles
 	.global	gPlayerFrame2503
 gPlayerFrame2503:
 	.word	gPlayerFrame2503OamTemplate+1
 	.word	gPlayerFrame2497Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C094
-	.word	gUnk_081412BE
+	.word	gPlayerFrame2497NextBankPalette
+	.word	gPlayerFrame2498UpperTiles
 	.global	gPlayerFrame2504
 gPlayerFrame2504:
 	.word	gPlayerFrame2504OamTemplate+1
 	.word	gPlayerFrame2497Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C094
-	.word	gUnk_08141384
+	.word	gPlayerFrame2497NextBankPalette
+	.word	gPlayerFrame2499UpperTiles
 	.global	gPlayerFrame2505
 gPlayerFrame2505:
 	.word	gPlayerFrame2505OamTemplate+1
 	.word	gPlayerFrame2497Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C094
-	.word	gUnk_081412BE
+	.word	gPlayerFrame2497NextBankPalette
+	.word	gPlayerFrame2498UpperTiles
 	.global	gPlayerFrame2506
 gPlayerFrame2506:
 	.word	gPlayerFrame2506OamTemplate+1
 	.word	gPlayerFrame2497Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C094
-	.word	gUnk_08141238
+	.word	gPlayerFrame2497NextBankPalette
+	.word	gPlayerFrame2497UpperTiles
 	.global	gPlayerFrame2507
 gPlayerFrame2507:
 	.word	gPlayerFrame2507OamTemplate+1
 	.word	gPlayerFrame2497Palette
 	.word	gPlayerFrame94Tiles
-	.word	gUnk_0813C094
-	.word	gUnk_0814144A
+	.word	gPlayerFrame2497NextBankPalette
+	.word	gPlayerFrame2507UpperTiles
 	.global	gPlayerFrame2508
 gPlayerFrame2508:
 	.word	gPlayerFrame2508OamTemplate+1
 	.word	gPlayerFrame2497Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813C094
-	.word	gUnk_08141570
+	.word	gPlayerFrame2497NextBankPalette
+	.word	gPlayerFrame2508UpperTiles
 	.global	gPlayerFrame2509
 gPlayerFrame2509:
 	.word	gPlayerFrame2509OamTemplate+1
 	.word	gPlayerFrame2497Palette
 	.word	gPlayerFrame96Tiles
-	.word	gUnk_0813C094
-	.word	gUnk_08141570
+	.word	gPlayerFrame2497NextBankPalette
+	.word	gPlayerFrame2508UpperTiles
 	.global	gPlayerFrame2637
 gPlayerFrame2637:
 	.word	gPlayerFrame2637OamTemplate+1
 	.word	gPlayerFrame2637Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C0D8
-	.word	gUnk_08141696
+	.word	gPlayerFrame2637NextBankPalette
+	.word	gPlayerFrame2637UpperTiles
 	.global	gPlayerFrame2638
 gPlayerFrame2638:
 	.word	gPlayerFrame2638OamTemplate+1
 	.word	gPlayerFrame2637Palette
 	.word	gPlayerFrame2638Tiles
-	.word	gUnk_0813C0D8
-	.word	gUnk_081418A2
+	.word	gPlayerFrame2637NextBankPalette
+	.word	gPlayerFrame2638UpperTiles
 	.global	gPlayerFrame2639
 gPlayerFrame2639:
 	.word	gPlayerFrame2639OamTemplate+1
 	.word	gPlayerFrame2637Palette
 	.word	gPlayerFrame2639Tiles
-	.word	gUnk_0813C0D8
-	.word	gUnk_081418A2
+	.word	gPlayerFrame2637NextBankPalette
+	.word	gPlayerFrame2638UpperTiles
 	.global	gPlayerFrame2640
 gPlayerFrame2640:
 	.word	gPlayerFrame2640OamTemplate+1
 	.word	gPlayerFrame2637Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C0D8
-	.word	gUnk_08141A8E
+	.word	gPlayerFrame2637NextBankPalette
+	.word	gPlayerFrame2640UpperTiles
 	.global	gPlayerFrame2641
 gPlayerFrame2641:
 	.word	gPlayerFrame2641OamTemplate+1
 	.word	gPlayerFrame2637Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C0D8
-	.word	gUnk_08141B34
+	.word	gPlayerFrame2637NextBankPalette
+	.word	gPlayerFrame2641UpperTiles
 	.global	gPlayerFrame2642
 gPlayerFrame2642:
 	.word	gPlayerFrame2642OamTemplate+1
 	.word	gPlayerFrame2637Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C0D8
-	.word	gUnk_08141696
+	.word	gPlayerFrame2637NextBankPalette
+	.word	gPlayerFrame2637UpperTiles
 	.global	gPlayerFrame2643
 gPlayerFrame2643:
 	.word	gPlayerFrame2643OamTemplate+1
 	.word	gPlayerFrame2637Palette
 	.word	gPlayerFrame2638Tiles
-	.word	gUnk_0813C0D8
-	.word	gUnk_081418A2
+	.word	gPlayerFrame2637NextBankPalette
+	.word	gPlayerFrame2638UpperTiles
 	.global	gPlayerFrame2644
 gPlayerFrame2644:
 	.word	gPlayerFrame2644OamTemplate+1
 	.word	gPlayerFrame2637Palette
 	.word	gPlayerFrame2639Tiles
-	.word	gUnk_0813C0D8
-	.word	gUnk_081418A2
+	.word	gPlayerFrame2637NextBankPalette
+	.word	gPlayerFrame2638UpperTiles
 	.global	gPlayerFrame2645
 gPlayerFrame2645:
 	.word	gPlayerFrame2645OamTemplate+1
 	.word	gPlayerFrame2637Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C0D8
-	.word	gUnk_08141A8E
+	.word	gPlayerFrame2637NextBankPalette
+	.word	gPlayerFrame2640UpperTiles
 	.global	gPlayerFrame2646
 gPlayerFrame2646:
 	.word	gPlayerFrame2646OamTemplate+1
 	.word	gPlayerFrame2637Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C0D8
-	.word	gUnk_08141B34
+	.word	gPlayerFrame2637NextBankPalette
+	.word	gPlayerFrame2641UpperTiles
 	.global	gPlayerFrame2647
 gPlayerFrame2647:
 	.word	gPlayerFrame2647OamTemplate+1
 	.word	gPlayerFrame2637Palette
 	.word	gPlayerFrame94Tiles
-	.word	gUnk_0813C0D8
-	.word	gUnk_08141BFA
+	.word	gPlayerFrame2637NextBankPalette
+	.word	gPlayerFrame2647UpperTiles
 	.global	gPlayerFrame2648
 gPlayerFrame2648:
 	.word	gPlayerFrame2648OamTemplate+1
 	.word	gPlayerFrame2637Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813C0D8
-	.word	gUnk_08141CC0
+	.word	gPlayerFrame2637NextBankPalette
+	.word	gPlayerFrame2648UpperTiles
 	.global	gPlayerFrame2649
 gPlayerFrame2649:
 	.word	gPlayerFrame2649OamTemplate+1
 	.word	gPlayerFrame2637Palette
 	.word	gPlayerFrame96Tiles
-	.word	gUnk_0813C0D8
-	.word	gUnk_08141D46
+	.word	gPlayerFrame2637NextBankPalette
+	.word	gPlayerFrame2649UpperTiles
 	.global	gPlayerFrame2801
 gPlayerFrame2801:
 	.word	gPlayerFrame2801OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C0FA
-	.word	gUnk_08141E0C
+	.word	gPlayerFrame2801NextBankPalette
+	.word	gPlayerFrame2801UpperTiles
 	.global	gPlayerFrame2802
 gPlayerFrame2802:
 	.word	gPlayerFrame2802OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C0FA
-	.word	gUnk_08141F52
+	.word	gPlayerFrame2801NextBankPalette
+	.word	gPlayerFrame2802UpperTiles
 	.global	gPlayerFrame2803
 gPlayerFrame2803:
 	.word	gPlayerFrame2803OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C0FA
-	.word	gUnk_08142098
+	.word	gPlayerFrame2801NextBankPalette
+	.word	gPlayerFrame2803UpperTiles
 	.global	gPlayerFrame2804
 gPlayerFrame2804:
 	.word	gPlayerFrame2804OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame2804Tiles
-	.word	gUnk_0813C0FA
-	.word	gUnk_08142304
+	.word	gPlayerFrame2801NextBankPalette
+	.word	gPlayerFrame2804UpperTiles
 	.global	gPlayerFrame2805
 gPlayerFrame2805:
 	.word	gPlayerFrame2805OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C0FA
-	.word	gUnk_0814242A
+	.word	gPlayerFrame2801NextBankPalette
+	.word	gPlayerFrame2805UpperTiles
 	.global	gPlayerFrame2806
 gPlayerFrame2806:
 	.word	gPlayerFrame2806OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C0FA
-	.word	gUnk_08142590
+	.word	gPlayerFrame2801NextBankPalette
+	.word	gPlayerFrame2806UpperTiles
 	.global	gPlayerFrame2807
 gPlayerFrame2807:
 	.word	gPlayerFrame2807OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C0FA
-	.word	gUnk_08141F52
+	.word	gPlayerFrame2801NextBankPalette
+	.word	gPlayerFrame2802UpperTiles
 	.global	gPlayerFrame2808
 gPlayerFrame2808:
 	.word	gPlayerFrame2808OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C0FA
-	.word	gUnk_08142098
+	.word	gPlayerFrame2801NextBankPalette
+	.word	gPlayerFrame2803UpperTiles
 	.global	gPlayerFrame2809
 gPlayerFrame2809:
 	.word	gPlayerFrame2809OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame2804Tiles
-	.word	gUnk_0813C0FA
-	.word	gUnk_08142304
+	.word	gPlayerFrame2801NextBankPalette
+	.word	gPlayerFrame2804UpperTiles
 	.global	gPlayerFrame2810
 gPlayerFrame2810:
 	.word	gPlayerFrame2810OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C0FA
-	.word	gUnk_0814242A
+	.word	gPlayerFrame2801NextBankPalette
+	.word	gPlayerFrame2805UpperTiles
 	.global	gPlayerFrame2811
 gPlayerFrame2811:
 	.word	gPlayerFrame2811OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame94Tiles
-	.word	gUnk_0813C0FA
-	.word	gUnk_081426B6
+	.word	gPlayerFrame2801NextBankPalette
+	.word	gPlayerFrame2811UpperTiles
 	.global	gPlayerFrame2812
 gPlayerFrame2812:
 	.word	gPlayerFrame2812OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813C0FA
-	.word	gUnk_081427DC
+	.word	gPlayerFrame2801NextBankPalette
+	.word	gPlayerFrame2812UpperTiles
 	.global	gPlayerFrame2813
 gPlayerFrame2813:
 	.word	gPlayerFrame2813OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame96Tiles
-	.word	gUnk_0813C0FA
-	.word	gUnk_08142902
+	.word	gPlayerFrame2801NextBankPalette
+	.word	gPlayerFrame2813UpperTiles
 	.global	gPlayerFrame2947
 gPlayerFrame2947:
 	.word	gPlayerFrame2947OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C11C
-	.word	gUnk_08142A28
+	.word	gPlayerFrame2947NextBankPalette
+	.word	gPlayerFrame2947UpperTiles
 	.global	gPlayerFrame2948
 gPlayerFrame2948:
 	.word	gPlayerFrame2948OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C11C
-	.word	gUnk_08142B0E
+	.word	gPlayerFrame2947NextBankPalette
+	.word	gPlayerFrame2948UpperTiles
 	.global	gPlayerFrame2949
 gPlayerFrame2949:
 	.word	gPlayerFrame2949OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C11C
-	.word	gUnk_08142BF4
+	.word	gPlayerFrame2947NextBankPalette
+	.word	gPlayerFrame2949UpperTiles
 	.global	gPlayerFrame2950
 gPlayerFrame2950:
 	.word	gPlayerFrame2950OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C11C
-	.word	gUnk_08142CBA
+	.word	gPlayerFrame2947NextBankPalette
+	.word	gPlayerFrame2950UpperTiles
 	.global	gPlayerFrame2951
 gPlayerFrame2951:
 	.word	gPlayerFrame2951OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C11C
-	.word	gUnk_08142D80
+	.word	gPlayerFrame2947NextBankPalette
+	.word	gPlayerFrame2951UpperTiles
 	.global	gPlayerFrame2952
 gPlayerFrame2952:
 	.word	gPlayerFrame2952OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C11C
-	.word	gUnk_08142E66
+	.word	gPlayerFrame2947NextBankPalette
+	.word	gPlayerFrame2952UpperTiles
 	.global	gPlayerFrame2953
 gPlayerFrame2953:
 	.word	gPlayerFrame2953OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C11C
-	.word	gUnk_08142F4C
+	.word	gPlayerFrame2947NextBankPalette
+	.word	gPlayerFrame2953UpperTiles
 	.global	gPlayerFrame2954
 gPlayerFrame2954:
 	.word	gPlayerFrame2954OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C11C
-	.word	gUnk_08143032
+	.word	gPlayerFrame2947NextBankPalette
+	.word	gPlayerFrame2954UpperTiles
 	.global	gPlayerFrame2955
 gPlayerFrame2955:
 	.word	gPlayerFrame2955OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C11C
-	.word	gUnk_081430F8
+	.word	gPlayerFrame2947NextBankPalette
+	.word	gPlayerFrame2955UpperTiles
 	.global	gPlayerFrame2956
 gPlayerFrame2956:
 	.word	gPlayerFrame2956OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C11C
-	.word	gUnk_081431BE
+	.word	gPlayerFrame2947NextBankPalette
+	.word	gPlayerFrame2956UpperTiles
 	.global	gPlayerFrame2957
 gPlayerFrame2957:
 	.word	gPlayerFrame2957OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame94Tiles
-	.word	gUnk_0813C11C
-	.word	gUnk_081432A4
+	.word	gPlayerFrame2947NextBankPalette
+	.word	gPlayerFrame2957UpperTiles
 	.global	gPlayerFrame2958
 gPlayerFrame2958:
 	.word	gPlayerFrame2958OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813C11C
-	.word	gUnk_0814336A
+	.word	gPlayerFrame2947NextBankPalette
+	.word	gPlayerFrame2958UpperTiles
 	.global	gPlayerFrame2959
 gPlayerFrame2959:
 	.word	gPlayerFrame2959OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame96Tiles
-	.word	gUnk_0813C11C
-	.word	gUnk_08143430
+	.word	gPlayerFrame2947NextBankPalette
+	.word	gPlayerFrame2959UpperTiles
 	.global	gPlayerFrame3078
 gPlayerFrame3078:
 	.word	gPlayerFrame3078OamTemplate+1
 	.word	gPlayerFrame3078Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C160
-	.word	gUnk_081434F6
+	.word	gPlayerFrame3078NextBankPalette
+	.word	gPlayerFrame3078UpperTiles
 	.global	gPlayerFrame3079
 gPlayerFrame3079:
 	.word	gPlayerFrame3079OamTemplate+1
 	.word	gPlayerFrame3078Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C160
-	.word	gUnk_0814361C
+	.word	gPlayerFrame3078NextBankPalette
+	.word	gPlayerFrame3079UpperTiles
 	.global	gPlayerFrame3080
 gPlayerFrame3080:
 	.word	gPlayerFrame3080OamTemplate+1
 	.word	gPlayerFrame3078Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C160
-	.word	gUnk_08143742
+	.word	gPlayerFrame3078NextBankPalette
+	.word	gPlayerFrame3080UpperTiles
 	.global	gPlayerFrame3081
 gPlayerFrame3081:
 	.word	gPlayerFrame3081OamTemplate+1
 	.word	gPlayerFrame3078Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C160
-	.word	gUnk_08143868
+	.word	gPlayerFrame3078NextBankPalette
+	.word	gPlayerFrame3081UpperTiles
 	.global	gPlayerFrame3082
 gPlayerFrame3082:
 	.word	gPlayerFrame3082OamTemplate+1
 	.word	gPlayerFrame3078Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C160
-	.word	gUnk_0814398E
+	.word	gPlayerFrame3078NextBankPalette
+	.word	gPlayerFrame3082UpperTiles
 	.global	gPlayerFrame3083
 gPlayerFrame3083:
 	.word	gPlayerFrame3083OamTemplate+1
 	.word	gPlayerFrame3078Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C160
-	.word	gUnk_081434F6
+	.word	gPlayerFrame3078NextBankPalette
+	.word	gPlayerFrame3078UpperTiles
 	.global	gPlayerFrame3084
 gPlayerFrame3084:
 	.word	gPlayerFrame3084OamTemplate+1
 	.word	gPlayerFrame3078Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C160
-	.word	gUnk_0814361C
+	.word	gPlayerFrame3078NextBankPalette
+	.word	gPlayerFrame3079UpperTiles
 	.global	gPlayerFrame3085
 gPlayerFrame3085:
 	.word	gPlayerFrame3085OamTemplate+1
 	.word	gPlayerFrame3078Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C160
-	.word	gUnk_08143742
+	.word	gPlayerFrame3078NextBankPalette
+	.word	gPlayerFrame3080UpperTiles
 	.global	gPlayerFrame3086
 gPlayerFrame3086:
 	.word	gPlayerFrame3086OamTemplate+1
 	.word	gPlayerFrame3078Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C160
-	.word	gUnk_08143868
+	.word	gPlayerFrame3078NextBankPalette
+	.word	gPlayerFrame3081UpperTiles
 	.global	gPlayerFrame3087
 gPlayerFrame3087:
 	.word	gPlayerFrame3087OamTemplate+1
 	.word	gPlayerFrame3078Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C160
-	.word	gUnk_0814398E
+	.word	gPlayerFrame3078NextBankPalette
+	.word	gPlayerFrame3082UpperTiles
 	.global	gPlayerFrame3088
 gPlayerFrame3088:
 	.word	gPlayerFrame3088OamTemplate+1
 	.word	gPlayerFrame3078Palette
 	.word	gPlayerFrame94Tiles
-	.word	gUnk_0813C160
-	.word	gUnk_08143AB4
+	.word	gPlayerFrame3078NextBankPalette
+	.word	gPlayerFrame3088UpperTiles
 	.global	gPlayerFrame3089
 gPlayerFrame3089:
 	.word	gPlayerFrame3089OamTemplate+1
 	.word	gPlayerFrame3078Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813C160
-	.word	gUnk_08143BDA
+	.word	gPlayerFrame3078NextBankPalette
+	.word	gPlayerFrame3089UpperTiles
 	.global	gPlayerFrame3090
 gPlayerFrame3090:
 	.word	gPlayerFrame3090OamTemplate+1
 	.word	gPlayerFrame3078Palette
 	.word	gPlayerFrame96Tiles
-	.word	gUnk_0813C160
-	.word	gUnk_08143D00
+	.word	gPlayerFrame3078NextBankPalette
+	.word	gPlayerFrame3090UpperTiles
 	.global	gPlayerFrame3217
 gPlayerFrame3217:
 	.word	gPlayerFrame3217OamTemplate+1
@@ -10997,365 +10997,365 @@ gPlayerFrame3420:
 	.word	gPlayerFrame3420OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144756
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3420UpperTiles
 	.global	gPlayerFrame3421
 gPlayerFrame3421:
 	.word	gPlayerFrame3421OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144756
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3420UpperTiles
 	.global	gPlayerFrame3422
 gPlayerFrame3422:
 	.word	gPlayerFrame3422OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_0814487C
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3422UpperTiles
 	.global	gPlayerFrame3423
 gPlayerFrame3423:
 	.word	gPlayerFrame3423OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_0814487C
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3422UpperTiles
 	.global	gPlayerFrame3424
 gPlayerFrame3424:
 	.word	gPlayerFrame3424OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144982
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3424UpperTiles
 	.global	gPlayerFrame3425
 gPlayerFrame3425:
 	.word	gPlayerFrame3425OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144982
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3424UpperTiles
 	.global	gPlayerFrame3426
 gPlayerFrame3426:
 	.word	gPlayerFrame3426OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144A68
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3426UpperTiles
 	.global	gPlayerFrame3427
 gPlayerFrame3427:
 	.word	gPlayerFrame3427OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144A68
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3426UpperTiles
 	.global	gPlayerFrame3428
 gPlayerFrame3428:
 	.word	gPlayerFrame3428OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144756
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3420UpperTiles
 	.global	gPlayerFrame3429
 gPlayerFrame3429:
 	.word	gPlayerFrame3429OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144756
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3420UpperTiles
 	.global	gPlayerFrame3430
 gPlayerFrame3430:
 	.word	gPlayerFrame3430OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame94Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144756
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3420UpperTiles
 	.global	gPlayerFrame3431
 gPlayerFrame3431:
 	.word	gPlayerFrame3431OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144756
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3420UpperTiles
 	.global	gPlayerFrame3432
 gPlayerFrame3432:
 	.word	gPlayerFrame3432OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame96Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_0814487C
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3422UpperTiles
 	.global	gPlayerFrame3433
 gPlayerFrame3433:
 	.word	gPlayerFrame3433OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144A68
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3426UpperTiles
 	.global	gPlayerFrame3434
 gPlayerFrame3434:
 	.word	gPlayerFrame3434OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144A68
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3426UpperTiles
 	.global	gPlayerFrame3435
 gPlayerFrame3435:
 	.word	gPlayerFrame3435OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144756
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3420UpperTiles
 	.global	gPlayerFrame3436
 gPlayerFrame3436:
 	.word	gPlayerFrame3436OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144756
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3420UpperTiles
 	.global	gPlayerFrame3437
 gPlayerFrame3437:
 	.word	gPlayerFrame3437OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_0814487C
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3422UpperTiles
 	.global	gPlayerFrame3438
 gPlayerFrame3438:
 	.word	gPlayerFrame3438OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_0814487C
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3422UpperTiles
 	.global	gPlayerFrame3439
 gPlayerFrame3439:
 	.word	gPlayerFrame3439OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144982
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3424UpperTiles
 	.global	gPlayerFrame3440
 gPlayerFrame3440:
 	.word	gPlayerFrame3440OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144982
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3424UpperTiles
 	.global	gPlayerFrame3441
 gPlayerFrame3441:
 	.word	gPlayerFrame3441OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144A68
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3426UpperTiles
 	.global	gPlayerFrame3442
 gPlayerFrame3442:
 	.word	gPlayerFrame3442OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144A68
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3426UpperTiles
 	.global	gPlayerFrame3443
 gPlayerFrame3443:
 	.word	gPlayerFrame3443OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame94Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144A68
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3426UpperTiles
 	.global	gPlayerFrame3444
 gPlayerFrame3444:
 	.word	gPlayerFrame3444OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144A68
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3426UpperTiles
 	.global	gPlayerFrame3445
 gPlayerFrame3445:
 	.word	gPlayerFrame3445OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame96Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144756
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3420UpperTiles
 	.global	gPlayerFrame3446
 gPlayerFrame3446:
 	.word	gPlayerFrame3446OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144982
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3424UpperTiles
 	.global	gPlayerFrame3447
 gPlayerFrame3447:
 	.word	gPlayerFrame3447OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144982
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3424UpperTiles
 	.global	gPlayerFrame3448
 gPlayerFrame3448:
 	.word	gPlayerFrame3448OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144A68
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3426UpperTiles
 	.global	gPlayerFrame3449
 gPlayerFrame3449:
 	.word	gPlayerFrame3449OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144A68
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3426UpperTiles
 	.global	gPlayerFrame3450
 gPlayerFrame3450:
 	.word	gPlayerFrame3450OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144756
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3420UpperTiles
 	.global	gPlayerFrame3451
 gPlayerFrame3451:
 	.word	gPlayerFrame3451OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144756
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3420UpperTiles
 	.global	gPlayerFrame3452
 gPlayerFrame3452:
 	.word	gPlayerFrame3452OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_0814487C
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3422UpperTiles
 	.global	gPlayerFrame3453
 gPlayerFrame3453:
 	.word	gPlayerFrame3453OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_0814487C
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3422UpperTiles
 	.global	gPlayerFrame3454
 gPlayerFrame3454:
 	.word	gPlayerFrame3454OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144982
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3424UpperTiles
 	.global	gPlayerFrame3455
 gPlayerFrame3455:
 	.word	gPlayerFrame3455OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144982
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3424UpperTiles
 	.global	gPlayerFrame3456
 gPlayerFrame3456:
 	.word	gPlayerFrame3456OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame94Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144982
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3424UpperTiles
 	.global	gPlayerFrame3457
 gPlayerFrame3457:
 	.word	gPlayerFrame3457OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144982
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3424UpperTiles
 	.global	gPlayerFrame3458
 gPlayerFrame3458:
 	.word	gPlayerFrame3458OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame96Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144A68
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3426UpperTiles
 	.global	gPlayerFrame3459
 gPlayerFrame3459:
 	.word	gPlayerFrame3459OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_0814487C
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3422UpperTiles
 	.global	gPlayerFrame3460
 gPlayerFrame3460:
 	.word	gPlayerFrame3460OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame88Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_0814487C
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3422UpperTiles
 	.global	gPlayerFrame3461
 gPlayerFrame3461:
 	.word	gPlayerFrame3461OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144982
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3424UpperTiles
 	.global	gPlayerFrame3462
 gPlayerFrame3462:
 	.word	gPlayerFrame3462OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame84Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144982
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3424UpperTiles
 	.global	gPlayerFrame3463
 gPlayerFrame3463:
 	.word	gPlayerFrame3463OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144A68
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3426UpperTiles
 	.global	gPlayerFrame3464
 gPlayerFrame3464:
 	.word	gPlayerFrame3464OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame85Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144A68
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3426UpperTiles
 	.global	gPlayerFrame3465
 gPlayerFrame3465:
 	.word	gPlayerFrame3465OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144756
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3420UpperTiles
 	.global	gPlayerFrame3466
 gPlayerFrame3466:
 	.word	gPlayerFrame3466OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame86Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144756
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3420UpperTiles
 	.global	gPlayerFrame3467
 gPlayerFrame3467:
 	.word	gPlayerFrame3467OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_0814487C
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3422UpperTiles
 	.global	gPlayerFrame3468
 gPlayerFrame3468:
 	.word	gPlayerFrame3468OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame87Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_0814487C
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3422UpperTiles
 	.global	gPlayerFrame3469
 gPlayerFrame3469:
 	.word	gPlayerFrame3469OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame94Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_0814487C
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3422UpperTiles
 	.global	gPlayerFrame3470
 gPlayerFrame3470:
 	.word	gPlayerFrame3470OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame95Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_0814487C
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3422UpperTiles
 	.global	gPlayerFrame3471
 gPlayerFrame3471:
 	.word	gPlayerFrame3471OamTemplate+1
 	.word	gPlayerFrame944Palette
 	.word	gPlayerFrame96Tiles
-	.word	gUnk_0813C1A4
-	.word	gUnk_08144982
+	.word	gPlayerFrame3420NextBankPalette
+	.word	gPlayerFrame3424UpperTiles
 	.global	gUnk_08761EB0
 gUnk_08761EB0:
 	.word	gUnk_0814958E+1
@@ -11439,274 +11439,274 @@ gPlayerFrame1067:
 	.word	gPlayerFrame1067OamTemplate+1
 	.word	gPlayerFrame1067Palette
 	.word	gPlayerFrame1067Tiles
-	.word	gUnk_08149752
-	.word	gUnk_08149900
+	.word	gPlayerFrame1067NextBankPalette
+	.word	gPlayerFrame1067UpperTiles
 	.global	gPlayerFrame1068
 gPlayerFrame1068:
 	.word	gPlayerFrame1068OamTemplate+1
 	.word	gPlayerFrame1067Palette
 	.word	gPlayerFrame1068Tiles
-	.word	gUnk_08149752
-	.word	gUnk_08149BEC
+	.word	gPlayerFrame1067NextBankPalette
+	.word	gPlayerFrame1068UpperTiles
 	.global	gPlayerFrame1069
 gPlayerFrame1069:
 	.word	gPlayerFrame1069OamTemplate+1
 	.word	gPlayerFrame1067Palette
 	.word	gPlayerFrame1069Tiles
-	.word	gUnk_08149752
-	.word	gUnk_08149ED8
+	.word	gPlayerFrame1067NextBankPalette
+	.word	gPlayerFrame1069UpperTiles
 	.global	gPlayerFrame1070
 gPlayerFrame1070:
 	.word	gPlayerFrame1070OamTemplate+1
 	.word	gPlayerFrame1067Palette
 	.word	gPlayerFrame1070Tiles
-	.word	gUnk_08149752
-	.word	gUnk_0814A1A4
+	.word	gPlayerFrame1067NextBankPalette
+	.word	gPlayerFrame1070UpperTiles
 	.global	gPlayerFrame1071
 gPlayerFrame1071:
 	.word	gPlayerFrame1071OamTemplate+1
 	.word	gPlayerFrame1067Palette
 	.word	gPlayerFrame1071Tiles
-	.word	gUnk_08149752
-	.word	gUnk_0814A490
+	.word	gPlayerFrame1067NextBankPalette
+	.word	gPlayerFrame1071UpperTiles
 	.global	gPlayerFrame1072
 gPlayerFrame1072:
 	.word	gPlayerFrame1072OamTemplate+1
 	.word	gPlayerFrame1067Palette
 	.word	gPlayerFrame1067Tiles
-	.word	gUnk_08149752
-	.word	gUnk_0814A656
+	.word	gPlayerFrame1067NextBankPalette
+	.word	gPlayerFrame1072UpperTiles
 	.global	gPlayerFrame1073
 gPlayerFrame1073:
 	.word	gPlayerFrame1073OamTemplate+1
 	.word	gPlayerFrame1067Palette
 	.word	gPlayerFrame1068Tiles
-	.word	gUnk_08149752
-	.word	gUnk_0814A81C
+	.word	gPlayerFrame1067NextBankPalette
+	.word	gPlayerFrame1073UpperTiles
 	.global	gPlayerFrame1074
 gPlayerFrame1074:
 	.word	gPlayerFrame1074OamTemplate+1
 	.word	gPlayerFrame1067Palette
 	.word	gPlayerFrame1069Tiles
-	.word	gUnk_08149752
-	.word	gUnk_0814A9C2
+	.word	gPlayerFrame1067NextBankPalette
+	.word	gPlayerFrame1074UpperTiles
 	.global	gPlayerFrame1075
 gPlayerFrame1075:
 	.word	gPlayerFrame1075OamTemplate+1
 	.word	gPlayerFrame1067Palette
 	.word	gPlayerFrame1070Tiles
-	.word	gUnk_08149752
-	.word	gUnk_0814AB68
+	.word	gPlayerFrame1067NextBankPalette
+	.word	gPlayerFrame1075UpperTiles
 	.global	gPlayerFrame1076
 gPlayerFrame1076:
 	.word	gPlayerFrame1076OamTemplate+1
 	.word	gPlayerFrame1067Palette
 	.word	gPlayerFrame1071Tiles
-	.word	gUnk_08149752
-	.word	gUnk_0814AD2E
+	.word	gPlayerFrame1067NextBankPalette
+	.word	gPlayerFrame1076UpperTiles
 	.global	gPlayerFrame1077
 gPlayerFrame1077:
 	.word	gPlayerFrame1077OamTemplate+1
 	.word	gPlayerFrame1067Palette
 	.word	gPlayerFrame1077Tiles
-	.word	gUnk_08149752
-	.word	gUnk_0814B01A
+	.word	gPlayerFrame1067NextBankPalette
+	.word	gPlayerFrame1077UpperTiles
 	.global	gPlayerFrame1078
 gPlayerFrame1078:
 	.word	gPlayerFrame1078OamTemplate+1
 	.word	gPlayerFrame1067Palette
 	.word	gPlayerFrame1078Tiles
-	.word	gUnk_08149752
-	.word	gUnk_0814B326
+	.word	gPlayerFrame1067NextBankPalette
+	.word	gPlayerFrame1078UpperTiles
 	.global	gPlayerFrame1079
 gPlayerFrame1079:
 	.word	gPlayerFrame1079OamTemplate+1
 	.word	gPlayerFrame1067Palette
 	.word	gPlayerFrame1079Tiles
-	.word	gUnk_08149752
-	.word	gUnk_0814B612
+	.word	gPlayerFrame1067NextBankPalette
+	.word	gPlayerFrame1079UpperTiles
 	.global	gPlayerFrame1869
 gPlayerFrame1869:
 	.word	gPlayerFrame1869OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1067Tiles
-	.word	gUnk_08149796
-	.word	gUnk_0814B7D8
+	.word	gPlayerFrame1869NextBankPalette
+	.word	gPlayerFrame1869UpperTiles
 	.global	gPlayerFrame1870
 gPlayerFrame1870:
 	.word	gPlayerFrame1870OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1068Tiles
-	.word	gUnk_08149796
-	.word	gUnk_0814B8BE
+	.word	gPlayerFrame1869NextBankPalette
+	.word	gPlayerFrame1870UpperTiles
 	.global	gPlayerFrame1871
 gPlayerFrame1871:
 	.word	gPlayerFrame1871OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1069Tiles
-	.word	gUnk_08149796
-	.word	gUnk_0814B9A4
+	.word	gPlayerFrame1869NextBankPalette
+	.word	gPlayerFrame1871UpperTiles
 	.global	gPlayerFrame1872
 gPlayerFrame1872:
 	.word	gPlayerFrame1872OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1070Tiles
-	.word	gUnk_08149796
-	.word	gUnk_0814BAAA
+	.word	gPlayerFrame1869NextBankPalette
+	.word	gPlayerFrame1872UpperTiles
 	.global	gPlayerFrame1873
 gPlayerFrame1873:
 	.word	gPlayerFrame1873OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1071Tiles
-	.word	gUnk_08149796
-	.word	gUnk_0814BBD0
+	.word	gPlayerFrame1869NextBankPalette
+	.word	gPlayerFrame1873UpperTiles
 	.global	gPlayerFrame1874
 gPlayerFrame1874:
 	.word	gPlayerFrame1874OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1067Tiles
-	.word	gUnk_08149796
-	.word	gUnk_0814BCB6
+	.word	gPlayerFrame1869NextBankPalette
+	.word	gPlayerFrame1874UpperTiles
 	.global	gPlayerFrame1875
 gPlayerFrame1875:
 	.word	gPlayerFrame1875OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1068Tiles
-	.word	gUnk_08149796
-	.word	gUnk_0814BAAA
+	.word	gPlayerFrame1869NextBankPalette
+	.word	gPlayerFrame1872UpperTiles
 	.global	gPlayerFrame1876
 gPlayerFrame1876:
 	.word	gPlayerFrame1876OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1069Tiles
-	.word	gUnk_08149796
-	.word	gUnk_0814B9A4
+	.word	gPlayerFrame1869NextBankPalette
+	.word	gPlayerFrame1871UpperTiles
 	.global	gPlayerFrame1877
 gPlayerFrame1877:
 	.word	gPlayerFrame1877OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1070Tiles
-	.word	gUnk_08149796
-	.word	gUnk_0814B9A4
+	.word	gPlayerFrame1869NextBankPalette
+	.word	gPlayerFrame1871UpperTiles
 	.global	gPlayerFrame1878
 gPlayerFrame1878:
 	.word	gPlayerFrame1878OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1071Tiles
-	.word	gUnk_08149796
-	.word	gUnk_0814BD9C
+	.word	gPlayerFrame1869NextBankPalette
+	.word	gPlayerFrame1878UpperTiles
 	.global	gPlayerFrame1879
 gPlayerFrame1879:
 	.word	gPlayerFrame1879OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1077Tiles
-	.word	gUnk_08149796
-	.word	gUnk_0814B8BE
+	.word	gPlayerFrame1869NextBankPalette
+	.word	gPlayerFrame1870UpperTiles
 	.global	gPlayerFrame1880
 gPlayerFrame1880:
 	.word	gPlayerFrame1880OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1078Tiles
-	.word	gUnk_08149796
-	.word	gUnk_0814B7D8
+	.word	gPlayerFrame1869NextBankPalette
+	.word	gPlayerFrame1869UpperTiles
 	.global	gPlayerFrame1881
 gPlayerFrame1881:
 	.word	gPlayerFrame1881OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1079Tiles
-	.word	gUnk_08149796
-	.word	gUnk_0814BD9C
+	.word	gPlayerFrame1869NextBankPalette
+	.word	gPlayerFrame1878UpperTiles
 	.global	gPlayerFrame2126
 gPlayerFrame2126:
 	.word	gPlayerFrame2126OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1067Tiles
-	.word	gUnk_081497B8
-	.word	gUnk_0814BE82
+	.word	gPlayerFrame2126NextBankPalette
+	.word	gPlayerFrame2126UpperTiles
 	.global	gPlayerFrame2127
 gPlayerFrame2127:
 	.word	gPlayerFrame2127OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1068Tiles
-	.word	gUnk_081497B8
-	.word	gUnk_0814BE82
+	.word	gPlayerFrame2126NextBankPalette
+	.word	gPlayerFrame2126UpperTiles
 	.global	gPlayerFrame2128
 gPlayerFrame2128:
 	.word	gPlayerFrame2128OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1069Tiles
-	.word	gUnk_081497B8
-	.word	gUnk_0814BFA8
+	.word	gPlayerFrame2126NextBankPalette
+	.word	gPlayerFrame2128UpperTiles
 	.global	gPlayerFrame2129
 gPlayerFrame2129:
 	.word	gPlayerFrame2129OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1070Tiles
-	.word	gUnk_081497B8
-	.word	gUnk_0814C0CE
+	.word	gPlayerFrame2126NextBankPalette
+	.word	gPlayerFrame2129UpperTiles
 	.global	gPlayerFrame2130
 gPlayerFrame2130:
 	.word	gPlayerFrame2130OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1071Tiles
-	.word	gUnk_081497B8
-	.word	gUnk_0814C0CE
+	.word	gPlayerFrame2126NextBankPalette
+	.word	gPlayerFrame2129UpperTiles
 	.global	gPlayerFrame2131
 gPlayerFrame2131:
 	.word	gPlayerFrame2131OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1067Tiles
-	.word	gUnk_081497B8
-	.word	gUnk_0814C0CE
+	.word	gPlayerFrame2126NextBankPalette
+	.word	gPlayerFrame2129UpperTiles
 	.global	gPlayerFrame2132
 gPlayerFrame2132:
 	.word	gPlayerFrame2132OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1068Tiles
-	.word	gUnk_081497B8
-	.word	gUnk_0814C0CE
+	.word	gPlayerFrame2126NextBankPalette
+	.word	gPlayerFrame2129UpperTiles
 	.global	gPlayerFrame2133
 gPlayerFrame2133:
 	.word	gPlayerFrame2133OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1069Tiles
-	.word	gUnk_081497B8
-	.word	gUnk_0814BFA8
+	.word	gPlayerFrame2126NextBankPalette
+	.word	gPlayerFrame2128UpperTiles
 	.global	gPlayerFrame2134
 gPlayerFrame2134:
 	.word	gPlayerFrame2134OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1070Tiles
-	.word	gUnk_081497B8
-	.word	gUnk_0814BE82
+	.word	gPlayerFrame2126NextBankPalette
+	.word	gPlayerFrame2126UpperTiles
 	.global	gPlayerFrame2135
 gPlayerFrame2135:
 	.word	gPlayerFrame2135OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1071Tiles
-	.word	gUnk_081497B8
-	.word	gUnk_0814C1F4
+	.word	gPlayerFrame2126NextBankPalette
+	.word	gPlayerFrame2135UpperTiles
 	.global	gPlayerFrame2136
 gPlayerFrame2136:
 	.word	gPlayerFrame2136OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1077Tiles
-	.word	gUnk_081497B8
-	.word	gUnk_0814C31A
+	.word	gPlayerFrame2126NextBankPalette
+	.word	gPlayerFrame2136UpperTiles
 	.global	gPlayerFrame2137
 gPlayerFrame2137:
 	.word	gPlayerFrame2137OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1078Tiles
-	.word	gUnk_081497B8
-	.word	gUnk_0814C440
+	.word	gPlayerFrame2126NextBankPalette
+	.word	gPlayerFrame2137UpperTiles
 	.global	gPlayerFrame2138
 gPlayerFrame2138:
 	.word	gPlayerFrame2138OamTemplate+1
 	.word	gPlayerFrame1869Palette
 	.word	gPlayerFrame1079Tiles
-	.word	gUnk_081497B8
-	.word	gUnk_0814C566
+	.word	gPlayerFrame2126NextBankPalette
+	.word	gPlayerFrame2138UpperTiles
 	.global	gPlayerFrame97
 gPlayerFrame97:
 	.word	gPlayerFrame97OamTemplate+1
@@ -11759,183 +11759,183 @@ gPlayerFrame957:
 	.word	gPlayerFrame957OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame957Tiles
-	.word	gUnk_0814D0DA
-	.word	gUnk_0814DAEC
+	.word	gPlayerFrame957NextBankPalette
+	.word	gPlayerFrame957UpperTiles
 	.global	gPlayerFrame958
 gPlayerFrame958:
 	.word	gPlayerFrame958OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame98Tiles
-	.word	gUnk_0814D0DA
-	.word	gUnk_0814DC12
+	.word	gPlayerFrame957NextBankPalette
+	.word	gPlayerFrame958UpperTiles
 	.global	gPlayerFrame1428
 gPlayerFrame1428:
 	.word	gPlayerFrame1428OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame97Tiles
-	.word	gUnk_0814D0FC
-	.word	gUnk_0814DD18
+	.word	gPlayerFrame1428NextBankPalette
+	.word	gPlayerFrame1428UpperTiles
 	.global	gPlayerFrame1429
 gPlayerFrame1429:
 	.word	gPlayerFrame1429OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame97Tiles
-	.word	gUnk_0814D0FC
-	.word	gUnk_0814DE9E
+	.word	gPlayerFrame1428NextBankPalette
+	.word	gPlayerFrame1429UpperTiles
 	.global	gPlayerFrame1430
 gPlayerFrame1430:
 	.word	gPlayerFrame1430OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame97Tiles
-	.word	gUnk_0814D0FC
-	.word	gUnk_0814E024
+	.word	gPlayerFrame1428NextBankPalette
+	.word	gPlayerFrame1430UpperTiles
 	.global	gPlayerFrame1431
 gPlayerFrame1431:
 	.word	gPlayerFrame1431OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame97Tiles
-	.word	gUnk_0814D0FC
-	.word	gUnk_0814E1AA
+	.word	gPlayerFrame1428NextBankPalette
+	.word	gPlayerFrame1431UpperTiles
 	.global	gPlayerFrame1432
 gPlayerFrame1432:
 	.word	gPlayerFrame1432OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame98Tiles
-	.word	gUnk_0814D0FC
-	.word	gUnk_0814E330
+	.word	gPlayerFrame1428NextBankPalette
+	.word	gPlayerFrame1432UpperTiles
 	.global	gPlayerFrame1580
 gPlayerFrame1580:
 	.word	gPlayerFrame1580OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame957Tiles
-	.word	gUnk_0814D11E
-	.word	gUnk_0814E4D6
+	.word	gPlayerFrame1580NextBankPalette
+	.word	gPlayerFrame1580UpperTiles
 	.global	gPlayerFrame1581
 gPlayerFrame1581:
 	.word	gPlayerFrame1581OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame98Tiles
-	.word	gUnk_0814D11E
-	.word	gUnk_0814E55C
+	.word	gPlayerFrame1580NextBankPalette
+	.word	gPlayerFrame1581UpperTiles
 	.global	gPlayerFrame1749
 gPlayerFrame1749:
 	.word	gPlayerFrame1749OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame97Tiles
-	.word	gUnk_0814D140
-	.word	gUnk_0814E5E2
+	.word	gPlayerFrame1749NextBankPalette
+	.word	gPlayerFrame1749UpperTiles
 	.global	gPlayerFrame1750
 gPlayerFrame1750:
 	.word	gPlayerFrame1750OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame98Tiles
-	.word	gUnk_0814D140
-	.word	gUnk_0814E688
+	.word	gPlayerFrame1749NextBankPalette
+	.word	gPlayerFrame1750UpperTiles
 	.global	gPlayerFrame2370
 gPlayerFrame2370:
 	.word	gPlayerFrame2370OamTemplate+1
 	.word	gPlayerFrame2370Palette
 	.word	gPlayerFrame97Tiles
-	.word	gUnk_0814D184
-	.word	gUnk_0814E72E
+	.word	gPlayerFrame2370NextBankPalette
+	.word	gPlayerFrame2370UpperTiles
 	.global	gPlayerFrame2371
 gPlayerFrame2371:
 	.word	gPlayerFrame2371OamTemplate+1
 	.word	gPlayerFrame2370Palette
 	.word	gPlayerFrame2371Tiles
-	.word	gUnk_0814D184
-	.word	gUnk_0814E89A
+	.word	gPlayerFrame2370NextBankPalette
+	.word	gPlayerFrame2371UpperTiles
 	.global	gPlayerFrame2510
 gPlayerFrame2510:
 	.word	gPlayerFrame2510OamTemplate+1
 	.word	gPlayerFrame2510Palette
 	.word	gPlayerFrame957Tiles
-	.word	gUnk_0814D1C8
-	.word	gUnk_0814E940
+	.word	gPlayerFrame2510NextBankPalette
+	.word	gPlayerFrame2510UpperTiles
 	.global	gPlayerFrame2511
 gPlayerFrame2511:
 	.word	gPlayerFrame2511OamTemplate+1
 	.word	gPlayerFrame2510Palette
 	.word	gPlayerFrame2511Tiles
-	.word	gUnk_0814D1C8
-	.word	gUnk_0814EAEC
+	.word	gPlayerFrame2510NextBankPalette
+	.word	gPlayerFrame2511UpperTiles
 	.global	gPlayerFrame2650
 gPlayerFrame2650:
 	.word	gPlayerFrame2650OamTemplate+1
 	.word	gPlayerFrame2650Palette
 	.word	gPlayerFrame97Tiles
-	.word	gUnk_0814D20C
-	.word	gUnk_0814EBB2
+	.word	gPlayerFrame2650NextBankPalette
+	.word	gPlayerFrame2650UpperTiles
 	.global	gPlayerFrame2651
 gPlayerFrame2651:
 	.word	gPlayerFrame2651OamTemplate+1
 	.word	gPlayerFrame2650Palette
 	.word	gPlayerFrame98Tiles
-	.word	gUnk_0814D20C
-	.word	gUnk_0814EC98
+	.word	gPlayerFrame2650NextBankPalette
+	.word	gPlayerFrame2651UpperTiles
 	.global	gPlayerFrame2814
 gPlayerFrame2814:
 	.word	gPlayerFrame2814OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame957Tiles
-	.word	gUnk_0814D22E
-	.word	gUnk_0814ED7E
+	.word	gPlayerFrame2814NextBankPalette
+	.word	gPlayerFrame2814UpperTiles
 	.global	gPlayerFrame2816
 gPlayerFrame2816:
 	.word	gPlayerFrame2816OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame98Tiles
-	.word	gUnk_0814D22E
-	.word	gUnk_0814EE84
+	.word	gPlayerFrame2814NextBankPalette
+	.word	gPlayerFrame2816UpperTiles
 	.global	gPlayerFrame2815
 gPlayerFrame2815:
 	.word	gPlayerFrame2815OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame957Tiles
-	.word	gUnk_0814D22E
-	.word	gUnk_0814EF8A
+	.word	gPlayerFrame2814NextBankPalette
+	.word	gPlayerFrame2815UpperTiles
 	.global	gPlayerFrame2960
 gPlayerFrame2960:
 	.word	gPlayerFrame2960OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame97Tiles
-	.word	gUnk_0814D250
-	.word	gUnk_0814F090
+	.word	gPlayerFrame2960NextBankPalette
+	.word	gPlayerFrame2960UpperTiles
 	.global	gPlayerFrame2962
 gPlayerFrame2962:
 	.word	gPlayerFrame2962OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame98Tiles
-	.word	gUnk_0814D250
-	.word	gUnk_0814F196
+	.word	gPlayerFrame2960NextBankPalette
+	.word	gPlayerFrame2962UpperTiles
 	.global	gPlayerFrame2961
 gPlayerFrame2961:
 	.word	gPlayerFrame2961OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame957Tiles
-	.word	gUnk_0814D250
-	.word	gUnk_0814F29C
+	.word	gPlayerFrame2960NextBankPalette
+	.word	gPlayerFrame2961UpperTiles
 	.global	gPlayerFrame3091
 gPlayerFrame3091:
 	.word	gPlayerFrame3091OamTemplate+1
 	.word	gPlayerFrame3091Palette
 	.word	gPlayerFrame97Tiles
-	.word	gUnk_0814D294
-	.word	gUnk_0814F3A2
+	.word	gPlayerFrame3091NextBankPalette
+	.word	gPlayerFrame3091UpperTiles
 	.global	gPlayerFrame3093
 gPlayerFrame3093:
 	.word	gPlayerFrame3093OamTemplate+1
 	.word	gPlayerFrame3091Palette
 	.word	gPlayerFrame98Tiles
-	.word	gUnk_0814D294
-	.word	gUnk_0814F4E8
+	.word	gPlayerFrame3091NextBankPalette
+	.word	gPlayerFrame3093UpperTiles
 	.global	gPlayerFrame3092
 gPlayerFrame3092:
 	.word	gPlayerFrame3092OamTemplate+1
 	.word	gPlayerFrame3091Palette
 	.word	gPlayerFrame97Tiles
-	.word	gUnk_0814D294
-	.word	gUnk_0814F5CE
+	.word	gPlayerFrame3091NextBankPalette
+	.word	gPlayerFrame3092UpperTiles
 	.global	gPlayerFrame3230
 gPlayerFrame3230:
 	.word	gPlayerFrame3230OamTemplate+1
@@ -11953,22 +11953,22 @@ gPlayerFrame3472:
 	.word	gPlayerFrame3472OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame97Tiles
-	.word	gUnk_0814D2D8
-	.word	gUnk_0814F8E0
+	.word	gPlayerFrame3472NextBankPalette
+	.word	gPlayerFrame3472UpperTiles
 	.global	gPlayerFrame3474
 gPlayerFrame3474:
 	.word	gPlayerFrame3474OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame98Tiles
-	.word	gUnk_0814D2D8
-	.word	gUnk_0814F9E6
+	.word	gPlayerFrame3472NextBankPalette
+	.word	gPlayerFrame3474UpperTiles
 	.global	gPlayerFrame3473
 gPlayerFrame3473:
 	.word	gPlayerFrame3473OamTemplate+1
 	.word	gPlayerFrame957Palette
 	.word	gPlayerFrame97Tiles
-	.word	gUnk_0814D2D8
-	.word	gUnk_0814FAEC
+	.word	gPlayerFrame3472NextBankPalette
+	.word	gPlayerFrame3473UpperTiles
 	.global	gUnk_087625B8
 gUnk_087625B8:
 	.word	gUnk_081502FC+1
@@ -11992,78 +11992,78 @@ gPlayerFrame1080:
 	.word	gPlayerFrame1080OamTemplate+1
 	.word	gPlayerFrame1080Palette
 	.word	gPlayerFrame1080Tiles
-	.word	gUnk_0815033E
-	.word	gUnk_08150510
+	.word	gPlayerFrame1080NextBankPalette
+	.word	gPlayerFrame1080UpperTiles
 	.global	gPlayerFrame1082
 gPlayerFrame1082:
 	.word	gPlayerFrame1082OamTemplate+1
 	.word	gPlayerFrame1080Palette
 	.word	gPlayerFrame1082Tiles
-	.word	gUnk_0815033E
-	.word	gUnk_081507FC
+	.word	gPlayerFrame1080NextBankPalette
+	.word	gPlayerFrame1082UpperTiles
 	.global	gPlayerFrame1081
 gPlayerFrame1081:
 	.word	gPlayerFrame1081OamTemplate+1
 	.word	gPlayerFrame1080Palette
 	.word	gPlayerFrame1080Tiles
-	.word	gUnk_0815033E
-	.word	gUnk_08150942
+	.word	gPlayerFrame1080NextBankPalette
+	.word	gPlayerFrame1081UpperTiles
 	.global	gPlayerFrame1882
 gPlayerFrame1882:
 	.word	gPlayerFrame1882OamTemplate+1
 	.word	gPlayerFrame1882Palette
 	.word	gPlayerFrame1882Tiles
-	.word	gUnk_08150382
-	.word	gUnk_08150C2E
+	.word	gPlayerFrame1882NextBankPalette
+	.word	gPlayerFrame1882UpperTiles
 	.global	gPlayerFrame1883
 gPlayerFrame1883:
 	.word	gPlayerFrame1883OamTemplate+1
 	.word	gPlayerFrame1882Palette
 	.word	gPlayerFrame1883Tiles
-	.word	gUnk_08150382
-	.word	gUnk_08150DDA
+	.word	gPlayerFrame1882NextBankPalette
+	.word	gPlayerFrame1883UpperTiles
 	.global	gPlayerFrame2139
 gPlayerFrame2139:
 	.word	gPlayerFrame2139OamTemplate+1
 	.word	gPlayerFrame2139Palette
 	.word	gPlayerFrame2139Tiles
-	.word	gUnk_081503C6
-	.word	gUnk_08150FC6
+	.word	gPlayerFrame2139NextBankPalette
+	.word	gPlayerFrame2139UpperTiles
 	.global	gPlayerFrame2140
 gPlayerFrame2140:
 	.word	gPlayerFrame2140OamTemplate+1
 	.word	gPlayerFrame2139Palette
 	.word	gPlayerFrame2140Tiles
-	.word	gUnk_081503C6
-	.word	gUnk_081511B2
+	.word	gPlayerFrame2139NextBankPalette
+	.word	gPlayerFrame2140UpperTiles
 	.global	gPlayerFrame4125
 gPlayerFrame4125:
 	.word	gPlayerFrame4125OamTemplate+1
 	.word	gPlayerFrame2139Palette
 	.word	gPlayerFrame2139Tiles
-	.word	gUnk_081503E8
-	.word	gUnk_081512D8
+	.word	gPlayerFrame4125NextBankPalette
+	.word	gPlayerFrame4125UpperTiles
 	.global	gPlayerFrame4256
 gPlayerFrame4256:
 	.word	gPlayerFrame4256OamTemplate+1
 	.word	gPlayerFrame2139Palette
 	.word	gPlayerFrame2139Tiles
-	.word	gUnk_081503E8
-	.word	gUnk_0815137E
+	.word	gPlayerFrame4125NextBankPalette
+	.word	gPlayerFrame4256UpperTiles
 	.global	gPlayerFrame4126
 gPlayerFrame4126:
 	.word	gPlayerFrame4126OamTemplate+1
 	.word	gPlayerFrame2139Palette
 	.word	gPlayerFrame2140Tiles
-	.word	gUnk_081503E8
-	.word	gUnk_081514A4
+	.word	gPlayerFrame4125NextBankPalette
+	.word	gPlayerFrame4126UpperTiles
 	.global	gPlayerFrame4257
 gPlayerFrame4257:
 	.word	gPlayerFrame4257OamTemplate+1
 	.word	gPlayerFrame2139Palette
 	.word	gPlayerFrame2140Tiles
-	.word	gUnk_081503E8
-	.word	gUnk_0815152A
+	.word	gPlayerFrame4125NextBankPalette
+	.word	gPlayerFrame4257UpperTiles
 	.global	gPlayerFrame100
 gPlayerFrame100:
 	.word	gPlayerFrame100OamTemplate+1
@@ -12109,211 +12109,211 @@ gPlayerFrame960:
 	.word	gPlayerFrame960OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_08151868
-	.word	gUnk_08151DC2
+	.word	gPlayerFrame959NextBankPalette
+	.word	gPlayerFrame960UpperTiles
 	.global	gPlayerFrame959
 gPlayerFrame959:
 	.word	gPlayerFrame959OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame99Tiles
-	.word	gUnk_08151868
-	.word	gUnk_08151E68
+	.word	gPlayerFrame959NextBankPalette
+	.word	gPlayerFrame959UpperTiles
 	.global	gPlayerFrame961
 gPlayerFrame961:
 	.word	gPlayerFrame961OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_08151868
-	.word	gUnk_08151DC2
+	.word	gPlayerFrame959NextBankPalette
+	.word	gPlayerFrame960UpperTiles
 	.global	gPlayerFrame1434
 gPlayerFrame1434:
 	.word	gPlayerFrame1434OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_0815188A
-	.word	gUnk_08151F6E
+	.word	gPlayerFrame1433NextBankPalette
+	.word	gPlayerFrame1434UpperTiles
 	.global	gPlayerFrame1433
 gPlayerFrame1433:
 	.word	gPlayerFrame1433OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame99Tiles
-	.word	gUnk_0815188A
-	.word	gUnk_081520F4
+	.word	gPlayerFrame1433NextBankPalette
+	.word	gPlayerFrame1433UpperTiles
 	.global	gPlayerFrame1435
 gPlayerFrame1435:
 	.word	gPlayerFrame1435OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_0815188A
-	.word	gUnk_08151F6E
+	.word	gPlayerFrame1433NextBankPalette
+	.word	gPlayerFrame1434UpperTiles
 	.global	gPlayerFrame1583
 gPlayerFrame1583:
 	.word	gPlayerFrame1583OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_081518AC
-	.word	gUnk_0815227A
+	.word	gPlayerFrame1582NextBankPalette
+	.word	gPlayerFrame1583UpperTiles
 	.global	gPlayerFrame1582
 gPlayerFrame1582:
 	.word	gPlayerFrame1582OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame99Tiles
-	.word	gUnk_081518AC
-	.word	gUnk_08152300
+	.word	gPlayerFrame1582NextBankPalette
+	.word	gPlayerFrame1582UpperTiles
 	.global	gPlayerFrame1584
 gPlayerFrame1584:
 	.word	gPlayerFrame1584OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_081518AC
-	.word	gUnk_0815227A
+	.word	gPlayerFrame1582NextBankPalette
+	.word	gPlayerFrame1583UpperTiles
 	.global	gPlayerFrame1752
 gPlayerFrame1752:
 	.word	gPlayerFrame1752OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_081518CE
-	.word	gUnk_08152386
+	.word	gPlayerFrame1751NextBankPalette
+	.word	gPlayerFrame1752UpperTiles
 	.global	gPlayerFrame1751
 gPlayerFrame1751:
 	.word	gPlayerFrame1751OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame99Tiles
-	.word	gUnk_081518CE
-	.word	gUnk_0815240C
+	.word	gPlayerFrame1751NextBankPalette
+	.word	gPlayerFrame1751UpperTiles
 	.global	gPlayerFrame1753
 gPlayerFrame1753:
 	.word	gPlayerFrame1753OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_081518CE
-	.word	gUnk_08152386
+	.word	gPlayerFrame1751NextBankPalette
+	.word	gPlayerFrame1752UpperTiles
 	.global	gPlayerFrame2373
 gPlayerFrame2373:
 	.word	gPlayerFrame2373OamTemplate+1
 	.word	gPlayerFrame2372Palette
 	.word	gPlayerFrame2373Tiles
-	.word	gUnk_08151912
-	.word	gUnk_08152538
+	.word	gPlayerFrame2372NextBankPalette
+	.word	gPlayerFrame2373UpperTiles
 	.global	gPlayerFrame2372
 gPlayerFrame2372:
 	.word	gPlayerFrame2372OamTemplate+1
 	.word	gPlayerFrame2372Palette
 	.word	gPlayerFrame99Tiles
-	.word	gUnk_08151912
-	.word	gUnk_081525DE
+	.word	gPlayerFrame2372NextBankPalette
+	.word	gPlayerFrame2372UpperTiles
 	.global	gPlayerFrame2374
 gPlayerFrame2374:
 	.word	gPlayerFrame2374OamTemplate+1
 	.word	gPlayerFrame2372Palette
 	.word	gPlayerFrame2373Tiles
-	.word	gUnk_08151912
-	.word	gUnk_08152538
+	.word	gPlayerFrame2372NextBankPalette
+	.word	gPlayerFrame2373UpperTiles
 	.global	gPlayerFrame2513
 gPlayerFrame2513:
 	.word	gPlayerFrame2513OamTemplate+1
 	.word	gPlayerFrame2512Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_08151956
-	.word	gUnk_081526E4
+	.word	gPlayerFrame2512NextBankPalette
+	.word	gPlayerFrame2513UpperTiles
 	.global	gPlayerFrame2512
 gPlayerFrame2512:
 	.word	gPlayerFrame2512OamTemplate+1
 	.word	gPlayerFrame2512Palette
 	.word	gPlayerFrame99Tiles
-	.word	gUnk_08151956
-	.word	gUnk_0815276A
+	.word	gPlayerFrame2512NextBankPalette
+	.word	gPlayerFrame2512UpperTiles
 	.global	gPlayerFrame2514
 gPlayerFrame2514:
 	.word	gPlayerFrame2514OamTemplate+1
 	.word	gPlayerFrame2512Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_08151956
-	.word	gUnk_081526E4
+	.word	gPlayerFrame2512NextBankPalette
+	.word	gPlayerFrame2513UpperTiles
 	.global	gPlayerFrame2653
 gPlayerFrame2653:
 	.word	gPlayerFrame2653OamTemplate+1
 	.word	gPlayerFrame2652Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_0815199A
-	.word	gUnk_08152830
+	.word	gPlayerFrame2652NextBankPalette
+	.word	gPlayerFrame2653UpperTiles
 	.global	gPlayerFrame2652
 gPlayerFrame2652:
 	.word	gPlayerFrame2652OamTemplate+1
 	.word	gPlayerFrame2652Palette
 	.word	gPlayerFrame99Tiles
-	.word	gUnk_0815199A
-	.word	gUnk_081528F6
+	.word	gPlayerFrame2652NextBankPalette
+	.word	gPlayerFrame2652UpperTiles
 	.global	gPlayerFrame2654
 gPlayerFrame2654:
 	.word	gPlayerFrame2654OamTemplate+1
 	.word	gPlayerFrame2652Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_0815199A
-	.word	gUnk_08152830
+	.word	gPlayerFrame2652NextBankPalette
+	.word	gPlayerFrame2653UpperTiles
 	.global	gPlayerFrame2818
 gPlayerFrame2818:
 	.word	gPlayerFrame2818OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_081519BC
-	.word	gUnk_081529FC
+	.word	gPlayerFrame2817NextBankPalette
+	.word	gPlayerFrame2818UpperTiles
 	.global	gPlayerFrame2817
 gPlayerFrame2817:
 	.word	gPlayerFrame2817OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame99Tiles
-	.word	gUnk_081519BC
-	.word	gUnk_08152AA2
+	.word	gPlayerFrame2817NextBankPalette
+	.word	gPlayerFrame2817UpperTiles
 	.global	gPlayerFrame2819
 gPlayerFrame2819:
 	.word	gPlayerFrame2819OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_081519BC
-	.word	gUnk_081529FC
+	.word	gPlayerFrame2817NextBankPalette
+	.word	gPlayerFrame2818UpperTiles
 	.global	gPlayerFrame2964
 gPlayerFrame2964:
 	.word	gPlayerFrame2964OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_081519DE
-	.word	gUnk_08152B48
+	.word	gPlayerFrame2963NextBankPalette
+	.word	gPlayerFrame2964UpperTiles
 	.global	gPlayerFrame2963
 gPlayerFrame2963:
 	.word	gPlayerFrame2963OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame99Tiles
-	.word	gUnk_081519DE
-	.word	gUnk_08152C0E
+	.word	gPlayerFrame2963NextBankPalette
+	.word	gPlayerFrame2963UpperTiles
 	.global	gPlayerFrame2965
 gPlayerFrame2965:
 	.word	gPlayerFrame2965OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_081519DE
-	.word	gUnk_08152B48
+	.word	gPlayerFrame2963NextBankPalette
+	.word	gPlayerFrame2964UpperTiles
 	.global	gPlayerFrame3095
 gPlayerFrame3095:
 	.word	gPlayerFrame3095OamTemplate+1
 	.word	gPlayerFrame3094Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_08151A22
-	.word	gUnk_08152CD4
+	.word	gPlayerFrame3094NextBankPalette
+	.word	gPlayerFrame3095UpperTiles
 	.global	gPlayerFrame3094
 gPlayerFrame3094:
 	.word	gPlayerFrame3094OamTemplate+1
 	.word	gPlayerFrame3094Palette
 	.word	gPlayerFrame99Tiles
-	.word	gUnk_08151A22
-	.word	gUnk_08152D7A
+	.word	gPlayerFrame3094NextBankPalette
+	.word	gPlayerFrame3094UpperTiles
 	.global	gPlayerFrame3096
 gPlayerFrame3096:
 	.word	gPlayerFrame3096OamTemplate+1
 	.word	gPlayerFrame3094Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_08151A22
-	.word	gUnk_08152CD4
+	.word	gPlayerFrame3094NextBankPalette
+	.word	gPlayerFrame3095UpperTiles
 	.global	gPlayerFrame3233
 gPlayerFrame3233:
 	.word	gPlayerFrame3233OamTemplate+1
@@ -12337,22 +12337,22 @@ gPlayerFrame3476:
 	.word	gPlayerFrame3476OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_08151A66
-	.word	gUnk_08152FCC
+	.word	gPlayerFrame3475NextBankPalette
+	.word	gPlayerFrame3476UpperTiles
 	.global	gPlayerFrame3475
 gPlayerFrame3475:
 	.word	gPlayerFrame3475OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame99Tiles
-	.word	gUnk_08151A66
-	.word	gUnk_08153092
+	.word	gPlayerFrame3475NextBankPalette
+	.word	gPlayerFrame3475UpperTiles
 	.global	gPlayerFrame3477
 gPlayerFrame3477:
 	.word	gPlayerFrame3477OamTemplate+1
 	.word	gPlayerFrame959Palette
 	.word	gPlayerFrame100Tiles
-	.word	gUnk_08151A66
-	.word	gUnk_08152FCC
+	.word	gPlayerFrame3475NextBankPalette
+	.word	gPlayerFrame3476UpperTiles
 	.global	gUnk_08762A54
 gUnk_08762A54:
 	.word	gUnk_081537DC+1
@@ -12376,64 +12376,64 @@ gPlayerFrame1084:
 	.word	gPlayerFrame1084OamTemplate+1
 	.word	gPlayerFrame1083Palette
 	.word	gPlayerFrame1084Tiles
-	.word	gUnk_0815382E
-	.word	gUnk_0815399E
+	.word	gPlayerFrame1083NextBankPalette
+	.word	gPlayerFrame1084UpperTiles
 	.global	gPlayerFrame1083
 gPlayerFrame1083:
 	.word	gPlayerFrame1083OamTemplate+1
 	.word	gPlayerFrame1083Palette
 	.word	gPlayerFrame1083Tiles
-	.word	gUnk_0815382E
-	.word	gUnk_08153BAA
+	.word	gPlayerFrame1083NextBankPalette
+	.word	gPlayerFrame1083UpperTiles
 	.global	gPlayerFrame1085
 gPlayerFrame1085:
 	.word	gPlayerFrame1085OamTemplate+1
 	.word	gPlayerFrame1083Palette
 	.word	gPlayerFrame1084Tiles
-	.word	gUnk_0815382E
-	.word	gUnk_0815399E
+	.word	gPlayerFrame1083NextBankPalette
+	.word	gPlayerFrame1084UpperTiles
 	.global	gPlayerFrame1885
 gPlayerFrame1885:
 	.word	gPlayerFrame1885OamTemplate+1
 	.word	gPlayerFrame1884Palette
 	.word	gPlayerFrame1885Tiles
-	.word	gUnk_08153872
-	.word	gUnk_08153E36
+	.word	gPlayerFrame1884NextBankPalette
+	.word	gPlayerFrame1885UpperTiles
 	.global	gPlayerFrame1884
 gPlayerFrame1884:
 	.word	gPlayerFrame1884OamTemplate+1
 	.word	gPlayerFrame1884Palette
 	.word	gPlayerFrame1884Tiles
-	.word	gUnk_08153872
-	.word	gUnk_08153FE2
+	.word	gPlayerFrame1884NextBankPalette
+	.word	gPlayerFrame1884UpperTiles
 	.global	gPlayerFrame1886
 gPlayerFrame1886:
 	.word	gPlayerFrame1886OamTemplate+1
 	.word	gPlayerFrame1884Palette
 	.word	gPlayerFrame1885Tiles
-	.word	gUnk_08153872
-	.word	gUnk_08153E36
+	.word	gPlayerFrame1884NextBankPalette
+	.word	gPlayerFrame1885UpperTiles
 	.global	gPlayerFrame2142
 gPlayerFrame2142:
 	.word	gPlayerFrame2142OamTemplate+1
 	.word	gPlayerFrame2141Palette
 	.word	gPlayerFrame1084Tiles
-	.word	gUnk_081538B6
-	.word	gUnk_081540C8
+	.word	gPlayerFrame2141NextBankPalette
+	.word	gPlayerFrame2142UpperTiles
 	.global	gPlayerFrame2141
 gPlayerFrame2141:
 	.word	gPlayerFrame2141OamTemplate+1
 	.word	gPlayerFrame2141Palette
 	.word	gPlayerFrame1083Tiles
-	.word	gUnk_081538B6
-	.word	gUnk_0815418E
+	.word	gPlayerFrame2141NextBankPalette
+	.word	gPlayerFrame2141UpperTiles
 	.global	gPlayerFrame2143
 gPlayerFrame2143:
 	.word	gPlayerFrame2143OamTemplate+1
 	.word	gPlayerFrame2141Palette
 	.word	gPlayerFrame1084Tiles
-	.word	gUnk_081538B6
-	.word	gUnk_081540C8
+	.word	gPlayerFrame2141NextBankPalette
+	.word	gPlayerFrame2142UpperTiles
 	.global	gPlayerFrame102
 gPlayerFrame102:
 	.word	gPlayerFrame102OamTemplate+1
@@ -12635,995 +12635,995 @@ gPlayerFrame962:
 	.word	gPlayerFrame962OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_08154442
-	.word	gUnk_081559C0
+	.word	gPlayerFrame962NextBankPalette
+	.word	gPlayerFrame962UpperTiles
 	.global	gPlayerFrame963
 gPlayerFrame963:
 	.word	gPlayerFrame963OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_08154442
-	.word	gUnk_08155AA6
+	.word	gPlayerFrame962NextBankPalette
+	.word	gPlayerFrame963UpperTiles
 	.global	gPlayerFrame964
 gPlayerFrame964:
 	.word	gPlayerFrame964OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_08154442
-	.word	gUnk_08155B8C
+	.word	gPlayerFrame962NextBankPalette
+	.word	gPlayerFrame964UpperTiles
 	.global	gPlayerFrame965
 gPlayerFrame965:
 	.word	gPlayerFrame965OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_08154442
-	.word	gUnk_08155C72
+	.word	gPlayerFrame962NextBankPalette
+	.word	gPlayerFrame965UpperTiles
 	.global	gPlayerFrame966
 gPlayerFrame966:
 	.word	gPlayerFrame966OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_08154442
-	.word	gUnk_08155C72
+	.word	gPlayerFrame962NextBankPalette
+	.word	gPlayerFrame965UpperTiles
 	.global	gPlayerFrame967
 gPlayerFrame967:
 	.word	gPlayerFrame967OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_08154442
-	.word	gUnk_08155B8C
+	.word	gPlayerFrame962NextBankPalette
+	.word	gPlayerFrame964UpperTiles
 	.global	gPlayerFrame968
 gPlayerFrame968:
 	.word	gPlayerFrame968OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_08154442
-	.word	gUnk_08155AA6
+	.word	gPlayerFrame962NextBankPalette
+	.word	gPlayerFrame963UpperTiles
 	.global	gPlayerFrame969
 gPlayerFrame969:
 	.word	gPlayerFrame969OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_08154442
-	.word	gUnk_081559C0
+	.word	gPlayerFrame962NextBankPalette
+	.word	gPlayerFrame962UpperTiles
 	.global	gPlayerFrame970
 gPlayerFrame970:
 	.word	gPlayerFrame970OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame110Tiles
-	.word	gUnk_08154442
-	.word	gUnk_08155D58
+	.word	gPlayerFrame962NextBankPalette
+	.word	gPlayerFrame970UpperTiles
 	.global	gPlayerFrame971
 gPlayerFrame971:
 	.word	gPlayerFrame971OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame111Tiles
-	.word	gUnk_08154442
-	.word	gUnk_08155E1E
+	.word	gPlayerFrame962NextBankPalette
+	.word	gPlayerFrame971UpperTiles
 	.global	gPlayerFrame972
 gPlayerFrame972:
 	.word	gPlayerFrame972OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame112Tiles
-	.word	gUnk_08154442
-	.word	gUnk_08155EC4
+	.word	gPlayerFrame962NextBankPalette
+	.word	gPlayerFrame972UpperTiles
 	.global	gPlayerFrame973
 gPlayerFrame973:
 	.word	gPlayerFrame973OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame113Tiles
-	.word	gUnk_08154442
-	.word	gUnk_08155F4A
+	.word	gPlayerFrame962NextBankPalette
+	.word	gPlayerFrame973UpperTiles
 	.global	gPlayerFrame974
 gPlayerFrame974:
 	.word	gPlayerFrame974OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame114Tiles
-	.word	gUnk_08154442
-	.word	gUnk_08155FD0
+	.word	gPlayerFrame962NextBankPalette
+	.word	gPlayerFrame974UpperTiles
 	.global	gPlayerFrame975
 gPlayerFrame975:
 	.word	gPlayerFrame975OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame115Tiles
-	.word	gUnk_08154442
-	.word	gUnk_08155FD0
+	.word	gPlayerFrame962NextBankPalette
+	.word	gPlayerFrame974UpperTiles
 	.global	gPlayerFrame1436
 gPlayerFrame1436:
 	.word	gPlayerFrame1436OamTemplate+1
 	.word	gPlayerFrame1436Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_08154464
-	.word	gUnk_08156056
+	.word	gPlayerFrame1436NextBankPalette
+	.word	gPlayerFrame1436UpperTiles
 	.global	gPlayerFrame1437
 gPlayerFrame1437:
 	.word	gPlayerFrame1437OamTemplate+1
 	.word	gPlayerFrame1436Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_08154464
-	.word	gUnk_0815617C
+	.word	gPlayerFrame1436NextBankPalette
+	.word	gPlayerFrame1437UpperTiles
 	.global	gPlayerFrame1438
 gPlayerFrame1438:
 	.word	gPlayerFrame1438OamTemplate+1
 	.word	gPlayerFrame1436Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_08154464
-	.word	gUnk_08156322
+	.word	gPlayerFrame1436NextBankPalette
+	.word	gPlayerFrame1438UpperTiles
 	.global	gPlayerFrame1439
 gPlayerFrame1439:
 	.word	gPlayerFrame1439OamTemplate+1
 	.word	gPlayerFrame1436Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_08154464
-	.word	gUnk_081564C8
+	.word	gPlayerFrame1436NextBankPalette
+	.word	gPlayerFrame1439UpperTiles
 	.global	gPlayerFrame1440
 gPlayerFrame1440:
 	.word	gPlayerFrame1440OamTemplate+1
 	.word	gPlayerFrame1436Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_08154464
-	.word	gUnk_081564C8
+	.word	gPlayerFrame1436NextBankPalette
+	.word	gPlayerFrame1439UpperTiles
 	.global	gPlayerFrame1441
 gPlayerFrame1441:
 	.word	gPlayerFrame1441OamTemplate+1
 	.word	gPlayerFrame1436Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_08154464
-	.word	gUnk_08156322
+	.word	gPlayerFrame1436NextBankPalette
+	.word	gPlayerFrame1438UpperTiles
 	.global	gPlayerFrame1442
 gPlayerFrame1442:
 	.word	gPlayerFrame1442OamTemplate+1
 	.word	gPlayerFrame1436Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_08154464
-	.word	gUnk_0815617C
+	.word	gPlayerFrame1436NextBankPalette
+	.word	gPlayerFrame1437UpperTiles
 	.global	gPlayerFrame1443
 gPlayerFrame1443:
 	.word	gPlayerFrame1443OamTemplate+1
 	.word	gPlayerFrame1436Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_08154464
-	.word	gUnk_08156056
+	.word	gPlayerFrame1436NextBankPalette
+	.word	gPlayerFrame1436UpperTiles
 	.global	gPlayerFrame1444
 gPlayerFrame1444:
 	.word	gPlayerFrame1444OamTemplate+1
 	.word	gPlayerFrame1436Palette
 	.word	gPlayerFrame110Tiles
-	.word	gUnk_08154464
-	.word	gUnk_0815664E
+	.word	gPlayerFrame1436NextBankPalette
+	.word	gPlayerFrame1444UpperTiles
 	.global	gPlayerFrame1445
 gPlayerFrame1445:
 	.word	gPlayerFrame1445OamTemplate+1
 	.word	gPlayerFrame1436Palette
 	.word	gPlayerFrame111Tiles
-	.word	gUnk_08154464
-	.word	gUnk_081567F4
+	.word	gPlayerFrame1436NextBankPalette
+	.word	gPlayerFrame1445UpperTiles
 	.global	gPlayerFrame1446
 gPlayerFrame1446:
 	.word	gPlayerFrame1446OamTemplate+1
 	.word	gPlayerFrame1436Palette
 	.word	gPlayerFrame112Tiles
-	.word	gUnk_08154464
-	.word	gUnk_0815697A
+	.word	gPlayerFrame1436NextBankPalette
+	.word	gPlayerFrame1446UpperTiles
 	.global	gPlayerFrame1447
 gPlayerFrame1447:
 	.word	gPlayerFrame1447OamTemplate+1
 	.word	gPlayerFrame1436Palette
 	.word	gPlayerFrame113Tiles
-	.word	gUnk_08154464
-	.word	gUnk_08156A00
+	.word	gPlayerFrame1436NextBankPalette
+	.word	gPlayerFrame1447UpperTiles
 	.global	gPlayerFrame1448
 gPlayerFrame1448:
 	.word	gPlayerFrame1448OamTemplate+1
 	.word	gPlayerFrame1436Palette
 	.word	gPlayerFrame114Tiles
-	.word	gUnk_08154464
-	.word	gUnk_08156B06
+	.word	gPlayerFrame1436NextBankPalette
+	.word	gPlayerFrame1448UpperTiles
 	.global	gPlayerFrame1449
 gPlayerFrame1449:
 	.word	gPlayerFrame1449OamTemplate+1
 	.word	gPlayerFrame1436Palette
 	.word	gPlayerFrame115Tiles
-	.word	gUnk_08154464
-	.word	gUnk_08156C0C
+	.word	gPlayerFrame1436NextBankPalette
+	.word	gPlayerFrame1449UpperTiles
 	.global	gPlayerFrame1450
 gPlayerFrame1450:
 	.word	gPlayerFrame1450OamTemplate+1
 	.word	gPlayerFrame1436Palette
 	.word	gPlayerFrame115Tiles
-	.word	gUnk_08154464
-	.word	gUnk_08156D12
+	.word	gPlayerFrame1436NextBankPalette
+	.word	gPlayerFrame1450UpperTiles
 	.global	gPlayerFrame1451
 gPlayerFrame1451:
 	.word	gPlayerFrame1451OamTemplate+1
 	.word	gPlayerFrame1436Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_08154464
-	.word	gUnk_08156E18
+	.word	gPlayerFrame1436NextBankPalette
+	.word	gPlayerFrame1451UpperTiles
 	.global	gPlayerFrame1585
 gPlayerFrame1585:
 	.word	gPlayerFrame1585OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_08154486
-	.word	gUnk_08156F9E
+	.word	gPlayerFrame1585NextBankPalette
+	.word	gPlayerFrame1585UpperTiles
 	.global	gPlayerFrame1586
 gPlayerFrame1586:
 	.word	gPlayerFrame1586OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_08154486
-	.word	gUnk_08157044
+	.word	gPlayerFrame1585NextBankPalette
+	.word	gPlayerFrame1586UpperTiles
 	.global	gPlayerFrame1587
 gPlayerFrame1587:
 	.word	gPlayerFrame1587OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_08154486
-	.word	gUnk_081570EA
+	.word	gPlayerFrame1585NextBankPalette
+	.word	gPlayerFrame1587UpperTiles
 	.global	gPlayerFrame1588
 gPlayerFrame1588:
 	.word	gPlayerFrame1588OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_08154486
-	.word	gUnk_08157170
+	.word	gPlayerFrame1585NextBankPalette
+	.word	gPlayerFrame1588UpperTiles
 	.global	gPlayerFrame1589
 gPlayerFrame1589:
 	.word	gPlayerFrame1589OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_08154486
-	.word	gUnk_08157170
+	.word	gPlayerFrame1585NextBankPalette
+	.word	gPlayerFrame1588UpperTiles
 	.global	gPlayerFrame1590
 gPlayerFrame1590:
 	.word	gPlayerFrame1590OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_08154486
-	.word	gUnk_081570EA
+	.word	gPlayerFrame1585NextBankPalette
+	.word	gPlayerFrame1587UpperTiles
 	.global	gPlayerFrame1591
 gPlayerFrame1591:
 	.word	gPlayerFrame1591OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_08154486
-	.word	gUnk_08157044
+	.word	gPlayerFrame1585NextBankPalette
+	.word	gPlayerFrame1586UpperTiles
 	.global	gPlayerFrame1592
 gPlayerFrame1592:
 	.word	gPlayerFrame1592OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_08154486
-	.word	gUnk_08156F9E
+	.word	gPlayerFrame1585NextBankPalette
+	.word	gPlayerFrame1585UpperTiles
 	.global	gPlayerFrame1593
 gPlayerFrame1593:
 	.word	gPlayerFrame1593OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame110Tiles
-	.word	gUnk_08154486
-	.word	gUnk_08157236
+	.word	gPlayerFrame1585NextBankPalette
+	.word	gPlayerFrame1593UpperTiles
 	.global	gPlayerFrame1594
 gPlayerFrame1594:
 	.word	gPlayerFrame1594OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame111Tiles
-	.word	gUnk_08154486
-	.word	gUnk_081572BC
+	.word	gPlayerFrame1585NextBankPalette
+	.word	gPlayerFrame1594UpperTiles
 	.global	gPlayerFrame1595
 gPlayerFrame1595:
 	.word	gPlayerFrame1595OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame112Tiles
-	.word	gUnk_08154486
-	.word	gUnk_08157342
+	.word	gPlayerFrame1585NextBankPalette
+	.word	gPlayerFrame1595UpperTiles
 	.global	gPlayerFrame1596
 gPlayerFrame1596:
 	.word	gPlayerFrame1596OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame113Tiles
-	.word	gUnk_08154486
-	.word	gUnk_081573C8
+	.word	gPlayerFrame1585NextBankPalette
+	.word	gPlayerFrame1596UpperTiles
 	.global	gPlayerFrame1597
 gPlayerFrame1597:
 	.word	gPlayerFrame1597OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame114Tiles
-	.word	gUnk_08154486
-	.word	gUnk_0815744E
+	.word	gPlayerFrame1585NextBankPalette
+	.word	gPlayerFrame1597UpperTiles
 	.global	gPlayerFrame1598
 gPlayerFrame1598:
 	.word	gPlayerFrame1598OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame115Tiles
-	.word	gUnk_08154486
-	.word	gUnk_081574D4
+	.word	gPlayerFrame1585NextBankPalette
+	.word	gPlayerFrame1598UpperTiles
 	.global	gPlayerFrame1754
 gPlayerFrame1754:
 	.word	gPlayerFrame1754OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_081544A8
-	.word	gUnk_0815755A
+	.word	gPlayerFrame1754NextBankPalette
+	.word	gPlayerFrame1754UpperTiles
 	.global	gPlayerFrame1755
 gPlayerFrame1755:
 	.word	gPlayerFrame1755OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_081544A8
-	.word	gUnk_08157600
+	.word	gPlayerFrame1754NextBankPalette
+	.word	gPlayerFrame1755UpperTiles
 	.global	gPlayerFrame1756
 gPlayerFrame1756:
 	.word	gPlayerFrame1756OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_081544A8
-	.word	gUnk_081576C6
+	.word	gPlayerFrame1754NextBankPalette
+	.word	gPlayerFrame1756UpperTiles
 	.global	gPlayerFrame1757
 gPlayerFrame1757:
 	.word	gPlayerFrame1757OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_081544A8
-	.word	gUnk_0815776C
+	.word	gPlayerFrame1754NextBankPalette
+	.word	gPlayerFrame1757UpperTiles
 	.global	gPlayerFrame1758
 gPlayerFrame1758:
 	.word	gPlayerFrame1758OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_081544A8
-	.word	gUnk_0815776C
+	.word	gPlayerFrame1754NextBankPalette
+	.word	gPlayerFrame1757UpperTiles
 	.global	gPlayerFrame1759
 gPlayerFrame1759:
 	.word	gPlayerFrame1759OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_081544A8
-	.word	gUnk_081576C6
+	.word	gPlayerFrame1754NextBankPalette
+	.word	gPlayerFrame1756UpperTiles
 	.global	gPlayerFrame1760
 gPlayerFrame1760:
 	.word	gPlayerFrame1760OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_081544A8
-	.word	gUnk_08157600
+	.word	gPlayerFrame1754NextBankPalette
+	.word	gPlayerFrame1755UpperTiles
 	.global	gPlayerFrame1761
 gPlayerFrame1761:
 	.word	gPlayerFrame1761OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_081544A8
-	.word	gUnk_0815755A
+	.word	gPlayerFrame1754NextBankPalette
+	.word	gPlayerFrame1754UpperTiles
 	.global	gPlayerFrame1762
 gPlayerFrame1762:
 	.word	gPlayerFrame1762OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame110Tiles
-	.word	gUnk_081544A8
-	.word	gUnk_08157812
+	.word	gPlayerFrame1754NextBankPalette
+	.word	gPlayerFrame1762UpperTiles
 	.global	gPlayerFrame1763
 gPlayerFrame1763:
 	.word	gPlayerFrame1763OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame111Tiles
-	.word	gUnk_081544A8
-	.word	gUnk_08157898
+	.word	gPlayerFrame1754NextBankPalette
+	.word	gPlayerFrame1763UpperTiles
 	.global	gPlayerFrame1764
 gPlayerFrame1764:
 	.word	gPlayerFrame1764OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame112Tiles
-	.word	gUnk_081544A8
-	.word	gUnk_0815791E
+	.word	gPlayerFrame1754NextBankPalette
+	.word	gPlayerFrame1764UpperTiles
 	.global	gPlayerFrame1765
 gPlayerFrame1765:
 	.word	gPlayerFrame1765OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame113Tiles
-	.word	gUnk_081544A8
-	.word	gUnk_081579A4
+	.word	gPlayerFrame1754NextBankPalette
+	.word	gPlayerFrame1765UpperTiles
 	.global	gPlayerFrame1766
 gPlayerFrame1766:
 	.word	gPlayerFrame1766OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame114Tiles
-	.word	gUnk_081544A8
-	.word	gUnk_08157A2A
+	.word	gPlayerFrame1754NextBankPalette
+	.word	gPlayerFrame1766UpperTiles
 	.global	gPlayerFrame1767
 gPlayerFrame1767:
 	.word	gPlayerFrame1767OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame115Tiles
-	.word	gUnk_081544A8
-	.word	gUnk_08157AB0
+	.word	gPlayerFrame1754NextBankPalette
+	.word	gPlayerFrame1767UpperTiles
 	.global	gPlayerFrame2375
 gPlayerFrame2375:
 	.word	gPlayerFrame2375OamTemplate+1
 	.word	gPlayerFrame2375Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_081544EC
-	.word	gUnk_08157B36
+	.word	gPlayerFrame2375NextBankPalette
+	.word	gPlayerFrame2375UpperTiles
 	.global	gPlayerFrame2376
 gPlayerFrame2376:
 	.word	gPlayerFrame2376OamTemplate+1
 	.word	gPlayerFrame2375Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_081544EC
-	.word	gUnk_08157C3C
+	.word	gPlayerFrame2375NextBankPalette
+	.word	gPlayerFrame2376UpperTiles
 	.global	gPlayerFrame2377
 gPlayerFrame2377:
 	.word	gPlayerFrame2377OamTemplate+1
 	.word	gPlayerFrame2375Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_081544EC
-	.word	gUnk_08157D42
+	.word	gPlayerFrame2375NextBankPalette
+	.word	gPlayerFrame2377UpperTiles
 	.global	gPlayerFrame2378
 gPlayerFrame2378:
 	.word	gPlayerFrame2378OamTemplate+1
 	.word	gPlayerFrame2375Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_081544EC
-	.word	gUnk_08157E48
+	.word	gPlayerFrame2375NextBankPalette
+	.word	gPlayerFrame2378UpperTiles
 	.global	gPlayerFrame2379
 gPlayerFrame2379:
 	.word	gPlayerFrame2379OamTemplate+1
 	.word	gPlayerFrame2375Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_081544EC
-	.word	gUnk_08157E48
+	.word	gPlayerFrame2375NextBankPalette
+	.word	gPlayerFrame2378UpperTiles
 	.global	gPlayerFrame2380
 gPlayerFrame2380:
 	.word	gPlayerFrame2380OamTemplate+1
 	.word	gPlayerFrame2375Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_081544EC
-	.word	gUnk_08157C3C
+	.word	gPlayerFrame2375NextBankPalette
+	.word	gPlayerFrame2376UpperTiles
 	.global	gPlayerFrame2381
 gPlayerFrame2381:
 	.word	gPlayerFrame2381OamTemplate+1
 	.word	gPlayerFrame2375Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_081544EC
-	.word	gUnk_08157C3C
+	.word	gPlayerFrame2375NextBankPalette
+	.word	gPlayerFrame2376UpperTiles
 	.global	gPlayerFrame2382
 gPlayerFrame2382:
 	.word	gPlayerFrame2382OamTemplate+1
 	.word	gPlayerFrame2375Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_081544EC
-	.word	gUnk_08157B36
+	.word	gPlayerFrame2375NextBankPalette
+	.word	gPlayerFrame2375UpperTiles
 	.global	gPlayerFrame2383
 gPlayerFrame2383:
 	.word	gPlayerFrame2383OamTemplate+1
 	.word	gPlayerFrame2375Palette
 	.word	gPlayerFrame110Tiles
-	.word	gUnk_081544EC
-	.word	gUnk_08157F4E
+	.word	gPlayerFrame2375NextBankPalette
+	.word	gPlayerFrame2383UpperTiles
 	.global	gPlayerFrame2384
 gPlayerFrame2384:
 	.word	gPlayerFrame2384OamTemplate+1
 	.word	gPlayerFrame2375Palette
 	.word	gPlayerFrame111Tiles
-	.word	gUnk_081544EC
-	.word	gUnk_08158034
+	.word	gPlayerFrame2375NextBankPalette
+	.word	gPlayerFrame2384UpperTiles
 	.global	gPlayerFrame2385
 gPlayerFrame2385:
 	.word	gPlayerFrame2385OamTemplate+1
 	.word	gPlayerFrame2375Palette
 	.word	gPlayerFrame112Tiles
-	.word	gUnk_081544EC
-	.word	gUnk_0815811A
+	.word	gPlayerFrame2375NextBankPalette
+	.word	gPlayerFrame2385UpperTiles
 	.global	gPlayerFrame2386
 gPlayerFrame2386:
 	.word	gPlayerFrame2386OamTemplate+1
 	.word	gPlayerFrame2375Palette
 	.word	gPlayerFrame113Tiles
-	.word	gUnk_081544EC
-	.word	gUnk_081581C0
+	.word	gPlayerFrame2375NextBankPalette
+	.word	gPlayerFrame2386UpperTiles
 	.global	gPlayerFrame2387
 gPlayerFrame2387:
 	.word	gPlayerFrame2387OamTemplate+1
 	.word	gPlayerFrame2375Palette
 	.word	gPlayerFrame114Tiles
-	.word	gUnk_081544EC
-	.word	gUnk_08158266
+	.word	gPlayerFrame2375NextBankPalette
+	.word	gPlayerFrame2387UpperTiles
 	.global	gPlayerFrame2388
 gPlayerFrame2388:
 	.word	gPlayerFrame2388OamTemplate+1
 	.word	gPlayerFrame2375Palette
 	.word	gPlayerFrame115Tiles
-	.word	gUnk_081544EC
-	.word	gUnk_0815830C
+	.word	gPlayerFrame2375NextBankPalette
+	.word	gPlayerFrame2388UpperTiles
 	.global	gPlayerFrame2515
 gPlayerFrame2515:
 	.word	gPlayerFrame2515OamTemplate+1
 	.word	gPlayerFrame2515Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_08154530
-	.word	gUnk_081583D2
+	.word	gPlayerFrame2515NextBankPalette
+	.word	gPlayerFrame2515UpperTiles
 	.global	gPlayerFrame2516
 gPlayerFrame2516:
 	.word	gPlayerFrame2516OamTemplate+1
 	.word	gPlayerFrame2515Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_08154530
-	.word	gUnk_08158498
+	.word	gPlayerFrame2515NextBankPalette
+	.word	gPlayerFrame2516UpperTiles
 	.global	gPlayerFrame2517
 gPlayerFrame2517:
 	.word	gPlayerFrame2517OamTemplate+1
 	.word	gPlayerFrame2515Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_08154530
-	.word	gUnk_0815855E
+	.word	gPlayerFrame2515NextBankPalette
+	.word	gPlayerFrame2517UpperTiles
 	.global	gPlayerFrame2518
 gPlayerFrame2518:
 	.word	gPlayerFrame2518OamTemplate+1
 	.word	gPlayerFrame2515Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_08154530
-	.word	gUnk_08158624
+	.word	gPlayerFrame2515NextBankPalette
+	.word	gPlayerFrame2518UpperTiles
 	.global	gPlayerFrame2519
 gPlayerFrame2519:
 	.word	gPlayerFrame2519OamTemplate+1
 	.word	gPlayerFrame2515Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_08154530
-	.word	gUnk_08158624
+	.word	gPlayerFrame2515NextBankPalette
+	.word	gPlayerFrame2518UpperTiles
 	.global	gPlayerFrame2520
 gPlayerFrame2520:
 	.word	gPlayerFrame2520OamTemplate+1
 	.word	gPlayerFrame2515Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_08154530
-	.word	gUnk_0815855E
+	.word	gPlayerFrame2515NextBankPalette
+	.word	gPlayerFrame2517UpperTiles
 	.global	gPlayerFrame2521
 gPlayerFrame2521:
 	.word	gPlayerFrame2521OamTemplate+1
 	.word	gPlayerFrame2515Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_08154530
-	.word	gUnk_08158498
+	.word	gPlayerFrame2515NextBankPalette
+	.word	gPlayerFrame2516UpperTiles
 	.global	gPlayerFrame2522
 gPlayerFrame2522:
 	.word	gPlayerFrame2522OamTemplate+1
 	.word	gPlayerFrame2515Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_08154530
-	.word	gUnk_081583D2
+	.word	gPlayerFrame2515NextBankPalette
+	.word	gPlayerFrame2515UpperTiles
 	.global	gPlayerFrame2523
 gPlayerFrame2523:
 	.word	gPlayerFrame2523OamTemplate+1
 	.word	gPlayerFrame2515Palette
 	.word	gPlayerFrame110Tiles
-	.word	gUnk_08154530
-	.word	gUnk_081586EA
+	.word	gPlayerFrame2515NextBankPalette
+	.word	gPlayerFrame2523UpperTiles
 	.global	gPlayerFrame2524
 gPlayerFrame2524:
 	.word	gPlayerFrame2524OamTemplate+1
 	.word	gPlayerFrame2515Palette
 	.word	gPlayerFrame111Tiles
-	.word	gUnk_08154530
-	.word	gUnk_081586EA
+	.word	gPlayerFrame2515NextBankPalette
+	.word	gPlayerFrame2523UpperTiles
 	.global	gPlayerFrame2525
 gPlayerFrame2525:
 	.word	gPlayerFrame2525OamTemplate+1
 	.word	gPlayerFrame2515Palette
 	.word	gPlayerFrame112Tiles
-	.word	gUnk_08154530
-	.word	gUnk_081587B0
+	.word	gPlayerFrame2515NextBankPalette
+	.word	gPlayerFrame2525UpperTiles
 	.global	gPlayerFrame2526
 gPlayerFrame2526:
 	.word	gPlayerFrame2526OamTemplate+1
 	.word	gPlayerFrame2515Palette
 	.word	gPlayerFrame113Tiles
-	.word	gUnk_08154530
-	.word	gUnk_08158836
+	.word	gPlayerFrame2515NextBankPalette
+	.word	gPlayerFrame2526UpperTiles
 	.global	gPlayerFrame2527
 gPlayerFrame2527:
 	.word	gPlayerFrame2527OamTemplate+1
 	.word	gPlayerFrame2515Palette
 	.word	gPlayerFrame114Tiles
-	.word	gUnk_08154530
-	.word	gUnk_081588BC
+	.word	gPlayerFrame2515NextBankPalette
+	.word	gPlayerFrame2527UpperTiles
 	.global	gPlayerFrame2528
 gPlayerFrame2528:
 	.word	gPlayerFrame2528OamTemplate+1
 	.word	gPlayerFrame2515Palette
 	.word	gPlayerFrame115Tiles
-	.word	gUnk_08154530
-	.word	gUnk_081588BC
+	.word	gPlayerFrame2515NextBankPalette
+	.word	gPlayerFrame2527UpperTiles
 	.global	gPlayerFrame2655
 gPlayerFrame2655:
 	.word	gPlayerFrame2655OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_08154552
-	.word	gUnk_08158942
+	.word	gPlayerFrame2655NextBankPalette
+	.word	gPlayerFrame2655UpperTiles
 	.global	gPlayerFrame2656
 gPlayerFrame2656:
 	.word	gPlayerFrame2656OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_08154552
-	.word	gUnk_08158A28
+	.word	gPlayerFrame2655NextBankPalette
+	.word	gPlayerFrame2656UpperTiles
 	.global	gPlayerFrame2657
 gPlayerFrame2657:
 	.word	gPlayerFrame2657OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_08154552
-	.word	gUnk_08158B0E
+	.word	gPlayerFrame2655NextBankPalette
+	.word	gPlayerFrame2657UpperTiles
 	.global	gPlayerFrame2658
 gPlayerFrame2658:
 	.word	gPlayerFrame2658OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_08154552
-	.word	gUnk_08158C14
+	.word	gPlayerFrame2655NextBankPalette
+	.word	gPlayerFrame2658UpperTiles
 	.global	gPlayerFrame2659
 gPlayerFrame2659:
 	.word	gPlayerFrame2659OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_08154552
-	.word	gUnk_08158C14
+	.word	gPlayerFrame2655NextBankPalette
+	.word	gPlayerFrame2658UpperTiles
 	.global	gPlayerFrame2660
 gPlayerFrame2660:
 	.word	gPlayerFrame2660OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_08154552
-	.word	gUnk_08158B0E
+	.word	gPlayerFrame2655NextBankPalette
+	.word	gPlayerFrame2657UpperTiles
 	.global	gPlayerFrame2661
 gPlayerFrame2661:
 	.word	gPlayerFrame2661OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_08154552
-	.word	gUnk_08158A28
+	.word	gPlayerFrame2655NextBankPalette
+	.word	gPlayerFrame2656UpperTiles
 	.global	gPlayerFrame2662
 gPlayerFrame2662:
 	.word	gPlayerFrame2662OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_08154552
-	.word	gUnk_08158942
+	.word	gPlayerFrame2655NextBankPalette
+	.word	gPlayerFrame2655UpperTiles
 	.global	gPlayerFrame2663
 gPlayerFrame2663:
 	.word	gPlayerFrame2663OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame110Tiles
-	.word	gUnk_08154552
-	.word	gUnk_08158CFA
+	.word	gPlayerFrame2655NextBankPalette
+	.word	gPlayerFrame2663UpperTiles
 	.global	gPlayerFrame2664
 gPlayerFrame2664:
 	.word	gPlayerFrame2664OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame111Tiles
-	.word	gUnk_08154552
-	.word	gUnk_08158E00
+	.word	gPlayerFrame2655NextBankPalette
+	.word	gPlayerFrame2664UpperTiles
 	.global	gPlayerFrame2665
 gPlayerFrame2665:
 	.word	gPlayerFrame2665OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame112Tiles
-	.word	gUnk_08154552
-	.word	gUnk_08158F06
+	.word	gPlayerFrame2655NextBankPalette
+	.word	gPlayerFrame2665UpperTiles
 	.global	gPlayerFrame2666
 gPlayerFrame2666:
 	.word	gPlayerFrame2666OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame113Tiles
-	.word	gUnk_08154552
-	.word	gUnk_08158F4C
+	.word	gPlayerFrame2655NextBankPalette
+	.word	gPlayerFrame2666UpperTiles
 	.global	gPlayerFrame2667
 gPlayerFrame2667:
 	.word	gPlayerFrame2667OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame114Tiles
-	.word	gUnk_08154552
-	.word	gUnk_08158FD2
+	.word	gPlayerFrame2655NextBankPalette
+	.word	gPlayerFrame2667UpperTiles
 	.global	gPlayerFrame2668
 gPlayerFrame2668:
 	.word	gPlayerFrame2668OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame115Tiles
-	.word	gUnk_08154552
-	.word	gUnk_08159058
+	.word	gPlayerFrame2655NextBankPalette
+	.word	gPlayerFrame2668UpperTiles
 	.global	gPlayerFrame2820
 gPlayerFrame2820:
 	.word	gPlayerFrame2820OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_08154574
-	.word	gUnk_081590DE
+	.word	gPlayerFrame2820NextBankPalette
+	.word	gPlayerFrame2820UpperTiles
 	.global	gPlayerFrame2821
 gPlayerFrame2821:
 	.word	gPlayerFrame2821OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_08154574
-	.word	gUnk_081591C4
+	.word	gPlayerFrame2820NextBankPalette
+	.word	gPlayerFrame2821UpperTiles
 	.global	gPlayerFrame2822
 gPlayerFrame2822:
 	.word	gPlayerFrame2822OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_08154574
-	.word	gUnk_081592EA
+	.word	gPlayerFrame2820NextBankPalette
+	.word	gPlayerFrame2822UpperTiles
 	.global	gPlayerFrame2823
 gPlayerFrame2823:
 	.word	gPlayerFrame2823OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_08154574
-	.word	gUnk_08159410
+	.word	gPlayerFrame2820NextBankPalette
+	.word	gPlayerFrame2823UpperTiles
 	.global	gPlayerFrame2824
 gPlayerFrame2824:
 	.word	gPlayerFrame2824OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_08154574
-	.word	gUnk_08159410
+	.word	gPlayerFrame2820NextBankPalette
+	.word	gPlayerFrame2823UpperTiles
 	.global	gPlayerFrame2825
 gPlayerFrame2825:
 	.word	gPlayerFrame2825OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_08154574
-	.word	gUnk_081592EA
+	.word	gPlayerFrame2820NextBankPalette
+	.word	gPlayerFrame2822UpperTiles
 	.global	gPlayerFrame2826
 gPlayerFrame2826:
 	.word	gPlayerFrame2826OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_08154574
-	.word	gUnk_081591C4
+	.word	gPlayerFrame2820NextBankPalette
+	.word	gPlayerFrame2821UpperTiles
 	.global	gPlayerFrame2827
 gPlayerFrame2827:
 	.word	gPlayerFrame2827OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_08154574
-	.word	gUnk_081590DE
+	.word	gPlayerFrame2820NextBankPalette
+	.word	gPlayerFrame2820UpperTiles
 	.global	gPlayerFrame2828
 gPlayerFrame2828:
 	.word	gPlayerFrame2828OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame110Tiles
-	.word	gUnk_08154574
-	.word	gUnk_08159536
+	.word	gPlayerFrame2820NextBankPalette
+	.word	gPlayerFrame2828UpperTiles
 	.global	gPlayerFrame2829
 gPlayerFrame2829:
 	.word	gPlayerFrame2829OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame111Tiles
-	.word	gUnk_08154574
-	.word	gUnk_0815967C
+	.word	gPlayerFrame2820NextBankPalette
+	.word	gPlayerFrame2829UpperTiles
 	.global	gPlayerFrame2830
 gPlayerFrame2830:
 	.word	gPlayerFrame2830OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame112Tiles
-	.word	gUnk_08154574
-	.word	gUnk_081597A2
+	.word	gPlayerFrame2820NextBankPalette
+	.word	gPlayerFrame2830UpperTiles
 	.global	gPlayerFrame2831
 gPlayerFrame2831:
 	.word	gPlayerFrame2831OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame113Tiles
-	.word	gUnk_08154574
-	.word	gUnk_081597E6
+	.word	gPlayerFrame2820NextBankPalette
+	.word	gPlayerFrame2831UpperTiles
 	.global	gPlayerFrame2832
 gPlayerFrame2832:
 	.word	gPlayerFrame2832OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame114Tiles
-	.word	gUnk_08154574
-	.word	gUnk_0815986C
+	.word	gPlayerFrame2820NextBankPalette
+	.word	gPlayerFrame2832UpperTiles
 	.global	gPlayerFrame2833
 gPlayerFrame2833:
 	.word	gPlayerFrame2833OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame115Tiles
-	.word	gUnk_08154574
-	.word	gUnk_0815986C
+	.word	gPlayerFrame2820NextBankPalette
+	.word	gPlayerFrame2832UpperTiles
 	.global	gPlayerFrame2966
 gPlayerFrame2966:
 	.word	gPlayerFrame2966OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_08154596
-	.word	gUnk_081598F2
+	.word	gPlayerFrame2966NextBankPalette
+	.word	gPlayerFrame2966UpperTiles
 	.global	gPlayerFrame2967
 gPlayerFrame2967:
 	.word	gPlayerFrame2967OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_08154596
-	.word	gUnk_081599F8
+	.word	gPlayerFrame2966NextBankPalette
+	.word	gPlayerFrame2967UpperTiles
 	.global	gPlayerFrame2968
 gPlayerFrame2968:
 	.word	gPlayerFrame2968OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_08154596
-	.word	gUnk_08159AFE
+	.word	gPlayerFrame2966NextBankPalette
+	.word	gPlayerFrame2968UpperTiles
 	.global	gPlayerFrame2969
 gPlayerFrame2969:
 	.word	gPlayerFrame2969OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_08154596
-	.word	gUnk_08159C04
+	.word	gPlayerFrame2966NextBankPalette
+	.word	gPlayerFrame2969UpperTiles
 	.global	gPlayerFrame2970
 gPlayerFrame2970:
 	.word	gPlayerFrame2970OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_08154596
-	.word	gUnk_08159C04
+	.word	gPlayerFrame2966NextBankPalette
+	.word	gPlayerFrame2969UpperTiles
 	.global	gPlayerFrame2971
 gPlayerFrame2971:
 	.word	gPlayerFrame2971OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_08154596
-	.word	gUnk_08159AFE
+	.word	gPlayerFrame2966NextBankPalette
+	.word	gPlayerFrame2968UpperTiles
 	.global	gPlayerFrame2972
 gPlayerFrame2972:
 	.word	gPlayerFrame2972OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_08154596
-	.word	gUnk_081599F8
+	.word	gPlayerFrame2966NextBankPalette
+	.word	gPlayerFrame2967UpperTiles
 	.global	gPlayerFrame2973
 gPlayerFrame2973:
 	.word	gPlayerFrame2973OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_08154596
-	.word	gUnk_081598F2
+	.word	gPlayerFrame2966NextBankPalette
+	.word	gPlayerFrame2966UpperTiles
 	.global	gPlayerFrame2974
 gPlayerFrame2974:
 	.word	gPlayerFrame2974OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame110Tiles
-	.word	gUnk_08154596
-	.word	gUnk_08159CCA
+	.word	gPlayerFrame2966NextBankPalette
+	.word	gPlayerFrame2974UpperTiles
 	.global	gPlayerFrame2975
 gPlayerFrame2975:
 	.word	gPlayerFrame2975OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame111Tiles
-	.word	gUnk_08154596
-	.word	gUnk_08159D90
+	.word	gPlayerFrame2966NextBankPalette
+	.word	gPlayerFrame2975UpperTiles
 	.global	gPlayerFrame2976
 gPlayerFrame2976:
 	.word	gPlayerFrame2976OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame112Tiles
-	.word	gUnk_08154596
-	.word	gUnk_08159E56
+	.word	gPlayerFrame2966NextBankPalette
+	.word	gPlayerFrame2976UpperTiles
 	.global	gPlayerFrame2977
 gPlayerFrame2977:
 	.word	gPlayerFrame2977OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame113Tiles
-	.word	gUnk_08154596
-	.word	gUnk_08159F1C
+	.word	gPlayerFrame2966NextBankPalette
+	.word	gPlayerFrame2977UpperTiles
 	.global	gPlayerFrame2978
 gPlayerFrame2978:
 	.word	gPlayerFrame2978OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame114Tiles
-	.word	gUnk_08154596
-	.word	gUnk_08159FE2
+	.word	gPlayerFrame2966NextBankPalette
+	.word	gPlayerFrame2978UpperTiles
 	.global	gPlayerFrame2979
 gPlayerFrame2979:
 	.word	gPlayerFrame2979OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame115Tiles
-	.word	gUnk_08154596
-	.word	gUnk_08159FE2
+	.word	gPlayerFrame2966NextBankPalette
+	.word	gPlayerFrame2978UpperTiles
 	.global	gPlayerFrame3097
 gPlayerFrame3097:
 	.word	gPlayerFrame3097OamTemplate+1
 	.word	gPlayerFrame3097Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_081545DA
-	.word	gUnk_0815A0E8
+	.word	gPlayerFrame3097NextBankPalette
+	.word	gPlayerFrame3097UpperTiles
 	.global	gPlayerFrame3098
 gPlayerFrame3098:
 	.word	gPlayerFrame3098OamTemplate+1
 	.word	gPlayerFrame3097Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_081545DA
-	.word	gUnk_0815A1EE
+	.word	gPlayerFrame3097NextBankPalette
+	.word	gPlayerFrame3098UpperTiles
 	.global	gPlayerFrame3099
 gPlayerFrame3099:
 	.word	gPlayerFrame3099OamTemplate+1
 	.word	gPlayerFrame3097Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_081545DA
-	.word	gUnk_0815A2F4
+	.word	gPlayerFrame3097NextBankPalette
+	.word	gPlayerFrame3099UpperTiles
 	.global	gPlayerFrame3100
 gPlayerFrame3100:
 	.word	gPlayerFrame3100OamTemplate+1
 	.word	gPlayerFrame3097Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_081545DA
-	.word	gUnk_0815A3FA
+	.word	gPlayerFrame3097NextBankPalette
+	.word	gPlayerFrame3100UpperTiles
 	.global	gPlayerFrame3101
 gPlayerFrame3101:
 	.word	gPlayerFrame3101OamTemplate+1
 	.word	gPlayerFrame3097Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_081545DA
-	.word	gUnk_0815A3FA
+	.word	gPlayerFrame3097NextBankPalette
+	.word	gPlayerFrame3100UpperTiles
 	.global	gPlayerFrame3102
 gPlayerFrame3102:
 	.word	gPlayerFrame3102OamTemplate+1
 	.word	gPlayerFrame3097Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_081545DA
-	.word	gUnk_0815A2F4
+	.word	gPlayerFrame3097NextBankPalette
+	.word	gPlayerFrame3099UpperTiles
 	.global	gPlayerFrame3103
 gPlayerFrame3103:
 	.word	gPlayerFrame3103OamTemplate+1
 	.word	gPlayerFrame3097Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_081545DA
-	.word	gUnk_0815A1EE
+	.word	gPlayerFrame3097NextBankPalette
+	.word	gPlayerFrame3098UpperTiles
 	.global	gPlayerFrame3104
 gPlayerFrame3104:
 	.word	gPlayerFrame3104OamTemplate+1
 	.word	gPlayerFrame3097Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_081545DA
-	.word	gUnk_0815A0E8
+	.word	gPlayerFrame3097NextBankPalette
+	.word	gPlayerFrame3097UpperTiles
 	.global	gPlayerFrame3105
 gPlayerFrame3105:
 	.word	gPlayerFrame3105OamTemplate+1
 	.word	gPlayerFrame3097Palette
 	.word	gPlayerFrame110Tiles
-	.word	gUnk_081545DA
-	.word	gUnk_0815A4E0
+	.word	gPlayerFrame3097NextBankPalette
+	.word	gPlayerFrame3105UpperTiles
 	.global	gPlayerFrame3106
 gPlayerFrame3106:
 	.word	gPlayerFrame3106OamTemplate+1
 	.word	gPlayerFrame3097Palette
 	.word	gPlayerFrame111Tiles
-	.word	gUnk_081545DA
-	.word	gUnk_0815A5A6
+	.word	gPlayerFrame3097NextBankPalette
+	.word	gPlayerFrame3106UpperTiles
 	.global	gPlayerFrame3107
 gPlayerFrame3107:
 	.word	gPlayerFrame3107OamTemplate+1
 	.word	gPlayerFrame3097Palette
 	.word	gPlayerFrame112Tiles
-	.word	gUnk_081545DA
-	.word	gUnk_0815A68C
+	.word	gPlayerFrame3097NextBankPalette
+	.word	gPlayerFrame3107UpperTiles
 	.global	gPlayerFrame3108
 gPlayerFrame3108:
 	.word	gPlayerFrame3108OamTemplate+1
 	.word	gPlayerFrame3097Palette
 	.word	gPlayerFrame113Tiles
-	.word	gUnk_081545DA
-	.word	gUnk_0815A732
+	.word	gPlayerFrame3097NextBankPalette
+	.word	gPlayerFrame3108UpperTiles
 	.global	gPlayerFrame3109
 gPlayerFrame3109:
 	.word	gPlayerFrame3109OamTemplate+1
 	.word	gPlayerFrame3097Palette
 	.word	gPlayerFrame114Tiles
-	.word	gUnk_081545DA
-	.word	gUnk_0815A7D8
+	.word	gPlayerFrame3097NextBankPalette
+	.word	gPlayerFrame3109UpperTiles
 	.global	gPlayerFrame3110
 gPlayerFrame3110:
 	.word	gPlayerFrame3110OamTemplate+1
 	.word	gPlayerFrame3097Palette
 	.word	gPlayerFrame115Tiles
-	.word	gUnk_081545DA
-	.word	gUnk_0815A87E
+	.word	gPlayerFrame3097NextBankPalette
+	.word	gPlayerFrame3110UpperTiles
 	.global	gPlayerFrame3235
 gPlayerFrame3235:
 	.word	gPlayerFrame3235OamTemplate+1
@@ -13713,113 +13713,113 @@ gPlayerFrame3478:
 	.word	gPlayerFrame3478OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_0815461E
-	.word	gUnk_0815B2C0
+	.word	gPlayerFrame3478NextBankPalette
+	.word	gPlayerFrame3478UpperTiles
 	.global	gPlayerFrame3479
 gPlayerFrame3479:
 	.word	gPlayerFrame3479OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_0815461E
-	.word	gUnk_0815B3E6
+	.word	gPlayerFrame3478NextBankPalette
+	.word	gPlayerFrame3479UpperTiles
 	.global	gPlayerFrame3480
 gPlayerFrame3480:
 	.word	gPlayerFrame3480OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_0815461E
-	.word	gUnk_0815B50C
+	.word	gPlayerFrame3478NextBankPalette
+	.word	gPlayerFrame3480UpperTiles
 	.global	gPlayerFrame3481
 gPlayerFrame3481:
 	.word	gPlayerFrame3481OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_0815461E
-	.word	gUnk_0815B632
+	.word	gPlayerFrame3478NextBankPalette
+	.word	gPlayerFrame3481UpperTiles
 	.global	gPlayerFrame3482
 gPlayerFrame3482:
 	.word	gPlayerFrame3482OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_0815461E
-	.word	gUnk_0815B632
+	.word	gPlayerFrame3478NextBankPalette
+	.word	gPlayerFrame3481UpperTiles
 	.global	gPlayerFrame3483
 gPlayerFrame3483:
 	.word	gPlayerFrame3483OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame104Tiles
-	.word	gUnk_0815461E
-	.word	gUnk_0815B50C
+	.word	gPlayerFrame3478NextBankPalette
+	.word	gPlayerFrame3480UpperTiles
 	.global	gPlayerFrame3484
 gPlayerFrame3484:
 	.word	gPlayerFrame3484OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame103Tiles
-	.word	gUnk_0815461E
-	.word	gUnk_0815B3E6
+	.word	gPlayerFrame3478NextBankPalette
+	.word	gPlayerFrame3479UpperTiles
 	.global	gPlayerFrame3485
 gPlayerFrame3485:
 	.word	gPlayerFrame3485OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame102Tiles
-	.word	gUnk_0815461E
-	.word	gUnk_0815B2C0
+	.word	gPlayerFrame3478NextBankPalette
+	.word	gPlayerFrame3478UpperTiles
 	.global	gPlayerFrame3486
 gPlayerFrame3486:
 	.word	gPlayerFrame3486OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame110Tiles
-	.word	gUnk_0815461E
-	.word	gUnk_0815B798
+	.word	gPlayerFrame3478NextBankPalette
+	.word	gPlayerFrame3486UpperTiles
 	.global	gPlayerFrame3487
 gPlayerFrame3487:
 	.word	gPlayerFrame3487OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame111Tiles
-	.word	gUnk_0815461E
-	.word	gUnk_0815B8BE
+	.word	gPlayerFrame3478NextBankPalette
+	.word	gPlayerFrame3487UpperTiles
 	.global	gPlayerFrame3488
 gPlayerFrame3488:
 	.word	gPlayerFrame3488OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame112Tiles
-	.word	gUnk_0815461E
-	.word	gUnk_0815B9C4
+	.word	gPlayerFrame3478NextBankPalette
+	.word	gPlayerFrame3488UpperTiles
 	.global	gPlayerFrame3489
 gPlayerFrame3489:
 	.word	gPlayerFrame3489OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame113Tiles
-	.word	gUnk_0815461E
-	.word	gUnk_0815BA6A
+	.word	gPlayerFrame3478NextBankPalette
+	.word	gPlayerFrame3489UpperTiles
 	.global	gPlayerFrame3490
 gPlayerFrame3490:
 	.word	gPlayerFrame3490OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame114Tiles
-	.word	gUnk_0815461E
-	.word	gUnk_0815BB30
+	.word	gPlayerFrame3478NextBankPalette
+	.word	gPlayerFrame3490UpperTiles
 	.global	gPlayerFrame3491
 gPlayerFrame3491:
 	.word	gPlayerFrame3491OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame115Tiles
-	.word	gUnk_0815461E
-	.word	gUnk_0815BC16
+	.word	gPlayerFrame3478NextBankPalette
+	.word	gPlayerFrame3491UpperTiles
 	.global	gPlayerFrame3492
 gPlayerFrame3492:
 	.word	gPlayerFrame3492OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame115Tiles
-	.word	gUnk_0815461E
-	.word	gUnk_0815BCFC
+	.word	gPlayerFrame3478NextBankPalette
+	.word	gPlayerFrame3492UpperTiles
 	.global	gPlayerFrame3493
 gPlayerFrame3493:
 	.word	gPlayerFrame3493OamTemplate+1
 	.word	gPlayerFrame102Palette
 	.word	gPlayerFrame105Tiles
-	.word	gUnk_0815461E
-	.word	gUnk_0815BDE2
+	.word	gPlayerFrame3478NextBankPalette
+	.word	gPlayerFrame3493UpperTiles
 	.global	gUnk_08763B0C
 gUnk_08763B0C:
 	.word	gUnk_0815EB0C+1
@@ -13921,169 +13921,169 @@ gPlayerFrame1086:
 	.word	gPlayerFrame1086OamTemplate+1
 	.word	gPlayerFrame1086Palette
 	.word	gPlayerFrame1086Tiles
-	.word	gUnk_0815ECFE
-	.word	gUnk_0815EECE
+	.word	gPlayerFrame1086NextBankPalette
+	.word	gPlayerFrame1086UpperTiles
 	.global	gPlayerFrame1087
 gPlayerFrame1087:
 	.word	gPlayerFrame1087OamTemplate+1
 	.word	gPlayerFrame1086Palette
 	.word	gPlayerFrame1087Tiles
-	.word	gUnk_0815ECFE
-	.word	gUnk_0815F15A
+	.word	gPlayerFrame1086NextBankPalette
+	.word	gPlayerFrame1087UpperTiles
 	.global	gPlayerFrame1088
 gPlayerFrame1088:
 	.word	gPlayerFrame1088OamTemplate+1
 	.word	gPlayerFrame1086Palette
 	.word	gPlayerFrame1088Tiles
-	.word	gUnk_0815ECFE
-	.word	gUnk_0815F3C6
+	.word	gPlayerFrame1086NextBankPalette
+	.word	gPlayerFrame1088UpperTiles
 	.global	gPlayerFrame1089
 gPlayerFrame1089:
 	.word	gPlayerFrame1089OamTemplate+1
 	.word	gPlayerFrame1086Palette
 	.word	gPlayerFrame1089Tiles
-	.word	gUnk_0815ECFE
-	.word	gUnk_0815F612
+	.word	gPlayerFrame1086NextBankPalette
+	.word	gPlayerFrame1089UpperTiles
 	.global	gPlayerFrame1090
 gPlayerFrame1090:
 	.word	gPlayerFrame1090OamTemplate+1
 	.word	gPlayerFrame1086Palette
 	.word	gPlayerFrame1090Tiles
-	.word	gUnk_0815ECFE
-	.word	gUnk_0815F612
+	.word	gPlayerFrame1086NextBankPalette
+	.word	gPlayerFrame1089UpperTiles
 	.global	gPlayerFrame1091
 gPlayerFrame1091:
 	.word	gPlayerFrame1091OamTemplate+1
 	.word	gPlayerFrame1086Palette
 	.word	gPlayerFrame1091Tiles
-	.word	gUnk_0815ECFE
-	.word	gUnk_0815F944
+	.word	gPlayerFrame1086NextBankPalette
+	.word	gPlayerFrame1091UpperTiles
 	.global	gPlayerFrame1092
 gPlayerFrame1092:
 	.word	gPlayerFrame1092OamTemplate+1
 	.word	gPlayerFrame1086Palette
 	.word	gPlayerFrame1092Tiles
-	.word	gUnk_0815ECFE
-	.word	gUnk_0815FB90
+	.word	gPlayerFrame1086NextBankPalette
+	.word	gPlayerFrame1092UpperTiles
 	.global	gPlayerFrame1093
 gPlayerFrame1093:
 	.word	gPlayerFrame1093OamTemplate+1
 	.word	gPlayerFrame1086Palette
 	.word	gPlayerFrame1093Tiles
-	.word	gUnk_0815ECFE
-	.word	gUnk_0815FE1C
+	.word	gPlayerFrame1086NextBankPalette
+	.word	gPlayerFrame1093UpperTiles
 	.global	gPlayerFrame1094
 gPlayerFrame1094:
 	.word	gPlayerFrame1094OamTemplate+1
 	.word	gPlayerFrame1086Palette
 	.word	gPlayerFrame1094Tiles
-	.word	gUnk_0815ECFE
-	.word	gUnk_08160088
+	.word	gPlayerFrame1086NextBankPalette
+	.word	gPlayerFrame1094UpperTiles
 	.global	gPlayerFrame1095
 gPlayerFrame1095:
 	.word	gPlayerFrame1095OamTemplate+1
 	.word	gPlayerFrame1086Palette
 	.word	gPlayerFrame1095Tiles
-	.word	gUnk_0815ECFE
-	.word	gUnk_08160314
+	.word	gPlayerFrame1086NextBankPalette
+	.word	gPlayerFrame1095UpperTiles
 	.global	gPlayerFrame1096
 gPlayerFrame1096:
 	.word	gPlayerFrame1096OamTemplate+1
 	.word	gPlayerFrame1086Palette
 	.word	gPlayerFrame1096Tiles
-	.word	gUnk_0815ECFE
-	.word	gUnk_08160480
+	.word	gPlayerFrame1086NextBankPalette
+	.word	gPlayerFrame1096UpperTiles
 	.global	gPlayerFrame1097
 gPlayerFrame1097:
 	.word	gPlayerFrame1097OamTemplate+1
 	.word	gPlayerFrame1086Palette
 	.word	gPlayerFrame1097Tiles
-	.word	gUnk_0815ECFE
-	.word	gUnk_0816058C
+	.word	gPlayerFrame1086NextBankPalette
+	.word	gPlayerFrame1097UpperTiles
 	.global	gPlayerFrame1098
 gPlayerFrame1098:
 	.word	gPlayerFrame1098OamTemplate+1
 	.word	gPlayerFrame1086Palette
 	.word	gPlayerFrame1098Tiles
-	.word	gUnk_0815ECFE
-	.word	gUnk_081606D8
+	.word	gPlayerFrame1086NextBankPalette
+	.word	gPlayerFrame1098UpperTiles
 	.global	gPlayerFrame1099
 gPlayerFrame1099:
 	.word	gPlayerFrame1099OamTemplate+1
 	.word	gPlayerFrame1086Palette
 	.word	gPlayerFrame1099Tiles
-	.word	gUnk_0815ECFE
-	.word	gUnk_08160824
+	.word	gPlayerFrame1086NextBankPalette
+	.word	gPlayerFrame1099UpperTiles
 	.global	gPlayerFrame1887
 gPlayerFrame1887:
 	.word	gPlayerFrame1887OamTemplate+1
 	.word	gPlayerFrame1887Palette
 	.word	gPlayerFrame1887Tiles
-	.word	gUnk_0815ED42
-	.word	gUnk_081609D0
+	.word	gPlayerFrame1887NextBankPalette
+	.word	gPlayerFrame1887UpperTiles
 	.global	gPlayerFrame1888
 gPlayerFrame1888:
 	.word	gPlayerFrame1888OamTemplate+1
 	.word	gPlayerFrame1887Palette
 	.word	gPlayerFrame1888Tiles
-	.word	gUnk_0815ED42
-	.word	gUnk_08160BBC
+	.word	gPlayerFrame1887NextBankPalette
+	.word	gPlayerFrame1888UpperTiles
 	.global	gPlayerFrame1889
 gPlayerFrame1889:
 	.word	gPlayerFrame1889OamTemplate+1
 	.word	gPlayerFrame1887Palette
 	.word	gPlayerFrame1889Tiles
-	.word	gUnk_0815ED42
-	.word	gUnk_08160DC8
+	.word	gPlayerFrame1887NextBankPalette
+	.word	gPlayerFrame1889UpperTiles
 	.global	gPlayerFrame1890
 gPlayerFrame1890:
 	.word	gPlayerFrame1890OamTemplate+1
 	.word	gPlayerFrame1887Palette
 	.word	gPlayerFrame1890Tiles
-	.word	gUnk_0815ED42
-	.word	gUnk_08160F94
+	.word	gPlayerFrame1887NextBankPalette
+	.word	gPlayerFrame1890UpperTiles
 	.global	gPlayerFrame1891
 gPlayerFrame1891:
 	.word	gPlayerFrame1891OamTemplate+1
 	.word	gPlayerFrame1887Palette
 	.word	gPlayerFrame1891Tiles
-	.word	gUnk_0815ED42
-	.word	gUnk_08160F94
+	.word	gPlayerFrame1887NextBankPalette
+	.word	gPlayerFrame1890UpperTiles
 	.global	gPlayerFrame1892
 gPlayerFrame1892:
 	.word	gPlayerFrame1892OamTemplate+1
 	.word	gPlayerFrame1887Palette
 	.word	gPlayerFrame1892Tiles
-	.word	gUnk_0815ED42
-	.word	gUnk_08160DC8
+	.word	gPlayerFrame1887NextBankPalette
+	.word	gPlayerFrame1889UpperTiles
 	.global	gPlayerFrame1893
 gPlayerFrame1893:
 	.word	gPlayerFrame1893OamTemplate+1
 	.word	gPlayerFrame1887Palette
 	.word	gPlayerFrame1893Tiles
-	.word	gUnk_0815ED42
-	.word	gUnk_08160BBC
+	.word	gPlayerFrame1887NextBankPalette
+	.word	gPlayerFrame1888UpperTiles
 	.global	gPlayerFrame1894
 gPlayerFrame1894:
 	.word	gPlayerFrame1894OamTemplate+1
 	.word	gPlayerFrame1887Palette
 	.word	gPlayerFrame1894Tiles
-	.word	gUnk_0815ED42
-	.word	gUnk_081609D0
+	.word	gPlayerFrame1887NextBankPalette
+	.word	gPlayerFrame1887UpperTiles
 	.global	gPlayerFrame1895
 gPlayerFrame1895:
 	.word	gPlayerFrame1895OamTemplate+1
 	.word	gPlayerFrame1887Palette
 	.word	gPlayerFrame1895Tiles
-	.word	gUnk_0815ED42
-	.word	gUnk_08160BBC
+	.word	gPlayerFrame1887NextBankPalette
+	.word	gPlayerFrame1888UpperTiles
 	.global	gPlayerFrame1896
 gPlayerFrame1896:
 	.word	gPlayerFrame1896OamTemplate+1
 	.word	gPlayerFrame1887Palette
 	.word	gPlayerFrame1896Tiles
-	.word	gUnk_0815ED42
-	.word	gUnk_08160DC8
+	.word	gPlayerFrame1887NextBankPalette
+	.word	gPlayerFrame1889UpperTiles
 	.global	gPlayerFrame1897
 gPlayerFrame1897:
 	.word	gPlayerFrame1897OamTemplate+1
@@ -14113,71 +14113,71 @@ gPlayerFrame2144:
 	.word	gPlayerFrame2144OamTemplate+1
 	.word	gPlayerFrame2144Palette
 	.word	gPlayerFrame1086Tiles
-	.word	gUnk_0815ED86
-	.word	gUnk_08161A14
+	.word	gPlayerFrame2144NextBankPalette
+	.word	gPlayerFrame2144UpperTiles
 	.global	gPlayerFrame2145
 gPlayerFrame2145:
 	.word	gPlayerFrame2145OamTemplate+1
 	.word	gPlayerFrame2144Palette
 	.word	gPlayerFrame1087Tiles
-	.word	gUnk_0815ED86
-	.word	gUnk_08161B3A
+	.word	gPlayerFrame2144NextBankPalette
+	.word	gPlayerFrame2145UpperTiles
 	.global	gPlayerFrame2146
 gPlayerFrame2146:
 	.word	gPlayerFrame2146OamTemplate+1
 	.word	gPlayerFrame2144Palette
 	.word	gPlayerFrame1088Tiles
-	.word	gUnk_0815ED86
-	.word	gUnk_08161B3A
+	.word	gPlayerFrame2144NextBankPalette
+	.word	gPlayerFrame2145UpperTiles
 	.global	gPlayerFrame2147
 gPlayerFrame2147:
 	.word	gPlayerFrame2147OamTemplate+1
 	.word	gPlayerFrame2144Palette
 	.word	gPlayerFrame1089Tiles
-	.word	gUnk_0815ED86
-	.word	gUnk_08161A14
+	.word	gPlayerFrame2144NextBankPalette
+	.word	gPlayerFrame2144UpperTiles
 	.global	gPlayerFrame2148
 gPlayerFrame2148:
 	.word	gPlayerFrame2148OamTemplate+1
 	.word	gPlayerFrame2144Palette
 	.word	gPlayerFrame1091Tiles
-	.word	gUnk_0815ED86
-	.word	gUnk_08161B3A
+	.word	gPlayerFrame2144NextBankPalette
+	.word	gPlayerFrame2145UpperTiles
 	.global	gPlayerFrame2149
 gPlayerFrame2149:
 	.word	gPlayerFrame2149OamTemplate+1
 	.word	gPlayerFrame2144Palette
 	.word	gPlayerFrame1090Tiles
-	.word	gUnk_0815ED86
-	.word	gUnk_08161C60
+	.word	gPlayerFrame2144NextBankPalette
+	.word	gPlayerFrame2149UpperTiles
 	.global	gPlayerFrame2150
 gPlayerFrame2150:
 	.word	gPlayerFrame2150OamTemplate+1
 	.word	gPlayerFrame2144Palette
 	.word	gPlayerFrame1092Tiles
-	.word	gUnk_0815ED86
-	.word	gUnk_08161A14
+	.word	gPlayerFrame2144NextBankPalette
+	.word	gPlayerFrame2144UpperTiles
 	.global	gPlayerFrame2151
 gPlayerFrame2151:
 	.word	gPlayerFrame2151OamTemplate+1
 	.word	gPlayerFrame2144Palette
 	.word	gPlayerFrame1093Tiles
-	.word	gUnk_0815ED86
-	.word	gUnk_08161C60
+	.word	gPlayerFrame2144NextBankPalette
+	.word	gPlayerFrame2149UpperTiles
 	.global	gPlayerFrame2152
 gPlayerFrame2152:
 	.word	gPlayerFrame2152OamTemplate+1
 	.word	gPlayerFrame2144Palette
 	.word	gPlayerFrame2152Tiles
-	.word	gUnk_0815ED86
-	.word	gUnk_08161A14
+	.word	gPlayerFrame2144NextBankPalette
+	.word	gPlayerFrame2144UpperTiles
 	.global	gPlayerFrame2153
 gPlayerFrame2153:
 	.word	gPlayerFrame2153OamTemplate+1
 	.word	gPlayerFrame2144Palette
 	.word	gPlayerFrame1095Tiles
-	.word	gUnk_0815ED86
-	.word	gUnk_08161B3A
+	.word	gPlayerFrame2144NextBankPalette
+	.word	gPlayerFrame2145UpperTiles
 	.global	gPlayerFrame2154
 gPlayerFrame2154:
 	.word	gPlayerFrame2154OamTemplate+1
@@ -14208,420 +14208,420 @@ gPlayerFrame124:
 	.word	gPlayerFrame11Palette
 	.word	gPlayerFrame124Tiles
 	.incbin	"baserom.gba", 0x763FB4, 0x4
-	.word	gUnk_08162844
+	.word	gPlayerFrame124UpperTiles
 	.global	gPlayerFrame125
 gPlayerFrame125:
 	.word	gPlayerFrame125OamTemplate+1
 	.word	gPlayerFrame11Palette
 	.word	gPlayerFrame125Tiles
 	.incbin	"baserom.gba", 0x763FC8, 0x4
-	.word	gUnk_08162A10
+	.word	gPlayerFrame125UpperTiles
 	.global	gPlayerFrame126
 gPlayerFrame126:
 	.word	gPlayerFrame126OamTemplate+1
 	.word	gPlayerFrame11Palette
 	.word	gPlayerFrame126Tiles
 	.incbin	"baserom.gba", 0x763FDC, 0x4
-	.word	gUnk_08162BBC
+	.word	gPlayerFrame126UpperTiles
 	.global	gPlayerFrame127
 gPlayerFrame127:
 	.word	gPlayerFrame127OamTemplate+1
 	.word	gPlayerFrame11Palette
 	.word	gPlayerFrame127Tiles
 	.incbin	"baserom.gba", 0x763FF0, 0x4
-	.word	gUnk_08162D26
+	.word	gPlayerFrame127UpperTiles
 	.global	gPlayerFrame128
 gPlayerFrame128:
 	.word	gPlayerFrame128OamTemplate+1
 	.word	gPlayerFrame11Palette
 	.word	gPlayerFrame127Tiles
 	.incbin	"baserom.gba", 0x764004, 0x4
-	.word	gUnk_08162D26
+	.word	gPlayerFrame127UpperTiles
 	.global	gPlayerFrame129
 gPlayerFrame129:
 	.word	gPlayerFrame129OamTemplate+1
 	.word	gPlayerFrame11Palette
 	.word	gPlayerFrame126Tiles
 	.incbin	"baserom.gba", 0x764018, 0x4
-	.word	gUnk_08162BBC
+	.word	gPlayerFrame126UpperTiles
 	.global	gPlayerFrame130
 gPlayerFrame130:
 	.word	gPlayerFrame130OamTemplate+1
 	.word	gPlayerFrame11Palette
 	.word	gPlayerFrame125Tiles
 	.incbin	"baserom.gba", 0x76402C, 0x4
-	.word	gUnk_08162A10
+	.word	gPlayerFrame125UpperTiles
 	.global	gPlayerFrame131
 gPlayerFrame131:
 	.word	gPlayerFrame131OamTemplate+1
 	.word	gPlayerFrame11Palette
 	.word	gPlayerFrame124Tiles
 	.incbin	"baserom.gba", 0x764040, 0x4
-	.word	gUnk_08162844
+	.word	gPlayerFrame124UpperTiles
 	.global	gPlayerFrame132
 gPlayerFrame132:
 	.word	gPlayerFrame132OamTemplate+1
 	.word	gPlayerFrame11Palette
 	.word	gPlayerFrame132Tiles
 	.incbin	"baserom.gba", 0x764054, 0x4
-	.word	gUnk_08162E90
+	.word	gPlayerFrame132UpperTiles
 	.global	gPlayerFrame133
 gPlayerFrame133:
 	.word	gPlayerFrame133OamTemplate+1
 	.word	gPlayerFrame11Palette
 	.word	gPlayerFrame133Tiles
 	.incbin	"baserom.gba", 0x764068, 0x4
-	.word	gUnk_0816303C
+	.word	gPlayerFrame133UpperTiles
 	.global	gPlayerFrame134
 gPlayerFrame134:
 	.word	gPlayerFrame134OamTemplate+1
 	.word	gPlayerFrame11Palette
 	.word	gPlayerFrame134Tiles
 	.incbin	"baserom.gba", 0x76407C, 0x4
-	.word	gUnk_08163108
+	.word	gPlayerFrame134UpperTiles
 	.global	gPlayerFrame135
 gPlayerFrame135:
 	.word	gPlayerFrame135OamTemplate+1
 	.word	gPlayerFrame11Palette
 	.word	gPlayerFrame135Tiles
 	.incbin	"baserom.gba", 0x764090, 0x4
-	.word	gUnk_08163254
+	.word	gPlayerFrame135UpperTiles
 	.global	gPlayerFrame136
 gPlayerFrame136:
 	.word	gPlayerFrame136OamTemplate+1
 	.word	gPlayerFrame11Palette
 	.word	gPlayerFrame136Tiles
 	.incbin	"baserom.gba", 0x7640A4, 0x4
-	.word	gUnk_081633A0
+	.word	gPlayerFrame136UpperTiles
 	.global	gPlayerFrame137
 gPlayerFrame137:
 	.word	gPlayerFrame137OamTemplate+1
 	.word	gPlayerFrame11Palette
 	.word	gPlayerFrame137Tiles
 	.incbin	"baserom.gba", 0x7640B8, 0x4
-	.word	gUnk_081633A0
+	.word	gPlayerFrame136UpperTiles
 	.global	gPlayerFrame11
 gPlayerFrame11:
 	.word	gPlayerFrame11OamTemplate+1
 	.word	gPlayerFrame11Palette
 	.word	gPlayerFrame11Tiles
 	.incbin	"baserom.gba", 0x7640CC, 0x4
-	.word	gUnk_08163612
+	.word	gPlayerFrame11UpperTiles
 	.global	gPlayerFrame1108
 gPlayerFrame1108:
 	.word	gPlayerFrame1108OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame1108Tiles
-	.word	gUnk_081626B8
-	.word	gUnk_081637BE
+	.word	gPlayerFrame1018NextBankPalette
+	.word	gPlayerFrame1108UpperTiles
 	.global	gPlayerFrame1109
 gPlayerFrame1109:
 	.word	gPlayerFrame1109OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame1109Tiles
-	.word	gUnk_081626B8
-	.word	gUnk_08163A4A
+	.word	gPlayerFrame1018NextBankPalette
+	.word	gPlayerFrame1109UpperTiles
 	.global	gPlayerFrame1110
 gPlayerFrame1110:
 	.word	gPlayerFrame1110OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame126Tiles
-	.word	gUnk_081626B8
-	.word	gUnk_08163B70
+	.word	gPlayerFrame1018NextBankPalette
+	.word	gPlayerFrame1110UpperTiles
 	.global	gPlayerFrame1111
 gPlayerFrame1111:
 	.word	gPlayerFrame1111OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame127Tiles
-	.word	gUnk_081626B8
-	.word	gUnk_08163C56
+	.word	gPlayerFrame1018NextBankPalette
+	.word	gPlayerFrame1111UpperTiles
 	.global	gPlayerFrame1112
 gPlayerFrame1112:
 	.word	gPlayerFrame1112OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame127Tiles
-	.word	gUnk_081626B8
-	.word	gUnk_08163C56
+	.word	gPlayerFrame1018NextBankPalette
+	.word	gPlayerFrame1111UpperTiles
 	.global	gPlayerFrame1113
 gPlayerFrame1113:
 	.word	gPlayerFrame1113OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame126Tiles
-	.word	gUnk_081626B8
-	.word	gUnk_08163B70
+	.word	gPlayerFrame1018NextBankPalette
+	.word	gPlayerFrame1110UpperTiles
 	.global	gPlayerFrame1114
 gPlayerFrame1114:
 	.word	gPlayerFrame1114OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame1109Tiles
-	.word	gUnk_081626B8
-	.word	gUnk_08163A4A
+	.word	gPlayerFrame1018NextBankPalette
+	.word	gPlayerFrame1109UpperTiles
 	.global	gPlayerFrame1115
 gPlayerFrame1115:
 	.word	gPlayerFrame1115OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame1115Tiles
-	.word	gUnk_081626B8
-	.word	gUnk_08163E02
+	.word	gPlayerFrame1018NextBankPalette
+	.word	gPlayerFrame1115UpperTiles
 	.global	gPlayerFrame1116
 gPlayerFrame1116:
 	.word	gPlayerFrame1116OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame1116Tiles
-	.word	gUnk_081626B8
-	.word	gUnk_0816408E
+	.word	gPlayerFrame1018NextBankPalette
+	.word	gPlayerFrame1116UpperTiles
 	.global	gPlayerFrame1117
 gPlayerFrame1117:
 	.word	gPlayerFrame1117OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame133Tiles
-	.word	gUnk_081626B8
-	.word	gUnk_081641D4
+	.word	gPlayerFrame1018NextBankPalette
+	.word	gPlayerFrame1117UpperTiles
 	.global	gPlayerFrame1118
 gPlayerFrame1118:
 	.word	gPlayerFrame1118OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame134Tiles
 	.incbin	"baserom.gba", 0x7641A8, 0x4
-	.word	gUnk_08163108
+	.word	gPlayerFrame134UpperTiles
 	.global	gPlayerFrame1119
 gPlayerFrame1119:
 	.word	gPlayerFrame1119OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame135Tiles
 	.incbin	"baserom.gba", 0x7641BC, 0x4
-	.word	gUnk_08163254
+	.word	gPlayerFrame135UpperTiles
 	.global	gPlayerFrame1120
 gPlayerFrame1120:
 	.word	gPlayerFrame1120OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame136Tiles
 	.incbin	"baserom.gba", 0x7641D0, 0x4
-	.word	gUnk_081633A0
+	.word	gPlayerFrame136UpperTiles
 	.global	gPlayerFrame1121
 gPlayerFrame1121:
 	.word	gPlayerFrame1121OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame137Tiles
 	.incbin	"baserom.gba", 0x7641E4, 0x4
-	.word	gUnk_081633A0
+	.word	gPlayerFrame136UpperTiles
 	.global	gPlayerFrame1018
 gPlayerFrame1018:
 	.word	gPlayerFrame1018OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame11Tiles
-	.word	gUnk_081626B8
-	.word	gUnk_081642FA
+	.word	gPlayerFrame1018NextBankPalette
+	.word	gPlayerFrame1018UpperTiles
 	.global	gPlayerFrame1909
 gPlayerFrame1909:
 	.word	gPlayerFrame1909OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame1108Tiles
-	.word	gUnk_081626DA
-	.word	gUnk_08164440
+	.word	gPlayerFrame1822NextBankPalette
+	.word	gPlayerFrame1909UpperTiles
 	.global	gPlayerFrame1910
 gPlayerFrame1910:
 	.word	gPlayerFrame1910OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame1109Tiles
-	.word	gUnk_081626DA
-	.word	gUnk_081645A6
+	.word	gPlayerFrame1822NextBankPalette
+	.word	gPlayerFrame1910UpperTiles
 	.global	gPlayerFrame1911
 gPlayerFrame1911:
 	.word	gPlayerFrame1911OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame126Tiles
-	.word	gUnk_081626DA
-	.word	gUnk_081646EC
+	.word	gPlayerFrame1822NextBankPalette
+	.word	gPlayerFrame1911UpperTiles
 	.global	gPlayerFrame1912
 gPlayerFrame1912:
 	.word	gPlayerFrame1912OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame127Tiles
-	.word	gUnk_081626DA
-	.word	gUnk_081647F2
+	.word	gPlayerFrame1822NextBankPalette
+	.word	gPlayerFrame1912UpperTiles
 	.global	gPlayerFrame1913
 gPlayerFrame1913:
 	.word	gPlayerFrame1913OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame127Tiles
-	.word	gUnk_081626DA
-	.word	gUnk_081648F8
+	.word	gPlayerFrame1822NextBankPalette
+	.word	gPlayerFrame1913UpperTiles
 	.global	gPlayerFrame1914
 gPlayerFrame1914:
 	.word	gPlayerFrame1914OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame126Tiles
-	.word	gUnk_081626DA
-	.word	gUnk_081649DE
+	.word	gPlayerFrame1822NextBankPalette
+	.word	gPlayerFrame1914UpperTiles
 	.global	gPlayerFrame1915
 gPlayerFrame1915:
 	.word	gPlayerFrame1915OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame1109Tiles
-	.word	gUnk_081626DA
-	.word	gUnk_081645A6
+	.word	gPlayerFrame1822NextBankPalette
+	.word	gPlayerFrame1910UpperTiles
 	.global	gPlayerFrame1916
 gPlayerFrame1916:
 	.word	gPlayerFrame1916OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame1115Tiles
-	.word	gUnk_081626DA
-	.word	gUnk_08164AC4
+	.word	gPlayerFrame1822NextBankPalette
+	.word	gPlayerFrame1916UpperTiles
 	.global	gPlayerFrame1917
 gPlayerFrame1917:
 	.word	gPlayerFrame1917OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame1116Tiles
-	.word	gUnk_081626DA
-	.word	gUnk_08164C2A
+	.word	gPlayerFrame1822NextBankPalette
+	.word	gPlayerFrame1917UpperTiles
 	.global	gPlayerFrame1918
 gPlayerFrame1918:
 	.word	gPlayerFrame1918OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame1918Tiles
-	.word	gUnk_081626DA
-	.word	gUnk_08164E96
+	.word	gPlayerFrame1822NextBankPalette
+	.word	gPlayerFrame1918UpperTiles
 	.global	gPlayerFrame1919
 gPlayerFrame1919:
 	.word	gPlayerFrame1919OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame134Tiles
 	.incbin	"baserom.gba", 0x7642D4, 0x4
-	.word	gUnk_08163108
+	.word	gPlayerFrame134UpperTiles
 	.global	gPlayerFrame1920
 gPlayerFrame1920:
 	.word	gPlayerFrame1920OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame135Tiles
 	.incbin	"baserom.gba", 0x7642E8, 0x4
-	.word	gUnk_08163254
+	.word	gPlayerFrame135UpperTiles
 	.global	gPlayerFrame1921
 gPlayerFrame1921:
 	.word	gPlayerFrame1921OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame136Tiles
 	.incbin	"baserom.gba", 0x7642FC, 0x4
-	.word	gUnk_081633A0
+	.word	gPlayerFrame136UpperTiles
 	.global	gPlayerFrame1922
 gPlayerFrame1922:
 	.word	gPlayerFrame1922OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame137Tiles
 	.incbin	"baserom.gba", 0x764310, 0x4
-	.word	gUnk_081633A0
+	.word	gPlayerFrame136UpperTiles
 	.global	gPlayerFrame1822
 gPlayerFrame1822:
 	.word	gPlayerFrame1822OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame11Tiles
-	.word	gUnk_081626DA
-	.word	gUnk_08164FDC
+	.word	gPlayerFrame1822NextBankPalette
+	.word	gPlayerFrame1822UpperTiles
 	.global	gPlayerFrame2166
 gPlayerFrame2166:
 	.word	gPlayerFrame2166OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame1108Tiles
-	.word	gUnk_081626FC
-	.word	gUnk_08165162
+	.word	gPlayerFrame2067NextBankPalette
+	.word	gPlayerFrame2166UpperTiles
 	.global	gPlayerFrame2167
 gPlayerFrame2167:
 	.word	gPlayerFrame2167OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame1109Tiles
-	.word	gUnk_081626FC
-	.word	gUnk_08165328
+	.word	gPlayerFrame2067NextBankPalette
+	.word	gPlayerFrame2167UpperTiles
 	.global	gPlayerFrame2168
 gPlayerFrame2168:
 	.word	gPlayerFrame2168OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame126Tiles
-	.word	gUnk_081626FC
-	.word	gUnk_081654CE
+	.word	gPlayerFrame2067NextBankPalette
+	.word	gPlayerFrame2168UpperTiles
 	.global	gPlayerFrame2169
 gPlayerFrame2169:
 	.word	gPlayerFrame2169OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame127Tiles
-	.word	gUnk_081626FC
-	.word	gUnk_08165634
+	.word	gPlayerFrame2067NextBankPalette
+	.word	gPlayerFrame2169UpperTiles
 	.global	gPlayerFrame2170
 gPlayerFrame2170:
 	.word	gPlayerFrame2170OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame127Tiles
-	.word	gUnk_081626FC
-	.word	gUnk_0816579A
+	.word	gPlayerFrame2067NextBankPalette
+	.word	gPlayerFrame2170UpperTiles
 	.global	gPlayerFrame2171
 gPlayerFrame2171:
 	.word	gPlayerFrame2171OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame126Tiles
-	.word	gUnk_081626FC
-	.word	gUnk_081654CE
+	.word	gPlayerFrame2067NextBankPalette
+	.word	gPlayerFrame2168UpperTiles
 	.global	gPlayerFrame2172
 gPlayerFrame2172:
 	.word	gPlayerFrame2172OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame1109Tiles
-	.word	gUnk_081626FC
-	.word	gUnk_08165900
+	.word	gPlayerFrame2067NextBankPalette
+	.word	gPlayerFrame2172UpperTiles
 	.global	gPlayerFrame2173
 gPlayerFrame2173:
 	.word	gPlayerFrame2173OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame1115Tiles
-	.word	gUnk_081626FC
-	.word	gUnk_08165AA6
+	.word	gPlayerFrame2067NextBankPalette
+	.word	gPlayerFrame2173UpperTiles
 	.global	gPlayerFrame2174
 gPlayerFrame2174:
 	.word	gPlayerFrame2174OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame1116Tiles
-	.word	gUnk_081626FC
-	.word	gUnk_08165C6C
+	.word	gPlayerFrame2067NextBankPalette
+	.word	gPlayerFrame2174UpperTiles
 	.global	gPlayerFrame2175
 gPlayerFrame2175:
 	.word	gPlayerFrame2175OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame133Tiles
-	.word	gUnk_081626FC
-	.word	gUnk_08165E12
+	.word	gPlayerFrame2067NextBankPalette
+	.word	gPlayerFrame2175UpperTiles
 	.global	gPlayerFrame2176
 gPlayerFrame2176:
 	.word	gPlayerFrame2176OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame134Tiles
 	.incbin	"baserom.gba", 0x764400, 0x4
-	.word	gUnk_08163108
+	.word	gPlayerFrame134UpperTiles
 	.global	gPlayerFrame2177
 gPlayerFrame2177:
 	.word	gPlayerFrame2177OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame135Tiles
 	.incbin	"baserom.gba", 0x764414, 0x4
-	.word	gUnk_08163254
+	.word	gPlayerFrame135UpperTiles
 	.global	gPlayerFrame2178
 gPlayerFrame2178:
 	.word	gPlayerFrame2178OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame136Tiles
 	.incbin	"baserom.gba", 0x764428, 0x4
-	.word	gUnk_081633A0
+	.word	gPlayerFrame136UpperTiles
 	.global	gPlayerFrame2179
 gPlayerFrame2179:
 	.word	gPlayerFrame2179OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame137Tiles
 	.incbin	"baserom.gba", 0x76443C, 0x4
-	.word	gUnk_081633A0
+	.word	gPlayerFrame136UpperTiles
 	.global	gPlayerFrame2067
 gPlayerFrame2067:
 	.word	gPlayerFrame2067OamTemplate+1
 	.word	gPlayerFrame1018Palette
 	.word	gPlayerFrame11Tiles
-	.word	gUnk_081626FC
-	.word	gUnk_08165FB8
+	.word	gPlayerFrame2067NextBankPalette
+	.word	gPlayerFrame2067UpperTiles
 	.global	gPlayerFrame116
 gPlayerFrame116:
 	.word	gPlayerFrame116OamTemplate+1
@@ -14752,582 +14752,582 @@ gPlayerFrame976:
 	.word	gPlayerFrame976OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame116Tiles
-	.word	gUnk_08166D46
-	.word	gUnk_0816812C
+	.word	gPlayerFrame976NextBankPalette
+	.word	gPlayerFrame976UpperTiles
 	.global	gPlayerFrame977
 gPlayerFrame977:
 	.word	gPlayerFrame977OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame117Tiles
-	.word	gUnk_08166D46
-	.word	gUnk_081681F2
+	.word	gPlayerFrame976NextBankPalette
+	.word	gPlayerFrame977UpperTiles
 	.global	gPlayerFrame978
 gPlayerFrame978:
 	.word	gPlayerFrame978OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166D46
-	.word	gUnk_08168298
+	.word	gPlayerFrame976NextBankPalette
+	.word	gPlayerFrame978UpperTiles
 	.global	gPlayerFrame979
 gPlayerFrame979:
 	.word	gPlayerFrame979OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166D46
-	.word	gUnk_08168298
+	.word	gPlayerFrame976NextBankPalette
+	.word	gPlayerFrame978UpperTiles
 	.global	gPlayerFrame980
 gPlayerFrame980:
 	.word	gPlayerFrame980OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame120Tiles
-	.word	gUnk_08166D46
-	.word	gUnk_0816837E
+	.word	gPlayerFrame976NextBankPalette
+	.word	gPlayerFrame980UpperTiles
 	.global	gPlayerFrame981
 gPlayerFrame981:
 	.word	gPlayerFrame981OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166D46
-	.word	gUnk_08168444
+	.word	gPlayerFrame976NextBankPalette
+	.word	gPlayerFrame981UpperTiles
 	.global	gPlayerFrame982
 gPlayerFrame982:
 	.word	gPlayerFrame982OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166D46
-	.word	gUnk_08168444
+	.word	gPlayerFrame976NextBankPalette
+	.word	gPlayerFrame981UpperTiles
 	.global	gPlayerFrame983
 gPlayerFrame983:
 	.word	gPlayerFrame983OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame123Tiles
-	.word	gUnk_08166D46
-	.word	gUnk_0816850A
+	.word	gPlayerFrame976NextBankPalette
+	.word	gPlayerFrame983UpperTiles
 	.global	gPlayerFrame1452
 gPlayerFrame1452:
 	.word	gPlayerFrame1452OamTemplate+1
 	.word	gPlayerFrame1452Palette
 	.word	gPlayerFrame116Tiles
-	.word	gUnk_08166D68
-	.word	gUnk_081685D0
+	.word	gPlayerFrame1452NextBankPalette
+	.word	gPlayerFrame1452UpperTiles
 	.global	gPlayerFrame1454
 gPlayerFrame1454:
 	.word	gPlayerFrame1454OamTemplate+1
 	.word	gPlayerFrame1452Palette
 	.word	gPlayerFrame117Tiles
-	.word	gUnk_08166D68
-	.word	gUnk_08168776
+	.word	gPlayerFrame1452NextBankPalette
+	.word	gPlayerFrame1454UpperTiles
 	.global	gPlayerFrame1456
 gPlayerFrame1456:
 	.word	gPlayerFrame1456OamTemplate+1
 	.word	gPlayerFrame1452Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166D68
-	.word	gUnk_081688FC
+	.word	gPlayerFrame1452NextBankPalette
+	.word	gPlayerFrame1456UpperTiles
 	.global	gPlayerFrame1457
 gPlayerFrame1457:
 	.word	gPlayerFrame1457OamTemplate+1
 	.word	gPlayerFrame1452Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166D68
-	.word	gUnk_08168A82
+	.word	gPlayerFrame1452NextBankPalette
+	.word	gPlayerFrame1457UpperTiles
 	.global	gPlayerFrame1458
 gPlayerFrame1458:
 	.word	gPlayerFrame1458OamTemplate+1
 	.word	gPlayerFrame1452Palette
 	.word	gPlayerFrame120Tiles
-	.word	gUnk_08166D68
-	.word	gUnk_08168C08
+	.word	gPlayerFrame1452NextBankPalette
+	.word	gPlayerFrame1458UpperTiles
 	.global	gPlayerFrame1459
 gPlayerFrame1459:
 	.word	gPlayerFrame1459OamTemplate+1
 	.word	gPlayerFrame1452Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166D68
-	.word	gUnk_08168D8E
+	.word	gPlayerFrame1452NextBankPalette
+	.word	gPlayerFrame1459UpperTiles
 	.global	gPlayerFrame1460
 gPlayerFrame1460:
 	.word	gPlayerFrame1460OamTemplate+1
 	.word	gPlayerFrame1452Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166D68
-	.word	gUnk_08168F14
+	.word	gPlayerFrame1452NextBankPalette
+	.word	gPlayerFrame1460UpperTiles
 	.global	gPlayerFrame1461
 gPlayerFrame1461:
 	.word	gPlayerFrame1461OamTemplate+1
 	.word	gPlayerFrame1452Palette
 	.word	gPlayerFrame123Tiles
-	.word	gUnk_08166D68
-	.word	gUnk_0816909A
+	.word	gPlayerFrame1452NextBankPalette
+	.word	gPlayerFrame1461UpperTiles
 	.global	gPlayerFrame1453
 gPlayerFrame1453:
 	.word	gPlayerFrame1453OamTemplate+1
 	.word	gPlayerFrame1452Palette
 	.word	gPlayerFrame116Tiles
-	.word	gUnk_08166D68
-	.word	gUnk_08169260
+	.word	gPlayerFrame1452NextBankPalette
+	.word	gPlayerFrame1453UpperTiles
 	.global	gPlayerFrame1455
 gPlayerFrame1455:
 	.word	gPlayerFrame1455OamTemplate+1
 	.word	gPlayerFrame1452Palette
 	.word	gPlayerFrame117Tiles
-	.word	gUnk_08166D68
-	.word	gUnk_08169406
+	.word	gPlayerFrame1452NextBankPalette
+	.word	gPlayerFrame1455UpperTiles
 	.global	gPlayerFrame1462
 gPlayerFrame1462:
 	.word	gPlayerFrame1462OamTemplate+1
 	.word	gPlayerFrame1452Palette
 	.word	gPlayerFrame123Tiles
-	.word	gUnk_08166D68
-	.word	gUnk_0816958C
+	.word	gPlayerFrame1452NextBankPalette
+	.word	gPlayerFrame1462UpperTiles
 	.global	gPlayerFrame1599
 gPlayerFrame1599:
 	.word	gPlayerFrame1599OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame116Tiles
-	.word	gUnk_08166D8A
-	.word	gUnk_08169752
+	.word	gPlayerFrame1599NextBankPalette
+	.word	gPlayerFrame1599UpperTiles
 	.global	gPlayerFrame1600
 gPlayerFrame1600:
 	.word	gPlayerFrame1600OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame117Tiles
-	.word	gUnk_08166D8A
-	.word	gUnk_081697D8
+	.word	gPlayerFrame1599NextBankPalette
+	.word	gPlayerFrame1600UpperTiles
 	.global	gPlayerFrame1601
 gPlayerFrame1601:
 	.word	gPlayerFrame1601OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166D8A
-	.word	gUnk_0816985E
+	.word	gPlayerFrame1599NextBankPalette
+	.word	gPlayerFrame1601UpperTiles
 	.global	gPlayerFrame1602
 gPlayerFrame1602:
 	.word	gPlayerFrame1602OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166D8A
-	.word	gUnk_0816985E
+	.word	gPlayerFrame1599NextBankPalette
+	.word	gPlayerFrame1601UpperTiles
 	.global	gPlayerFrame1603
 gPlayerFrame1603:
 	.word	gPlayerFrame1603OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame120Tiles
-	.word	gUnk_08166D8A
-	.word	gUnk_081698E4
+	.word	gPlayerFrame1599NextBankPalette
+	.word	gPlayerFrame1603UpperTiles
 	.global	gPlayerFrame1604
 gPlayerFrame1604:
 	.word	gPlayerFrame1604OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166D8A
-	.word	gUnk_0816996A
+	.word	gPlayerFrame1599NextBankPalette
+	.word	gPlayerFrame1604UpperTiles
 	.global	gPlayerFrame1605
 gPlayerFrame1605:
 	.word	gPlayerFrame1605OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166D8A
-	.word	gUnk_0816996A
+	.word	gPlayerFrame1599NextBankPalette
+	.word	gPlayerFrame1604UpperTiles
 	.global	gPlayerFrame1606
 gPlayerFrame1606:
 	.word	gPlayerFrame1606OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame123Tiles
-	.word	gUnk_08166D8A
-	.word	gUnk_081699F0
+	.word	gPlayerFrame1599NextBankPalette
+	.word	gPlayerFrame1606UpperTiles
 	.global	gPlayerFrame1768
 gPlayerFrame1768:
 	.word	gPlayerFrame1768OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame116Tiles
-	.word	gUnk_08166DAC
-	.word	gUnk_08169A76
+	.word	gPlayerFrame1768NextBankPalette
+	.word	gPlayerFrame1768UpperTiles
 	.global	gPlayerFrame1769
 gPlayerFrame1769:
 	.word	gPlayerFrame1769OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame117Tiles
-	.word	gUnk_08166DAC
-	.word	gUnk_08169A76
+	.word	gPlayerFrame1768NextBankPalette
+	.word	gPlayerFrame1768UpperTiles
 	.global	gPlayerFrame1770
 gPlayerFrame1770:
 	.word	gPlayerFrame1770OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166DAC
-	.word	gUnk_08169AFC
+	.word	gPlayerFrame1768NextBankPalette
+	.word	gPlayerFrame1770UpperTiles
 	.global	gPlayerFrame1771
 gPlayerFrame1771:
 	.word	gPlayerFrame1771OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166DAC
-	.word	gUnk_08169AFC
+	.word	gPlayerFrame1768NextBankPalette
+	.word	gPlayerFrame1770UpperTiles
 	.global	gPlayerFrame1772
 gPlayerFrame1772:
 	.word	gPlayerFrame1772OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame120Tiles
-	.word	gUnk_08166DAC
-	.word	gUnk_08169B82
+	.word	gPlayerFrame1768NextBankPalette
+	.word	gPlayerFrame1772UpperTiles
 	.global	gPlayerFrame1773
 gPlayerFrame1773:
 	.word	gPlayerFrame1773OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166DAC
-	.word	gUnk_08169C28
+	.word	gPlayerFrame1768NextBankPalette
+	.word	gPlayerFrame1773UpperTiles
 	.global	gPlayerFrame1774
 gPlayerFrame1774:
 	.word	gPlayerFrame1774OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166DAC
-	.word	gUnk_08169C28
+	.word	gPlayerFrame1768NextBankPalette
+	.word	gPlayerFrame1773UpperTiles
 	.global	gPlayerFrame1775
 gPlayerFrame1775:
 	.word	gPlayerFrame1775OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame123Tiles
-	.word	gUnk_08166DAC
-	.word	gUnk_08169CCE
+	.word	gPlayerFrame1768NextBankPalette
+	.word	gPlayerFrame1775UpperTiles
 	.global	gPlayerFrame2389
 gPlayerFrame2389:
 	.word	gPlayerFrame2389OamTemplate+1
 	.word	gPlayerFrame2389Palette
 	.word	gPlayerFrame116Tiles
-	.word	gUnk_08166DF0
-	.word	gUnk_08169D94
+	.word	gPlayerFrame2389NextBankPalette
+	.word	gPlayerFrame2389UpperTiles
 	.global	gPlayerFrame2390
 gPlayerFrame2390:
 	.word	gPlayerFrame2390OamTemplate+1
 	.word	gPlayerFrame2389Palette
 	.word	gPlayerFrame117Tiles
-	.word	gUnk_08166DF0
-	.word	gUnk_08169E7A
+	.word	gPlayerFrame2389NextBankPalette
+	.word	gPlayerFrame2390UpperTiles
 	.global	gPlayerFrame2391
 gPlayerFrame2391:
 	.word	gPlayerFrame2391OamTemplate+1
 	.word	gPlayerFrame2389Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166DF0
-	.word	gUnk_08169F60
+	.word	gPlayerFrame2389NextBankPalette
+	.word	gPlayerFrame2391UpperTiles
 	.global	gPlayerFrame2392
 gPlayerFrame2392:
 	.word	gPlayerFrame2392OamTemplate+1
 	.word	gPlayerFrame2389Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166DF0
-	.word	gUnk_0816A046
+	.word	gPlayerFrame2389NextBankPalette
+	.word	gPlayerFrame2392UpperTiles
 	.global	gPlayerFrame2393
 gPlayerFrame2393:
 	.word	gPlayerFrame2393OamTemplate+1
 	.word	gPlayerFrame2389Palette
 	.word	gPlayerFrame120Tiles
-	.word	gUnk_08166DF0
-	.word	gUnk_0816A12C
+	.word	gPlayerFrame2389NextBankPalette
+	.word	gPlayerFrame2393UpperTiles
 	.global	gPlayerFrame2394
 gPlayerFrame2394:
 	.word	gPlayerFrame2394OamTemplate+1
 	.word	gPlayerFrame2389Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166DF0
-	.word	gUnk_0816A1F2
+	.word	gPlayerFrame2389NextBankPalette
+	.word	gPlayerFrame2394UpperTiles
 	.global	gPlayerFrame2395
 gPlayerFrame2395:
 	.word	gPlayerFrame2395OamTemplate+1
 	.word	gPlayerFrame2389Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166DF0
-	.word	gUnk_0816A1F2
+	.word	gPlayerFrame2389NextBankPalette
+	.word	gPlayerFrame2394UpperTiles
 	.global	gPlayerFrame2396
 gPlayerFrame2396:
 	.word	gPlayerFrame2396OamTemplate+1
 	.word	gPlayerFrame2389Palette
 	.word	gPlayerFrame2396Tiles
-	.word	gUnk_08166DF0
-	.word	gUnk_0816A41E
+	.word	gPlayerFrame2389NextBankPalette
+	.word	gPlayerFrame2396UpperTiles
 	.global	gPlayerFrame2529
 gPlayerFrame2529:
 	.word	gPlayerFrame2529OamTemplate+1
 	.word	gPlayerFrame2529Palette
 	.word	gPlayerFrame116Tiles
-	.word	gUnk_08166E34
-	.word	gUnk_0816A524
+	.word	gPlayerFrame2529NextBankPalette
+	.word	gPlayerFrame2529UpperTiles
 	.global	gPlayerFrame2530
 gPlayerFrame2530:
 	.word	gPlayerFrame2530OamTemplate+1
 	.word	gPlayerFrame2529Palette
 	.word	gPlayerFrame117Tiles
-	.word	gUnk_08166E34
-	.word	gUnk_0816A524
+	.word	gPlayerFrame2529NextBankPalette
+	.word	gPlayerFrame2529UpperTiles
 	.global	gPlayerFrame2531
 gPlayerFrame2531:
 	.word	gPlayerFrame2531OamTemplate+1
 	.word	gPlayerFrame2529Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166E34
-	.word	gUnk_0816A5EA
+	.word	gPlayerFrame2529NextBankPalette
+	.word	gPlayerFrame2531UpperTiles
 	.global	gPlayerFrame2532
 gPlayerFrame2532:
 	.word	gPlayerFrame2532OamTemplate+1
 	.word	gPlayerFrame2529Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166E34
-	.word	gUnk_0816A5EA
+	.word	gPlayerFrame2529NextBankPalette
+	.word	gPlayerFrame2531UpperTiles
 	.global	gPlayerFrame2533
 gPlayerFrame2533:
 	.word	gPlayerFrame2533OamTemplate+1
 	.word	gPlayerFrame2529Palette
 	.word	gPlayerFrame120Tiles
-	.word	gUnk_08166E34
-	.word	gUnk_0816A6B0
+	.word	gPlayerFrame2529NextBankPalette
+	.word	gPlayerFrame2533UpperTiles
 	.global	gPlayerFrame2534
 gPlayerFrame2534:
 	.word	gPlayerFrame2534OamTemplate+1
 	.word	gPlayerFrame2529Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166E34
-	.word	gUnk_0816A776
+	.word	gPlayerFrame2529NextBankPalette
+	.word	gPlayerFrame2534UpperTiles
 	.global	gPlayerFrame2535
 gPlayerFrame2535:
 	.word	gPlayerFrame2535OamTemplate+1
 	.word	gPlayerFrame2529Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166E34
-	.word	gUnk_0816A776
+	.word	gPlayerFrame2529NextBankPalette
+	.word	gPlayerFrame2534UpperTiles
 	.global	gPlayerFrame2536
 gPlayerFrame2536:
 	.word	gPlayerFrame2536OamTemplate+1
 	.word	gPlayerFrame2529Palette
 	.word	gPlayerFrame123Tiles
-	.word	gUnk_08166E34
-	.word	gUnk_0816A83C
+	.word	gPlayerFrame2529NextBankPalette
+	.word	gPlayerFrame2536UpperTiles
 	.global	gPlayerFrame2669
 gPlayerFrame2669:
 	.word	gPlayerFrame2669OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame116Tiles
-	.word	gUnk_08166E56
-	.word	gUnk_0816A922
+	.word	gPlayerFrame2669NextBankPalette
+	.word	gPlayerFrame2669UpperTiles
 	.global	gPlayerFrame2670
 gPlayerFrame2670:
 	.word	gPlayerFrame2670OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame117Tiles
-	.word	gUnk_08166E56
-	.word	gUnk_0816AA28
+	.word	gPlayerFrame2669NextBankPalette
+	.word	gPlayerFrame2670UpperTiles
 	.global	gPlayerFrame2671
 gPlayerFrame2671:
 	.word	gPlayerFrame2671OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166E56
-	.word	gUnk_0816AB2E
+	.word	gPlayerFrame2669NextBankPalette
+	.word	gPlayerFrame2671UpperTiles
 	.global	gPlayerFrame2672
 gPlayerFrame2672:
 	.word	gPlayerFrame2672OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166E56
-	.word	gUnk_0816AB2E
+	.word	gPlayerFrame2669NextBankPalette
+	.word	gPlayerFrame2671UpperTiles
 	.global	gPlayerFrame2673
 gPlayerFrame2673:
 	.word	gPlayerFrame2673OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame120Tiles
-	.word	gUnk_08166E56
-	.word	gUnk_0816AC54
+	.word	gPlayerFrame2669NextBankPalette
+	.word	gPlayerFrame2673UpperTiles
 	.global	gPlayerFrame2674
 gPlayerFrame2674:
 	.word	gPlayerFrame2674OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166E56
-	.word	gUnk_0816AD5A
+	.word	gPlayerFrame2669NextBankPalette
+	.word	gPlayerFrame2674UpperTiles
 	.global	gPlayerFrame2675
 gPlayerFrame2675:
 	.word	gPlayerFrame2675OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166E56
-	.word	gUnk_0816AD5A
+	.word	gPlayerFrame2669NextBankPalette
+	.word	gPlayerFrame2674UpperTiles
 	.global	gPlayerFrame2676
 gPlayerFrame2676:
 	.word	gPlayerFrame2676OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame123Tiles
-	.word	gUnk_08166E56
-	.word	gUnk_0816AE40
+	.word	gPlayerFrame2669NextBankPalette
+	.word	gPlayerFrame2676UpperTiles
 	.global	gPlayerFrame2834
 gPlayerFrame2834:
 	.word	gPlayerFrame2834OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame116Tiles
-	.word	gUnk_08166E78
-	.word	gUnk_0816AF46
+	.word	gPlayerFrame2834NextBankPalette
+	.word	gPlayerFrame2834UpperTiles
 	.global	gPlayerFrame2835
 gPlayerFrame2835:
 	.word	gPlayerFrame2835OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame117Tiles
-	.word	gUnk_08166E78
-	.word	gUnk_0816B08C
+	.word	gPlayerFrame2834NextBankPalette
+	.word	gPlayerFrame2835UpperTiles
 	.global	gPlayerFrame2836
 gPlayerFrame2836:
 	.word	gPlayerFrame2836OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166E78
-	.word	gUnk_0816B1D2
+	.word	gPlayerFrame2834NextBankPalette
+	.word	gPlayerFrame2836UpperTiles
 	.global	gPlayerFrame2837
 gPlayerFrame2837:
 	.word	gPlayerFrame2837OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166E78
-	.word	gUnk_0816B2D8
+	.word	gPlayerFrame2834NextBankPalette
+	.word	gPlayerFrame2837UpperTiles
 	.global	gPlayerFrame2838
 gPlayerFrame2838:
 	.word	gPlayerFrame2838OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame120Tiles
-	.word	gUnk_08166E78
-	.word	gUnk_0816B3DE
+	.word	gPlayerFrame2834NextBankPalette
+	.word	gPlayerFrame2838UpperTiles
 	.global	gPlayerFrame2839
 gPlayerFrame2839:
 	.word	gPlayerFrame2839OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166E78
-	.word	gUnk_0816B4E4
+	.word	gPlayerFrame2834NextBankPalette
+	.word	gPlayerFrame2839UpperTiles
 	.global	gPlayerFrame2840
 gPlayerFrame2840:
 	.word	gPlayerFrame2840OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166E78
-	.word	gUnk_0816B60A
+	.word	gPlayerFrame2834NextBankPalette
+	.word	gPlayerFrame2840UpperTiles
 	.global	gPlayerFrame2841
 gPlayerFrame2841:
 	.word	gPlayerFrame2841OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame123Tiles
-	.word	gUnk_08166E78
-	.word	gUnk_0816B730
+	.word	gPlayerFrame2834NextBankPalette
+	.word	gPlayerFrame2841UpperTiles
 	.global	gPlayerFrame2980
 gPlayerFrame2980:
 	.word	gPlayerFrame2980OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame116Tiles
-	.word	gUnk_08166E9A
-	.word	gUnk_0816B836
+	.word	gPlayerFrame2980NextBankPalette
+	.word	gPlayerFrame2980UpperTiles
 	.global	gPlayerFrame2981
 gPlayerFrame2981:
 	.word	gPlayerFrame2981OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame117Tiles
-	.word	gUnk_08166E9A
-	.word	gUnk_0816B8FC
+	.word	gPlayerFrame2980NextBankPalette
+	.word	gPlayerFrame2981UpperTiles
 	.global	gPlayerFrame2982
 gPlayerFrame2982:
 	.word	gPlayerFrame2982OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166E9A
-	.word	gUnk_0816B9C2
+	.word	gPlayerFrame2980NextBankPalette
+	.word	gPlayerFrame2982UpperTiles
 	.global	gPlayerFrame2983
 gPlayerFrame2983:
 	.word	gPlayerFrame2983OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166E9A
-	.word	gUnk_0816BAA8
+	.word	gPlayerFrame2980NextBankPalette
+	.word	gPlayerFrame2983UpperTiles
 	.global	gPlayerFrame2984
 gPlayerFrame2984:
 	.word	gPlayerFrame2984OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame120Tiles
-	.word	gUnk_08166E9A
-	.word	gUnk_0816BB8E
+	.word	gPlayerFrame2980NextBankPalette
+	.word	gPlayerFrame2984UpperTiles
 	.global	gPlayerFrame2985
 gPlayerFrame2985:
 	.word	gPlayerFrame2985OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166E9A
-	.word	gUnk_0816BC54
+	.word	gPlayerFrame2980NextBankPalette
+	.word	gPlayerFrame2985UpperTiles
 	.global	gPlayerFrame2986
 gPlayerFrame2986:
 	.word	gPlayerFrame2986OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166E9A
-	.word	gUnk_0816BD7A
+	.word	gPlayerFrame2980NextBankPalette
+	.word	gPlayerFrame2986UpperTiles
 	.global	gPlayerFrame2987
 gPlayerFrame2987:
 	.word	gPlayerFrame2987OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame123Tiles
-	.word	gUnk_08166E9A
-	.word	gUnk_0816BEA0
+	.word	gPlayerFrame2980NextBankPalette
+	.word	gPlayerFrame2987UpperTiles
 	.global	gPlayerFrame3111
 gPlayerFrame3111:
 	.word	gPlayerFrame3111OamTemplate+1
 	.word	gPlayerFrame3111Palette
 	.word	gPlayerFrame116Tiles
-	.word	gUnk_08166EDE
-	.word	gUnk_0816BFA6
+	.word	gPlayerFrame3111NextBankPalette
+	.word	gPlayerFrame3111UpperTiles
 	.global	gPlayerFrame3112
 gPlayerFrame3112:
 	.word	gPlayerFrame3112OamTemplate+1
 	.word	gPlayerFrame3111Palette
 	.word	gPlayerFrame117Tiles
-	.word	gUnk_08166EDE
-	.word	gUnk_0816C06C
+	.word	gPlayerFrame3111NextBankPalette
+	.word	gPlayerFrame3112UpperTiles
 	.global	gPlayerFrame3113
 gPlayerFrame3113:
 	.word	gPlayerFrame3113OamTemplate+1
 	.word	gPlayerFrame3111Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166EDE
-	.word	gUnk_0816C152
+	.word	gPlayerFrame3111NextBankPalette
+	.word	gPlayerFrame3113UpperTiles
 	.global	gPlayerFrame3114
 gPlayerFrame3114:
 	.word	gPlayerFrame3114OamTemplate+1
 	.word	gPlayerFrame3111Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166EDE
-	.word	gUnk_0816C152
+	.word	gPlayerFrame3111NextBankPalette
+	.word	gPlayerFrame3113UpperTiles
 	.global	gPlayerFrame3115
 gPlayerFrame3115:
 	.word	gPlayerFrame3115OamTemplate+1
 	.word	gPlayerFrame3111Palette
 	.word	gPlayerFrame120Tiles
-	.word	gUnk_08166EDE
-	.word	gUnk_0816C258
+	.word	gPlayerFrame3111NextBankPalette
+	.word	gPlayerFrame3115UpperTiles
 	.global	gPlayerFrame3116
 gPlayerFrame3116:
 	.word	gPlayerFrame3116OamTemplate+1
 	.word	gPlayerFrame3111Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166EDE
-	.word	gUnk_0816C35E
+	.word	gPlayerFrame3111NextBankPalette
+	.word	gPlayerFrame3116UpperTiles
 	.global	gPlayerFrame3117
 gPlayerFrame3117:
 	.word	gPlayerFrame3117OamTemplate+1
 	.word	gPlayerFrame3111Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166EDE
-	.word	gUnk_0816C464
+	.word	gPlayerFrame3111NextBankPalette
+	.word	gPlayerFrame3117UpperTiles
 	.global	gPlayerFrame3118
 gPlayerFrame3118:
 	.word	gPlayerFrame3118OamTemplate+1
 	.word	gPlayerFrame3111Palette
 	.word	gPlayerFrame123Tiles
-	.word	gUnk_08166EDE
-	.word	gUnk_0816C56A
+	.word	gPlayerFrame3111NextBankPalette
+	.word	gPlayerFrame3118UpperTiles
 	.global	gPlayerFrame3249
 gPlayerFrame3249:
 	.word	gPlayerFrame3249OamTemplate+1
@@ -15381,78 +15381,78 @@ gPlayerFrame3494:
 	.word	gPlayerFrame3494OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame116Tiles
-	.word	gUnk_08166F22
-	.word	gUnk_0816CD54
+	.word	gPlayerFrame3494NextBankPalette
+	.word	gPlayerFrame3494UpperTiles
 	.global	gPlayerFrame3496
 gPlayerFrame3496:
 	.word	gPlayerFrame3496OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame117Tiles
-	.word	gUnk_08166F22
-	.word	gUnk_0816CE7A
+	.word	gPlayerFrame3494NextBankPalette
+	.word	gPlayerFrame3496UpperTiles
 	.global	gPlayerFrame3498
 gPlayerFrame3498:
 	.word	gPlayerFrame3498OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166F22
-	.word	gUnk_0816CFC0
+	.word	gPlayerFrame3494NextBankPalette
+	.word	gPlayerFrame3498UpperTiles
 	.global	gPlayerFrame3499
 gPlayerFrame3499:
 	.word	gPlayerFrame3499OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame118Tiles
-	.word	gUnk_08166F22
-	.word	gUnk_0816D086
+	.word	gPlayerFrame3494NextBankPalette
+	.word	gPlayerFrame3499UpperTiles
 	.global	gPlayerFrame3500
 gPlayerFrame3500:
 	.word	gPlayerFrame3500OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame120Tiles
-	.word	gUnk_08166F22
-	.word	gUnk_0816D14C
+	.word	gPlayerFrame3494NextBankPalette
+	.word	gPlayerFrame3500UpperTiles
 	.global	gPlayerFrame3501
 gPlayerFrame3501:
 	.word	gPlayerFrame3501OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166F22
-	.word	gUnk_0816D212
+	.word	gPlayerFrame3494NextBankPalette
+	.word	gPlayerFrame3501UpperTiles
 	.global	gPlayerFrame3502
 gPlayerFrame3502:
 	.word	gPlayerFrame3502OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame121Tiles
-	.word	gUnk_08166F22
-	.word	gUnk_0816D338
+	.word	gPlayerFrame3494NextBankPalette
+	.word	gPlayerFrame3502UpperTiles
 	.global	gPlayerFrame3503
 gPlayerFrame3503:
 	.word	gPlayerFrame3503OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame123Tiles
-	.word	gUnk_08166F22
-	.word	gUnk_0816D45E
+	.word	gPlayerFrame3494NextBankPalette
+	.word	gPlayerFrame3503UpperTiles
 	.global	gPlayerFrame3495
 gPlayerFrame3495:
 	.word	gPlayerFrame3495OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame116Tiles
-	.word	gUnk_08166F22
-	.word	gUnk_0816D584
+	.word	gPlayerFrame3494NextBankPalette
+	.word	gPlayerFrame3495UpperTiles
 	.global	gPlayerFrame3497
 gPlayerFrame3497:
 	.word	gPlayerFrame3497OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame117Tiles
-	.word	gUnk_08166F22
-	.word	gUnk_0816D6AA
+	.word	gPlayerFrame3494NextBankPalette
+	.word	gPlayerFrame3497UpperTiles
 	.global	gPlayerFrame3504
 gPlayerFrame3504:
 	.word	gPlayerFrame3504OamTemplate+1
 	.word	gPlayerFrame116Palette
 	.word	gPlayerFrame123Tiles
-	.word	gUnk_08166F22
-	.word	gUnk_0816D7B0
+	.word	gPlayerFrame3494NextBankPalette
+	.word	gPlayerFrame3504UpperTiles
 	.global	gUnk_08764DCC
 gUnk_08764DCC:
 	.word	gUnk_0816FB7C+1
@@ -15524,393 +15524,393 @@ gPlayerFrame1100:
 	.word	gPlayerFrame1100OamTemplate+1
 	.word	gPlayerFrame1100Palette
 	.word	gPlayerFrame1100Tiles
-	.word	gUnk_0816FD0E
-	.word	gUnk_0816FEDE
+	.word	gPlayerFrame1100NextBankPalette
+	.word	gPlayerFrame1100UpperTiles
 	.global	gPlayerFrame1101
 gPlayerFrame1101:
 	.word	gPlayerFrame1101OamTemplate+1
 	.word	gPlayerFrame1100Palette
 	.word	gPlayerFrame1101Tiles
-	.word	gUnk_0816FD0E
-	.word	gUnk_0817018A
+	.word	gPlayerFrame1100NextBankPalette
+	.word	gPlayerFrame1101UpperTiles
 	.global	gPlayerFrame1102
 gPlayerFrame1102:
 	.word	gPlayerFrame1102OamTemplate+1
 	.word	gPlayerFrame1100Palette
 	.word	gPlayerFrame1102Tiles
-	.word	gUnk_0816FD0E
-	.word	gUnk_081703F6
+	.word	gPlayerFrame1100NextBankPalette
+	.word	gPlayerFrame1102UpperTiles
 	.global	gPlayerFrame1103
 gPlayerFrame1103:
 	.word	gPlayerFrame1103OamTemplate+1
 	.word	gPlayerFrame1100Palette
 	.word	gPlayerFrame1102Tiles
-	.word	gUnk_0816FD0E
-	.word	gUnk_0817059C
+	.word	gPlayerFrame1100NextBankPalette
+	.word	gPlayerFrame1103UpperTiles
 	.global	gPlayerFrame1104
 gPlayerFrame1104:
 	.word	gPlayerFrame1104OamTemplate+1
 	.word	gPlayerFrame1100Palette
 	.word	gPlayerFrame1104Tiles
-	.word	gUnk_0816FD0E
-	.word	gUnk_08170848
+	.word	gPlayerFrame1100NextBankPalette
+	.word	gPlayerFrame1104UpperTiles
 	.global	gPlayerFrame1105
 gPlayerFrame1105:
 	.word	gPlayerFrame1105OamTemplate+1
 	.word	gPlayerFrame1100Palette
 	.word	gPlayerFrame1105Tiles
-	.word	gUnk_0816FD0E
-	.word	gUnk_08170AF4
+	.word	gPlayerFrame1100NextBankPalette
+	.word	gPlayerFrame1105UpperTiles
 	.global	gPlayerFrame1106
 gPlayerFrame1106:
 	.word	gPlayerFrame1106OamTemplate+1
 	.word	gPlayerFrame1100Palette
 	.word	gPlayerFrame1105Tiles
-	.word	gUnk_0816FD0E
-	.word	gUnk_08170C5A
+	.word	gPlayerFrame1100NextBankPalette
+	.word	gPlayerFrame1106UpperTiles
 	.global	gPlayerFrame1107
 gPlayerFrame1107:
 	.word	gPlayerFrame1107OamTemplate+1
 	.word	gPlayerFrame1100Palette
 	.word	gPlayerFrame1107Tiles
-	.word	gUnk_0816FD0E
-	.word	gUnk_08170EE6
+	.word	gPlayerFrame1100NextBankPalette
+	.word	gPlayerFrame1107UpperTiles
 	.global	gPlayerFrame1901
 gPlayerFrame1901:
 	.word	gPlayerFrame1901OamTemplate+1
 	.word	gPlayerFrame1901Palette
 	.word	gPlayerFrame1901Tiles
-	.word	gUnk_0816FD52
-	.word	gUnk_08171172
+	.word	gPlayerFrame1901NextBankPalette
+	.word	gPlayerFrame1901UpperTiles
 	.global	gPlayerFrame1902
 gPlayerFrame1902:
 	.word	gPlayerFrame1902OamTemplate+1
 	.word	gPlayerFrame1901Palette
 	.word	gPlayerFrame1902Tiles
-	.word	gUnk_0816FD52
-	.word	gUnk_08171172
+	.word	gPlayerFrame1901NextBankPalette
+	.word	gPlayerFrame1901UpperTiles
 	.global	gPlayerFrame1903
 gPlayerFrame1903:
 	.word	gPlayerFrame1903OamTemplate+1
 	.word	gPlayerFrame1901Palette
 	.word	gPlayerFrame1903Tiles
-	.word	gUnk_0816FD52
-	.word	gUnk_081714A4
+	.word	gPlayerFrame1901NextBankPalette
+	.word	gPlayerFrame1903UpperTiles
 	.global	gPlayerFrame1904
 gPlayerFrame1904:
 	.word	gPlayerFrame1904OamTemplate+1
 	.word	gPlayerFrame1901Palette
 	.word	gPlayerFrame1903Tiles
-	.word	gUnk_0816FD52
-	.word	gUnk_081714A4
+	.word	gPlayerFrame1901NextBankPalette
+	.word	gPlayerFrame1903UpperTiles
 	.global	gPlayerFrame1905
 gPlayerFrame1905:
 	.word	gPlayerFrame1905OamTemplate+1
 	.word	gPlayerFrame1901Palette
 	.word	gPlayerFrame1905Tiles
-	.word	gUnk_0816FD52
-	.word	gUnk_081716D0
+	.word	gPlayerFrame1901NextBankPalette
+	.word	gPlayerFrame1905UpperTiles
 	.global	gPlayerFrame1906
 gPlayerFrame1906:
 	.word	gPlayerFrame1906OamTemplate+1
 	.word	gPlayerFrame1901Palette
 	.word	gPlayerFrame1906Tiles
-	.word	gUnk_0816FD52
-	.word	gUnk_08171172
+	.word	gPlayerFrame1901NextBankPalette
+	.word	gPlayerFrame1901UpperTiles
 	.global	gPlayerFrame1907
 gPlayerFrame1907:
 	.word	gPlayerFrame1907OamTemplate+1
 	.word	gPlayerFrame1901Palette
 	.word	gPlayerFrame1906Tiles
-	.word	gUnk_0816FD52
-	.word	gUnk_08171172
+	.word	gPlayerFrame1901NextBankPalette
+	.word	gPlayerFrame1901UpperTiles
 	.global	gPlayerFrame1908
 gPlayerFrame1908:
 	.word	gPlayerFrame1908OamTemplate+1
 	.word	gPlayerFrame1901Palette
 	.word	gPlayerFrame1908Tiles
-	.word	gUnk_0816FD52
-	.word	gUnk_08171172
+	.word	gPlayerFrame1901NextBankPalette
+	.word	gPlayerFrame1901UpperTiles
 	.global	gPlayerFrame2158
 gPlayerFrame2158:
 	.word	gPlayerFrame2158OamTemplate+1
 	.word	gPlayerFrame2158Palette
 	.word	gPlayerFrame2158Tiles
-	.word	gUnk_0816FD96
-	.word	gUnk_08171B28
+	.word	gPlayerFrame2158NextBankPalette
+	.word	gPlayerFrame2158UpperTiles
 	.global	gPlayerFrame2159
 gPlayerFrame2159:
 	.word	gPlayerFrame2159OamTemplate+1
 	.word	gPlayerFrame2158Palette
 	.word	gPlayerFrame1101Tiles
-	.word	gUnk_0816FD96
-	.word	gUnk_08171B28
+	.word	gPlayerFrame2158NextBankPalette
+	.word	gPlayerFrame2158UpperTiles
 	.global	gPlayerFrame2160
 gPlayerFrame2160:
 	.word	gPlayerFrame2160OamTemplate+1
 	.word	gPlayerFrame2158Palette
 	.word	gPlayerFrame1102Tiles
-	.word	gUnk_0816FD96
-	.word	gUnk_08171C4E
+	.word	gPlayerFrame2158NextBankPalette
+	.word	gPlayerFrame2160UpperTiles
 	.global	gPlayerFrame2161
 gPlayerFrame2161:
 	.word	gPlayerFrame2161OamTemplate+1
 	.word	gPlayerFrame2158Palette
 	.word	gPlayerFrame1102Tiles
-	.word	gUnk_0816FD96
-	.word	gUnk_08171C4E
+	.word	gPlayerFrame2158NextBankPalette
+	.word	gPlayerFrame2160UpperTiles
 	.global	gPlayerFrame2162
 gPlayerFrame2162:
 	.word	gPlayerFrame2162OamTemplate+1
 	.word	gPlayerFrame2158Palette
 	.word	gPlayerFrame1104Tiles
-	.word	gUnk_0816FD96
-	.word	gUnk_08171D54
+	.word	gPlayerFrame2158NextBankPalette
+	.word	gPlayerFrame2162UpperTiles
 	.global	gPlayerFrame2163
 gPlayerFrame2163:
 	.word	gPlayerFrame2163OamTemplate+1
 	.word	gPlayerFrame2158Palette
 	.word	gPlayerFrame1105Tiles
-	.word	gUnk_0816FD96
-	.word	gUnk_08171D54
+	.word	gPlayerFrame2158NextBankPalette
+	.word	gPlayerFrame2162UpperTiles
 	.global	gPlayerFrame2164
 gPlayerFrame2164:
 	.word	gPlayerFrame2164OamTemplate+1
 	.word	gPlayerFrame2158Palette
 	.word	gPlayerFrame1105Tiles
-	.word	gUnk_0816FD96
-	.word	gUnk_08171D54
+	.word	gPlayerFrame2158NextBankPalette
+	.word	gPlayerFrame2162UpperTiles
 	.global	gPlayerFrame2165
 gPlayerFrame2165:
 	.word	gPlayerFrame2165OamTemplate+1
 	.word	gPlayerFrame2158Palette
 	.word	gPlayerFrame1107Tiles
-	.word	gUnk_0816FD96
-	.word	gUnk_08171D54
+	.word	gPlayerFrame2158NextBankPalette
+	.word	gPlayerFrame2162UpperTiles
 	.global	gPlayerFrame138
 gPlayerFrame138:
 	.word	gPlayerFrame138OamTemplate+1
 	.word	gPlayerFrame138Palette
 	.word	gPlayerFrame138Tiles
 	.incbin	"baserom.gba", 0x765094, 0x4
-	.word	gUnk_08172614
+	.word	gPlayerFrame138UpperTiles
 	.global	gPlayerFrame139
 gPlayerFrame139:
 	.word	gPlayerFrame139OamTemplate+1
 	.word	gPlayerFrame138Palette
 	.word	gPlayerFrame139Tiles
 	.incbin	"baserom.gba", 0x7650A8, 0x4
-	.word	gUnk_081727C0
+	.word	gPlayerFrame139UpperTiles
 	.global	gPlayerFrame140
 gPlayerFrame140:
 	.word	gPlayerFrame140OamTemplate+1
 	.word	gPlayerFrame138Palette
 	.word	gPlayerFrame140Tiles
 	.incbin	"baserom.gba", 0x7650BC, 0x4
-	.word	gUnk_0817296C
+	.word	gPlayerFrame140UpperTiles
 	.global	gPlayerFrame141
 gPlayerFrame141:
 	.word	gPlayerFrame141OamTemplate+1
 	.word	gPlayerFrame138Palette
 	.word	gPlayerFrame140Tiles
 	.incbin	"baserom.gba", 0x7650D0, 0x4
-	.word	gUnk_0817296C
+	.word	gPlayerFrame140UpperTiles
 	.global	gPlayerFrame142
 gPlayerFrame142:
 	.word	gPlayerFrame142OamTemplate+1
 	.word	gPlayerFrame138Palette
 	.word	gPlayerFrame142Tiles
 	.incbin	"baserom.gba", 0x7650E4, 0x4
-	.word	gUnk_08172B18
+	.word	gPlayerFrame142UpperTiles
 	.global	gPlayerFrame143
 gPlayerFrame143:
 	.word	gPlayerFrame143OamTemplate+1
 	.word	gPlayerFrame138Palette
 	.word	gPlayerFrame143Tiles
 	.incbin	"baserom.gba", 0x7650F8, 0x4
-	.word	gUnk_08172CC4
+	.word	gPlayerFrame143UpperTiles
 	.global	gPlayerFrame144
 gPlayerFrame144:
 	.word	gPlayerFrame144OamTemplate+1
 	.word	gPlayerFrame138Palette
 	.word	gPlayerFrame143Tiles
 	.incbin	"baserom.gba", 0x76510C, 0x4
-	.word	gUnk_08172CC4
+	.word	gPlayerFrame143UpperTiles
 	.global	gPlayerFrame145
 gPlayerFrame145:
 	.word	gPlayerFrame145OamTemplate+1
 	.word	gPlayerFrame138Palette
 	.word	gPlayerFrame145Tiles
 	.incbin	"baserom.gba", 0x765120, 0x4
-	.word	gUnk_08172E70
+	.word	gPlayerFrame145UpperTiles
 	.global	gPlayerFrame1122
 gPlayerFrame1122:
 	.word	gPlayerFrame1122OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame1122Tiles
-	.word	gUnk_08172488
-	.word	gUnk_0817301C
+	.word	gPlayerFrame1122NextBankPalette
+	.word	gPlayerFrame1122UpperTiles
 	.global	gPlayerFrame1123
 gPlayerFrame1123:
 	.word	gPlayerFrame1123OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame1123Tiles
-	.word	gUnk_08172488
-	.word	gUnk_08173288
+	.word	gPlayerFrame1122NextBankPalette
+	.word	gPlayerFrame1123UpperTiles
 	.global	gPlayerFrame1124
 gPlayerFrame1124:
 	.word	gPlayerFrame1124OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame140Tiles
-	.word	gUnk_08172488
-	.word	gUnk_081733AE
+	.word	gPlayerFrame1122NextBankPalette
+	.word	gPlayerFrame1124UpperTiles
 	.global	gPlayerFrame1125
 gPlayerFrame1125:
 	.word	gPlayerFrame1125OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame140Tiles
-	.word	gUnk_08172488
-	.word	gUnk_081733AE
+	.word	gPlayerFrame1122NextBankPalette
+	.word	gPlayerFrame1124UpperTiles
 	.global	gPlayerFrame1126
 gPlayerFrame1126:
 	.word	gPlayerFrame1126OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame142Tiles
-	.word	gUnk_08172488
-	.word	gUnk_081734F4
+	.word	gPlayerFrame1122NextBankPalette
+	.word	gPlayerFrame1126UpperTiles
 	.global	gPlayerFrame1127
 gPlayerFrame1127:
 	.word	gPlayerFrame1127OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame143Tiles
-	.word	gUnk_08172488
-	.word	gUnk_0817363A
+	.word	gPlayerFrame1122NextBankPalette
+	.word	gPlayerFrame1127UpperTiles
 	.global	gPlayerFrame1128
 gPlayerFrame1128:
 	.word	gPlayerFrame1128OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame143Tiles
-	.word	gUnk_08172488
-	.word	gUnk_0817363A
+	.word	gPlayerFrame1122NextBankPalette
+	.word	gPlayerFrame1127UpperTiles
 	.global	gPlayerFrame1129
 gPlayerFrame1129:
 	.word	gPlayerFrame1129OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame145Tiles
-	.word	gUnk_08172488
-	.word	gUnk_08173760
+	.word	gPlayerFrame1122NextBankPalette
+	.word	gPlayerFrame1129UpperTiles
 	.global	gPlayerFrame1923
 gPlayerFrame1923:
 	.word	gPlayerFrame1923OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame1122Tiles
-	.word	gUnk_081724AA
-	.word	gUnk_08173886
+	.word	gPlayerFrame1923NextBankPalette
+	.word	gPlayerFrame1923UpperTiles
 	.global	gPlayerFrame1924
 gPlayerFrame1924:
 	.word	gPlayerFrame1924OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame1123Tiles
-	.word	gUnk_081724AA
-	.word	gUnk_081739EC
+	.word	gPlayerFrame1923NextBankPalette
+	.word	gPlayerFrame1924UpperTiles
 	.global	gPlayerFrame1925
 gPlayerFrame1925:
 	.word	gPlayerFrame1925OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame140Tiles
-	.word	gUnk_081724AA
-	.word	gUnk_08173B52
+	.word	gPlayerFrame1923NextBankPalette
+	.word	gPlayerFrame1925UpperTiles
 	.global	gPlayerFrame1926
 gPlayerFrame1926:
 	.word	gPlayerFrame1926OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame140Tiles
-	.word	gUnk_081724AA
-	.word	gUnk_08173B52
+	.word	gPlayerFrame1923NextBankPalette
+	.word	gPlayerFrame1925UpperTiles
 	.global	gPlayerFrame1927
 gPlayerFrame1927:
 	.word	gPlayerFrame1927OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame142Tiles
-	.word	gUnk_081724AA
-	.word	gUnk_08173CD8
+	.word	gPlayerFrame1923NextBankPalette
+	.word	gPlayerFrame1927UpperTiles
 	.global	gPlayerFrame1928
 gPlayerFrame1928:
 	.word	gPlayerFrame1928OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame143Tiles
-	.word	gUnk_081724AA
-	.word	gUnk_08173E1E
+	.word	gPlayerFrame1923NextBankPalette
+	.word	gPlayerFrame1928UpperTiles
 	.global	gPlayerFrame1929
 gPlayerFrame1929:
 	.word	gPlayerFrame1929OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame143Tiles
-	.word	gUnk_081724AA
-	.word	gUnk_08173E1E
+	.word	gPlayerFrame1923NextBankPalette
+	.word	gPlayerFrame1928UpperTiles
 	.global	gPlayerFrame1930
 gPlayerFrame1930:
 	.word	gPlayerFrame1930OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame145Tiles
-	.word	gUnk_081724AA
-	.word	gUnk_08173F24
+	.word	gPlayerFrame1923NextBankPalette
+	.word	gPlayerFrame1930UpperTiles
 	.global	gPlayerFrame2180
 gPlayerFrame2180:
 	.word	gPlayerFrame2180OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame1122Tiles
-	.word	gUnk_081724CC
-	.word	gUnk_0817406A
+	.word	gPlayerFrame2180NextBankPalette
+	.word	gPlayerFrame2180UpperTiles
 	.global	gPlayerFrame2181
 gPlayerFrame2181:
 	.word	gPlayerFrame2181OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame1123Tiles
-	.word	gUnk_081724CC
-	.word	gUnk_08174210
+	.word	gPlayerFrame2180NextBankPalette
+	.word	gPlayerFrame2181UpperTiles
 	.global	gPlayerFrame2182
 gPlayerFrame2182:
 	.word	gPlayerFrame2182OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame140Tiles
-	.word	gUnk_081724CC
-	.word	gUnk_081743B6
+	.word	gPlayerFrame2180NextBankPalette
+	.word	gPlayerFrame2182UpperTiles
 	.global	gPlayerFrame2183
 gPlayerFrame2183:
 	.word	gPlayerFrame2183OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame140Tiles
-	.word	gUnk_081724CC
-	.word	gUnk_081744FC
+	.word	gPlayerFrame2180NextBankPalette
+	.word	gPlayerFrame2183UpperTiles
 	.global	gPlayerFrame2184
 gPlayerFrame2184:
 	.word	gPlayerFrame2184OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame142Tiles
-	.word	gUnk_081724CC
-	.word	gUnk_08174682
+	.word	gPlayerFrame2180NextBankPalette
+	.word	gPlayerFrame2184UpperTiles
 	.global	gPlayerFrame2185
 gPlayerFrame2185:
 	.word	gPlayerFrame2185OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame143Tiles
-	.word	gUnk_081724CC
-	.word	gUnk_08174808
+	.word	gPlayerFrame2180NextBankPalette
+	.word	gPlayerFrame2185UpperTiles
 	.global	gPlayerFrame2186
 gPlayerFrame2186:
 	.word	gPlayerFrame2186OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame143Tiles
-	.word	gUnk_081724CC
-	.word	gUnk_08174808
+	.word	gPlayerFrame2180NextBankPalette
+	.word	gPlayerFrame2185UpperTiles
 	.global	gPlayerFrame2187
 gPlayerFrame2187:
 	.word	gPlayerFrame2187OamTemplate+1
 	.word	gPlayerFrame1122Palette
 	.word	gPlayerFrame145Tiles
-	.word	gUnk_081724CC
-	.word	gUnk_0817494E
+	.word	gPlayerFrame2180NextBankPalette
+	.word	gPlayerFrame2187UpperTiles
 	.global	gUnk_08765308
 gUnk_08765308:
 	.word	gUnk_0817990E+1
@@ -16130,1121 +16130,1121 @@ gPlayerFrame1000:
 	.word	gPlayerFrame1000OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175202
-	.word	gUnk_08175DA0
+	.word	gPlayerFrame985NextBankPalette
+	.word	gPlayerFrame988UpperTiles
 	.global	gPlayerFrame996
 gPlayerFrame996:
 	.word	gPlayerFrame996OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175202
-	.word	gUnk_08175DA0
+	.word	gPlayerFrame985NextBankPalette
+	.word	gPlayerFrame988UpperTiles
 	.global	gPlayerFrame988
 gPlayerFrame988:
 	.word	gPlayerFrame988OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175202
-	.word	gUnk_08175DA0
+	.word	gPlayerFrame985NextBankPalette
+	.word	gPlayerFrame988UpperTiles
 	.global	gPlayerFrame992
 gPlayerFrame992:
 	.word	gPlayerFrame992OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175202
-	.word	gUnk_08175DA0
+	.word	gPlayerFrame985NextBankPalette
+	.word	gPlayerFrame988UpperTiles
 	.global	gPlayerFrame986
 gPlayerFrame986:
 	.word	gPlayerFrame986OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_0817556A
-	.word	gUnk_08175202
-	.word	gUnk_08175E26
+	.word	gPlayerFrame985NextBankPalette
+	.word	gPlayerFrame986UpperTiles
 	.global	gPlayerFrame994
 gPlayerFrame994:
 	.word	gPlayerFrame994OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_0817556A
-	.word	gUnk_08175202
-	.word	gUnk_08175E26
+	.word	gPlayerFrame985NextBankPalette
+	.word	gPlayerFrame986UpperTiles
 	.global	gPlayerFrame987
 gPlayerFrame987:
 	.word	gPlayerFrame987OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175202
-	.word	gUnk_08175EAC
+	.word	gPlayerFrame985NextBankPalette
+	.word	gPlayerFrame985UpperTiles
 	.global	gPlayerFrame993
 gPlayerFrame993:
 	.word	gPlayerFrame993OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175202
-	.word	gUnk_08175EAC
+	.word	gPlayerFrame985NextBankPalette
+	.word	gPlayerFrame985UpperTiles
 	.global	gPlayerFrame985
 gPlayerFrame985:
 	.word	gPlayerFrame985OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175202
-	.word	gUnk_08175EAC
+	.word	gPlayerFrame985NextBankPalette
+	.word	gPlayerFrame985UpperTiles
 	.global	gPlayerFrame995
 gPlayerFrame995:
 	.word	gPlayerFrame995OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175202
-	.word	gUnk_08175EAC
+	.word	gPlayerFrame985NextBankPalette
+	.word	gPlayerFrame985UpperTiles
 	.global	gPlayerFrame989
 gPlayerFrame989:
 	.word	gPlayerFrame989OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175202
-	.word	gUnk_08175F32
+	.word	gPlayerFrame985NextBankPalette
+	.word	gPlayerFrame989UpperTiles
 	.global	gPlayerFrame991
 gPlayerFrame991:
 	.word	gPlayerFrame991OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175202
-	.word	gUnk_08175F32
+	.word	gPlayerFrame985NextBankPalette
+	.word	gPlayerFrame989UpperTiles
 	.global	gPlayerFrame999
 gPlayerFrame999:
 	.word	gPlayerFrame999OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175202
-	.word	gUnk_08175F32
+	.word	gPlayerFrame985NextBankPalette
+	.word	gPlayerFrame989UpperTiles
 	.global	gPlayerFrame997
 gPlayerFrame997:
 	.word	gPlayerFrame997OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175202
-	.word	gUnk_08175F32
+	.word	gPlayerFrame985NextBankPalette
+	.word	gPlayerFrame989UpperTiles
 	.global	gPlayerFrame998
 gPlayerFrame998:
 	.word	gPlayerFrame998OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081758DC
-	.word	gUnk_08175202
-	.word	gUnk_08175FB8
+	.word	gPlayerFrame985NextBankPalette
+	.word	gPlayerFrame990UpperTiles
 	.global	gPlayerFrame990
 gPlayerFrame990:
 	.word	gPlayerFrame990OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081758DC
-	.word	gUnk_08175202
-	.word	gUnk_08175FB8
+	.word	gPlayerFrame985NextBankPalette
+	.word	gPlayerFrame990UpperTiles
 	.global	gPlayerFrame1482
 gPlayerFrame1482:
 	.word	gPlayerFrame1482OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175224
-	.word	gUnk_0817603E
+	.word	gPlayerFrame1467NextBankPalette
+	.word	gPlayerFrame1470UpperTiles
 	.global	gPlayerFrame1478
 gPlayerFrame1478:
 	.word	gPlayerFrame1478OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175224
-	.word	gUnk_0817603E
+	.word	gPlayerFrame1467NextBankPalette
+	.word	gPlayerFrame1470UpperTiles
 	.global	gPlayerFrame1470
 gPlayerFrame1470:
 	.word	gPlayerFrame1470OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175224
-	.word	gUnk_0817603E
+	.word	gPlayerFrame1467NextBankPalette
+	.word	gPlayerFrame1470UpperTiles
 	.global	gPlayerFrame1474
 gPlayerFrame1474:
 	.word	gPlayerFrame1474OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175224
-	.word	gUnk_0817603E
+	.word	gPlayerFrame1467NextBankPalette
+	.word	gPlayerFrame1470UpperTiles
 	.global	gPlayerFrame1468
 gPlayerFrame1468:
 	.word	gPlayerFrame1468OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_0817556A
-	.word	gUnk_08175224
-	.word	gUnk_081761C4
+	.word	gPlayerFrame1467NextBankPalette
+	.word	gPlayerFrame1468UpperTiles
 	.global	gPlayerFrame1476
 gPlayerFrame1476:
 	.word	gPlayerFrame1476OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_0817556A
-	.word	gUnk_08175224
-	.word	gUnk_081761C4
+	.word	gPlayerFrame1467NextBankPalette
+	.word	gPlayerFrame1468UpperTiles
 	.global	gPlayerFrame1469
 gPlayerFrame1469:
 	.word	gPlayerFrame1469OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175224
-	.word	gUnk_0817634A
+	.word	gPlayerFrame1467NextBankPalette
+	.word	gPlayerFrame1467UpperTiles
 	.global	gPlayerFrame1475
 gPlayerFrame1475:
 	.word	gPlayerFrame1475OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175224
-	.word	gUnk_0817634A
+	.word	gPlayerFrame1467NextBankPalette
+	.word	gPlayerFrame1467UpperTiles
 	.global	gPlayerFrame1467
 gPlayerFrame1467:
 	.word	gPlayerFrame1467OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175224
-	.word	gUnk_0817634A
+	.word	gPlayerFrame1467NextBankPalette
+	.word	gPlayerFrame1467UpperTiles
 	.global	gPlayerFrame1477
 gPlayerFrame1477:
 	.word	gPlayerFrame1477OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175224
-	.word	gUnk_0817634A
+	.word	gPlayerFrame1467NextBankPalette
+	.word	gPlayerFrame1467UpperTiles
 	.global	gPlayerFrame1471
 gPlayerFrame1471:
 	.word	gPlayerFrame1471OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175224
-	.word	gUnk_081764D0
+	.word	gPlayerFrame1467NextBankPalette
+	.word	gPlayerFrame1471UpperTiles
 	.global	gPlayerFrame1473
 gPlayerFrame1473:
 	.word	gPlayerFrame1473OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175224
-	.word	gUnk_081764D0
+	.word	gPlayerFrame1467NextBankPalette
+	.word	gPlayerFrame1471UpperTiles
 	.global	gPlayerFrame1481
 gPlayerFrame1481:
 	.word	gPlayerFrame1481OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175224
-	.word	gUnk_081764D0
+	.word	gPlayerFrame1467NextBankPalette
+	.word	gPlayerFrame1471UpperTiles
 	.global	gPlayerFrame1479
 gPlayerFrame1479:
 	.word	gPlayerFrame1479OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175224
-	.word	gUnk_081764D0
+	.word	gPlayerFrame1467NextBankPalette
+	.word	gPlayerFrame1471UpperTiles
 	.global	gPlayerFrame1480
 gPlayerFrame1480:
 	.word	gPlayerFrame1480OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081758DC
-	.word	gUnk_08175224
-	.word	gUnk_08176656
+	.word	gPlayerFrame1467NextBankPalette
+	.word	gPlayerFrame1472UpperTiles
 	.global	gPlayerFrame1472
 gPlayerFrame1472:
 	.word	gPlayerFrame1472OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081758DC
-	.word	gUnk_08175224
-	.word	gUnk_08176656
+	.word	gPlayerFrame1467NextBankPalette
+	.word	gPlayerFrame1472UpperTiles
 	.global	gPlayerFrame1623
 gPlayerFrame1623:
 	.word	gPlayerFrame1623OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175246
-	.word	gUnk_081767DC
+	.word	gPlayerFrame1608NextBankPalette
+	.word	gPlayerFrame1615UpperTiles
 	.global	gPlayerFrame1619
 gPlayerFrame1619:
 	.word	gPlayerFrame1619OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175246
-	.word	gUnk_08176862
+	.word	gPlayerFrame1608NextBankPalette
+	.word	gPlayerFrame1611UpperTiles
 	.global	gPlayerFrame1611
 gPlayerFrame1611:
 	.word	gPlayerFrame1611OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175246
-	.word	gUnk_08176862
+	.word	gPlayerFrame1608NextBankPalette
+	.word	gPlayerFrame1611UpperTiles
 	.global	gPlayerFrame1615
 gPlayerFrame1615:
 	.word	gPlayerFrame1615OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175246
-	.word	gUnk_081767DC
+	.word	gPlayerFrame1608NextBankPalette
+	.word	gPlayerFrame1615UpperTiles
 	.global	gPlayerFrame1609
 gPlayerFrame1609:
 	.word	gPlayerFrame1609OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_0817556A
-	.word	gUnk_08175246
-	.word	gUnk_081768E8
+	.word	gPlayerFrame1608NextBankPalette
+	.word	gPlayerFrame1609UpperTiles
 	.global	gPlayerFrame1617
 gPlayerFrame1617:
 	.word	gPlayerFrame1617OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_0817556A
-	.word	gUnk_08175246
-	.word	gUnk_081768E8
+	.word	gPlayerFrame1608NextBankPalette
+	.word	gPlayerFrame1609UpperTiles
 	.global	gPlayerFrame1610
 gPlayerFrame1610:
 	.word	gPlayerFrame1610OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175246
-	.word	gUnk_0817696E
+	.word	gPlayerFrame1608NextBankPalette
+	.word	gPlayerFrame1610UpperTiles
 	.global	gPlayerFrame1616
 gPlayerFrame1616:
 	.word	gPlayerFrame1616OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175246
-	.word	gUnk_081769F4
+	.word	gPlayerFrame1608NextBankPalette
+	.word	gPlayerFrame1608UpperTiles
 	.global	gPlayerFrame1608
 gPlayerFrame1608:
 	.word	gPlayerFrame1608OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175246
-	.word	gUnk_081769F4
+	.word	gPlayerFrame1608NextBankPalette
+	.word	gPlayerFrame1608UpperTiles
 	.global	gPlayerFrame1618
 gPlayerFrame1618:
 	.word	gPlayerFrame1618OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175246
-	.word	gUnk_0817696E
+	.word	gPlayerFrame1608NextBankPalette
+	.word	gPlayerFrame1610UpperTiles
 	.global	gPlayerFrame1612
 gPlayerFrame1612:
 	.word	gPlayerFrame1612OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175246
-	.word	gUnk_08176A7A
+	.word	gPlayerFrame1608NextBankPalette
+	.word	gPlayerFrame1612UpperTiles
 	.global	gPlayerFrame1614
 gPlayerFrame1614:
 	.word	gPlayerFrame1614OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175246
-	.word	gUnk_08176B00
+	.word	gPlayerFrame1608NextBankPalette
+	.word	gPlayerFrame1614UpperTiles
 	.global	gPlayerFrame1622
 gPlayerFrame1622:
 	.word	gPlayerFrame1622OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175246
-	.word	gUnk_08176B00
+	.word	gPlayerFrame1608NextBankPalette
+	.word	gPlayerFrame1614UpperTiles
 	.global	gPlayerFrame1620
 gPlayerFrame1620:
 	.word	gPlayerFrame1620OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175246
-	.word	gUnk_08176A7A
+	.word	gPlayerFrame1608NextBankPalette
+	.word	gPlayerFrame1612UpperTiles
 	.global	gPlayerFrame1621
 gPlayerFrame1621:
 	.word	gPlayerFrame1621OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081758DC
-	.word	gUnk_08175246
-	.word	gUnk_08176B86
+	.word	gPlayerFrame1608NextBankPalette
+	.word	gPlayerFrame1613UpperTiles
 	.global	gPlayerFrame1613
 gPlayerFrame1613:
 	.word	gPlayerFrame1613OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081758DC
-	.word	gUnk_08175246
-	.word	gUnk_08176B86
+	.word	gPlayerFrame1608NextBankPalette
+	.word	gPlayerFrame1613UpperTiles
 	.global	gPlayerFrame1792
 gPlayerFrame1792:
 	.word	gPlayerFrame1792OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175268
-	.word	gUnk_08176C0C
+	.word	gPlayerFrame1777NextBankPalette
+	.word	gPlayerFrame1780UpperTiles
 	.global	gPlayerFrame1788
 gPlayerFrame1788:
 	.word	gPlayerFrame1788OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175268
-	.word	gUnk_08176C0C
+	.word	gPlayerFrame1777NextBankPalette
+	.word	gPlayerFrame1780UpperTiles
 	.global	gPlayerFrame1780
 gPlayerFrame1780:
 	.word	gPlayerFrame1780OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175268
-	.word	gUnk_08176C0C
+	.word	gPlayerFrame1777NextBankPalette
+	.word	gPlayerFrame1780UpperTiles
 	.global	gPlayerFrame1784
 gPlayerFrame1784:
 	.word	gPlayerFrame1784OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175268
-	.word	gUnk_08176C0C
+	.word	gPlayerFrame1777NextBankPalette
+	.word	gPlayerFrame1780UpperTiles
 	.global	gPlayerFrame1778
 gPlayerFrame1778:
 	.word	gPlayerFrame1778OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gPlayerFrame1778Tiles
-	.word	gUnk_08175268
-	.word	gUnk_08176DD8
+	.word	gPlayerFrame1777NextBankPalette
+	.word	gPlayerFrame1778UpperTiles
 	.global	gPlayerFrame1786
 gPlayerFrame1786:
 	.word	gPlayerFrame1786OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gPlayerFrame1778Tiles
-	.word	gUnk_08175268
-	.word	gUnk_08176DD8
+	.word	gPlayerFrame1777NextBankPalette
+	.word	gPlayerFrame1778UpperTiles
 	.global	gPlayerFrame1779
 gPlayerFrame1779:
 	.word	gPlayerFrame1779OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175268
-	.word	gUnk_08176E5E
+	.word	gPlayerFrame1777NextBankPalette
+	.word	gPlayerFrame1777UpperTiles
 	.global	gPlayerFrame1785
 gPlayerFrame1785:
 	.word	gPlayerFrame1785OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175268
-	.word	gUnk_08176E5E
+	.word	gPlayerFrame1777NextBankPalette
+	.word	gPlayerFrame1777UpperTiles
 	.global	gPlayerFrame1777
 gPlayerFrame1777:
 	.word	gPlayerFrame1777OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175268
-	.word	gUnk_08176E5E
+	.word	gPlayerFrame1777NextBankPalette
+	.word	gPlayerFrame1777UpperTiles
 	.global	gPlayerFrame1787
 gPlayerFrame1787:
 	.word	gPlayerFrame1787OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175268
-	.word	gUnk_08176E5E
+	.word	gPlayerFrame1777NextBankPalette
+	.word	gPlayerFrame1777UpperTiles
 	.global	gPlayerFrame1781
 gPlayerFrame1781:
 	.word	gPlayerFrame1781OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175268
-	.word	gUnk_08176F04
+	.word	gPlayerFrame1777NextBankPalette
+	.word	gPlayerFrame1781UpperTiles
 	.global	gPlayerFrame1783
 gPlayerFrame1783:
 	.word	gPlayerFrame1783OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175268
-	.word	gUnk_08176F04
+	.word	gPlayerFrame1777NextBankPalette
+	.word	gPlayerFrame1781UpperTiles
 	.global	gPlayerFrame1791
 gPlayerFrame1791:
 	.word	gPlayerFrame1791OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175268
-	.word	gUnk_08176F04
+	.word	gPlayerFrame1777NextBankPalette
+	.word	gPlayerFrame1781UpperTiles
 	.global	gPlayerFrame1789
 gPlayerFrame1789:
 	.word	gPlayerFrame1789OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175268
-	.word	gUnk_08176F04
+	.word	gPlayerFrame1777NextBankPalette
+	.word	gPlayerFrame1781UpperTiles
 	.global	gPlayerFrame1790
 gPlayerFrame1790:
 	.word	gPlayerFrame1790OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081758DC
-	.word	gUnk_08175268
-	.word	gUnk_08176FAA
+	.word	gPlayerFrame1777NextBankPalette
+	.word	gPlayerFrame1782UpperTiles
 	.global	gPlayerFrame1782
 gPlayerFrame1782:
 	.word	gPlayerFrame1782OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081758DC
-	.word	gUnk_08175268
-	.word	gUnk_08176FAA
+	.word	gPlayerFrame1777NextBankPalette
+	.word	gPlayerFrame1782UpperTiles
 	.global	gPlayerFrame2413
 gPlayerFrame2413:
 	.word	gPlayerFrame2413OamTemplate+1
 	.word	gPlayerFrame2398Palette
 	.word	gUnk_08175444
-	.word	gUnk_081752AC
-	.word	gUnk_08177050
+	.word	gPlayerFrame2398NextBankPalette
+	.word	gPlayerFrame2401UpperTiles
 	.global	gPlayerFrame2409
 gPlayerFrame2409:
 	.word	gPlayerFrame2409OamTemplate+1
 	.word	gPlayerFrame2398Palette
 	.word	gUnk_08175444
-	.word	gUnk_081752AC
-	.word	gUnk_08177050
+	.word	gPlayerFrame2398NextBankPalette
+	.word	gPlayerFrame2401UpperTiles
 	.global	gPlayerFrame2401
 gPlayerFrame2401:
 	.word	gPlayerFrame2401OamTemplate+1
 	.word	gPlayerFrame2398Palette
 	.word	gUnk_08175444
-	.word	gUnk_081752AC
-	.word	gUnk_08177050
+	.word	gPlayerFrame2398NextBankPalette
+	.word	gPlayerFrame2401UpperTiles
 	.global	gPlayerFrame2405
 gPlayerFrame2405:
 	.word	gPlayerFrame2405OamTemplate+1
 	.word	gPlayerFrame2398Palette
 	.word	gUnk_08175444
-	.word	gUnk_081752AC
-	.word	gUnk_08177050
+	.word	gPlayerFrame2398NextBankPalette
+	.word	gPlayerFrame2401UpperTiles
 	.global	gPlayerFrame2399
 gPlayerFrame2399:
 	.word	gPlayerFrame2399OamTemplate+1
 	.word	gPlayerFrame2398Palette
 	.word	gUnk_0817556A
-	.word	gUnk_081752AC
-	.word	gUnk_08177116
+	.word	gPlayerFrame2398NextBankPalette
+	.word	gPlayerFrame2399UpperTiles
 	.global	gPlayerFrame2407
 gPlayerFrame2407:
 	.word	gPlayerFrame2407OamTemplate+1
 	.word	gPlayerFrame2398Palette
 	.word	gUnk_0817556A
-	.word	gUnk_081752AC
-	.word	gUnk_08177116
+	.word	gPlayerFrame2398NextBankPalette
+	.word	gPlayerFrame2399UpperTiles
 	.global	gPlayerFrame2400
 gPlayerFrame2400:
 	.word	gPlayerFrame2400OamTemplate+1
 	.word	gPlayerFrame2398Palette
 	.word	gUnk_08175690
-	.word	gUnk_081752AC
-	.word	gUnk_081771DC
+	.word	gPlayerFrame2398NextBankPalette
+	.word	gPlayerFrame2398UpperTiles
 	.global	gPlayerFrame2406
 gPlayerFrame2406:
 	.word	gPlayerFrame2406OamTemplate+1
 	.word	gPlayerFrame2398Palette
 	.word	gUnk_08175690
-	.word	gUnk_081752AC
-	.word	gUnk_081771DC
+	.word	gPlayerFrame2398NextBankPalette
+	.word	gPlayerFrame2398UpperTiles
 	.global	gPlayerFrame2398
 gPlayerFrame2398:
 	.word	gPlayerFrame2398OamTemplate+1
 	.word	gPlayerFrame2398Palette
 	.word	gUnk_08175690
-	.word	gUnk_081752AC
-	.word	gUnk_081771DC
+	.word	gPlayerFrame2398NextBankPalette
+	.word	gPlayerFrame2398UpperTiles
 	.global	gPlayerFrame2408
 gPlayerFrame2408:
 	.word	gPlayerFrame2408OamTemplate+1
 	.word	gPlayerFrame2398Palette
 	.word	gUnk_08175690
-	.word	gUnk_081752AC
-	.word	gUnk_081771DC
+	.word	gPlayerFrame2398NextBankPalette
+	.word	gPlayerFrame2398UpperTiles
 	.global	gPlayerFrame2402
 gPlayerFrame2402:
 	.word	gPlayerFrame2402OamTemplate+1
 	.word	gPlayerFrame2398Palette
 	.word	gUnk_081757B6
-	.word	gUnk_081752AC
-	.word	gUnk_081772A2
+	.word	gPlayerFrame2398NextBankPalette
+	.word	gPlayerFrame2402UpperTiles
 	.global	gPlayerFrame2404
 gPlayerFrame2404:
 	.word	gPlayerFrame2404OamTemplate+1
 	.word	gPlayerFrame2398Palette
 	.word	gUnk_081757B6
-	.word	gUnk_081752AC
-	.word	gUnk_081772A2
+	.word	gPlayerFrame2398NextBankPalette
+	.word	gPlayerFrame2402UpperTiles
 	.global	gPlayerFrame2412
 gPlayerFrame2412:
 	.word	gPlayerFrame2412OamTemplate+1
 	.word	gPlayerFrame2398Palette
 	.word	gUnk_081757B6
-	.word	gUnk_081752AC
-	.word	gUnk_081772A2
+	.word	gPlayerFrame2398NextBankPalette
+	.word	gPlayerFrame2402UpperTiles
 	.global	gPlayerFrame2410
 gPlayerFrame2410:
 	.word	gPlayerFrame2410OamTemplate+1
 	.word	gPlayerFrame2398Palette
 	.word	gUnk_081757B6
-	.word	gUnk_081752AC
-	.word	gUnk_081772A2
+	.word	gPlayerFrame2398NextBankPalette
+	.word	gPlayerFrame2402UpperTiles
 	.global	gPlayerFrame2411
 gPlayerFrame2411:
 	.word	gPlayerFrame2411OamTemplate+1
 	.word	gPlayerFrame2398Palette
 	.word	gUnk_081758DC
-	.word	gUnk_081752AC
-	.word	gUnk_08177368
+	.word	gPlayerFrame2398NextBankPalette
+	.word	gPlayerFrame2403UpperTiles
 	.global	gPlayerFrame2403
 gPlayerFrame2403:
 	.word	gPlayerFrame2403OamTemplate+1
 	.word	gPlayerFrame2398Palette
 	.word	gUnk_081758DC
-	.word	gUnk_081752AC
-	.word	gUnk_08177368
+	.word	gPlayerFrame2398NextBankPalette
+	.word	gPlayerFrame2403UpperTiles
 	.global	gPlayerFrame2553
 gPlayerFrame2553:
 	.word	gPlayerFrame2553OamTemplate+1
 	.word	gPlayerFrame2538Palette
 	.word	gUnk_08175444
-	.word	gUnk_081752F0
-	.word	gUnk_0817742E
+	.word	gPlayerFrame2538NextBankPalette
+	.word	gPlayerFrame2541UpperTiles
 	.global	gPlayerFrame2549
 gPlayerFrame2549:
 	.word	gPlayerFrame2549OamTemplate+1
 	.word	gPlayerFrame2538Palette
 	.word	gUnk_08175444
-	.word	gUnk_081752F0
-	.word	gUnk_0817742E
+	.word	gPlayerFrame2538NextBankPalette
+	.word	gPlayerFrame2541UpperTiles
 	.global	gPlayerFrame2541
 gPlayerFrame2541:
 	.word	gPlayerFrame2541OamTemplate+1
 	.word	gPlayerFrame2538Palette
 	.word	gUnk_08175444
-	.word	gUnk_081752F0
-	.word	gUnk_0817742E
+	.word	gPlayerFrame2538NextBankPalette
+	.word	gPlayerFrame2541UpperTiles
 	.global	gPlayerFrame2545
 gPlayerFrame2545:
 	.word	gPlayerFrame2545OamTemplate+1
 	.word	gPlayerFrame2538Palette
 	.word	gUnk_08175444
-	.word	gUnk_081752F0
-	.word	gUnk_0817742E
+	.word	gPlayerFrame2538NextBankPalette
+	.word	gPlayerFrame2541UpperTiles
 	.global	gPlayerFrame2539
 gPlayerFrame2539:
 	.word	gPlayerFrame2539OamTemplate+1
 	.word	gPlayerFrame2538Palette
 	.word	gUnk_0817556A
-	.word	gUnk_081752F0
-	.word	gUnk_081774B4
+	.word	gPlayerFrame2538NextBankPalette
+	.word	gPlayerFrame2539UpperTiles
 	.global	gPlayerFrame2547
 gPlayerFrame2547:
 	.word	gPlayerFrame2547OamTemplate+1
 	.word	gPlayerFrame2538Palette
 	.word	gUnk_0817556A
-	.word	gUnk_081752F0
-	.word	gUnk_081774B4
+	.word	gPlayerFrame2538NextBankPalette
+	.word	gPlayerFrame2539UpperTiles
 	.global	gPlayerFrame2540
 gPlayerFrame2540:
 	.word	gPlayerFrame2540OamTemplate+1
 	.word	gPlayerFrame2538Palette
 	.word	gUnk_08175690
-	.word	gUnk_081752F0
-	.word	gUnk_0817757A
+	.word	gPlayerFrame2538NextBankPalette
+	.word	gPlayerFrame2538UpperTiles
 	.global	gPlayerFrame2546
 gPlayerFrame2546:
 	.word	gPlayerFrame2546OamTemplate+1
 	.word	gPlayerFrame2538Palette
 	.word	gUnk_08175690
-	.word	gUnk_081752F0
-	.word	gUnk_0817757A
+	.word	gPlayerFrame2538NextBankPalette
+	.word	gPlayerFrame2538UpperTiles
 	.global	gPlayerFrame2538
 gPlayerFrame2538:
 	.word	gPlayerFrame2538OamTemplate+1
 	.word	gPlayerFrame2538Palette
 	.word	gUnk_08175690
-	.word	gUnk_081752F0
-	.word	gUnk_0817757A
+	.word	gPlayerFrame2538NextBankPalette
+	.word	gPlayerFrame2538UpperTiles
 	.global	gPlayerFrame2548
 gPlayerFrame2548:
 	.word	gPlayerFrame2548OamTemplate+1
 	.word	gPlayerFrame2538Palette
 	.word	gUnk_08175690
-	.word	gUnk_081752F0
-	.word	gUnk_0817757A
+	.word	gPlayerFrame2538NextBankPalette
+	.word	gPlayerFrame2538UpperTiles
 	.global	gPlayerFrame2542
 gPlayerFrame2542:
 	.word	gPlayerFrame2542OamTemplate+1
 	.word	gPlayerFrame2538Palette
 	.word	gUnk_081757B6
-	.word	gUnk_081752F0
-	.word	gUnk_08177640
+	.word	gPlayerFrame2538NextBankPalette
+	.word	gPlayerFrame2542UpperTiles
 	.global	gPlayerFrame2544
 gPlayerFrame2544:
 	.word	gPlayerFrame2544OamTemplate+1
 	.word	gPlayerFrame2538Palette
 	.word	gUnk_081757B6
-	.word	gUnk_081752F0
-	.word	gUnk_08177640
+	.word	gPlayerFrame2538NextBankPalette
+	.word	gPlayerFrame2542UpperTiles
 	.global	gPlayerFrame2552
 gPlayerFrame2552:
 	.word	gPlayerFrame2552OamTemplate+1
 	.word	gPlayerFrame2538Palette
 	.word	gUnk_081757B6
-	.word	gUnk_081752F0
-	.word	gUnk_08177640
+	.word	gPlayerFrame2538NextBankPalette
+	.word	gPlayerFrame2542UpperTiles
 	.global	gPlayerFrame2550
 gPlayerFrame2550:
 	.word	gPlayerFrame2550OamTemplate+1
 	.word	gPlayerFrame2538Palette
 	.word	gUnk_081757B6
-	.word	gUnk_081752F0
-	.word	gUnk_08177640
+	.word	gPlayerFrame2538NextBankPalette
+	.word	gPlayerFrame2542UpperTiles
 	.global	gPlayerFrame2551
 gPlayerFrame2551:
 	.word	gPlayerFrame2551OamTemplate+1
 	.word	gPlayerFrame2538Palette
 	.word	gUnk_081758DC
-	.word	gUnk_081752F0
-	.word	gUnk_08177706
+	.word	gPlayerFrame2538NextBankPalette
+	.word	gPlayerFrame2543UpperTiles
 	.global	gPlayerFrame2543
 gPlayerFrame2543:
 	.word	gPlayerFrame2543OamTemplate+1
 	.word	gPlayerFrame2538Palette
 	.word	gUnk_081758DC
-	.word	gUnk_081752F0
-	.word	gUnk_08177706
+	.word	gPlayerFrame2538NextBankPalette
+	.word	gPlayerFrame2543UpperTiles
 	.global	gPlayerFrame2693
 gPlayerFrame2693:
 	.word	gPlayerFrame2693OamTemplate+1
 	.word	gPlayerFrame2678Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175334
-	.word	gUnk_081777CC
+	.word	gPlayerFrame2678NextBankPalette
+	.word	gPlayerFrame2681UpperTiles
 	.global	gPlayerFrame2689
 gPlayerFrame2689:
 	.word	gPlayerFrame2689OamTemplate+1
 	.word	gPlayerFrame2678Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175334
-	.word	gUnk_081777CC
+	.word	gPlayerFrame2678NextBankPalette
+	.word	gPlayerFrame2681UpperTiles
 	.global	gPlayerFrame2681
 gPlayerFrame2681:
 	.word	gPlayerFrame2681OamTemplate+1
 	.word	gPlayerFrame2678Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175334
-	.word	gUnk_081777CC
+	.word	gPlayerFrame2678NextBankPalette
+	.word	gPlayerFrame2681UpperTiles
 	.global	gPlayerFrame2685
 gPlayerFrame2685:
 	.word	gPlayerFrame2685OamTemplate+1
 	.word	gPlayerFrame2678Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175334
-	.word	gUnk_081777CC
+	.word	gPlayerFrame2678NextBankPalette
+	.word	gPlayerFrame2681UpperTiles
 	.global	gPlayerFrame2679
 gPlayerFrame2679:
 	.word	gPlayerFrame2679OamTemplate+1
 	.word	gPlayerFrame2678Palette
 	.word	gUnk_0817556A
-	.word	gUnk_08175334
-	.word	gUnk_08177852
+	.word	gPlayerFrame2678NextBankPalette
+	.word	gPlayerFrame2679UpperTiles
 	.global	gPlayerFrame2687
 gPlayerFrame2687:
 	.word	gPlayerFrame2687OamTemplate+1
 	.word	gPlayerFrame2678Palette
 	.word	gUnk_0817556A
-	.word	gUnk_08175334
-	.word	gUnk_08177852
+	.word	gPlayerFrame2678NextBankPalette
+	.word	gPlayerFrame2679UpperTiles
 	.global	gPlayerFrame2680
 gPlayerFrame2680:
 	.word	gPlayerFrame2680OamTemplate+1
 	.word	gPlayerFrame2678Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175334
-	.word	gUnk_08177938
+	.word	gPlayerFrame2678NextBankPalette
+	.word	gPlayerFrame2678UpperTiles
 	.global	gPlayerFrame2686
 gPlayerFrame2686:
 	.word	gPlayerFrame2686OamTemplate+1
 	.word	gPlayerFrame2678Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175334
-	.word	gUnk_08177938
+	.word	gPlayerFrame2678NextBankPalette
+	.word	gPlayerFrame2678UpperTiles
 	.global	gPlayerFrame2678
 gPlayerFrame2678:
 	.word	gPlayerFrame2678OamTemplate+1
 	.word	gPlayerFrame2678Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175334
-	.word	gUnk_08177938
+	.word	gPlayerFrame2678NextBankPalette
+	.word	gPlayerFrame2678UpperTiles
 	.global	gPlayerFrame2688
 gPlayerFrame2688:
 	.word	gPlayerFrame2688OamTemplate+1
 	.word	gPlayerFrame2678Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175334
-	.word	gUnk_08177938
+	.word	gPlayerFrame2678NextBankPalette
+	.word	gPlayerFrame2678UpperTiles
 	.global	gPlayerFrame2682
 gPlayerFrame2682:
 	.word	gPlayerFrame2682OamTemplate+1
 	.word	gPlayerFrame2678Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175334
-	.word	gUnk_08177A3E
+	.word	gPlayerFrame2678NextBankPalette
+	.word	gPlayerFrame2682UpperTiles
 	.global	gPlayerFrame2684
 gPlayerFrame2684:
 	.word	gPlayerFrame2684OamTemplate+1
 	.word	gPlayerFrame2678Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175334
-	.word	gUnk_08177A3E
+	.word	gPlayerFrame2678NextBankPalette
+	.word	gPlayerFrame2682UpperTiles
 	.global	gPlayerFrame2692
 gPlayerFrame2692:
 	.word	gPlayerFrame2692OamTemplate+1
 	.word	gPlayerFrame2678Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175334
-	.word	gUnk_08177A3E
+	.word	gPlayerFrame2678NextBankPalette
+	.word	gPlayerFrame2682UpperTiles
 	.global	gPlayerFrame2690
 gPlayerFrame2690:
 	.word	gPlayerFrame2690OamTemplate+1
 	.word	gPlayerFrame2678Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175334
-	.word	gUnk_08177A3E
+	.word	gPlayerFrame2678NextBankPalette
+	.word	gPlayerFrame2682UpperTiles
 	.global	gPlayerFrame2691
 gPlayerFrame2691:
 	.word	gPlayerFrame2691OamTemplate+1
 	.word	gPlayerFrame2678Palette
 	.word	gUnk_081758DC
-	.word	gUnk_08175334
-	.word	gUnk_08177B44
+	.word	gPlayerFrame2678NextBankPalette
+	.word	gPlayerFrame2683UpperTiles
 	.global	gPlayerFrame2683
 gPlayerFrame2683:
 	.word	gPlayerFrame2683OamTemplate+1
 	.word	gPlayerFrame2678Palette
 	.word	gUnk_081758DC
-	.word	gUnk_08175334
-	.word	gUnk_08177B44
+	.word	gPlayerFrame2678NextBankPalette
+	.word	gPlayerFrame2683UpperTiles
 	.global	gPlayerFrame2858
 gPlayerFrame2858:
 	.word	gPlayerFrame2858OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175356
-	.word	gUnk_08177C2A
+	.word	gPlayerFrame2843NextBankPalette
+	.word	gPlayerFrame2846UpperTiles
 	.global	gPlayerFrame2854
 gPlayerFrame2854:
 	.word	gPlayerFrame2854OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175356
-	.word	gUnk_08177C2A
+	.word	gPlayerFrame2843NextBankPalette
+	.word	gPlayerFrame2846UpperTiles
 	.global	gPlayerFrame2846
 gPlayerFrame2846:
 	.word	gPlayerFrame2846OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175356
-	.word	gUnk_08177C2A
+	.word	gPlayerFrame2843NextBankPalette
+	.word	gPlayerFrame2846UpperTiles
 	.global	gPlayerFrame2850
 gPlayerFrame2850:
 	.word	gPlayerFrame2850OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175356
-	.word	gUnk_08177C2A
+	.word	gPlayerFrame2843NextBankPalette
+	.word	gPlayerFrame2846UpperTiles
 	.global	gPlayerFrame2844
 gPlayerFrame2844:
 	.word	gPlayerFrame2844OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_0817556A
-	.word	gUnk_08175356
-	.word	gUnk_08177CF0
+	.word	gPlayerFrame2843NextBankPalette
+	.word	gPlayerFrame2844UpperTiles
 	.global	gPlayerFrame2852
 gPlayerFrame2852:
 	.word	gPlayerFrame2852OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_0817556A
-	.word	gUnk_08175356
-	.word	gUnk_08177CF0
+	.word	gPlayerFrame2843NextBankPalette
+	.word	gPlayerFrame2844UpperTiles
 	.global	gPlayerFrame2845
 gPlayerFrame2845:
 	.word	gPlayerFrame2845OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175356
-	.word	gUnk_08177D76
+	.word	gPlayerFrame2843NextBankPalette
+	.word	gPlayerFrame2843UpperTiles
 	.global	gPlayerFrame2851
 gPlayerFrame2851:
 	.word	gPlayerFrame2851OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175356
-	.word	gUnk_08177D76
+	.word	gPlayerFrame2843NextBankPalette
+	.word	gPlayerFrame2843UpperTiles
 	.global	gPlayerFrame2843
 gPlayerFrame2843:
 	.word	gPlayerFrame2843OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175356
-	.word	gUnk_08177D76
+	.word	gPlayerFrame2843NextBankPalette
+	.word	gPlayerFrame2843UpperTiles
 	.global	gPlayerFrame2853
 gPlayerFrame2853:
 	.word	gPlayerFrame2853OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175356
-	.word	gUnk_08177D76
+	.word	gPlayerFrame2843NextBankPalette
+	.word	gPlayerFrame2843UpperTiles
 	.global	gPlayerFrame2847
 gPlayerFrame2847:
 	.word	gPlayerFrame2847OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175356
-	.word	gUnk_08177E3C
+	.word	gPlayerFrame2843NextBankPalette
+	.word	gPlayerFrame2847UpperTiles
 	.global	gPlayerFrame2849
 gPlayerFrame2849:
 	.word	gPlayerFrame2849OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175356
-	.word	gUnk_08177E3C
+	.word	gPlayerFrame2843NextBankPalette
+	.word	gPlayerFrame2847UpperTiles
 	.global	gPlayerFrame2857
 gPlayerFrame2857:
 	.word	gPlayerFrame2857OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175356
-	.word	gUnk_08177E3C
+	.word	gPlayerFrame2843NextBankPalette
+	.word	gPlayerFrame2847UpperTiles
 	.global	gPlayerFrame2855
 gPlayerFrame2855:
 	.word	gPlayerFrame2855OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175356
-	.word	gUnk_08177E3C
+	.word	gPlayerFrame2843NextBankPalette
+	.word	gPlayerFrame2847UpperTiles
 	.global	gPlayerFrame2856
 gPlayerFrame2856:
 	.word	gPlayerFrame2856OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081758DC
-	.word	gUnk_08175356
-	.word	gUnk_08177F02
+	.word	gPlayerFrame2843NextBankPalette
+	.word	gPlayerFrame2848UpperTiles
 	.global	gPlayerFrame2848
 gPlayerFrame2848:
 	.word	gPlayerFrame2848OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081758DC
-	.word	gUnk_08175356
-	.word	gUnk_08177F02
+	.word	gPlayerFrame2843NextBankPalette
+	.word	gPlayerFrame2848UpperTiles
 	.global	gPlayerFrame3004
 gPlayerFrame3004:
 	.word	gPlayerFrame3004OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175378
-	.word	gUnk_08177F86
+	.word	gPlayerFrame2989NextBankPalette
+	.word	gPlayerFrame2996UpperTiles
 	.global	gPlayerFrame3000
 gPlayerFrame3000:
 	.word	gPlayerFrame3000OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175378
-	.word	gUnk_0817804C
+	.word	gPlayerFrame2989NextBankPalette
+	.word	gPlayerFrame2992UpperTiles
 	.global	gPlayerFrame2992
 gPlayerFrame2992:
 	.word	gPlayerFrame2992OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175378
-	.word	gUnk_0817804C
+	.word	gPlayerFrame2989NextBankPalette
+	.word	gPlayerFrame2992UpperTiles
 	.global	gPlayerFrame2996
 gPlayerFrame2996:
 	.word	gPlayerFrame2996OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175378
-	.word	gUnk_08177F86
+	.word	gPlayerFrame2989NextBankPalette
+	.word	gPlayerFrame2996UpperTiles
 	.global	gPlayerFrame2990
 gPlayerFrame2990:
 	.word	gPlayerFrame2990OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_0817556A
-	.word	gUnk_08175378
-	.word	gUnk_08178112
+	.word	gPlayerFrame2989NextBankPalette
+	.word	gPlayerFrame2990UpperTiles
 	.global	gPlayerFrame2998
 gPlayerFrame2998:
 	.word	gPlayerFrame2998OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_0817556A
-	.word	gUnk_08175378
-	.word	gUnk_08178112
+	.word	gPlayerFrame2989NextBankPalette
+	.word	gPlayerFrame2990UpperTiles
 	.global	gPlayerFrame2991
 gPlayerFrame2991:
 	.word	gPlayerFrame2991OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175378
-	.word	gUnk_081781D8
+	.word	gPlayerFrame2989NextBankPalette
+	.word	gPlayerFrame2991UpperTiles
 	.global	gPlayerFrame2997
 gPlayerFrame2997:
 	.word	gPlayerFrame2997OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175378
-	.word	gUnk_0817829E
+	.word	gPlayerFrame2989NextBankPalette
+	.word	gPlayerFrame2989UpperTiles
 	.global	gPlayerFrame2989
 gPlayerFrame2989:
 	.word	gPlayerFrame2989OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175378
-	.word	gUnk_0817829E
+	.word	gPlayerFrame2989NextBankPalette
+	.word	gPlayerFrame2989UpperTiles
 	.global	gPlayerFrame2999
 gPlayerFrame2999:
 	.word	gPlayerFrame2999OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175378
-	.word	gUnk_081781D8
+	.word	gPlayerFrame2989NextBankPalette
+	.word	gPlayerFrame2991UpperTiles
 	.global	gPlayerFrame2993
 gPlayerFrame2993:
 	.word	gPlayerFrame2993OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175378
-	.word	gUnk_08178364
+	.word	gPlayerFrame2989NextBankPalette
+	.word	gPlayerFrame2993UpperTiles
 	.global	gPlayerFrame2995
 gPlayerFrame2995:
 	.word	gPlayerFrame2995OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175378
-	.word	gUnk_0817842A
+	.word	gPlayerFrame2989NextBankPalette
+	.word	gPlayerFrame2995UpperTiles
 	.global	gPlayerFrame3003
 gPlayerFrame3003:
 	.word	gPlayerFrame3003OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175378
-	.word	gUnk_0817842A
+	.word	gPlayerFrame2989NextBankPalette
+	.word	gPlayerFrame2995UpperTiles
 	.global	gPlayerFrame3001
 gPlayerFrame3001:
 	.word	gPlayerFrame3001OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175378
-	.word	gUnk_08178364
+	.word	gPlayerFrame2989NextBankPalette
+	.word	gPlayerFrame2993UpperTiles
 	.global	gPlayerFrame3002
 gPlayerFrame3002:
 	.word	gPlayerFrame3002OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081758DC
-	.word	gUnk_08175378
-	.word	gUnk_081784F0
+	.word	gPlayerFrame2989NextBankPalette
+	.word	gPlayerFrame2994UpperTiles
 	.global	gPlayerFrame2994
 gPlayerFrame2994:
 	.word	gPlayerFrame2994OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081758DC
-	.word	gUnk_08175378
-	.word	gUnk_081784F0
+	.word	gPlayerFrame2989NextBankPalette
+	.word	gPlayerFrame2994UpperTiles
 	.global	gPlayerFrame3135
 gPlayerFrame3135:
 	.word	gPlayerFrame3135OamTemplate+1
 	.word	gPlayerFrame3120Palette
 	.word	gUnk_08175444
-	.word	gUnk_081753BC
-	.word	gUnk_081785B6
+	.word	gPlayerFrame3120NextBankPalette
+	.word	gPlayerFrame3123UpperTiles
 	.global	gPlayerFrame3131
 gPlayerFrame3131:
 	.word	gPlayerFrame3131OamTemplate+1
 	.word	gPlayerFrame3120Palette
 	.word	gUnk_08175444
-	.word	gUnk_081753BC
-	.word	gUnk_081785B6
+	.word	gPlayerFrame3120NextBankPalette
+	.word	gPlayerFrame3123UpperTiles
 	.global	gPlayerFrame3123
 gPlayerFrame3123:
 	.word	gPlayerFrame3123OamTemplate+1
 	.word	gPlayerFrame3120Palette
 	.word	gUnk_08175444
-	.word	gUnk_081753BC
-	.word	gUnk_081785B6
+	.word	gPlayerFrame3120NextBankPalette
+	.word	gPlayerFrame3123UpperTiles
 	.global	gPlayerFrame3127
 gPlayerFrame3127:
 	.word	gPlayerFrame3127OamTemplate+1
 	.word	gPlayerFrame3120Palette
 	.word	gUnk_08175444
-	.word	gUnk_081753BC
-	.word	gUnk_081785B6
+	.word	gPlayerFrame3120NextBankPalette
+	.word	gPlayerFrame3123UpperTiles
 	.global	gPlayerFrame3121
 gPlayerFrame3121:
 	.word	gPlayerFrame3121OamTemplate+1
 	.word	gPlayerFrame3120Palette
 	.word	gUnk_0817556A
-	.word	gUnk_081753BC
-	.word	gUnk_0817867C
+	.word	gPlayerFrame3120NextBankPalette
+	.word	gPlayerFrame3121UpperTiles
 	.global	gPlayerFrame3129
 gPlayerFrame3129:
 	.word	gPlayerFrame3129OamTemplate+1
 	.word	gPlayerFrame3120Palette
 	.word	gUnk_0817556A
-	.word	gUnk_081753BC
-	.word	gUnk_0817867C
+	.word	gPlayerFrame3120NextBankPalette
+	.word	gPlayerFrame3121UpperTiles
 	.global	gPlayerFrame3122
 gPlayerFrame3122:
 	.word	gPlayerFrame3122OamTemplate+1
 	.word	gPlayerFrame3120Palette
 	.word	gUnk_08175690
-	.word	gUnk_081753BC
-	.word	gUnk_08178742
+	.word	gPlayerFrame3120NextBankPalette
+	.word	gPlayerFrame3120UpperTiles
 	.global	gPlayerFrame3128
 gPlayerFrame3128:
 	.word	gPlayerFrame3128OamTemplate+1
 	.word	gPlayerFrame3120Palette
 	.word	gUnk_08175690
-	.word	gUnk_081753BC
-	.word	gUnk_08178742
+	.word	gPlayerFrame3120NextBankPalette
+	.word	gPlayerFrame3120UpperTiles
 	.global	gPlayerFrame3120
 gPlayerFrame3120:
 	.word	gPlayerFrame3120OamTemplate+1
 	.word	gPlayerFrame3120Palette
 	.word	gUnk_08175690
-	.word	gUnk_081753BC
-	.word	gUnk_08178742
+	.word	gPlayerFrame3120NextBankPalette
+	.word	gPlayerFrame3120UpperTiles
 	.global	gPlayerFrame3130
 gPlayerFrame3130:
 	.word	gPlayerFrame3130OamTemplate+1
 	.word	gPlayerFrame3120Palette
 	.word	gUnk_08175690
-	.word	gUnk_081753BC
-	.word	gUnk_08178742
+	.word	gPlayerFrame3120NextBankPalette
+	.word	gPlayerFrame3120UpperTiles
 	.global	gPlayerFrame3124
 gPlayerFrame3124:
 	.word	gPlayerFrame3124OamTemplate+1
 	.word	gPlayerFrame3120Palette
 	.word	gUnk_081757B6
-	.word	gUnk_081753BC
-	.word	gUnk_08178808
+	.word	gPlayerFrame3120NextBankPalette
+	.word	gPlayerFrame3124UpperTiles
 	.global	gPlayerFrame3126
 gPlayerFrame3126:
 	.word	gPlayerFrame3126OamTemplate+1
 	.word	gPlayerFrame3120Palette
 	.word	gUnk_081757B6
-	.word	gUnk_081753BC
-	.word	gUnk_08178808
+	.word	gPlayerFrame3120NextBankPalette
+	.word	gPlayerFrame3124UpperTiles
 	.global	gPlayerFrame3134
 gPlayerFrame3134:
 	.word	gPlayerFrame3134OamTemplate+1
 	.word	gPlayerFrame3120Palette
 	.word	gUnk_081757B6
-	.word	gUnk_081753BC
-	.word	gUnk_08178808
+	.word	gPlayerFrame3120NextBankPalette
+	.word	gPlayerFrame3124UpperTiles
 	.global	gPlayerFrame3132
 gPlayerFrame3132:
 	.word	gPlayerFrame3132OamTemplate+1
 	.word	gPlayerFrame3120Palette
 	.word	gUnk_081757B6
-	.word	gUnk_081753BC
-	.word	gUnk_08178808
+	.word	gPlayerFrame3120NextBankPalette
+	.word	gPlayerFrame3124UpperTiles
 	.global	gPlayerFrame3133
 gPlayerFrame3133:
 	.word	gPlayerFrame3133OamTemplate+1
 	.word	gPlayerFrame3120Palette
 	.word	gUnk_081758DC
-	.word	gUnk_081753BC
-	.word	gUnk_081788CE
+	.word	gPlayerFrame3120NextBankPalette
+	.word	gPlayerFrame3125UpperTiles
 	.global	gPlayerFrame3125
 gPlayerFrame3125:
 	.word	gPlayerFrame3125OamTemplate+1
 	.word	gPlayerFrame3120Palette
 	.word	gUnk_081758DC
-	.word	gUnk_081753BC
-	.word	gUnk_081788CE
+	.word	gPlayerFrame3120NextBankPalette
+	.word	gPlayerFrame3125UpperTiles
 	.global	gPlayerFrame3273
 gPlayerFrame3273:
 	.word	gPlayerFrame3273OamTemplate+1
@@ -17346,113 +17346,113 @@ gPlayerFrame3524:
 	.word	gPlayerFrame3524OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175400
-	.word	gUnk_08178F52
+	.word	gPlayerFrame3509NextBankPalette
+	.word	gPlayerFrame3512UpperTiles
 	.global	gPlayerFrame3520
 gPlayerFrame3520:
 	.word	gPlayerFrame3520OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175400
-	.word	gUnk_08178F52
+	.word	gPlayerFrame3509NextBankPalette
+	.word	gPlayerFrame3512UpperTiles
 	.global	gPlayerFrame3512
 gPlayerFrame3512:
 	.word	gPlayerFrame3512OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175400
-	.word	gUnk_08178F52
+	.word	gPlayerFrame3509NextBankPalette
+	.word	gPlayerFrame3512UpperTiles
 	.global	gPlayerFrame3516
 gPlayerFrame3516:
 	.word	gPlayerFrame3516OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175444
-	.word	gUnk_08175400
-	.word	gUnk_08178F52
+	.word	gPlayerFrame3509NextBankPalette
+	.word	gPlayerFrame3512UpperTiles
 	.global	gPlayerFrame3510
 gPlayerFrame3510:
 	.word	gPlayerFrame3510OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_0817556A
-	.word	gUnk_08175400
-	.word	gUnk_08179038
+	.word	gPlayerFrame3509NextBankPalette
+	.word	gPlayerFrame3510UpperTiles
 	.global	gPlayerFrame3518
 gPlayerFrame3518:
 	.word	gPlayerFrame3518OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_0817556A
-	.word	gUnk_08175400
-	.word	gUnk_08179038
+	.word	gPlayerFrame3509NextBankPalette
+	.word	gPlayerFrame3510UpperTiles
 	.global	gPlayerFrame3511
 gPlayerFrame3511:
 	.word	gPlayerFrame3511OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175400
-	.word	gUnk_081790FE
+	.word	gPlayerFrame3509NextBankPalette
+	.word	gPlayerFrame3509UpperTiles
 	.global	gPlayerFrame3517
 gPlayerFrame3517:
 	.word	gPlayerFrame3517OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175400
-	.word	gUnk_081790FE
+	.word	gPlayerFrame3509NextBankPalette
+	.word	gPlayerFrame3509UpperTiles
 	.global	gPlayerFrame3509
 gPlayerFrame3509:
 	.word	gPlayerFrame3509OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175400
-	.word	gUnk_081790FE
+	.word	gPlayerFrame3509NextBankPalette
+	.word	gPlayerFrame3509UpperTiles
 	.global	gPlayerFrame3519
 gPlayerFrame3519:
 	.word	gPlayerFrame3519OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_08175690
-	.word	gUnk_08175400
-	.word	gUnk_081790FE
+	.word	gPlayerFrame3509NextBankPalette
+	.word	gPlayerFrame3509UpperTiles
 	.global	gPlayerFrame3513
 gPlayerFrame3513:
 	.word	gPlayerFrame3513OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175400
-	.word	gUnk_081791C4
+	.word	gPlayerFrame3509NextBankPalette
+	.word	gPlayerFrame3513UpperTiles
 	.global	gPlayerFrame3515
 gPlayerFrame3515:
 	.word	gPlayerFrame3515OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175400
-	.word	gUnk_081791C4
+	.word	gPlayerFrame3509NextBankPalette
+	.word	gPlayerFrame3513UpperTiles
 	.global	gPlayerFrame3523
 gPlayerFrame3523:
 	.word	gPlayerFrame3523OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175400
-	.word	gUnk_081791C4
+	.word	gPlayerFrame3509NextBankPalette
+	.word	gPlayerFrame3513UpperTiles
 	.global	gPlayerFrame3521
 gPlayerFrame3521:
 	.word	gPlayerFrame3521OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081757B6
-	.word	gUnk_08175400
-	.word	gUnk_081791C4
+	.word	gPlayerFrame3509NextBankPalette
+	.word	gPlayerFrame3513UpperTiles
 	.global	gPlayerFrame3522
 gPlayerFrame3522:
 	.word	gPlayerFrame3522OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081758DC
-	.word	gUnk_08175400
-	.word	gUnk_0817928A
+	.word	gPlayerFrame3509NextBankPalette
+	.word	gPlayerFrame3514UpperTiles
 	.global	gPlayerFrame3514
 gPlayerFrame3514:
 	.word	gPlayerFrame3514OamTemplate+1
 	.word	gPlayerFrame985Palette
 	.word	gUnk_081758DC
-	.word	gUnk_08175400
-	.word	gUnk_0817928A
+	.word	gPlayerFrame3509NextBankPalette
+	.word	gPlayerFrame3514UpperTiles
 	.global	gUnk_087664B0
 gUnk_087664B0:
 	.word	gUnk_0817C1DE+1
@@ -17554,337 +17554,337 @@ gPlayerFrame1209:
 	.word	gPlayerFrame1209OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817C4AC
-	.word	gUnk_0817C402
-	.word	gUnk_0817C5D2
+	.word	gPlayerFrame1194NextBankPalette
+	.word	gPlayerFrame1201UpperTiles
 	.global	gPlayerFrame1205
 gPlayerFrame1205:
 	.word	gPlayerFrame1205OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817C4AC
-	.word	gUnk_0817C402
-	.word	gUnk_0817C718
+	.word	gPlayerFrame1194NextBankPalette
+	.word	gPlayerFrame1197UpperTiles
 	.global	gPlayerFrame1197
 gPlayerFrame1197:
 	.word	gPlayerFrame1197OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817C4AC
-	.word	gUnk_0817C402
-	.word	gUnk_0817C718
+	.word	gPlayerFrame1194NextBankPalette
+	.word	gPlayerFrame1197UpperTiles
 	.global	gPlayerFrame1201
 gPlayerFrame1201:
 	.word	gPlayerFrame1201OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817C4AC
-	.word	gUnk_0817C402
-	.word	gUnk_0817C5D2
+	.word	gPlayerFrame1194NextBankPalette
+	.word	gPlayerFrame1201UpperTiles
 	.global	gPlayerFrame1195
 gPlayerFrame1195:
 	.word	gPlayerFrame1195OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817C83E
-	.word	gUnk_0817C402
-	.word	gUnk_0817C964
+	.word	gPlayerFrame1194NextBankPalette
+	.word	gPlayerFrame1195UpperTiles
 	.global	gPlayerFrame1203
 gPlayerFrame1203:
 	.word	gPlayerFrame1203OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817C83E
-	.word	gUnk_0817C402
-	.word	gUnk_0817C964
+	.word	gPlayerFrame1194NextBankPalette
+	.word	gPlayerFrame1195UpperTiles
 	.global	gPlayerFrame1196
 gPlayerFrame1196:
 	.word	gPlayerFrame1196OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817CAAA
-	.word	gUnk_0817C402
-	.word	gUnk_0817CBD0
+	.word	gPlayerFrame1194NextBankPalette
+	.word	gPlayerFrame1196UpperTiles
 	.global	gPlayerFrame1202
 gPlayerFrame1202:
 	.word	gPlayerFrame1202OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817CAAA
-	.word	gUnk_0817C402
-	.word	gUnk_0817CD16
+	.word	gPlayerFrame1194NextBankPalette
+	.word	gPlayerFrame1194UpperTiles
 	.global	gPlayerFrame1194
 gPlayerFrame1194:
 	.word	gPlayerFrame1194OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817CAAA
-	.word	gUnk_0817C402
-	.word	gUnk_0817CD16
+	.word	gPlayerFrame1194NextBankPalette
+	.word	gPlayerFrame1194UpperTiles
 	.global	gPlayerFrame1204
 gPlayerFrame1204:
 	.word	gPlayerFrame1204OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817CAAA
-	.word	gUnk_0817C402
-	.word	gUnk_0817CBD0
+	.word	gPlayerFrame1194NextBankPalette
+	.word	gPlayerFrame1196UpperTiles
 	.global	gPlayerFrame1198
 gPlayerFrame1198:
 	.word	gPlayerFrame1198OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817CE5C
-	.word	gUnk_0817C402
-	.word	gUnk_0817CF82
+	.word	gPlayerFrame1194NextBankPalette
+	.word	gPlayerFrame1198UpperTiles
 	.global	gPlayerFrame1200
 gPlayerFrame1200:
 	.word	gPlayerFrame1200OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817CE5C
-	.word	gUnk_0817C402
-	.word	gUnk_0817D0C8
+	.word	gPlayerFrame1194NextBankPalette
+	.word	gPlayerFrame1200UpperTiles
 	.global	gPlayerFrame1208
 gPlayerFrame1208:
 	.word	gPlayerFrame1208OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817CE5C
-	.word	gUnk_0817C402
-	.word	gUnk_0817D0C8
+	.word	gPlayerFrame1194NextBankPalette
+	.word	gPlayerFrame1200UpperTiles
 	.global	gPlayerFrame1206
 gPlayerFrame1206:
 	.word	gPlayerFrame1206OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817CE5C
-	.word	gUnk_0817C402
-	.word	gUnk_0817CF82
+	.word	gPlayerFrame1194NextBankPalette
+	.word	gPlayerFrame1198UpperTiles
 	.global	gPlayerFrame1207
 gPlayerFrame1207:
 	.word	gPlayerFrame1207OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817D20E
-	.word	gUnk_0817C402
-	.word	gUnk_0817D334
+	.word	gPlayerFrame1194NextBankPalette
+	.word	gPlayerFrame1199UpperTiles
 	.global	gPlayerFrame1199
 gPlayerFrame1199:
 	.word	gPlayerFrame1199OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817D20E
-	.word	gUnk_0817C402
-	.word	gUnk_0817D334
+	.word	gPlayerFrame1194NextBankPalette
+	.word	gPlayerFrame1199UpperTiles
 	.global	gPlayerFrame2001
 gPlayerFrame2001:
 	.word	gPlayerFrame2001OamTemplate+1
 	.word	gPlayerFrame1986Palette
 	.word	gPlayerFrame1989Tiles
-	.word	gUnk_0817C446
-	.word	gUnk_0817D5A0
+	.word	gPlayerFrame1986NextBankPalette
+	.word	gPlayerFrame1991UpperTiles
 	.global	gPlayerFrame1997
 gPlayerFrame1997:
 	.word	gPlayerFrame1997OamTemplate+1
 	.word	gPlayerFrame1986Palette
 	.word	gPlayerFrame1989Tiles
-	.word	gUnk_0817C446
-	.word	gUnk_0817D686
+	.word	gPlayerFrame1986NextBankPalette
+	.word	gPlayerFrame1987UpperTiles
 	.global	gPlayerFrame1989
 gPlayerFrame1989:
 	.word	gPlayerFrame1989OamTemplate+1
 	.word	gPlayerFrame1986Palette
 	.word	gPlayerFrame1989Tiles
-	.word	gUnk_0817C446
-	.word	gUnk_0817D686
+	.word	gPlayerFrame1986NextBankPalette
+	.word	gPlayerFrame1987UpperTiles
 	.global	gPlayerFrame1993
 gPlayerFrame1993:
 	.word	gPlayerFrame1993OamTemplate+1
 	.word	gPlayerFrame1986Palette
 	.word	gPlayerFrame1989Tiles
-	.word	gUnk_0817C446
-	.word	gUnk_0817D5A0
+	.word	gPlayerFrame1986NextBankPalette
+	.word	gPlayerFrame1991UpperTiles
 	.global	gPlayerFrame1987
 gPlayerFrame1987:
 	.word	gPlayerFrame1987OamTemplate+1
 	.word	gPlayerFrame1986Palette
 	.word	gPlayerFrame1987Tiles
-	.word	gUnk_0817C446
-	.word	gUnk_0817D686
+	.word	gPlayerFrame1986NextBankPalette
+	.word	gPlayerFrame1987UpperTiles
 	.global	gPlayerFrame1995
 gPlayerFrame1995:
 	.word	gPlayerFrame1995OamTemplate+1
 	.word	gPlayerFrame1986Palette
 	.word	gPlayerFrame1987Tiles
-	.word	gUnk_0817C446
-	.word	gUnk_0817D686
+	.word	gPlayerFrame1986NextBankPalette
+	.word	gPlayerFrame1987UpperTiles
 	.global	gPlayerFrame1988
 gPlayerFrame1988:
 	.word	gPlayerFrame1988OamTemplate+1
 	.word	gPlayerFrame1986Palette
 	.word	gPlayerFrame1986Tiles
-	.word	gUnk_0817C446
-	.word	gUnk_0817D9D8
+	.word	gPlayerFrame1986NextBankPalette
+	.word	gPlayerFrame1988UpperTiles
 	.global	gPlayerFrame1994
 gPlayerFrame1994:
 	.word	gPlayerFrame1994OamTemplate+1
 	.word	gPlayerFrame1986Palette
 	.word	gPlayerFrame1986Tiles
-	.word	gUnk_0817C446
-	.word	gUnk_0817DA9E
+	.word	gPlayerFrame1986NextBankPalette
+	.word	gPlayerFrame1994UpperTiles
 	.global	gPlayerFrame1986
 gPlayerFrame1986:
 	.word	gPlayerFrame1986OamTemplate+1
 	.word	gPlayerFrame1986Palette
 	.word	gPlayerFrame1986Tiles
-	.word	gUnk_0817C446
-	.word	gUnk_0817DBA4
+	.word	gPlayerFrame1986NextBankPalette
+	.word	gPlayerFrame1986UpperTiles
 	.global	gPlayerFrame1996
 gPlayerFrame1996:
 	.word	gPlayerFrame1996OamTemplate+1
 	.word	gPlayerFrame1986Palette
 	.word	gPlayerFrame1986Tiles
-	.word	gUnk_0817C446
-	.word	gUnk_0817D9D8
+	.word	gPlayerFrame1986NextBankPalette
+	.word	gPlayerFrame1988UpperTiles
 	.global	gPlayerFrame1990
 gPlayerFrame1990:
 	.word	gPlayerFrame1990OamTemplate+1
 	.word	gPlayerFrame1986Palette
 	.word	gPlayerFrame1990Tiles
-	.word	gUnk_0817C446
-	.word	gUnk_0817DBA4
+	.word	gPlayerFrame1986NextBankPalette
+	.word	gPlayerFrame1986UpperTiles
 	.global	gPlayerFrame1992
 gPlayerFrame1992:
 	.word	gPlayerFrame1992OamTemplate+1
 	.word	gPlayerFrame1986Palette
 	.word	gPlayerFrame1990Tiles
-	.word	gUnk_0817C446
-	.word	gUnk_0817DDD0
+	.word	gPlayerFrame1986NextBankPalette
+	.word	gPlayerFrame1992UpperTiles
 	.global	gPlayerFrame2000
 gPlayerFrame2000:
 	.word	gPlayerFrame2000OamTemplate+1
 	.word	gPlayerFrame1986Palette
 	.word	gPlayerFrame1990Tiles
-	.word	gUnk_0817C446
-	.word	gUnk_0817DDD0
+	.word	gPlayerFrame1986NextBankPalette
+	.word	gPlayerFrame1992UpperTiles
 	.global	gPlayerFrame1998
 gPlayerFrame1998:
 	.word	gPlayerFrame1998OamTemplate+1
 	.word	gPlayerFrame1986Palette
 	.word	gPlayerFrame1990Tiles
-	.word	gUnk_0817C446
-	.word	gUnk_0817DA9E
+	.word	gPlayerFrame1986NextBankPalette
+	.word	gPlayerFrame1994UpperTiles
 	.global	gPlayerFrame1999
 gPlayerFrame1999:
 	.word	gPlayerFrame1999OamTemplate+1
 	.word	gPlayerFrame1986Palette
 	.word	gPlayerFrame1991Tiles
-	.word	gUnk_0817C446
-	.word	gUnk_0817D5A0
+	.word	gPlayerFrame1986NextBankPalette
+	.word	gPlayerFrame1991UpperTiles
 	.global	gPlayerFrame1991
 gPlayerFrame1991:
 	.word	gPlayerFrame1991OamTemplate+1
 	.word	gPlayerFrame1986Palette
 	.word	gPlayerFrame1991Tiles
-	.word	gUnk_0817C446
-	.word	gUnk_0817D5A0
+	.word	gPlayerFrame1986NextBankPalette
+	.word	gPlayerFrame1991UpperTiles
 	.global	gPlayerFrame2257
 gPlayerFrame2257:
 	.word	gPlayerFrame2257OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817C4AC
-	.word	gUnk_0817C468
-	.word	gUnk_0817DFBC
+	.word	gPlayerFrame2242NextBankPalette
+	.word	gPlayerFrame2247UpperTiles
 	.global	gPlayerFrame2253
 gPlayerFrame2253:
 	.word	gPlayerFrame2253OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817C4AC
-	.word	gUnk_0817C468
-	.word	gUnk_0817E082
+	.word	gPlayerFrame2242NextBankPalette
+	.word	gPlayerFrame2245UpperTiles
 	.global	gPlayerFrame2245
 gPlayerFrame2245:
 	.word	gPlayerFrame2245OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817C4AC
-	.word	gUnk_0817C468
-	.word	gUnk_0817E082
+	.word	gPlayerFrame2242NextBankPalette
+	.word	gPlayerFrame2245UpperTiles
 	.global	gPlayerFrame2249
 gPlayerFrame2249:
 	.word	gPlayerFrame2249OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817C4AC
-	.word	gUnk_0817C468
-	.word	gUnk_0817DFBC
+	.word	gPlayerFrame2242NextBankPalette
+	.word	gPlayerFrame2247UpperTiles
 	.global	gPlayerFrame2243
 gPlayerFrame2243:
 	.word	gPlayerFrame2243OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817C83E
-	.word	gUnk_0817C468
-	.word	gUnk_0817E148
+	.word	gPlayerFrame2242NextBankPalette
+	.word	gPlayerFrame2243UpperTiles
 	.global	gPlayerFrame2251
 gPlayerFrame2251:
 	.word	gPlayerFrame2251OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817C83E
-	.word	gUnk_0817C468
-	.word	gUnk_0817E148
+	.word	gPlayerFrame2242NextBankPalette
+	.word	gPlayerFrame2243UpperTiles
 	.global	gPlayerFrame2244
 gPlayerFrame2244:
 	.word	gPlayerFrame2244OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817CAAA
-	.word	gUnk_0817C468
-	.word	gUnk_0817E20E
+	.word	gPlayerFrame2242NextBankPalette
+	.word	gPlayerFrame2244UpperTiles
 	.global	gPlayerFrame2250
 gPlayerFrame2250:
 	.word	gPlayerFrame2250OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817CAAA
-	.word	gUnk_0817C468
-	.word	gUnk_0817E2D4
+	.word	gPlayerFrame2242NextBankPalette
+	.word	gPlayerFrame2242UpperTiles
 	.global	gPlayerFrame2242
 gPlayerFrame2242:
 	.word	gPlayerFrame2242OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817CAAA
-	.word	gUnk_0817C468
-	.word	gUnk_0817E2D4
+	.word	gPlayerFrame2242NextBankPalette
+	.word	gPlayerFrame2242UpperTiles
 	.global	gPlayerFrame2252
 gPlayerFrame2252:
 	.word	gPlayerFrame2252OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817CAAA
-	.word	gUnk_0817C468
-	.word	gUnk_0817E20E
+	.word	gPlayerFrame2242NextBankPalette
+	.word	gPlayerFrame2244UpperTiles
 	.global	gPlayerFrame2246
 gPlayerFrame2246:
 	.word	gPlayerFrame2246OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817CE5C
-	.word	gUnk_0817C468
-	.word	gUnk_0817E3BA
+	.word	gPlayerFrame2242NextBankPalette
+	.word	gPlayerFrame2246UpperTiles
 	.global	gPlayerFrame2248
 gPlayerFrame2248:
 	.word	gPlayerFrame2248OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817CE5C
-	.word	gUnk_0817C468
-	.word	gUnk_0817E4A0
+	.word	gPlayerFrame2242NextBankPalette
+	.word	gPlayerFrame2248UpperTiles
 	.global	gPlayerFrame2256
 gPlayerFrame2256:
 	.word	gPlayerFrame2256OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817CE5C
-	.word	gUnk_0817C468
-	.word	gUnk_0817E4A0
+	.word	gPlayerFrame2242NextBankPalette
+	.word	gPlayerFrame2248UpperTiles
 	.global	gPlayerFrame2254
 gPlayerFrame2254:
 	.word	gPlayerFrame2254OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817CE5C
-	.word	gUnk_0817C468
-	.word	gUnk_0817E3BA
+	.word	gPlayerFrame2242NextBankPalette
+	.word	gPlayerFrame2246UpperTiles
 	.global	gPlayerFrame2255
 gPlayerFrame2255:
 	.word	gPlayerFrame2255OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817D20E
-	.word	gUnk_0817C468
-	.word	gUnk_0817DFBC
+	.word	gPlayerFrame2242NextBankPalette
+	.word	gPlayerFrame2247UpperTiles
 	.global	gPlayerFrame2247
 gPlayerFrame2247:
 	.word	gPlayerFrame2247OamTemplate+1
 	.word	gUnk_0817C3E0
 	.word	gUnk_0817D20E
-	.word	gUnk_0817C468
-	.word	gUnk_0817DFBC
+	.word	gPlayerFrame2242NextBankPalette
+	.word	gPlayerFrame2247UpperTiles
 	.global	gUnk_087669B0
 gUnk_087669B0:
 	.word	gUnk_0817FB5E+1
@@ -18298,92 +18298,92 @@ gPlayerFrame984:
 	.word	gPlayerFrame984OamTemplate+1
 	.word	gPlayerFrame147Palette
 	.word	gPlayerFrame171Tiles
-	.word	gUnk_08180246
-	.word	gUnk_0818237C
+	.word	gPlayerFrame984NextBankPalette
+	.word	gPlayerFrame984UpperTiles
 	.global	gPlayerFrame1463
 gPlayerFrame1463:
 	.word	gPlayerFrame1463OamTemplate+1
 	.word	gPlayerFrame1463Palette
 	.word	gPlayerFrame1463Tiles
-	.word	gUnk_08180268
-	.word	gUnk_08182422
+	.word	gPlayerFrame1463NextBankPalette
+	.word	gPlayerFrame1463UpperTiles
 	.global	gPlayerFrame1464
 gPlayerFrame1464:
 	.word	gPlayerFrame1464OamTemplate+1
 	.word	gPlayerFrame1463Palette
 	.word	gPlayerFrame1463Tiles
-	.word	gUnk_08180268
-	.word	gUnk_081825A8
+	.word	gPlayerFrame1463NextBankPalette
+	.word	gPlayerFrame1464UpperTiles
 	.global	gPlayerFrame1465
 gPlayerFrame1465:
 	.word	gPlayerFrame1465OamTemplate+1
 	.word	gPlayerFrame1463Palette
 	.word	gPlayerFrame1463Tiles
-	.word	gUnk_08180268
-	.word	gUnk_0818272E
+	.word	gPlayerFrame1463NextBankPalette
+	.word	gPlayerFrame1465UpperTiles
 	.global	gPlayerFrame1466
 gPlayerFrame1466:
 	.word	gPlayerFrame1466OamTemplate+1
 	.word	gPlayerFrame1463Palette
 	.word	gPlayerFrame1463Tiles
-	.word	gUnk_08180268
-	.word	gUnk_081828B4
+	.word	gPlayerFrame1463NextBankPalette
+	.word	gPlayerFrame1466UpperTiles
 	.global	gPlayerFrame1607
 gPlayerFrame1607:
 	.word	gPlayerFrame1607OamTemplate+1
 	.word	gPlayerFrame1463Palette
 	.word	gPlayerFrame171Tiles
-	.word	gUnk_0818028A
-	.word	gUnk_08182A3A
+	.word	gPlayerFrame1607NextBankPalette
+	.word	gPlayerFrame1607UpperTiles
 	.global	gPlayerFrame1776
 gPlayerFrame1776:
 	.word	gPlayerFrame1776OamTemplate+1
 	.word	gPlayerFrame1463Palette
 	.word	gPlayerFrame171Tiles
-	.word	gUnk_081802AC
-	.word	gUnk_08182AC0
+	.word	gPlayerFrame1776NextBankPalette
+	.word	gPlayerFrame1776UpperTiles
 	.global	gPlayerFrame2397
 gPlayerFrame2397:
 	.word	gPlayerFrame2397OamTemplate+1
 	.word	gPlayerFrame2397Palette
 	.word	gPlayerFrame171Tiles
-	.word	gUnk_081802F0
-	.word	gUnk_08182B46
+	.word	gPlayerFrame2397NextBankPalette
+	.word	gPlayerFrame2397UpperTiles
 	.global	gPlayerFrame2537
 gPlayerFrame2537:
 	.word	gPlayerFrame2537OamTemplate+1
 	.word	gPlayerFrame2537Palette
 	.word	gPlayerFrame1463Tiles
-	.word	gUnk_08180334
-	.word	gUnk_08182C0C
+	.word	gPlayerFrame2537NextBankPalette
+	.word	gPlayerFrame2537UpperTiles
 	.global	gPlayerFrame2677
 gPlayerFrame2677:
 	.word	gPlayerFrame2677OamTemplate+1
 	.word	gPlayerFrame2677Palette
 	.word	gPlayerFrame1463Tiles
-	.word	gUnk_08180378
-	.word	gUnk_08182CD2
+	.word	gPlayerFrame2677NextBankPalette
+	.word	gPlayerFrame2677UpperTiles
 	.global	gPlayerFrame2842
 gPlayerFrame2842:
 	.word	gPlayerFrame2842OamTemplate+1
 	.word	gPlayerFrame147Palette
 	.word	gPlayerFrame1463Tiles
-	.word	gUnk_0818039A
-	.word	gUnk_08182DD8
+	.word	gPlayerFrame2842NextBankPalette
+	.word	gPlayerFrame2842UpperTiles
 	.global	gPlayerFrame2988
 gPlayerFrame2988:
 	.word	gPlayerFrame2988OamTemplate+1
 	.word	gPlayerFrame1463Palette
 	.word	gPlayerFrame1463Tiles
-	.word	gUnk_081803BC
-	.word	gUnk_08182F3E
+	.word	gPlayerFrame2988NextBankPalette
+	.word	gPlayerFrame2988UpperTiles
 	.global	gPlayerFrame3119
 gPlayerFrame3119:
 	.word	gPlayerFrame3119OamTemplate+1
 	.word	gPlayerFrame3119Palette
 	.word	gPlayerFrame171Tiles
-	.word	gUnk_08180400
-	.word	gUnk_08183004
+	.word	gPlayerFrame3119NextBankPalette
+	.word	gPlayerFrame3119UpperTiles
 	.global	gPlayerFrame3257
 gPlayerFrame3257:
 	.word	gPlayerFrame3257OamTemplate+1
@@ -18395,29 +18395,29 @@ gPlayerFrame3505:
 	.word	gPlayerFrame3505OamTemplate+1
 	.word	gPlayerFrame1463Palette
 	.word	gPlayerFrame1463Tiles
-	.word	gUnk_08180444
-	.word	gUnk_081831F0
+	.word	gPlayerFrame3505NextBankPalette
+	.word	gPlayerFrame3505UpperTiles
 	.global	gPlayerFrame3506
 gPlayerFrame3506:
 	.word	gPlayerFrame3506OamTemplate+1
 	.word	gPlayerFrame1463Palette
 	.word	gPlayerFrame1463Tiles
-	.word	gUnk_08180444
-	.word	gUnk_08183316
+	.word	gPlayerFrame3505NextBankPalette
+	.word	gPlayerFrame3506UpperTiles
 	.global	gPlayerFrame3507
 gPlayerFrame3507:
 	.word	gPlayerFrame3507OamTemplate+1
 	.word	gPlayerFrame1463Palette
 	.word	gPlayerFrame1463Tiles
-	.word	gUnk_08180444
-	.word	gUnk_0818343C
+	.word	gPlayerFrame3505NextBankPalette
+	.word	gPlayerFrame3507UpperTiles
 	.global	gPlayerFrame3508
 gPlayerFrame3508:
 	.word	gPlayerFrame3508OamTemplate+1
 	.word	gPlayerFrame1463Palette
 	.word	gPlayerFrame1463Tiles
-	.word	gUnk_08180444
-	.word	gUnk_08183562
+	.word	gPlayerFrame3505NextBankPalette
+	.word	gPlayerFrame3508UpperTiles
 	.global	gUnk_08766FF0
 gUnk_08766FF0:
 	.word	gUnk_08183F0E+1
@@ -18429,22 +18429,22 @@ gPlayerFrame1135:
 	.word	gPlayerFrame1135OamTemplate+1
 	.word	gPlayerFrame1135Palette
 	.word	gPlayerFrame1135Tiles
-	.word	gUnk_08183F52
-	.word	gUnk_08184122
+	.word	gPlayerFrame1135NextBankPalette
+	.word	gPlayerFrame1135UpperTiles
 	.global	gPlayerFrame1936
 gPlayerFrame1936:
 	.word	gPlayerFrame1936OamTemplate+1
 	.word	gPlayerFrame1936Palette
 	.word	gPlayerFrame1936Tiles
-	.word	gUnk_08183F96
-	.word	gUnk_0818436E
+	.word	gPlayerFrame1936NextBankPalette
+	.word	gPlayerFrame1936UpperTiles
 	.global	gPlayerFrame2192
 gPlayerFrame2192:
 	.word	gPlayerFrame2192OamTemplate+1
 	.word	gPlayerFrame2192Palette
 	.word	gPlayerFrame1135Tiles
-	.word	gUnk_08183FDA
-	.word	gUnk_08184414
+	.word	gPlayerFrame2192NextBankPalette
+	.word	gPlayerFrame2192UpperTiles
 	.global	gPlayerFrame146
 gPlayerFrame146:
 	.word	gPlayerFrame146OamTemplate+1
@@ -18456,99 +18456,99 @@ gPlayerFrame1130:
 	.word	gPlayerFrame1130OamTemplate+1
 	.word	gUnk_08184606
 	.word	gUnk_0818481A
-	.word	gUnk_08184628
-	.word	gUnk_08184940
+	.word	gPlayerFrame1130NextBankPalette
+	.word	gPlayerFrame1130UpperTiles
 	.global	gPlayerFrame1131
 gPlayerFrame1131:
 	.word	gPlayerFrame1131OamTemplate+1
 	.word	gUnk_08184606
 	.word	gUnk_08184B26
-	.word	gUnk_08184628
-	.word	gUnk_08184C4C
+	.word	gPlayerFrame1130NextBankPalette
+	.word	gPlayerFrame1131UpperTiles
 	.global	gPlayerFrame1132
 gPlayerFrame1132:
 	.word	gPlayerFrame1132OamTemplate+1
 	.word	gUnk_08184606
 	.word	gPlayerFrame1132Tiles
-	.word	gUnk_08184628
-	.word	gUnk_08184F78
+	.word	gPlayerFrame1130NextBankPalette
+	.word	gPlayerFrame1132UpperTiles
 	.global	gPlayerFrame1133
 gPlayerFrame1133:
 	.word	gPlayerFrame1133OamTemplate+1
 	.word	gUnk_08184606
 	.word	gUnk_0818513E
-	.word	gUnk_08184628
-	.word	gUnk_08185264
+	.word	gPlayerFrame1130NextBankPalette
+	.word	gPlayerFrame1133UpperTiles
 	.global	gPlayerFrame1134
 gPlayerFrame1134:
 	.word	gPlayerFrame1134OamTemplate+1
 	.word	gUnk_08184606
 	.word	gUnk_081846F4
-	.word	gUnk_08184628
-	.word	gUnk_0818552A
+	.word	gPlayerFrame1130NextBankPalette
+	.word	gPlayerFrame1134UpperTiles
 	.global	gPlayerFrame1931
 gPlayerFrame1931:
 	.word	gPlayerFrame1931OamTemplate+1
 	.word	gPlayerFrame1931Palette
 	.word	gPlayerFrame1931Tiles
-	.word	gUnk_0818466C
-	.word	gUnk_08185796
+	.word	gPlayerFrame1931NextBankPalette
+	.word	gPlayerFrame1931UpperTiles
 	.global	gPlayerFrame1932
 gPlayerFrame1932:
 	.word	gPlayerFrame1932OamTemplate+1
 	.word	gPlayerFrame1931Palette
 	.word	gPlayerFrame1931Tiles
-	.word	gUnk_0818466C
-	.word	gUnk_0818583C
+	.word	gPlayerFrame1931NextBankPalette
+	.word	gPlayerFrame1932UpperTiles
 	.global	gPlayerFrame1933
 gPlayerFrame1933:
 	.word	gPlayerFrame1933OamTemplate+1
 	.word	gPlayerFrame1931Palette
 	.word	gPlayerFrame1931Tiles
-	.word	gUnk_0818466C
-	.word	gUnk_08185922
+	.word	gPlayerFrame1931NextBankPalette
+	.word	gPlayerFrame1933UpperTiles
 	.global	gPlayerFrame1934
 gPlayerFrame1934:
 	.word	gPlayerFrame1934OamTemplate+1
 	.word	gPlayerFrame1931Palette
 	.word	gPlayerFrame1931Tiles
-	.word	gUnk_0818466C
-	.word	gUnk_08185922
+	.word	gPlayerFrame1931NextBankPalette
+	.word	gPlayerFrame1933UpperTiles
 	.global	gPlayerFrame1935
 gPlayerFrame1935:
 	.word	gPlayerFrame1935OamTemplate+1
 	.word	gPlayerFrame1931Palette
 	.word	gPlayerFrame1931Tiles
-	.word	gUnk_0818466C
-	.word	gUnk_0818583C
+	.word	gPlayerFrame1931NextBankPalette
+	.word	gPlayerFrame1932UpperTiles
 	.global	gPlayerFrame2188
 gPlayerFrame2188:
 	.word	gPlayerFrame2188OamTemplate+1
 	.word	gPlayerFrame2188Palette
 	.word	gUnk_081846F4
-	.word	gUnk_081846B0
-	.word	gUnk_081859C8
+	.word	gPlayerFrame2188NextBankPalette
+	.word	gPlayerFrame2188UpperTiles
 	.global	gPlayerFrame2189
 gPlayerFrame2189:
 	.word	gPlayerFrame2189OamTemplate+1
 	.word	gPlayerFrame2188Palette
 	.word	gUnk_081846F4
-	.word	gUnk_081846B0
-	.word	gUnk_08185AEE
+	.word	gPlayerFrame2188NextBankPalette
+	.word	gPlayerFrame2189UpperTiles
 	.global	gPlayerFrame2190
 gPlayerFrame2190:
 	.word	gPlayerFrame2190OamTemplate+1
 	.word	gPlayerFrame2188Palette
 	.word	gUnk_081846F4
-	.word	gUnk_081846B0
-	.word	gUnk_08185AEE
+	.word	gPlayerFrame2188NextBankPalette
+	.word	gPlayerFrame2189UpperTiles
 	.global	gPlayerFrame2191
 gPlayerFrame2191:
 	.word	gPlayerFrame2191OamTemplate+1
 	.word	gPlayerFrame2188Palette
 	.word	gUnk_081846F4
-	.word	gUnk_081846B0
-	.word	gUnk_081859C8
+	.word	gPlayerFrame2188NextBankPalette
+	.word	gPlayerFrame2188UpperTiles
 	.global	gUnk_0876716C
 gUnk_0876716C:
 	.word	gUnk_08186AF6+1
@@ -18650,1562 +18650,1562 @@ gPlayerFrame1185:
 	.word	gPlayerFrame1185OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame243Tiles
-	.word	gUnk_08186CBC
-	.word	gUnk_08187696
+	.word	gPlayerFrame1185NextBankPalette
+	.word	gPlayerFrame1185UpperTiles
 	.global	gPlayerFrame1186
 gPlayerFrame1186:
 	.word	gPlayerFrame1186OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame244Tiles
-	.word	gUnk_08186CBC
-	.word	gUnk_081877BC
+	.word	gPlayerFrame1185NextBankPalette
+	.word	gPlayerFrame1186UpperTiles
 	.global	gPlayerFrame1187
 gPlayerFrame1187:
 	.word	gPlayerFrame1187OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame245Tiles
-	.word	gUnk_08186CBC
-	.word	gUnk_081878E2
+	.word	gPlayerFrame1185NextBankPalette
+	.word	gPlayerFrame1187UpperTiles
 	.global	gPlayerFrame1188
 gPlayerFrame1188:
 	.word	gPlayerFrame1188OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame246Tiles
-	.word	gUnk_08186CBC
-	.word	gUnk_08187A88
+	.word	gPlayerFrame1185NextBankPalette
+	.word	gPlayerFrame1188UpperTiles
 	.global	gPlayerFrame1189
 gPlayerFrame1189:
 	.word	gPlayerFrame1189OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame247Tiles
-	.word	gUnk_08186CBC
-	.word	gUnk_08187C0E
+	.word	gPlayerFrame1185NextBankPalette
+	.word	gPlayerFrame1189UpperTiles
 	.global	gPlayerFrame1190
 gPlayerFrame1190:
 	.word	gPlayerFrame1190OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame248Tiles
-	.word	gUnk_08186CBC
-	.word	gUnk_08187D54
+	.word	gPlayerFrame1185NextBankPalette
+	.word	gPlayerFrame1190UpperTiles
 	.global	gPlayerFrame1191
 gPlayerFrame1191:
 	.word	gPlayerFrame1191OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame249Tiles
-	.word	gUnk_08186CBC
-	.word	gUnk_08187EDA
+	.word	gPlayerFrame1185NextBankPalette
+	.word	gPlayerFrame1191UpperTiles
 	.global	gPlayerFrame1192
 gPlayerFrame1192:
 	.word	gPlayerFrame1192OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame250Tiles
-	.word	gUnk_08186CBC
-	.word	gUnk_08188060
+	.word	gPlayerFrame1185NextBankPalette
+	.word	gPlayerFrame1192UpperTiles
 	.global	gPlayerFrame1193
 gPlayerFrame1193:
 	.word	gPlayerFrame1193OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame251Tiles
-	.word	gUnk_08186CBC
-	.word	gUnk_081881C6
+	.word	gPlayerFrame1185NextBankPalette
+	.word	gPlayerFrame1193UpperTiles
 	.global	gPlayerFrame4150
 gPlayerFrame4150:
 	.word	gPlayerFrame4150OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame243Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_081882EC
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4150UpperTiles
 	.global	gPlayerFrame4281
 gPlayerFrame4281:
 	.word	gPlayerFrame4281OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame243Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_081883B2
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4281UpperTiles
 	.global	gPlayerFrame4151
 gPlayerFrame4151:
 	.word	gPlayerFrame4151OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame244Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_081884F8
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4151UpperTiles
 	.global	gPlayerFrame4282
 gPlayerFrame4282:
 	.word	gPlayerFrame4282OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame244Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_0818859E
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4282UpperTiles
 	.global	gPlayerFrame4152
 gPlayerFrame4152:
 	.word	gPlayerFrame4152OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame245Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_081886C4
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4152UpperTiles
 	.global	gPlayerFrame4283
 gPlayerFrame4283:
 	.word	gPlayerFrame4283OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame245Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_0818874A
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4283UpperTiles
 	.global	gPlayerFrame4153
 gPlayerFrame4153:
 	.word	gPlayerFrame4153OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame246Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_08188850
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4153UpperTiles
 	.global	gPlayerFrame4284
 gPlayerFrame4284:
 	.word	gPlayerFrame4284OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame246Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_081888F6
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4284UpperTiles
 	.global	gPlayerFrame4154
 gPlayerFrame4154:
 	.word	gPlayerFrame4154OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame247Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_081882EC
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4150UpperTiles
 	.global	gPlayerFrame4285
 gPlayerFrame4285:
 	.word	gPlayerFrame4285OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame247Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_081883B2
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4281UpperTiles
 	.global	gPlayerFrame4155
 gPlayerFrame4155:
 	.word	gPlayerFrame4155OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame248Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_08188A1C
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4155UpperTiles
 	.global	gPlayerFrame4286
 gPlayerFrame4286:
 	.word	gPlayerFrame4286OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame248Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_08188AC2
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4286UpperTiles
 	.global	gPlayerFrame4156
 gPlayerFrame4156:
 	.word	gPlayerFrame4156OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame4156Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_08188D0E
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4156UpperTiles
 	.global	gPlayerFrame4287
 gPlayerFrame4287:
 	.word	gPlayerFrame4287OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame4287Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_08188EBA
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4287UpperTiles
 	.global	gPlayerFrame4157
 gPlayerFrame4157:
 	.word	gPlayerFrame4157OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame250Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_081884F8
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4151UpperTiles
 	.global	gPlayerFrame4288
 gPlayerFrame4288:
 	.word	gPlayerFrame4288OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame250Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_0818859E
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4282UpperTiles
 	.global	gPlayerFrame4158
 gPlayerFrame4158:
 	.word	gPlayerFrame4158OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame251Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_081882EC
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4150UpperTiles
 	.global	gPlayerFrame4289
 gPlayerFrame4289:
 	.word	gPlayerFrame4289OamTemplate+1
 	.word	gPlayerFrame1185Palette
 	.word	gPlayerFrame251Tiles
-	.word	gUnk_08186CDE
-	.word	gUnk_081883B2
+	.word	gPlayerFrame4150NextBankPalette
+	.word	gPlayerFrame4281UpperTiles
 	.global	gPlayerFrame173
 gPlayerFrame173:
 	.word	gPlayerFrame173OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame173Tiles
 	.incbin	"baserom.gba", 0x767574, 0x4
-	.word	gUnk_081898E0
+	.word	gPlayerFrame173UpperTiles
 	.global	gPlayerFrame174
 gPlayerFrame174:
 	.word	gPlayerFrame174OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame174Tiles
 	.incbin	"baserom.gba", 0x767588, 0x4
-	.word	gUnk_08189ACC
+	.word	gPlayerFrame174UpperTiles
 	.global	gPlayerFrame175
 gPlayerFrame175:
 	.word	gPlayerFrame175OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame175Tiles
 	.incbin	"baserom.gba", 0x76759C, 0x4
-	.word	gUnk_08189CB8
+	.word	gPlayerFrame175UpperTiles
 	.global	gPlayerFrame176
 gPlayerFrame176:
 	.word	gPlayerFrame176OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame176Tiles
 	.incbin	"baserom.gba", 0x7675B0, 0x4
-	.word	gUnk_08189EA4
+	.word	gPlayerFrame176UpperTiles
 	.global	gPlayerFrame177
 gPlayerFrame177:
 	.word	gPlayerFrame177OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame177Tiles
 	.incbin	"baserom.gba", 0x7675C4, 0x4
-	.word	gUnk_0818A070
+	.word	gPlayerFrame177UpperTiles
 	.global	gPlayerFrame178
 gPlayerFrame178:
 	.word	gPlayerFrame178OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame178Tiles
 	.incbin	"baserom.gba", 0x7675D8, 0x4
-	.word	gUnk_0818A25C
+	.word	gPlayerFrame178UpperTiles
 	.global	gPlayerFrame179
 gPlayerFrame179:
 	.word	gPlayerFrame179OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame179Tiles
 	.incbin	"baserom.gba", 0x7675EC, 0x4
-	.word	gUnk_0818A448
+	.word	gPlayerFrame179UpperTiles
 	.global	gPlayerFrame180
 gPlayerFrame180:
 	.word	gPlayerFrame180OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame180Tiles
 	.incbin	"baserom.gba", 0x767600, 0x4
-	.word	gUnk_0818A634
+	.word	gPlayerFrame180UpperTiles
 	.global	gPlayerFrame181
 gPlayerFrame181:
 	.word	gPlayerFrame181OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame181Tiles
 	.incbin	"baserom.gba", 0x767614, 0x4
-	.word	gUnk_0818A820
+	.word	gPlayerFrame181UpperTiles
 	.global	gPlayerFrame182
 gPlayerFrame182:
 	.word	gPlayerFrame182OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame182Tiles
 	.incbin	"baserom.gba", 0x767628, 0x4
-	.word	gUnk_0818A9EC
+	.word	gPlayerFrame182UpperTiles
 	.global	gPlayerFrame183
 gPlayerFrame183:
 	.word	gPlayerFrame183OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame183Tiles
 	.incbin	"baserom.gba", 0x76763C, 0x4
-	.word	gUnk_0818ABD8
+	.word	gPlayerFrame183UpperTiles
 	.global	gPlayerFrame184
 gPlayerFrame184:
 	.word	gPlayerFrame184OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame184Tiles
 	.incbin	"baserom.gba", 0x767650, 0x4
-	.word	gUnk_0818ADC4
+	.word	gPlayerFrame184UpperTiles
 	.global	gPlayerFrame185
 gPlayerFrame185:
 	.word	gPlayerFrame185OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame185Tiles
 	.incbin	"baserom.gba", 0x767664, 0x4
-	.word	gUnk_0818AFB0
+	.word	gPlayerFrame185UpperTiles
 	.global	gPlayerFrame186
 gPlayerFrame186:
 	.word	gPlayerFrame186OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame186Tiles
 	.incbin	"baserom.gba", 0x767678, 0x4
-	.word	gUnk_0818B19C
+	.word	gPlayerFrame186UpperTiles
 	.global	gPlayerFrame187
 gPlayerFrame187:
 	.word	gPlayerFrame187OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame187Tiles
 	.incbin	"baserom.gba", 0x76768C, 0x4
-	.word	gUnk_0818B388
+	.word	gPlayerFrame187UpperTiles
 	.global	gPlayerFrame188
 gPlayerFrame188:
 	.word	gPlayerFrame188OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame188Tiles
 	.incbin	"baserom.gba", 0x7676A0, 0x4
-	.word	gUnk_0818B574
+	.word	gPlayerFrame188UpperTiles
 	.global	gPlayerFrame189
 gPlayerFrame189:
 	.word	gPlayerFrame189OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame189Tiles
 	.incbin	"baserom.gba", 0x7676B4, 0x4
-	.word	gUnk_0818B760
+	.word	gPlayerFrame189UpperTiles
 	.global	gPlayerFrame190
 gPlayerFrame190:
 	.word	gPlayerFrame190OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame190Tiles
 	.incbin	"baserom.gba", 0x7676C8, 0x4
-	.word	gUnk_0818B90C
+	.word	gPlayerFrame190UpperTiles
 	.global	gPlayerFrame191
 gPlayerFrame191:
 	.word	gPlayerFrame191OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame191Tiles
 	.incbin	"baserom.gba", 0x7676DC, 0x4
-	.word	gUnk_0818BAB8
+	.word	gPlayerFrame191UpperTiles
 	.global	gPlayerFrame192
 gPlayerFrame192:
 	.word	gPlayerFrame192OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame192Tiles
 	.incbin	"baserom.gba", 0x7676F0, 0x4
-	.word	gUnk_0818B90C
+	.word	gPlayerFrame190UpperTiles
 	.global	gPlayerFrame193
 gPlayerFrame193:
 	.word	gPlayerFrame193OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame193Tiles
 	.incbin	"baserom.gba", 0x767704, 0x4
-	.word	gUnk_0818B90C
+	.word	gPlayerFrame190UpperTiles
 	.global	gPlayerFrame194
 gPlayerFrame194:
 	.word	gPlayerFrame194OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame194Tiles
 	.incbin	"baserom.gba", 0x767718, 0x4
-	.word	gUnk_0818BEB0
+	.word	gPlayerFrame194UpperTiles
 	.global	gPlayerFrame195
 gPlayerFrame195:
 	.word	gPlayerFrame195OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame195Tiles
 	.incbin	"baserom.gba", 0x76772C, 0x4
-	.word	gUnk_0818C05C
+	.word	gPlayerFrame195UpperTiles
 	.global	gPlayerFrame196
 gPlayerFrame196:
 	.word	gPlayerFrame196OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame196Tiles
 	.incbin	"baserom.gba", 0x767740, 0x4
-	.word	gUnk_0818C208
+	.word	gPlayerFrame196UpperTiles
 	.global	gPlayerFrame197
 gPlayerFrame197:
 	.word	gPlayerFrame197OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame197Tiles
 	.incbin	"baserom.gba", 0x767754, 0x4
-	.word	gUnk_0818C3B4
+	.word	gPlayerFrame197UpperTiles
 	.global	gPlayerFrame198
 gPlayerFrame198:
 	.word	gPlayerFrame198OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame198Tiles
 	.incbin	"baserom.gba", 0x767768, 0x4
-	.word	gUnk_0818C5C0
+	.word	gPlayerFrame198UpperTiles
 	.global	gPlayerFrame199
 gPlayerFrame199:
 	.word	gPlayerFrame199OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame199Tiles
 	.incbin	"baserom.gba", 0x76777C, 0x4
-	.word	gUnk_0818C76C
+	.word	gPlayerFrame199UpperTiles
 	.global	gPlayerFrame200
 gPlayerFrame200:
 	.word	gPlayerFrame200OamTemplate+1
 	.word	gPlayerFrame173Palette
 	.word	gPlayerFrame200Tiles
 	.incbin	"baserom.gba", 0x767790, 0x4
-	.word	gUnk_0818C958
+	.word	gPlayerFrame200UpperTiles
 	.global	gPlayerFrame1136
 gPlayerFrame1136:
 	.word	gPlayerFrame1136OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1136Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818CB04
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1136UpperTiles
 	.global	gPlayerFrame1137
 gPlayerFrame1137:
 	.word	gPlayerFrame1137OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1137Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818CD90
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1137UpperTiles
 	.global	gPlayerFrame1138
 gPlayerFrame1138:
 	.word	gPlayerFrame1138OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1138Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818D01C
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1138UpperTiles
 	.global	gPlayerFrame1139
 gPlayerFrame1139:
 	.word	gPlayerFrame1139OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1139Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818D2A8
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1139UpperTiles
 	.global	gPlayerFrame1140
 gPlayerFrame1140:
 	.word	gPlayerFrame1140OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1140Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818D514
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1140UpperTiles
 	.global	gPlayerFrame1141
 gPlayerFrame1141:
 	.word	gPlayerFrame1141OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1141Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818D7A0
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1141UpperTiles
 	.global	gPlayerFrame1142
 gPlayerFrame1142:
 	.word	gPlayerFrame1142OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1142Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818DA2C
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1142UpperTiles
 	.global	gPlayerFrame1143
 gPlayerFrame1143:
 	.word	gPlayerFrame1143OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1143Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818DCB8
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1143UpperTiles
 	.global	gPlayerFrame1144
 gPlayerFrame1144:
 	.word	gPlayerFrame1144OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1144Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818DF44
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1144UpperTiles
 	.global	gPlayerFrame1145
 gPlayerFrame1145:
 	.word	gPlayerFrame1145OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1145Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818E1D0
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1145UpperTiles
 	.global	gPlayerFrame1146
 gPlayerFrame1146:
 	.word	gPlayerFrame1146OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1146Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818E43C
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1146UpperTiles
 	.global	gPlayerFrame1147
 gPlayerFrame1147:
 	.word	gPlayerFrame1147OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1147Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818E6A8
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1147UpperTiles
 	.global	gPlayerFrame1148
 gPlayerFrame1148:
 	.word	gPlayerFrame1148OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1148Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818E914
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1148UpperTiles
 	.global	gPlayerFrame1149
 gPlayerFrame1149:
 	.word	gPlayerFrame1149OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1149Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818EBA0
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1149UpperTiles
 	.global	gPlayerFrame1150
 gPlayerFrame1150:
 	.word	gPlayerFrame1150OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1150Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818EE0C
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1150UpperTiles
 	.global	gPlayerFrame1151
 gPlayerFrame1151:
 	.word	gPlayerFrame1151OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1151Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818F078
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1151UpperTiles
 	.global	gPlayerFrame1152
 gPlayerFrame1152:
 	.word	gPlayerFrame1152OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1152Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818F304
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1152UpperTiles
 	.global	gPlayerFrame1153
 gPlayerFrame1153:
 	.word	gPlayerFrame1153OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1153Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818F550
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1153UpperTiles
 	.global	gPlayerFrame1154
 gPlayerFrame1154:
 	.word	gPlayerFrame1154OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1154Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818F79C
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1154UpperTiles
 	.global	gPlayerFrame1155
 gPlayerFrame1155:
 	.word	gPlayerFrame1155OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1155Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818F550
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1153UpperTiles
 	.global	gPlayerFrame1156
 gPlayerFrame1156:
 	.word	gPlayerFrame1156OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1156Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818F550
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1153UpperTiles
 	.global	gPlayerFrame1157
 gPlayerFrame1157:
 	.word	gPlayerFrame1157OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1157Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818FC34
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1157UpperTiles
 	.global	gPlayerFrame1158
 gPlayerFrame1158:
 	.word	gPlayerFrame1158OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1158Tiles
-	.word	gUnk_08189754
-	.word	gUnk_0818FE80
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1158UpperTiles
 	.global	gPlayerFrame1159
 gPlayerFrame1159:
 	.word	gPlayerFrame1159OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1159Tiles
-	.word	gUnk_08189754
-	.word	gUnk_081900CC
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1159UpperTiles
 	.global	gPlayerFrame1160
 gPlayerFrame1160:
 	.word	gPlayerFrame1160OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1160Tiles
-	.word	gUnk_08189754
-	.word	gUnk_08190318
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1160UpperTiles
 	.global	gPlayerFrame1161
 gPlayerFrame1161:
 	.word	gPlayerFrame1161OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1161Tiles
-	.word	gUnk_08189754
-	.word	gUnk_081905C4
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1161UpperTiles
 	.global	gPlayerFrame1162
 gPlayerFrame1162:
 	.word	gPlayerFrame1162OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1162Tiles
-	.word	gUnk_08189754
-	.word	gUnk_08190810
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1162UpperTiles
 	.global	gPlayerFrame1163
 gPlayerFrame1163:
 	.word	gPlayerFrame1163OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1163Tiles
-	.word	gUnk_08189754
-	.word	gUnk_08190A9C
+	.word	gPlayerFrame1136NextBankPalette
+	.word	gPlayerFrame1163UpperTiles
 	.global	gPlayerFrame1937
 gPlayerFrame1937:
 	.word	gPlayerFrame1937OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1136Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08190BC2
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1937UpperTiles
 	.global	gPlayerFrame1938
 gPlayerFrame1938:
 	.word	gPlayerFrame1938OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1137Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08190D28
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1938UpperTiles
 	.global	gPlayerFrame1939
 gPlayerFrame1939:
 	.word	gPlayerFrame1939OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1138Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08190E8E
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1939UpperTiles
 	.global	gPlayerFrame1940
 gPlayerFrame1940:
 	.word	gPlayerFrame1940OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1139Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08190FF4
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1940UpperTiles
 	.global	gPlayerFrame1941
 gPlayerFrame1941:
 	.word	gPlayerFrame1941OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1140Tiles
-	.word	gUnk_08189776
-	.word	gUnk_0819115A
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1941UpperTiles
 	.global	gPlayerFrame1942
 gPlayerFrame1942:
 	.word	gPlayerFrame1942OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1141Tiles
-	.word	gUnk_08189776
-	.word	gUnk_081912E0
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1942UpperTiles
 	.global	gPlayerFrame1943
 gPlayerFrame1943:
 	.word	gPlayerFrame1943OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1142Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08191466
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1943UpperTiles
 	.global	gPlayerFrame1944
 gPlayerFrame1944:
 	.word	gPlayerFrame1944OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1143Tiles
-	.word	gUnk_08189776
-	.word	gUnk_0819160C
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1944UpperTiles
 	.global	gPlayerFrame1945
 gPlayerFrame1945:
 	.word	gPlayerFrame1945OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1144Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08191792
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1945UpperTiles
 	.global	gPlayerFrame1946
 gPlayerFrame1946:
 	.word	gPlayerFrame1946OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1145Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08191938
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1946UpperTiles
 	.global	gPlayerFrame1947
 gPlayerFrame1947:
 	.word	gPlayerFrame1947OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1146Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08191A9E
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1947UpperTiles
 	.global	gPlayerFrame1948
 gPlayerFrame1948:
 	.word	gPlayerFrame1948OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1147Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08191C04
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1948UpperTiles
 	.global	gPlayerFrame1949
 gPlayerFrame1949:
 	.word	gPlayerFrame1949OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1148Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08191D6A
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1949UpperTiles
 	.global	gPlayerFrame1950
 gPlayerFrame1950:
 	.word	gPlayerFrame1950OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1149Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08191ED0
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1950UpperTiles
 	.global	gPlayerFrame1951
 gPlayerFrame1951:
 	.word	gPlayerFrame1951OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1150Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08192036
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1951UpperTiles
 	.global	gPlayerFrame1952
 gPlayerFrame1952:
 	.word	gPlayerFrame1952OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1151Tiles
-	.word	gUnk_08189776
-	.word	gUnk_0819219C
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1952UpperTiles
 	.global	gPlayerFrame1953
 gPlayerFrame1953:
 	.word	gPlayerFrame1953OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1152Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08192302
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1953UpperTiles
 	.global	gPlayerFrame1954
 gPlayerFrame1954:
 	.word	gPlayerFrame1954OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1153Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08192448
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1954UpperTiles
 	.global	gPlayerFrame1955
 gPlayerFrame1955:
 	.word	gPlayerFrame1955OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1154Tiles
-	.word	gUnk_08189776
-	.word	gUnk_0819258E
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1955UpperTiles
 	.global	gPlayerFrame1956
 gPlayerFrame1956:
 	.word	gPlayerFrame1956OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1155Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08192448
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1954UpperTiles
 	.global	gPlayerFrame1957
 gPlayerFrame1957:
 	.word	gPlayerFrame1957OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1156Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08192448
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1954UpperTiles
 	.global	gPlayerFrame1958
 gPlayerFrame1958:
 	.word	gPlayerFrame1958OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1157Tiles
-	.word	gUnk_08189776
-	.word	gUnk_081926D4
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1958UpperTiles
 	.global	gPlayerFrame1959
 gPlayerFrame1959:
 	.word	gPlayerFrame1959OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1158Tiles
-	.word	gUnk_08189776
-	.word	gUnk_0819281A
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1959UpperTiles
 	.global	gPlayerFrame1960
 gPlayerFrame1960:
 	.word	gPlayerFrame1960OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1159Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08192960
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1960UpperTiles
 	.global	gPlayerFrame1961
 gPlayerFrame1961:
 	.word	gPlayerFrame1961OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1160Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08192AA6
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1961UpperTiles
 	.global	gPlayerFrame1962
 gPlayerFrame1962:
 	.word	gPlayerFrame1962OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1161Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08192BEC
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1962UpperTiles
 	.global	gPlayerFrame1963
 gPlayerFrame1963:
 	.word	gPlayerFrame1963OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1162Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08192D32
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1963UpperTiles
 	.global	gPlayerFrame1964
 gPlayerFrame1964:
 	.word	gPlayerFrame1964OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1163Tiles
-	.word	gUnk_08189776
-	.word	gUnk_08192E78
+	.word	gPlayerFrame1937NextBankPalette
+	.word	gPlayerFrame1964UpperTiles
 	.global	gPlayerFrame2193
 gPlayerFrame2193:
 	.word	gPlayerFrame2193OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1136Tiles
-	.word	gUnk_08189798
-	.word	gUnk_08192FBE
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2193UpperTiles
 	.global	gPlayerFrame2194
 gPlayerFrame2194:
 	.word	gPlayerFrame2194OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1137Tiles
-	.word	gUnk_08189798
-	.word	gUnk_08193144
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2194UpperTiles
 	.global	gPlayerFrame2195
 gPlayerFrame2195:
 	.word	gPlayerFrame2195OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1138Tiles
-	.word	gUnk_08189798
-	.word	gUnk_081932CA
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2195UpperTiles
 	.global	gPlayerFrame2196
 gPlayerFrame2196:
 	.word	gPlayerFrame2196OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1139Tiles
-	.word	gUnk_08189798
-	.word	gUnk_08193450
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2196UpperTiles
 	.global	gPlayerFrame2197
 gPlayerFrame2197:
 	.word	gPlayerFrame2197OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1140Tiles
-	.word	gUnk_08189798
-	.word	gUnk_081935D6
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2197UpperTiles
 	.global	gPlayerFrame2198
 gPlayerFrame2198:
 	.word	gPlayerFrame2198OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1141Tiles
-	.word	gUnk_08189798
-	.word	gUnk_0819375C
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2198UpperTiles
 	.global	gPlayerFrame2199
 gPlayerFrame2199:
 	.word	gPlayerFrame2199OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1142Tiles
-	.word	gUnk_08189798
-	.word	gUnk_081938E2
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2199UpperTiles
 	.global	gPlayerFrame2200
 gPlayerFrame2200:
 	.word	gPlayerFrame2200OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1143Tiles
-	.word	gUnk_08189798
-	.word	gUnk_08193A68
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2200UpperTiles
 	.global	gPlayerFrame2201
 gPlayerFrame2201:
 	.word	gPlayerFrame2201OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1144Tiles
-	.word	gUnk_08189798
-	.word	gUnk_08193BEE
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2201UpperTiles
 	.global	gPlayerFrame2202
 gPlayerFrame2202:
 	.word	gPlayerFrame2202OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1145Tiles
-	.word	gUnk_08189798
-	.word	gUnk_08193D74
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2202UpperTiles
 	.global	gPlayerFrame2203
 gPlayerFrame2203:
 	.word	gPlayerFrame2203OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1146Tiles
-	.word	gUnk_08189798
-	.word	gUnk_08193EDA
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2203UpperTiles
 	.global	gPlayerFrame2204
 gPlayerFrame2204:
 	.word	gPlayerFrame2204OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1147Tiles
-	.word	gUnk_08189798
-	.word	gUnk_08194040
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2204UpperTiles
 	.global	gPlayerFrame2205
 gPlayerFrame2205:
 	.word	gPlayerFrame2205OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1148Tiles
-	.word	gUnk_08189798
-	.word	gUnk_081941C6
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2205UpperTiles
 	.global	gPlayerFrame2206
 gPlayerFrame2206:
 	.word	gPlayerFrame2206OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1149Tiles
-	.word	gUnk_08189798
-	.word	gUnk_0819432C
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2206UpperTiles
 	.global	gPlayerFrame2207
 gPlayerFrame2207:
 	.word	gPlayerFrame2207OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1150Tiles
-	.word	gUnk_08189798
-	.word	gUnk_081944B2
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2207UpperTiles
 	.global	gPlayerFrame2208
 gPlayerFrame2208:
 	.word	gPlayerFrame2208OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1151Tiles
-	.word	gUnk_08189798
-	.word	gUnk_08194618
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2208UpperTiles
 	.global	gPlayerFrame2209
 gPlayerFrame2209:
 	.word	gPlayerFrame2209OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1152Tiles
-	.word	gUnk_08189798
-	.word	gUnk_0819479E
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2209UpperTiles
 	.global	gPlayerFrame2210
 gPlayerFrame2210:
 	.word	gPlayerFrame2210OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1153Tiles
-	.word	gUnk_08189798
-	.word	gUnk_081948E4
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2210UpperTiles
 	.global	gPlayerFrame2211
 gPlayerFrame2211:
 	.word	gPlayerFrame2211OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1154Tiles
-	.word	gUnk_08189798
-	.word	gUnk_08194A2A
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2211UpperTiles
 	.global	gPlayerFrame2212
 gPlayerFrame2212:
 	.word	gPlayerFrame2212OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1155Tiles
-	.word	gUnk_08189798
-	.word	gUnk_081948E4
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2210UpperTiles
 	.global	gPlayerFrame2213
 gPlayerFrame2213:
 	.word	gPlayerFrame2213OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1156Tiles
-	.word	gUnk_08189798
-	.word	gUnk_081948E4
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2210UpperTiles
 	.global	gPlayerFrame2214
 gPlayerFrame2214:
 	.word	gPlayerFrame2214OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1157Tiles
-	.word	gUnk_08189798
-	.word	gUnk_08194B70
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2214UpperTiles
 	.global	gPlayerFrame2215
 gPlayerFrame2215:
 	.word	gPlayerFrame2215OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1158Tiles
-	.word	gUnk_08189798
-	.word	gUnk_08194CB6
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2215UpperTiles
 	.global	gPlayerFrame2216
 gPlayerFrame2216:
 	.word	gPlayerFrame2216OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1159Tiles
-	.word	gUnk_08189798
-	.word	gUnk_08194DFC
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2216UpperTiles
 	.global	gPlayerFrame2217
 gPlayerFrame2217:
 	.word	gPlayerFrame2217OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1160Tiles
-	.word	gUnk_08189798
-	.word	gUnk_08194F42
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2217UpperTiles
 	.global	gPlayerFrame2218
 gPlayerFrame2218:
 	.word	gPlayerFrame2218OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1161Tiles
-	.word	gUnk_08189798
-	.word	gUnk_081950C8
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2218UpperTiles
 	.global	gPlayerFrame2219
 gPlayerFrame2219:
 	.word	gPlayerFrame2219OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1162Tiles
-	.word	gUnk_08189798
-	.word	gUnk_0819520E
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2219UpperTiles
 	.global	gPlayerFrame2220
 gPlayerFrame2220:
 	.word	gPlayerFrame2220OamTemplate+1
 	.word	gPlayerFrame1136Palette
 	.word	gPlayerFrame1163Tiles
-	.word	gUnk_08189798
-	.word	gUnk_08195394
+	.word	gPlayerFrame2193NextBankPalette
+	.word	gPlayerFrame2220UpperTiles
 	.global	gPlayerFrame201
 gPlayerFrame201:
 	.word	gPlayerFrame201OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame201Tiles
 	.incbin	"baserom.gba", 0x767E34, 0x4
-	.word	gUnk_08197014
+	.word	gPlayerFrame201UpperTiles
 	.global	gPlayerFrame202
 gPlayerFrame202:
 	.word	gPlayerFrame202OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame202Tiles
 	.incbin	"baserom.gba", 0x767E48, 0x4
-	.word	gUnk_08197200
+	.word	gPlayerFrame202UpperTiles
 	.global	gPlayerFrame203
 gPlayerFrame203:
 	.word	gPlayerFrame203OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame203Tiles
 	.incbin	"baserom.gba", 0x767E5C, 0x4
-	.word	gUnk_081973EC
+	.word	gPlayerFrame203UpperTiles
 	.global	gPlayerFrame204
 gPlayerFrame204:
 	.word	gPlayerFrame204OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame204Tiles
 	.incbin	"baserom.gba", 0x767E70, 0x4
-	.word	gUnk_08197598
+	.word	gPlayerFrame204UpperTiles
 	.global	gPlayerFrame205
 gPlayerFrame205:
 	.word	gPlayerFrame205OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame205Tiles
 	.incbin	"baserom.gba", 0x767E84, 0x4
-	.word	gUnk_08197724
+	.word	gPlayerFrame205UpperTiles
 	.global	gPlayerFrame206
 gPlayerFrame206:
 	.word	gPlayerFrame206OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame206Tiles
 	.incbin	"baserom.gba", 0x767E98, 0x4
-	.word	gUnk_081978D0
+	.word	gPlayerFrame206UpperTiles
 	.global	gPlayerFrame207
 gPlayerFrame207:
 	.word	gPlayerFrame207OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame207Tiles
 	.incbin	"baserom.gba", 0x767EAC, 0x4
-	.word	gUnk_08197ABC
+	.word	gPlayerFrame207UpperTiles
 	.global	gPlayerFrame208
 gPlayerFrame208:
 	.word	gPlayerFrame208OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame208Tiles
 	.incbin	"baserom.gba", 0x767EC0, 0x4
-	.word	gUnk_08197CA8
+	.word	gPlayerFrame208UpperTiles
 	.global	gPlayerFrame209
 gPlayerFrame209:
 	.word	gPlayerFrame209OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame209Tiles
 	.incbin	"baserom.gba", 0x767ED4, 0x4
-	.word	gUnk_08197E94
+	.word	gPlayerFrame209UpperTiles
 	.global	gPlayerFrame210
 gPlayerFrame210:
 	.word	gPlayerFrame210OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame210Tiles
 	.incbin	"baserom.gba", 0x767EE8, 0x4
-	.word	gUnk_08198060
+	.word	gPlayerFrame210UpperTiles
 	.global	gPlayerFrame211
 gPlayerFrame211:
 	.word	gPlayerFrame211OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame211Tiles
 	.incbin	"baserom.gba", 0x767EFC, 0x4
-	.word	gUnk_0819824C
+	.word	gPlayerFrame211UpperTiles
 	.global	gPlayerFrame212
 gPlayerFrame212:
 	.word	gPlayerFrame212OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame212Tiles
 	.incbin	"baserom.gba", 0x767F10, 0x4
-	.word	gUnk_081983F8
+	.word	gPlayerFrame212UpperTiles
 	.global	gPlayerFrame213
 gPlayerFrame213:
 	.word	gPlayerFrame213OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame213Tiles
 	.incbin	"baserom.gba", 0x767F24, 0x4
-	.word	gUnk_08198584
+	.word	gPlayerFrame213UpperTiles
 	.global	gPlayerFrame214
 gPlayerFrame214:
 	.word	gPlayerFrame214OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame214Tiles
 	.incbin	"baserom.gba", 0x767F38, 0x4
-	.word	gUnk_08198730
+	.word	gPlayerFrame214UpperTiles
 	.global	gPlayerFrame215
 gPlayerFrame215:
 	.word	gPlayerFrame215OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame215Tiles
 	.incbin	"baserom.gba", 0x767F4C, 0x4
-	.word	gUnk_0819891C
+	.word	gPlayerFrame215UpperTiles
 	.global	gPlayerFrame216
 gPlayerFrame216:
 	.word	gPlayerFrame216OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame216Tiles
 	.incbin	"baserom.gba", 0x767F60, 0x4
-	.word	gUnk_08198B08
+	.word	gPlayerFrame216UpperTiles
 	.global	gPlayerFrame217
 gPlayerFrame217:
 	.word	gPlayerFrame217OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame217Tiles
 	.incbin	"baserom.gba", 0x767F74, 0x4
-	.word	gUnk_08198CF4
+	.word	gPlayerFrame217UpperTiles
 	.global	gPlayerFrame220
 gPlayerFrame220:
 	.word	gPlayerFrame220OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame220Tiles
 	.incbin	"baserom.gba", 0x767F88, 0x4
-	.word	gUnk_08198EA0
+	.word	gPlayerFrame220UpperTiles
 	.global	gPlayerFrame221
 gPlayerFrame221:
 	.word	gPlayerFrame221OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame221Tiles
 	.incbin	"baserom.gba", 0x767F9C, 0x4
-	.word	gUnk_0819904C
+	.word	gPlayerFrame221UpperTiles
 	.global	gPlayerFrame218
 gPlayerFrame218:
 	.word	gPlayerFrame218OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame218Tiles
 	.incbin	"baserom.gba", 0x767FB0, 0x4
-	.word	gUnk_08199238
+	.word	gPlayerFrame218UpperTiles
 	.global	gPlayerFrame219
 gPlayerFrame219:
 	.word	gPlayerFrame219OamTemplate+1
 	.word	gPlayerFrame201Palette
 	.word	gPlayerFrame219Tiles
 	.incbin	"baserom.gba", 0x767FC4, 0x4
-	.word	gUnk_081993E4
+	.word	gPlayerFrame219UpperTiles
 	.global	gPlayerFrame1164
 gPlayerFrame1164:
 	.word	gPlayerFrame1164OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1164Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_08199590
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1164UpperTiles
 	.global	gPlayerFrame1165
 gPlayerFrame1165:
 	.word	gPlayerFrame1165OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1165Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819983C
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1165UpperTiles
 	.global	gPlayerFrame1166
 gPlayerFrame1166:
 	.word	gPlayerFrame1166OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1166Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_08199AE8
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1166UpperTiles
 	.global	gPlayerFrame1167
 gPlayerFrame1167:
 	.word	gPlayerFrame1167OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1167Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_08199D74
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1167UpperTiles
 	.global	gPlayerFrame1168
 gPlayerFrame1168:
 	.word	gPlayerFrame1168OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1168Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_08199FE0
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1168UpperTiles
 	.global	gPlayerFrame1169
 gPlayerFrame1169:
 	.word	gPlayerFrame1169OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1169Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819A26C
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1169UpperTiles
 	.global	gPlayerFrame1170
 gPlayerFrame1170:
 	.word	gPlayerFrame1170OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1170Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819A518
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1170UpperTiles
 	.global	gPlayerFrame1171
 gPlayerFrame1171:
 	.word	gPlayerFrame1171OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1171Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819A7A4
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1171UpperTiles
 	.global	gPlayerFrame1172
 gPlayerFrame1172:
 	.word	gPlayerFrame1172OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1172Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819AA50
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1172UpperTiles
 	.global	gPlayerFrame1173
 gPlayerFrame1173:
 	.word	gPlayerFrame1173OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1173Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819ACBC
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1173UpperTiles
 	.global	gPlayerFrame1174
 gPlayerFrame1174:
 	.word	gPlayerFrame1174OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1174Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819AF48
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1174UpperTiles
 	.global	gPlayerFrame1175
 gPlayerFrame1175:
 	.word	gPlayerFrame1175OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1175Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819B1D4
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1175UpperTiles
 	.global	gPlayerFrame1176
 gPlayerFrame1176:
 	.word	gPlayerFrame1176OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1176Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819B460
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1176UpperTiles
 	.global	gPlayerFrame1177
 gPlayerFrame1177:
 	.word	gPlayerFrame1177OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1177Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819B6EC
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1177UpperTiles
 	.global	gPlayerFrame1178
 gPlayerFrame1178:
 	.word	gPlayerFrame1178OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1178Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819B998
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1178UpperTiles
 	.global	gPlayerFrame1179
 gPlayerFrame1179:
 	.word	gPlayerFrame1179OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1179Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819BC44
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1179UpperTiles
 	.global	gPlayerFrame1180
 gPlayerFrame1180:
 	.word	gPlayerFrame1180OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame217Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819BDCA
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1180UpperTiles
 	.global	gPlayerFrame1183
 gPlayerFrame1183:
 	.word	gPlayerFrame1183OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame220Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819BF10
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1183UpperTiles
 	.global	gPlayerFrame1184
 gPlayerFrame1184:
 	.word	gPlayerFrame1184OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1184Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819C15C
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1184UpperTiles
 	.global	gPlayerFrame1181
 gPlayerFrame1181:
 	.word	gPlayerFrame1181OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame218Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819C2E2
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1181UpperTiles
 	.global	gPlayerFrame1182
 gPlayerFrame1182:
 	.word	gPlayerFrame1182OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame219Tiles
-	.word	gUnk_08196E88
-	.word	gUnk_0819C428
+	.word	gPlayerFrame1164NextBankPalette
+	.word	gPlayerFrame1182UpperTiles
 	.global	gPlayerFrame1965
 gPlayerFrame1965:
 	.word	gPlayerFrame1965OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1164Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819C54E
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1965UpperTiles
 	.global	gPlayerFrame1966
 gPlayerFrame1966:
 	.word	gPlayerFrame1966OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1165Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819C6F4
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1966UpperTiles
 	.global	gPlayerFrame1967
 gPlayerFrame1967:
 	.word	gPlayerFrame1967OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1967Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819C9E0
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1967UpperTiles
 	.global	gPlayerFrame1968
 gPlayerFrame1968:
 	.word	gPlayerFrame1968OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1167Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819CBA6
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1968UpperTiles
 	.global	gPlayerFrame1969
 gPlayerFrame1969:
 	.word	gPlayerFrame1969OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1168Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819CD6C
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1969UpperTiles
 	.global	gPlayerFrame1970
 gPlayerFrame1970:
 	.word	gPlayerFrame1970OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1169Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819CF32
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1970UpperTiles
 	.global	gPlayerFrame1971
 gPlayerFrame1971:
 	.word	gPlayerFrame1971OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1170Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819D0F8
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1971UpperTiles
 	.global	gPlayerFrame1972
 gPlayerFrame1972:
 	.word	gPlayerFrame1972OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1171Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819D29E
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1972UpperTiles
 	.global	gPlayerFrame1973
 gPlayerFrame1973:
 	.word	gPlayerFrame1973OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1172Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819D464
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1973UpperTiles
 	.global	gPlayerFrame1974
 gPlayerFrame1974:
 	.word	gPlayerFrame1974OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1173Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819D60A
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1974UpperTiles
 	.global	gPlayerFrame1975
 gPlayerFrame1975:
 	.word	gPlayerFrame1975OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1174Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819D7D0
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1975UpperTiles
 	.global	gPlayerFrame1976
 gPlayerFrame1976:
 	.word	gPlayerFrame1976OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1175Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819D996
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1976UpperTiles
 	.global	gPlayerFrame1977
 gPlayerFrame1977:
 	.word	gPlayerFrame1977OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1176Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819DB5C
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1977UpperTiles
 	.global	gPlayerFrame1978
 gPlayerFrame1978:
 	.word	gPlayerFrame1978OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1177Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819DD22
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1978UpperTiles
 	.global	gPlayerFrame1979
 gPlayerFrame1979:
 	.word	gPlayerFrame1979OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1178Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819DEE8
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1979UpperTiles
 	.global	gPlayerFrame1980
 gPlayerFrame1980:
 	.word	gPlayerFrame1980OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1179Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819E0AE
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1980UpperTiles
 	.global	gPlayerFrame1981
 gPlayerFrame1981:
 	.word	gPlayerFrame1981OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame217Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819E254
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1981UpperTiles
 	.global	gPlayerFrame1984
 gPlayerFrame1984:
 	.word	gPlayerFrame1984OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame220Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819E3BA
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1984UpperTiles
 	.global	gPlayerFrame1985
 gPlayerFrame1985:
 	.word	gPlayerFrame1985OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1184Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819E500
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1985UpperTiles
 	.global	gPlayerFrame1982
 gPlayerFrame1982:
 	.word	gPlayerFrame1982OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame218Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819E6C6
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1982UpperTiles
 	.global	gPlayerFrame1983
 gPlayerFrame1983:
 	.word	gPlayerFrame1983OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame219Tiles
-	.word	gUnk_08196EAA
-	.word	gUnk_0819E80C
+	.word	gPlayerFrame1965NextBankPalette
+	.word	gPlayerFrame1983UpperTiles
 	.global	gPlayerFrame2221
 gPlayerFrame2221:
 	.word	gPlayerFrame2221OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1164Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819E912
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2221UpperTiles
 	.global	gPlayerFrame2222
 gPlayerFrame2222:
 	.word	gPlayerFrame2222OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1165Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819EA98
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2222UpperTiles
 	.global	gPlayerFrame2223
 gPlayerFrame2223:
 	.word	gPlayerFrame2223OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1967Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819EC1E
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2223UpperTiles
 	.global	gPlayerFrame2224
 gPlayerFrame2224:
 	.word	gPlayerFrame2224OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1167Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819EDA4
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2224UpperTiles
 	.global	gPlayerFrame2225
 gPlayerFrame2225:
 	.word	gPlayerFrame2225OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1168Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819EF2A
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2225UpperTiles
 	.global	gPlayerFrame2226
 gPlayerFrame2226:
 	.word	gPlayerFrame2226OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1169Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819F0B0
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2226UpperTiles
 	.global	gPlayerFrame2227
 gPlayerFrame2227:
 	.word	gPlayerFrame2227OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1170Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819F0B0
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2226UpperTiles
 	.global	gPlayerFrame2228
 gPlayerFrame2228:
 	.word	gPlayerFrame2228OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1171Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819F0B0
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2226UpperTiles
 	.global	gPlayerFrame2229
 gPlayerFrame2229:
 	.word	gPlayerFrame2229OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1172Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819F236
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2229UpperTiles
 	.global	gPlayerFrame2230
 gPlayerFrame2230:
 	.word	gPlayerFrame2230OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1173Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819F39C
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2230UpperTiles
 	.global	gPlayerFrame2231
 gPlayerFrame2231:
 	.word	gPlayerFrame2231OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1174Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819F522
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2231UpperTiles
 	.global	gPlayerFrame2232
 gPlayerFrame2232:
 	.word	gPlayerFrame2232OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1175Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819F6A8
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2232UpperTiles
 	.global	gPlayerFrame2233
 gPlayerFrame2233:
 	.word	gPlayerFrame2233OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1176Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819F82E
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2233UpperTiles
 	.global	gPlayerFrame2234
 gPlayerFrame2234:
 	.word	gPlayerFrame2234OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1177Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819F9B4
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2234UpperTiles
 	.global	gPlayerFrame2235
 gPlayerFrame2235:
 	.word	gPlayerFrame2235OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1178Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819FB3A
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2235UpperTiles
 	.global	gPlayerFrame2236
 gPlayerFrame2236:
 	.word	gPlayerFrame2236OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1179Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819FCC0
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2236UpperTiles
 	.global	gPlayerFrame2237
 gPlayerFrame2237:
 	.word	gPlayerFrame2237OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame217Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819FE46
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2237UpperTiles
 	.global	gPlayerFrame2240
 gPlayerFrame2240:
 	.word	gPlayerFrame2240OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame220Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_0819FF8C
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2240UpperTiles
 	.global	gPlayerFrame2241
 gPlayerFrame2241:
 	.word	gPlayerFrame2241OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame1184Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_081A0112
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2241UpperTiles
 	.global	gPlayerFrame2238
 gPlayerFrame2238:
 	.word	gPlayerFrame2238OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame218Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_081A0298
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2238UpperTiles
 	.global	gPlayerFrame2239
 gPlayerFrame2239:
 	.word	gPlayerFrame2239OamTemplate+1
 	.word	gPlayerFrame1164Palette
 	.word	gPlayerFrame219Tiles
-	.word	gUnk_08196ECC
-	.word	gUnk_081A041E
+	.word	gPlayerFrame2221NextBankPalette
+	.word	gPlayerFrame2239UpperTiles
 	.global	gPlayerFrame4339
 gPlayerFrame4339:
 	.word	gPlayerFrame4339OamTemplate+1
@@ -20415,547 +20415,547 @@ gPlayerFrame4393:
 	.word	gPlayerFrame4393OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823F874
-	.word	gUnk_082410A0
+	.word	gPlayerFrame4393NextBankPalette
+	.word	gPlayerFrame4393UpperTiles
 	.global	gPlayerFrame4394
 gPlayerFrame4394:
 	.word	gPlayerFrame4394OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823F874
-	.word	gUnk_082411A6
+	.word	gPlayerFrame4393NextBankPalette
+	.word	gPlayerFrame4394UpperTiles
 	.global	gPlayerFrame4395
 gPlayerFrame4395:
 	.word	gPlayerFrame4395OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4341Tiles
-	.word	gUnk_0823F874
-	.word	gUnk_082412AC
+	.word	gPlayerFrame4393NextBankPalette
+	.word	gPlayerFrame4395UpperTiles
 	.global	gPlayerFrame4396
 gPlayerFrame4396:
 	.word	gPlayerFrame4396OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823F874
-	.word	gUnk_08241392
+	.word	gPlayerFrame4393NextBankPalette
+	.word	gPlayerFrame4396UpperTiles
 	.global	gPlayerFrame4397
 gPlayerFrame4397:
 	.word	gPlayerFrame4397OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823F874
-	.word	gUnk_082410A0
+	.word	gPlayerFrame4393NextBankPalette
+	.word	gPlayerFrame4393UpperTiles
 	.global	gPlayerFrame4398
 gPlayerFrame4398:
 	.word	gPlayerFrame4398OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4344Tiles
-	.word	gUnk_0823F874
-	.word	gUnk_08241498
+	.word	gPlayerFrame4393NextBankPalette
+	.word	gPlayerFrame4398UpperTiles
 	.global	gPlayerFrame4405
 gPlayerFrame4405:
 	.word	gPlayerFrame4405OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_0824155E
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4405UpperTiles
 	.global	gPlayerFrame4406
 gPlayerFrame4406:
 	.word	gPlayerFrame4406OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_08241684
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4406UpperTiles
 	.global	gPlayerFrame4407
 gPlayerFrame4407:
 	.word	gPlayerFrame4407OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_082417AA
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4407UpperTiles
 	.global	gPlayerFrame4408
 gPlayerFrame4408:
 	.word	gPlayerFrame4408OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_082418D0
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4408UpperTiles
 	.global	gPlayerFrame4409
 gPlayerFrame4409:
 	.word	gPlayerFrame4409OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_082419F6
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4409UpperTiles
 	.global	gPlayerFrame4410
 gPlayerFrame4410:
 	.word	gPlayerFrame4410OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_08241B1C
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4410UpperTiles
 	.global	gPlayerFrame4411
 gPlayerFrame4411:
 	.word	gPlayerFrame4411OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_08241C42
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4411UpperTiles
 	.global	gPlayerFrame4412
 gPlayerFrame4412:
 	.word	gPlayerFrame4412OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_08241D68
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4412UpperTiles
 	.global	gPlayerFrame4413
 gPlayerFrame4413:
 	.word	gPlayerFrame4413OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4341Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_08241E8E
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4413UpperTiles
 	.global	gPlayerFrame4414
 gPlayerFrame4414:
 	.word	gPlayerFrame4414OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4341Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_08242014
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4414UpperTiles
 	.global	gPlayerFrame4415
 gPlayerFrame4415:
 	.word	gPlayerFrame4415OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4341Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_0824219A
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4415UpperTiles
 	.global	gPlayerFrame4416
 gPlayerFrame4416:
 	.word	gPlayerFrame4416OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4341Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_08242320
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4416UpperTiles
 	.global	gPlayerFrame4417
 gPlayerFrame4417:
 	.word	gPlayerFrame4417OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_0824155E
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4405UpperTiles
 	.global	gPlayerFrame4418
 gPlayerFrame4418:
 	.word	gPlayerFrame4418OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_08241684
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4406UpperTiles
 	.global	gPlayerFrame4419
 gPlayerFrame4419:
 	.word	gPlayerFrame4419OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_082417AA
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4407UpperTiles
 	.global	gPlayerFrame4420
 gPlayerFrame4420:
 	.word	gPlayerFrame4420OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_082418D0
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4408UpperTiles
 	.global	gPlayerFrame4421
 gPlayerFrame4421:
 	.word	gPlayerFrame4421OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_0824155E
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4405UpperTiles
 	.global	gPlayerFrame4422
 gPlayerFrame4422:
 	.word	gPlayerFrame4422OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_08241684
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4406UpperTiles
 	.global	gPlayerFrame4423
 gPlayerFrame4423:
 	.word	gPlayerFrame4423OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_082417AA
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4407UpperTiles
 	.global	gPlayerFrame4424
 gPlayerFrame4424:
 	.word	gPlayerFrame4424OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_082418D0
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4408UpperTiles
 	.global	gPlayerFrame4425
 gPlayerFrame4425:
 	.word	gPlayerFrame4425OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4344Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_0824155E
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4405UpperTiles
 	.global	gPlayerFrame4426
 gPlayerFrame4426:
 	.word	gPlayerFrame4426OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4344Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_08241684
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4406UpperTiles
 	.global	gPlayerFrame4427
 gPlayerFrame4427:
 	.word	gPlayerFrame4427OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4344Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_082417AA
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4407UpperTiles
 	.global	gPlayerFrame4428
 gPlayerFrame4428:
 	.word	gPlayerFrame4428OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4344Tiles
-	.word	gUnk_0823F896
-	.word	gUnk_082418D0
+	.word	gPlayerFrame4405NextBankPalette
+	.word	gPlayerFrame4408UpperTiles
 	.global	gPlayerFrame4429
 gPlayerFrame4429:
 	.word	gPlayerFrame4429OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823F8B8
-	.word	gUnk_082424A6
+	.word	gPlayerFrame4429NextBankPalette
+	.word	gPlayerFrame4429UpperTiles
 	.global	gPlayerFrame4430
 gPlayerFrame4430:
 	.word	gPlayerFrame4430OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823F8B8
-	.word	gUnk_0824254C
+	.word	gPlayerFrame4429NextBankPalette
+	.word	gPlayerFrame4430UpperTiles
 	.global	gPlayerFrame4431
 gPlayerFrame4431:
 	.word	gPlayerFrame4431OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4341Tiles
-	.word	gUnk_0823F8B8
-	.word	gUnk_082425F2
+	.word	gPlayerFrame4429NextBankPalette
+	.word	gPlayerFrame4431UpperTiles
 	.global	gPlayerFrame4432
 gPlayerFrame4432:
 	.word	gPlayerFrame4432OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823F8B8
-	.word	gUnk_082424A6
+	.word	gPlayerFrame4429NextBankPalette
+	.word	gPlayerFrame4429UpperTiles
 	.global	gPlayerFrame4433
 gPlayerFrame4433:
 	.word	gPlayerFrame4433OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823F8B8
-	.word	gUnk_082424A6
+	.word	gPlayerFrame4429NextBankPalette
+	.word	gPlayerFrame4429UpperTiles
 	.global	gPlayerFrame4434
 gPlayerFrame4434:
 	.word	gPlayerFrame4434OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4344Tiles
-	.word	gUnk_0823F8B8
-	.word	gUnk_08242678
+	.word	gPlayerFrame4429NextBankPalette
+	.word	gPlayerFrame4434UpperTiles
 	.global	gPlayerFrame4435
 gPlayerFrame4435:
 	.word	gPlayerFrame4435OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823F8DA
-	.word	gUnk_082426FE
+	.word	gPlayerFrame4435NextBankPalette
+	.word	gPlayerFrame4435UpperTiles
 	.global	gPlayerFrame4436
 gPlayerFrame4436:
 	.word	gPlayerFrame4436OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823F8DA
-	.word	gUnk_082427C4
+	.word	gPlayerFrame4435NextBankPalette
+	.word	gPlayerFrame4436UpperTiles
 	.global	gPlayerFrame4437
 gPlayerFrame4437:
 	.word	gPlayerFrame4437OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4341Tiles
-	.word	gUnk_0823F8DA
-	.word	gUnk_0824288A
+	.word	gPlayerFrame4435NextBankPalette
+	.word	gPlayerFrame4437UpperTiles
 	.global	gPlayerFrame4438
 gPlayerFrame4438:
 	.word	gPlayerFrame4438OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823F8DA
-	.word	gUnk_08242950
+	.word	gPlayerFrame4435NextBankPalette
+	.word	gPlayerFrame4438UpperTiles
 	.global	gPlayerFrame4439
 gPlayerFrame4439:
 	.word	gPlayerFrame4439OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823F8DA
-	.word	gUnk_082426FE
+	.word	gPlayerFrame4435NextBankPalette
+	.word	gPlayerFrame4435UpperTiles
 	.global	gPlayerFrame4440
 gPlayerFrame4440:
 	.word	gPlayerFrame4440OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4344Tiles
-	.word	gUnk_0823F8DA
-	.word	gUnk_08242A16
+	.word	gPlayerFrame4435NextBankPalette
+	.word	gPlayerFrame4440UpperTiles
 	.global	gPlayerFrame4453
 gPlayerFrame4453:
 	.word	gPlayerFrame4453OamTemplate+1
 	.word	gPlayerFrame4453Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823F91E
-	.word	gUnk_08242A9C
+	.word	gPlayerFrame4453NextBankPalette
+	.word	gPlayerFrame4453UpperTiles
 	.global	gPlayerFrame4454
 gPlayerFrame4454:
 	.word	gPlayerFrame4454OamTemplate+1
 	.word	gPlayerFrame4453Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823F91E
-	.word	gUnk_08242B62
+	.word	gPlayerFrame4453NextBankPalette
+	.word	gPlayerFrame4454UpperTiles
 	.global	gPlayerFrame4455
 gPlayerFrame4455:
 	.word	gPlayerFrame4455OamTemplate+1
 	.word	gPlayerFrame4453Palette
 	.word	gPlayerFrame4455Tiles
-	.word	gUnk_0823F91E
-	.word	gUnk_08242D2E
+	.word	gPlayerFrame4453NextBankPalette
+	.word	gPlayerFrame4455UpperTiles
 	.global	gPlayerFrame4456
 gPlayerFrame4456:
 	.word	gPlayerFrame4456OamTemplate+1
 	.word	gPlayerFrame4453Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823F91E
-	.word	gUnk_08242E54
+	.word	gPlayerFrame4453NextBankPalette
+	.word	gPlayerFrame4456UpperTiles
 	.global	gPlayerFrame4457
 gPlayerFrame4457:
 	.word	gPlayerFrame4457OamTemplate+1
 	.word	gPlayerFrame4453Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823F91E
-	.word	gUnk_08242A9C
+	.word	gPlayerFrame4453NextBankPalette
+	.word	gPlayerFrame4453UpperTiles
 	.global	gPlayerFrame4458
 gPlayerFrame4458:
 	.word	gPlayerFrame4458OamTemplate+1
 	.word	gPlayerFrame4453Palette
 	.word	gPlayerFrame4344Tiles
-	.word	gUnk_0823F91E
-	.word	gUnk_08242F1A
+	.word	gPlayerFrame4453NextBankPalette
+	.word	gPlayerFrame4458UpperTiles
 	.global	gPlayerFrame4459
 gPlayerFrame4459:
 	.word	gPlayerFrame4459OamTemplate+1
 	.word	gPlayerFrame4459Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823F962
-	.word	gUnk_08242FC0
+	.word	gPlayerFrame4459NextBankPalette
+	.word	gPlayerFrame4459UpperTiles
 	.global	gPlayerFrame4460
 gPlayerFrame4460:
 	.word	gPlayerFrame4460OamTemplate+1
 	.word	gPlayerFrame4459Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823F962
-	.word	gUnk_08243086
+	.word	gPlayerFrame4459NextBankPalette
+	.word	gPlayerFrame4460UpperTiles
 	.global	gPlayerFrame4461
 gPlayerFrame4461:
 	.word	gPlayerFrame4461OamTemplate+1
 	.word	gPlayerFrame4459Palette
 	.word	gPlayerFrame4341Tiles
-	.word	gUnk_0823F962
-	.word	gUnk_0824314C
+	.word	gPlayerFrame4459NextBankPalette
+	.word	gPlayerFrame4461UpperTiles
 	.global	gPlayerFrame4462
 gPlayerFrame4462:
 	.word	gPlayerFrame4462OamTemplate+1
 	.word	gPlayerFrame4459Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823F962
-	.word	gUnk_08242FC0
+	.word	gPlayerFrame4459NextBankPalette
+	.word	gPlayerFrame4459UpperTiles
 	.global	gPlayerFrame4463
 gPlayerFrame4463:
 	.word	gPlayerFrame4463OamTemplate+1
 	.word	gPlayerFrame4459Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823F962
-	.word	gUnk_08242FC0
+	.word	gPlayerFrame4459NextBankPalette
+	.word	gPlayerFrame4459UpperTiles
 	.global	gPlayerFrame4464
 gPlayerFrame4464:
 	.word	gPlayerFrame4464OamTemplate+1
 	.word	gPlayerFrame4459Palette
 	.word	gPlayerFrame4464Tiles
-	.word	gUnk_0823F962
-	.word	gUnk_08243338
+	.word	gPlayerFrame4459NextBankPalette
+	.word	gPlayerFrame4464UpperTiles
 	.global	gPlayerFrame4465
 gPlayerFrame4465:
 	.word	gPlayerFrame4465OamTemplate+1
 	.word	gPlayerFrame4465Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823F9A6
-	.word	gUnk_082433DE
+	.word	gPlayerFrame4465NextBankPalette
+	.word	gPlayerFrame4465UpperTiles
 	.global	gPlayerFrame4466
 gPlayerFrame4466:
 	.word	gPlayerFrame4466OamTemplate+1
 	.word	gPlayerFrame4465Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823F9A6
-	.word	gUnk_082434E4
+	.word	gPlayerFrame4465NextBankPalette
+	.word	gPlayerFrame4466UpperTiles
 	.global	gPlayerFrame4467
 gPlayerFrame4467:
 	.word	gPlayerFrame4467OamTemplate+1
 	.word	gPlayerFrame4465Palette
 	.word	gPlayerFrame4341Tiles
-	.word	gUnk_0823F9A6
-	.word	gUnk_082435EA
+	.word	gPlayerFrame4465NextBankPalette
+	.word	gPlayerFrame4467UpperTiles
 	.global	gPlayerFrame4468
 gPlayerFrame4468:
 	.word	gPlayerFrame4468OamTemplate+1
 	.word	gPlayerFrame4465Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823F9A6
-	.word	gUnk_082436B0
+	.word	gPlayerFrame4465NextBankPalette
+	.word	gPlayerFrame4468UpperTiles
 	.global	gPlayerFrame4469
 gPlayerFrame4469:
 	.word	gPlayerFrame4469OamTemplate+1
 	.word	gPlayerFrame4465Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823F9A6
-	.word	gUnk_08243776
+	.word	gPlayerFrame4465NextBankPalette
+	.word	gPlayerFrame4469UpperTiles
 	.global	gPlayerFrame4470
 gPlayerFrame4470:
 	.word	gPlayerFrame4470OamTemplate+1
 	.word	gPlayerFrame4465Palette
 	.word	gPlayerFrame4464Tiles
-	.word	gUnk_0823F9A6
-	.word	gUnk_0824387C
+	.word	gPlayerFrame4465NextBankPalette
+	.word	gPlayerFrame4470UpperTiles
 	.global	gPlayerFrame4471
 gPlayerFrame4471:
 	.word	gPlayerFrame4471OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823F9C8
-	.word	gUnk_08243942
+	.word	gPlayerFrame4471NextBankPalette
+	.word	gPlayerFrame4471UpperTiles
 	.global	gPlayerFrame4472
 gPlayerFrame4472:
 	.word	gPlayerFrame4472OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823F9C8
-	.word	gUnk_08243A08
+	.word	gPlayerFrame4471NextBankPalette
+	.word	gPlayerFrame4472UpperTiles
 	.global	gPlayerFrame4473
 gPlayerFrame4473:
 	.word	gPlayerFrame4473OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4341Tiles
-	.word	gUnk_0823F9C8
-	.word	gUnk_08243B0E
+	.word	gPlayerFrame4471NextBankPalette
+	.word	gPlayerFrame4473UpperTiles
 	.global	gPlayerFrame4474
 gPlayerFrame4474:
 	.word	gPlayerFrame4474OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823F9C8
-	.word	gUnk_08243942
+	.word	gPlayerFrame4471NextBankPalette
+	.word	gPlayerFrame4471UpperTiles
 	.global	gPlayerFrame4475
 gPlayerFrame4475:
 	.word	gPlayerFrame4475OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823F9C8
-	.word	gUnk_08243C34
+	.word	gPlayerFrame4471NextBankPalette
+	.word	gPlayerFrame4475UpperTiles
 	.global	gPlayerFrame4476
 gPlayerFrame4476:
 	.word	gPlayerFrame4476OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4344Tiles
-	.word	gUnk_0823F9C8
-	.word	gUnk_08243CFA
+	.word	gPlayerFrame4471NextBankPalette
+	.word	gPlayerFrame4476UpperTiles
 	.global	gPlayerFrame4477
 gPlayerFrame4477:
 	.word	gPlayerFrame4477OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823F9EA
-	.word	gUnk_08243DA0
+	.word	gPlayerFrame4477NextBankPalette
+	.word	gPlayerFrame4477UpperTiles
 	.global	gPlayerFrame4478
 gPlayerFrame4478:
 	.word	gPlayerFrame4478OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823F9EA
-	.word	gUnk_08243E66
+	.word	gPlayerFrame4477NextBankPalette
+	.word	gPlayerFrame4478UpperTiles
 	.global	gPlayerFrame4479
 gPlayerFrame4479:
 	.word	gPlayerFrame4479OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4341Tiles
-	.word	gUnk_0823F9EA
-	.word	gUnk_08243F2C
+	.word	gPlayerFrame4477NextBankPalette
+	.word	gPlayerFrame4479UpperTiles
 	.global	gPlayerFrame4480
 gPlayerFrame4480:
 	.word	gPlayerFrame4480OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823F9EA
-	.word	gUnk_08243DA0
+	.word	gPlayerFrame4477NextBankPalette
+	.word	gPlayerFrame4477UpperTiles
 	.global	gPlayerFrame4481
 gPlayerFrame4481:
 	.word	gPlayerFrame4481OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823F9EA
-	.word	gUnk_08243DA0
+	.word	gPlayerFrame4477NextBankPalette
+	.word	gPlayerFrame4477UpperTiles
 	.global	gPlayerFrame4482
 gPlayerFrame4482:
 	.word	gPlayerFrame4482OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4344Tiles
-	.word	gUnk_0823F9EA
-	.word	gUnk_08243FF2
+	.word	gPlayerFrame4477NextBankPalette
+	.word	gPlayerFrame4482UpperTiles
 	.global	gPlayerFrame4483
 gPlayerFrame4483:
 	.word	gPlayerFrame4483OamTemplate+1
 	.word	gPlayerFrame4483Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823FA2E
-	.word	gUnk_082440B8
+	.word	gPlayerFrame4483NextBankPalette
+	.word	gPlayerFrame4483UpperTiles
 	.global	gPlayerFrame4484
 gPlayerFrame4484:
 	.word	gPlayerFrame4484OamTemplate+1
 	.word	gPlayerFrame4483Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823FA2E
-	.word	gUnk_0824419E
+	.word	gPlayerFrame4483NextBankPalette
+	.word	gPlayerFrame4484UpperTiles
 	.global	gPlayerFrame4485
 gPlayerFrame4485:
 	.word	gPlayerFrame4485OamTemplate+1
 	.word	gPlayerFrame4483Palette
 	.word	gPlayerFrame4341Tiles
-	.word	gUnk_0823FA2E
-	.word	gUnk_08244284
+	.word	gPlayerFrame4483NextBankPalette
+	.word	gPlayerFrame4485UpperTiles
 	.global	gPlayerFrame4486
 gPlayerFrame4486:
 	.word	gPlayerFrame4486OamTemplate+1
 	.word	gPlayerFrame4483Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823FA2E
-	.word	gUnk_082443AA
+	.word	gPlayerFrame4483NextBankPalette
+	.word	gPlayerFrame4486UpperTiles
 	.global	gPlayerFrame4487
 gPlayerFrame4487:
 	.word	gPlayerFrame4487OamTemplate+1
 	.word	gPlayerFrame4483Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823FA2E
-	.word	gUnk_082440B8
+	.word	gPlayerFrame4483NextBankPalette
+	.word	gPlayerFrame4483UpperTiles
 	.global	gPlayerFrame4488
 gPlayerFrame4488:
 	.word	gPlayerFrame4488OamTemplate+1
 	.word	gPlayerFrame4483Palette
 	.word	gPlayerFrame4344Tiles
-	.word	gUnk_0823FA2E
-	.word	gUnk_08244470
+	.word	gPlayerFrame4483NextBankPalette
+	.word	gPlayerFrame4488UpperTiles
 	.global	gPlayerFrame4489
 gPlayerFrame4489:
 	.word	gPlayerFrame4489OamTemplate+1
@@ -20997,169 +20997,169 @@ gPlayerFrame4495:
 	.word	gPlayerFrame4495OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_0824499A
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4495UpperTiles
 	.global	gPlayerFrame4496
 gPlayerFrame4496:
 	.word	gPlayerFrame4496OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_08244AC0
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4496UpperTiles
 	.global	gPlayerFrame4497
 gPlayerFrame4497:
 	.word	gPlayerFrame4497OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_08244BC6
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4497UpperTiles
 	.global	gPlayerFrame4498
 gPlayerFrame4498:
 	.word	gPlayerFrame4498OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4339Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_08244CCC
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4498UpperTiles
 	.global	gPlayerFrame4499
 gPlayerFrame4499:
 	.word	gPlayerFrame4499OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_08244DF2
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4499UpperTiles
 	.global	gPlayerFrame4500
 gPlayerFrame4500:
 	.word	gPlayerFrame4500OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_08244F18
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4500UpperTiles
 	.global	gPlayerFrame4501
 gPlayerFrame4501:
 	.word	gPlayerFrame4501OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_0824501E
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4501UpperTiles
 	.global	gPlayerFrame4502
 gPlayerFrame4502:
 	.word	gPlayerFrame4502OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4340Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_08245124
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4502UpperTiles
 	.global	gPlayerFrame4503
 gPlayerFrame4503:
 	.word	gPlayerFrame4503OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4341Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_0824524A
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4503UpperTiles
 	.global	gPlayerFrame4504
 gPlayerFrame4504:
 	.word	gPlayerFrame4504OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4341Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_08245370
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4504UpperTiles
 	.global	gPlayerFrame4505
 gPlayerFrame4505:
 	.word	gPlayerFrame4505OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4341Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_08245496
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4505UpperTiles
 	.global	gPlayerFrame4506
 gPlayerFrame4506:
 	.word	gPlayerFrame4506OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4341Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_0824557C
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4506UpperTiles
 	.global	gPlayerFrame4507
 gPlayerFrame4507:
 	.word	gPlayerFrame4507OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_0824499A
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4495UpperTiles
 	.global	gPlayerFrame4508
 gPlayerFrame4508:
 	.word	gPlayerFrame4508OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_08245682
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4508UpperTiles
 	.global	gPlayerFrame4509
 gPlayerFrame4509:
 	.word	gPlayerFrame4509OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_08244BC6
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4497UpperTiles
 	.global	gPlayerFrame4510
 gPlayerFrame4510:
 	.word	gPlayerFrame4510OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4342Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_08244CCC
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4498UpperTiles
 	.global	gPlayerFrame4511
 gPlayerFrame4511:
 	.word	gPlayerFrame4511OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_0824499A
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4495UpperTiles
 	.global	gPlayerFrame4512
 gPlayerFrame4512:
 	.word	gPlayerFrame4512OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_08245682
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4508UpperTiles
 	.global	gPlayerFrame4513
 gPlayerFrame4513:
 	.word	gPlayerFrame4513OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_08244BC6
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4497UpperTiles
 	.global	gPlayerFrame4514
 gPlayerFrame4514:
 	.word	gPlayerFrame4514OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4343Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_08244CCC
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4498UpperTiles
 	.global	gPlayerFrame4515
 gPlayerFrame4515:
 	.word	gPlayerFrame4515OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4344Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_082457A8
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4515UpperTiles
 	.global	gPlayerFrame4516
 gPlayerFrame4516:
 	.word	gPlayerFrame4516OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4344Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_082458AE
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4516UpperTiles
 	.global	gPlayerFrame4517
 gPlayerFrame4517:
 	.word	gPlayerFrame4517OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4344Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_082459D4
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4517UpperTiles
 	.global	gPlayerFrame4518
 gPlayerFrame4518:
 	.word	gPlayerFrame4518OamTemplate+1
 	.word	gPlayerFrame4339Palette
 	.word	gPlayerFrame4344Tiles
-	.word	gUnk_0823FA72
-	.word	gUnk_08245ADA
+	.word	gPlayerFrame4495NextBankPalette
+	.word	gPlayerFrame4518UpperTiles
 	.global	gUnk_08768F80
 gUnk_08768F80:
 	.word	gUnk_0824761C+1
@@ -21201,208 +21201,208 @@ gPlayerFrame4399:
 	.word	gPlayerFrame4399OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4399Tiles
-	.word	gUnk_082476BE
-	.word	gUnk_082477EE
+	.word	gPlayerFrame4399NextBankPalette
+	.word	gPlayerFrame4399UpperTiles
 	.global	gPlayerFrame4400
 gPlayerFrame4400:
 	.word	gPlayerFrame4400OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4400Tiles
-	.word	gUnk_082476BE
-	.word	gUnk_082479DA
+	.word	gPlayerFrame4399NextBankPalette
+	.word	gPlayerFrame4400UpperTiles
 	.global	gPlayerFrame4401
 gPlayerFrame4401:
 	.word	gPlayerFrame4401OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4401Tiles
-	.word	gUnk_082476BE
-	.word	gUnk_08247C46
+	.word	gPlayerFrame4399NextBankPalette
+	.word	gPlayerFrame4401UpperTiles
 	.global	gPlayerFrame4402
 gPlayerFrame4402:
 	.word	gPlayerFrame4402OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4402Tiles
-	.word	gUnk_082476BE
-	.word	gUnk_08247E32
+	.word	gPlayerFrame4399NextBankPalette
+	.word	gPlayerFrame4402UpperTiles
 	.global	gPlayerFrame4403
 gPlayerFrame4403:
 	.word	gPlayerFrame4403OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4403Tiles
-	.word	gUnk_082476BE
-	.word	gUnk_082477EE
+	.word	gPlayerFrame4399NextBankPalette
+	.word	gPlayerFrame4399UpperTiles
 	.global	gPlayerFrame4404
 gPlayerFrame4404:
 	.word	gPlayerFrame4404OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4404Tiles
-	.word	gUnk_082476BE
-	.word	gUnk_08248144
+	.word	gPlayerFrame4399NextBankPalette
+	.word	gPlayerFrame4404UpperTiles
 	.global	gPlayerFrame4441
 gPlayerFrame4441:
 	.word	gPlayerFrame4441OamTemplate+1
 	.word	gPlayerFrame4441Palette
 	.word	gPlayerFrame4441Tiles
-	.word	gUnk_08247702
-	.word	gUnk_08248250
+	.word	gPlayerFrame4441NextBankPalette
+	.word	gPlayerFrame4441UpperTiles
 	.global	gPlayerFrame4442
 gPlayerFrame4442:
 	.word	gPlayerFrame4442OamTemplate+1
 	.word	gPlayerFrame4441Palette
 	.word	gPlayerFrame4442Tiles
-	.word	gUnk_08247702
-	.word	gUnk_0824839C
+	.word	gPlayerFrame4441NextBankPalette
+	.word	gPlayerFrame4442UpperTiles
 	.global	gPlayerFrame4443
 gPlayerFrame4443:
 	.word	gPlayerFrame4443OamTemplate+1
 	.word	gPlayerFrame4441Palette
 	.word	gPlayerFrame4401Tiles
-	.word	gUnk_08247702
-	.word	gUnk_08248482
+	.word	gPlayerFrame4441NextBankPalette
+	.word	gPlayerFrame4443UpperTiles
 	.global	gPlayerFrame4444
 gPlayerFrame4444:
 	.word	gPlayerFrame4444OamTemplate+1
 	.word	gPlayerFrame4441Palette
 	.word	gPlayerFrame4444Tiles
-	.word	gUnk_08247702
-	.word	gUnk_082485EE
+	.word	gPlayerFrame4441NextBankPalette
+	.word	gPlayerFrame4444UpperTiles
 	.global	gPlayerFrame4445
 gPlayerFrame4445:
 	.word	gPlayerFrame4445OamTemplate+1
 	.word	gPlayerFrame4441Palette
 	.word	gPlayerFrame4403Tiles
-	.word	gUnk_08247702
-	.word	gUnk_082486D4
+	.word	gPlayerFrame4441NextBankPalette
+	.word	gPlayerFrame4445UpperTiles
 	.global	gPlayerFrame4446
 gPlayerFrame4446:
 	.word	gPlayerFrame4446OamTemplate+1
 	.word	gPlayerFrame4441Palette
 	.word	gPlayerFrame4446Tiles
-	.word	gUnk_08247702
-	.word	gUnk_08248880
+	.word	gPlayerFrame4441NextBankPalette
+	.word	gPlayerFrame4446UpperTiles
 	.global	gPlayerFrame4447
 gPlayerFrame4447:
 	.word	gPlayerFrame4447OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4399Tiles
-	.word	gUnk_08247724
-	.word	gUnk_08248946
+	.word	gPlayerFrame4447NextBankPalette
+	.word	gPlayerFrame4447UpperTiles
 	.global	gPlayerFrame4448
 gPlayerFrame4448:
 	.word	gPlayerFrame4448OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4400Tiles
-	.word	gUnk_08247724
-	.word	gUnk_08248A6C
+	.word	gPlayerFrame4447NextBankPalette
+	.word	gPlayerFrame4448UpperTiles
 	.global	gPlayerFrame4449
 gPlayerFrame4449:
 	.word	gPlayerFrame4449OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4401Tiles
-	.word	gUnk_08247724
-	.word	gUnk_08248B92
+	.word	gPlayerFrame4447NextBankPalette
+	.word	gPlayerFrame4449UpperTiles
 	.global	gPlayerFrame4450
 gPlayerFrame4450:
 	.word	gPlayerFrame4450OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4402Tiles
-	.word	gUnk_08247724
-	.word	gUnk_08248CB8
+	.word	gPlayerFrame4447NextBankPalette
+	.word	gPlayerFrame4450UpperTiles
 	.global	gPlayerFrame4451
 gPlayerFrame4451:
 	.word	gPlayerFrame4451OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4403Tiles
-	.word	gUnk_08247724
-	.word	gUnk_08248DDE
+	.word	gPlayerFrame4447NextBankPalette
+	.word	gPlayerFrame4451UpperTiles
 	.global	gPlayerFrame4452
 gPlayerFrame4452:
 	.word	gPlayerFrame4452OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4404Tiles
-	.word	gUnk_08247724
-	.word	gUnk_08248F04
+	.word	gPlayerFrame4447NextBankPalette
+	.word	gPlayerFrame4452UpperTiles
 	.global	gPlayerFrame4531
 gPlayerFrame4531:
 	.word	gPlayerFrame4531OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4399Tiles
-	.word	gUnk_08247746
-	.word	gUnk_0824902A
+	.word	gPlayerFrame4531NextBankPalette
+	.word	gPlayerFrame4531UpperTiles
 	.global	gPlayerFrame4532
 gPlayerFrame4532:
 	.word	gPlayerFrame4532OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4399Tiles
-	.word	gUnk_08247746
-	.word	gUnk_082490B0
+	.word	gPlayerFrame4531NextBankPalette
+	.word	gPlayerFrame4532UpperTiles
 	.global	gPlayerFrame4533
 gPlayerFrame4533:
 	.word	gPlayerFrame4533OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4400Tiles
-	.word	gUnk_08247746
-	.word	gUnk_082491B6
+	.word	gPlayerFrame4531NextBankPalette
+	.word	gPlayerFrame4533UpperTiles
 	.global	gPlayerFrame4534
 gPlayerFrame4534:
 	.word	gPlayerFrame4534OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4400Tiles
-	.word	gUnk_08247746
-	.word	gUnk_0824923C
+	.word	gPlayerFrame4531NextBankPalette
+	.word	gPlayerFrame4534UpperTiles
 	.global	gPlayerFrame4535
 gPlayerFrame4535:
 	.word	gPlayerFrame4535OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4401Tiles
-	.word	gUnk_08247746
-	.word	gUnk_08249342
+	.word	gPlayerFrame4531NextBankPalette
+	.word	gPlayerFrame4535UpperTiles
 	.global	gPlayerFrame4536
 gPlayerFrame4536:
 	.word	gPlayerFrame4536OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4401Tiles
-	.word	gUnk_08247746
-	.word	gUnk_082493E8
+	.word	gPlayerFrame4531NextBankPalette
+	.word	gPlayerFrame4536UpperTiles
 	.global	gPlayerFrame4537
 gPlayerFrame4537:
 	.word	gPlayerFrame4537OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4402Tiles
-	.word	gUnk_08247746
-	.word	gUnk_0824950E
+	.word	gPlayerFrame4531NextBankPalette
+	.word	gPlayerFrame4537UpperTiles
 	.global	gPlayerFrame4538
 gPlayerFrame4538:
 	.word	gPlayerFrame4538OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4402Tiles
-	.word	gUnk_08247746
-	.word	gUnk_082495D4
+	.word	gPlayerFrame4531NextBankPalette
+	.word	gPlayerFrame4538UpperTiles
 	.global	gPlayerFrame4539
 gPlayerFrame4539:
 	.word	gPlayerFrame4539OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4403Tiles
-	.word	gUnk_08247746
-	.word	gUnk_082491B6
+	.word	gPlayerFrame4531NextBankPalette
+	.word	gPlayerFrame4533UpperTiles
 	.global	gPlayerFrame4540
 gPlayerFrame4540:
 	.word	gPlayerFrame4540OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4403Tiles
-	.word	gUnk_08247746
-	.word	gUnk_0824923C
+	.word	gPlayerFrame4531NextBankPalette
+	.word	gPlayerFrame4534UpperTiles
 	.global	gPlayerFrame4541
 gPlayerFrame4541:
 	.word	gPlayerFrame4541OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4404Tiles
-	.word	gUnk_08247746
-	.word	gUnk_0824950E
+	.word	gPlayerFrame4531NextBankPalette
+	.word	gPlayerFrame4537UpperTiles
 	.global	gPlayerFrame4542
 gPlayerFrame4542:
 	.word	gPlayerFrame4542OamTemplate+1
 	.word	gPlayerFrame4399Palette
 	.word	gPlayerFrame4404Tiles
-	.word	gUnk_08247746
-	.word	gUnk_082495D4
+	.word	gPlayerFrame4531NextBankPalette
+	.word	gPlayerFrame4538UpperTiles

@@ -590,7 +590,7 @@ REASONS = {
     "asset-consumer": "asset label no record points at, named by its one consuming function and the kind its call proves (docs/naming.md 2.5, code only)",
     "asset-shared": "asset label whose referrers span owners: records of several tables or stages, or records and code, or several functions (docs/naming.md 2.5 A3)",
     "asset-via-unnamed": "asset label reached only through an unnamed record or a `sub_*` (a functional `gUnk_` table, a frame table or player frame record #155 left unnamed): it is named with that referrer",
-    "asset-via-unnamed-field": "asset label its owner points at through a word with no field name: a struct field still `unkNN`, a word the struct does not declare (the player's 20-byte frame records' +0xC/+0x10), or a 2D table column whose kind no consumer proves (docs/naming.md 2.5 A2)",
+    "asset-via-unnamed-field": "asset label its owner points at through a word with no field name: a struct field still `unkNN`, a word past the end of the struct (an unlabeled 12-byte TaskGfx after a labeled one; #186 declared the player's 20-byte frame records as struct TaskGfxExtended), or a 2D table column whose kind no consumer proves (docs/naming.md 2.5 A2)",
     "asset-positional-table": "asset label in a slot of a table whose own name is a position (it ends in its index, gEnemyPaletteVariant0), so A1 has no singular (docs/naming.md 2.5 Q4)",
     "asset-no-owner": "asset label no record points at: unreferenced, or only a `sub_*` function's code names it (docs/naming.md 2.5)",
     "rom-data": "tracked by #155: functional data whose consumer does not settle a name",
@@ -1078,7 +1078,7 @@ def census_markdown(rows, by_zone, extra):
     out.append("")
     ab = extra.get("asset_by", {})
     out.append("Named for comparison: %d RAM cells by role and %d by position, %d ROM labels by role and %d by position; "
-               "%d asset labels by their owner (#183, docs/naming.md 2.5): %d semantic, %d position, %d format-only, "
+               "%d asset labels by their owner (#183, #186, docs/naming.md 2.5): %d semantic, %d position, %d format-only, "
                "%d by consumer."
                % (ram_named, ram_pos, rom_named, rom_pos, sum(ab.values()), ab.get("semantic", 0),
                   ab.get("position", 0), ab.get("format", 0), ab.get("consumer", 0)))

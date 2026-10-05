@@ -153,6 +153,36 @@ struct TaskGfx
     /*0x08*/ u16 *tiles;
 };
 
+/* The extended form of struct TaskGfx (0x14 bytes; issue #186): the first
+   three fields are TaskGfx's, and bit 0 of oamTemplate, TASK_GFX_EXTENDED
+   (include/constants/sprites.h), tags the record
+   (PlayerLoadFrameTilesAndPalette, src/player_helpers.c:498, queues
+   oamTemplate & ~TASK_GFX_EXTENDED).  The player's frame records
+   (data/player_frame_records.s, reached through gPlayerFrames and
+   gCutsceneFountainKirbyFrames) are all of this form.  Their sprite slot
+   is two OBJ palette banks and 128 tiles: Task_Player sets tileWord =
+   (i << 13) | (i << 7) for player i (src/player_task.c:85,
+   src/collision_collider_lists.c:16), so banks 2i and 2i + 1 and tiles 128i
+   to 128i + 127.  palette and tiles fill the lower half (the bank tileWord
+   names and the first 64 tiles); the two words after them fill the upper
+   half:
+   - nextBankPalette, a counted palette like palette, is copied to the OBJ
+     palette bank after the frame's (gObjPaletteBank1 + bank * 32,
+     src/player_helpers.c:514-517; gObjPalette + 32 + bank * 32 in
+     PlayerLoadFramePalette); it is skipped while PLAYER_STATUS_PALETTE_LOCKED
+     is set or when it is NULL.
+   - upperTiles, a tile chunk stream like tiles, is copied to the OBJ tiles
+     0x800 bytes (64 tiles) after the frame's (OBJ_VRAM0 + 0x800,
+     src/player_helpers.c:518-530); it is skipped when NULL. */
+struct TaskGfxExtended
+{
+    /*0x00*/ u32 oamTemplate;
+    /*0x04*/ u16 *palette;
+    /*0x08*/ u16 *tiles;
+    /*0x0C*/ u16 *nextBankPalette;
+    /*0x10*/ u16 *upperTiles;
+};
+
 /* ROM descriptor an actor is bound to (Actor.def). */
 struct ActorDef
 {

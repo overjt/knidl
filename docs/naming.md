@@ -115,7 +115,13 @@ role is not proven on every path; the offset comments (`/*0x14*/`) stay.
 - **The same word for the same thing** across structs: `ActorDef.score` is
   copied into `Actor.score`, `ActorDef.ability` into `Actor.ability`,
   `GfxHeader`, `TaskGfx` and the room objects' graphics descriptor all say
-  `palette` / `tiles` / `tileCount` / `paletteBankCount`.
+  `palette` / `tiles` / `tileCount` / `paletteBankCount`.  An extended
+  form keeps the base's names for the base's fields: `struct
+  TaskGfxExtended` (#186) is `TaskGfx`'s `oamTemplate`, `palette` and
+  `tiles`, then `nextBankPalette` (the OBJ palette bank after the frame's,
+  the "next bank" of `Task.playerNextBankBlendRatio`) and `upperTiles`
+  (the 64 tiles after the frame's in the player's 128-tile slot): named by
+  where the copy sends them, not `palette2` / `tiles2` (section 1).
 - **Per-type scratch stays unnamed.**  `Task.unk18`-`unk34`,
   `unk6C`-`unk70`, `unk46`, `unk73`/`unk74`/`unk76` and `unk82`/`unk84`
   mean different things in different task families (a variant, a timer, a
@@ -487,10 +493,15 @@ decisions Q1-Q7 folded in):
   a word the struct does not declare, keeps the placeholder with the reason
   `via-unnamed-field`: the fields census names fields, not this rule.  The
   player's 20-byte frame records hold a second palette and tiles at +0xC
-  and +0x10 that `struct TaskGfx` (three fields) does not declare
-  (PlayerLoadFrameTilesAndPalette reads them by pointer arithmetic,
-  `src/player_helpers.c`), so their targets stay (Q7; a struct for the
-  player's frame record is a candidate for later).  Two forms follow from
+  and +0x10 that `struct TaskGfx` (three fields) does not declare; #183
+  left their targets (Q7), and #186 declared the records as `struct
+  TaskGfxExtended` (`include/task.h`: TaskGfx's fields, then
+  `nextBankPalette` and `upperTiles`, the upper half of the player's
+  sprite slot, which PlayerLoadFrameTilesAndPalette copies to the next OBJ
+  palette bank and 0x800 bytes after the frame's tiles), so they take A2
+  names like any field: `gPlayerFrame883NextBankPalette`,
+  `gPlayerFrame888UpperTiles` (1,806 labels; a target several records
+  share takes the lowest slot's, A3).  Two forms follow from
   the consumer, with its line in the evidence:
   - **BG animation commands** (Q2): op 0's `ptr` is the `struct
     BgAnimTileFrame` that `BgAnimCopyTiles(cmd->ptr)` copies
@@ -745,13 +756,13 @@ codes:
 | ROM label | `gUnk_08*` | 1 | no code or record names it: a record boundary the data census cut, reached by an offset from a named neighbour |
 | ROM label | `gUnk_08*` | 397 | asset label whose referrers span owners: records of several tables or stages, or records and code, or several functions (docs/naming.md 2.5 A3) |
 | ROM label | `gUnk_08*` | 2245 | asset label reached only through an unnamed record or a `sub_*` (a functional `gUnk_` table, a frame table or player frame record #155 left unnamed): it is named with that referrer |
-| ROM label | `gUnk_08*` | 1877 | asset label its owner points at through a word with no field name: a struct field still `unkNN`, a word the struct does not declare (the player's 20-byte frame records' +0xC/+0x10), or a 2D table column whose kind no consumer proves (docs/naming.md 2.5 A2) |
+| ROM label | `gUnk_08*` | 71 | asset label its owner points at through a word with no field name: a struct field still `unkNN`, a word past the end of the struct (an unlabeled 12-byte TaskGfx after a labeled one; #186 declared the player's 20-byte frame records as struct TaskGfxExtended), or a 2D table column whose kind no consumer proves (docs/naming.md 2.5 A2) |
 | ROM label | `gUnk_08*` | 165 | asset label in a slot of a table whose own name is a position (it ends in its index, gEnemyPaletteVariant0), so A1 has no singular (docs/naming.md 2.5 Q4) |
 | ROM label | `gUnk_08*` | 10 | asset label no record points at: unreferenced, or only a `sub_*` function's code names it (docs/naming.md 2.5) |
 | ROM label | `gUnk_08*` | 71 | an asset label only its one named consumer's code mentions, which loads several of its kind that no destination the code proves tells apart (docs/naming.md 2.5) |
 | ROM label | `gUnk_08*` | 15 | an asset label only its one named consumer's code mentions, and the call it is passed to proves no kind (Palette, Tiles, Map, OamTemplate) (docs/naming.md 2.5) |
 | ROM label | (named) | 5024 | asset label named after a semantic owner: the named record whose consumer-proven word points at it, by the pointer chain (docs/naming.md 2.5 A1-A3) |
-| ROM label | (named) | 7213 | asset label named after a position owner: a position record or a table whose slots are position names, such as gPlayerFrame189, a RoomDef or a BG animation script (docs/naming.md 2.5 A4) |
+| ROM label | (named) | 9019 | asset label named after a position owner: a position record or a table whose slots are position names, such as gPlayerFrame189, a RoomDef or a BG animation script (docs/naming.md 2.5 A4) |
 | ROM label | (named) | 9 | asset label named by a format-only frame list alone: no code reads the list (docs/naming.md 2.5 Q1, docs/data.md 5.3) |
 | ROM label | (named) | 46 | asset label no record points at, named by its one consuming function and the kind its call proves (docs/naming.md 2.5, code only) |
 | ROM label | (named) | 5336 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
@@ -775,7 +786,7 @@ codes:
 | struct field | `unk*` | 1 | a flag word whose bits are not all proven (docs/naming.md 7.0, R3) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 518 RAM cells by role and 24 by position, 3323 ROM labels by role and 5396 by position; 12292 asset labels by their owner (#183, docs/naming.md 2.5): 5024 semantic, 7213 position, 9 format-only, 46 by consumer.
+Named for comparison: 518 RAM cells by role and 24 by position, 3323 ROM labels by role and 5396 by position; 14098 asset labels by their owner (#183, #186, docs/naming.md 2.5): 5024 semantic, 9019 position, 9 format-only, 46 by consumer.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 
@@ -827,7 +838,7 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 
 Register aliases (include/task_vars.h): 1186 in 205 families: AbilityReleaseFlash 1, AbilityStar 6, Actor 44, AirGrind 6, AirGrindDoorSign 1, AirGrindObject 5, ArenaDoorSign 1, Blipper 9, BombRally 10, BombRallyDoorSign 1, BombRallyObject 37, Bomber 2, Bonkers 10, BonkersHammerHitBox 1, BonkersNut 1, BossDoorSign 3, BrontoBurt 9, BroomHatter 4, Bubbles 2, Bugzzy 9, BugzzyAfterimage 3, BugzzyLadybug 5, Burst 1, Cannon 4, CannonFuse 8, CannonFuseSpark 2, CannonSmoke 3, Cappy 2, Chilly 3, ChillyFreeze 4, CutsceneActor 11, CutsceneDirector 1, DashFireTrail 2, DashFlame 2, DoorObject 1, DoorOpening 3, DustBurst 2, DustTrail 3, EndingEpilogue 12, EndingStarRodReturn 8, EraseConfirmDialog 3, EraseFileWipe 4, ExplosionScreenFlash 1, ExtraModeTitleSprite 1, FileMenuHighlight 4, FileMenuSlot 4, FileSelectCursor 4, FileSelectSlot 2, FileSelectSlotLabel 1, FireLion 11, FireLionFlame 1, Flamer 12, FlamerFlame 1, GameOverChoice 3, GameOverObject 2, GameOverPalette 4, GameOverPlayer 5, GameOverSprite 1, Gip 5, Glunk 2, GlunkShot 1, GoalGameBigTrailStar 1, GoalGameCamera 2, GoalGameHelperKirby 9, GoalGameLaunchStars 1, GoalGameOneUp 4, GoalGameSign 4, GoalGameSmallTrailStar 1, GrandWheelie 17, GrandWheelieMiniWheelie 2, HalveScore 2, HeavyMole 5, HeavyMoleArm 7, HeavyMoleEye 1, HeavyMoleRedMissile 1, HeavyMoleSmoke 3, HeavyMoleYellowMissile 1, HitFrost 2, HotHead 7, HotHeadFire 3, IceBlock 3, ImpactStar 1, InhalableStar 1, IntroStoryPicture 1, Kabu 16, KingDedede 21, KingDededeStar 2, Kracko 20, KrackoCloud 4, KrackoJrOrbs 3, KrackoLightningMiddle 1, KrackoLightningTop 1, KrackoStarman 1, LandingImpact 2, LaserBall 12, LevelDoorSign 1, LinkPlayCable 4, LinkPlayColorCycle 4, LinkPlayConsole 4, LinkPlayPalettePulse 6, LinkPlayPlayerList 9, MaceKnightMace 2, MapEvent 20, MenuBackground 4, MenuBgPaletteCycle 7, MenuScreenTitle 3, MetaKnight 13, MetaKnightCape 1, MetaKnightMask 1, MetaKnightMaskHalf 2, MetaKnightSword 4, MetaKnightSwordHitBox 1, MetaKnights 11, MetaKnightsKnight 16, ModeListCursor 4, ModePlayerCountPanel 3, MrFrosty 10, MrFrostyIceCube 4, MrShineAndMrBright 19, MrShineAndMrBrightAttack 6, MrTickTock 14, MrTickTockNote 1, MrTickTockRing 2, MuseumAbilitySign 1, Needlous 5, NightmarePowerOrb 6, NightmarePowerOrbEscape 1, NightmarePowerOrbEscapeStar 5, NightmarePowerOrbIntroScroll 1, NightmarePowerOrbStar 1, NightmarePowerOrbStarAfterimage 1, NightmarePowerOrbStarTrail 1, NightmarePowerOrbStarTrailDown 1, NightmarePowerOrbStarTrailUp 1, NightmareWizard 11, NightmareWizardCloakHands 2, NightmareWizardDefeatFlash 1, NightmareWizardHitBox 1, NightmareWizardPalmTornado 1, NightmareWizardPointTornado 1, NightmareWizardStar 3, Noddy 4, NormalExtraPanel 3, PaintRoller 3, PaintRollerPainting 3, PaletteAnim 13, Parasol 5, Pengy 5, PengyIceBreath 1, PengyIceBreathSparkle 1, PhanPhan 6, PhanPhanApple 1, Player 131, PlayerCountPanel 3, PlayerEffect 20, PlayerObject 20, PlayerState 15, PoppyBrosJr 14, PoppyBrosSr 11, PoppyBrosSrBomb 1, PoppyBrosSrHand 8, PoppyBrosSrHead 3, QuickDraw 16, QuickDrawDoorSign 1, QuickDrawObject 26, RingStar 1, Rocky 3, RoomParticles 4, Scarfy 8, Shotzo 15, ShotzoCannonball 2, SirKibble 3, Slippy 4, SoundTestCursors 3, SoundTestPulse 5, Sparky 4, Squishy 4, StageDoorSign 4, StageEffect 1, StarFlashOnParent 3, StarRodPiece 2, Starman 11, SubGame 1, SwordAndBladeKnight 8, SwordAndBladeKnightSlash 1, TitlePalette 1, TitleSprites 4, TridentKnightTrident 1, Twister 7, Twizzy 11, UFO 8, WaddleDee 4, WaddleDoo 5, WaddleDooBeam 2, WarpStar 12, WarpStarStationDoorSign 1, WarpStarStationDoorSparkle 2, WarpStarStationLevelSign 1, WarpStarStationNumber 1, WarpStarTrailStar 3, Wheelie 10, WhispyWoods 5, WhispyWoodsAirPuff 3, WhispyWoodsApple 4, WhispyWoodsLeaves 4.
 
-Named constants (include/constants/, docs/naming.md section 7): 1571 in 13 headers, spelled at 4637 sites: `abilities.h` 27 (653 sites), `actors.h` 8 (120 sites), `camera.h` 6 (73 sites), `game_states.h` 37 (239 sites), `hits.h` 25 (132 sites), `player.h` 180 (476 sites), `rooms.h` 14 (87 sites), `sound.h` 30 (93 sites), `sprites.h` 1 (239 sites), `states.h` 692 (1717 sites), `task_skip.h` 5 (147 sites), `tasks.h` 266 (406 sites), `variants.h` 280 (255 sites).  Integer literals left at a mechanical family's positions whose value has a constant: tasks 0, abilities 0, game_states 0, stage_requests 0, hits 0, actors 0, rooms 0, sound 0, songs 0, player_effect_variants 0, player_object_variants 0, attack_box_immunity 0, attack_box_flags 0, body_box_flags 0, body_box_guard 0, player_action_flags 0, player_status 0, sprite_flags 0, task_skip 0, camera 0.
+Named constants (include/constants/, docs/naming.md section 7): 1572 in 13 headers, spelled at 4641 sites: `abilities.h` 27 (653 sites), `actors.h` 8 (120 sites), `camera.h` 6 (73 sites), `game_states.h` 37 (239 sites), `hits.h` 25 (132 sites), `player.h` 180 (476 sites), `rooms.h` 14 (87 sites), `sound.h` 30 (93 sites), `sprites.h` 2 (243 sites), `states.h` 692 (1717 sites), `task_skip.h` 5 (147 sites), `tasks.h` 266 (406 sites), `variants.h` 280 (255 sites).  Integer literals left at a mechanical family's positions whose value has a constant: tasks 0, abilities 0, game_states 0, stage_requests 0, hits 0, actors 0, rooms 0, sound 0, songs 0, player_effect_variants 0, player_object_variants 0, attack_box_immunity 0, attack_box_flags 0, body_box_flags 0, body_box_guard 0, player_action_flags 0, player_status 0, sprite_flags 0, task_gfx_tag 0, task_skip 0, camera 0.
 
 `unk*` fields by header struct: `Task` 17, `PlayerState` 8, `Door` 6, `TerrainProbeResult` 6, `TerrainResult` 6, `BodyBox` 5, `AirGrindCourse` 4, `Actor` 3, `AttackBox` 3, `CannonFusePiece` 3, `RoomDef` 3, `RoomParticleAnimFrame` 3, `Unk03004B00` 3, `AirGrindScenerySet` 2, `AirGrindScript` 2, `BgMap` 2, `PlayerHitBoxSet` 2, `ActorDef` 1, `ActorHandlers` 1, `ActorSpawn` 1, `AirGrindRacerState` 1, `BgAnim` 1, `BootLogoObject` 1, `GfxDesc` 1, `GfxHeader` 1, `GfxSrc` 1, `HitBoxSet` 1, `HudBar` 1, `M04Spark` 1, `RoomObjectGfx` 1, `SaveSlot` 1.
 
@@ -960,6 +971,7 @@ tools/name_assets.py                        # dry run: proposals per rule, owner
 tools/name_assets.py --list                 # every proposal with its evidence, every reason
 tools/name_assets.py --root gBonkersFrames --list   # one owner's chain
 tools/name_assets.py --batch frames --csv b.csv     # frames, pictures, rooms, bganims, player
+tools/name_assets.py --batch player --csv b.csv --issue 186   # the batch's issue column (183 by default)
 tools/rename.py --csv b.csv --issue 183 --write     # kind `asset`
 make symbols && make split && make modmap && make clean && make compare
 python3 tools/audit.py --write              # the census follows
@@ -970,7 +982,9 @@ with offsets (every symbolic `.word` of `data/*.s` at its offset inside its
 label, every leaf of the C initializers, every function that mentions a
 label), types each referrer (its definition or extern declaration, the
 pointee of the typed table that points at it, or a word array for a pointer
-list), takes the struct layouts from the `/*0xNN*/` comments, and decides
+list), takes the struct layouts from the `/*0xNN*/` comments (a record
+declared with a wider struct, as the player's frame records are `struct
+TaskGfxExtended` since #186, has that struct's fields), and decides
 each asset placeholder once all its referrers are settled, so a chain is
 named from its owner down in one run (section 2.5).  The proposals are a
 batch for `tools/rename.py`; run on a tree where they are applied, it

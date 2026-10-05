@@ -234,6 +234,13 @@ FAMILIES = {
         "prefix": "SPRITE_FLAG_",
         "bits": ["spriteFlags"],
     },
+    # bit 0 of TaskGfx.oamTemplate tags a struct TaskGfxExtended (#186)
+    "task_gfx_tag": {
+        "header": "sprites",
+        "prefix": "TASK_GFX_",
+        "bits": ["oamTemplate"],
+        "width": 32,
+    },
     "task_skip": {
         "header": "task_skip",
         "prefix": "TASK_SKIP_",
