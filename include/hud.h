@@ -69,16 +69,16 @@ extern u32 gUnk_030015B0[];
 extern u32 gUnk_030027A8[];
 
 /* ROM */
-extern u16 gUnk_085A5654[];
+extern u16 gHudDrawLevelNameMap[];
 extern u8 gUnk_085A6714[];
 extern u16 gHudDigitTiles[2][10]; /* digit tiles, top and bottom rows */
 extern u16 gUnk_085A6F5C[]; /* the clock's colon tiles */
 extern u16 gUnk_085A6F60[];
 extern u16 gUnk_085A6F64[];
-extern u16 gUnk_085A6F68[][5];
+extern u16 gHudDrawAbilityPanelMap[][5];
 extern u16 gHudPlayerIconTiles[2][4][2];
 extern u16 gUnk_085A6FC4[];
-extern u16 gUnk_085A6FC8[];
+extern u16 gHudDrawHpBarFrameMap[];
 extern u16 gUnk_085A6FF0[];
 extern u16 gUnk_085A6FF8[];
 extern u16 gUnk_085A6FFC[];

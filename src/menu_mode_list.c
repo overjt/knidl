@@ -295,7 +295,7 @@ void MenuEnterSoundTest(void)
 
 void SoundTestHighlightCursor(void)
 {
-    u16 *src = gUnk_08564F34;
+    u16 *src = gSoundTestHighlightCursorPalette;
 
     RequestCopy(2, (u32)src, (u32)gObjPaletteBank12 + ((gMenuCursor * 16 + 1) * 2), 2);
     src++;
@@ -312,8 +312,8 @@ void SoundTestDrawNumber(s32 a)
     if (gSoundTestSelection[a] < 10)
         gDigits[1] = 10;
     for (i = 0; i < 3; i++) {
-        RequestCopy(3, (u32)&gUnk_085653C4[gDigits[2 - i] * 128], (u32)gObjVram + (a * 6 + i * 2 + 4) * 32, 64);
-        RequestCopy(3, (u32)&gUnk_085653C4[(gDigits[2 - i] * 4 + 2) * 32], (u32)gObjVram + (a * 6 + i * 2 + 36) * 32, 64);
+        RequestCopy(3, (u32)&gSoundTestDrawNumberTiles[gDigits[2 - i] * 128], (u32)gObjVram + (a * 6 + i * 2 + 4) * 32, 64);
+        RequestCopy(3, (u32)&gSoundTestDrawNumberTiles[(gDigits[2 - i] * 4 + 2) * 32], (u32)gObjVram + (a * 6 + i * 2 + 36) * 32, 64);
     }
 }
 

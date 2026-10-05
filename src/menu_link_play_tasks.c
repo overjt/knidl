@@ -464,7 +464,7 @@ void Task_MenuBackground(void)
             u->menuBackgroundFadeRatio += 32;
             switch (u->menuBackgroundFadePhase) {
             case 1:
-                BlendColors(gUnk_08731CF8[u->menuBackgroundPrevScreen], gUnk_085563C8, (u16)u->menuBackgroundFadeRatio, 16, gBgPaletteBank2);
+                BlendColors(gUnk_08731CF8[u->menuBackgroundPrevScreen], gMenuBackgroundPalette, (u16)u->menuBackgroundFadeRatio, 16, gBgPaletteBank2);
                 w = gCurTask;
                 if (w->menuBackgroundFadeRatio == 256) {
                     w->menuBackgroundFadeRatio = 0;
@@ -473,7 +473,7 @@ void Task_MenuBackground(void)
                 }
                 break;
             case 2:
-                BlendColors(gUnk_085563C8, gUnk_08731CF8[u->menuBackgroundScreen], (u16)u->menuBackgroundFadeRatio, 16, gBgPaletteBank2);
+                BlendColors(gMenuBackgroundPalette, gUnk_08731CF8[u->menuBackgroundScreen], (u16)u->menuBackgroundFadeRatio, 16, gBgPaletteBank2);
                 w = gCurTask;
                 if (w->menuBackgroundFadeRatio == 256) {
                     w->menuBackgroundFadeRatio = 0;

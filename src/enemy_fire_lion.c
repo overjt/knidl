@@ -1080,7 +1080,7 @@ void FireLionUpdatePalette(void)
                          &gObjPalette[(u->tileWord >> 12) * 32]);
         } else {
             BlendColors(gUnk_08744598[u->u8C.actor->paletteVariant][0],
-                         gUnk_082B07BC,
+                         gFireLionUpdatePalettePalette,
                          gUnk_087445D8[*q], 16,
                          &gObjPalette[(u->tileWord >> 12) * 32]);
         }

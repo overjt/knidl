@@ -201,10 +201,10 @@ void PlayerEffectCrashBlast(void)
             TaskYieldTrampoline(3);
         }
         o = ((gCurTask->u8C.parentTask)->tileWord & 0x7FF) << 5;
-        RequestCopy(1, gUnk_082030D8, (void *)(o + (OBJ_VRAM0 + 0x80)), 0x180);
-        RequestCopy(1, gUnk_082030D8 + 0x180, (void *)(o + (OBJ_VRAM0 + 0x480)), 0x180);
-        RequestCopy(1, gUnk_082030D8 + 0x300, (void *)(o + (OBJ_VRAM0 + 0x880)), 0x180);
-        RequestCopy(1, gUnk_082030D8 + 0x480, (void *)(o + (OBJ_VRAM0 + 0xC80)), 0x180);
+        RequestCopy(1, gPlayerEffectCrashBlastTiles, (void *)(o + (OBJ_VRAM0 + 0x80)), 0x180);
+        RequestCopy(1, gPlayerEffectCrashBlastTiles + 0x180, (void *)(o + (OBJ_VRAM0 + 0x480)), 0x180);
+        RequestCopy(1, gPlayerEffectCrashBlastTiles + 0x300, (void *)(o + (OBJ_VRAM0 + 0x880)), 0x180);
+        RequestCopy(1, gPlayerEffectCrashBlastTiles + 0x480, (void *)(o + (OBJ_VRAM0 + 0xC80)), 0x180);
         break;
     case 1:
         t->moveCallback = 0;

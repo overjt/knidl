@@ -202,7 +202,7 @@ void Task_NightmarePowerOrbEscape(void)
         t->layer = 11;
     }
     gCurTask->frameTable = gNightmarePowerOrbEscapeFrames;
-    RequestCopy(2, (u32)gUnk_085E6FA4, IWRAM_START + 0x15B0, 64);
+    RequestCopy(2, (u32)gNightmarePowerOrbEscapePalette, IWRAM_START + 0x15B0, 64);
     LZ77UnCompWram(gUnk_085E6FE4, (void *)(EWRAM_START + 0x20000));
     RequestCopy(4, EWRAM_START + 0x20000, OBJ_VRAM0 + 0x3000, 0x800);
     LZ77UnCompWram(gUnk_085E72D4, (void *)(EWRAM_START + 0x20000));

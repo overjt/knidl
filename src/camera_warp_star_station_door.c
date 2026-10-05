@@ -169,8 +169,8 @@ void WarpStarStationDoorSignUpdate(void)
 
     if (gCurTask->warpStarStationDoorSignTileFrame != -1)
     {
-        RequestCopy(4, (u32)gUnk_085A2DF8[gCurTask->warpStarStationDoorSignTileFrame * 9], OBJ_VRAM0 + 0x3980, 96);
-        src = (u8 *)gUnk_085A2DF8;
+        RequestCopy(4, (u32)gWarpStarStationDoorSignUpdateTiles[gCurTask->warpStarStationDoorSignTileFrame * 9], OBJ_VRAM0 + 0x3980, 96);
+        src = (u8 *)gWarpStarStationDoorSignUpdateTiles;
         RequestCopy(4, (u32)(src + (gCurTask->warpStarStationDoorSignTileFrame * 9 + 3) * 32), OBJ_VRAM0 + 0x3D80, 96);
         RequestCopy(4, (u32)(src + (gCurTask->warpStarStationDoorSignTileFrame * 9 + 6) * 32), OBJ_VRAM0 + 0x4180, 96);
         gCurTask->warpStarStationDoorSignTileFrame = -1;

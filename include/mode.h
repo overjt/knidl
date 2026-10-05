@@ -55,7 +55,7 @@ extern u16 gPrevGameState; /* requested/next game state */
 extern s32 gExtraModeTitlePhase;
 
 /* ROM */
-extern u8 gUnk_080D1B78[];
+extern u8 gLoadMetaKnightmareOneUpTilesTiles[];
 extern u8 gUnk_080D2AD0[];
 extern u16 gUnk_08541D98[][16];
 extern u16 gUnk_08541F58[];
@@ -77,7 +77,7 @@ extern u8 gUnk_08571BE0[];
 extern u8 gUnk_08571D74[];
 extern u8 gUnk_08572164[];
 extern u8 gUnk_085A3CB8[];
-extern u8 gUnk_085A4904[];
+extern u8 gHudLoadLevelNamePalette[];
 extern u8 gUnk_085A49E8[];
 extern u16 gUnk_085B113C[];
 extern u16 gUnk_085B119C[];
@@ -91,7 +91,7 @@ extern u16 gUnk_085B64C8[];
 extern u8 gUnk_085B6A90[];
 extern u8 gUnk_085B6AC0[];
 extern u8 gUnk_085B6AC8[];
-extern u16 gUnk_085B6E78[][3][16];
+extern u16 gExtraModeTitleLevelBarUpdatePalette[][3][16];
 extern u16 gUnk_085B6F98[];
 extern u8 gUnk_085CCB58[];
 extern void (*gExtraModeTitleSpriteStates[])(void);

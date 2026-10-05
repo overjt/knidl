@@ -10,7 +10,7 @@
 player_frame_lists:
 	.global	gUnk_08769250
 gUnk_08769250:
-	.word	gUnk_0824A9CC
+	.word	gMetaKnightWarpStarRideDrawOamTemplate
 	.global	gWaddleDeeGfxFrameList
 gWaddleDeeGfxFrameList:
 	.word	gWaddleDeeFrame4

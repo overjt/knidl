@@ -16,8 +16,8 @@ gUnk_080D0788:
 	.global	gUnk_080D07C8
 gUnk_080D07C8:
 	.incbin	"baserom.gba", 0xD07C8, 0x13B0
-	.global	gUnk_080D1B78
-gUnk_080D1B78:
+	.global	gLoadMetaKnightmareOneUpTilesTiles
+gLoadMetaKnightmareOneUpTilesTiles:
 	.incbin	"baserom.gba", 0xD1B78, 0x80
 	.global	gUnk_080D1BF8
 gUnk_080D1BF8:
@@ -22503,8 +22503,8 @@ gPlayerFrame882:
 	.word	gPlayerFrame874Palette
 	.word	gPlayerFrame882Tiles
 	.incbin	"baserom.gba", 0x1BE454, 0x8
-	.global	gUnk_081BE45C
-gUnk_081BE45C:
+	.global	gPlayerLoadSparkTilesTiles
+gPlayerLoadSparkTilesTiles:
 	.incbin	"baserom.gba", 0x1BE45C, 0x200
 	.global	gUnk_081BE65C
 gUnk_081BE65C:
@@ -27117,8 +27117,8 @@ gPlayerFrame2881:
 	.word	gPlayerFrame2859Palette
 	.word	gPlayerFrame2881Tiles
 	.incbin	"baserom.gba", 0x1F59E8, 0x8
-	.global	gUnk_081F59F0
-gUnk_081F59F0:
+	.global	gPlayerActionHiJumpUpdatePalette
+gPlayerActionHiJumpUpdatePalette:
 	.incbin	"baserom.gba", 0x1F59F0, 0x40
 	.global	gPlayerFrame3005Palette
 gPlayerFrame3005Palette:
@@ -28816,14 +28816,14 @@ gPlayerFrame3580:
 	.word	gPlayerFrame3559Palette
 	.word	gPlayerFrame3580Tiles
 	.incbin	"baserom.gba", 0x203090, 0x8
-	.global	gUnk_08203098
-gUnk_08203098:
+	.global	gPlayerActionCrashUpdatePalette
+gPlayerActionCrashUpdatePalette:
 	.incbin	"baserom.gba", 0x203098, 0x20
-	.global	gUnk_082030B8
-gUnk_082030B8:
+	.global	gPlayerActionCrashPalette
+gPlayerActionCrashPalette:
 	.incbin	"baserom.gba", 0x2030B8, 0x20
-	.global	gUnk_082030D8
-gUnk_082030D8:
+	.global	gPlayerEffectCrashBlastTiles
+gPlayerEffectCrashBlastTiles:
 	.incbin	"baserom.gba", 0x2030D8, 0x600
 	.global	gUnk_082036D8
 gUnk_082036D8:
@@ -28997,11 +28997,11 @@ gPlayerFrame3592:
 	.word	gPlayerFrame3581Palette
 	.word	gPlayerFrame3592Tiles
 	.incbin	"baserom.gba", 0x204B70, 0x8
-	.global	gUnk_08204B78
-gUnk_08204B78:
+	.global	gPlayerObjectLightOrbPalette
+gPlayerObjectLightOrbPalette:
 	.incbin	"baserom.gba", 0x204B78, 0x20
-	.global	gUnk_08204B98
-gUnk_08204B98:
+	.global	gPlayerObjectLightOrbTiles
+gPlayerObjectLightOrbTiles:
 	.incbin	"baserom.gba", 0x204B98, 0x500
 	.global	gPlayerObjectLightOrbFrame0
 gPlayerObjectLightOrbFrame0:
@@ -35358,8 +35358,8 @@ gUnk_08249BAC:
 	.global	gUnk_08249BCC
 gUnk_08249BCC:
 	.incbin	"baserom.gba", 0x249BCC, 0xE00
-	.global	gUnk_0824A9CC
-gUnk_0824A9CC:
+	.global	gMetaKnightWarpStarRideDrawOamTemplate
+gMetaKnightWarpStarRideDrawOamTemplate:
 	.incbin	"baserom.gba", 0x24A9CC, 0x18
 	.global	gUnk_0824A9E4
 gUnk_0824A9E4:
@@ -41916,8 +41916,8 @@ gUnk_082B077C:
 	.global	gUnk_082B079C
 gUnk_082B079C:
 	.incbin	"baserom.gba", 0x2B079C, 0x20
-	.global	gUnk_082B07BC
-gUnk_082B07BC:
+	.global	gFireLionUpdatePalettePalette
+gFireLionUpdatePalettePalette:
 	.incbin	"baserom.gba", 0x2B07BC, 0x20
 	.global	gFireLionGfxPalette
 gFireLionGfxPalette:
@@ -42446,8 +42446,8 @@ gUnk_082BFB64:
 	.global	gUnk_082BFB84
 gUnk_082BFB84:
 	.incbin	"baserom.gba", 0x2BFB84, 0x20
-	.global	gUnk_082BFBA4
-gUnk_082BFBA4:
+	.global	gPhanPhanUpdatePalette
+gPhanPhanUpdatePalette:
 	.incbin	"baserom.gba", 0x2BFBA4, 0x20
 	.global	gPhanPhanGfxPalette
 gPhanPhanGfxPalette:
@@ -43713,8 +43713,8 @@ gPaintRollerGfx:
 	.word	gPaintRollerGfxPalette
 	.word	gPaintRollerGfxTiles
 	.word	gPaintRollerGfxFrameList
-	.global	gUnk_082DFFA8
-gUnk_082DFFA8:
+	.global	gPaintRollerStartHitStunPalette
+gPaintRollerStartHitStunPalette:
 	.incbin	"baserom.gba", 0x2DFFA8, 0x40
 	.global	gMetaKnightFrame4Palette
 gMetaKnightFrame4Palette:
@@ -45284,8 +45284,8 @@ gMetaKnightGfx:
 	.word	gMetaKnightGfxPalette
 	.word	gMetaKnightGfxTiles
 	.word	gMetaKnightGfxFrameList
-	.global	gUnk_082F427C
-gUnk_082F427C:
+	.global	gMetaKnightReactToDamagePalette
+gMetaKnightReactToDamagePalette:
 	.incbin	"baserom.gba", 0x2F427C, 0x20
 	.global	gHeavyMoleGfxPalette
 gHeavyMoleGfxPalette:
@@ -45860,8 +45860,8 @@ gHeavyMoleGfx:
 	.word	gHeavyMoleGfxPalette
 	.word	gHeavyMoleGfxTiles
 	.word	gHeavyMoleGfxFrameList
-	.global	gUnk_082F65D4
-gUnk_082F65D4:
+	.global	gHeavyMoleReactToDamagePalette
+gHeavyMoleReactToDamagePalette:
 	.incbin	"baserom.gba", 0x2F65D4, 0x40
 	.global	gMrShineAndMrBrightGfxPalette
 gMrShineAndMrBrightGfxPalette:
@@ -46591,8 +46591,8 @@ gKrackoGfx:
 	.word	gKrackoGfxPalette
 	.word	gKrackoGfxTiles
 	.word	gKrackoGfxFrameList
-	.global	gUnk_082FD438
-gUnk_082FD438:
+	.global	gKrackoReactToDamagePalette
+gKrackoReactToDamagePalette:
 	.incbin	"baserom.gba", 0x2FD438, 0x60
 	.global	gNightmarePowerOrbGfxPalette
 gNightmarePowerOrbGfxPalette:

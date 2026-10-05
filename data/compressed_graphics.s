@@ -1180,8 +1180,8 @@ gUnk_0855025C:
 	.global	gUnk_085509FC
 gUnk_085509FC:
 	.incbin	"baserom.gba", 0x5509FC, 0x1A0
-	.global	gUnk_08550B9C
-gUnk_08550B9C:
+	.global	gFileSelectCursorUpdateTiles
+gFileSelectCursorUpdateTiles:
 	.incbin	"baserom.gba", 0x550B9C, 0x260
 	.global	gUnk_08550DFC
 gUnk_08550DFC:
@@ -1195,8 +1195,8 @@ gUnk_08553210:
 	.global	gUnk_08553510
 gUnk_08553510:
 	.incbin	"baserom.gba", 0x553510, 0x300
-	.global	gUnk_08553810
-gUnk_08553810:
+	.global	gMenuLoadSaveSlotPictureTiles
+gMenuLoadSaveSlotPictureTiles:
 	.incbin	"baserom.gba", 0x553810, 0xF00
 	.global	gUnk_08554710
 gUnk_08554710:
@@ -1234,14 +1234,14 @@ gUnk_08554AC0:
 	.global	gUnk_08554AE0
 gUnk_08554AE0:
 	.incbin	"baserom.gba", 0x554AE0, 0x80
-	.global	gUnk_08554B60
-gUnk_08554B60:
+	.global	gFileSelectCursorUpdatePalette
+gFileSelectCursorUpdatePalette:
 	.incbin	"baserom.gba", 0x554B60, 0x10
 	.global	gUnk_08554B70
 gUnk_08554B70:
 	.incbin	"baserom.gba", 0x554B70, 0x8
-	.global	gUnk_08554B78
-gUnk_08554B78:
+	.global	gMenuLoadSaveSlotPalettePalette
+gMenuLoadSaveSlotPalettePalette:
 	.incbin	"baserom.gba", 0x554B78, 0x200
 	.global	gUnk_08554D78
 gUnk_08554D78:
@@ -1285,8 +1285,8 @@ gUnk_08555E04:
 	.global	gUnk_085560EC
 gUnk_085560EC:
 	.incbin	"baserom.gba", 0x5560EC, 0x2DC
-	.global	gUnk_085563C8
-gUnk_085563C8:
+	.global	gMenuBackgroundPalette
+gMenuBackgroundPalette:
 	.incbin	"baserom.gba", 0x5563C8, 0x20
 	.global	gUnk_085563E8
 gUnk_085563E8:
@@ -1360,8 +1360,8 @@ gUnk_08559B68:
 	.global	gUnk_08559B90
 gUnk_08559B90:
 	.incbin	"baserom.gba", 0x559B90, 0x14
-	.global	gUnk_08559BA4
-gUnk_08559BA4:
+	.global	gEraseConfirmDialogUpdatePalette
+gEraseConfirmDialogUpdatePalette:
 	.incbin	"baserom.gba", 0x559BA4, 0x80
 	.global	gUnk_08559C24
 gUnk_08559C24:
@@ -1420,8 +1420,8 @@ gUnk_0855D2F8:
 	.global	gUnk_0855D320
 gUnk_0855D320:
 	.incbin	"baserom.gba", 0x55D320, 0x14
-	.global	gUnk_0855D334
-gUnk_0855D334:
+	.global	gModePlayerCountPanelUpdatePalette
+gModePlayerCountPanelUpdatePalette:
 	.incbin	"baserom.gba", 0x55D334, 0xC0
 	.global	gUnk_0855D3F4
 gUnk_0855D3F4:
@@ -1567,8 +1567,8 @@ gUnk_0856342C:
 	.global	gUnk_085634B8
 gUnk_085634B8:
 	.incbin	"baserom.gba", 0x5634B8, 0x20
-	.global	gUnk_085634D8
-gUnk_085634D8:
+	.global	gSoundTestPulsePalette
+gSoundTestPulsePalette:
 	.incbin	"baserom.gba", 0x5634D8, 0x100
 	.global	gUnk_085635D8
 gUnk_085635D8:
@@ -1594,11 +1594,11 @@ gUnk_08564D4C:
 	.global	gUnk_08564EF4
 gUnk_08564EF4:
 	.incbin	"baserom.gba", 0x564EF4, 0x40
-	.global	gUnk_08564F34
-gUnk_08564F34:
+	.global	gSoundTestHighlightCursorPalette
+gSoundTestHighlightCursorPalette:
 	.incbin	"baserom.gba", 0x564F34, 0x4
-	.global	gUnk_08564F38
-gUnk_08564F38:
+	.global	gSoundTestCursorsUpdatePalette
+gSoundTestCursorsUpdatePalette:
 	.incbin	"baserom.gba", 0x564F38, 0x14
 	.global	gUnk_08564F4C
 gUnk_08564F4C:
@@ -1609,8 +1609,8 @@ gUnk_08565090:
 	.global	gUnk_085653BC
 gUnk_085653BC:
 	.incbin	"baserom.gba", 0x5653BC, 0x8
-	.global	gUnk_085653C4
-gUnk_085653C4:
+	.global	gSoundTestDrawNumberTiles
+gSoundTestDrawNumberTiles:
 	.incbin	"baserom.gba", 0x5653C4, 0x580
 	.global	gUnk_08565944
 gUnk_08565944:
@@ -1891,8 +1891,8 @@ gUnk_08583F98:
 	.global	gUnk_085848A4
 gUnk_085848A4:
 	.incbin	"baserom.gba", 0x5848A4, 0x30C
-	.global	gUnk_08584BB0
-gUnk_08584BB0:
+	.global	gGameOverPalettePalette
+gGameOverPalettePalette:
 	.incbin	"baserom.gba", 0x584BB0, 0x10
 	.global	gUnk_08584BC0
 gUnk_08584BC0:
@@ -2464,11 +2464,11 @@ gUnk_0859EB94:
 	.global	gUnk_0859EC54
 gUnk_0859EC54:
 	.incbin	"baserom.gba", 0x59EC54, 0x19E4
-	.global	gUnk_085A0638
-gUnk_085A0638:
+	.global	gArenaDoorSignUpdateTiles
+gArenaDoorSignUpdateTiles:
 	.incbin	"baserom.gba", 0x5A0638, 0x600
-	.global	gUnk_085A0C38
-gUnk_085A0C38:
+	.global	gBossDoorSignUpdateTiles
+gBossDoorSignUpdateTiles:
 	.incbin	"baserom.gba", 0x5A0C38, 0x6C0
 	.global	gUnk_085A12F8
 gUnk_085A12F8:
@@ -2479,8 +2479,8 @@ gUnk_085A1BF8:
 	.global	gUnk_085A24F8
 gUnk_085A24F8:
 	.incbin	"baserom.gba", 0x5A24F8, 0x900
-	.global	gUnk_085A2DF8
-gUnk_085A2DF8:
+	.global	gWarpStarStationDoorSignUpdateTiles
+gWarpStarStationDoorSignUpdateTiles:
 	.incbin	"baserom.gba", 0x5A2DF8, 0x480
 	.global	gArenaDoorSignFrame0
 gArenaDoorSignFrame0:
@@ -2731,14 +2731,14 @@ gMuseumAbilitySignFrame0:
 	.global	gMuseumAbilitySignFrame1
 gMuseumAbilitySignFrame1:
 	.incbin	"baserom.gba", 0x5A48E4, 0x20
-	.global	gUnk_085A4904
-gUnk_085A4904:
+	.global	gHudLoadLevelNamePalette
+gHudLoadLevelNamePalette:
 	.incbin	"baserom.gba", 0x5A4904, 0xE4
 	.global	gUnk_085A49E8
 gUnk_085A49E8:
 	.incbin	"baserom.gba", 0x5A49E8, 0xC6C
-	.global	gUnk_085A5654
-gUnk_085A5654:
+	.global	gHudDrawLevelNameMap
+gHudDrawLevelNameMap:
 	.incbin	"baserom.gba", 0x5A5654, 0x80
 	.global	gUnk_085A56D4
 gUnk_085A56D4:
@@ -2761,8 +2761,8 @@ gUnk_085A6F60:
 	.global	gUnk_085A6F64
 gUnk_085A6F64:
 	.incbin	"baserom.gba", 0x5A6F64, 0x4
-	.global	gUnk_085A6F68
-gUnk_085A6F68:
+	.global	gHudDrawAbilityPanelMap
+gHudDrawAbilityPanelMap:
 	.incbin	"baserom.gba", 0x5A6F68, 0x3C
 	.global	gHudPlayerIconTiles
 gHudPlayerIconTiles:
@@ -2770,8 +2770,8 @@ gHudPlayerIconTiles:
 	.global	gUnk_085A6FC4
 gUnk_085A6FC4:
 	.incbin	"baserom.gba", 0x5A6FC4, 0x4
-	.global	gUnk_085A6FC8
-gUnk_085A6FC8:
+	.global	gHudDrawHpBarFrameMap
+gHudDrawHpBarFrameMap:
 	.incbin	"baserom.gba", 0x5A6FC8, 0x28
 	.global	gUnk_085A6FF0
 gUnk_085A6FF0:
@@ -2959,8 +2959,8 @@ gUnk_085AD91C:
 	.global	gUnk_085AD93C
 gUnk_085AD93C:
 	.incbin	"baserom.gba", 0x5AD93C, 0x3E0
-	.global	gUnk_085ADD1C
-gUnk_085ADD1C:
+	.global	gPlayerLifeRequestLoadGfxPalette
+gPlayerLifeRequestLoadGfxPalette:
 	.incbin	"baserom.gba", 0x5ADD1C, 0x40
 	.global	gUnk_085ADD5C
 gUnk_085ADD5C:
@@ -2983,8 +2983,8 @@ gUnk_085B0A10:
 	.global	gUnk_085B0A30
 gUnk_085B0A30:
 	.incbin	"baserom.gba", 0x5B0A30, 0x34
-	.global	gUnk_085B0A64
-gUnk_085B0A64:
+	.global	gPlayerLifeRequestDrawListTitleMap
+gPlayerLifeRequestDrawListTitleMap:
 	.incbin	"baserom.gba", 0x5B0A64, 0x4C
 	.global	gUnk_085B0AB0
 gUnk_085B0AB0:
@@ -2992,11 +2992,11 @@ gUnk_085B0AB0:
 	.global	gUnk_085B0AD0
 gUnk_085B0AD0:
 	.incbin	"baserom.gba", 0x5B0AD0, 0x4
-	.global	gUnk_085B0AD4
-gUnk_085B0AD4:
+	.global	gPlayerLifeRequestDrawLivesMap
+gPlayerLifeRequestDrawLivesMap:
 	.incbin	"baserom.gba", 0x5B0AD4, 0x28
-	.global	gUnk_085B0AFC
-gUnk_085B0AFC:
+	.global	gPlayerLifeRequestDrawListCursorMap
+gPlayerLifeRequestDrawListCursorMap:
 	.incbin	"baserom.gba", 0x5B0AFC, 0x4
 	.global	gUnk_085B0B00
 gUnk_085B0B00:
@@ -3010,17 +3010,17 @@ gUnk_085B0B10:
 	.global	gUnk_085B0B28
 gUnk_085B0B28:
 	.incbin	"baserom.gba", 0x5B0B28, 0x34
-	.global	gUnk_085B0B5C
-gUnk_085B0B5C:
+	.global	gPlayerLifeRequestDrawCannotBorrowMap
+gPlayerLifeRequestDrawCannotBorrowMap:
 	.incbin	"baserom.gba", 0x5B0B5C, 0x58
 	.global	gUnk_085B0BB4
 gUnk_085B0BB4:
 	.incbin	"baserom.gba", 0x5B0BB4, 0x20
-	.global	gUnk_085B0BD4
-gUnk_085B0BD4:
+	.global	gPlayerLifeRequestDrawGotNothingMap
+gPlayerLifeRequestDrawGotNothingMap:
 	.incbin	"baserom.gba", 0x5B0BD4, 0x58
-	.global	gUnk_085B0C2C
-gUnk_085B0C2C:
+	.global	gPlayerLifeRequestDrawGameOverMap
+gPlayerLifeRequestDrawGameOverMap:
 	.incbin	"baserom.gba", 0x5B0C2C, 0x38
 	.global	gUnk_085B0C64
 gUnk_085B0C64:
@@ -3088,8 +3088,8 @@ gUnk_085B6E20:
 	.global	gUnk_085B6E48
 gUnk_085B6E48:
 	.incbin	"baserom.gba", 0x5B6E48, 0x30
-	.global	gUnk_085B6E78
-gUnk_085B6E78:
+	.global	gExtraModeTitleLevelBarUpdatePalette
+gExtraModeTitleLevelBarUpdatePalette:
 	.incbin	"baserom.gba", 0x5B6E78, 0x120
 	.global	gUnk_085B6F98
 gUnk_085B6F98:

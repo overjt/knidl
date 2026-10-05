@@ -72,7 +72,7 @@ void LoadMetaKnightmareOneUpTiles(void)
     u32 src;
 
     if (gMetaKnightmareMode == 1) {
-        src = (u32)gUnk_080D1B78;
+        src = (u32)gLoadMetaKnightmareOneUpTilesTiles;
         RequestCopy(3, src, OBJ_VRAM0 + 0x60C0, 64);
         src += 64;
         RequestCopy(3, src, OBJ_VRAM0 + 0x64C0, 64);
@@ -122,7 +122,7 @@ void ExtraModeTitleLoadPicture(s32 a0)
 
 void HudLoadLevelName(s32 a0)
 {
-    RequestCopy(2, (u32)gUnk_085A4904 + (a0 << 5), (u32)gBgPaletteBank10, 32);
+    RequestCopy(2, (u32)gHudLoadLevelNamePalette + (a0 << 5), (u32)gBgPaletteBank10, 32);
     RequestCopy(8, (u32)gUnk_085A49E8, (u32)gUnk_02020000, 0);
     RequestCopy(1, (u32)gUnk_02020000 + (a0 << 11), BG_VRAM + 0x7800, 0x800);
 }

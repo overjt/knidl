@@ -18,7 +18,7 @@
  * presets 38, 0 and 1, and states 3-4 hand the player over to mode 5
  * with handler 7 (animation 0xAD2, then the ability's loop from
  * gPlayerFallFrames[ability][1]).  Its handler PlayerActionHiJumpUpdate
- * flashes the palette gUnk_081F59F0 (the VRAM transfer queue
+ * flashes the palette gPlayerActionHiJumpUpdatePalette (the VRAM transfer queue
  * RequestCopy) in state 1, re-binds state 3 on a newly-pressed B after
  * the PlayerState.unk14 frames, registers the collider gUnk_0873C228,
  * steers with the held left/right keys, picks one of five animation
@@ -135,7 +135,7 @@ void PlayerActionHiJumpUpdate(void)
     case 1:
         t->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
         if ((gFrameCount & 7) <= 3) {
-            RequestCopy(2, gUnk_081F59F0, gObjPalette + (t->tileWord >> 12) * 32, 64);
+            RequestCopy(2, gPlayerActionHiJumpUpdatePalette, gObjPalette + (t->tileWord >> 12) * 32, 64);
             gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
         }
         /* fallthrough */

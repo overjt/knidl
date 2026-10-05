@@ -2272,8 +2272,8 @@ gUnk_085E2A20:
 	.global	gUnk_085E2B20
 gUnk_085E2B20:
 	.incbin	"baserom.gba", 0x5E2B20, 0x100
-	.global	gUnk_085E2C20
-gUnk_085E2C20:
+	.global	gGameOverLoadGraphicsPalette
+gGameOverLoadGraphicsPalette:
 	.incbin	"baserom.gba", 0x5E2C20, 0xC0
 	.global	gUnk_085E2CE0
 gUnk_085E2CE0:
@@ -2557,8 +2557,8 @@ gGameOverKnockedOutPlayersFrame2:
 	.global	gGameOverKnockedOutPlayersFrame3
 gGameOverKnockedOutPlayersFrame3:
 	.incbin	"baserom.gba", 0x5E6E84, 0x120
-	.global	gUnk_085E6FA4
-gUnk_085E6FA4:
+	.global	gNightmarePowerOrbEscapePalette
+gNightmarePowerOrbEscapePalette:
 	.incbin	"baserom.gba", 0x5E6FA4, 0x40
 	.global	gUnk_085E6FE4
 gUnk_085E6FE4:
@@ -3760,9 +3760,9 @@ gUnk_08609D42:
 	.global	gUnk_08609E40
 gUnk_08609E40:
 	.incbin	"baserom.gba", 0x609E40, 0x100
-	.global	gUnk_08609F40
-gUnk_08609F40:
+	.global	gAirGrindResultsDrawCursorPalette
+gAirGrindResultsDrawCursorPalette:
 	.incbin	"baserom.gba", 0x609F40, 0x102
-	.global	gUnk_0860A042
-gUnk_0860A042:
+	.global	gAirGrindRacePalette
+gAirGrindRacePalette:
 	.incbin	"baserom.gba", 0x60A042, 0xFE

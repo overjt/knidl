@@ -1304,7 +1304,7 @@ s32 MetaKnightReactToDamage(void)
     gBg2Cnt |= 64;
     gBg3Cnt |= 64;
     gCurTask->metaKnightGuardFlags |= 2;
-    BossStartHitStun(13, (u32)MetaKnightHitStunUpdate, (u32)gUnk_082F427C, 16, 1);
+    BossStartHitStun(13, (u32)MetaKnightHitStunUpdate, (u32)gMetaKnightReactToDamagePalette, 16, 1);
     return 0;
 }
 

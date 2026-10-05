@@ -136,7 +136,7 @@ void AirGrindRace(void)
     }
     gCurTask->pixelX = 144;
     gCurTask->pixelY = 80;
-    gCurTask->airGrindSignFadeSlot = AirGrindStartPaletteFade(gUnk_0860A042, 241, 10, 8, 15, 0);
+    gCurTask->airGrindSignFadeSlot = AirGrindStartPaletteFade(gAirGrindRacePalette, 241, 10, 8, 15, 0);
     gCurTask->frame = 0;
     PlayBgm(0x82A);
     while (gAirGrindCoursePtr->scrollPos < gAirGrindCoursePtr->startLine + 240)
@@ -161,7 +161,7 @@ void AirGrindRace(void)
         TaskYieldTrampoline(1);
     gCurTask->pixelX = 112;
     gCurTask->pixelY = 80;
-    gCurTask->airGrindSignFadeSlot = AirGrindStartPaletteFade(gUnk_0860A042, 241, 10, 8, 15, 0);
+    gCurTask->airGrindSignFadeSlot = AirGrindStartPaletteFade(gAirGrindRacePalette, 241, 10, 8, 15, 0);
     gCurTask->frame = 1;
     PlayBgm(0x82C);
     while (1) {

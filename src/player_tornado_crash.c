@@ -25,11 +25,11 @@
  * gDispCnt to windowed BG1-BG3, remembers the height Task.posY in
  * Task.unk2C, shakes the screen (RequestScreenShake(5), SetRoomUpdateFlags(2)),
  * flashes the player's palette gPlayerPalettes[player] towards
- * gUnk_082030B8 twice (BlendColors, presets 51/52), waits for the
+ * gPlayerActionCrashPalette twice (BlendColors, presets 51/52), waits for the
  * blast task through PlayerState.unk16 and TaskSetSkipMask, restores the
  * default script gPlayerDefaultTerrainBox and resets the HUD ability panel
  * (SetPlayerAbility(0, -1, player)).  Its handler PlayerActionCrashUpdate fades the
- * palette in and back out (gUnk_08203098, Task.unk28 in steps of 10 and
+ * palette in and back out (gPlayerActionCrashUpdatePalette, Task.unk28 in steps of 10 and
  * 16) and keeps the player under the height Task.unk2C. */
 
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
@@ -222,7 +222,7 @@ void PlayerActionCrash(void)
     gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
     gCurTask->playerLoopCount = 0;
     do {
-        BlendColors(gPlayerPalettes[gCurTask->player->playerIndex], gUnk_082030B8,
+        BlendColors(gPlayerPalettes[gCurTask->player->playerIndex], gPlayerActionCrashPalette,
                      (u16)gCurTask->playerCrashBlendRatio, 16,
                      (u16 *)(gObjPalette + ((gCurTask->tileWord >> 12) << 5)));
         gCurTask->playerCrashBlendRatio += 85;
@@ -241,7 +241,7 @@ void PlayerActionCrash(void)
     gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
     gCurTask->playerLoopCount = 0;
     do {
-        BlendColors(gPlayerPalettes[gCurTask->player->playerIndex], gUnk_082030B8,
+        BlendColors(gPlayerPalettes[gCurTask->player->playerIndex], gPlayerActionCrashPalette,
                      (u16)gCurTask->playerCrashBlendRatio, 16,
                      (u16 *)(gObjPalette + ((gCurTask->tileWord >> 12) << 5)));
         gCurTask->playerCrashBlendRatio += 85;
@@ -333,7 +333,7 @@ void PlayerActionCrashUpdate(void)
 
     switch (t->variant) {
     case 1:
-        BlendColors(gPlayerPalettes[t->player->playerIndex], gUnk_08203098, (u16)t->playerCrashBlendRatio, 16,
+        BlendColors(gPlayerPalettes[t->player->playerIndex], gPlayerActionCrashUpdatePalette, (u16)t->playerCrashBlendRatio, 16,
                      (u16 *)(gObjPalette + ((t->tileWord >> 12) << 5)));
         {
             struct Task *u = gCurTask;
@@ -347,7 +347,7 @@ void PlayerActionCrashUpdate(void)
         }
         break;
     case 2:
-        BlendColors(gPlayerPalettes[t->player->playerIndex], gUnk_08203098, (u16)t->playerCrashBlendRatio, 16,
+        BlendColors(gPlayerPalettes[t->player->playerIndex], gPlayerActionCrashUpdatePalette, (u16)t->playerCrashBlendRatio, 16,
                      (u16 *)(gObjPalette + ((t->tileWord >> 12) << 5)));
         {
             struct Task *u = gCurTask;

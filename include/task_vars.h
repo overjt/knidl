@@ -83,7 +83,7 @@
 #define airGrindLevelCursor unk2C /* s32: the results menu's level cursor (0-2) */
 #define airGrindSignFadeSlot unk34 /* s32: slot (0-3) of the palette fade AirGrindStartPaletteFade started for the course sign */
 #define airGrindCursorBlendTimer unk6C /* s16: frames left of the cursor highlight's blend step (8 down to 0, restarts) */
-#define airGrindCursorBlendFrom unk6E /* s16: index (0 / 2 / 4) of gUnk_08609F40 the cursor highlight blends from (to the next) */
+#define airGrindCursorBlendFrom unk6E /* s16: index (0 / 2 / 4) of gAirGrindResultsDrawCursorPalette the cursor highlight blends from (to the next) */
 #define airGrindGlowBlendTimer unk70 /* u16: frames left of the second blend step (palettes 6 -> 7), 8 down to 0 */
 
 /* AirGrindDoorSign - Air Grind door sign (task type #227,
@@ -433,7 +433,7 @@
 /* FireLion - Fire Lion (task type #55, Task_FireLion; gFireLionStates /
    gFireLionStateUpdates) */
 #define fireLionHeldPlayerSlot unk18 /* s32: the caught player's task slot (HoldPlayer, SetHeldPlayerState), -1 if none */
-#define fireLionGlowing unk1C /* s32: 1 while the palette also blends toward gUnk_082B07BC (state 9's leap, the defeat) */
+#define fireLionGlowing unk1C /* s32: 1 while the palette also blends toward gFireLionUpdatePalettePalette (state 9's leap, the defeat) */
 #define fireLionDustTimer unk20 /* s32: frames since the last dust trail while the defeated lion slides (a puff every 16) */
 #define fireLionFlameSlots unk24 /* s32: the four flame children's slots, one per byte (cleared after; unreferenced reader) */
 #define fireLionWallHit unk2C /* s32: set by the wall hook FireLionHitWall; cleared before each move, then tested */
@@ -480,8 +480,8 @@
 /* GameOverPalette - Game-over palette cycle (task type #262,
    Task_GameOverPalette) */
 #define gameOverPaletteFadeTimer unk28 /* s32: frames of the 32-frame blend fade-in (gBldAlphaEva = it / 2) */
-#define gameOverPaletteFrom unk2C /* s32: index 0/1 of the gUnk_08584BB0 palette the blend starts from (swapped each cycle) */
-#define gameOverPaletteTo unk30 /* s32: index 1/0 of the gUnk_08584BB0 palette the blend goes to (swapped each cycle) */
+#define gameOverPaletteFrom unk2C /* s32: index 0/1 of the gGameOverPalettePalette palette the blend starts from (swapped each cycle) */
+#define gameOverPaletteTo unk30 /* s32: index 1/0 of the gGameOverPalettePalette palette the blend goes to (swapped each cycle) */
 #define gameOverPaletteBlend unk34 /* s32: blend ratio 0-256 between the two palettes, +4 per frame */
 
 /* GameOverPlayer - Game-over player (task type #264 variant 0,

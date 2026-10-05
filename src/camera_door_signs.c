@@ -75,8 +75,8 @@ void ArenaDoorSignUpdate(void)
 
     if (gCurTask->arenaDoorSignTileFrame != -1)
     {
-        RequestCopy(4, (u32)&gUnk_085A0638[gCurTask->arenaDoorSignTileFrame * 384], OBJ_VRAM0 + 0x2180, 128);
-        src = gUnk_085A0638;
+        RequestCopy(4, (u32)&gArenaDoorSignUpdateTiles[gCurTask->arenaDoorSignTileFrame * 384], OBJ_VRAM0 + 0x2180, 128);
+        src = gArenaDoorSignUpdateTiles;
         RequestCopy(4, (u32)(src + (gCurTask->arenaDoorSignTileFrame * 384 + 128)), OBJ_VRAM0 + 0x2580, 128);
         RequestCopy(4, (u32)(src + (gCurTask->arenaDoorSignTileFrame * 384 + 256)), OBJ_VRAM0 + 0x2980, 128);
         gCurTask->arenaDoorSignTileFrame = -1;
@@ -146,8 +146,8 @@ void BossDoorSignUpdate(void)
 
     if (gCurTask->bossDoorSignTileFrame != -1)
     {
-        RequestCopy(4, (u32)gUnk_085A0C38[gCurTask->bossDoorSignTileFrame * 9], OBJ_VRAM0 + 0x2100, 96);
-        src = (u8 *)gUnk_085A0C38;
+        RequestCopy(4, (u32)gBossDoorSignUpdateTiles[gCurTask->bossDoorSignTileFrame * 9], OBJ_VRAM0 + 0x2100, 96);
+        src = (u8 *)gBossDoorSignUpdateTiles;
         RequestCopy(4, (u32)(src + (gCurTask->bossDoorSignTileFrame * 9 + 3) * 32), OBJ_VRAM0 + 0x2500, 96);
         RequestCopy(4, (u32)(src + (gCurTask->bossDoorSignTileFrame * 9 + 6) * 32), OBJ_VRAM0 + 0x2900, 96);
         gCurTask->bossDoorSignTileFrame = -1;

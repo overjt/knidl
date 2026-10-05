@@ -65,12 +65,12 @@ extern struct Unk03004B00 gUnk_03004B00;
 
 /* ROM */
 extern u16 gUnk_080D71A0[];
-extern u8 gUnk_085A0638[];
-extern u8 gUnk_085A0C38[][32];
+extern u8 gArenaDoorSignUpdateTiles[];
+extern u8 gBossDoorSignUpdateTiles[][32];
 extern u8 gUnk_085A12F8[];
 extern u8 gUnk_085A1BF8[];
 extern u8 gUnk_085A24F8[];
-extern u8 gUnk_085A2DF8[][32];
+extern u8 gWarpStarStationDoorSignUpdateTiles[][32];
 extern u16 gWarpStarStationDoorCells[][2];
 extern s8 gUnk_08732428[][3];
 extern s8 gUnk_087324A6[][3];
