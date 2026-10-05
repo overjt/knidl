@@ -152,7 +152,7 @@
 #define bombRallyObjectAimSide unk20 /* s32: the side a player aims: 0 toward seat + 1 (throws 0-2), 1 toward seat - 1 (3-5) */
 #define bombRallyObjectPanVelY unk20 /* s32: the BG3 scroll step in Y of the pan between seats */
 #define bombRallyObjectResultsPlayer unk20 /* s32: the player at that seat (gBombRallySeats[seat]): gBombRallyFinishOrder index */
-#define bombRallyObjectBombSeat unk24 /* s32: the seat the bomb sits at when the round starts (the sub-game task's turn seat) */
+#define bombRallyObjectBombSeat unk24 /* s32: the seat the bomb sits at, from the round start through the whole pass (the sub-game task's turn seat) */
 #define bombRallyObjectWantedAimSide unk24 /* s32: the aim side the presses ask for (0 / 1); Ready turns while it differs from the aim side */
 #define bombRallyObjectBlastSeat unk28 /* s32: seat (0-3) the bomb blew up at: blast position, frames, star burst and screen shake */
 #define bombRallyObjectBlinkCount unk28 /* s32: frames the continue / quit item has been shown (0 once quitting): bit 1 blinks it */
@@ -1499,7 +1499,7 @@
    burst, opponent, sweat drop, bonus sign, bonus, rank label) */
 #define quickDrawObjectBonusIndex unk18 /* s32: the bonus row's index into gQuickDrawRankBonuses / gQuickDrawDefeatBonuses */
 #define quickDrawObjectCount unk18 /* s32: the timer row's count (0-99), +1 per frame while running; mirrored into the parent */
-#define quickDrawObjectDropIndex unk18 /* s32: which of the sweat drops (0-2): its frame and its velY (gUnk_087564A0) */
+#define quickDrawObjectDropIndex unk18 /* s32: which sweat drop (the spot, 0-3): its frame and its velY (gUnk_087564A0) */
 #define quickDrawObjectLabelFrame unk18 /* s32: the label row's frame (in the table its kind picks) */
 #define quickDrawObjectOpponentIndex unk18 /* s32: which CPU opponent (0 Waddle Doo .. 4 Meta Knight); +1 after each defeat */
 #define quickDrawObjectPlayerIndex unk18 /* s32: the player row's player index (its task slot 0-3): palette, wins, local test */
