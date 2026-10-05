@@ -691,12 +691,12 @@ gUnk_08758374:
 	.incbin	"baserom.gba", 0x758374, 0x40
 	.global	gCreditsTextPages
 gCreditsTextPages:
-	.word	gUnk_0859D3AC
-	.word	gUnk_0859D514
-	.word	gUnk_0859D6D0
-	.word	gUnk_0859D88C
-	.word	gUnk_0859DA3C
-	.word	gUnk_0859DBF0
+	.word	gCreditsTextPage0
+	.word	gCreditsTextPage1
+	.word	gCreditsTextPage2
+	.word	gCreditsTextPage3
+	.word	gCreditsTextPage4
+	.word	gCreditsTextPage5
 	.global	gCreditsDemoRecordings
 gCreditsDemoRecordings:
 	.word	gUnk_0859DDCC

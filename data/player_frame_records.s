@@ -16009,7 +16009,7 @@ gPlayerFrame299:
 	.incbin	"baserom.gba", 0x765440, 0x8
 	.global	gCutsceneFountainKirbyFrame35
 gCutsceneFountainKirbyFrame35:
-	.word	gUnk_08179B0E+1
+	.word	gCutsceneFountainKirbyFrame35OamTemplate+1
 	.word	gUnk_0817519C
 	.word	gUnk_081758DC
 	.incbin	"baserom.gba", 0x765454, 0x1C

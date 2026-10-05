@@ -1163,13 +1163,13 @@ gUnk_08731F48:
 	.incbin	"baserom.gba", 0x731F48, 0x30
 	.global	gCutsceneSheets
 gCutsceneSheets:
-	.word	gUnk_085BC800
-	.word	gUnk_085BEB70
-	.word	gUnk_085C1974
-	.word	gUnk_085C4218
-	.word	gUnk_085C6B98
-	.word	gUnk_085C9250
-	.word	gUnk_085CC328
+	.word	gCutsceneSheet0
+	.word	gCutsceneSheet1
+	.word	gCutsceneSheet2
+	.word	gCutsceneSheet3
+	.word	gCutsceneSheet4
+	.word	gCutsceneSheet5
+	.word	gCutsceneSheet6
 	.incbin	"baserom.gba", 0x731F94, 0x4
 	.global	gCutsceneDurations
 gCutsceneDurations:
@@ -4526,13 +4526,13 @@ gUnk_0873E220:
 	.incbin	"baserom.gba", 0x73E220, 0x44
 	.global	gStarRodPiecePalettes
 gStarRodPiecePalettes:
-	.word	gUnk_08334DD4
-	.word	gUnk_08334DF4
-	.word	gUnk_08334E14
-	.word	gUnk_08334E34
-	.word	gUnk_08334E54
-	.word	gUnk_08334E74
-	.word	gUnk_08334E94
+	.word	gStarRodPiecePalette0
+	.word	gStarRodPiecePalette1
+	.word	gStarRodPiecePalette2
+	.word	gStarRodPiecePalette3
+	.word	gStarRodPiecePalette4
+	.word	gStarRodPiecePalette5
+	.word	gStarRodPiecePalette6
 
 @ 0x0873E280-0x0873E284: C, row game_tbl_0873e280 (src/data/game_tables.c section .game_tbl_0873e280)
 

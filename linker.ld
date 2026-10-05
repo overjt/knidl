@@ -3486,7 +3486,7 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.compressed_graphics) == 0x083D0148, "MATCHING: .compressed_graphics moved")
 
-    /* Sprite sheets, part 2 (asset, #36 phase 2 run 3; formerly m4a_songs, no m4a data): OAM streams, raw and LZ77 tiles, palettes, TaskGfx records; opens with the tail of compressed_graphics' LZ77 stream gUnk_085BF484 */
+    /* Sprite sheets, part 2 (asset, #36 phase 2 run 3; formerly m4a_songs, no m4a data): OAM streams, raw and LZ77 tiles, palettes, TaskGfx records; opens with the tail of compressed_graphics' LZ77 stream gCutsceneSheet2Tiles */
     .sprite_sheets_2 : {
         KEEP(*(.sprite_sheets_2))
     } > ROM

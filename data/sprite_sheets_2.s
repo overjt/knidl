@@ -215,11 +215,11 @@ gCutsceneBombFrame66:
 	.global	gCutsceneBombFrame67
 gCutsceneBombFrame67:
 	.incbin	"baserom.gba", 0x5C1954, 0x20
-	.global	gUnk_085C1974
-gUnk_085C1974:
+	.global	gCutsceneSheet2
+gCutsceneSheet2:
 	.incbin	"baserom.gba", 0x5C1974, 0x8
-	.word	gUnk_085BF424
-	.word	gUnk_085BF484
+	.word	gCutsceneSheet2Palette
+	.word	gCutsceneSheet2Tiles
 	.word	gUnk_087E29A0
 	.global	gUnk_085C1988
 gUnk_085C1988:
@@ -230,11 +230,11 @@ gUnk_085C19C8:
 	.global	gUnk_085C2000
 gUnk_085C2000:
 	.incbin	"baserom.gba", 0x5C2000, 0x20C
-	.global	gUnk_085C220C
-gUnk_085C220C:
+	.global	gCutsceneSheet3Palette
+gCutsceneSheet3Palette:
 	.incbin	"baserom.gba", 0x5C220C, 0x40
-	.global	gUnk_085C224C
-gUnk_085C224C:
+	.global	gCutsceneSheet3Tiles
+gCutsceneSheet3Tiles:
 	.incbin	"baserom.gba", 0x5C224C, 0x1254
 	.global	gCutsceneBalloonsFrame0
 gCutsceneBalloonsFrame0:
@@ -392,11 +392,11 @@ gCutsceneBalloonsFrame50:
 	.global	gCutsceneBalloonsFrame51
 gCutsceneBalloonsFrame51:
 	.incbin	"baserom.gba", 0x5C41F8, 0x20
-	.global	gUnk_085C4218
-gUnk_085C4218:
+	.global	gCutsceneSheet3
+gCutsceneSheet3:
 	.incbin	"baserom.gba", 0x5C4218, 0x8
-	.word	gUnk_085C220C
-	.word	gUnk_085C224C
+	.word	gCutsceneSheet3Palette
+	.word	gCutsceneSheet3Tiles
 	.word	gUnk_087E2AB0
 	.global	gUnk_085C422C
 gUnk_085C422C:
@@ -407,11 +407,11 @@ gUnk_085C426C:
 	.global	gUnk_085C48A4
 gUnk_085C48A4:
 	.incbin	"baserom.gba", 0x5C48A4, 0x204
-	.global	gUnk_085C4AA8
-gUnk_085C4AA8:
+	.global	gCutsceneSheet4Palette
+gCutsceneSheet4Palette:
 	.incbin	"baserom.gba", 0x5C4AA8, 0x40
-	.global	gUnk_085C4AE8
-gUnk_085C4AE8:
+	.global	gCutsceneSheet4Tiles
+gCutsceneSheet4Tiles:
 	.incbin	"baserom.gba", 0x5C4AE8, 0x1950
 	.global	gCutsceneTomatoFrame0
 gCutsceneTomatoFrame0:
@@ -626,11 +626,11 @@ gCutsceneTomatoFrame69:
 	.global	gCutsceneTomatoFrame70
 gCutsceneTomatoFrame70:
 	.incbin	"baserom.gba", 0x5C6B90, 0x8
-	.global	gUnk_085C6B98
-gUnk_085C6B98:
+	.global	gCutsceneSheet4
+gCutsceneSheet4:
 	.incbin	"baserom.gba", 0x5C6B98, 0x8
-	.word	gUnk_085C4AA8
-	.word	gUnk_085C4AE8
+	.word	gCutsceneSheet4Palette
+	.word	gCutsceneSheet4Tiles
 	.word	gUnk_087E2B80
 	.global	gUnk_085C6BAC
 gUnk_085C6BAC:
@@ -641,11 +641,11 @@ gUnk_085C6BEC:
 	.global	gUnk_085C7244
 gUnk_085C7244:
 	.incbin	"baserom.gba", 0x5C7244, 0x20C
-	.global	gUnk_085C7450
-gUnk_085C7450:
+	.global	gCutsceneSheet5Palette
+gCutsceneSheet5Palette:
 	.incbin	"baserom.gba", 0x5C7450, 0xA0
-	.global	gUnk_085C74F0
-gUnk_085C74F0:
+	.global	gCutsceneSheet5Tiles
+gCutsceneSheet5Tiles:
 	.incbin	"baserom.gba", 0x5C74F0, 0x13D0
 	.global	gCutsceneShipFrame0
 gCutsceneShipFrame0:
@@ -824,11 +824,11 @@ gCutsceneShipFrame57:
 	.global	gCutsceneShipFrame58
 gCutsceneShipFrame58:
 	.incbin	"baserom.gba", 0x5C91F0, 0x60
-	.global	gUnk_085C9250
-gUnk_085C9250:
+	.global	gCutsceneSheet5
+gCutsceneSheet5:
 	.incbin	"baserom.gba", 0x5C9250, 0x8
-	.word	gUnk_085C7450
-	.word	gUnk_085C74F0
+	.word	gCutsceneSheet5Palette
+	.word	gCutsceneSheet5Tiles
 	.word	gUnk_087E2C9C
 	.global	gUnk_085C9264
 gUnk_085C9264:
@@ -839,11 +839,11 @@ gUnk_085C92A4:
 	.global	gUnk_085C9914
 gUnk_085C9914:
 	.incbin	"baserom.gba", 0x5C9914, 0x20C
-	.global	gUnk_085C9B20
-gUnk_085C9B20:
+	.global	gCutsceneSheet6Palette
+gCutsceneSheet6Palette:
 	.incbin	"baserom.gba", 0x5C9B20, 0x80
-	.global	gUnk_085C9BA0
-gUnk_085C9BA0:
+	.global	gCutsceneSheet6Tiles
+gCutsceneSheet6Tiles:
 	.incbin	"baserom.gba", 0x5C9BA0, 0x1EC0
 	.global	gCutsceneSingingFrame0
 gCutsceneSingingFrame0:
@@ -1037,11 +1037,11 @@ gCutsceneSingingFrame62:
 	.global	gCutsceneSingingFrame63
 gCutsceneSingingFrame63:
 	.incbin	"baserom.gba", 0x5CC2F0, 0x38
-	.global	gUnk_085CC328
-gUnk_085CC328:
+	.global	gCutsceneSheet6
+gCutsceneSheet6:
 	.incbin	"baserom.gba", 0x5CC328, 0x8
-	.word	gUnk_085C9B20
-	.word	gUnk_085C9BA0
+	.word	gCutsceneSheet6Palette
+	.word	gCutsceneSheet6Tiles
 	.word	gUnk_087E2D88
 	.global	gUnk_085CC33C
 gUnk_085CC33C:

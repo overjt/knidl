@@ -26538,3 +26538,47 @@ gUnk_0835BE8C,gRoomBgAnimSet11Script0Cmd2TileFrame,asset,"slot: gRoomBgAnimSet11
 gUnk_0835C2D0,gRoomBgAnimSet11Script0Cmd3TileFrame,asset,"slot: gRoomBgAnimSet11Script0[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
 gUnk_0835C714,gRoomBgAnimSet11Script0Cmd4TileFrame,asset,"slot: gRoomBgAnimSet11Script0[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
 gUnk_0835CB58,gRoomBgAnimSet11Script0Cmd5TileFrame,asset,"slot: gRoomBgAnimSet11Script0[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08179B0E,gCutsceneFountainKirbyFrame35OamTemplate,asset,slot: gCutsceneFountainKirbyFrame35 -> TaskGfx.oamTemplate (data/player_frame_records.s); docs/naming.md 2.5 A2,183
+gUnk_08279E30,gMrTickTockGfxFrame13,asset,"slot: gMrTickTockGfxFrameList[13] (data/player_frame_lists.s); docs/naming.md 2.5 A1, format-only",183
+gUnk_082F59D8,gHeavyMoleGfxFrame17,asset,"slot: gHeavyMoleGfxFrameList[17] (data/player_frame_lists.s); docs/naming.md 2.5 A1, format-only",183
+gUnk_082F59E0,gHeavyMoleGfxFrame18,asset,"slot: gHeavyMoleGfxFrameList[18] (data/player_frame_lists.s); docs/naming.md 2.5 A1, format-only",183
+gUnk_082F59E8,gHeavyMoleGfxFrame19,asset,"slot: gHeavyMoleGfxFrameList[19] (data/player_frame_lists.s); docs/naming.md 2.5 A1, format-only",183
+gUnk_082F6130,gHeavyMoleGfxFrame128,asset,"slot: gHeavyMoleGfxFrameList[128] (data/player_frame_lists.s); docs/naming.md 2.5 A1, format-only",183
+gUnk_082F6150,gHeavyMoleGfxFrame130,asset,"slot: gHeavyMoleGfxFrameList[130] (data/player_frame_lists.s); docs/naming.md 2.5 A1, format-only",183
+gUnk_082F6170,gHeavyMoleGfxFrame132,asset,"slot: gHeavyMoleGfxFrameList[132] (data/player_frame_lists.s); docs/naming.md 2.5 A1, format-only",183
+gUnk_082F6190,gHeavyMoleGfxFrame134,asset,"slot: gHeavyMoleGfxFrameList[134] (data/player_frame_lists.s); docs/naming.md 2.5 A1, format-only",183
+gUnk_082FD20C,gKrackoGfxFrame28,asset,"slot: gKrackoGfxFrameList[28] (data/player_frame_lists.s); docs/naming.md 2.5 A1, format-only",183
+gUnk_08334DD4,gStarRodPiecePalette0,asset,slot: gStarRodPiecePalettes[0] (data/game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_08334DF4,gStarRodPiecePalette1,asset,slot: gStarRodPiecePalettes[1] (data/game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_08334E14,gStarRodPiecePalette2,asset,slot: gStarRodPiecePalettes[2] (data/game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_08334E34,gStarRodPiecePalette3,asset,slot: gStarRodPiecePalettes[3] (data/game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_08334E54,gStarRodPiecePalette4,asset,slot: gStarRodPiecePalettes[4] (data/game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_08334E74,gStarRodPiecePalette5,asset,slot: gStarRodPiecePalettes[5] (data/game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_08334E94,gStarRodPiecePalette6,asset,slot: gStarRodPiecePalettes[6] (data/game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_0859D3AC,gCreditsTextPage0,asset,slot: gCreditsTextPages[0] (data/late_game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_0859D514,gCreditsTextPage1,asset,slot: gCreditsTextPages[1] (data/late_game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_0859D6D0,gCreditsTextPage2,asset,slot: gCreditsTextPages[2] (data/late_game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_0859D88C,gCreditsTextPage3,asset,slot: gCreditsTextPages[3] (data/late_game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_0859DA3C,gCreditsTextPage4,asset,slot: gCreditsTextPages[4] (data/late_game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_0859DBF0,gCreditsTextPage5,asset,slot: gCreditsTextPages[5] (data/late_game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_085BA46C,gCutsceneSheet0Palette,asset,slot: gCutsceneSheets[0] -> GfxHeader.palette (data/game_rodata.s); docs/naming.md 2.5 A2,183
+gUnk_085BA4CC,gCutsceneSheet0Tiles,asset,slot: gCutsceneSheets[0] -> GfxHeader.tiles (data/game_rodata.s); docs/naming.md 2.5 A2,183
+gUnk_085BC800,gCutsceneSheet0,asset,slot: gCutsceneSheets[0] (data/game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_085BD098,gCutsceneSheet1Palette,asset,slot: gCutsceneSheets[1] -> GfxHeader.palette (data/game_rodata.s); docs/naming.md 2.5 A2,183
+gUnk_085BD138,gCutsceneSheet1Tiles,asset,slot: gCutsceneSheets[1] -> GfxHeader.tiles (data/game_rodata.s); docs/naming.md 2.5 A2,183
+gUnk_085BEB70,gCutsceneSheet1,asset,slot: gCutsceneSheets[1] (data/game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_085BF424,gCutsceneSheet2Palette,asset,slot: gCutsceneSheets[2] -> GfxHeader.palette (data/game_rodata.s); docs/naming.md 2.5 A2,183
+gUnk_085BF484,gCutsceneSheet2Tiles,asset,slot: gCutsceneSheets[2] -> GfxHeader.tiles (data/game_rodata.s); docs/naming.md 2.5 A2,183
+gUnk_085C1974,gCutsceneSheet2,asset,slot: gCutsceneSheets[2] (data/game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_085C220C,gCutsceneSheet3Palette,asset,slot: gCutsceneSheets[3] -> GfxHeader.palette (data/game_rodata.s); docs/naming.md 2.5 A2,183
+gUnk_085C224C,gCutsceneSheet3Tiles,asset,slot: gCutsceneSheets[3] -> GfxHeader.tiles (data/game_rodata.s); docs/naming.md 2.5 A2,183
+gUnk_085C4218,gCutsceneSheet3,asset,slot: gCutsceneSheets[3] (data/game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_085C4AA8,gCutsceneSheet4Palette,asset,slot: gCutsceneSheets[4] -> GfxHeader.palette (data/game_rodata.s); docs/naming.md 2.5 A2,183
+gUnk_085C4AE8,gCutsceneSheet4Tiles,asset,slot: gCutsceneSheets[4] -> GfxHeader.tiles (data/game_rodata.s); docs/naming.md 2.5 A2,183
+gUnk_085C6B98,gCutsceneSheet4,asset,slot: gCutsceneSheets[4] (data/game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_085C7450,gCutsceneSheet5Palette,asset,slot: gCutsceneSheets[5] -> GfxHeader.palette (data/game_rodata.s); docs/naming.md 2.5 A2,183
+gUnk_085C74F0,gCutsceneSheet5Tiles,asset,slot: gCutsceneSheets[5] -> GfxHeader.tiles (data/game_rodata.s); docs/naming.md 2.5 A2,183
+gUnk_085C9250,gCutsceneSheet5,asset,slot: gCutsceneSheets[5] (data/game_rodata.s); docs/naming.md 2.5 A1,183
+gUnk_085C9B20,gCutsceneSheet6Palette,asset,slot: gCutsceneSheets[6] -> GfxHeader.palette (data/game_rodata.s); docs/naming.md 2.5 A2,183
+gUnk_085C9BA0,gCutsceneSheet6Tiles,asset,slot: gCutsceneSheets[6] -> GfxHeader.tiles (data/game_rodata.s); docs/naming.md 2.5 A2,183
+gUnk_085CC328,gCutsceneSheet6,asset,slot: gCutsceneSheets[6] (data/game_rodata.s); docs/naming.md 2.5 A1,183

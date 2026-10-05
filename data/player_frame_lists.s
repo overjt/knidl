@@ -888,7 +888,7 @@ gMrTickTockGfxFrameList:
 	.word	gMrTickTockNoteFrame8
 	.word	gMrTickTockNoteFrame9
 	.word	gMrTickTockNoteFrame3
-	.word	gUnk_08279E30
+	.word	gMrTickTockGfxFrame13
 	.global	gAxeKnightGfxFrameList
 gAxeKnightGfxFrameList:
 	.word	gAxeKnightFrame4
@@ -1719,9 +1719,9 @@ gHeavyMoleGfxFrameList:
 	.word	gHeavyMoleFrame14
 	.word	gHeavyMoleFrame15
 	.word	gHeavyMoleFrame16
-	.word	gUnk_082F59D8
-	.word	gUnk_082F59E0
-	.word	gUnk_082F59E8
+	.word	gHeavyMoleGfxFrame17
+	.word	gHeavyMoleGfxFrame18
+	.word	gHeavyMoleGfxFrame19
 	.word	gHeavyMoleArmFrame66
 	.word	gHeavyMoleArmFrame67
 	.word	gHeavyMoleArmFrame68
@@ -1830,13 +1830,13 @@ gHeavyMoleGfxFrameList:
 	.word	gHeavyMoleRedMissileFrame14
 	.word	gHeavyMoleRedMissileFrame15
 	.word	gHeavyMoleYellowMissileFrame0
-	.word	gUnk_082F6130
+	.word	gHeavyMoleGfxFrame128
 	.word	gHeavyMoleYellowMissileFrame3
-	.word	gUnk_082F6150
+	.word	gHeavyMoleGfxFrame130
 	.word	gHeavyMoleRedMissileFrame0
-	.word	gUnk_082F6170
+	.word	gHeavyMoleGfxFrame132
 	.word	gHeavyMoleRedMissileFrame3
-	.word	gUnk_082F6190
+	.word	gHeavyMoleGfxFrame134
 	.word	gHeavyMoleArmFrame126
 	.word	gHeavyMoleArmFrame127
 	.word	gHeavyMoleArmFrame128
@@ -2056,7 +2056,7 @@ gKrackoGfxFrameList:
 	.word	gUnk_082FD1F4
 	.word	gUnk_082FD1FC
 	.word	gUnk_082FD204
-	.word	gUnk_082FD20C
+	.word	gKrackoGfxFrame28
 	.word	gKrackoLightningFrame12
 	.word	gUnk_082FD21C
 	.word	gUnk_082FD23C

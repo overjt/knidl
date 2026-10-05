@@ -16111,8 +16111,8 @@ gUnk_08179ACE:
 	.global	gPlayerFrame299OamTemplate
 gPlayerFrame299OamTemplate:
 	.incbin	"baserom.gba", 0x179AEE, 0x20
-	.global	gUnk_08179B0E
-gUnk_08179B0E:
+	.global	gCutsceneFountainKirbyFrame35OamTemplate
+gCutsceneFountainKirbyFrame35OamTemplate:
 	.incbin	"baserom.gba", 0x179B0E, 0x40
 	.global	gUnk_08179B4E
 gUnk_08179B4E:
@@ -39833,8 +39833,8 @@ gMrTickTockNoteFrame9:
 	.global	gMrTickTockNoteFrame3
 gMrTickTockNoteFrame3:
 	.incbin	"baserom.gba", 0x279E20, 0x10
-	.global	gUnk_08279E30
-gUnk_08279E30:
+	.global	gMrTickTockGfxFrame13
+gMrTickTockGfxFrame13:
 	.incbin	"baserom.gba", 0x279E30, 0x10
 	.global	gMrTickTockGfx
 gMrTickTockGfx:
@@ -45344,14 +45344,14 @@ gHeavyMoleFrame15:
 	.global	gHeavyMoleFrame16
 gHeavyMoleFrame16:
 	.incbin	"baserom.gba", 0x2F59C8, 0x10
-	.global	gUnk_082F59D8
-gUnk_082F59D8:
+	.global	gHeavyMoleGfxFrame17
+gHeavyMoleGfxFrame17:
 	.incbin	"baserom.gba", 0x2F59D8, 0x8
-	.global	gUnk_082F59E0
-gUnk_082F59E0:
+	.global	gHeavyMoleGfxFrame18
+gHeavyMoleGfxFrame18:
 	.incbin	"baserom.gba", 0x2F59E0, 0x8
-	.global	gUnk_082F59E8
-gUnk_082F59E8:
+	.global	gHeavyMoleGfxFrame19
+gHeavyMoleGfxFrame19:
 	.incbin	"baserom.gba", 0x2F59E8, 0xF0
 	.global	gHeavyMoleArmFrame66
 gHeavyMoleArmFrame66:
@@ -45677,26 +45677,26 @@ gHeavyMoleRedMissileFrame15:
 	.global	gHeavyMoleYellowMissileFrame0
 gHeavyMoleYellowMissileFrame0:
 	.incbin	"baserom.gba", 0x2F6120, 0x10
-	.global	gUnk_082F6130
-gUnk_082F6130:
+	.global	gHeavyMoleGfxFrame128
+gHeavyMoleGfxFrame128:
 	.incbin	"baserom.gba", 0x2F6130, 0x10
 	.global	gHeavyMoleYellowMissileFrame3
 gHeavyMoleYellowMissileFrame3:
 	.incbin	"baserom.gba", 0x2F6140, 0x10
-	.global	gUnk_082F6150
-gUnk_082F6150:
+	.global	gHeavyMoleGfxFrame130
+gHeavyMoleGfxFrame130:
 	.incbin	"baserom.gba", 0x2F6150, 0x10
 	.global	gHeavyMoleRedMissileFrame0
 gHeavyMoleRedMissileFrame0:
 	.incbin	"baserom.gba", 0x2F6160, 0x10
-	.global	gUnk_082F6170
-gUnk_082F6170:
+	.global	gHeavyMoleGfxFrame132
+gHeavyMoleGfxFrame132:
 	.incbin	"baserom.gba", 0x2F6170, 0x10
 	.global	gHeavyMoleRedMissileFrame3
 gHeavyMoleRedMissileFrame3:
 	.incbin	"baserom.gba", 0x2F6180, 0x10
-	.global	gUnk_082F6190
-gUnk_082F6190:
+	.global	gHeavyMoleGfxFrame134
+gHeavyMoleGfxFrame134:
 	.incbin	"baserom.gba", 0x2F6190, 0x10
 	.global	gHeavyMoleArmFrame126
 gHeavyMoleArmFrame126:
@@ -46531,8 +46531,8 @@ gUnk_082FD1FC:
 	.global	gUnk_082FD204
 gUnk_082FD204:
 	.incbin	"baserom.gba", 0x2FD204, 0x8
-	.global	gUnk_082FD20C
-gUnk_082FD20C:
+	.global	gKrackoGfxFrame28
+gKrackoGfxFrame28:
 	.incbin	"baserom.gba", 0x2FD20C, 0x8
 	.global	gKrackoLightningFrame12
 gKrackoLightningFrame12:
@@ -48246,26 +48246,26 @@ gUnk_08334DC0:
 	.word	gUnk_08334500
 	.word	gUnk_08334520
 	.word	gUnk_0876B1B8
-	.global	gUnk_08334DD4
-gUnk_08334DD4:
+	.global	gStarRodPiecePalette0
+gStarRodPiecePalette0:
 	.incbin	"baserom.gba", 0x334DD4, 0x20
-	.global	gUnk_08334DF4
-gUnk_08334DF4:
+	.global	gStarRodPiecePalette1
+gStarRodPiecePalette1:
 	.incbin	"baserom.gba", 0x334DF4, 0x20
-	.global	gUnk_08334E14
-gUnk_08334E14:
+	.global	gStarRodPiecePalette2
+gStarRodPiecePalette2:
 	.incbin	"baserom.gba", 0x334E14, 0x20
-	.global	gUnk_08334E34
-gUnk_08334E34:
+	.global	gStarRodPiecePalette3
+gStarRodPiecePalette3:
 	.incbin	"baserom.gba", 0x334E34, 0x20
-	.global	gUnk_08334E54
-gUnk_08334E54:
+	.global	gStarRodPiecePalette4
+gStarRodPiecePalette4:
 	.incbin	"baserom.gba", 0x334E54, 0x20
-	.global	gUnk_08334E74
-gUnk_08334E74:
+	.global	gStarRodPiecePalette5
+gStarRodPiecePalette5:
 	.incbin	"baserom.gba", 0x334E74, 0x20
-	.global	gUnk_08334E94
-gUnk_08334E94:
+	.global	gStarRodPiecePalette6
+gStarRodPiecePalette6:
 	.incbin	"baserom.gba", 0x334E94, 0x20
 	.global	gLevelStageCounts
 gLevelStageCounts:
