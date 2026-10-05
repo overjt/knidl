@@ -142,7 +142,7 @@ void ScarfyState1(void)
 {
     gCurTask->updateState = SCARFY_STATE_1;
     gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_08740854);
-    sub_0807a968();
+    ScarfyPlaceNearPlayer();
     TaskSleepForever();
 }
 
@@ -1193,38 +1193,38 @@ void NeedlousFallUpdate(void)
     gCurTask->actorAnimDelay34 = ActorTickAnim(gCurTask->actorAnimDelay34);
 }
 
-void NeedlousState2(void)
+void NeedlousBounce1(void)
 {
     gCurTask->updateState = NEEDLOUS_STATE_2;
     sub_0807bf74();
     TaskSleepForever();
 }
 
-void NeedlousState2Update(void)
+void NeedlousBounce1Update(void)
 {
     gCurTask->actorAnimDelay34 = ActorTickAnim(gCurTask->actorAnimDelay34);
 }
 
-void NeedlousState3(void)
+void NeedlousBounce2(void)
 {
     gCurTask->updateState = NEEDLOUS_STATE_3;
     sub_0807bfd0();
     TaskSleepForever();
 }
 
-void NeedlousState3Update(void)
+void NeedlousBounce2Update(void)
 {
     gCurTask->actorAnimDelay34 = ActorTickAnim(gCurTask->actorAnimDelay34);
 }
 
-void NeedlousState4(void)
+void NeedlousBounce3(void)
 {
     gCurTask->updateState = NEEDLOUS_STATE_4;
     sub_0807c000();
     TaskSleepForever();
 }
 
-void NeedlousState4Update(void)
+void NeedlousBounce3Update(void)
 {
     gCurTask->actorAnimDelay34 = ActorTickAnim(gCurTask->actorAnimDelay34);
 }

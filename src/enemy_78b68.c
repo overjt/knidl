@@ -35,7 +35,7 @@
  *     `SparkyStandDischarge` (row 2) (identical: a seventeen-step frame script followed by an
  *     eight-iteration palette flip between `0x08740DE4` and `0x0873F774`);
  *   * Task_Scarfy's `sub_0807a8fc`, the bank's only `mov pc` jump table (five
- *     cases over Task.variant), and `sub_0807a968`, which places Scarfy at an
+ *     cases over Task.variant), and `ScarfyPlaceNearPlayer`, which places Scarfy at an
  *     offset from the nearest player, clamping the point from
  *     `0x08740824` into the camera box `gViewRect[0..3]`.
  *
@@ -1544,7 +1544,7 @@ void sub_0807a8fc(void)
     }
 }
 
-void sub_0807a968(void)
+void ScarfyPlaceNearPlayer(void)
 {
     struct Task *t = gCurTask;
     s32 i = (t->variant - 1) * 3;

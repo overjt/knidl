@@ -323,7 +323,7 @@ void RockyWalkState1Update(void)
         TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
 }
 
-void RockyWalkState2(void)
+void RockyWalkJump(void)
 {
     gCurTask->onGround = 0;
     gCurTask->updateState = ROCKY_WALK_STATE_2;
@@ -343,7 +343,7 @@ void RockyWalkState2(void)
     TaskSleepForever();
 }
 
-void RockyWalkState2Update(void)
+void RockyWalkJumpUpdate(void)
 {
     if (gCurTask->state != ROCKY_WALK_STATE_2)
         TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
@@ -365,7 +365,7 @@ void RockyWalkState3Update(void)
         TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
 }
 
-void RockyWalkState4(void)
+void RockyWalkFall(void)
 {
     gCurTask->updateState = ROCKY_WALK_STATE_4;
     gCurTask->velY = 0x80000;
@@ -373,7 +373,7 @@ void RockyWalkState4(void)
     TaskSleepForever();
 }
 
-void RockyWalkState4Update(void)
+void RockyWalkFallUpdate(void)
 {
 }
 
@@ -485,7 +485,7 @@ void RockyStandState1Update(void)
         TaskSetEntry(RockyStandEnterState, gCurTaskIdx);
 }
 
-void RockyStandState2(void)
+void RockyStandFall(void)
 {
     gCurTask->updateState = ROCKY_STAND_STATE_2;
     gCurTask->velY = 0x80000;
@@ -493,7 +493,7 @@ void RockyStandState2(void)
     TaskSleepForever();
 }
 
-void RockyStandState2Update(void)
+void RockyStandFallUpdate(void)
 {
 }
 

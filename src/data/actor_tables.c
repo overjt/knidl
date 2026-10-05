@@ -558,18 +558,18 @@ u32 gNeedlousVariants[2] ACTOR_TBL(087409fc) = {
 u32 gNeedlousStates[6] ACTOR_TBL(08740ac8) = {
     (u32)NeedlousWalk,
     (u32)NeedlousFall,
-    (u32)NeedlousState2,
-    (u32)NeedlousState3,
-    (u32)NeedlousState4,
+    (u32)NeedlousBounce1,
+    (u32)NeedlousBounce2,
+    (u32)NeedlousBounce3,
     (u32)NeedlousDash,
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in NeedlousUpdate */
 u32 gNeedlousStateUpdates[6] ACTOR_TBL(08740ac8) = {
     (u32)NeedlousWalkUpdate,
     (u32)NeedlousFallUpdate,
-    (u32)NeedlousState2Update,
-    (u32)NeedlousState3Update,
-    (u32)NeedlousState4Update,
+    (u32)NeedlousBounce1Update,
+    (u32)NeedlousBounce2Update,
+    (u32)NeedlousBounce3Update,
     (u32)NeedlousDashUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in NeedlousIdleInit, NeedlousIdleEnterState */
@@ -682,17 +682,17 @@ u32 gRockyVariants[3] ACTOR_TBL(087411c0) = {
 u32 gRockyWalkStates[5] ACTOR_TBL(087411c0) = {
     (u32)RockyWalk,
     (u32)RockyWalkState1,
-    (u32)RockyWalkState2,
+    (u32)RockyWalkJump,
     (u32)RockyWalkState3,
-    (u32)RockyWalkState4,
+    (u32)RockyWalkFall,
 };
 /* include/enemy.h; CallTableEntry(i, 5, ...) in RockyWalkUpdate */
 u32 gRockyWalkStateUpdates[5] ACTOR_TBL(087411c0) = {
     (u32)RockyWalkState0Update,
     (u32)RockyWalkState1Update,
-    (u32)RockyWalkState2Update,
+    (u32)RockyWalkJumpUpdate,
     (u32)RockyWalkState3Update,
-    (u32)RockyWalkState4Update,
+    (u32)RockyWalkFallUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in RockyIdleInit, RockyIdleEnterState */
 u32 gRockyIdleStates[1] ACTOR_TBL(087411c0) = {
@@ -706,13 +706,13 @@ u32 gRockyIdleStateUpdates[1] ACTOR_TBL(087411c0) = {
 u32 gRockyStandStates[3] ACTOR_TBL(087411c0) = {
     (u32)RockyStandState0,
     (u32)RockyStandState1,
-    (u32)RockyStandState2,
+    (u32)RockyStandFall,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in RockyStandUpdate */
 u32 gRockyStandStateUpdates[3] ACTOR_TBL(087411c0) = {
     (u32)RockyStandState0Update,
     (u32)RockyStandState1Update,
-    (u32)RockyStandState2Update,
+    (u32)RockyStandFallUpdate,
 };
 
 /* ---- 0x08741220-0x08741298: 15 table(s), 30 function pointer(s), section .actor_tbl_08741220 ---- */
@@ -1569,11 +1569,11 @@ u32 gSlippyVariants[2] ACTOR_TBL(087427b4) = {
 };
 /* include/enemy.h; CallTableEntry(i, 11, ...) in SlippyInit, SlippyEnterState */
 u32 gSlippyStates[11] ACTOR_TBL(087427b4) = {
-    (u32)SlippyState0,
-    (u32)SlippyState1,
+    (u32)SlippyWait,
+    (u32)SlippyLookAround,
     (u32)SlippyJump,
     (u32)SlippyHighJump,
-    (u32)SlippyState4,
+    (u32)SlippyLeap,
     (u32)SlippyState5,
     (u32)SlippyState6,
     (u32)SlippyState7,
@@ -1583,11 +1583,11 @@ u32 gSlippyStates[11] ACTOR_TBL(087427b4) = {
 };
 /* include/enemy.h; CallTableEntry(i, 11, ...) in SlippyUpdate */
 u32 gSlippyStateUpdates[11] ACTOR_TBL(087427b4) = {
-    (u32)SlippyState0Update,
-    (u32)SlippyState1Update,
+    (u32)SlippyWaitUpdate,
+    (u32)SlippyLookAroundUpdate,
     (u32)SlippyJumpUpdate,
     (u32)SlippyHighJumpUpdate,
-    (u32)SlippyState4Update,
+    (u32)SlippyLeapUpdate,
     (u32)SlippyState5Update,
     (u32)SlippyState6Update,
     (u32)SlippyState7Update,

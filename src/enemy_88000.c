@@ -1451,7 +1451,7 @@ void SlippyUpdate(void)
     ActorReactToHit();
 }
 
-void SlippyState0(void)
+void SlippyWait(void)
 {
     gCurTask->updateState = SLIPPY_STATE_0;
     gCurTask->slippyCollideTerrain = 1;
@@ -1493,13 +1493,13 @@ void SlippyState0(void)
     TaskSleepForever();
 }
 
-void SlippyState0Update(void)
+void SlippyWaitUpdate(void)
 {
     if (gCurTask->state != SLIPPY_STATE_0)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
 }
 
-void SlippyState1(void)
+void SlippyLookAround(void)
 {
     gCurTask->updateState = SLIPPY_STATE_1;
     gCurTask->onGround = 1;
@@ -1558,7 +1558,7 @@ void SlippyState1(void)
     }
 }
 
-void SlippyState1Update(void)
+void SlippyLookAroundUpdate(void)
 {
     if (gCurTask->state != SLIPPY_STATE_1)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
@@ -1608,7 +1608,7 @@ void SlippyHighJumpUpdate(void)
 {
 }
 
-void SlippyState4(void)
+void SlippyLeap(void)
 {
     gCurTask->updateState = SLIPPY_STATE_4;
     gCurTask->slippyCollideTerrain = 0;
@@ -1636,7 +1636,7 @@ void SlippyState4(void)
     TaskSleepForever();
 }
 
-void SlippyState4Update(void)
+void SlippyLeapUpdate(void)
 {
     u8 r;
 

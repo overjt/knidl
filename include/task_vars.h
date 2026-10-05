@@ -1447,7 +1447,7 @@
 #define slippyCollideTerrain unk28 /* s32: 1 when SlippyUpdate runs ActorCollideTerrain (0 while it starts in or leaves the water) */
 #define slippySwimAngle unk2C /* s32: swim heading (512 per turn) the water states pass to AngleToVector */
 #define slippyMovePickCount unk34 /* s32: calls of SlippyPickMove; its parity picks one of the two weight tables */
-#define slippyLoopCount unk6C /* s16: SlippyState1's loop counter: frame cycles done (gUnk_08742820[spawn arg]: 3 or 2) */
+#define slippyLoopCount unk6C /* s16: SlippyLookAround's loop counter: frame cycles done (gUnk_08742820[spawn arg]: 3 or 2) */
 
 /* SoundTestCursors - SoundTestCursors (task type #254, Task_SoundTestCursors)
    */
