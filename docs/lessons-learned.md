@@ -2114,7 +2114,7 @@ local, the second `ands` ties its result to `k` (`ands r1, r0`, 4 bytes off
 in `sub_080349b4`); re-reading the global in each test,
 `if (gUnk_03002458[gUnk_03002490->unk88->unk00] & 32)`, lets cse reuse the
 first load and gives the ROM's `ands r0, r1`, with the result in the
-constant's register.  This is M11's own spelling (`src/stage_413a4.c`).
+constant's register.  This is M11's own spelling (`src/player_meta_knight_actions.c`).
 The re-read form also loads the array base BEFORE the task pointer; the
 ROM's other order (`ldr` of the task and its player record first) comes from
 `t = gUnk_03002490; p = t->unk88;` locals (`sub_08033a2c`, 13 bytes).
@@ -2469,7 +2469,7 @@ arms were identical: `if (t->unk54 == 0) t->unk88->unk01 = 1; else
 t->unk88->unk01 = 1;`.  The branch and the second store are removed after
 the load has been allocated, so the load stays.  `< 0`, `>= 0` and `!= 0`
 all match; `== 0` is M11's own test of `unk54` before the same store
-(`src/stage_3cd60.c`).
+(`src/player_helpers.c`).
 
 ### 3.422 A pointer shared by every `case` pins one register; the ROM's per-arm registers mean no shared pointer
 `sub_08049738` uploads 1 to 4 tile rows from a per-ability ROM table in 16
@@ -2552,8 +2552,8 @@ permutations (3.259) before touching anything else.
   each case (lesson 4.90's phantoms, seen from the source side).
 - A negative constant passed to a `u16` parameter becomes a pool load; the
   ROM's `movs r1, #2; negs r1, r1` for `sub_080008e8(4, -2, mask)` proves
-  the parameter is signed (`s16 delta` in `src/player_47fe8.c`; the landed
-  `src/early_08e8.c` spells it `u16`, and two asm callers pass -4 and -2
+  the parameter is signed (`s16 delta` in `src/player_get_ability.c`; the landed
+  `src/main_fade.c` spells it `u16`, and two asm callers pass -4 and -2
   the same way).
 - Two loops counting with the same field (`(s16)++t->unk6C <= N` twice,
   nested) let loop.c merge and hoist their two `0xFFFF` constants, which
@@ -2844,7 +2844,7 @@ the `s16` elements), `extern u16 gUnk_0873BAB0[][3];`.
   `tbl = t->unk38; x = ...; y = ...; sub_08001a94(t->unk42, tbl[t->unk3C],
   ..., x, (s16)y);`; inline expressions are evaluated last.  Its 6th
   parameter is `s16` at the call sites (`lsls/asrs #16`) although
-  `src/early_1518.c` defines it `u16`; `sub_0800641c` and `sub_080063f0` are
+  `src/main_copy_queue.c` defines it `u16`; `sub_0800641c` and `sub_080063f0` are
   tested unnarrowed (`bl; cmp r0, #0`), so the callers declare them `u32`/
   `s32` (3.428).
 - A 2-D table whose base the ROM loads before the index: write the index in
@@ -3103,7 +3103,7 @@ ROM's (`-da` `.greg`, lesson 3.34):
 * `x = x - K + y` is regrouped to `x + (y - K)`: `x -= K; x += y;` (or the
   shared temp above) keeps the ROM's order.
 
-**Note (final campaign, lesson 3.493):** the block scoping of the lane-loop state was one way of reaching the pseudo numbering the slot order needs; the matching source declares the locals at function scope in another order and lands inside `src/subgame_c5284.c`, whose pool labels complete the hash arithmetic.
+**Note (final campaign, lesson 3.493):** the block scoping of the lane-loop state was one way of reaching the pseudo numbering the slot order needs; the matching source declares the locals at function scope in another order and lands inside `src/subgame_air_grind_course.c`, whose pool labels complete the hash arithmetic.
 
 ### 3.453 A halfword the ROM reads both unsigned and signed is two expressions over one cell
 M38 has three functions where one table or local halfword reaches two uses
@@ -3243,7 +3243,7 @@ ROM's sources avoid the swap in two ways, both confirmed by a match:
   `!(gUnk_08732CF0[k] & 1)` (two table reads, not a `u8 m` local).  cse
   substitutes the register known to hold 1 for the constant, the forward
   tie fails and reload copies it (`sub_0801d9c8`, `sub_0801dc88`,
-  `sub_0801c690`, `sub_0801ff84`, and M07's `src/terrain_21b18.c`); by the
+  `sub_0801c690`, `sub_0801ff84`, and M07's `src/collision_terrain_init.c`); by the
   same substitution a store of the constant, `gUnk_03005530.unk0 = 1;`,
   stores the attribute register;
 * the compare is on a cast, `s32 a = gUnk_08732EF0[t]; if ((s8)a == 1
@@ -3302,7 +3302,7 @@ cross-jumps them back into one (3.430 again).
   a `u8`/`u16`/`s32 k` local makes regmove do the AND in place (`ands r1,
   r0`), the same tie as 3.458 (`sub_0801ecd0`, `sub_0801ff84`).
 - `p = gUnk_087328F0[u]; if (p[gUnk_03005508] != 0)` puts the pointer load
-  before the index load, as `src/terrain_214e0.c`'s helpers do;
+  before the index load, as `src/collision_query_pixel.c`'s helpers do;
   `gUnk_087328F0[u][gUnk_03005508]` loads the index first (`sub_0801ecd0`,
   `sub_0801dee8`).
 - Two side probes that each end `gUnk_03005570 += ...; gUnk_03005530.unk1++;`
@@ -3528,7 +3528,7 @@ a residue sits in reload's choices, **remove the pins first**; no lever on
 `order_regs_for_reload` was needed for any function of this module.
 
 ### 3.467 A cell address kept in one register from a test to a loop is a pointer local; a spilled `u32` local makes the ROM's `mov r0, sp; ldrh`
-`sub_080b6b08` (the sine variant of `src/save_b6d04.c`) keeps
+`sub_080b6b08` (the sine variant of `src/main_hblank_row_scroll_reverse.c`) keeps
 `&gUnk_02016494` in r6 from the `> 0x1FF` wrap test through the loop.  With
 the cell written directly, gcse gives the test its own pseudo and copies it
 into a second one for the rest (`ldr r0, =g; ... adds r6, r0, #0`, 2 bytes
@@ -3540,7 +3540,7 @@ every register is taken in the loop, global alloc spills it, and reload's
 HImode use of the stack slot is exactly the ROM's `str r0, [sp]` ...
 `mov r0, sp; ldrh r0, [r0]`.  The `u16 w[2]` written through `*(u32 *)w`
 that the first run used to force this slot (issue #94's comments;
-`src/save_b6d04.c` still carries it) is not needed when the register
+`src/main_hblank_row_scroll_reverse.c` still carries it) is not needed when the register
 pressure is the ROM's.
 
 ### 3.468 Re-attack an old straggler from the plainest source before any lever
@@ -3647,7 +3647,7 @@ right size on its first build, and three source facts took it to zero:
   (PROMOTE_MODE only promotes declared variables, so a `u8 v` local spills
   in SImode, `str r0, [sp, #4]`);
 * `sub_08065dbc` takes three arguments (its definition in
-  `src/actor_653ec.c` does; the fourteen declarations elsewhere in `src/`
+  `src/actor_helpers.c` does; the fourteen declarations elsewhere in `src/`
   list two): the ROM
   keeps `e->unk2 >> 4` in r2 across the test because it is the third
   argument (3.284);
@@ -3731,7 +3731,7 @@ source keeps the old candidate's two stand-ins, `m = gUnk_03002490->unk7B &
 1;` cached before the test and `tp = &gUnk_03002490;` between them (cse
 rewrites `tp`'s init into the copy); `tp` without `m` puts the copy before
 the load (16 bytes).  They are documented as stand-ins in
-`src/stage_4335c.c`, not as the original's spelling.
+`src/player_meta_knight_swim_update.c`, not as the original's spelling.
 
 ### 3.478 `sub_0801b24c` again: the plain rewrite keeps 3.464's 44 bytes, and the `p` block is a cse1/cse2 path effect
 The straggler campaign redrafted M06's last function plainly in the style
@@ -3759,7 +3759,7 @@ the reload trace cannot see either residue.  Best source on #84.
 **Note (final campaign, lesson 3.492):** the `p` block's path effect is the `p` local itself: without it (the global read at every use) and with the fourth mask through the shared `m`, the function matches; "one more long-lived value nobody found" was one local fewer.
 
 ### 3.479 `sub_08001cc8`: a goto loop, arithmetic in place, a real 3-D table - not a regmove tie
-The affine sprite emitter (776 bytes, now `src/early_1cc8.c`) was parked by
+The affine sprite emitter (776 bytes, now `src/main_affine_sprite.c`) was parked by
 issue #32 at 8 bytes with a proof sketch that the ROM's operand tie is
 unreachable (3.35: regmove only re-targets to operand 2 when the chain roots
 in a hard register).  A fresh draft from the listing was 569 bytes off at
@@ -3783,13 +3783,13 @@ about regmove:
   extension;
 * the matrix entries as `(sx * *(gUnk_0872FB30 + rot)) >> 8` and
   `*(gUnk_0872FB30 - 128 + rot)`, `sy *` first in the last two (pointer
-  arithmetic scales rot before the load, as in `src/actor_63698.c`).
+  arithmetic scales rot before the load, as in `src/actor.c`).
 **Corrects** 3.35's closing claim that this function's ROM assignment is
 "structurally unreachable from its environment" and rom-map §6.4's "Group B"
 row: the premise (a regmove operand choice) was never the residue.
 
 ### 3.480 One scratch variable with five jobs is one pseudo: `sub_080031b8`
-The sound-effect allocator (716 bytes, `src/early_31b8.c`) sat at 36 bytes
+The sound-effect allocator (716 bytes, `src/sound_play_sfx.c`) sat at 36 bytes
 under `--old2` and 444 under the real recipe, diagnosed as "a pure register
 permutation over the last third".  It was one source difference (early-c):
 the original reuses a single `s32 t` as the move mask
@@ -3808,7 +3808,7 @@ directly instead of an `allowed` local, and no local for the first mask
 `adds r1, r0, #0`).
 
 ### 3.481 MultiBootMain is an older SDK revision, and its SIOMULTI is the io_reg.h constant
-`sub_08004984` (1000 bytes, `src/early_4984.c`) is the SDK's MultiBootMain
+`sub_08004984` (1000 bytes, `src/link_multiboot_main.c`) is the SDK's MultiBootMain
 (pokeemerald's `src/multiboot.c` is a later revision of the same source).
 Issue #32 left it with "gcc keeps 0x04000120 in a callee-saved register
 where the ROM re-loads the pool word".  From pokeemerald's source it took
@@ -3829,15 +3829,15 @@ four facts to match:
   jump.c's copy `(set 95 524)` makes it a register, not a constant) where
   the ROM loads its own pool word 0x04000126; while/for forms without the
   rotation are 12 bytes shorter;
-* `masterp` is a plain `u8 *` (the MultiBootParam of `src/early_3964.c`);
-  the `vu8 *` of `src/early_4734.c` ties the header bytes' OR to the other
+* `masterp` is a plain `u8 *` (the MultiBootParam of `src/link_setup.c`);
+  the `vu8 *` of `src/link_block_main.c` ties the header bytes' OR to the other
   operand (4 bytes).
 The MultiBoot SWI returns an int (`adds r5, r0, #0; cmp r5, #0`, no
 truncation): `include/gba/syscall.h` now declares it that way.
 
 ### 3.482 The link library's I/O registers are the io_reg.h macros: gcse keeps a symbol's address alive, never a constant's
 EnqueueSendCmd/DequeueRecvCmds (`sub_08006ac8`/`sub_08006bb4`,
-`src/early_6ac8.c`, pokeruby's `link.c` in an older revision) matched from
+`src/link_cmd_queue.c`, pokeruby's `link.c` in an older revision) matched from
 pokeruby's source once `REG_IME` was the io_reg.h macro instead of the
 `gUnk_04000208` symbol the landed link files use (early-b).  gcse's PRE
 only handles symbol loads (`want_to_gcse_p` rejects CONST_INT), so a symbol
@@ -3858,7 +3858,7 @@ counter spills") and answers L7 of the run: the address loaded into sl
 before the loop was the symbol's reaching register.
 
 ### 3.483 DoRecv walks its buffer with a pointer: the ROM steps the register that holds the buffer's address
-`sub_08006e9c` (360 bytes, `src/early_6e9c.c`) was "three extra base
+`sub_08006e9c` (360 bytes, `src/link_do_recv.c`) was "three extra base
 pseudos in high registers" (#32, 271 bytes).  In this revision the staging
 buffer is walked with a pointer (early-b): `p = gUnk_03004D38;` right after
 the 8-byte copy (which still says `*(struct Pair *)gUnk_03004D38`), `*p++` in
@@ -3873,7 +3873,7 @@ by compute_local_properties) as the kill set, so a copy is available only at
 a block all of whose predecessors end with it, never at a loop header.
 
 ### 3.484 LinkInit's "missing movhi scratch" was a chained assignment
-`sub_08003888` (`src/early_3888.c`) stores 0xFF to one u8 byte, -1 to three
+`sub_08003888` (`src/link_setup_init.c`) stores 0xFF to one u8 byte, -1 to three
 s8 bytes of `gUnk_030023A8` and -1 to the s16 cell `gUnk_0300244C`, the
 last through `movs r0,#1; negs r0,r0; ... adds r1, r0, #0; adds r0, r1,
 #0; strh`.  Issue #32 read that as a missing `*movhi_insn` scratch and parked
@@ -3906,14 +3906,14 @@ neighbour `sub_08003964`.
 **Corrects** 3.73 (see its note).
 
 ### 3.486 TaskCreate: an integer literal is reloaded, a symbol is a local quantity
-`sub_0800579c` (TaskCreate, `src/early_5654.c`) had the ROM's instruction
+`sub_0800579c` (TaskCreate, `src/task.c`) had the ROM's instruction
 stream but every register of its found block one step off: the ROM loads the
 EWRAM stack base as `ldr r7, =0x0203BFE0` straight before its only use, in
 the register `type` has just vacated, while the draft's
 `(u32)gUnk_0203BFE0` became a pool-load pseudo that local allocation served
 first (priority 10000) and pushed the address, table, `type * 8` and zero
 temporaries up by one (the LA print showed it).  The source spells the base
-as the plain number, as the landed `sub_08006148` (`src/early_5d9c.c`)
+as the plain number, as the landed `sub_08006148` (`src/task_draw_world.c`)
 already does: `gUnk_03004B90[slot] = 0x0203BFE0 + (slot << 8);`.  A CONST_INT
 operand survives in the addsi3 until reload, which materialises it in a
 reload register, so it never competes in local allocation (early-c).  The
@@ -3959,7 +3959,7 @@ issue #63.
 **Note (final campaign, lessons 3.490, 3.491):** matched.  The `u16 *recv` local was wrong (the struct spelling makes the ROM's r4 a compiler pseudo), and the one doubling too many came from jump.c's else-arm swap running in jump1; a dead `i = 4;` before the `break` delays it to jump2.  It was not about when cse attaches REG_EQUAL.
 
 ### 3.488 `sub_08002378`: merge_blocks splices a goto's target back in, and WHEN it does decides cse1's view
-The 0x7700-series link handshake (752 bytes, `src/early_2378.c`) is the twin
+The 0x7700-series link handshake (752 bytes, `src/link_sync_random.c`) is the twin
 of the landed `sub_08002668`, whose source reaches its negotiation clamp by
 a goto into a trailing do/while.  #32 diagnosed its 20 bytes as "the ROM's
 `&gUnk_0300244C` preheader load is a GCSE/PRE insertion; ours lands one
@@ -3995,7 +3995,7 @@ later pass removed.  **Corrects** 3.55's "the ROM's preheader load must
 come from GCSE's PRE" for this function.
 
 ### 3.489 `sub_08027a6c`: a `u16` value makes its constant test a hoistable HImode chain, and a map cell is a struct copy
-M07's room map builder (956 bytes, now `src/level_27a6c.c`) was parked by #93
+M07's room map builder (956 bytes, now `src/room_hub_map.c`) was parked by #93
 at 234 differing bytes (948 of 956) on "loop optimisation and allocation
 choices".  A fresh pass from #93's best found two source facts in about
 fifteen minutes (fin-m07), both read off the `-da` dumps:
@@ -4019,7 +4019,7 @@ fifteen minutes (fin-m07), both read off the `-da` dumps:
   local was one more pseudo in global allocation (86 -> 0).
 The loop-1 flag shift keeps a second `& 0xFF7F` (`& 0xFF` is 18 bytes off),
 the y store comes before the x store, and `gUnk_0200AFE0` is `s16 [][2]`
-here (`src/camtask_2d38c.c` reads the same cells as a flat `s16 [4]`).
+here (`src/camera_map_events.c` reads the same cells as a flat `s16 [4]`).
 The function matches at every pool-label count (4.79's K scan, 0-120).
 
 ### 3.490 SerialCB's handshake reads the struct, not a pointer local
@@ -4074,7 +4074,7 @@ question for SerialCB; `sub_0801b24c` turned out to have no doubling
 residue at all (3.492).
 
 ### 3.492 `sub_0801b24c`: no `p` local, one mask variable - and the triple doubling was never the residue
-M06's third hit test (1424 bytes, now `src/hitbox_1b24c.c`) sat at 44 bytes
+M06's third hit test (1424 bytes, now `src/collision_hit_test_class20.c`) sat at 44 bytes
 through three agents, the straggler campaign's plain rewrite and 3.464/3.478's
 diagnoses.  A fresh pass matched it in about twenty minutes (fin-m07) with
 two source facts that only work together:
@@ -4108,7 +4108,7 @@ block's path effect is the `p` local itself; "the original evidently has one
 more long-lived value" was wrong: it has one fewer local).
 
 ### 3.493 `sub_080c5b84`: PRE's slot order is arithmetic - solve the bucket inequalities for declaration order, S and the file's label count together
-The course renderer (1720 bytes, now at the end of `src/subgame_c5284.c`) was
+The course renderer (1720 bytes, now at the end of `src/subgame_air_grind_course.c`) was
 parked by #98 at 22 bytes, byte-exact only with 37 empty `asm("")` that raised
 gcse's hash-table size S (4.105).  The final campaign first measured the
 premise (fin-gcse, a private gcse print of every expression's unreduced hash
@@ -4133,7 +4133,7 @@ closed it with no insn added (fin-m07):
   z, flag, set, clear were 22-28), so `s32 lane; u16 zero; s32 x, y, z;
   struct M37CoursePlayer *p;` makes lane 22 and p 27 (lo/hi 35/36);
 * the pool-label term then needs &gUnk_0201B0E0 to be `.LC20`-`.LC29` or
-  `.LC40`-`.LC49`: appended to `src/subgame_c5284.c`, which allocates
+  `.LC40`-`.LC49`: appended to `src/subgame_air_grind_course.c`, which allocates
   `.LC0`-`.LC39`, it is `.LC41`.  Twelve of twelve model-predicted
   declaration orders matched there, and the function is 8 bytes off
   compiled alone (4.79/4.86: the file is part of the source).
@@ -4150,7 +4150,7 @@ initializers remain a valid, trace-free way to move S (they closed half of
 caab8's residue, 3.494).
 
 ### 3.494 `sub_080caab8`: dead initializers settle the slot swap; the all-ones `orrs` still needs two levers
-The boot logo objects' interpreter (568 bytes, now `src/boot_caab8.c`) had
+The boot logo objects' interpreter (568 bytes, now `src/boot_logo_update_objects.c`) had
 two residues (3.457), and the final campaign separated them (fin-gcse, with
 private gcse/combine prints of the expression hashes and of the IOR fold):
 * **the slot swap is the insn count.**  The two PRE copies `obj + 32` and
@@ -4163,7 +4163,7 @@ private gcse/combine prints of the expression hashes and of the IOR fold):
   deletes the stores) raise the count to 258 (S = 129) and fix the order
   with nothing else changed.  The working S values are 115, 117, 119, 129,
   141, 147 and 157; no pool label is involved, so the file does not matter
-  (the function matches alone and appended to `src/boot_caa3c.c`);
+  (the function matches alone and appended to `src/boot_logo_init_objects.c`);
 * **the `orrs` is combine's `(ior A C) -> C` fold** (simplify_logical): the
   off-screen `obj->unk04 = 0xFFFF` expands to `(ior old 0xFFFF)` with `old`
   PRE's reaching register for `(mem:HI obj+4)`.  LCM inserts it at the end
@@ -4209,8 +4209,8 @@ observations for any later campaign of this kind:
 * **Delete first.**  A mechanical strip (drop the `asm("rN")` labels and the
   empty `asm` statements of ONE function, turning `asm("" : "=r"(x) :
   "0"(y))` into `x = y;`, and re-test the whole file) matched 36 functions
-  as they stood: 8 in `enemy_aa338.c`, 11 in `enemy_ae3bc.c`, 9 in
-  `hud_b2fe8.c`, 3 in `hud_b5024.c`, 2 in `hud_b5840.c`, and
+  as they stood: 8 in `enemy_nightmare_wizard_heavy_mole.c`, 11 in `enemy_nightmare_power_orb.c`, 9 in
+  `actor_whispy_woods_items.c`, 3 in `room_spawn_objects.c`, 2 in `room_gfx_spawns.c`, and
   `sub_0809bc1c`, `sub_08012fe0`, `sub_080b6290`.  Their pins no longer did
   anything.  The residue table of the rest (bytes of that function only,
   from a per-symbol comparison of the whole-file build) was the plan.
@@ -4261,7 +4261,7 @@ is taken in the loop, global allocation drops `pc`, and reload re-loads the
 address right before the store - after the value (3.258's address reload).
 The fixed BG2VOFS value is a plain `u32 w` that spills (3.467); the `u16
 w[2]` written through `*(u32 *)w` was not needed.  **Corrects** the three
-placeholders `src/save_b6d04.c` documented (3.341's `asm("" ::: "r8",
+placeholders `src/main_hblank_row_scroll_reverse.c` documented (3.341's `asm("" ::: "r8",
 "ip")` lever; see 3.341's note).
 
 ### 3.499 One variable for the inner loop counters and a later `Div()` result
@@ -4402,7 +4402,7 @@ The same agent's other M32 shapes: an `s32 d` local for a copied `s8` field
 (`ldrb; lsls #24; asrs #24; strb`), `if (c) ofs = 8; else ofs = 0;` for a
 zero set after the compare, `vu16 gUnk_03001EA4`, `while` loops for goto
 loops, and `sub_080b0b50` written like its landed twin in
-`src/actor_70ec0.c` (`s8 sign = c ? -1 : 1;` ... `(u16)tbl[i] * sign`).
+`src/cutscene_warp_star.c` (`s8 sign = c ? -1 : 1;` ... `(u16)tbl[i] * sign`).
 **Corrects** 3.260, 3.261 (`sub_080b09ac`), 3.262 and the recipe (not the
 rule) of 3.264; see their notes.
 
@@ -4474,7 +4474,7 @@ natc-b's M33 results:
   `sub_08063eb0` is `struct PointPair box;` (task.h's bit-fields): the ROM's
   `ldr [sp]; ands; orrs; str [sp]` word RMW and the HImode `-640`/`640`
   copies are the bit-field stores (per-file `extern s32
-  sub_08063eb0(struct PointPair *box, s32 i);`, as `src/enemy_7aa5c.c`
+  sub_08063eb0(struct PointPair *box, s32 i);`, as `src/enemy_sword_and_blade_knight.c`
   declares it);
 * `sub_080b603c`: `ldr r1, =0x040000B0; str; adds r1, #4; str; adds r1, #4;
   str` is `REG_DMA0SAD = a; REG_DMA0DAD = b; REG_DMA0CNT = c;` (cse derives
@@ -4589,7 +4589,7 @@ The coordinator's leftovers (natc-a, natc-d):
   a2, v & r);`) - which makes both quality 1 and keeps the tie on `v`.
 * **`sub_08074c0c`** (M19; 387 bytes after the strip): `t->unk40 = 0; if
   (c) t->unk40 |= 0xC00; else t->unk40 &= 0xF3FF;`, the spelling its
-  sibling in `src/actor_70ec0.c` uses.  The literal `= 0xC00` / `= 0` form
+  sibling in `src/cutscene_warp_star.c` uses.  The literal `= 0xC00` / `= 0` form
   gives the same instructions but a different set of pseudos (the zero of
   a literal store against a copied `&gUnk_03002490`, priorities 789/1111),
   and that alone was the whole cascade.
@@ -4599,7 +4599,7 @@ The coordinator's leftovers (natc-a, natc-d):
   so the stores of the arms do not block it) treats the plain re-reads as
   redundant, and the ROM keeps one at the join after the `unk08` arms and
   one after `abs(unk04)`; the same placeholders sit in the twin in
-  `src/player_3bde8.c`, so one natural source would free both.
+  `src/player_share_item.c`, so one natural source would free both.
 * **`sub_0804e3a0`** (M14): its twin `sub_08037914`'s style (`while (1) {
   ...; break; }`, task locals per block, `!(gUnk_03002458[...] & 2)`
   inline) gives the shared constant 2; the old staging locals were the
@@ -4636,8 +4636,8 @@ Measured: #155 renamed 1,145 symbols in 14 batches, changing identifier
 lengths by -8 to +22 characters across the 306 source files, and `make clean
 && make compare` passed after every batch.  The batches covered the
 functions the hash-order lessons are about: `sub_080c5b84`'s PRE slot
-`&gUnk_0201B0E0` (3.493, now `gAirGrindCourse`), `obj_30238.c`'s
-`sub_08030724` (4.79, now `ResetBlockAnims`) and `level_242d0.c`'s door
+`&gUnk_0201B0E0` (3.493, now `gAirGrindCourse`), `camera_stage_effect.c`'s
+`sub_08030724` (4.79, now `ResetBlockAnims`) and `room_enter_exit.c`'s door
 code (4.86).  So a pure rename needs no K-scan and no per-function check;
 `tools/rename.py --verify-diff` plus `make compare` is the whole proof.
 Two limits: the pool label names (`.LCn`) still come from the count of
@@ -4673,7 +4673,7 @@ everywhere (`vu16` vs `u16` where each access is one load, `u16 x[4]` vs
 `u16 x[]`, `s32` vs `s32 []` read as `x[0]`...).  The other 73 are views
 the code depends on: AgbInit's `u32`/`vu32` spellings of the BG scroll
 shadows (the stores chain differently when the cells are volatile),
-`src/hud_b5840.c`'s `u32 []` views of the HBlank DMA cells
+`src/room_gfx_spawns.c`'s `u32 []` views of the HBlank DMA cells
 (`*(vu32 *)gHBlankDmaCnt`), sixteen files that read `gTerrainResult` as
 `u8 []`, `u32` for a function pointer that is only stored, partial struct
 copies (`struct RoomDef { u8 filler00[0x10]; struct MapTile *unk10; }`).
@@ -4700,7 +4700,7 @@ completing the struct later does not re-lay it out.  A scalar
 (`extern struct Foo gFoo;`) and a pointer (`struct Foo *p`) are not
 affected, and a word field happened to load aligned in the test.  Found
 when `include/camera.h` declared `gBg1BreakingBlocks[]` with the struct
-only forward-declared and `src/block_318b4.c` (which defines the struct
+only forward-declared and `src/player_block_anims.c` (which defines the struct
 itself) changed at two halfword loads.  Rule for headers: a header that
 declares an array of a struct includes the struct's definition (its home
 header); everything else may forward-declare.
@@ -4735,10 +4735,10 @@ once, as a call argument, is the easy case.  Also dropping `static` from
 the SDK's two RAM-copied SRAM cores only added two `.globl` lines.
 
 ### 3.521 A void-returning callback's "return value" is its own address
-`UpdateHBlankScroll` (`src/hud_b5840.c`) takes the s16 return value of
+`UpdateHBlankScroll` (`src/room_gfx_spawns.c`) takes the s16 return value of
 the effect it calls through `gHBlankScrollEffects[]` as the HBlank DMA
 count.  One effect, the fade driver `sub_080b6154`
-(`src/save_b6154.c`), has a path that falls off its end without setting
+(`src/main_hblank_bands_in_blend.c`), has a path that falls off its end without setting
 r0, and a call through a function pointer leaves the callee's address
 in the register the call went through: on that frame the DMA count is
 `0x6155`, the low half of `sub_080b6154 + 1`.  The ROM's own undefined
@@ -4777,23 +4777,23 @@ REG_ADDR_BG2HOFS`, `(vu32 *)REG_ADDR_DMA0`) and a region address written
 `REGION + offset` (262 sites in 57 files) compile exactly like the number.
 Swapping an extern I/O symbol for its `REG_*` macro changed only the pool
 word's spelling (`.word gUnk_0400012A` -> `.word 0x400012a`) in
-`early_7004.c`, `early_6d28.c`, `early_6e8c.c` and `early_6e9c.c`: the
+`link_send_connect.c`, `link_serial_cb.c`, `link_start_transfer.c` and `link_do_recv.c`: the
 same instructions, labels and pool order, and the same `.text` once the
 absolute symbols are defined (the 3.520 case; the owner's coordinator
-accepted it under those three checks).  In `early_4734.c`, `REG_IME`
+accepted it under those three checks).  In `link_block_main.c`, `REG_IME`
 lets cse derive `0x04000208` from the live `0x0400010C` (`adds r1, #252`),
 which removes one pseudo and shifts the allocation, so `GIME` stays the
 symbol with a `raw:` comment (3.482's opposite case, 3.62).  The `u`
 suffix of the region macros never mattered for a real address, but it did
 for a number that only looked like one: `gBg0ScrollX > 0x2000000`
-(`mode_082d0.c`, a 16.16 scroll value) became an unsigned `bls` with
+(`mode_extra_mode_title_sprites.c`, a 16.16 scroll value) became an unsigned `bls` with
 `EWRAM_START`; it stays a number with a `raw:` comment.  So the oracle
 also checks that a literal really is an address.  `make audit` (docs/audit.md)
 lists what is left: four CpuSet control words and nine commented numbers.
 
 ### 3.524 `sub_080b38f0`: a nested `do { } while (0)` is a x3 reference weight, and it settled #154's last r3/r4 swap
 #37's one-hour attempt (agent D) matched `sub_080b38f0`
-(`src/hud_b2fe8.c`) with no pin and no `asm`, from #154's 7-byte plain body
+(`src/actor_whispy_woods_items.c`) with no pin and no `asm`, from #154's 7-byte plain body
 (`gCurTask->` at every access, which is right: the ROM reloads `gCurTask`
 exactly after the two byte stores to `u80` and `facing`, which a `t` local
 would not do).  The residue was 3.511's r3/r4 swap, and `-dl` gives its
@@ -4832,7 +4832,7 @@ size and `health`'s offset after it.
 
 ### 3.526 `PoppyBrosSrHeadUpdate`: a redundant store keeps a value live to reload, and post-reload cse deletes it
 3.156 kept one empty `asm("" : : "r"(d2))` in `sub_08091e18` (now
-`PoppyBrosSrHeadUpdate`, `src/enemy_9113c.c`) because "pure C cannot
+`PoppyBrosSrHeadUpdate`, `src/enemy_poppy_bros_sr.c`) because "pure C cannot
 express" a value that is live without being used: the ROM keeps the
 decremented animation timer in r4 (`subs r4, r0, #1`) through the
 `frame != -1` test, which makes reload's index scratches for the four
@@ -4925,8 +4925,8 @@ combine's IOR simplification:
   loop gains an entry test).
 * **The compiler has that scan.**  A private agbcc that skips the scan's
   recording compiles the plain body to the levered version's code, but it
-  also changes five matched files (`actor_653ec`, `block_30804`,
-  `player_3bde8`, `save_b6b08`, `save_b6d04`).
+  also changes five matched files (`actor_helpers`, `player_break_blocks`,
+  `player_share_item`, `main_hblank_row_scroll`, `main_hblank_row_scroll_reverse`).
 * What does not help: changing `obj` between the compare's load and the
   copy (combine keeps the memory reference, still 0xFFFF); a store inside
   the header test or the while test (it breaks the gcse reuse, 184 and
@@ -5722,7 +5722,7 @@ both the case that needs the opposite and the case where it does not matter.
   candidate AND your candidate has a `adds rX, rPool, #0` copy on a merge path.
 * **Does not matter**: `sub_0806e73c`'s setup block is byte-identical written
   either way, because CSE collapses the repeated loads into the pseudo the local
-  would have created. All of `src/actor_6e0f0.c` matched with locals.
+  would have created. All of `src/actor_hit_effects.c` matched with locals.
 So treat this as a diagnostic, not a rule: reach for the rewrite when the diff
 shows a spurious `adds rX, rY, #0` before an offset fix-up, and never churn a
 file that already matches. The real lever for *which* register each group gets
@@ -5770,7 +5770,7 @@ local gives the right addressing but emits the pool load at the assignment,
 before the earlier call arguments (8 bytes wrong); a plain index variable set
 next to the other initialisations gives both the addressing and the emission
 order, because cse folds it to 4 only after the address form has been chosen.
-(All three input dispatchers in `src/actor_692fc.c`.)
+(All three input dispatchers in `src/actor_collision.c`.)
 
 ### 3.140 Assorted M18 one-liners
 * **Fall-through `case` chains are how a small multiply is spelled.** `unk7D * 64`
@@ -5782,7 +5782,7 @@ order, because cse folds it to 4 only after the address form has been chosen.
   (`sub_0806bfd8`).
 * **The return-value extension pair names the CALLEE's return type**: `lsls #16;
   asrs #16` after a `bl` is an `s16` return, `lsls #16; lsrs #16` a `u16` one.
-  Related trap: `src/early_6464.c` declares two helpers with a `u16` first
+  Related trap: `src/link_driver.c` declares two helpers with a `u16` first
   parameter, but every M18 caller passes a negative base, where `u16` folds the
   constant to `0xFFF4` and pools it instead of the ROM's `movs; negs`. Declare
   the parameter `s32` in the caller's file — `s16` does not work, because ARM
@@ -6502,7 +6502,7 @@ value has a second use.)
 
 ### 3.179 A struct in `include/task.h` can be right for the callee and wrong for the caller
 `sub_08063E2C` / `sub_08063F00` take an axis-aligned box, and
-`src/actor_63698.c` byte-matches them with `struct Rect` (four separate `s16`
+`src/actor.c` byte-matches them with `struct Rect` (four separate `s16`
 fields).  Three M22 callers do NOT: `sub_08083020`, `sub_08083488` and
 `sub_08083fbc` build the argument in their own stack frame with 32-bit
 read-modify-write over *pairs* of halfwords
@@ -7565,7 +7565,7 @@ never a web problem: with r9-r11 fixed and the cse temp broken up, n7 lands
 r7 naturally). Only for carved single-function modules - the register is
 reserved for the whole file.
 
-**Note (natural-C campaign, #154):** `src/hud_b4ea8.c` has no file-scope register globals any more (lesson 3.511).
+**Note (natural-C campaign, #154):** `src/room_object_gfx.c` has no file-scope register globals any more (lesson 3.511).
 
 ### 3.279 asm insns block cross-jump entirely; a DELIBERATE duplicate arm that merges post-reload is a zero-byte rotation advance
 
@@ -7718,7 +7718,7 @@ r7 (`push {r4,r5,r6,r7,lr}; mov r7,r8; push {r7}`).
   reload rotation, both internal to reload's spill-set construction and
   unreachable by any C source shape or pin (which are invisible to the
   spill-set order, 3.269b).
-- **SOLVED (b4ea8, landed as `src/hud_b4ea8.c`).** The "same class as a78a0,
+- **SOLVED (b4ea8, landed as `src/room_object_gfx.c`).** The "same class as a78a0,
   unreachable" verdict above is WRONG, and so is the r7-as-spill model it
   rests on: the ROM's shape needs no r7 spill enrollment at all, only the
   right web and the right rotation. Six zero-byte levers, all already
@@ -7886,7 +7886,7 @@ sources have no asm, so on any function where the diff shows a lone
 `beq far` vs `bne+b` pair: count the barriers between branch and target and
 replace them with fully-pinned staging (3.261), which needs no asm at all.
 
-**Note (natural-C campaign, #154):** `sub_080b0b50` needs neither barriers nor pinned staging: it is written like its landed twin in `src/actor_70ec0.c` (lesson 3.507).
+**Note (natural-C campaign, #154):** `sub_080b0b50` needs neither barriers nor pinned staging: it is written like its landed twin in `src/cutscene_warp_star.c` (lesson 3.507).
 
 ### 3.261 The volatile-staged pinned copy: how to place a hi-reg reload temp in a chosen register
 
@@ -8121,7 +8121,7 @@ Ruled out as equivalents while establishing this: `*(u16 *)&f |= 0xFFFF`
 (folds), `*(vu16 *)&f |= 0xFFFF` (keeps the `ldrh` but stores the constant -
 `ldrh; ldr; add; strh`, no `orrs`), `|= 0x1FFFF`, `|= (u16)0xFFFF`,
 `u32 m = 0xFFFF; |= m`, and `f = f | 0xFFFF`. The `|= 0xFFFF` sites in
-`src/early_4fec.c` and `src/agb_init.c` are not counter-evidence: those apply
+`src/task_init.c` and `src/agb_init.c` are not counter-evidence: those apply
 `|=` to a wider or indexed lvalue, where the fold does not arise.
 
 ### 3.292 Constant grouping in a mixed shift-and-add expression is observable
@@ -8148,7 +8148,7 @@ instruction *after* the loop before choosing.
 `t->unk48 - (gUnk_03000B78 >> 16)`. Declared `s32`, agbcc proves only the top
 halfword is needed and emits `movs rN, #2 ; ldrsh r1, [r0, rN]`; declared `u32`
 it emits `ldrh r1, [r0, #2]`. The ROM has `ldr r1, [r0, #0] ; asrs r1, r1, #16`,
-the full-word load, which is what the **`vs32`** declaration `src/early_11ac.c`
+the full-word load, which is what the **`vs32`** declaration `src/main_frame_io.c`
 already uses for these two cells (they are the BG3HOFS/BG3VOFS 16.16 shadows)
 produces. Reuse the existing declaration of a cell before inventing one: the
 early zone named most of IWRAM in #32 and the volatility is part of the type.
@@ -8372,8 +8372,8 @@ global emits `asrs`, not `lsrs`, even though the load is a zero-extending
 signedness and read the shift as promotion.
 
 ### 3.311 The house spelling for a short descending zero loop
-Two landed files already contain it (`src/enemy_9fbd0.c:327`,
-`src/early_6464.c:266`) and nothing else reproduces `cmp r0, r1; bge`:
+Two landed files already contain it (`src/enemy_king_dedede_damage.c:327`,
+`src/link_driver.c:266`) and nothing else reproduces `cmp r0, r1; bge`:
 
 ```c
     q = arr; z = 0;
@@ -8402,7 +8402,7 @@ polarity moves. M16's `sub_0805d918` needed `case -2:` written before
 `case -3:` and `case -4:` for exactly this reason.
 
 **This corrects a wrong inference worth recording.** The same `bne default;
-b case` shape in the landed twin `sub_080af020` (`src/enemy_ae3bc.c`) was first
+b case` shape in the landed twin `sub_080af020` (`src/enemy_nightmare_power_orb.c`) was first
 read as evidence of a FOUR-case tree with a hidden case value, and a full pass
 over the alternatives disproved it: adding `case -1:` in any form (empty,
 body-sharing, `case -2 ... -1:`, `case -2 ... 0:`, or a different fourth value)
@@ -8515,7 +8515,7 @@ a 32-bit expression. Combined with the case-constant rule above, this is what
 settled the signature of `sub_08001a94`: the ROM passes argument 5 straight
 from two `ldrsh`s and truncates only argument 6, so the prototype is all-`u32`
 with an explicit `(s16)` cast at the last argument, exactly as the landed twin
-`src/early_5d9c.c:65` spells it.
+`src/task_draw_world.c:65` spells it.
 
 ### 3.300 A sub-word LOCAL costs a sign-extend at every read
 `lsls rX, rX, #24; lsrs rSAVED, rX, #24` at entry, followed later by
@@ -9147,8 +9147,8 @@ out to track what the original source wrote. In M16's `sub_0805da2c` the pool
 word `0x0600FE00` prints numerically while `gUnk_03001470` next to it prints
 symbolically, and the function only matches with the VRAM address written as
 the literal `0x0600FE00`; spelling it `(u8 *)0x03001470` for the other one made
-that access *worse*. The landed `src/` agrees — `actor_653ec.c`,
-`player_1a07c.c` and `enemy_a93ec.c` all write
+that access *worse*. The landed `src/` agrees — `actor_helpers.c`,
+`cutscene_fountain_kirby_draw.c` and `enemy_kracko_cloud_lightning.c` all write
 `((prio & 0x7FF) << 5) + 0x0600FE00`.
 
 Practical consequence: a `data_symbols` entry invented for an address the
@@ -9307,7 +9307,7 @@ decompiled.  The arithmetic is worth memorising: the phantom always lands at
 ### 4.44 Grep the landed `src/` for a twin before hand-deriving anything
 The same body is reused across modules, not just within one. M04's
 `sub_08012fe0` is byte-for-byte the already-landed `sub_080b0570`
-(`src/enemy_ae3bc.c`) in a completely different module, scaffolding and
+(`src/enemy_nightmare_power_orb.c`) in a completely different module, scaffolding and
 `register ... asm("ip")` pin included; copying it verbatim cost seconds where
 deriving it would have cost an hour. Search on a distinctive *expression* from
 the listing rather than on a name - `grep -n "(x >> 16) + (u16)" src/` found
@@ -9445,10 +9445,10 @@ splits after the fan-out, and all were harmonised with byte-exact rechecks.
 ### 4.74 Carve order decides what the next module's segment is called
 `tools/carve.py` gives the part AFTER a carve the name `<segment>_<end>`
 only when a part remains BEFORE it; a start-adjacent carve leaves the name
-unchanged.  Carving M02's last two files as `[hud_0b318][mode_0b44c]` in
+unchanged.  Carving M02's last two files as `[hud_tilemap][mode_hub_stage_init]` in
 that order named M03's segment `game_code_and_rodata_0800b44c` (the end of
 the first carve), not its own start.  Carve the file adjacent to the next
-module FIRST (`mode_0b44c`, then `hud_0b318`): M03 then lives in
+module FIRST (`mode_hub_stage_init`, then `hud_tilemap`): M03 then lives in
 `game_code_and_rodata_0800b920`, and every intermediate name inside M02 is
 consumed as the module completes.
 
@@ -9503,7 +9503,7 @@ subagent spotted it).
 
 ### 4.79 A function can match alone and not inside its carve file: gcse hashes pool-label ADDRESSES
 `sub_08030724` byte-matched on its own and swapped r3/r4 when compiled as the
-last-but-five function of `obj_30238.c`.  The `-da` dumps are identical up
+last-but-five function of `camera_stage_effect.c`.  The `-da` dumps are identical up
 to `.gcse`, where the expression hash table lists the same three
 `(mem (symbol_ref ".LCn"))` pool loads in a different bucket order (hash
 values 2/3/4 in one build, 9/10/0 in the other, 11 buckets): gcc 2.95's
@@ -9516,11 +9516,11 @@ before the function.  It is deterministic but chaotic: starting the file at
 `sub_080302cc` or `sub_08030254` it matched.  Extern declaration order,
 declaration placement and prototype spellings do not move it.  The fix is at
 landing: split the carve file at a boundary where both halves match
-(`obj_30238.c` + `obj_306b4.c`, cut between the type-#236 bodies and the
+(`camera_stage_effect.c` + `camera_world_sprite_block_anims.c`, cut between the type-#236 bodies and the
 helpers).  So the whole-file `fnmatch.sh` before `carve.py` (step 3 of the
 landing checklist) is not a formality - it is the only check that sees this,
 and a whole file can also match where two smaller ones would not
-(`camtask_2d38c.c`, 10 functions, was verified whole before merging).
+(`camera_map_events.c`, 10 functions, was verified whole before merging).
 
 **Note (final campaign):** gcse's `hash_expr_1` hashes a `SYMBOL_REF` by the CHARACTERS of its name (`h += (h << 7) + c`; the source comment says it avoids hashing the address), not by the string's address; the conclusion stands, since a `.LCn` label's name carries its TU-wide number n.
 
@@ -9578,7 +9578,7 @@ well: the logs of `m07-loadB_A.c` and `m07-loadB_a.c` overwrote each other.
 ### 4.84 Emit shared struct definitions from the canonical file, not from the first body
 gen.py unions the declarations of a carve file's bodies and emits each
 struct from the first body that declares it.  One agent's tool had stripped
-the `/*0x00*/` offset comments, so `level_242d0.c` would have shipped a bare
+the `/*0x00*/` offset comments, so `room_enter_exit.c` would have shipped a bare
 `struct RoomDef` even though every body agreed on its layout.  gen.py now
 prints a struct from `types.txt` whenever its normalised form equals the
 canonical one, and falls back to the first body otherwise.
@@ -9605,7 +9605,7 @@ shifts K without emitting code, and scanning K = 0..220 (about 0.3 s per K,
 K = 6-10, 36-40, ...; eleven of the fifteen door functions match at every
 K.  For landing, the scan tells you which cut points are safe: here no split
 of 0x080242D0-0x080261C0 worked, the whole range matched only as one file
-starting at `sub_080242d0`, and `level_242d0.c` (already landed at
+starting at `sub_080242d0`, and `room_enter_exit.c` (already landed at
 0x080242D0-0x08024E40) was extended to cover it (carve the second half with
 carve.py, then merge the two `c_code` rows in `segments.txt` and drop the
 second section from `linker.ld`).  Two related traps: `fnmatch.sh` truncates
@@ -9730,7 +9730,7 @@ answer.  In the expand RTL the constant is already HImode -
 `(minus:SI (subreg:SI (reg:HI 81)) ...)` - because the destination is a `u16`
 store, and agbcc's HImode move of a constant too large for `movs` needs a
 scratch: `movs rX,#128; lsls rX,#1; adds rY,rX,#0`.  That is the same shape
-`src/early_0de4.c`'s header comment records for its `0xFFFF` mask, where the
+`src/main_end_frame.c`'s header comment records for its `0xFFFF` mask, where the
 fix was `register u16 mask asm("r2")`.  So the copy is a property of the
 LITERAL (combine can narrow it to HImode); a variable is promoted to SImode
 and synthesises straight into its register with no copy.
@@ -10441,9 +10441,9 @@ build from a draft.
 ### 4.103 A start-adjacent carve cannot give the next module its own segment name
 Lesson 4.74 carves the file next to the following module first so that the
 remainder is named after its own start.  That only works when a part of the
-segment remains in front of the carve.  PR #133's `src/sub_080c6258.c` had
+segment remains in front of the carve.  PR #133's `src/subgame_air_grind_half_depth.c` had
 already split M37's second segment at `0x080C6260`, M37's own seam, so
-carving `mode_c6260` (`0x080C6260-0x080C6420`) first was start-adjacent and
+carving `ending_main` (`0x080C6260-0x080C6420`) first was start-adjacent and
 M38 kept the segment name `..._080c1ffc_080c6260`.  Renaming it would have
 meant editing another module's segment, so it stays; the name is cosmetic
 (the linker section and `carve.py` only use addresses).
@@ -10692,7 +10692,7 @@ installed as a callback by `sub_080cd70c`) and a 4.40 phantom
   their questions (3.491, 3.493, 3.494) and closed SerialCB and half of
   caab8.  Races never collided: the racer wrote only `wip/<agent>/` and the
   owner kept `fns/`.
-- `sub_080c5b84` landed appended to `src/subgame_c5284.c` by 4.86's
+- `sub_080c5b84` landed appended to `src/subgame_air_grind_course.c` by 4.86's
   procedure (carve the hole under a temporary name, merge the two `c_code`
   rows in `segments.txt`, drop the second `linker.ld` section; the module
   map's later row ids shift by one, which nothing references).
@@ -10755,7 +10755,7 @@ to be listed as excluded, or "remaining to be decompiled" never reaches 0.
   "measured" in `.greg`, a gcse reaching register, a pointer local that
   looked required) were wrong every time: finished agents closed all five
   by drafting from the function's landed sibling or twin first
-  (`sub_08037914`, `sub_0803c9b4`, `src/actor_70ec0.c`) and measuring
+  (`sub_08037914`, `sub_0803c9b4`, `src/cutscene_warp_star.c`) and measuring
   second.  A measured residue says what the candidate does, not what the
   original was.
 
@@ -10805,7 +10805,7 @@ addresses (NULL allowed in the door and object-list fields), while the four
 `u8` fields at `+0x54` produce six "pointers" into crt0 because their bytes
 happen to spell `0x08000xxx`.  A pointer table's `targets` layout comes
 from the C struct, never from "every word of the record that looks like an
-address".  The same test settled the task-type table: `src/early_5c4c.c`'s
+address".  The same test settled the task-type table: `src/task_draw_screen.c`'s
 comment still calls the second word "u32 flags", but TaskCreate copies it
 into the slot's resume address, which the ARM switcher enters with `bx`,
 and all 266 values are Thumb entries.
@@ -10867,8 +10867,10 @@ split && make modmap` may rewrite.  Findings from writing and running it:
 * `split_config.json` round-trips exactly through `json.dumps(indent=2)`,
   so the tool edits it structurally and keeps `external_defined` sorted
   (`carve.py`'s convention).
-* Two C file names are also function names (`src/sub_0804e3a0.c`,
-  `src/sub_080c6258.c`, with `.sub_...` linker sections): the pattern must
+* Two C file names were also function names (the two files PR #133 named
+  after their only function, with `.sub_...` linker sections, until #182
+  named them `src/player_throw_update.c` and
+  `src/subgame_air_grind_half_depth.c`): the pattern must
   not match a name preceded by `/` or `.` or followed by `.c/.h/.o/.s`, or
   a rename rewrites a path.  `linker.ld` and `segments.txt` are never
   edited.
@@ -10951,11 +10953,11 @@ A word replace cannot rename a field: `Task.unk3C` has 7,461 accesses, and
   the unmodified tree's error set and requires the renamed tree's to be
   identical, which also proves no access was renamed into a struct that
   lacks the new name.  agbcc and `make compare` stay the ground truth.
-* Local copies: the task engine's files (`src/early_4fec.c`, `early_5228.c`,
-  `early_55b0.c`, `early_58e4.c`, `early_5c4c.c`, `early_6464.c`,
-  `early_6cd4.c`) declare their own `struct Task`, with `h10`/`b12`/`w4C`
+* Local copies: the task engine's files (`src/task_init.c`, `task_run.c`,
+  `task_skip_mask.c`, `task_move.c`, `task_draw_screen.c`, `link_driver.c`,
+  `link_vsync.c`) declare their own `struct Task`, with `h10`/`b12`/`w4C`
   names, `s16` where the header has `u16`, and `u32 w18[8]` or
-  `u8 pad14[0x7C]` spans; `early_5d9c.c` calls the same block `struct
+  `u8 pad14[0x7C]` spans; `task_draw_world.c` calls the same block `struct
   Sprite`.  None is layout-identical to `include/task.h`, so none could be
   replaced by the header.  With `copies` the tool renames the member at the
   same offset (from the `/*0x14*/` comment) in every definition of the tag
@@ -10983,7 +10985,7 @@ The pipeline, from the loaders' C (all under `pending/`, never committed):
 * Room objects are created by `CreateActorByKind(kind, subtype, ...)`; the
   task type comes from a per-kind table indexed by the subtype (kind 0:
   `gUnk_0873F198`, subtypes 0-40 -> types 8-48), and the room object loader
-  (`src/hud_b5670.c`) copies the subtype's graphics descriptor
+  (`src/room_enemy_gfx.c`) copies the subtype's graphics descriptor
   `gUnk_0873EEA0[subtype]` = `{u16 palette banks, u16 tile count, u16 ?, u16
   compressed, u32 palette, u32 tiles}` into OBJ VRAM and the OBJ palette.
 * OBJ VRAM is in 2D mapping: `RequestCopy` modes 3/4 copy 0x200-byte rows to
@@ -10993,7 +10995,7 @@ The pipeline, from the loaders' C (all under `pending/`, never committed):
 * A frame table (`Task.unk38`) holds one OAM template per frame: a stream of
   4 halfwords per object (attr0 with the y offset in its low byte and bit 12
   = last, attr1, the h-flipped attr1, attr2 with the tile offset from the
-  task's tile word), exactly what `BuildOam` (`src/early_1b08.c`) reads.
+  task's tile word), exactly what `BuildOam` (`src/main_build_oam.c`) reads.
   Assembling frames from it gives recognisable sprites.
 * A render is written with `zlib` + `struct` (no PIL on the host) and read
   back with the Read tool.  `visual:` evidence says what the local render
@@ -11048,7 +11050,7 @@ pristine file with one line changed, named `<file>__<symbol>__<k>.c` (the
 compiler choice keys on the part before `__`).  That made #36 phase 2 a
 census-and-oracle job rather than a per-range `fnmatch.sh` one: choose a
 type for every symbol, apply everything, compare 306 files, and bisect
-only what differs (one file, `block_318b4.c`, lesson 3.518).  Pitfalls:
+only what differs (one file, `player_block_anims.c`, lesson 3.518).  Pitfalls:
 a generated C file left in `src/data/` is compiled by the Makefile's
 `src/**/*.c` glob (keep drafts in `pending/`); after
 a conversion, read the census's line numbers from the pristine copy, not
@@ -11189,7 +11191,7 @@ cartridge header; their words are the receiver's addresses, not ours).
 ### 4.137 Seg 19's head is the player's frame records, and one format needs a flag bit
 The 10,700 dense pointer words at the head of `song_tail_misc_audio` are
 3,116 twenty-byte records `{oam | 1, palette, tiles, palette2, tiles2}`
-that `PlayerLoadFrameTilesAndPalette` (`src/stage_3cd60.c`) reads through
+that `PlayerLoadFrameTilesAndPalette` (`src/player_helpers.c`) reads through
 the 4,713-entry player frame table `gUnk_0874CFEC`: bit 0 of the first
 word says the record has the second palette/tiles pair, and the function
 returns `oam & ~1`.  A pointer whose bit 0 is a flag has no plain `.word`
@@ -11606,7 +11608,7 @@ source, not only `make datastats`.
 * A record type can be declared in a code file only: the 58 seven-word
   terrain-handler tables and the hit-reaction records looked untyped
   until a second look found `struct ActorHandlers` and `struct ActorVt`
-  inside `src/actor_692fc.c`.  Moved to `include/actor.h` (an identical
+  inside `src/actor_collision.c`.  Moved to `include/actor.h` (an identical
   assembly for every file), they typed 198 records, 98 of which hold no
   function at all and were found from the pointers to them, not by a
   scan for function words.

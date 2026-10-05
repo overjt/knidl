@@ -9,9 +9,9 @@ entry lists them):
       me}, include/gba/m4a_internal.h): m4aSongNumStart and its siblings
       (src/m4a_c1.c) pass gSongTable[n].header to MPlayStart;
   gSfxTable (0x0872EB38, 479 x struct SongEntry {SongHeader *header; u8
-      prio, chans, pad[2]}, include/sound.h): PlaySfx (src/early_31b8.c)
+      prio, chans, pad[2]}, include/sound.h): PlaySfx (src/sound_play_sfx.c)
       takes id 100..578 and passes gSfxTable[id - 100].header to
-      MPlayStart; sub_0800d404 (src/menu_0ca10.c) scans the same 479.
+      MPlayStart; sub_0800d404 (src/menu_mode_list.c) scans the same 479.
 
 What the engine reads, and so what the parser walks.  Everything below is
 THIS ROM's engine (asm/m4a_1.s, src/m4a_c1.c, src/m4a_ctrl.c,
@@ -129,7 +129,7 @@ DEFAULT_ROOTS = [
      "gSongTable[n].header to MPlayStart"),
     (0x0872EB38, 479, 8,
      "gSfxTable[479] (struct SongEntry {SongHeader *header; u8 prio, "
-     "chans}, include/sound.h): PlaySfx (src/early_31b8.c) passes "
+     "chans}, include/sound.h): PlaySfx (src/sound_play_sfx.c) passes "
      "gSfxTable[id - 100].header, id 100..578, to MPlayStart"),
 ]
 

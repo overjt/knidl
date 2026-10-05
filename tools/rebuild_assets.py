@@ -26,7 +26,7 @@ comparison).  Edited records are re-encoded into their ROM format:
                          per-chunk sizes may change — a blob that grew or
                          shrank resizes the last chunk, because chunks
                          land 0x400 apart in VRAM (TaskLoadFrameTiles,
-                         src/early_5acc.c), so earlier chunks keep their
+                         src/task_frame_tiles.c), so earlier chunks keep their
                          pages
     lz77                 re-compressed with a BIOS LZ77 (type 0x10)
                          writer; every stream is decoded back and
@@ -41,7 +41,7 @@ comparison).  Edited records are re-encoded into their ROM format:
                          stream at the recorded stream address
     oam                  JSON entries packed back to little-endian
                          halfwords; attr0 bit 12 (BuildOam's "last" flag,
-                         src/early_1b08.c) must be set on exactly the
+                         src/main_build_oam.c) must be set on exactly the
                          final entry
 
 graphics/*.png are rendered views and misc/*.bin (huffman, raw-copy) are
@@ -270,7 +270,7 @@ def oam_parse(text):
         rows.append(vals)
     for k, vals in enumerate(rows):
         # BuildOam stops at the first entry with attr0 bit 12 set, so the
-        # flag must sit on exactly the final entry (src/early_1b08.c).
+        # flag must sit on exactly the final entry (src/main_build_oam.c).
         if bool(vals[0] & 0x1000) != (k == len(rows) - 1):
             raise ObjectError(
                 "entry %d %s attr0 bit 12 (BuildOam's \"last\" flag); it "

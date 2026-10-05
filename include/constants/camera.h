@@ -8,7 +8,7 @@
  * docs/analysis/constants.csv.
  */
 
-/* Camera modes - gCameraMode in the stage rooms: the case RoomTaskUpdateCamera (src/roomtask_23618.c:69) and the room loaders' first-frame switches dispatch on */
+/* Camera modes - gCameraMode in the stage rooms: the case RoomTaskUpdateCamera (src/room_task.c:69) and the room loaders' first-frame switches dispatch on */
 #define CAMERA_MODE_FOLLOW_FOCUS     0 /* the same value in the hub */
 #define CAMERA_MODE_FOLLOW_PLAYER    1 /* the same value in the hub */
 #define CAMERA_MODE_SLIDE_TO_LOCK    2 /* stage rooms only: the hub's 2 is another mode (see the notes) */

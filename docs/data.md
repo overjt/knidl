@@ -127,7 +127,7 @@ Add an entry to `pointer_tables`:
   "targets": {
     "pointers": ["0x08", "0x0C", "0x10", "0x18", "0x1C", "0x20",
                  "0x28", "0x2C", "0x30", "0x44", "0x48"],
-    "why": "struct RoomDef (0x58 bytes, M07, src/room_27e28.c): ..."
+    "why": "struct RoomDef (0x58 bytes, M07, src/room_bg_layout.c): ..."
   }
 }
 ```
@@ -155,7 +155,7 @@ Add an entry to `pointer_tables`:
   `0x0` carries a flag in bit 0 (it is emitted as `label+1` when set),
   and a record whose flag is set has the listed extra pointer fields (the
   20-byte player frame records, `PlayerLoadFrameTilesAndPalette`,
-  `src/stage_3cd60.c`).
+  `src/player_helpers.c`).
 - `"proof": "format"` marks a table that only a format parse proves and
   no code reads (§5.3); `make datastats` counts its words on a line of
   their own.  The default is `"consumer"`.
@@ -263,9 +263,9 @@ header comment.
 |---|---|---|---|
 | `gap_interworking_veneer_irq_handler_table_14` | `0x080CFDE4-0x080CFDE8` | the veneer's literal | 1 code pointer |
 | `irq_handler_table_14` | `0x080CFDE8-0x080CFE20` | IRQ handler table | 14 code pointers; its start is `gIntrTableTemplate`, which AgbInit copies |
-| `sram_id_string` | `0x080CFE20-0x080CFE2C` | the SRAM id string "AGB  KIRBY" (`gSramIdString`, `src/save_b7a9c.c`) | 2 labels |
+| `sram_id_string` | `0x080CFE20-0x080CFE2C` | the SRAM id string "AGB  KIRBY" (`gSramIdString`, `src/save_write_slot.c`) | 2 labels |
 | `air_grind_rodata` | `0x080CFE2C-0x080D0788` | Air Grind's (M37) rodata (not sound-driver or FIR tables, #98) | 27 labels, bytes extracted |
-| `sprite_sheets` | `0x080D0788-0x08334EC0` | sprite sheets (**asset**): OAM template streams, tiles, palettes and `struct TaskGfx` records; its last 12 bytes are the stage-count table `gUnk_08334EB4` (`u8[9]`, `src/level_2296c.c`) | 14,675 labels, 5,957 data pointers |
+| `sprite_sheets` | `0x080D0788-0x08334EC0` | sprite sheets (**asset**): OAM template streams, tiles, palettes and `struct TaskGfx` records; its last 12 bytes are the stage-count table `gUnk_08334EB4` (`u8[9]`, `src/room_reset_level_load_room.c`) | 14,675 labels, 5,957 data pointers |
 | `room_bg_anims` | `0x08334EC0-0x0835CFD4` | the rooms' BG animations: 30 scripts, 181 tile frames, 14 palette fades, 28 palettes (**asset**) | 209 labels in 40 pieces of `data/room_bg_anims.s`; the 30 scripts and 14 fades are C (`src/data/bg_anim_scripts.c`, 40 runs, 224 pointers) |
 | `room_data` | `0x0835CFD4-0x083A862C` | 333 RoomDefs, each after its metatile map, block layer, block table, doors and object list (**asset**) | 1,581 labels in 333 pieces of `data/room_data.s`; the 333 RoomDefs are C (`src/data/room_defs.c`, 3,574 pointer fields) |
 | `room_metatiles` | `0x083A862C-0x083B5538` | 23 LZ77 metatile tables (`RoomDef.metatileTiles`, **asset**) | 23 labels |
@@ -286,7 +286,7 @@ header comment.
 | `credits_demos` | `0x08758448-0x08759DC8` | the 14 recorded input demos the staff credits play (`gUnk_087583CC` rows 1-2) | 14 labels |
 | `player_frame_records` | `0x08759DC8-0x08769250` | the 20-byte tagged player frame records | 3,116 labels, 14,663 pointers |
 | `player_frame_lists` | `0x08769250-0x0876B1FC` | the player sheets' frame lists (format-only, §5.3) | 146 labels, 2,025 pointers |
-| `multiboot_program`, `quick_draw_program`, `bomb_rally_program`, `air_grind_program` | `0x0876B1FC-0x087E1D58` | four separately linked GBA programs: the single-pak link client and the three sub-games sent to the other players (`src/menu_0d450.c`, `src/mode_07b68.c`; **asset**) | 1 label each |
+| `multiboot_program`, `quick_draw_program`, `bomb_rally_program`, `air_grind_program` | `0x0876B1FC-0x087E1D58` | four separately linked GBA programs: the single-pak link client and the three sub-games sent to the other players (`src/menu_sound_test_link_play.c`, `src/mode_extra_mode_title.c`; **asset**) | 1 label each |
 | `room_table` (**C**, `src/data/room_table.c`) | `0x087E1D58-0x087E1E78` | `gRoomTable[9][8]` | 57 pointers in C |
 | `room_bg_anim_lists` (**C**, `src/data/room_bg_anim_lists.c`) | `0x087E1E78-0x087E1F58` | 12 NULL-ended lists of the 30 BG animation scripts and their index `gRoomBgAnimScripts` | 13 objects, 42 pointers in C |
 | `room_lists` (**C**, `src/data/room_lists.c`) | `0x087E1F58-0x087E2570` | the 57 stage room lists | 333 pointers in C |
@@ -343,8 +343,8 @@ The evidence for run 3's names:
 
 - `sram_id_string` is the "AGB  KIRBY" string `WriteSramSignature` writes
   to `0x0E000000` (`WriteSramEx(gUnk_080CFE20, .., 10)`,
-  `src/save_b7a9c.c:29`); every label from `0x080CFE2C` to `0x080D0766`
-  is Air Grind's (M37: `src/subgame_c243c.c` ... `src/subgame_c5284.c`),
+  `src/save_write_slot.c:29`); every label from `0x080CFE2C` to `0x080D0766`
+  is Air Grind's (M37: `src/subgame_air_grind_results_sky.c` ... `src/subgame_air_grind_course.c`),
   and the 32 bytes at `0x080D0768` have no consumer.
 - `sprite_sheets`, `sprite_sheets_2`: 96% of seg 12's and 93% of seg 11's
   bytes are OAM streams, tiles, palettes and TaskGfx records the census's
@@ -365,8 +365,8 @@ The evidence for run 3's names:
 - The player frame records start at `0x08759DC8` (the first record a
   frame table reaches), so the old `0x08760000` boundary cut them; the
   four programs' extents come from their senders (`MultiBootInitWithParams`
-  in `src/menu_0d450.c`, `sub_08007c5c` and `sub_08007e04` in
-  `src/mode_07b68.c`, indexed by the sub-game `gUnk_02006090`).
+  in `src/menu_sound_test_link_play.c`, `sub_08007c5c` and `sub_08007e04` in
+  `src/mode_extra_mode_title.c`, indexed by the sub-game `gUnk_02006090`).
 
 The evidence for the zone map (all addresses from the consumers):
 
@@ -378,18 +378,18 @@ The evidence for the zone map (all addresses from the consumers):
   raw 4bpp tile frames (97% of `room_bg_anims`) and LZ77 streams (326 of
   the 333 rooms have `mapsCompressed = 1`).
 - `room_bg_anims` is exactly the BG animation data `LoadRoomBgAnims` and
-  `UpdateBgAnims` read (`src/camera_2d01c.c`): each script follows its own
+  `UpdateBgAnims` read (`src/camera_bg_anims.c`): each script follows its own
   frames (op 0 copies `{u16 tile, u16 byteSize, tiles}` to `0x06004000`,
   op 1 runs a palette fade `{from, to, index, count, rate}`), with no hole.
 - `room_data` is the 333 rooms, each laid out as metatile map, block
   layer, block table (`RoomDef.unk10`), doors, object list, RoomDef, plus
   five palettes of the level-7 stage-1 rooms; the room loaders
-  (`src/level_2296c.c`, `src/level_242d0.c`), the doors
-  (`src/door_26b60.c`) and the blocks (`src/block_30804.c`) read them.
+  (`src/room_reset_level_load_room.c`, `src/room_enter_exit.c`), the doors
+  (`src/room_doors.c`) and the blocks (`src/player_break_blocks.c`) read them.
 - `room_metatiles` are the `RequestCopy(8, ...)` sources of
-  `src/level_2296c.c` (mode 8 is `LZ77UnCompVram`), and `room_bg3_maps`
-  the BG3 maps `src/camera_28b8c.c`, `src/bgmap_2a9cc.c` and
-  `src/room_28320.c` stream.
+  `src/room_reset_level_load_room.c` (mode 8 is `LZ77UnCompVram`), and `room_bg3_maps`
+  the BG3 maps `src/room_camera_init.c`, `src/camera_draw_bg_map.c` and
+  `src/room_spawn_door_objects.c` stream.
 - `sprite_frame_lists` (`0x087E2570`): **no code reference found**.  It is
   23 lists of frame pointers, strictly increasing, into `0x0854B980-
   0x085F2AF8`; each list is pointed at by exactly one word in the ROM, a
@@ -444,16 +444,16 @@ array is shorter than the span and its length needs its consumer):
 
 | table | declaration | span words | not pointers |
 |---|---|---|---|
-| `0x08730884` | `src/gfx_08b8c.c` `u16 *gUnk_08730884[]` | 1,014 | 421 |
-| `0x08734BF0` | `src/terrain_1bcac.c` `u8 *const gUnk_08734BF0[]` | 266 | 5 |
-| `0x0873A994` | `src/player_3bde8.c` `struct Unk0873A994 *gUnk_0873A994[]` | 330 | 245 |
-| `0x0873F950` | `src/actor_6ff24.c` `s16 *gUnk_0873F950[]` | 89 | 63 |
-| `0x087401E4` | `src/actor_763e8.c` `struct M19Script *gUnk_087401E4[]` | 54 | 48 |
-| `0x08742998` | `src/enemy_8aa68.c` `u8 *gUnk_08742998[]` | 42 | 12 |
-| `0x08745D4C` | `src/enemy_9c028.c` `u32 *gUnk_08745D4C[]` | 1,878 | 1,642 |
-| `0x087482A8` | `src/enemy_a0274.c` `u16 *gUnk_087482A8[]` | 51 | 40 |
-| `0x087565F4` | `src/subgame_bda2c.c` `u8 *gUnk_087565F4[]` | 23 | 8 |
-| `0x087577D8` | `src/boot_caa3c.c` `s16 *gUnk_087577D8[]` | 679 | 357 |
+| `0x08730884` | `src/mode_gfx_loaders.c` `u16 *gUnk_08730884[]` | 1,014 | 421 |
+| `0x08734BF0` | `src/collision_collide_box.c` `u8 *const gUnk_08734BF0[]` | 266 | 5 |
+| `0x0873A994` | `src/player_share_item.c` `struct Unk0873A994 *gUnk_0873A994[]` | 330 | 245 |
+| `0x0873F950` | `src/player_meta_knight_warp_star_ride.c` `s16 *gUnk_0873F950[]` | 89 | 63 |
+| `0x087401E4` | `src/cutscene_cannon.c` `struct M19Script *gUnk_087401E4[]` | 54 | 48 |
+| `0x08742998` | `src/enemy_blipper_gip.c` `u8 *gUnk_08742998[]` | 42 | 12 |
+| `0x08745D4C` | `src/enemy_meta_knights_lineup.c` `u32 *gUnk_08745D4C[]` | 1,878 | 1,642 |
+| `0x087482A8` | `src/enemy_king_dedede.c` `u16 *gUnk_087482A8[]` | 51 | 40 |
+| `0x087565F4` | `src/subgame_bomb_rally.c` `u8 *gUnk_087565F4[]` | 23 | 8 |
+| `0x087577D8` | `src/boot_logo_init_objects.c` `s16 *gUnk_087577D8[]` | 679 | 357 |
 
 Also left out: six tables that one file declares as a pointer array and
 another as `u32 []` (`0x08731F78`, `0x087343F0`, `0x087347F0`,
@@ -508,17 +508,17 @@ spells it `const` (the consumers compile to the same assembly).
 
 | table | range | C | consumer (the layout proof) |
 |---|---|---|---|
-| `gTaskTypes[266]` | `0x0872FF30-0x08730780` | `src/data/task_types.c`: `{taskClass, {0, 0, 0}, (u32)Task_X}` per type | `TaskCreate` (`src/early_5654.c`) copies `.taskClass` into the task and `.entry` into `gTaskResumeAddrs[]`, which the ARM switcher enters (rom-map §6) |
-| the six `struct ActorDef *` tables | `0x0873ECEC-0x0873EEA0` | `src/data/actor_defs.c` | `sub_08063704` (`src/actor_63698.c`) binds a task to `table[Task.unk76]`, the table picked by `Task.actorKind`; lengths are the next-label spans (§5.1) |
-| `gRoomTable[9][8]` | `0x087E1D58-0x087E1E78` | `src/data/room_table.c` | the room loaders read `gRoomTable[level][stage][room]` into `gCurRoomDef` (`src/level_23948.c`, `src/level_242d0.c`) |
+| `gTaskTypes[266]` | `0x0872FF30-0x08730780` | `src/data/task_types.c`: `{taskClass, {0, 0, 0}, (u32)Task_X}` per type | `TaskCreate` (`src/task.c`) copies `.taskClass` into the task and `.entry` into `gTaskResumeAddrs[]`, which the ARM switcher enters (rom-map §6) |
+| the six `struct ActorDef *` tables | `0x0873ECEC-0x0873EEA0` | `src/data/actor_defs.c` | `sub_08063704` (`src/actor.c`) binds a task to `table[Task.unk76]`, the table picked by `Task.actorKind`; lengths are the next-label spans (§5.1) |
+| `gRoomTable[9][8]` | `0x087E1D58-0x087E1E78` | `src/data/room_table.c` | the room loaders read `gRoomTable[level][stage][room]` into `gCurRoomDef` (`src/room_hub.c`, `src/room_enter_exit.c`) |
 | the 57 stage room lists | `0x087E1F58-0x087E2570` | `src/data/room_lists.c` | the same loaders index them with `gRoomIndex`; each ends with a NULL |
-| the 136 `struct ActorDef` and 43 `struct ActorAux` records | 34 runs in `0x0873F2B8-0x0874C3D0` | `src/data/actor_records.c`, one input section per run | `ActorLoadDefSlot` and `sub_080637e4` (`src/actor_63698.c`) read an ActorDef when a task binds it; `Actor.unk60 = def->unk10`, whose `altAttackBox` becomes `gAttackBox` (`src/actor_673ec.c`) |
-| the 30 BG animation scripts and 14 palette fades (#167) | 40 runs in `room_bg_anims` | `src/data/bg_anim_scripts.c`, one input section per run | `UpdateBgAnims` runs a script's `struct Unk02007D70Cmd {op, arg, ptr}` commands up to its op-3 (loop) or op-4 (stop) terminator; op 1's fade (`struct Unk0802D278`, 16 bytes) is what `BgAnimStartPaletteFade` copies (`src/camera_2d01c.c`) |
+| the 136 `struct ActorDef` and 43 `struct ActorAux` records | 34 runs in `0x0873F2B8-0x0874C3D0` | `src/data/actor_records.c`, one input section per run | `ActorLoadDefSlot` and `sub_080637e4` (`src/actor.c`) read an ActorDef when a task binds it; `Actor.unk60 = def->unk10`, whose `altAttackBox` becomes `gAttackBox` (`src/actor_held_player.c`) |
+| the 30 BG animation scripts and 14 palette fades (#167) | 40 runs in `room_bg_anims` | `src/data/bg_anim_scripts.c`, one input section per run | `UpdateBgAnims` runs a script's `struct Unk02007D70Cmd {op, arg, ptr}` commands up to its op-3 (loop) or op-4 (stop) terminator; op 1's fade (`struct Unk0802D278`, 16 bytes) is what `BgAnimStartPaletteFade` copies (`src/camera_bg_anims.c`) |
 | the 12 script lists and `gRoomBgAnimScripts[14]` (#167) | `0x087E1E78-0x087E1F58` (the whole `room_bg_anim_lists`) | `src/data/room_bg_anim_lists.c` | `LoadRoomBgAnims` walks `gRoomBgAnimScripts[RoomDef.bgAnimSet]` up to its NULL |
-| the 343 frame tables (#167) | `0x0874C44C-0x0875607C` (the whole `frame_tables`) | `src/data/frame_tables.c`, one named section | `Task.frameTable[Task.frame]` (`TaskLoadFrameTiles`, `src/early_5acc.c`; the player's `PlayerLoadFrameTilesAndPalette`, `src/stage_3cd60.c`) or a frame `QueueSprite` stores (`src/early_1518.c`); each array's comment gives its extent proof |
-| the 333 `struct RoomDef` headers (#167) | 333 runs in `room_data` | `src/data/room_defs.c`, one input section per run | the room loaders read `gRoomTable[level][stage][room]` into `gCurRoomDef` (`src/level_2296c.c`, `src/level_23948.c`, `src/level_242d0.c`); the camera, doors and blocks read the rest |
-| 507 handler tables and scripts of seg 18 (#167) | 148 runs in `game_rodata`, the `actor_rodata` zone and `late_game_rodata` | `src/data/game_tables.c`, `actor_tables.c`, `late_game_tables.c`, one input section per run | most are `CallTableEntry(index, count, table)` tables (`src/early_2b04.c`) whose count is the span; the rest are read by direct index or declared as function-pointer arrays; seven are the Whispy Woods script streams `sub_080af020` runs |
-| 62 terrain-handler tables and 136 hit-reaction records (#167) | 28 runs in the `actor_rodata` zone | `src/data/actor_handlers.c`, one input section per run | `struct ActorHandlers` (seven `u8 (*)(void)`) and `struct ActorVt` (`{s8, s8, pad, hook, hook}`), which `ActorCollideTerrain`, `ActorReactToDamage` and `ActorReactToDefeat` (`src/actor_692fc.c`) walk through `Actor.terrainHandlers` / `Actor.hitReactions` |
+| the 343 frame tables (#167) | `0x0874C44C-0x0875607C` (the whole `frame_tables`) | `src/data/frame_tables.c`, one named section | `Task.frameTable[Task.frame]` (`TaskLoadFrameTiles`, `src/task_frame_tiles.c`; the player's `PlayerLoadFrameTilesAndPalette`, `src/player_helpers.c`) or a frame `QueueSprite` stores (`src/main_copy_queue.c`); each array's comment gives its extent proof |
+| the 333 `struct RoomDef` headers (#167) | 333 runs in `room_data` | `src/data/room_defs.c`, one input section per run | the room loaders read `gRoomTable[level][stage][room]` into `gCurRoomDef` (`src/room_reset_level_load_room.c`, `src/room_hub.c`, `src/room_enter_exit.c`); the camera, doors and blocks read the rest |
+| 507 handler tables and scripts of seg 18 (#167) | 148 runs in `game_rodata`, the `actor_rodata` zone and `late_game_rodata` | `src/data/game_tables.c`, `actor_tables.c`, `late_game_tables.c`, one input section per run | most are `CallTableEntry(index, count, table)` tables (`src/link_run_frames.c`) whose count is the span; the rest are read by direct index or declared as function-pointer arrays; seven are the Whispy Woods script streams `sub_080af020` runs |
+| 62 terrain-handler tables and 136 hit-reaction records (#167) | 28 runs in the `actor_rodata` zone | `src/data/actor_handlers.c`, one input section per run | `struct ActorHandlers` (seven `u8 (*)(void)`) and `struct ActorVt` (`{s8, s8, pad, hook, hook}`), which `ActorCollideTerrain`, `ActorReactToDamage` and `ActorReactToDefeat` (`src/actor_collision.c`) walk through `Actor.terrainHandlers` / `Actor.hitReactions` |
 
 The ActorDef/ActorAux records (run 3) lie between other seg 18 tables,
 so one carve per run would give each run its own output section and
@@ -889,20 +889,20 @@ file's history.)  Per cluster, what closed the 429 unknown words:
   consumer-sized palettes and tile blocks, 9 in the OAM streams of the two
   QueueSprite tables (index at most 11); **4 were real pointers** still
   written raw, the `.tiles` fields of the four raw-tiles sheet headers
-  the code copies from (`src/actor_6ff24.c`, `src/enemy_ae3bc.c`,
-  `src/actor_653ec.c`), now symbols; 27 are the fields of nine TaskGfx
+  the code copies from (`src/player_meta_knight_warp_star_ride.c`, `src/enemy_nightmare_power_orb.c`,
+  `src/actor_helpers.c`), now symbols; 27 are the fields of nine TaskGfx
   records no frame table reaches, symbolized format-only (their blocks'
   count words equal their length) and their 17 OAM words, plus 42 words
   in OAM streams that tile the bytes between two proven objects, format
   only (BuildOam's flipped-x pair, which 48,293 of 48,298 consumer-proven
   entries satisfy);
 - **the completion pictures (84)**: `sub_0800bda4` copies halves
-  `2 * (percent / 10)` and `+1` of `gUnk_08551110` (`src/menu_0b920.c`),
-  percent 100 is displayed (`src/save_b79b8.c`, `src/save_b8918.c`) and
+  `2 * (percent / 10)` and `+1` of `gUnk_08551110` (`src/menu_main_save_slots.c`),
+  percent 100 is displayed (`src/save_completion_percent.c`, `src/save_merge_link_slots.c`) and
   only checksum-valid slots or new files reach the menu
-  (`src/save_b77d4.c`), so all 22 halves are read raw: tiles;
+  (`src/save_init_slots.c`), so all 22 halves are read raw: tiles;
 - **seg 18 (31)**: the hub camera-pan steps, two Nightmare Wizard frame
-  tables, one frame table of `src/enemy_ae3bc.c` and the wave table
+  tables, one frame table of `src/enemy_nightmare_power_orb.c` and the wave table
   `gUnk_087561CC` (its index is `(gSpriteCameraY + line) >> 3`, bounded
   by the room's camera clamp and the largest screen shake to 135) got
   their consumer extents; the credits demos' extents come from replaying
@@ -912,7 +912,7 @@ file's history.)  Per cluster, what closed the 429 unknown words:
   palette-variant records (readers take words -1..2 and 4-5) and two
   second ActorAux records nothing indexes;
 - **seg 19 (50)**: fourteen tagged player records no frame table points
-  at (reached only through `tbl[frame + a0]`, `src/stage_3cd60.c`) and
+  at (reached only through `tbl[frame + a0]`, `src/player_helpers.c`) and
   two frame-list entries that hold their sheet header's address, the
   lists being read by no code: unreachable;
 - **seg 11 (1)**: bytes 0x80-0x1FF of `gUnk_080DCA28`, past the four
@@ -1070,7 +1070,7 @@ deterministic: the same script plays the same game in every run.
 
 - **The ending and the staff credits** (states 11 and 12).  Only two
   writers raise the stage request 7 that enters state 11, both in
-  `src/level_242d0.c`: the Nightmare Wizard's defeat (entry 8 of the
+  `src/room_enter_exit.c`: the Nightmare Wizard's defeat (entry 8 of the
   boss-defeat table) and King Dedede's, which raises it only in Meta
   Knightmare (otherwise it sends Kirby to the Nightmare's Power Orb).
   Meta Knightmare and Boss Endurance are mode-list rows 4 and 3, both
@@ -1134,8 +1134,8 @@ What it found, at the first run:
   and B that crosses an insertion point and checks that the shifted image
   still reaches the target; before the fix it lists exactly these three.
 - **an address used as a number**: the fade driver `sub_080b6154`
-  (`src/save_b6154.c`) falls off its end without a return value on its
-  last frame, and `UpdateHBlankScroll` (`src/hud_b5840.c`) takes the
+  (`src/main_hblank_bands_in_blend.c`) falls off its end without a return value on its
+  last frame, and `UpdateHBlankScroll` (`src/room_gfx_spawns.c`) takes the
   function's own address, still in r0, as the HBlank DMA count
   (`gHBlankDmaCnt = 0xA2600000 | 0x6155`, and `gHBlankDmaSrc` from it).
   The ROM's own undefined behaviour, so a shifted image programs a

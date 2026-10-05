@@ -113,7 +113,7 @@ struct TerrainResult
 };
 
 /* IWRAM */
-/* Actor-vs-player hit test cells (M17's src/actor_673ec.c widths). */
+/* Actor-vs-player hit test cells (M17's src/actor_held_player.c widths). */
 extern s16 gHitMidpointX;
 extern u8 gUnk_03001F24;
 extern s8 gAttackHitDuration;
@@ -123,7 +123,7 @@ extern u16 gAttackY; /* actor y */
 extern u8 gHitTimer;
 extern u16 gAttackX; /* actor x */
 extern u16 gAttackHealth;
-extern struct AttackBox *gAttackBox; /* the actor's attack box (s32 in actor_673ec.c) */
+extern struct AttackBox *gAttackBox; /* the actor's attack box (s32 in actor_held_player.c) */
 extern u8 gHitKind; /* hit result */
 extern u8 gAttackLastHitterSlot;
 extern u16 gHitHealthLeft;
@@ -221,7 +221,7 @@ extern u16 gUnk_08735098[];
 struct Task;
 
 /* The collider classes are the high nibble of a box's byte 8, which
- * RegisterCollider (src/player_1a76c.c) sorts into three lists.  Class 0x00
+ * RegisterCollider (src/collision_collider_lists.c) sorts into three lists.  Class 0x00
  * is the players' bodies (gPlayerColliders).  The other two are named by
  * their class value, because no role word is true for every registrant
  * (#155 run 4):
@@ -236,53 +236,53 @@ struct Task;
  *   kind nibble (inhale, grab, slide, high fall, explosion, strike,
  *   freeze). */
 
-/* src/hitbox_1a8c8.c */
+/* src/collision_hit_test_players_class10.c */
 u8 HitTestPlayerColliders(void);
 u8 HitTestColliderClass10(void);
 
-/* src/hitbox_1b24c.c */
+/* src/collision_hit_test_class20.c */
 u8 HitTestColliderClass20(void);
 
-/* src/hitbox_1b7dc.c */
+/* src/collision_hit_test_helpers.c */
 void PlaceAttackBox(void);
 void CalcHitDamageAndDirection(void);
 void HitRecordHitter(void);
 
-/* src/terrain_1baa4.c */
+/* src/collision_player_probe.c */
 void PlayerProbeTerrain(u32 p);
 
-/* src/terrain_1c444.c */
+/* src/collision_collide_box_tile_edge.c */
 void TerrainCollideBoxTileEdge(const s8 *p);
 
-/* src/terrain_1c51c.c */
+/* src/collision_probe_begin_end.c */
 void TerrainProbeBegin(const s8 *p);
 void TerrainProbeEnd(const s8 *p);
 
-/* src/terrain_1c690.c */
+/* src/collision_probe_wall_on_ground.c */
 void TerrainProbeWallRightOnGround(void);
 void TerrainProbeWallLeftOnGround(void);
 
-/* src/terrain_1c8dc.c */
+/* src/collision_probe_box_top.c */
 void sub_0801c8dc(void);
 
-/* src/terrain_1c930.c */
+/* src/collision_probe_floor_in_camera_bounds.c */
 void TerrainProbeFloorInCameraBounds(void);
 
-/* src/terrain_1d394.c */
+/* src/collision_probe_floor.c */
 void TerrainProbeFloor(void);
 
-/* src/terrain_1d9c8.c */
+/* src/collision_probe_wall_in_air_ceiling.c */
 void TerrainProbeWallRightInAir(void);
 void TerrainProbeWallLeftInAir(void);
 void TerrainProbeCeiling(void);
 
-/* src/terrain_1e178.c */
+/* src/collision_probe_landing_in_camera_bounds.c */
 void TerrainProbeLandingInCameraBounds(void);
 
-/* src/terrain_1ecd0.c */
+/* src/collision_probe_landing.c */
 void TerrainProbeLanding(void);
 
-/* src/terrain_1f540.c */
+/* src/collision_probe_no_slope_link.c */
 void sub_0801f540(void);
 void sub_0801f6b0(void);
 void TerrainProbeCeilingNoSlopeLink(void);
@@ -290,24 +290,24 @@ void sub_0801f9b8(void);
 void TerrainProbeFloorNoSlopeLink(void);
 void TerrainProbeLandingNoSlopeLink(void);
 
-/* src/terrain_1ff84.c */
+/* src/collision_probe_along_velocity.c */
 void TerrainProbeAlongVelocity(void);
 void sub_08020698(void);
 
-/* src/terrain_2069c.c */
+/* src/collision_probe_point_stop.c */
 u32 TerrainProbePointStop(void);
 
-/* src/terrain_207a0.c */
+/* src/collision_probe_point_push_out_tile_edge.c */
 void TerrainProbePointPushOut(void);
 void TerrainProbeTileEdge(void);
 
-/* src/terrain_21130.c */
+/* src/collision_probe_water_drift.c */
 void TerrainProbeWaterAndDrift(void);
 
-/* src/terrain_2136c.c */
+/* src/collision_probe_water.c */
 void TerrainProbeWater(void);
 
-/* src/terrain_214e0.c */
+/* src/collision_query_pixel.c */
 void TerrainProbeWaterAtPoint(void);
 void TerrainProbeDamage(void);
 s32 TerrainQueryPixel(u32 x, u32 y);
@@ -322,7 +322,7 @@ s32 GetTilePushLeft(u16 a);
 void TerrainLoadFloorAttributes(u16 a);
 s32 GetTileShapeAtPixel(u32 x, u32 y);
 
-/* src/terrain_21b18.c */
+/* src/collision_terrain_init.c */
 s32 GetCollisionTileAtPixel(u16 x, u16 y);
 s32 GetCollisionTile(u32 x, u32 y);
 s32 sub_08021b70(u32 x, u32 y);

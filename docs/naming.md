@@ -125,7 +125,7 @@ role is not proven on every path; the offset comments (`/*0x14*/`) stay.
   in the evidence.
 - **Local copies.**  A file that declares its own copy of a shared struct
   (the task engine's `struct Task` with `h10`/`b12`/`w4C` names,
-  `src/early_5d9c.c`'s `struct Sprite`, the 17 `struct RoomDef` copies)
+  `src/task_draw_world.c`'s `struct Sprite`, the 17 `struct RoomDef` copies)
   gets the same name at the same offset; a copy whose member spans more
   than the field (an array, padding) keeps its span.
 - **What the named `struct Task` looks like** (`include/task.h`): four
@@ -476,7 +476,7 @@ check.  Start it with one of these tags:
 - `role:` the caller or cell pattern that fixes the role: who calls it and
   with what, what it writes, which table dispatches it.  Cite a file, a table
   or a rom-map section: `role: installed in gUnk_030004B0[0], the serial
-  slot of the master ISR's handler table (src/early_6464.c)`.
+  slot of the master ISR's handler table (src/link_driver.c)`.
 - `visual:` what a LOCAL render of the graphics the code loads shows
   (`visual: a red rock-dome creature with a headband (local render, not
   committed)`).  Renders live only in the gitignored `pending/` and are
@@ -606,7 +606,7 @@ whose symbol was renamed, and on an unknown code.  The codes:
 | RAM cell | `gUnk_02*`, `gUnk_03*` | 10 | read and written by one function only; its meaning is local to that algorithm (docs/naming.md 5) |
 | RAM cell | `gUnk_02*`, `gUnk_03*` | 3 | nothing references it: no call, table slot or data word (kept for the match) |
 | RAM cell | `gUnk_02*`, `gUnk_03*` | 3 | the name needs an identity (enemy, object, picture, scene) with fewer than three agreeing sources (docs/naming.md 2.3) |
-| I/O register | `gUnk_04*` | 0 | none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and early_4734.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_* |
+| I/O register | `gUnk_04*` | 0 | none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and link_block_main.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_* |
 | ROM label | `gUnk_08*` | 717 | shared: two or more slots, records or consumers point at it, so no single slot or role is its identity (docs/naming.md section 2.4) |
 | ROM label | `gUnk_08*` | 683 | reached only through a record or consumer that is itself unnamed (a `gUnk_` record, a `sub_*`): it is named with that referrer |
 | ROM label | `gUnk_08*` | 793 | read by one function only: its meaning is local to that function's algorithm, as for RAM cells (docs/naming.md section 5) |
@@ -622,7 +622,7 @@ whose symbol was renamed, and on an unknown code.  The codes:
 | ROM label | `gUnk_08*` | 1 | a flag word whose bits are not all proven (docs/naming.md 7.0, R3) |
 | struct field | `unk*` | 14 | per-family registers, named per family by the aliases in include/task_vars.h (docs/header-conventions.md; the member keeps its unk name, lessons and history cite it); `unk76` is u76's member for the player's bits |
 | struct field | `unk*` | 2 | struct PlayerState's per-action scratch: each player action keeps its own value there, named per action by the aliases in include/task_vars.h (#155 run 7; the member keeps its unk name) |
-| struct field | `unk*` | 28 | the per-family registers in the task engine's local copies of struct Task (src/early_58e4.c, early_5c4c.c): named per family by the aliases of include/task_vars.h, which the engine never uses |
+| struct field | `unk*` | 28 | the per-family registers in the task engine's local copies of struct Task (src/task_move.c, task_draw_screen.c): named per family by the aliases of include/task_vars.h, which the engine never uses |
 | struct field | `unk*` | 92 | no code reads or writes it |
 | struct field | `unk*` | 48 | two encodings or meanings that no single noun covers (docs/naming.md 5) |
 | struct field | `unk*` | 23 | its role rests on a cell, field or value that stays unnamed (the row names it) |

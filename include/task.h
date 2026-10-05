@@ -16,7 +16,7 @@
  * Cooperative task system data model.
  *
  * `struct Task` is the 0x90-byte task control block first mapped in issue #32
- * (`src/early_58e4.c`, `src/early_5d9c.c`); the 64-entry table lives at
+ * (`src/task_move.c`, `src/task_draw_world.c`); the 64-entry table lives at
  * gTasks and gCurTask points at the task that is currently
  * running.  `struct Actor` is the larger per-task actor record hanging off
  * Task.u8C.actor that module M17 (issue #65) is the field API for, and
@@ -80,7 +80,7 @@ struct Task
     /*0x68*/ s32 speedLimitY;
     /* Per-family registers (include/task_vars.h names them per family).
        0x6C and 0x70 are read with `ldrsh`/`(s16)` casts throughout M18
-       (issue #64) but unsigned in M17's src/actor_673ec.c, so they stay u16
+       (issue #64) but unsigned in M17's src/actor_held_player.c, so they stay u16
        and the signed sites cast; each alias line in task_vars.h says which
        type its family reads.  0x6E is signed everywhere. */
     /*0x6C*/ u16 unk6C;
@@ -93,8 +93,8 @@ struct Task
     /* A per-family view (docs/header-conventions.md): an actor's subtype
        (written by CreateActor, CreateChildActor and CreateItemOrObject;
        ActorBindDefSlot binds Actor.def = gEnemyDefs[subtype] ...); the door
-       index into gDoorStates for the door signs (src/obj_2eac8.c,
-       obj_2f62c.c); the player's hit and status bits and Quick Draw's flag
+       index into gDoorStates for the door signs (src/camera_door_signs.c,
+       camera_warp_star_station_door.c); the player's hit and status bits and Quick Draw's flag
        stay unk76.  packed, aligned(2): agbcc pads every union to 4 bytes
        (lesson 3.522). */
     /*0x76*/ union {
@@ -368,7 +368,7 @@ struct ActorSpawn
  *
  * INCOMPLETE MODEL - read this before declaring a caller of TaskIsInRect or
  * TaskIsNearestPlayerInRect.  Four separate `s16` fields are what the CALLEE reads (that is
- * how src/actor_63698.c matches), but a caller that fills the box in the
+ * how src/actor.c matches), but a caller that fills the box in the
  * caller's own stack frame does NOT necessarily see this type: M22 (issue #69)
  * has three of them (FlamerCrawlUpdate, FlamerState4Update, SirKibbleCutterState0Update) where the ROM
  * builds the argument with 32-bit read-modify-write over PAIRS of halfwords
@@ -436,22 +436,22 @@ extern const struct TaskType gTaskTypes[];
 
 /* Functions (defined in the files named above each group). */
 
-/* src/early_4fec.c */
+/* src/task_init.c */
 void InitTasks(void);
 
-/* src/early_5228.c */
+/* src/task_run.c */
 void RunTasks(void);
 
-/* src/early_55b0.c */
+/* src/task_skip_mask.c */
 void TaskSetSkipMask(u8 val, s32 idx);
 void TaskSetOthersSkipMask(u16 val, s32 idx);
 void TaskSetAllSkipMask(u16 val);
 
-/* src/early_5654.c */
+/* src/task.c */
 void TaskFree(s32 id);
 s32 TaskCreate(u32 type);
 
-/* src/early_58e4.c */
+/* src/task_move.c */
 s32 TaskCreateFrom(u32 type, s32 idx);
 s32 TaskCreateInRange(u32 type, s32 start, s32 end);
 void TaskClampVelocity(void);
@@ -461,11 +461,11 @@ void TaskMoveRelativeToParent(void);
 void TaskUpdatePixelPos(void);
 void TaskMoveRelativeToBg3(void);
 
-/* src/early_5acc.c */
+/* src/task_frame_tiles.c */
 u32 TaskLoadFrameTilesAndPalette(u32 alt);
 u32 TaskLoadFrameTiles(u32 alt);
 
-/* src/early_5c4c.c */
+/* src/task_draw_screen.c */
 void TaskDrawScreen(void);
 void TaskDrawScreenOrFree(void);
 

@@ -355,20 +355,20 @@ extern u8 gKirbyFlashBlendRatios[];
 
 /* Functions (defined in the files named above each group). */
 
-/* src/player_17668.c */
+/* src/cutscene_fountain_kirby_king_dedede.c */
 void CutsceneFountainKirby(void);
 void CutsceneFountainKirbyUpdate(void);
 void CutsceneFountainKingDedede(void);
 
-/* src/player_18b84.c */
+/* src/cutscene_fountain_actor_scripts.c */
 void CutsceneFountainKingDededeUpdate(void);
 void CutsceneFountainActorScript53(void);
 void CutsceneFountainActorScript54(void);
 
-/* src/player_18e14.c */
+/* src/cutscene_fountain_sparkles.c */
 void CutsceneFountainActorScript52(void);
 
-/* src/player_19000.c */
+/* src/cutscene_fountain_power_orb_star_rod.c */
 void CutsceneFountainNightmarePowerOrb(void);
 void CutsceneFountainNightmarePowerOrbUpdate(void);
 void CutsceneFountainStarRod(void);
@@ -378,22 +378,22 @@ void CutsceneFountainActorScript60(void);
 void CutsceneFountainActorScript61(void);
 void sub_08019ecc(void);
 
-/* src/player_19eec.c */
+/* src/cutscene_fountain_blend.c */
 void CutsceneFountainActorScript62(void);
 
-/* src/player_1a07c.c */
+/* src/cutscene_fountain_kirby_draw.c */
 void CutsceneFountainActorScript56(void);
 void CutsceneFountainKirbyDraw(void);
 void CutsceneActorDrawStreamedFrame(void);
 
-/* src/player_1a3e4.c */
+/* src/cutscene_fountain_sprite_draw.c */
 void FountainSpriteDraw(void);
 
-/* src/player_1a76c.c */
+/* src/collision_collider_lists.c */
 void sub_0801a76c(s32 i);
 void ClearColliderLists(void);
 
-/* src/block_30804.c */
+/* src/player_break_blocks.c */
 u16 TaskBreakBlocksAtNoPlayer(struct HitBoxSet *p, s32 x, s32 y);
 u16 BreakBlocksInHitBoxes(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e);
 u16 BreakFirstBlockInHitBox(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e);
@@ -404,7 +404,7 @@ s32 CanBreakBlock(s32 x, s32 y, s32 id, s32 e);
 s32 sub_08031310(s32 x, s32 y);
 s32 BreakBlockAtCursor(void);
 
-/* src/block_318b4.c */
+/* src/player_block_anims.c */
 void UpdateBlockAnims(void);
 void FreeBlockAnimAndBlock(struct BreakingBlock *b);
 void FreeBlockAnim(struct BreakingBlock *b);
@@ -425,14 +425,14 @@ void Bg1BlockAnimWriteMetatile(struct BreakingBlock *b);
 void Bg1BlockAnimDrawTiles(struct BreakingBlock *b);
 void Bg1BlockAnimBreakNeighbors(struct BreakingBlock *b);
 
-/* src/player_32688.c */
+/* src/player_task.c */
 void Task_Player(void);
 void PlayerStartRequestedAction(void);
 void PlayerUpdate(void);
 void PlayerLateUpdate(void);
 void sub_08033414(void);
 
-/* src/player_337f4.c */
+/* src/player_stand_walk.c */
 void sub_080337f4(void);
 void sub_080337f8(void);
 void sub_080337fc(void);
@@ -444,7 +444,7 @@ void PlayerActionStandUpdate(void);
 void PlayerActionWalk(void);
 void PlayerActionWalkUpdate(void);
 
-/* src/player_343c0.c */
+/* src/player_run_jump.c */
 void PlayerActionRun(void);
 void PlayerActionRunUpdate(void);
 void PlayerActionSkid(void);
@@ -455,21 +455,21 @@ void PlayerActionReleaseJump(void);
 void PlayerActionReleaseJumpUpdate(void);
 void sub_08034f70(void);
 
-/* src/player_34f8c.c */
+/* src/player_fall_float.c */
 void PlayerActionFall(void);
 void PlayerActionFallUpdate(void);
 void PlayerActionHighFall(void);
 void PlayerActionHighFallUpdate(void);
 void PlayerActionFloat(void);
 
-/* src/player_36280.c */
+/* src/player_duck_slide.c */
 void PlayerActionFloatUpdate(void);
 void PlayerActionDuck(void);
 void PlayerActionDuckUpdate(void);
 void PlayerActionSlide(void);
 void PlayerActionSlideUpdate(void);
 
-/* src/player_36c94.c */
+/* src/player_ladder_inhale.c */
 void PlayerActionLadder(void);
 void PlayerActionLadderUpdate(void);
 void PlayerActionInhale(void);
@@ -479,20 +479,20 @@ void PlayerActionSpitUpdate(void);
 void PlayerActionSwallow(void);
 void PlayerActionSwallowUpdate(void);
 
-/* src/player_37ed8.c */
+/* src/player_hurt.c */
 void PlayerActionHurt(void);
 void PlayerActionHurtUpdate(void);
 
-/* src/player_3919c.c */
+/* src/player_die_enter_door.c */
 void PlayerActionDie(void);
 void PlayerActionDieUpdate(void);
 void PlayerActionEnterDoor(void);
 
-/* src/player_39c24.c */
+/* src/player_exit_door.c */
 void PlayerActionExitDoor(void);
 void PlayerActionExitDoorUpdate(void);
 
-/* src/player_3aa64.c */
+/* src/player_water.c */
 void PlayerActionSwim(void);
 void PlayerActionSwimUpdate(void);
 void PlayerActionStandInWater(void);
@@ -508,14 +508,14 @@ void PlayerActionWaterShotUpdate(void);
 void PlayerActionRecoil(void);
 void PlayerActionRecoilUpdate(void);
 
-/* src/player_3bde8.c */
+/* src/player_share_item.c */
 void PlayerActionShareItem(void);
 void PlayerActionShareItemUpdate(void);
 void sub_0803c9b4(s32 a);
 void PlayerStepOffsetScript(void);
 void PlayerSetParasolDriftRow(s32 a);
 
-/* src/stage_3cd60.c */
+/* src/player_helpers.c */
 void PlayerPlayBump(void);
 void PlayerUpdateBlink(void);
 s32 sub_0803d010(void);
@@ -595,10 +595,10 @@ void sub_08040934(s32 a0);
 void sub_080409b8(s32 a0);
 void sub_08040a44(s16 p0, s16 p1);
 
-/* src/stage_40b40.c */
+/* src/player_motion_x_preset.c */
 void PlayerSetMotionXPreset(s32 a0, s32 a1);
 
-/* src/stage_413a4.c */
+/* src/player_meta_knight_actions.c */
 void PlayerSetMotionYPreset(s32 a0);
 void MetaKnightActionStand(void);
 void MetaKnightActionWalk(void);
@@ -628,10 +628,10 @@ void MetaKnightActionEnterDoor(void);
 void MetaKnightActionExitDoor(void);
 void MetaKnightActionSwim(void);
 
-/* src/stage_4335c.c */
+/* src/player_meta_knight_swim_update.c */
 void MetaKnightActionSwimUpdate(void);
 
-/* src/stage_43654.c */
+/* src/player_meta_knight_slash.c */
 void MetaKnightActionStandInWater(void);
 void MetaKnightActionWalkInWater(void);
 void MetaKnightActionSlash(void);
@@ -646,34 +646,34 @@ void PlayerActionFire(void);
 void PlayerActionFireUpdate(void);
 void PlayerActionSpark(void);
 
-/* src/player_449c8.c */
+/* src/player_spark_cutter.c */
 void PlayerActionSparkUpdate(void);
 void PlayerActionCutter(void);
 void PlayerActionCutterUpdate(void);
 
-/* src/player_44d04.c */
+/* src/player_sword.c */
 void PlayerActionSword(void);
 void PlayerActionSwordUpdate(void);
 
-/* src/player_455c8.c */
+/* src/player_burning_laser.c */
 void PlayerActionBurning(void);
 void PlayerActionBurningUpdate(void);
 void PlayerActionLaser(void);
 void PlayerActionLaserUpdate(void);
 
-/* src/player_45d34.c */
+/* src/player_mike.c */
 void PlayerActionMike(void);
 void PlayerActionMikeUpdate(void);
 
-/* src/player_46330.c */
+/* src/player_wheel.c */
 void PlayerActionWheel(void);
 void PlayerActionWheelUpdate(void);
 
-/* src/player_46c00.c */
+/* src/player_hammer.c */
 void PlayerActionHammer(void);
 void PlayerActionHammerUpdate(void);
 
-/* src/player_474e8.c */
+/* src/player_sleep.c */
 void PlayerActionParasol(void);
 void PlayerActionParasolUpdate(void);
 void PlayerActionSleep(void);
@@ -681,66 +681,66 @@ void PlayerActionSleepUpdate(void);
 void PlayerActionNeedle(void);
 void PlayerActionNeedleUpdate(void);
 
-/* src/player_47fe8.c */
+/* src/player_get_ability.c */
 void PlayerActionGetAbility(void);
 void PlayerActionGetAbilityUpdate(void);
 
-/* src/player_49738.c */
+/* src/player_ability_tiles.c */
 void LoadAbilityTiles(void);
 void PlayerLoadSparkTiles(void);
 
-/* src/player_49b48.c */
+/* src/player_ice_freeze.c */
 void PlayerActionIce(void);
 void PlayerActionIceUpdate(void);
 void PlayerActionFreeze(void);
 void PlayerActionFreezeUpdate(void);
 
-/* src/player_49f98.c */
+/* src/player_hi_jump.c */
 void PlayerActionHiJump(void);
 void PlayerActionHiJumpUpdate(void);
 
-/* src/player_4a54c.c */
+/* src/player_beam_stone.c */
 void PlayerActionBeam(void);
 void PlayerActionBeamUpdate(void);
 void PlayerActionStone(void);
 void PlayerActionStoneUpdate(void);
 
-/* src/player_4ab70.c */
+/* src/player_tornado_crash.c */
 void PlayerActionTornado(void);
 void PlayerActionTornadoUpdate(void);
 void PlayerActionCrash(void);
 void PlayerActionCrashUpdate(void);
 
-/* src/player_4b5b4.c */
+/* src/player_light.c */
 void PlayerActionLight(void);
 void PlayerActionLightUpdate(void);
 
-/* src/player_4b858.c */
+/* src/player_backdrop_hold.c */
 void PlayerActionBackdropHold(void);
 void PlayerActionBackdropHoldUpdate(void);
 
-/* src/player_4c64c.c */
+/* src/player_throw_hold.c */
 void PlayerActionThrowHold(void);
 void PlayerActionThrowHoldUpdate(void);
 
-/* src/player_4cc7c.c */
+/* src/player_ufo.c */
 void PlayerActionUFO(void);
 void PlayerActionUFOUpdate(void);
 
-/* src/player_4dc08.c */
+/* src/player_backdrop_throw.c */
 void PlayerActionBackdrop(void);
 void PlayerActionBackdropUpdate(void);
 void PlayerActionThrow(void);
 
-/* src/sub_0804e3a0.c */
+/* src/player_throw_update.c */
 void PlayerActionThrowUpdate(void);
 
-/* src/player_4e5a4.c */
+/* src/player_ball.c */
 void PlayerActionBall(void);
 void PlayerActionBallEnterVariant(void);
 void PlayerActionBallUpdate(void);
 
-/* src/player_4e78c.c */
+/* src/player_ball_roll.c */
 void PlayerBallTransform(void);
 void PlayerBallTransformUpdate(void);
 void PlayerBallStand(void);
@@ -750,7 +750,7 @@ void PlayerBallRollUpdate(void);
 void PlayerBallSkid(void);
 void PlayerBallSkidUpdate(void);
 
-/* src/player_4ee08.c */
+/* src/player_ball_jump.c */
 void PlayerBallJump(void);
 void PlayerBallJumpUpdate(void);
 void PlayerBallBounce(void);
@@ -762,14 +762,14 @@ void PlayerBallLandUpdate(void);
 void PlayerBallRevert(void);
 void PlayerBallRevertUpdate(void);
 
-/* src/player_4f614.c */
+/* src/player_ball_helpers.c */
 s32 PlayerBallPlayBump(void);
 s32 PlayerBallGetRollDelay(void);
 void PlayerBallStepRoll(void);
 s32 PlayerBallCheckVariant(s32 a);
 s32 PlayerBallCheckLanding(s32 a0);
 
-/* src/player_4f948.c */
+/* src/player_star_rod.c */
 void PlayerActionStarRod(void);
 void PlayerActionStarRodUpdate(void);
 void PlayerActionStarRodJump(void);
@@ -778,7 +778,7 @@ void PlayerActionStarRodFlight(void);
 void PlayerActionStarRodFlightEnterVariant(void);
 void PlayerActionStarRodFlightUpdate(void);
 
-/* src/player_4ffdc.c */
+/* src/player_star_rod_flight.c */
 void PlayerStarRodFlightIntro(void);
 void PlayerStarRodFlightIntroUpdate(void);
 void PlayerStarRodFlightFly(void);
@@ -790,12 +790,12 @@ void PlayerStarRodFlightHurtUpdate(void);
 s32 PlayerStarRodFlightCheckShoot(void);
 void PlayerStarRodFlightSteer(void);
 
-/* src/plobj_507bc.c */
+/* src/player_object_task.c */
 void Task_PlayerObject(void);
 void PlayerObjectVanish(void);
 void PlayerObjectLaserBeamVanish(void);
 
-/* src/plobj_509ec.c */
+/* src/player_object_air_puff.c */
 void PlayerObjectAirPuff(void);
 void PlayerObjectAirPuffUpdate(void);
 void PlayerObjectSpitStar(void);
@@ -805,7 +805,7 @@ void PlayerObjectSpitMultiStar(void);
 void PlayerObjectSpitMultiStarUpdate(void);
 void sub_080513d4(void);
 
-/* src/plobj_514f8.c */
+/* src/player_object_laser_beam.c */
 void PlayerObjectWaterShot(void);
 void PlayerObjectWaterShotUpdate(void);
 void PlayerObjectFireBreath(void);
@@ -815,14 +815,14 @@ void PlayerObjectCutterBladeUpdate(void);
 void PlayerObjectLaserBeam(void);
 void PlayerObjectLaserBeamUpdate(void);
 
-/* src/plobj_5239c.c */
+/* src/player_object_ice_breath.c */
 void PlayerObjectIceBreath(void);
 void PlayerObjectIceBreathUpdate(void);
 s32 PlayerObjectBeamOrb(void);
 s32 PlayerObjectBeamOrbUpdate(void);
 void PlayerObjectLightOrb(void);
 
-/* src/plobj_52f6c.c */
+/* src/player_object_ufo_shot.c */
 void PlayerObjectUFOShot(void);
 void PlayerObjectUFOShotUpdate(void);
 void PlayerObjectUFOShotLateUpdate(void);

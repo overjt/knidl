@@ -373,7 +373,7 @@ extern u16 *gUnk_08757320[];
 
 /* Functions (defined in the files named above each group). */
 
-/* src/subgame_b9d0c.c */
+/* src/subgame.c */
 void SubGameReplay(s32 a0);
 void SubGameQuit(void);
 s32 SubGameInit(void);
@@ -402,7 +402,7 @@ void QuickDrawStartTimer(void);
 void QuickDrawWaitForSignal(void);
 s32 QuickDrawCountPresses(void);
 
-/* src/subgame_ba774.c */
+/* src/subgame_quick_draw.c */
 u8 QuickDrawIsTimeUp(void);
 void QuickDrawEndRoundTimeUp(void);
 void QuickDrawEndRoundFalseStart(void);
@@ -459,7 +459,7 @@ void QuickDrawRoundTieVsCpuUpdate(void);
 void QuickDrawRoundNextVsCpu(void);
 void QuickDrawRoundNextVsCpuUpdate(void);
 
-/* src/subgame_bb528.c */
+/* src/subgame_quick_draw_results.c */
 void QuickDrawSetupResults(void);
 void QuickDrawInitContinueMenu(void);
 void QuickDrawPlaySfxIfPlayer0(s32 a0);
@@ -503,7 +503,7 @@ void QuickDrawResultsLevelMenuUpdate(void);
 void QuickDrawResultsWaitQuit(void);
 void QuickDrawResultsWaitQuitUpdate(void);
 
-/* src/subgame_bc0cc.c */
+/* src/subgame_quick_draw_objects.c */
 void Task_QuickDrawObject(void);
 void QuickDrawPlayerSlideIn(void);
 void QuickDrawPlayerStartSlideIn(void);
@@ -575,11 +575,11 @@ void QuickDrawBonus(void);
 void QuickDrawRankLabelDraw(void);
 void QuickDrawRankLabel(void);
 
-/* src/subgame_bd9e8.c */
+/* src/subgame_bomb_rally_main.c */
 void BombRallyInit(void);
 void BombRallyMain(void);
 
-/* src/subgame_bda2c.c */
+/* src/subgame_bomb_rally.c */
 void BombRallyRound(void);
 void BombRallyRoundUpdate(void);
 void BombRallyEnterState(void);
@@ -637,7 +637,7 @@ void BombRallyPlayerCpuFollowThroughUpdate(void);
 void BombRallyPlayerBlownUp(void);
 void BombRallyPlayerBlownUpUpdate(void);
 
-/* src/subgame_bf994.c */
+/* src/subgame_bomb_rally_bomb.c */
 void BombRallyPlayerBubblesServe(void);
 void BombRallyPlayerBubblesServeUpdate(void);
 void BombRallyPlayerBubblesWait(void);
@@ -663,7 +663,7 @@ void BombRallyBombSmoke(void);
 void BombRallyBombSmokeUpdate(void);
 void BombRallyStarBurst(void);
 
-/* src/subgame_c0de8.c */
+/* src/subgame_bomb_rally_star_burst.c */
 void BombRallyStarBurstState0(void);
 void BombRallyStarBurstState4(void);
 void BombRallyStarBurstState5(void);
@@ -701,7 +701,7 @@ void sub_080c1f88(void);
 void AirGrindInit(void);
 void AirGrindMain(void);
 
-/* src/subgame_c1ffc.c */
+/* src/subgame_air_grind.c */
 void CreateAirGrindRacers(void);
 void CreateAirGrindScenery(s32 unused);
 void CreateAirGrindEffect(s32 a, s32 b, s32 c);
@@ -709,7 +709,7 @@ void AirGrindSetupRace(void);
 void AirGrindRace(void);
 void AirGrindRaceUpdate(void);
 
-/* src/subgame_c243c.c */
+/* src/subgame_air_grind_results_sky.c */
 void AirGrindResults(void);
 void AirGrindResultsDraw(void);
 void AirGrindResultsStep(void);
@@ -719,14 +719,14 @@ void AirGrindResultsSetCursorBlend(s32 mode);
 void AirGrindBuildSky(void);
 void AirGrindSkyVBlankCallback(void);
 
-/* src/subgame_c2ff8.c */
+/* src/subgame_air_grind_racer.c */
 void Task_AirGrindObject(void);
 void AirGrindRacer(void);
 void AirGrindCpuRollTarget(s32 player);
 s32 AirGrindCpuHoldsA(s32 player, s32 pos);
 void AirGrindRacerUpdate(void);
 
-/* src/subgame_c3648.c */
+/* src/subgame_air_grind_racer_steps.c */
 void AirGrindRacerSlowDown(void);
 void AirGrindScrollCourseTo(s32 pos);
 s32 AirGrindRacerTryBoost(s32 player);
@@ -738,7 +738,7 @@ void AirGrindRacerUpdateScreenPos(s32 player);
 void AirGrindRacerRaceUpdate(void);
 void AirGrindRacerIdleUpdate(void);
 
-/* src/subgame_c3f44.c */
+/* src/subgame_air_grind_effects.c */
 void AirGrindEffect(void);
 void AirGrindEffectFollowRacer(s32 layer);
 void sub_080c4364(void);
@@ -749,7 +749,7 @@ void AirGrindReleaseEffectUpdate(void);
 void AirGrindBoostRatingUpdate(void);
 void AirGrindPenaltyEffectUpdate(void);
 
-/* src/subgame_c4630.c */
+/* src/subgame_air_grind_scenery.c */
 void AirGrindDrawSceneryObject(s32 idx, s32 x, s32 y, u16 attr);
 void AirGrindRollSceneryObject(s32 i);
 void AirGrindScenery(void);
@@ -771,7 +771,7 @@ void AirGrindSeedRandom(void);
 u32 AirGrindRandom(s32 i);
 u32 AirGrindRandomRange(s32 i, u32 range);
 
-/* src/subgame_c4d08.c */
+/* src/subgame_air_grind_sprites.c */
 void AirGrindRacerDraw(void);
 void AirGrindEffectDrawOrFree(void);
 void AirGrindRacerMove(void);
@@ -780,7 +780,7 @@ void AirGrindClearScript(void);
 void AirGrindStepScript(void);
 void AirGrindStartScript(u16 id);
 
-/* src/subgame_c5284.c */
+/* src/subgame_air_grind_course.c */
 s32 AirGrindSin(s32 angle);
 void AirGrindCalcLanePoint(s32 lane, s32 x, s32 *px, s32 *py, s32 *pz);
 void AirGrindFindLaneSegment(s32 lane, s32 *idx, s32 x, s32 *out);
@@ -792,10 +792,10 @@ void AirGrindLayOutCourse(s32 a);
 void AirGrindBuildCourse(s32 a, s32 b);
 void AirGrindDrawCourse(void);
 
-/* src/subgame_c623c.c */
+/* src/subgame_air_grind_depth_scale.c */
 s32 AirGrindGetDepthScale(s32 x);
 
-/* src/sub_080c6258.c */
+/* src/subgame_air_grind_half_depth.c */
 s32 sub_080c6258(s32 value);
 
 #endif /* GUARD_SUBGAME_H */

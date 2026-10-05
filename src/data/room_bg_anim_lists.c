@@ -4,7 +4,7 @@
 /* The rooms' BG animation script lists (0x087E1E78-0x087E1F57, issue #167):
  * gRoomBgAnimScripts[RoomDef.bgAnimSet] is a NULL-ended list of the
  * scripts (src/data/bg_anim_scripts.c) LoadRoomBgAnims
- * (src/camera_2d01c.c) loads into the slots gBgAnims[], one slot per
+ * (src/camera_bg_anims.c) loads into the slots gBgAnims[], one slot per
  * script.  Set 0 means no BG animation (LoadRoomBgAnims tests it first),
  * so entry 0 is NULL; entry 13 is NULL too, and no room uses it (the 333
  * RoomDefs use sets 0-12).  Not const at the scripts: the lists hold the

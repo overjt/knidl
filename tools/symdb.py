@@ -5448,7 +5448,7 @@ FALSE_POSITIVES = {
     # prologue, not 4-aligned, and the preceding entry's claimed size (0x2E) is
     # not a multiple of 4 - the pair of properties from lesson 4.40.  Its only
     # evidence is one `bl` whose SITE, 0x0803DB34, is a literal-pool word
-    # (0xFFFFF078, inside the landed src/stage_3cd60.c range) decoding as a bl
+    # (0xFFFFF078, inside the landed src/player_helpers.c range) decoding as a bl
     # pair: 0x0803DB38 + 0x78FFE = 0x080B6B36 exactly.  sub_080b6b08 really
     # runs 0x080B6B08-0x080B6C40 (0x138).
     0x080B6B36,
@@ -5503,7 +5503,7 @@ FALSE_POSITIVES = {
     # (issue #65): the word 0xFFFFF000 at 0x08062DFC decodes as the `bl`
     # pair F000/FFFF, whose target lands mid-way through sub_08063DF4.  The
     # real function runs 0x08063DF4-0x08063E14 and byte-matches as one body
-    # (src/actor_63698.c).
+    # (src/actor.c).
     0x08063DFE,
     # 0x080643A2 is the same artifact one function later (issue #65): the
     # word 0xFFFFF000 at 0x080633A0, inside sub_08062F88's literal pool,
@@ -5520,7 +5520,7 @@ FALSE_POSITIVES = {
     # 0x0806F0E3.  The entry itself has no prologue -- it opens
     # `ldr r1, [r4, #0]` with r4 set by the code above it -- and
     # sub_0806efec really runs 0x0806EFEC-0x0806F174, pool included
-    # (src/actor_6ef5c.c).
+    # (src/player_warp_star_ride.c).
     0x0806F0E2,
     # 0x0806FC3E is the middle of sub_0806fb0c (issue #64), from the same
     # artifact one function later: the word 0xFFFFF000 at 0x0806EC3C, in
@@ -5842,7 +5842,7 @@ EXTRA_THUMB_ENTRIES = {
     # pool load and ends `bx lr`, so -fprologue-bugfix left it without a
     # `push`.  The behaviour-table word at 0x087440CC points at it (its
     # neighbours point at sub_080937d0, sub_08090ef1, sub_08090f15), and the
-    # byte match of src/enemy_91f9c.c confirms the split: sub_080937d0 runs
+    # byte match of src/enemy_bugzzy.c confirms the split: sub_080937d0 runs
     # 0x080937D0-0x08093858 (0x88) and this one 0x08093858-0x08093868.
     0x08093858,
     # Four M24 entries the census missed (issue #70), all found by the
@@ -5865,7 +5865,7 @@ EXTRA_THUMB_ENTRIES = {
     # that opens with a pool load and ends `bx lr`, so -fprologue-bugfix left
     # it without a `push` and the prologue filter rejected it.  The behaviour
     # table word at 0x087456C8 points at it, and the byte match of
-    # src/enemy_988f8.c confirms the split: sub_08099a7c runs
+    # src/enemy_mr_frosty.c confirms the split: sub_08099a7c runs
     # 0x08099A7C-0x08099AD0 (0x54) and this one 0x08099AD0-0x08099AEC.
     0x08099AD0,
     # Three more M27 leaves the same filter rejected (issue #68): the pair of
@@ -5875,7 +5875,7 @@ EXTRA_THUMB_ENTRIES = {
     # 0x0874580C points at it; sub_0809b408 is 0x30, not 0x4C), and the dead
     # table re-arm at 0x0809B8AC (a copy of sub_0809b5ec for the 0x08745B04
     # table; sub_0809b868 is 0x44, not 0x60).  All four are byte-matched by
-    # src/enemy_99b20.c.
+    # src/enemy_mr_tick_tock.c.
     0x08099FE0,
     0x08099FE4,
     0x0809B438,
@@ -5892,8 +5892,8 @@ EXTRA_THUMB_ENTRIES = {
     # `ldr r0, [pc, #N]` and the anchor-table word at 0x08741FA0 points at it
     # (host sub_080849dc is 0x74, not 0x98), and 0x08085FEC opens the same way
     # with the table word at 0x08742D40 pointing at it (host sub_08085fa0 is
-    # 0x4C, not 0x84).  All six are byte-matched by src/enemy_82e68.c /
-    # src/enemy_84d14.c.
+    # 0x4C, not 0x84).  All six are byte-matched by src/enemy_flamer.c /
+    # src/enemy_waddle_doo.c.
     0x080839D0,
     0x08083EE8,
     0x080840D4,

@@ -143,33 +143,33 @@ extern u32 gPlayerLifeRequestStateUpdates[];
 
 /* Functions (defined in the files named above each group). */
 
-/* src/save_b6154.c */
+/* src/main_hblank_bands_in_blend.c */
 s32 sub_080b6154(void);
 
-/* src/save_b6290.c */
+/* src/main_hblank_bands_out_blend.c */
 s32 sub_080b6290(void);
 
-/* src/save_b63a4.c */
+/* src/main_hblank_bands_out.c */
 s32 sub_080b63a4(void);
 
-/* src/save_b6474.c */
+/* src/main_hblank_bands_in_link_play.c */
 s32 sub_080b6474(void);
 s32 sub_080b6570(void);
 s32 sub_080b67dc(void);
 
-/* src/save_b6a90.c */
+/* src/main_room_hblank_scroll.c */
 void UpdateRoomHBlankScroll(void);
 
-/* src/save_b6b08.c */
+/* src/main_hblank_row_scroll.c */
 s32 sub_080b6b08(void);
 
-/* src/save_b6c40.c */
+/* src/main_hblank_uniform_scroll.c */
 s32 sub_080b6c40(void);
 
-/* src/save_b6d04.c */
+/* src/main_hblank_row_scroll_reverse.c */
 s32 sub_080b6d04(void);
 
-/* src/save_b6e44.c */
+/* src/main_hblank_scroll.c */
 void ResetHBlankScroll(void);
 void StopHBlankScroll(void);
 void StartHBlankScroll(s32 a);
@@ -179,27 +179,27 @@ void SuspendHBlankScroll(void);
 void RestoreRoomHBlankScroll(void);
 void ResumeHBlankScroll(void);
 
-/* src/save_b6f38.c */
+/* src/save_input_recorder_start.c */
 void InputRecorderStart(void);
 
-/* src/save_b72bc.c */
+/* src/save_input_recorder_restore.c */
 void InputRecorderRestoreState(void);
 
-/* src/save_b75a4.c */
+/* src/save_input_recorder_frame.c */
 void InputRecorderRecordFrame(void);
 void InputRecorderPlayFrame(void);
 
-/* src/save_b77d4.c */
+/* src/save_init_slots.c */
 void InputRecorderUpdate(void);
 void InitSaveSlots(void);
 void SelectLatestSaveSlot(void);
 s32 ReadSaveSlot(s32 a, s32 b);
 void InitNewSaveFile(s32 a);
 
-/* src/save_b79b8.c */
+/* src/save_completion_percent.c */
 s32 CalcCompletionPercent(s32 a);
 
-/* src/save_b7a9c.c */
+/* src/save_write_slot.c */
 s32 WriteSaveSlot(s32 a);
 u32 WriteSramSignature(void);
 void WriteNewSaveFile(s32 a);
@@ -210,10 +210,10 @@ void EraseSaveSlot(s32 a);
 void ClearSaveSlot(s32 a);
 u32 CalcSaveSlotChecksum(s32 a);
 
-/* src/save_b7df4.c */
+/* src/save_slot_checksum.c */
 u32 UpdateSaveSlotChecksum(s32 a);
 
-/* src/save_b7e14.c */
+/* src/save_store_progress.c */
 void StoreProgressInSaveSlot(s32 a);
 void StoreProgressInBothHalves(s32 a);
 void LoadSaveSlot(s32 a);
@@ -225,17 +225,17 @@ u32 WriteInputRecordingEntry(u8 *src, s32 i);
 void CopySaveSlotToLinkSlot(void);
 void FillSendCmdWithSaveSlot(void);
 
-/* src/save_b8694.c */
+/* src/save_receive_link_slots.c */
 void ReceiveLinkSaveSlots(void);
 
-/* src/save_b8888.c */
+/* src/save_exchange_link_slots.c */
 void ExchangeLinkSaveSlots(void);
 
-/* src/save_b8918.c */
+/* src/save_merge_link_slots.c */
 void MergeLinkSaveSlots(void);
 void MergeProgressIntoSaveSlot(s32 a);
 
-/* src/save_b8ea0.c */
+/* src/player_life_request.c */
 void PlayerLifeRequestClear(void);
 void PlayerClearOwnLifeRequests(void);
 void PlayerLifeRequestPickStartState(void);

@@ -89,7 +89,7 @@ extern struct GfxHeader *gUnk_087555FC[];
 
 /* Functions (defined in the files named above each group). */
 
-/* src/hud_099fc.c */
+/* src/hud_init_counters.c */
 void Task_IntroStoryPicture(void);
 void HudShowScore(void);
 void HudShowClock(void);
@@ -107,7 +107,7 @@ void AddPlayerScore(s32 a, u32 b);
 void AddPlayerScoreNoHud(s32 a, u32 b);
 void HudShowAbilityAnimated(s32 a, s32 b);
 
-/* src/hud_0a130.c */
+/* src/hud_hp_bars.c */
 void HudShowAbility(s32 a, s32 id);
 void sub_0800a178(s32 a, s32 id);
 void HudOpenAbilityPanel(s32 id);
@@ -126,7 +126,7 @@ void HudSetHpBar(s32 x, s32 i);
 void HudResetHpBar(s32 i);
 void HudStopHpBarAnim(s32 i);
 
-/* src/hud_0aad0.c */
+/* src/hud_draw.c */
 void HudUpdateClock(void);
 void HudRedrawClock(void);
 void HudDrawLevelName(void);
@@ -142,14 +142,14 @@ void HudDrawHpBar(s32 x);
 void HudDrawHpBarChange(s32 from, s32 to);
 void HudDrawLifeRequestPanel(s32 a, s32 b);
 
-/* src/hud_0b318.c */
+/* src/hud_tilemap.c */
 void HudClearTiles(s32 x, s32 y, s32 n);
 void HudClearWholeTilemap(void);
 void HudClearTilemap(void);
 void HudFlushTilemap(void);
 void HudLoadGfx(void);
 
-/* src/hud_b2fe8.c */
+/* src/actor_whispy_woods_items.c */
 void sub_080b2fe8(void);
 void WhispyWoodsAppleAdvanceRollFrame(u8 a);
 void Task_WhispyWoodsApple(void);
@@ -242,10 +242,10 @@ void StarRodPieceSlideOutState2Update(void);
 void StarRodPieceVariant2(void);
 void InitRoomObjects(void);
 
-/* src/hud_b4ea8.c */
+/* src/room_object_gfx.c */
 void LoadRoomObjectGfx(void);
 
-/* src/hud_b5024.c */
+/* src/room_spawn_objects.c */
 void SpawnRoomObjectsOnLoad(void);
 s32 SpawnRoomObject(s32 i);
 void MarkRoomObjectUsed(s32 a);
@@ -255,7 +255,7 @@ s32 AllocObjTilesAndPalettes(u32 a, u32 b);
 s32 AllocObjTiles(u32 a);
 s32 AllocObjPalettes(u32 a);
 
-/* src/hud_b5840.c */
+/* src/room_gfx_spawns.c */
 void HBlankScrollVBlankCallback(void);
 void UpdateHBlankScroll(void);
 

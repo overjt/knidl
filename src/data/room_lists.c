@@ -4,7 +4,7 @@
 /* The stage room lists gRoomTable[level][stage] points at (0x087E1F58-
  * 0x087E256F, issue #36 phase 2): each list holds the struct RoomDef headers
  * of one stage in room order, ended by a NULL.  gRoomIndex indexes them
- * (src/level_23948.c, src/level_242d0.c, src/block_318b4.c).  The headers
+ * (src/room_hub.c, src/room_enter_exit.c, src/player_block_anims.c).  The headers
  * themselves stay structure-only data (seg 13), and their maps and graphics
  * are assets.  Carved by tools/carve_data.py. */
 

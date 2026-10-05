@@ -1298,7 +1298,7 @@ extern s16 (*gHBlankScrollEffects[])(void);
 
 /* Functions (defined in the files named above each group). */
 
-/* src/enemy_78b68.c */
+/* src/enemy_sparky.c */
 void sub_08078b68(void);
 void WaddleDeeWalkInit(void);
 void WaddleDeeWalkUpdate(void);
@@ -1431,7 +1431,7 @@ void sub_0807a8fc(void);
 void ScarfyPlaceNearPlayer(void);
 void ScarfyCheckTransform(void);
 
-/* src/enemy_7aa5c.c */
+/* src/enemy_sword_and_blade_knight.c */
 void sub_0807aa5c(void);
 void ScarfyInit(void);
 void ScarfyUpdate(void);
@@ -1603,7 +1603,7 @@ void UFOLaserVanish(void);
 void sub_0807d384(void);
 void Task_SwordAndBladeKnightSlash(void);
 
-/* src/enemy_7d3b0.c */
+/* src/enemy_rocky.c */
 void SwordAndBladeKnightSlashUpdate(void);
 void Task_PengyIceBreathPuff(void);
 void Task_PengyIceBreathSparkle(void);
@@ -1718,7 +1718,7 @@ void sub_0807ef7c(void);
 void CoolSpookTeardown(void);
 void Task_Kabu(void);
 
-/* src/enemy_7f044.c */
+/* src/enemy_kabu.c */
 void KabuJumpInit(void);
 void KabuJumpEnterState(void);
 void KabuJumpUpdate(void);
@@ -1801,7 +1801,7 @@ void HotHeadStandFall(void);
 void HotHeadStandFallUpdate(void);
 void sub_08080b2c(void);
 
-/* src/enemy_80b70.c */
+/* src/enemy_starman_poppy_bros_jr.c */
 s32 HotHeadStartFall(void);
 s32 HotHeadLand(void);
 s32 HotHeadBounceOffWall(void);
@@ -1873,7 +1873,7 @@ s32 PoppyBrosJrEnterWater(void);
 void Task_PoppyBrosJrOnApple(void);
 void Task_PoppyBrosJrOnMaximTomato(void);
 
-/* src/enemy_820b8.c */
+/* src/enemy_poppy_bros_jr_wheelie.c */
 void PoppyBrosJrRideInit(void);
 void PoppyBrosJrRideEnterState(void);
 void PoppyBrosJrRideUpdate(void);
@@ -1924,7 +1924,7 @@ s32 sub_08082db0(void);
 s32 WheelieEnterWater(void);
 void Task_Flamer(void);
 
-/* src/enemy_82e68.c */
+/* src/enemy_flamer.c */
 void FlamerInit(void);
 void FlamerEnterState(void);
 void FlamerUpdate(void);
@@ -1974,7 +1974,7 @@ void sub_080843f8(void);
 void Task_FlamerFlame(void);
 void Task_Noddy(void);
 
-/* src/enemy_844c4.c */
+/* src/enemy_noddy.c */
 void NoddyInit(void);
 void NoddyEnterState(void);
 void NoddyUpdate(void);
@@ -2001,7 +2001,7 @@ s32 NoddyTurnAtSlope(void);
 s32 NoddyBounceOffWall(void);
 void Task_Chilly(void);
 
-/* src/enemy_84d14.c */
+/* src/enemy_waddle_doo.c */
 void ChillyInit(void);
 void ChillyEnterState(void);
 void ChillyUpdate(void);
@@ -2055,7 +2055,7 @@ void ParasolWaddleDooReactToDefeat(void);
 void Task_BrontoBurt(void);
 void BrontoBurtEnterVariant(void);
 
-/* src/enemy_860f8.c */
+/* src/enemy_bronto_burt_twizzy.c */
 void BrontoBurtWaveInit(void);
 void BrontoBurtWaveEnterState(void);
 void BrontoBurtWaveUpdate(void);
@@ -2138,7 +2138,7 @@ void TwizzyHopFall(void);
 void TwizzyHopFallUpdate(void);
 void TwizzyHopToChaseInit(void);
 
-/* src/enemy_88000.c */
+/* src/enemy_slippy.c */
 void TwizzyHopToChaseEnterState(void);
 void TwizzyHopToChaseUpdate(void);
 void sub_08088054(void);
@@ -2277,7 +2277,7 @@ s32 SlippyEnterWater(void);
 s32 SlippyHitWall(void);
 s32 SlippyHitCeiling(void);
 
-/* src/enemy_8aa68.c */
+/* src/enemy_blipper_gip.c */
 void Task_Blipper(void);
 void BlipperChaseInit(void);
 void BlipperChaseEnterState(void);
@@ -2358,7 +2358,7 @@ s32 GipGetWallDistLeft(s32 a, s32 b);
 void Task_ChillyFreeze(void);
 void ChillyFreezeUpdate(void);
 
-/* src/enemy_8cce8.c */
+/* src/enemy_broom_hatter.c */
 void Task_ChillyFreezeSparkle(void);
 void ChillyFreezeSparkleCheckParent(void);
 void Task_WaddleDooBeam(void);
@@ -2413,7 +2413,7 @@ void LaserBallReaim(void);
 void LaserBallAccelerateInMoveDir(void);
 void Task_LaserBall(void);
 
-/* src/enemy_8e404.c */
+/* src/enemy_shotzo.c */
 void LaserBallInit(void);
 void LaserBallUpdate(void);
 void LaserBallEnterState(void);
@@ -2471,7 +2471,7 @@ void ParasolShotzoEnterState(void);
 void ShotzoAim(void);
 void ShotzoAimState0Update(void);
 
-/* src/enemy_8f41c.c */
+/* src/enemy_shotzo_coner.c */
 void ShotzoAimShoot(void);
 void ShotzoAimShootUpdate(void);
 void ShotzoAimFall(void);
@@ -2522,7 +2522,7 @@ void ShotzoCannonballEnterState(void);
 void ShotzoCannonballState0(void);
 void ShotzoCannonballState0Update(void);
 
-/* src/enemy_9000c.c */
+/* src/enemy_bonkers.c */
 void Task_Bonkers(void);
 void BonkersInit(void);
 void BonkersEnterState(void);
@@ -2559,7 +2559,7 @@ void Task_BonkersHammerHitBox(void);
 void BonkersHammerHitBoxUpdate(void);
 void Task_PoppyBrosSr(void);
 
-/* src/enemy_9113c.c */
+/* src/enemy_poppy_bros_sr.c */
 void PoppyBrosSrInit(void);
 void PoppyBrosSrEnterState(void);
 void PoppyBrosSrUpdate(void);
@@ -2589,7 +2589,7 @@ void Task_PoppyBrosSrHead(void);
 void PoppyBrosSrHeadUpdate(void);
 void Task_Bugzzy(void);
 
-/* src/enemy_91f9c.c */
+/* src/enemy_bugzzy.c */
 void BugzzyInit(void);
 void BugzzyEnterState(void);
 void BugzzyUpdate(void);
@@ -2649,7 +2649,7 @@ void Task_PoppyBrosSrBombSpark(void);
 s32 PoppyBrosSrBombHitWall(void);
 s32 PoppyBrosSrBombLand(void);
 
-/* src/enemy_93f64.c */
+/* src/enemy_grand_wheelie.c */
 void Task_BugzzyLadybug(void);
 void BugzzyLadybugInit(void);
 void BugzzyLadybugUpdate(void);
@@ -2701,7 +2701,7 @@ s32 GrandWheelieStepAnim(void);
 s32 GrandWheelieTickAnimFacingNearestPlayer(s32 a);
 s32 GrandWheelieTickAnim(s32 a);
 
-/* src/enemy_957bc.c */
+/* src/enemy_fire_lion.c */
 void Task_FireLion(void);
 void sub_08095834(void);
 void FireLionEnterState(void);
@@ -2750,10 +2750,10 @@ void FireLionChooseNextState(void);
 void FireLionUpdateAttackBoxes(void);
 void FireLionCreateLandingStar(void);
 
-/* src/enemy_970c4.c */
+/* src/enemy_fire_lion_flame.c */
 void Task_FireLionFlame(void);
 
-/* src/enemy_974c8.c */
+/* src/enemy_phan_phan.c */
 void FireLionFlameCheckParent(void);
 void Task_PhanPhan(void);
 void sub_08097580(void);
@@ -2805,7 +2805,7 @@ s32 PhanPhanAppleHitWall(void);
 void sub_080988c0(void);
 s32 MrFrostyStartFall(void);
 
-/* src/enemy_988f8.c */
+/* src/enemy_mr_frosty.c */
 u8 MrFrostyLand(void);
 u8 MrFrostyHitWall(void);
 u8 MrFrostyReactToDefeat(void);
@@ -2861,7 +2861,7 @@ void MrFrostyDropIn(void);
 void MrFrostyDropInUpdate(void);
 u8 MrTickTockStartFall(void);
 
-/* src/enemy_99b20.c */
+/* src/enemy_mr_tick_tock.c */
 u8 MrTickTockLand(void);
 u8 MrTickTockHitWall(void);
 u8 MrTickTockReactToDamage(void);
@@ -2953,7 +2953,7 @@ u8 MrTickTockNoteLand(void);
 u8 MrTickTockNoteHitWall(void);
 void Task_MrTickTockNote(void);
 
-/* src/enemy_9ba44.c */
+/* src/enemy_meta_knights.c */
 void MrTickTockNoteInit(void);
 void MrTickTockNoteUpdate(void);
 void MrTickTockNoteEnterState(void);
@@ -2966,10 +2966,10 @@ void MetaKnightsUpdate(void);
 void MetaKnightsLateUpdate(void);
 void MetaKnightsLoadGfx(void);
 
-/* src/enemy_9c028.c */
+/* src/enemy_meta_knights_lineup.c */
 void sub_0809c028(void);
 
-/* src/enemy_9c0a8.c */
+/* src/enemy_axe_knight.c */
 void MetaKnightsIntro(void);
 void Task_MetaKnightsKnight(void);
 void sub_0809c490(void);
@@ -2990,10 +2990,10 @@ void AxeKnightState4(void);
 void AxeKnightState4Update(void);
 void AxeKnightSlashLoop(void);
 
-/* src/enemy_9cb90.c */
+/* src/enemy_axe_knight_slash_loop_update.c */
 void AxeKnightSlashLoopUpdate(void);
 
-/* src/enemy_9cc24.c */
+/* src/enemy_javelin_knight.c */
 void AxeKnightWalkInShortInit(void);
 void AxeKnightWalkInShortUpdate(void);
 void AxeKnightWalkInLongInit(void);
@@ -3028,10 +3028,10 @@ void JavelinKnightBounceUpdate(void);
 void JavelinKnightPickHop(void);
 void CreateJavelinKnightJavelin(void);
 
-/* src/enemy_9d994.c */
+/* src/enemy_javelin_knight_overlay.c */
 void JavelinKnightDrawOverlay(void);
 
-/* src/enemy_9da1c.c */
+/* src/enemy_mace_knight_trident_knight.c */
 void Task_JavelinKnightJavelin(void);
 void JavelinKnightJavelinUpdate(void);
 u8 JavelinKnightLand(void);
@@ -3088,10 +3088,10 @@ void TridentKnightWalkInLongInit(void);
 void TridentKnightWalkInLongUpdate(void);
 s32 CreateTridentKnightTrident(s32 a);
 
-/* src/enemy_9f2f4.c */
+/* src/enemy_trident_knight_overlay.c */
 void TridentKnightDrawOverlay(void);
 
-/* src/enemy_9f37c.c */
+/* src/enemy_meta_knights_knight.c */
 void Task_TridentKnightTrident(void);
 void TridentKnightTridentUpdate(void);
 void TridentKnightTridentVariant0(void);
@@ -3116,11 +3116,11 @@ void sub_0809f960(void);
 void sub_0809f970(void);
 s32 MetaKnightsKnightIsAtEdge(void);
 
-/* src/enemy_9f9dc.c */
+/* src/enemy_meta_knights_knight_palette.c */
 void MetaKnightsKnightFlashPalette(void);
 void MetaKnightsKnightRestorePalette(void);
 
-/* src/enemy_9fbd0.c */
+/* src/enemy_king_dedede_damage.c */
 void MetaKnightsLockPlayers(void);
 void MetaKnightsUnlockPlayers(void);
 void Task_KingDedede(void);
@@ -3133,10 +3133,10 @@ void sub_0809ffec(void);
 void CreateKingDededeStar(void);
 void KingDededeStartInhale(void);
 
-/* src/enemy_a00ec.c */
+/* src/enemy_king_dedede_inhale_particles.c */
 void sub_080a00ec(void);
 
-/* src/enemy_a0274.c */
+/* src/enemy_king_dedede.c */
 void CreateKingDededeLandingStar(void);
 void CreateKingDededeAirPuff(void);
 void KingDededeCreateImpactStars(u8 a);
@@ -3183,7 +3183,7 @@ void KingDededeDefeatedInit(void);
 void KingDededeDefeatedUpdate(void);
 void KingDededeDefeatedEnterState(void);
 
-/* src/enemy_a1590.c */
+/* src/enemy_mr_shine_and_mr_bright.c */
 void KingDededeDefeatedFall(void);
 void KingDededeDefeatedFallUpdate(void);
 s32 KingDededeDefeatHook(void);
@@ -3410,7 +3410,7 @@ void MrBrightBeamEffectDropSlow(void);
 void MrBrightBeamEffectDropFast(void);
 void Task_MetaKnight(void);
 
-/* src/enemy_a5644.c */
+/* src/enemy_meta_knight.c */
 void MetaKnightInit(void);
 void MetaKnightEnterState(void);
 void MetaKnightUpdate(void);
@@ -3485,10 +3485,10 @@ void sub_080a75c8(void);
 void sub_080a787c(void);
 void Task_MetaKnightSwordHitBox(void);
 
-/* src/enemy_a78a0.c */
+/* src/enemy_meta_knight_sword_hit_box.c */
 void MetaKnightSwordHitBoxUpdate(void);
 
-/* src/enemy_a7998.c */
+/* src/enemy_kracko_jr.c */
 void Task_MetaKnightCape(void);
 void Task_MetaKnightMask(void);
 void Task_MetaKnightMaskHalf(void);
@@ -3502,10 +3502,10 @@ void KrackoJrState0(void);
 void KrackoJrState0Update(void);
 void KrackoJrTransform(void);
 
-/* src/enemy_a860c.c */
+/* src/enemy_kracko_jr_transform_update.c */
 void KrackoJrTransformUpdate(void);
 
-/* src/enemy_a87c8.c */
+/* src/enemy_kracko.c */
 void KrackoInit(void);
 void KrackoEnterState(void);
 void KrackoUpdate(void);
@@ -3524,10 +3524,10 @@ void KrackoSummonUpdate(void);
 void KrackoSwoop(void);
 void KrackoSwoopUpdate(void);
 
-/* src/enemy_a932c.c */
+/* src/enemy_kracko_jr_clamp_to_view.c */
 void KrackoJrClampToView(void);
 
-/* src/enemy_a93ec.c */
+/* src/enemy_kracko_cloud_lightning.c */
 s32 KrackoJrIsPlayerAbove(void);
 void sub_080a9434(struct Task *pt);
 void KrackoJrPickMoveAxis(void);
@@ -3555,7 +3555,7 @@ void NightmareWizardTornadoDrawStreamedFrameNearView(void);
 void NightmareWizardTornadoDrawStreamedFrame(void);
 void Task_NightmareWizard(void);
 
-/* src/enemy_aa338.c */
+/* src/enemy_nightmare_wizard_heavy_mole.c */
 void NightmareWizardInit(void);
 void NightmareWizardEnterState(void);
 void NightmareWizardUpdate(void);
@@ -3680,7 +3680,7 @@ void Task_HeavyMoleSmoke(void);
 void sub_080ae37c(void);
 s32 HeavyMoleDefeatSweepFilter(s32 i);
 
-/* src/enemy_ae3bc.c */
+/* src/enemy_nightmare_power_orb.c */
 void Task_NightmarePowerOrb(void);
 void NightmarePowerOrbUpdate(void);
 void sub_080ae4c4(void);

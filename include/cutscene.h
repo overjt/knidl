@@ -131,11 +131,11 @@ extern u32 gNightmarePowerOrbEscapeFrames[];
 
 /* Functions (defined in the files named above each group). */
 
-/* src/mode_100ac.c */
+/* src/cutscene_main.c */
 void CutsceneMain(void);
 void CutsceneLoadGraphics(void);
 
-/* src/player_10358.c */
+/* src/cutscene_director_duel.c */
 s32 CreateCutsceneActor(s32 a, s32 b);
 void Task_CutsceneDirector(void);
 void CutsceneCheckSkip(void);
@@ -144,10 +144,10 @@ void CutsceneDuelStart(void);
 void CutsceneDuelKirby(void);
 void CutsceneActorScript1(void);
 
-/* src/player_109c8.c */
+/* src/cutscene_actor_particles.c */
 void sub_080109c8(void);
 
-/* src/player_10b38.c */
+/* src/cutscene_scenes.c */
 void CutsceneActorDrawPlayerFrame(void);
 void CutsceneActorScript2(void);
 void CutsceneActorScript3(void);
@@ -206,7 +206,7 @@ void CutsceneSingingThoughtBubble(void);
 void CutsceneSingingTrebleClef(void);
 void CutsceneFountainStart(void);
 
-/* src/actor_70ec0.c */
+/* src/cutscene_warp_star.c */
 void MetaKnightWarpStarRideDraw(void);
 void sub_08070ffc(void);
 void Task_WarpStar(void);
@@ -250,7 +250,7 @@ void WarpStarFlight11Update(void);
 void WarpStarFlight12(void);
 void WarpStarFlight12Update(void);
 
-/* src/actor_72d8c.c */
+/* src/cutscene_warp_star_flights.c */
 void WarpStarFlight13(void);
 void WarpStarFlight13Update(void);
 void WarpStarFlight14(void);
@@ -300,7 +300,7 @@ void WarpStarCameraPath23(void);
 void WarpStarCameraPath24(void);
 void CreateWarpStarTrailStar(int a, int b, int c);
 
-/* src/actor_74c0c.c */
+/* src/cutscene_nightmare_power_orb_escape.c */
 void Task_WarpStarTrailStar(void);
 void sub_08074e8c(void);
 void sub_08074ee0(u32 flag);
@@ -314,7 +314,7 @@ void PlayerCannonInit(void);
 void PlayerCannonUpdate(void);
 void PlayerCannonEnterState(void);
 
-/* src/actor_763e8.c */
+/* src/cutscene_cannon.c */
 void PlayerCannonStepPose(void);
 void sub_08076454(void);
 void sub_080764f8(void);
@@ -379,7 +379,7 @@ void CannonFuseInit(void);
 void CannonFuseUpdate(void);
 void CannonFuseEnterState(void);
 
-/* src/actor_77ae0.c */
+/* src/cutscene_big_switch_room_particles.c */
 void CannonFuseWait(void);
 void CannonFuseWaitUpdate(void);
 void CannonFuseBurn(void);

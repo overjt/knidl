@@ -33,13 +33,13 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
 - Whole Thumb game-code region split into per-function labeled asm (issue #25): `game_code_early` (2 chunks; `agb_init` decompiled to `src/agb_init.c` in #28) and `game_code_and_rodata` (14 ~64 KiB chunks, 5,003 functions) live under `asm/<segment>/<segment>_NN.s` via the config's `chunk_bytes`. Chunks share the segment's linker section (ld concatenates them in address order); cross-chunk branches use global `loc_XXXXXXXX` labels; no `.incbin` remains below `0x080D0000`. objdump→gas hazards are auto-repaired per instruction (`-marmv4t`, error-line feedback, post-assemble byte-diff feedback — lessons §4.15–4.17); ROM stays byte-identical.
 - Decomp-permuter vendored + standard loop documented (issue #26): `tools/decomp-permuter/` (simonlindholm/decomp-permuter@`2795247`, own MIT LICENSE kept; Dockerfile gained the required `toml` pip dep) verified inside `knidl-builder` on a scratch example (`tools/permuter-example/`, scorer reaches 0 against ROM-extracted target asm); per-function workflow + subagent handoff contract in `docs/decomp-loop.md`, old_agbcc-specific pitfalls in lessons §2.9–2.11.
 - m4a/mp2k sound engine located and fully labeled (issue #31): engine code `0x080CD89C-0x080CFA4B` (asm core + C driver halves, boundaries/evidence in `docs/analysis/rom-map.md` §8), 91 canonical names in the symbol DB (94 entries in the range; 3 tiny bx-r3 shims stay sub_*) (incl. 10 dead SDK exports via the new `EXTRA_THUMB_ENTRIES`/`curated` evidence mechanism in `tools/symdb.py`), engine RAM cells named via `data_symbols` (`gSoundInfo` `0x030056D0`, `SOUND_INFO_PTR` `0x03007FF0`, players/tracks, `gSoundMainRAM_Buffer` `0x03007150`), engine rodata tables mapped at `0x0860A140-0x0860B797` (byte-identical to pokeemerald's — same engine revision). Decompilation proceeds in child issues per rom-map §8.5.
-- Bulk code clustered into a module map (issue #34): `docs/analysis/module-map.md` + `docs/analysis/module-map.csv` (`make modmap`, `tools/modmap.py`, CSV regeneration checked in CI) partition the remaining `0x080075B8-0x080CD89C` (792.7 KiB, 4,950 functions) into **37 contiguous candidate modules** of 12-31 KiB with per-module evidence (anchor tables, task types, call traffic, pool references, difficulty, suggested batches) and a five-wave decompile order; child issues of #35 are generated from it. Key findings: the ROM task-type table at `0x0872FF30` has **266 entries whose second word is the task body's entry point** (not a flag word — corrects rom-map §6 / `src/early_58e4.c`), seg 7 references the I/O block only 20 times in 792 KiB (everything goes through the early zone's IWRAM shadows), and 3,288 of 5,045 functions are reachable only through ROM pointer tables.
+- Bulk code clustered into a module map (issue #34): `docs/analysis/module-map.md` + `docs/analysis/module-map.csv` (`make modmap`, `tools/modmap.py`, CSV regeneration checked in CI) partition the remaining `0x080075B8-0x080CD89C` (792.7 KiB, 4,950 functions) into **37 contiguous candidate modules** of 12-31 KiB with per-module evidence (anchor tables, task types, call traffic, pool references, difficulty, suggested batches) and a five-wave decompile order; child issues of #35 are generated from it. Key findings: the ROM task-type table at `0x0872FF30` has **266 entries whose second word is the task body's entry point** (not a flag word — corrects rom-map §6 / `src/task_move.c`), seg 7 references the I/O block only 20 times in 792 KiB (everything goes through the early zone's IWRAM shadows), and 3,288 of 5,045 functions are reachable only through ROM pointer tables.
 - Enemy/object behaviour bank 9 decompiled (issue #74): module M28
-  `0x0809BA44-0x080A158F` (22.8 KiB) landed as `src/enemy_9ba44.c`,
-  `src/enemy_9c028.c`, `src/enemy_9c0a8.c`, `src/enemy_9cb90.c`,
-  `src/enemy_9cc24.c`, `src/enemy_9d994.c`, `src/enemy_9da1c.c`,
-  `src/enemy_9f2f4.c`, `src/enemy_9f37c.c`, `src/enemy_9f9dc.c`,
-  `src/enemy_9fbd0.c`, `src/enemy_a00ec.c` and `src/enemy_a0274.c` (**all 204
+  `0x0809BA44-0x080A158F` (22.8 KiB) landed as `src/enemy_meta_knights.c`,
+  `src/enemy_meta_knights_lineup.c`, `src/enemy_axe_knight.c`, `src/enemy_axe_knight_slash_loop_update.c`,
+  `src/enemy_javelin_knight.c`, `src/enemy_javelin_knight_overlay.c`, `src/enemy_mace_knight_trident_knight.c`,
+  `src/enemy_trident_knight_overlay.c`, `src/enemy_meta_knights_knight.c`, `src/enemy_meta_knights_knight_palette.c`,
+  `src/enemy_king_dedede_damage.c`, `src/enemy_king_dedede_inhale_particles.c` and `src/enemy_king_dedede.c` (**all 204
   functions, no asm left in the range**; the last one, `sub_080A00EC`, the
   392-byte three-star burst stepper, fell to the address-reload phase mechanism
   in `docs/lessons-learned.md` 3.258 after 3.249-3.257 document the road there;
@@ -56,31 +56,31 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   `tools/addsyms.py` is new and folds the linker's `undefined reference to
   gUnk_<addr>` wall back into that map.
 - Enemy/object behaviour bank 7 decompiled (issue #75): module M26
-  `0x08093F64-0x080988F7` (18.4 KiB) landed as `src/enemy_93f64.c`,
-  `src/enemy_957bc.c`, `src/enemy_970c4.c` and `src/enemy_974c8.c` (all 148
+  `0x08093F64-0x080988F7` (18.4 KiB) landed as `src/enemy_grand_wheelie.c`,
+  `src/enemy_fire_lion.c`, `src/enemy_fire_lion_flame.c` and `src/enemy_phan_phan.c` (all 148
   functions; no asm left in the range).
   Four scripted enemies in the M22/M25 three-table shape plus two companions
   and a room-edge wanderer; eight census entries curated in `tools/symdb.py`
   and 131 ROM tables named via `split_config.json` `data_symbols`.
 - Enemy/object behaviour bank 5 decompiled (issue #70): module M24
-  `0x0808CCE8-0x0809000C` (12.8 KiB) landed as `src/enemy_8cce8.c`,
-  `src/enemy_8e404.c` and `src/enemy_8f41c.c` (all 158 functions; no asm left
+  `0x0808CCE8-0x0809000C` (12.8 KiB) landed as `src/enemy_broom_hatter.c`,
+  `src/enemy_shotzo.c` and `src/enemy_shotzo_coner.c` (all 158 functions; no asm left
   in the range).  Six scripted enemies in the M22/M25/M26 three-table shape
   plus the bank's own ArcTan2 aiming library; seven census rows corrected in
   `tools/symdb.py` (three `0xFFFFF000`/rom-pointer phantoms removed, four
   hidden entries added) and 65 ROM tables named via `split_config.json`
   `data_symbols`.
 - Enemy/object behaviour bank 4 decompiled (issue #80): module M23
-  `0x080860F8-0x0808CCE8` (27.0 KiB) landed as `src/enemy_860f8.c`,
-  `src/enemy_88000.c` and `src/enemy_8aa68.c` (all 297 functions; no asm left
+  `0x080860F8-0x0808CCE8` (27.0 KiB) landed as `src/enemy_bronto_burt_twizzy.c`,
+  `src/enemy_slippy.c` and `src/enemy_blipper_gip.c` (all 297 functions; no asm left
   in the range).  Fourteen scripted objects in the M22/M24/M25/M26 three-table
   shape plus two multi-state bosses (eleven and twelve states) and the shared
   nine-way walk probe `sub_08086f54`; sixteen census rows corrected in
   `tools/symdb.py` (fourteen hidden entries added, two graphics-blob phantoms
   removed) and 129 ROM tables named via `split_config.json` `data_symbols`.
 - Enemy/object behaviour bank 2 decompiled (issue #71): module M21
-  `0x0807F044-0x08082E67` (15.5 KiB) landed as `src/enemy_7f044.c`,
-  `src/enemy_80b70.c` and `src/enemy_820b8.c` (all 200 functions; no asm left
+  `0x0807F044-0x08082E67` (15.5 KiB) landed as `src/enemy_kabu.c`,
+  `src/enemy_starman_poppy_bros_jr.c` and `src/enemy_poppy_bros_jr_wheelie.c` (all 200 functions; no asm left
   in the range).  Nine ROM task types in the M22/M24/M25/M26 three-table shape
   (eight class-3 dispatchers plus the class-4 coroutine #175), 21 entry/hook
   script pairs and a shared library of terrain probe, animation loops and
@@ -89,8 +89,8 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   exports added) and 98 ROM tables named via `split_config.json`
   `data_symbols`.
 - Enemy/object behaviour bank 1 decompiled (issue #77): module M20
-  `0x08078B68-0x0807F044` (25.2 KiB) landed as `src/enemy_78b68.c`,
-  `src/enemy_7aa5c.c` and `src/enemy_7d3b0.c` (all 414 functions; no asm left
+  `0x08078B68-0x0807F044` (25.2 KiB) landed as `src/enemy_sparky.c`,
+  `src/enemy_sword_and_blade_knight.c` and `src/enemy_rocky.c` (all 414 functions; no asm left
   in the range).  Twenty-one ROM task types in the M21/M22/M24/M25/M26
   three-table shape.  #77 read the bank as moving scenery; #155 run 2's
   local sprite renders and the subtypes' `ActorDef.ability` show it is
@@ -101,9 +101,9 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   prologue-filter misses and nineteen dead exports) and 121 ROM tables named
   via `split_config.json` `data_symbols`.
 - Cutscene / ending-sequence bank decompiled (issue #79): module M19
-  `0x08070EC0-0x08078B68` (31.2 KiB) landed as `src/actor_70ec0.c`,
-  `src/actor_72d8c.c`, `src/actor_74c0c.c`, `src/actor_763e8.c` and
-  `src/actor_77ae0.c` (all 220 functions; no asm left in the range).  Eleven
+  `0x08070EC0-0x08078B68` (31.2 KiB) landed as `src/cutscene_warp_star.c`,
+  `src/cutscene_warp_star_flights.c`, `src/cutscene_nightmare_power_orb_escape.c`, `src/cutscene_cannon.c` and
+  `src/cutscene_big_switch_room_particles.c` (all 220 functions; no asm left in the range).  Eleven
   class-3 ROM task types (#8, #74-#79, #97-#99, #165) that run the game's
   non-interactive sequences - warp-star intro, stage-clear pose, goal-game
   walk, four-ring sparkle and the end credits.  Unlike the enemy banks these
@@ -116,14 +116,14 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   shared epilogue - and five hidden entries added) and 63 ROM/RAM cells named
   via `split_config.json` `data_symbols`.
 - Save file / SRAM records + options decompiled (issue #94): module
-  M34 `0x080B6154-0x080B9D0B` (14.9 KiB) landed as `src/save_b6154.c`,
-  `src/save_b6290.c`, `src/save_b63a4.c`, `src/save_b6474.c`,
-  `src/save_b6a90.c`, `src/save_b6b08.c`, `src/save_b6c40.c`,
-  `src/save_b6d04.c`, `src/save_b6e44.c`, `src/save_b6f38.c`,
-  `src/save_b72bc.c`, `src/save_b75a4.c`, `src/save_b77d4.c`,
-  `src/save_b79b8.c`, `src/save_b7a9c.c`, `src/save_b7df4.c`,
-  `src/save_b7e14.c`, `src/save_b8694.c`, `src/save_b8888.c`,
-  `src/save_b8918.c` and `src/save_b8ea0.c` (**all 105 functions, no asm
+  M34 `0x080B6154-0x080B9D0B` (14.9 KiB) landed as `src/main_hblank_bands_in_blend.c`,
+  `src/main_hblank_bands_out_blend.c`, `src/main_hblank_bands_out.c`, `src/main_hblank_bands_in_link_play.c`,
+  `src/main_room_hblank_scroll.c`, `src/main_hblank_row_scroll.c`, `src/main_hblank_uniform_scroll.c`,
+  `src/main_hblank_row_scroll_reverse.c`, `src/main_hblank_scroll.c`, `src/save_input_recorder_start.c`,
+  `src/save_input_recorder_restore.c`, `src/save_input_recorder_frame.c`, `src/save_init_slots.c`,
+  `src/save_completion_percent.c`, `src/save_write_slot.c`, `src/save_slot_checksum.c`,
+  `src/save_store_progress.c`, `src/save_receive_link_slots.c`, `src/save_exchange_link_slots.c`,
+  `src/save_merge_link_slots.c` and `src/player_life_request.c` (**all 105 functions, no asm
   left in the range**).  PR #130 landed 97; the last eight (five wavy-scroll
   drivers, the input recorder pair and the link-record copy, 3,252 bytes)
   had resisted the first run's pins and clobber sweeps at 3-532 bytes and
@@ -145,9 +145,9 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   via `split_config.json` `data_symbols`; new agbcc lessons 3.330-3.354,
   3.465-3.471 and 4.70, 4.110.
 - Sub-game framework + reaction-duel sub-game decompiled (issue #95): module
-  M35 `0x080B9D0C-0x080BDA2B` (15.3 KiB) landed as `src/subgame_b9d0c.c`,
-  `src/subgame_ba774.c`, `src/subgame_bb528.c`, `src/subgame_bc0cc.c` and
-  `src/subgame_bd9e8.c` (**all 196 functions, no asm left in the range**, no
+  M35 `0x080B9D0C-0x080BDA2B` (15.3 KiB) landed as `src/subgame.c`,
+  `src/subgame_quick_draw.c`, `src/subgame_quick_draw_results.c`, `src/subgame_quick_draw_objects.c` and
+  `src/subgame_bomb_rally_main.c` (**all 196 functions, no asm left in the range**, no
   `register`/`asm` pins).  The census name "game-mode flow + link lobby" was
   half right: the range is the framework `AgbMain` runs for its sub-game
   state - `gUnk_02007FCC` selects one of three sub-games (0 = the duel here,
@@ -161,10 +161,10 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   `data_symbols`; new agbcc lessons 3.361-3.366 and 4.71.
 - Game-state bodies, boot/title sequence, screen loaders, pause screen and
   HUD decompiled (issue #96): module M02 `0x080075B8-0x0800B91F` (16.9 KiB)
-  landed as `src/mode_075b8.c`, `src/mode_07b68.c`, `src/mode_082d0.c`,
-  `src/mode_08664.c`, `src/gfx_08b8c.c`, `src/boot_091ac.c`,
-  `src/hud_099fc.c`, `src/hud_0a130.c`, `src/hud_0aad0.c`,
-  `src/hud_0b318.c` and `src/mode_0b44c.c` (**all 109 functions, no asm left
+  landed as `src/mode_hub_stage.c`, `src/mode_extra_mode_title.c`, `src/mode_extra_mode_title_sprites.c`,
+  `src/mode_pause_boss_endurance.c`, `src/mode_gfx_loaders.c`, `src/mode_boot_sequence.c`,
+  `src/hud_init_counters.c`, `src/hud_hp_bars.c`, `src/hud_draw.c`,
+  `src/hud_tilemap.c` and `src/mode_hub_stage_init.c` (**all 109 functions, no asm left
   in the range**; its one zero-byte `asm("" ::: "r0")` clobber went in #154,
   no `register` pins).  It is what `AgbMain` dispatches into: the per-frame bodies of game
   states 5, 8/17/18/19, 9 and 20, which loop until the stage-request byte
@@ -183,10 +183,10 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
 
 - Main menu, its sprite tasks, the BG scroll animator and the stage
   sequence state decompiled (issue #99): module M03 `0x0800B920-0x08010357`
-  (18.6 KiB) landed as `src/menu_0b920.c`, `src/menu_0c09c.c`,
-  `src/menu_0ca10.c`, `src/menu_0d450.c`, `src/menutask_0daf8.c`,
-  `src/menutask_0e314.c`, `src/menutask_0ea0c.c`, `src/menutask_0f180.c`,
-  `src/bgscroll_0fcbc.c` and `src/mode_100ac.c` (**all 79 functions, no asm
+  (18.6 KiB) landed as `src/menu_main_save_slots.c`, `src/menu_file_select.c`,
+  `src/menu_mode_list.c`, `src/menu_sound_test_link_play.c`, `src/menu_file_select_tasks.c`,
+  `src/menu_panel_tasks.c`, `src/menu_sound_test_tasks.c`, `src/menu_link_play_tasks.c`,
+  `src/menu_bg_scroll.c` and `src/cutscene_main.c` (**all 79 functions, no asm
   left in the range**; its one zero-byte `asm("" ::: "r6")` clobber went in
   #154, no `register` pins), so `0x080075B8-0x08017667` (M02-M04) is contiguous C.
   `AgbMain` state 4 is the main menu: `sub_0800b920` dispatches on the menu
@@ -206,11 +206,11 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
 
 - Camera, BG map streaming, the type-#4 map events and the stage objects
   #221-#236 decompiled (issue #86): module M08 `0x080296A0-0x08030803`
-  (28.3 KiB) landed as `src/camera_296a0.c`, `src/camera_29c74.c`,
-  `src/bgmap_2a9cc.c`, `src/bgmap_2b2f0.c`, `src/camera_2b4bc.c`,
-  `src/camera_2c42c.c`, `src/camera_2d01c.c`, `src/camtask_2d38c.c`,
-  `src/obj_2eac8.c`, `src/obj_2f62c.c`, `src/obj_30238.c` and
-  `src/obj_306b4.c` (**all 151 functions, no asm left in the range**, no
+  (28.3 KiB) landed as `src/camera_stream_scroll.c`, `src/camera_player_group.c`,
+  `src/camera_draw_bg_map.c`, `src/camera_block_anim_clip.c`, `src/camera_scroll_lock.c`,
+  `src/camera_hub.c`, `src/camera_bg_anims.c`, `src/camera_map_events.c`,
+  `src/camera_door_signs.c`, `src/camera_warp_star_station_door.c`, `src/camera_stage_effect.c` and
+  `src/camera_world_sprite_block_anims.c` (**all 151 functions, no asm left in the range**, no
   `asm` statements and no `register` pins).  It is one subsystem with M07
   (the level / room builder, then still asm), which calls it every frame: the
   camera (mode `gUnk_030055C0`, pixel position `gUnk_03005604`, 16.16
@@ -232,14 +232,14 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   file, because gcse hashes pool-label addresses).
 
 - Level / room builder decompiled (issue #93): module M07
-  `0x08021B18-0x0802969F` (30.9 KiB) landed as `src/terrain_21b18.c`,
-  `src/level_2296c.c`, `src/roomtask_23618.c`, `src/level_23948.c`,
-  `src/level_242d0.c`, `src/stage_261c0.c`, `src/door_26b60.c`,
-  `src/stage_270d0.c`, `src/stage_273a0.c`, `src/room_27e28.c`,
-  `src/room_28320.c` and `src/camera_28b8c.c` (**156 of 157 functions**,
+  `0x08021B18-0x0802969F` (30.9 KiB) landed as `src/collision_terrain_init.c`,
+  `src/room_reset_level_load_room.c`, `src/room_task.c`, `src/room_hub.c`,
+  `src/room_enter_exit.c`, `src/room_stage_helpers.c`, `src/room_doors.c`,
+  `src/room_stop_pause.c`, `src/room_restart_point.c`, `src/room_bg_layout.c`,
+  `src/room_spawn_door_objects.c` and `src/room_camera_init.c` (**156 of 157 functions**,
   no `asm` statements and no `register` pins; the one hole is
   `sub_08027a6c`, 956 bytes, parked at 234 differing bytes, which the
-  final campaign landed from plain source as `src/level_27a6c.c`), so
+  final campaign landed from plain source as `src/room_hub_map.c`), so
   `0x08021B18-0x08030803` (M07+M08) is all C.  It is the half of the
   level engine that decides which room is on screen and drives M08's camera:
   the room table `gUnk_087E1D58[level][stage][room]` gives the room header
@@ -252,7 +252,7 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   player and `sub_08025024` (a 9-way `switch` on the door kind) enters it and
   raises M02's stage request `gUnk_03002438`.  The rest continue M06's map
   queries, hold the stage helpers the whole game calls and start the camera
-  and the BG3 parallax layer.  `level_242d0.c` covers the part-3 loaders and
+  and the BG3 parallax layer.  `room_enter_exit.c` covers the part-3 loaders and
   the doors as one translation unit because the doors only match after them
   (lessons 4.79/4.86).  Six census rows corrected in `tools/symdb.py` (four
   dead exports added, the two long-jump phantoms inside `sub_08025024`
@@ -262,9 +262,9 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   lessons 3.389-3.401 and 4.82-4.86.
 
 - Breakable blocks + the player task decompiled (issue #92): module M09
-  `0x08030804-0x0803627F` (22.6 KiB) landed as `src/block_30804.c`,
-  `src/block_318b4.c`, `src/player_32688.c`, `src/player_337f4.c`,
-  `src/player_343c0.c` and `src/player_34f8c.c` (**all 63 functions, no asm
+  `0x08030804-0x0803627F` (22.6 KiB) landed as `src/player_break_blocks.c`,
+  `src/player_block_anims.c`, `src/player_task.c`, `src/player_stand_walk.c`,
+  `src/player_run_jump.c` and `src/player_fall_float.c` (**all 63 functions, no asm
   left in the range**, no `asm` statements and no `register` pins).  The
   census name "stage manager A" was wrong twice over: the first half is the
   breakable-block system (the per-metatile block layers `gUnk_02008160[]`
@@ -276,7 +276,7 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   action machine M10-M14 continue - "enter" coroutines `gUnk_0873A748[62]`
   indexed by `PlayerState.unk02` and per-frame handlers `gUnk_0873A840[57]`
   indexed by `Task.unk15`, both dispatched through `sub_08002e98` with a
-  NULL entry 0, written in M11's style (`src/stage_*.c`).  Three dead
+  NULL entry 0, written in M11's style (`src/player_helpers.c`, `src/player_meta_knight_*.c`).  Three dead
   exports added in `tools/symdb.py` (so 63, not 60 functions), 35 RAM/ROM
   cells named via `split_config.json` `data_symbols`, `PlayerState.unk5C`
   named in `include/task.h`; done by a four-agent fan-out after the
@@ -285,9 +285,9 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   (lesson 3.409); new lessons 3.402-3.410 and 4.87-4.89.
 
 - Player action bodies, part 2, decompiled (issue #91): module M10
-  `0x08036280-0x0803CD5F` (26.7 KiB) landed as `src/player_36280.c`,
-  `src/player_36c94.c`, `src/player_37ed8.c`, `src/player_3919c.c`,
-  `src/player_39c24.c`, `src/player_3aa64.c` and `src/player_3bde8.c`
+  `0x08036280-0x0803CD5F` (26.7 KiB) landed as `src/player_duck_slide.c`,
+  `src/player_ladder_inhale.c`, `src/player_hurt.c`, `src/player_die_enter_door.c`,
+  `src/player_exit_door.c`, `src/player_water.c` and `src/player_share_item.c`
   (**all 39 functions, no asm left in the range**, no `asm` statements and
   no `register` pins), so `0x08021B18-0x08040B3F` (M07 through the start of
   M11) is C (M07's last function landed in the final campaign).  The census name "stage script
@@ -308,9 +308,9 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   3.411-3.415 and 4.90-4.91.
 
 - Player action bodies, part 3, decompiled (issue #87): module M12
-  `0x080449C8-0x08047FE7` (13.5 KiB) landed as `src/player_449c8.c`,
-  `src/player_44d04.c`, `src/player_455c8.c`, `src/player_45d34.c`,
-  `src/player_46330.c`, `src/player_46c00.c` and `src/player_474e8.c`
+  `0x080449C8-0x08047FE7` (13.5 KiB) landed as `src/player_spark_cutter.c`,
+  `src/player_sword.c`, `src/player_burning_laser.c`, `src/player_mike.c`,
+  `src/player_wheel.c`, `src/player_hammer.c` and `src/player_sleep.c`
   (**all 21 functions, no asm left in the range**, no `asm` statements and
   no `register` pins), so `0x08043654-0x08047FE7` (the end of M11 and all
   of M12) is contiguous C.  The census name "large actor bank A" was
@@ -332,10 +332,10 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   no handovers; new lessons 3.416-3.420 and 4.93-4.94.
 
 - Player action bodies, part 4, decompiled (issue #88): module M13
-  `0x08047FE8-0x0804CC7B` (19.1 KiB) landed as `src/player_47fe8.c`,
-  `src/player_49738.c`, `src/player_49b48.c`, `src/player_49f98.c`,
-  `src/player_4a54c.c`, `src/player_4ab70.c`, `src/player_4b5b4.c`,
-  `src/player_4b858.c` and `src/player_4c64c.c` (**all 24 functions, no
+  `0x08047FE8-0x0804CC7B` (19.1 KiB) landed as `src/player_get_ability.c`,
+  `src/player_ability_tiles.c`, `src/player_ice_freeze.c`, `src/player_hi_jump.c`,
+  `src/player_beam_stone.c`, `src/player_tornado_crash.c`, `src/player_light.c`,
+  `src/player_backdrop_hold.c` and `src/player_throw_hold.c` (**all 24 functions, no
   asm left in the range**, no `asm` statements and no `register` pins; two
   zero-code `do { } while (0)` priority levers), so
   `0x08043654-0x0804CC7B` (the end of M11, M12 and M13) is contiguous C.
@@ -361,12 +361,12 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
 
 - Player action bodies, part 5, the action 49/58 sub-action tables and
   task type #6 decompiled (issue #90): module M14 `0x0804CC7C-0x08053AF3`
-  (27.6 KiB) landed as `src/player_4cc7c.c`, `src/player_4dc08.c`,
-  `src/player_4e5a4.c`, `src/player_4e78c.c`, `src/player_4ee08.c`,
-  `src/player_4f614.c`, `src/player_4f948.c`, `src/player_4ffdc.c`,
-  `src/plobj_507bc.c`, `src/plobj_509ec.c`, `src/plobj_514f8.c`,
-  `src/plobj_5239c.c` and `src/plobj_52f6c.c` around PR #133's
-  `src/sub_0804e3a0.c` (**all 81 functions, no asm left in the range**,
+  (27.6 KiB) landed as `src/player_ufo.c`, `src/player_backdrop_throw.c`,
+  `src/player_ball.c`, `src/player_ball_roll.c`, `src/player_ball_jump.c`,
+  `src/player_ball_helpers.c`, `src/player_star_rod.c`, `src/player_star_rod_flight.c`,
+  `src/player_object_task.c`, `src/player_object_air_puff.c`, `src/player_object_laser_beam.c`,
+  `src/player_object_ice_breath.c` and `src/player_object_ufo_shot.c` around PR #133's
+  `src/player_throw_update.c` (**all 81 functions, no asm left in the range**,
   no `asm` statements and no `register` pins), so
   `0x08043654-0x08053AF3` (the end of M11 through M14) is contiguous C.
   The census name "stage manager B" was half right: the range holds the
@@ -393,15 +393,15 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   3.428-3.434 and 4.97-4.98.
 
 - Task type #7, the player's effect objects, decompiled (issue #89): module
-  M15 `0x08053AF4-0x0805AFAB` (29.2 KiB) landed as `src/effect_53af4.c`,
-  `src/effect_54330.c`, `src/effect_54a80.c`, `src/effect_55460.c`,
-  `src/effect_55b24.c`, `src/effect_56448.c`, `src/effect_56dd4.c`,
-  `src/effect_57494.c`, `src/effect_57ce0.c`, `src/effect_58810.c`,
-  `src/effect_59570.c` and `src/effect_5a358.c` (**all 84 functions, no asm
+  M15 `0x08053AF4-0x0805AFAB` (29.2 KiB) landed as `src/effect_skid_dust.c`,
+  `src/effect_slide_dust.c`, `src/effect_death_star_ring_ability.c`, `src/effect_dance_star_burst.c`,
+  `src/effect_hurt_flames_sparks.c`, `src/effect_ability_puffs.c`, `src/effect_fire_breath_spark_aura.c`,
+  `src/effect_burning_flames_wheel.c`, `src/effect_mike_attack.c`, `src/effect_ice_breath_freeze_aura.c`,
+  `src/effect_hi_jump_ball.c` and `src/effect_crash_blast.c` (**all 84 functions, no asm
   left in the range**, no `asm` statements and no `register` pins), so
   `0x08043654-0x080B566F` (the end of M11 through the head of M33) is one
   contiguous C run.  The census name "link multiplayer mode" was wrong: its
-  "SIO multi-play x162" counted calls into `src/early_6464.c`, 149 of them
+  "SIO multi-play x162" counted calls into `src/link_driver.c`, 149 of them
   the random-range helpers `sub_080064ac`/`sub_080064dc`.  The range is
   task type #7 (class 1, body `sub_08053af4`): the effect objects the
   player's actions and M11's movement code spawn through M16's
@@ -423,14 +423,14 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
 
 - Sub-game 2 of M35's framework and `AgbMain` state 11 decompiled (issue
   #98): module M37 `0x080C1FFC-0x080C641F` (17.0 KiB) landed as
-  `src/subgame_c1ffc.c`, `src/subgame_c243c.c`, `src/subgame_c2ff8.c`,
-  `src/subgame_c3648.c`, `src/subgame_c3f44.c`, `src/subgame_c4630.c`,
-  `src/subgame_c4d08.c`, `src/subgame_c5284.c`, `src/subgame_c623c.c` and
-  `src/mode_c6260.c` around PR #133's `src/sub_080c6258.c` (**81 of 82
+  `src/subgame_air_grind.c`, `src/subgame_air_grind_results_sky.c`, `src/subgame_air_grind_racer.c`,
+  `src/subgame_air_grind_racer_steps.c`, `src/subgame_air_grind_effects.c`, `src/subgame_air_grind_scenery.c`,
+  `src/subgame_air_grind_sprites.c`, `src/subgame_air_grind_course.c`, `src/subgame_air_grind_depth_scale.c` and
+  `src/ending_main.c` around PR #133's `src/subgame_air_grind_half_depth.c` (**81 of 82
   functions** in C, no `asm` statements and no `register` pins; the one
   hole was the 1720-byte course renderer `sub_080c5b84`, parked at 22 bytes,
   which the final campaign landed from natural source at the end of
-  `src/subgame_c5284.c`), so `0x080B9D0C-0x080C641F` (M35, M36 and M37) is
+  `src/subgame_air_grind_course.c`), so `0x080B9D0C-0x080C641F` (M35, M36 and M37) is
   contiguous C.  The census name "FIR-coefficient effect
   engine" was wrong: the `0x080CFE2C-0x080D0600` tables it was named after
   are this module's rodata.  The range is game 2 of the sub-game framework
@@ -445,7 +445,7 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   `gUnk_0201716C`, which M35 fills through the course builder
   `sub_080c59d8` and `sub_080c5b84` renders column by column;
   the sky is a 160-line HBlank-DMA backdrop gradient.  After the real seam
-  at `0x080C6260` comes `AgbMain` state 11 (`src/mode_c6260.c`), two scenes
+  at `0x080C6260` comes `AgbMain` state 11 (`src/ending_main.c`), two scenes
   directed by M38's task types #100/#101 before state 12.  Four census
   rows corrected in `tools/symdb.py` (two lesson 4.95 phantoms folded, two
   push-less entries added, so still 82 functions) and 51 ROM/RAM cells
@@ -455,18 +455,18 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   3.443-3.452 and 4.101-4.105.
 - The ending, the staff credits and the game-over screen decompiled (issue
   #100): module M38 `0x080C6420-0x080CD89B` (29.1 KiB), the last unstarted
-  bulk module, landed as `src/results_c6420.c`, `src/ending_c6c64.c`,
-  `src/ending_c7e4c.c`, `src/ending_c9004.c`, `src/boot_caa3c.c`,
-  `src/gameover_cacf0.c`, `src/gameover_cb354.c`, `src/gameover_cb64c.c`,
-  `src/gameover_cbed4.c`, `src/gameover_ccd4c.c` and `src/credits_cd330.c`
+  bulk module, landed as `src/ending_final_results.c`, `src/ending_epilogue.c`,
+  `src/ending_epilogue_kirby.c`, `src/ending_star_rod_return.c`, `src/boot_logo_init_objects.c`,
+  `src/game_over_screen.c`, `src/game_over_tasks.c`, `src/game_over_player.c`,
+  `src/game_over_choice.c`, `src/game_over_objects.c` and `src/ending_credits.c`
   (**109 of 110 functions**, no `asm` statements and no `register` pins;
   the one hole was the boot logo objects' 568-byte interpreter
   `sub_080caab8`, parked at 33 differing bytes, which the final campaign
-  landed as `src/boot_caab8.c` with two commented zero-byte levers), so
+  landed as `src/boot_logo_update_objects.c` with two commented zero-byte levers), so
   `0x080C6260-0x080CD89B` is all C.  The census
   name "intro / cutscene / ending sequences?" was half right: it is the
   ending and the game-over screen.  `AgbMain` state 11 (M37's
-  `src/mode_c6260.c`) plays two scenes directed by task types #100 and #101
+  `src/ending_main.c`) plays two scenes directed by task types #100 and #101
   (class 3, variants `gUnk_08757330[11]` / `gUnk_087573F4[12]`, linear
   `TaskYieldTrampoline` scripts that end the scene by clearing
   `gUnk_02008018`); state 12 runs the staff credits `sub_080cd330` -
@@ -490,18 +490,18 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   back).
 - Box-vs-terrain collision engine + actor-vs-collider hit tests decompiled
   (issue #84): module M06 `0x0801A8C8-0x08021B17` (28.6 KiB) is C in 21
-  files - PR #131's `src/terrain_1bcac.c`, `terrain_1c30c.c`,
-  `terrain_1c444.c`, `terrain_1c51c.c`, `terrain_1c8dc.c`,
-  `terrain_2069c.c`, `terrain_21130.c` and `terrain_214e0.c` (28
-  functions), and this run's `src/hitbox_1a8c8.c`, `src/hitbox_1b7dc.c`,
-  `src/terrain_1baa4.c`, `src/terrain_1c690.c`, `src/terrain_1c930.c`,
-  `src/terrain_1d394.c`, `src/terrain_1d9c8.c`, `src/terrain_1e178.c`,
-  `src/terrain_1ecd0.c`, `src/terrain_1f540.c`, `src/terrain_1ff84.c`,
-  `src/terrain_207a0.c` and `src/terrain_2136c.c` (26) - **54 of 55
+  files - PR #131's `src/collision_collide_box.c`, `collision_collide_point.c`,
+  `collision_collide_box_tile_edge.c`, `collision_probe_begin_end.c`, `collision_probe_box_top.c`,
+  `collision_probe_point_stop.c`, `collision_probe_water_drift.c` and `collision_query_pixel.c` (28
+  functions), and this run's `src/collision_hit_test_players_class10.c`, `src/collision_hit_test_helpers.c`,
+  `src/collision_player_probe.c`, `src/collision_probe_wall_on_ground.c`, `src/collision_probe_floor_in_camera_bounds.c`,
+  `src/collision_probe_floor.c`, `src/collision_probe_wall_in_air_ceiling.c`, `src/collision_probe_landing_in_camera_bounds.c`,
+  `src/collision_probe_landing.c`, `src/collision_probe_no_slope_link.c`, `src/collision_probe_along_velocity.c`,
+  `src/collision_probe_point_push_out_tile_edge.c` and `src/collision_probe_water.c` (26) - **54 of 55
   functions**, no `asm` statements and no `register` pins; the one hole is
   `sub_0801b24c` (1424 bytes, the third collider list's hit test), parked
   at 44 differing bytes, which the final campaign landed as
-  `src/hitbox_1b24c.c`, so `0x0801A8C8-0x08030803` (M06-M08) is all C.  The census name "terrain / collision query (pure leaf)"
+  `src/collision_hit_test_class20.c`, so `0x0801A8C8-0x08030803` (M06-M08) is all C.  The census name "terrain / collision query (pure leaf)"
   was half right: the range is the collision engine every actor and player
   runs - ten per-frame entry points that load a box, compute its
   room-relative corners and run a probe set picked by the x velocity and
@@ -522,10 +522,10 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   first and the bodies after them) and 4.108-4.109.
 - Straggler campaign over seven parked allocation-residue functions
   (issues #125, #97, #84 and M11's #85): six landed as C in one file each,
-  `src/player_18e14.c`, `src/player_19eec.c` and `src/player_1a3e4.c`
-  (M05's last three, so M05 has no asm left), `src/stage_40b40.c` and
-  `src/stage_4335c.c` (M11's last two, so M11 is all C) and
-  `src/hud_b5670.c` (M33's last, so M33 is all C); 5,168 of 6,592 bytes.
+  `src/cutscene_fountain_sparkles.c`, `src/cutscene_fountain_blend.c` and `src/cutscene_fountain_sprite_draw.c`
+  (M05's last three, so M05 has no asm left), `src/player_motion_x_preset.c` and
+  `src/player_meta_knight_swim_update.c` (M11's last two, so M11 is all C) and
+  `src/room_enemy_gfx.c` (M33's last, so M33 is all C); 5,168 of 6,592 bytes.
   Five are plain pin-free C with no `asm` and no `register`;
   `sub_0804335c` keeps one commented zero-code `do { } while (0)` (the
   lever its M10 twin uses) and two documented stand-in locals.  The old
@@ -546,12 +546,12 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   3.472-3.478 and 4.111.
 - The engine zone's last asm functions (issue #63, the backlog #32 left):
   13 of the 14 functions of `game_code_early` that #32 parked landed as C
-  in `src/early_1cc8.c`, `src/early_2378.c`, `src/early_31b8.c`,
-  `src/early_3888.c`, `src/early_4984.c`, `src/early_5654.c`,
-  `src/early_5acc.c`, `src/early_6ac8.c` and `src/early_6e9c.c`, so
+  in `src/main_affine_sprite.c`, `src/link_sync_random.c`, `src/sound_play_sfx.c`,
+  `src/link_setup_init.c`, `src/link_multiboot_main.c`, `src/task.c`,
+  `src/task_frame_tiles.c`, `src/link_cmd_queue.c` and `src/link_do_recv.c`, so
   `0x080008E8-0x08007300` is C except `sub_08006d28` (SerialCB, 356 bytes,
   parked at 15 differing bytes; the final campaign landed it as
-  `src/early_6d28.c`, rom-map §6.4).
+  `src/link_serial_cb.c`, rom-map §6.4).
   Twelve are plain source and `sub_08002378` keeps one commented zero-code
   stand-in conjunct.  All fourteen were redrafted from the listings (#32's
   candidates were lost), and every #32 diagnosis turned out to describe
@@ -566,11 +566,11 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   `MultiBoot` as returning int.  No census row changed; done by a
   three-agent fan-out; new lessons 3.479-3.488 and 4.112.
 - The final campaign over the last five game functions (issues #63, #84,
-  #93, #98, #100): `sub_08027a6c` (M07, `src/level_27a6c.c`),
-  `sub_08006d28` (SerialCB, `src/early_6d28.c`), `sub_0801b24c` (M06,
-  `src/hitbox_1b24c.c`), `sub_080c5b84` (M37, appended to
-  `src/subgame_c5284.c`, whose nine landed functions stay byte-identical)
-  and `sub_080caab8` (M38, `src/boot_caab8.c`), 5,024 bytes.  Four are
+  #93, #98, #100): `sub_08027a6c` (M07, `src/room_hub_map.c`),
+  `sub_08006d28` (SerialCB, `src/link_serial_cb.c`), `sub_0801b24c` (M06,
+  `src/collision_hit_test_class20.c`), `sub_080c5b84` (M37, appended to
+  `src/subgame_air_grind_course.c`, whose nine landed functions stay byte-identical)
+  and `sub_080caab8` (M38, `src/boot_logo_update_objects.c`), 5,024 bytes.  Four are
   plain source, SerialCB with one commented zero-code stand-in (a dead
   `i = 4;` before a `break`), and `sub_080caab8` keeps two commented
   zero-byte `asm` levers at one store, approved by the owner's coordinator
@@ -602,16 +602,16 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   189 -> 9, with two commented zero-code stand-ins (`sub_080a22d4`'s
   `do { } while (0)`, `sub_080b55d8`'s volatile read); `sub_080109c8` keeps
   #82's two commented `volatile` placeholder re-reads.  M29-M32
-  (`enemy_a1590.c` ... `enemy_ae3bc.c`), M28 and the tail have no pin or
-  empty `asm` left; `hud_b4ea8.c` lost its file-scope r9-r11 register
+  (`enemy_mr_shine_and_mr_bright.c` ... `enemy_nightmare_power_orb.c`), M28 and the tail have no pin or
+  empty `asm` left; `room_object_gfx.c` lost its file-scope r9-r11 register
   globals.  The census had missed `BLOCK_CROSS_JUMP` (`global.h`'s
   `asm("");` macro): 13 sites, 9 of them in three unlisted functions, now 4,
   all in `sub_0809fe10`, where the ROM really duplicates the tails (a
-  sanctioned pret idiom).  Still carrying: `sub_080b38f0` (hud_b2fe8.c, 10
+  sanctioned pret idiom).  Still carrying: `sub_080b38f0` (actor_whispy_woods_items.c, 10
   pins + 6 levers; best plain attempt 7 bytes off, an r3/r4 local-alloc
-  order), `sub_08091e18` (enemy_9113c.c, one lever; lesson 3.156: cse folds
+  order), `sub_08091e18` (enemy_poppy_bros_sr.c, one lever; lesson 3.156: cse folds
   every use of the decremented value inside its `== 0` block, 9 bytes) and
-  `sub_080caab8` (boot_caab8.c, #152's two approved levers, 3.494).  The
+  `sub_080caab8` (boot_logo_update_objects.c, #152's two approved levers, 3.494).  The
   pins described the old candidates, not the functions: 36 matched with
   their pins merely deleted, and the rest fell to wrong declarations
   (`u16` for `s16`, `vu8` for `u8` and back, `u32 []` headers), literals
@@ -674,7 +674,7 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   abilities.  `tools/rename_field.py` renames a struct field
   compiler-guided: it renames the member in every definition of the
   struct (and, with `copies`, in the local copies at the same offset: the
-  task engine's `struct Task` with `h10`/`b12` names, `src/early_5d9c.c`'s
+  task engine's `struct Task` with `h10`/`b12` names, `src/task_draw_world.c`'s
   `struct Sprite`, the 17 `struct RoomDef` copies), lets gcc 12's
   `-fsyntax-only` in the knidl-builder image report each access that now
   fails (file, line, column and struct), renames exactly those, and
@@ -896,7 +896,7 @@ moved the record here; `AGENTS.md`'s `## Status` stays the current state.
   block tables, doors and object lists stay `.incbin` assets), and seg
   18's 507 handler tables and scripts plus 62 terrain-handler tables and
   136 hit-reaction records (`struct ActorHandlers`/`ActorVt`, moved from
-  `src/actor_692fc.c` to `include/actor.h`) in 176 runs.  589 `c_data`
+  `src/actor_collision.c` to `include/actor.h`) in 176 runs.  589 `c_data`
   rows, 17,622 pointer words in C; `make datastats`: symbolic words in
   data files 46,156 -> 29,884; `make shifttest` 16,961 unrelocated after
   crt0, 0 proven pointers, 0 unknown, before and after; `make boottest`

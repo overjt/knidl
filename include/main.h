@@ -90,7 +90,7 @@ extern u8 gSpriteLayerLists[16][64]; /* per-lane byte lists [lane][64] */
 extern vu16 gAffineSpriteBufferPos; /* staging buffer write index */
 extern u16 gFadedPalette[];
 extern vu16 gFadeSteps; /* frames left to wait */
-extern vs32 gBg2ScrollY; /* the wavy-scroll drivers of src/save_b6b08.c and src/save_b6d04.c read it as vu32 */
+extern vs32 gBg2ScrollY; /* the wavy-scroll drivers of src/main_hblank_row_scroll.c and src/main_hblank_row_scroll_reverse.c read it as vu32 */
 extern vu16 gFadeInterval;
 extern vu16 gDispStat; /* REG_DISPSTAT shadow */
 extern vu16 gUnk_03001EA0;
@@ -137,16 +137,16 @@ struct TransferNode;
 /* src/agb_init.c */
 void AgbInit(void);
 
-/* src/early_08e8.c */
+/* src/main_fade.c */
 void UpdateFade(void);
 
-/* src/early_0de4.c */
+/* src/main_end_frame.c */
 void EndFrame(void);
 
-/* src/early_10cc.c */
+/* src/main_vblank_intr.c */
 void VBlankIntr(void);
 
-/* src/early_11ac.c */
+/* src/main_frame_io.c */
 void CopyOamAndPalette(void);
 void ReadKeys(void);
 void FlushDisplayRegs(void);
@@ -156,7 +156,7 @@ void ClearHBlankIntr(void);
 void SetVCountIntr(void (*fn)(void), u8 vcount);
 void ClearVCountIntr(void);
 
-/* src/early_1518.c */
+/* src/main_copy_queue.c */
 void IntrDummy(void);
 void EnableForcedBlank(void);
 void DisableForcedBlank(void);
@@ -165,10 +165,10 @@ void ResetOamShadow(void);
 void ResetSpriteQueue(void);
 void RunBuildOamInIwram(void);
 
-/* src/early_1b08.c */
+/* src/main_build_oam.c */
 void BuildOam(void);
 
-/* src/early_1fd0.c */
+/* src/main_fade_requests.c */
 void ResetBgScroll(void);
 void ResetFadeAndBlend(void);
 void BeginFadeInFromWhite(void);
@@ -187,7 +187,7 @@ void LinkStopKeyExchange(void);
 void LinkStartRecordExchange(void);
 void LinkRequestSync(void);
 
-/* src/early_5d9c.c */
+/* src/task_draw_world.c */
 void TaskDrawWorld(void);
 void TaskDrawWorldOrFree(void);
 void TaskDrawWorldInView(void);

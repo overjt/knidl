@@ -367,7 +367,7 @@
 /* Whispy Woods variants - gWhispyWoodsVariants[N], CallTableEntry(Task.variant) in Task_WhispyWoods */
 #define WHISPY_WOODS_VARIANT_INIT  0
 
-/* Player effect variants - gPlayerEffectVariants[N], CallTableEntry(byte 27 = CreatePlayerEffect's argument 1, 49, ...) in Task_PlayerEffect (src/effect_53af4.c) */
+/* Player effect variants - gPlayerEffectVariants[N], CallTableEntry(byte 27 = CreatePlayerEffect's argument 1, 49, ...) in Task_PlayerEffect (src/effect_skid_dust.c) */
 #define PLAYER_EFFECT_VARIANT_INHALE_AIR               0
 #define PLAYER_EFFECT_VARIANT_CATCH_DUST               1
 #define PLAYER_EFFECT_VARIANT_SPIT_DUST                2
@@ -403,7 +403,7 @@
 #define PLAYER_EFFECT_VARIANT_CRASH_BLAST              46
 #define PLAYER_EFFECT_VARIANT_UFO_CHARGE_SPARKLE       48
 
-/* Player object variants - gPlayerObjectVariants[N], CallTableEntry(byte 27 = CreatePlayerObject's argument 1, 13, ...) in Task_PlayerObject (src/plobj_507bc.c) */
+/* Player object variants - gPlayerObjectVariants[N], CallTableEntry(byte 27 = CreatePlayerObject's argument 1, 13, ...) in Task_PlayerObject (src/player_object_task.c) */
 #define PLAYER_OBJECT_VARIANT_AIR_PUFF              0
 #define PLAYER_OBJECT_VARIANT_SPIT_STAR             1
 #define PLAYER_OBJECT_VARIANT_SPIT_MULTI_STAR       2

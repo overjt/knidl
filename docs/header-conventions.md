@@ -231,7 +231,7 @@ no anonymous unions), and every access says which member it means:
 
 | field | union | members, and who uses which |
 |---|---|---|
-| `0x76` | `u76` (`__attribute__((packed, aligned(2)))`, #155 run 4) | `subtype` (u16): every actor's subtype, written by CreateActor and the room spawners, indexing the kind's ActorDef and graphics tables (ActorBindDefSlot, PickupCollect, ActorDefeatBoss), and TaskFree's clear; `doorIndex` (u16): the door signs' index into `gDoorStates` (src/obj_2eac8.c, obj_2f62c.c); `unk76`: the player's hit and status bits and Quick Draw's flag, not named yet (98 accesses in all: 61 / 14 / 23) |
+| `0x76` | `u76` (`__attribute__((packed, aligned(2)))`, #155 run 4) | `subtype` (u16): every actor's subtype, written by CreateActor and the room spawners, indexing the kind's ActorDef and graphics tables (ActorBindDefSlot, PickupCollect, ActorDefeatBoss), and TaskFree's clear; `doorIndex` (u16): the door signs' index into `gDoorStates` (src/camera_door_signs.c, camera_warp_star_station_door.c); `unk76`: the player's hit and status bits and Quick Draw's flag, not named yet (98 accesses in all: 61 / 14 / 23) |
 | `0x80` | `u80` (`__attribute__((packed))`) | `nearestPlayer` (s8): the actor API's nearest-player index (sub_08063a9c, TaskFindNearestPlayer, TaskFree's clear, the #170 trail's history); `attackAbility` (s8): the ability id of the running attack for the player, its objects (#6) and effects (#7), read by ActorPlayHitSfx off the hitter |
 | `0x8C` | `u8C` | `actor` (`struct Actor *`): the task's `&gActors[slot]` for every actor family; `parentTask` (`struct Task *`): `&gTasks[Task.parent]` for task types #6 Task_PlayerObject and #7 Task_PlayerEffect (their bodies bind it, sub_08056770 rebinds it with `parent`) |
 
@@ -252,10 +252,10 @@ Rules for a view:
   the offsets of `u76`, `health`, `u80`, `unk81`, `hitEffect`, `u8C` and
   `sizeof(struct Task)` with negative-size arrays, so a layout change fails `make
   check-headers` too.
-- The task engine's local copies of `struct Task` (`src/early_4fec.c`,
-  `early_58e4.c`, `early_5c4c.c`) keep their plain `u8`/`u32` members:
+- The task engine's local copies of `struct Task` (`src/task_init.c`,
+  `task_move.c`, `task_draw_screen.c`) keep their plain `u8`/`u32` members:
   the only accesses to them are InitTasks' clears (`w8C = 0`, `b80 |=
-  0xFF` in `src/early_4fec.c`).
+  0xFF` in `src/task_init.c`).
 - A view is a type change, applied in its own commit (outside
   `tools/rename.py --verify-diff`, which proves renames only), and a new
   one goes to the owner first.

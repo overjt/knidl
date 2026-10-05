@@ -72,227 +72,227 @@ SECTIONS
     ASSERT(!MATCHING || ADDR(.agb_init) == 0x08000310, "MATCHING: .agb_init moved")
 
     /* Game code: early subsystems (Thumb) */
-    /* early_08e8 — decompiled to C (src/early_08e8.c, carved by tools/carve.py) */
-    .early_08e8 : {
-        build/src/early_08e8.o(.text)
+    /* main_fade — decompiled to C (src/main_fade.c, carved by tools/carve.py) */
+    .main_fade : {
+        build/src/main_fade.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_08e8) == 0x080008E8, "MATCHING: .early_08e8 moved")
+    ASSERT(!MATCHING || ADDR(.main_fade) == 0x080008E8, "MATCHING: .main_fade moved")
 
-    /* early_0de4 — decompiled to C (src/early_0de4.c, carved by tools/carve.py) */
-    .early_0de4 : {
-        build/src/early_0de4.o(.text)
+    /* main_end_frame — decompiled to C (src/main_end_frame.c, carved by tools/carve.py) */
+    .main_end_frame : {
+        build/src/main_end_frame.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_0de4) == 0x08000DE4, "MATCHING: .early_0de4 moved")
+    ASSERT(!MATCHING || ADDR(.main_end_frame) == 0x08000DE4, "MATCHING: .main_end_frame moved")
 
-    /* early_10cc — decompiled to C (src/early_10cc.c, carved by tools/carve.py) */
-    .early_10cc : {
-        build/src/early_10cc.o(.text)
+    /* main_vblank_intr — decompiled to C (src/main_vblank_intr.c, carved by tools/carve.py) */
+    .main_vblank_intr : {
+        build/src/main_vblank_intr.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_10cc) == 0x080010CC, "MATCHING: .early_10cc moved")
+    ASSERT(!MATCHING || ADDR(.main_vblank_intr) == 0x080010CC, "MATCHING: .main_vblank_intr moved")
 
-    /* early_11ac — decompiled to C (src/early_11ac.c, carved by tools/carve.py) */
-    .early_11ac : {
-        build/src/early_11ac.o(.text)
+    /* main_frame_io — decompiled to C (src/main_frame_io.c, carved by tools/carve.py) */
+    .main_frame_io : {
+        build/src/main_frame_io.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_11ac) == 0x080011AC, "MATCHING: .early_11ac moved")
+    ASSERT(!MATCHING || ADDR(.main_frame_io) == 0x080011AC, "MATCHING: .main_frame_io moved")
 
-    /* early_1518 — decompiled to C (src/early_1518.c, carved by tools/carve.py) */
-    .early_1518 : {
-        build/src/early_1518.o(.text)
+    /* main_copy_queue — decompiled to C (src/main_copy_queue.c, carved by tools/carve.py) */
+    .main_copy_queue : {
+        build/src/main_copy_queue.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_1518) == 0x08001518, "MATCHING: .early_1518 moved")
+    ASSERT(!MATCHING || ADDR(.main_copy_queue) == 0x08001518, "MATCHING: .main_copy_queue moved")
 
-    /* early_1b08 — decompiled to C (src/early_1b08.c, carved by tools/carve.py) */
-    .early_1b08 : {
-        build/src/early_1b08.o(.text)
+    /* main_build_oam — decompiled to C (src/main_build_oam.c, carved by tools/carve.py) */
+    .main_build_oam : {
+        build/src/main_build_oam.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_1b08) == 0x08001B08, "MATCHING: .early_1b08 moved")
+    ASSERT(!MATCHING || ADDR(.main_build_oam) == 0x08001B08, "MATCHING: .main_build_oam moved")
 
-    /* early_1cc8 — decompiled to C (src/early_1cc8.c, carved by tools/carve.py) */
-    .early_1cc8 : {
-        build/src/early_1cc8.o(.text)
+    /* main_affine_sprite — decompiled to C (src/main_affine_sprite.c, carved by tools/carve.py) */
+    .main_affine_sprite : {
+        build/src/main_affine_sprite.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_1cc8) == 0x08001CC8, "MATCHING: .early_1cc8 moved")
+    ASSERT(!MATCHING || ADDR(.main_affine_sprite) == 0x08001CC8, "MATCHING: .main_affine_sprite moved")
 
-    /* early_1fd0 — decompiled to C (src/early_1fd0.c, carved by tools/carve.py) */
-    .early_1fd0 : {
-        build/src/early_1fd0.o(.text)
+    /* main_fade_requests — decompiled to C (src/main_fade_requests.c, carved by tools/carve.py) */
+    .main_fade_requests : {
+        build/src/main_fade_requests.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_1fd0) == 0x08001FD0, "MATCHING: .early_1fd0 moved")
+    ASSERT(!MATCHING || ADDR(.main_fade_requests) == 0x08001FD0, "MATCHING: .main_fade_requests moved")
 
-    /* early_2378 — decompiled to C (src/early_2378.c, carved by tools/carve.py) */
-    .early_2378 : {
-        build/src/early_2378.o(.text)
+    /* link_sync_random — decompiled to C (src/link_sync_random.c, carved by tools/carve.py) */
+    .link_sync_random : {
+        build/src/link_sync_random.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_2378) == 0x08002378, "MATCHING: .early_2378 moved")
+    ASSERT(!MATCHING || ADDR(.link_sync_random) == 0x08002378, "MATCHING: .link_sync_random moved")
 
-    /* early_2668 — decompiled to C (src/early_2668.c, carved by tools/carve.py) */
-    .early_2668 : {
-        build/src/early_2668.o(.text)
+    /* link_sync_clock — decompiled to C (src/link_sync_clock.c, carved by tools/carve.py) */
+    .link_sync_clock : {
+        build/src/link_sync_clock.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_2668) == 0x08002668, "MATCHING: .early_2668 moved")
+    ASSERT(!MATCHING || ADDR(.link_sync_clock) == 0x08002668, "MATCHING: .link_sync_clock moved")
 
-    /* early_293c — decompiled to C (src/early_293c.c, carved by tools/carve.py) */
-    .early_293c : {
-        build/src/early_293c.o(.text)
+    /* link_disconnect — decompiled to C (src/link_disconnect.c, carved by tools/carve.py) */
+    .link_disconnect : {
+        build/src/link_disconnect.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_293c) == 0x0800293C, "MATCHING: .early_293c moved")
+    ASSERT(!MATCHING || ADDR(.link_disconnect) == 0x0800293C, "MATCHING: .link_disconnect moved")
 
-    /* early_2b04 — decompiled to C (src/early_2b04.c, carved by tools/carve.py) */
-    .early_2b04 : {
-        build/src/early_2b04.o(.text)
+    /* link_run_frames — decompiled to C (src/link_run_frames.c, carved by tools/carve.py) */
+    .link_run_frames : {
+        build/src/link_run_frames.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_2b04) == 0x08002B04, "MATCHING: .early_2b04 moved")
+    ASSERT(!MATCHING || ADDR(.link_run_frames) == 0x08002B04, "MATCHING: .link_run_frames moved")
 
-    /* early_3110 — decompiled to C (src/early_3110.c, carved by tools/carve.py) */
-    .early_3110 : {
-        build/src/early_3110.o(.text)
+    /* sound_bgm — decompiled to C (src/sound_bgm.c, carved by tools/carve.py) */
+    .sound_bgm : {
+        build/src/sound_bgm.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_3110) == 0x08003110, "MATCHING: .early_3110 moved")
+    ASSERT(!MATCHING || ADDR(.sound_bgm) == 0x08003110, "MATCHING: .sound_bgm moved")
 
-    /* early_31b8 — decompiled to C (src/early_31b8.c, carved by tools/carve.py) */
-    .early_31b8 : {
-        build/src/early_31b8.o(.text)
+    /* sound_play_sfx — decompiled to C (src/sound_play_sfx.c, carved by tools/carve.py) */
+    .sound_play_sfx : {
+        build/src/sound_play_sfx.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_31b8) == 0x080031B8, "MATCHING: .early_31b8 moved")
+    ASSERT(!MATCHING || ADDR(.sound_play_sfx) == 0x080031B8, "MATCHING: .sound_play_sfx moved")
 
-    /* early_3484 — decompiled to C (src/early_3484.c, carved by tools/carve.py) */
-    .early_3484 : {
-        build/src/early_3484.o(.text)
+    /* sound_control — decompiled to C (src/sound_control.c, carved by tools/carve.py) */
+    .sound_control : {
+        build/src/sound_control.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_3484) == 0x08003484, "MATCHING: .early_3484 moved")
+    ASSERT(!MATCHING || ADDR(.sound_control) == 0x08003484, "MATCHING: .sound_control moved")
 
-    /* early_3888 — decompiled to C (src/early_3888.c, carved by tools/carve.py) */
-    .early_3888 : {
-        build/src/early_3888.o(.text)
+    /* link_setup_init — decompiled to C (src/link_setup_init.c, carved by tools/carve.py) */
+    .link_setup_init : {
+        build/src/link_setup_init.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_3888) == 0x08003888, "MATCHING: .early_3888 moved")
+    ASSERT(!MATCHING || ADDR(.link_setup_init) == 0x08003888, "MATCHING: .link_setup_init moved")
 
-    /* early_3964 — decompiled to C (src/early_3964.c, carved by tools/carve.py) */
-    .early_3964 : {
-        build/src/early_3964.o(.text)
+    /* link_setup — decompiled to C (src/link_setup.c, carved by tools/carve.py) */
+    .link_setup : {
+        build/src/link_setup.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_3964) == 0x08003964, "MATCHING: .early_3964 moved")
+    ASSERT(!MATCHING || ADDR(.link_setup) == 0x08003964, "MATCHING: .link_setup moved")
 
-    /* early_4000 — decompiled to C (src/early_4000.c, carved by tools/carve.py) */
-    .early_4000 : {
-        build/src/early_4000.o(.text)
+    /* link_setup_intr_block — decompiled to C (src/link_setup_intr_block.c, carved by tools/carve.py) */
+    .link_setup_intr_block : {
+        build/src/link_setup_intr_block.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_4000) == 0x08004000, "MATCHING: .early_4000 moved")
+    ASSERT(!MATCHING || ADDR(.link_setup_intr_block) == 0x08004000, "MATCHING: .link_setup_intr_block moved")
 
-    /* early_4734 — decompiled to C (src/early_4734.c, carved by tools/carve.py) */
-    .early_4734 : {
-        build/src/early_4734.o(.text)
+    /* link_block_main — decompiled to C (src/link_block_main.c, carved by tools/carve.py) */
+    .link_block_main : {
+        build/src/link_block_main.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_4734) == 0x08004734, "MATCHING: .early_4734 moved")
+    ASSERT(!MATCHING || ADDR(.link_block_main) == 0x08004734, "MATCHING: .link_block_main moved")
 
-    /* early_4984 — decompiled to C (src/early_4984.c, carved by tools/carve.py) */
-    .early_4984 : {
-        build/src/early_4984.o(.text)
+    /* link_multiboot_main — decompiled to C (src/link_multiboot_main.c, carved by tools/carve.py) */
+    .link_multiboot_main : {
+        build/src/link_multiboot_main.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_4984) == 0x08004984, "MATCHING: .early_4984 moved")
+    ASSERT(!MATCHING || ADDR(.link_multiboot_main) == 0x08004984, "MATCHING: .link_multiboot_main moved")
 
-    /* early_4d6c — decompiled to C (src/early_4d6c.c, carved by tools/carve.py) */
-    .early_4d6c : {
-        build/src/early_4d6c.o(.text)
+    /* link_multiboot — decompiled to C (src/link_multiboot.c, carved by tools/carve.py) */
+    .link_multiboot : {
+        build/src/link_multiboot.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_4d6c) == 0x08004D6C, "MATCHING: .early_4d6c moved")
+    ASSERT(!MATCHING || ADDR(.link_multiboot) == 0x08004D6C, "MATCHING: .link_multiboot moved")
 
-    /* early_4fec — decompiled to C (src/early_4fec.c, carved by tools/carve.py) */
-    .early_4fec : {
-        build/src/early_4fec.o(.text)
+    /* task_init — decompiled to C (src/task_init.c, carved by tools/carve.py) */
+    .task_init : {
+        build/src/task_init.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_4fec) == 0x08004FEC, "MATCHING: .early_4fec moved")
+    ASSERT(!MATCHING || ADDR(.task_init) == 0x08004FEC, "MATCHING: .task_init moved")
 
-    /* early_5228 — decompiled to C (src/early_5228.c, carved by tools/carve.py) */
-    .early_5228 : {
-        build/src/early_5228.o(.text)
+    /* task_run — decompiled to C (src/task_run.c, carved by tools/carve.py) */
+    .task_run : {
+        build/src/task_run.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_5228) == 0x08005228, "MATCHING: .early_5228 moved")
+    ASSERT(!MATCHING || ADDR(.task_run) == 0x08005228, "MATCHING: .task_run moved")
 
-    /* early_55b0 — decompiled to C (src/early_55b0.c, carved by tools/carve.py) */
-    .early_55b0 : {
-        build/src/early_55b0.o(.text)
+    /* task_skip_mask — decompiled to C (src/task_skip_mask.c, carved by tools/carve.py) */
+    .task_skip_mask : {
+        build/src/task_skip_mask.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_55b0) == 0x080055B0, "MATCHING: .early_55b0 moved")
+    ASSERT(!MATCHING || ADDR(.task_skip_mask) == 0x080055B0, "MATCHING: .task_skip_mask moved")
 
-    /* early_5654 — decompiled to C (src/early_5654.c, carved by tools/carve.py) */
-    .early_5654 : {
-        build/src/early_5654.o(.text)
+    /* task — decompiled to C (src/task.c, carved by tools/carve.py) */
+    .task : {
+        build/src/task.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_5654) == 0x08005654, "MATCHING: .early_5654 moved")
+    ASSERT(!MATCHING || ADDR(.task) == 0x08005654, "MATCHING: .task moved")
 
-    /* early_58e4 — decompiled to C (src/early_58e4.c, carved by tools/carve.py) */
-    .early_58e4 : {
-        build/src/early_58e4.o(.text)
+    /* task_move — decompiled to C (src/task_move.c, carved by tools/carve.py) */
+    .task_move : {
+        build/src/task_move.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_58e4) == 0x080058E4, "MATCHING: .early_58e4 moved")
+    ASSERT(!MATCHING || ADDR(.task_move) == 0x080058E4, "MATCHING: .task_move moved")
 
-    /* early_5acc — decompiled to C (src/early_5acc.c, carved by tools/carve.py) */
-    .early_5acc : {
-        build/src/early_5acc.o(.text)
+    /* task_frame_tiles — decompiled to C (src/task_frame_tiles.c, carved by tools/carve.py) */
+    .task_frame_tiles : {
+        build/src/task_frame_tiles.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_5acc) == 0x08005ACC, "MATCHING: .early_5acc moved")
+    ASSERT(!MATCHING || ADDR(.task_frame_tiles) == 0x08005ACC, "MATCHING: .task_frame_tiles moved")
 
-    /* early_5c4c — decompiled to C (src/early_5c4c.c, carved by tools/carve.py) */
-    .early_5c4c : {
-        build/src/early_5c4c.o(.text)
+    /* task_draw_screen — decompiled to C (src/task_draw_screen.c, carved by tools/carve.py) */
+    .task_draw_screen : {
+        build/src/task_draw_screen.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_5c4c) == 0x08005C4C, "MATCHING: .early_5c4c moved")
+    ASSERT(!MATCHING || ADDR(.task_draw_screen) == 0x08005C4C, "MATCHING: .task_draw_screen moved")
 
-    /* early_5d9c — decompiled to C (src/early_5d9c.c, carved by tools/carve.py) */
-    .early_5d9c : {
-        build/src/early_5d9c.o(.text)
+    /* task_draw_world — decompiled to C (src/task_draw_world.c, carved by tools/carve.py) */
+    .task_draw_world : {
+        build/src/task_draw_world.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_5d9c) == 0x08005D9C, "MATCHING: .early_5d9c moved")
+    ASSERT(!MATCHING || ADDR(.task_draw_world) == 0x08005D9C, "MATCHING: .task_draw_world moved")
 
-    /* early_6464 — decompiled to C (src/early_6464.c, carved by tools/carve.py) */
-    .early_6464 : {
-        build/src/early_6464.o(.text)
+    /* link_driver — decompiled to C (src/link_driver.c, carved by tools/carve.py) */
+    .link_driver : {
+        build/src/link_driver.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_6464) == 0x08006464, "MATCHING: .early_6464 moved")
+    ASSERT(!MATCHING || ADDR(.link_driver) == 0x08006464, "MATCHING: .link_driver moved")
 
-    /* early_6ac8 — decompiled to C (src/early_6ac8.c, carved by tools/carve.py) */
-    .early_6ac8 : {
-        build/src/early_6ac8.o(.text)
+    /* link_cmd_queue — decompiled to C (src/link_cmd_queue.c, carved by tools/carve.py) */
+    .link_cmd_queue : {
+        build/src/link_cmd_queue.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_6ac8) == 0x08006AC8, "MATCHING: .early_6ac8 moved")
+    ASSERT(!MATCHING || ADDR(.link_cmd_queue) == 0x08006AC8, "MATCHING: .link_cmd_queue moved")
 
-    /* early_6cd4 — decompiled to C (src/early_6cd4.c, carved by tools/carve.py) */
-    .early_6cd4 : {
-        build/src/early_6cd4.o(.text)
+    /* link_vsync — decompiled to C (src/link_vsync.c, carved by tools/carve.py) */
+    .link_vsync : {
+        build/src/link_vsync.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_6cd4) == 0x08006CD4, "MATCHING: .early_6cd4 moved")
+    ASSERT(!MATCHING || ADDR(.link_vsync) == 0x08006CD4, "MATCHING: .link_vsync moved")
 
-    /* early_6d18 — decompiled to C (src/early_6d18.c, carved by tools/carve.py) */
-    .early_6d18 : {
-        build/src/early_6d18.o(.text)
+    /* link_timer3_intr — decompiled to C (src/link_timer3_intr.c, carved by tools/carve.py) */
+    .link_timer3_intr : {
+        build/src/link_timer3_intr.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_6d18) == 0x08006D18, "MATCHING: .early_6d18 moved")
+    ASSERT(!MATCHING || ADDR(.link_timer3_intr) == 0x08006D18, "MATCHING: .link_timer3_intr moved")
 
-    /* early_6d28 — decompiled to C (src/early_6d28.c, carved by tools/carve.py) */
-    .early_6d28 : {
-        build/src/early_6d28.o(.text)
+    /* link_serial_cb — decompiled to C (src/link_serial_cb.c, carved by tools/carve.py) */
+    .link_serial_cb : {
+        build/src/link_serial_cb.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_6d28) == 0x08006D28, "MATCHING: .early_6d28 moved")
+    ASSERT(!MATCHING || ADDR(.link_serial_cb) == 0x08006D28, "MATCHING: .link_serial_cb moved")
 
-    /* early_6e8c — decompiled to C (src/early_6e8c.c, carved by tools/carve.py) */
-    .early_6e8c : {
-        build/src/early_6e8c.o(.text)
+    /* link_start_transfer — decompiled to C (src/link_start_transfer.c, carved by tools/carve.py) */
+    .link_start_transfer : {
+        build/src/link_start_transfer.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_6e8c) == 0x08006E8C, "MATCHING: .early_6e8c moved")
+    ASSERT(!MATCHING || ADDR(.link_start_transfer) == 0x08006E8C, "MATCHING: .link_start_transfer moved")
 
-    /* early_6e9c — decompiled to C (src/early_6e9c.c, carved by tools/carve.py) */
-    .early_6e9c : {
-        build/src/early_6e9c.o(.text)
+    /* link_do_recv — decompiled to C (src/link_do_recv.c, carved by tools/carve.py) */
+    .link_do_recv : {
+        build/src/link_do_recv.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_6e9c) == 0x08006E9C, "MATCHING: .early_6e9c moved")
+    ASSERT(!MATCHING || ADDR(.link_do_recv) == 0x08006E9C, "MATCHING: .link_do_recv moved")
 
-    /* early_7004 — decompiled to C (src/early_7004.c, carved by tools/carve.py) */
-    .early_7004 : {
-        build/src/early_7004.o(.text)
+    /* link_send_connect — decompiled to C (src/link_send_connect.c, carved by tools/carve.py) */
+    .link_send_connect : {
+        build/src/link_send_connect.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.early_7004) == 0x08007004, "MATCHING: .early_7004 moved")
+    ASSERT(!MATCHING || ADDR(.link_send_connect) == 0x08007004, "MATCHING: .link_send_connect moved")
 
     /* Game code + rodata (Thumb) — bulk of the game logic */
     /* main — decompiled to C (src/main.c, carved by tools/carve.py) */
@@ -301,1583 +301,1583 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.main) == 0x08007300, "MATCHING: .main moved")
 
-    /* mode_075b8 — decompiled to C (src/mode_075b8.c, carved by tools/carve.py) */
-    .mode_075b8 : {
-        build/src/mode_075b8.o(.text)
+    /* mode_hub_stage — decompiled to C (src/mode_hub_stage.c, carved by tools/carve.py) */
+    .mode_hub_stage : {
+        build/src/mode_hub_stage.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.mode_075b8) == 0x080075B8, "MATCHING: .mode_075b8 moved")
+    ASSERT(!MATCHING || ADDR(.mode_hub_stage) == 0x080075B8, "MATCHING: .mode_hub_stage moved")
 
-    /* mode_07b68 — decompiled to C (src/mode_07b68.c, carved by tools/carve.py) */
-    .mode_07b68 : {
-        build/src/mode_07b68.o(.text)
+    /* mode_extra_mode_title — decompiled to C (src/mode_extra_mode_title.c, carved by tools/carve.py) */
+    .mode_extra_mode_title : {
+        build/src/mode_extra_mode_title.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.mode_07b68) == 0x08007B68, "MATCHING: .mode_07b68 moved")
+    ASSERT(!MATCHING || ADDR(.mode_extra_mode_title) == 0x08007B68, "MATCHING: .mode_extra_mode_title moved")
 
-    /* mode_082d0 — decompiled to C (src/mode_082d0.c, carved by tools/carve.py) */
-    .mode_082d0 : {
-        build/src/mode_082d0.o(.text)
+    /* mode_extra_mode_title_sprites — decompiled to C (src/mode_extra_mode_title_sprites.c, carved by tools/carve.py) */
+    .mode_extra_mode_title_sprites : {
+        build/src/mode_extra_mode_title_sprites.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.mode_082d0) == 0x080082D0, "MATCHING: .mode_082d0 moved")
+    ASSERT(!MATCHING || ADDR(.mode_extra_mode_title_sprites) == 0x080082D0, "MATCHING: .mode_extra_mode_title_sprites moved")
 
-    /* mode_08664 — decompiled to C (src/mode_08664.c, carved by tools/carve.py) */
-    .mode_08664 : {
-        build/src/mode_08664.o(.text)
+    /* mode_pause_boss_endurance — decompiled to C (src/mode_pause_boss_endurance.c, carved by tools/carve.py) */
+    .mode_pause_boss_endurance : {
+        build/src/mode_pause_boss_endurance.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.mode_08664) == 0x08008664, "MATCHING: .mode_08664 moved")
+    ASSERT(!MATCHING || ADDR(.mode_pause_boss_endurance) == 0x08008664, "MATCHING: .mode_pause_boss_endurance moved")
 
-    /* gfx_08b8c — decompiled to C (src/gfx_08b8c.c, carved by tools/carve.py) */
-    .gfx_08b8c : {
-        build/src/gfx_08b8c.o(.text)
+    /* mode_gfx_loaders — decompiled to C (src/mode_gfx_loaders.c, carved by tools/carve.py) */
+    .mode_gfx_loaders : {
+        build/src/mode_gfx_loaders.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.gfx_08b8c) == 0x08008B8C, "MATCHING: .gfx_08b8c moved")
+    ASSERT(!MATCHING || ADDR(.mode_gfx_loaders) == 0x08008B8C, "MATCHING: .mode_gfx_loaders moved")
 
-    /* boot_091ac — decompiled to C (src/boot_091ac.c, carved by tools/carve.py) */
-    .boot_091ac : {
-        build/src/boot_091ac.o(.text)
+    /* mode_boot_sequence — decompiled to C (src/mode_boot_sequence.c, carved by tools/carve.py) */
+    .mode_boot_sequence : {
+        build/src/mode_boot_sequence.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.boot_091ac) == 0x080091AC, "MATCHING: .boot_091ac moved")
+    ASSERT(!MATCHING || ADDR(.mode_boot_sequence) == 0x080091AC, "MATCHING: .mode_boot_sequence moved")
 
-    /* hud_099fc — decompiled to C (src/hud_099fc.c, carved by tools/carve.py) */
-    .hud_099fc : {
-        build/src/hud_099fc.o(.text)
+    /* hud_init_counters — decompiled to C (src/hud_init_counters.c, carved by tools/carve.py) */
+    .hud_init_counters : {
+        build/src/hud_init_counters.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.hud_099fc) == 0x080099FC, "MATCHING: .hud_099fc moved")
+    ASSERT(!MATCHING || ADDR(.hud_init_counters) == 0x080099FC, "MATCHING: .hud_init_counters moved")
 
-    /* hud_0a130 — decompiled to C (src/hud_0a130.c, carved by tools/carve.py) */
-    .hud_0a130 : {
-        build/src/hud_0a130.o(.text)
+    /* hud_hp_bars — decompiled to C (src/hud_hp_bars.c, carved by tools/carve.py) */
+    .hud_hp_bars : {
+        build/src/hud_hp_bars.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.hud_0a130) == 0x0800A130, "MATCHING: .hud_0a130 moved")
+    ASSERT(!MATCHING || ADDR(.hud_hp_bars) == 0x0800A130, "MATCHING: .hud_hp_bars moved")
 
-    /* hud_0aad0 — decompiled to C (src/hud_0aad0.c, carved by tools/carve.py) */
-    .hud_0aad0 : {
-        build/src/hud_0aad0.o(.text)
+    /* hud_draw — decompiled to C (src/hud_draw.c, carved by tools/carve.py) */
+    .hud_draw : {
+        build/src/hud_draw.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.hud_0aad0) == 0x0800AAD0, "MATCHING: .hud_0aad0 moved")
+    ASSERT(!MATCHING || ADDR(.hud_draw) == 0x0800AAD0, "MATCHING: .hud_draw moved")
 
-    /* hud_0b318 — decompiled to C (src/hud_0b318.c, carved by tools/carve.py) */
-    .hud_0b318 : {
-        build/src/hud_0b318.o(.text)
+    /* hud_tilemap — decompiled to C (src/hud_tilemap.c, carved by tools/carve.py) */
+    .hud_tilemap : {
+        build/src/hud_tilemap.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.hud_0b318) == 0x0800B318, "MATCHING: .hud_0b318 moved")
+    ASSERT(!MATCHING || ADDR(.hud_tilemap) == 0x0800B318, "MATCHING: .hud_tilemap moved")
 
-    /* mode_0b44c — decompiled to C (src/mode_0b44c.c, carved by tools/carve.py) */
-    .mode_0b44c : {
-        build/src/mode_0b44c.o(.text)
+    /* mode_hub_stage_init — decompiled to C (src/mode_hub_stage_init.c, carved by tools/carve.py) */
+    .mode_hub_stage_init : {
+        build/src/mode_hub_stage_init.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.mode_0b44c) == 0x0800B44C, "MATCHING: .mode_0b44c moved")
+    ASSERT(!MATCHING || ADDR(.mode_hub_stage_init) == 0x0800B44C, "MATCHING: .mode_hub_stage_init moved")
 
-    /* menu_0b920 — decompiled to C (src/menu_0b920.c, carved by tools/carve.py) */
-    .menu_0b920 : {
-        build/src/menu_0b920.o(.text)
+    /* menu_main_save_slots — decompiled to C (src/menu_main_save_slots.c, carved by tools/carve.py) */
+    .menu_main_save_slots : {
+        build/src/menu_main_save_slots.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.menu_0b920) == 0x0800B920, "MATCHING: .menu_0b920 moved")
+    ASSERT(!MATCHING || ADDR(.menu_main_save_slots) == 0x0800B920, "MATCHING: .menu_main_save_slots moved")
 
-    /* menu_0c09c — decompiled to C (src/menu_0c09c.c, carved by tools/carve.py) */
-    .menu_0c09c : {
-        build/src/menu_0c09c.o(.text)
+    /* menu_file_select — decompiled to C (src/menu_file_select.c, carved by tools/carve.py) */
+    .menu_file_select : {
+        build/src/menu_file_select.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.menu_0c09c) == 0x0800C09C, "MATCHING: .menu_0c09c moved")
+    ASSERT(!MATCHING || ADDR(.menu_file_select) == 0x0800C09C, "MATCHING: .menu_file_select moved")
 
-    /* menu_0ca10 — decompiled to C (src/menu_0ca10.c, carved by tools/carve.py) */
-    .menu_0ca10 : {
-        build/src/menu_0ca10.o(.text)
+    /* menu_mode_list — decompiled to C (src/menu_mode_list.c, carved by tools/carve.py) */
+    .menu_mode_list : {
+        build/src/menu_mode_list.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.menu_0ca10) == 0x0800CA10, "MATCHING: .menu_0ca10 moved")
+    ASSERT(!MATCHING || ADDR(.menu_mode_list) == 0x0800CA10, "MATCHING: .menu_mode_list moved")
 
-    /* menu_0d450 — decompiled to C (src/menu_0d450.c, carved by tools/carve.py) */
-    .menu_0d450 : {
-        build/src/menu_0d450.o(.text)
+    /* menu_sound_test_link_play — decompiled to C (src/menu_sound_test_link_play.c, carved by tools/carve.py) */
+    .menu_sound_test_link_play : {
+        build/src/menu_sound_test_link_play.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.menu_0d450) == 0x0800D450, "MATCHING: .menu_0d450 moved")
+    ASSERT(!MATCHING || ADDR(.menu_sound_test_link_play) == 0x0800D450, "MATCHING: .menu_sound_test_link_play moved")
 
-    /* menutask_0daf8 — decompiled to C (src/menutask_0daf8.c, carved by tools/carve.py) */
-    .menutask_0daf8 : {
-        build/src/menutask_0daf8.o(.text)
+    /* menu_file_select_tasks — decompiled to C (src/menu_file_select_tasks.c, carved by tools/carve.py) */
+    .menu_file_select_tasks : {
+        build/src/menu_file_select_tasks.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.menutask_0daf8) == 0x0800DAF8, "MATCHING: .menutask_0daf8 moved")
+    ASSERT(!MATCHING || ADDR(.menu_file_select_tasks) == 0x0800DAF8, "MATCHING: .menu_file_select_tasks moved")
 
-    /* menutask_0e314 — decompiled to C (src/menutask_0e314.c, carved by tools/carve.py) */
-    .menutask_0e314 : {
-        build/src/menutask_0e314.o(.text)
+    /* menu_panel_tasks — decompiled to C (src/menu_panel_tasks.c, carved by tools/carve.py) */
+    .menu_panel_tasks : {
+        build/src/menu_panel_tasks.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.menutask_0e314) == 0x0800E314, "MATCHING: .menutask_0e314 moved")
+    ASSERT(!MATCHING || ADDR(.menu_panel_tasks) == 0x0800E314, "MATCHING: .menu_panel_tasks moved")
 
-    /* menutask_0ea0c — decompiled to C (src/menutask_0ea0c.c, carved by tools/carve.py) */
-    .menutask_0ea0c : {
-        build/src/menutask_0ea0c.o(.text)
+    /* menu_sound_test_tasks — decompiled to C (src/menu_sound_test_tasks.c, carved by tools/carve.py) */
+    .menu_sound_test_tasks : {
+        build/src/menu_sound_test_tasks.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.menutask_0ea0c) == 0x0800EA0C, "MATCHING: .menutask_0ea0c moved")
+    ASSERT(!MATCHING || ADDR(.menu_sound_test_tasks) == 0x0800EA0C, "MATCHING: .menu_sound_test_tasks moved")
 
-    /* menutask_0f180 — decompiled to C (src/menutask_0f180.c, carved by tools/carve.py) */
-    .menutask_0f180 : {
-        build/src/menutask_0f180.o(.text)
+    /* menu_link_play_tasks — decompiled to C (src/menu_link_play_tasks.c, carved by tools/carve.py) */
+    .menu_link_play_tasks : {
+        build/src/menu_link_play_tasks.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.menutask_0f180) == 0x0800F180, "MATCHING: .menutask_0f180 moved")
+    ASSERT(!MATCHING || ADDR(.menu_link_play_tasks) == 0x0800F180, "MATCHING: .menu_link_play_tasks moved")
 
-    /* bgscroll_0fcbc — decompiled to C (src/bgscroll_0fcbc.c, carved by tools/carve.py) */
-    .bgscroll_0fcbc : {
-        build/src/bgscroll_0fcbc.o(.text)
+    /* menu_bg_scroll — decompiled to C (src/menu_bg_scroll.c, carved by tools/carve.py) */
+    .menu_bg_scroll : {
+        build/src/menu_bg_scroll.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.bgscroll_0fcbc) == 0x0800FCBC, "MATCHING: .bgscroll_0fcbc moved")
+    ASSERT(!MATCHING || ADDR(.menu_bg_scroll) == 0x0800FCBC, "MATCHING: .menu_bg_scroll moved")
 
-    /* mode_100ac — decompiled to C (src/mode_100ac.c, carved by tools/carve.py) */
-    .mode_100ac : {
-        build/src/mode_100ac.o(.text)
+    /* cutscene_main — decompiled to C (src/cutscene_main.c, carved by tools/carve.py) */
+    .cutscene_main : {
+        build/src/cutscene_main.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.mode_100ac) == 0x080100AC, "MATCHING: .mode_100ac moved")
+    ASSERT(!MATCHING || ADDR(.cutscene_main) == 0x080100AC, "MATCHING: .cutscene_main moved")
 
-    /* player_10358 — decompiled to C (src/player_10358.c, carved by tools/carve.py) */
-    .player_10358 : {
-        build/src/player_10358.o(.text)
+    /* cutscene_director_duel — decompiled to C (src/cutscene_director_duel.c, carved by tools/carve.py) */
+    .cutscene_director_duel : {
+        build/src/cutscene_director_duel.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_10358) == 0x08010358, "MATCHING: .player_10358 moved")
+    ASSERT(!MATCHING || ADDR(.cutscene_director_duel) == 0x08010358, "MATCHING: .cutscene_director_duel moved")
 
-    /* player_109c8 — decompiled to C (src/player_109c8.c, carved by tools/carve.py) */
-    .player_109c8 : {
-        build/src/player_109c8.o(.text)
+    /* cutscene_actor_particles — decompiled to C (src/cutscene_actor_particles.c, carved by tools/carve.py) */
+    .cutscene_actor_particles : {
+        build/src/cutscene_actor_particles.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_109c8) == 0x080109C8, "MATCHING: .player_109c8 moved")
+    ASSERT(!MATCHING || ADDR(.cutscene_actor_particles) == 0x080109C8, "MATCHING: .cutscene_actor_particles moved")
 
-    /* player_10b38 — decompiled to C (src/player_10b38.c, carved by tools/carve.py) */
-    .player_10b38 : {
-        build/src/player_10b38.o(.text)
+    /* cutscene_scenes — decompiled to C (src/cutscene_scenes.c, carved by tools/carve.py) */
+    .cutscene_scenes : {
+        build/src/cutscene_scenes.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_10b38) == 0x08010B38, "MATCHING: .player_10b38 moved")
+    ASSERT(!MATCHING || ADDR(.cutscene_scenes) == 0x08010B38, "MATCHING: .cutscene_scenes moved")
 
-    /* player_17668 — decompiled to C (src/player_17668.c, carved by tools/carve.py) */
-    .player_17668 : {
-        build/src/player_17668.o(.text)
+    /* cutscene_fountain_kirby_king_dedede — decompiled to C (src/cutscene_fountain_kirby_king_dedede.c, carved by tools/carve.py) */
+    .cutscene_fountain_kirby_king_dedede : {
+        build/src/cutscene_fountain_kirby_king_dedede.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_17668) == 0x08017668, "MATCHING: .player_17668 moved")
+    ASSERT(!MATCHING || ADDR(.cutscene_fountain_kirby_king_dedede) == 0x08017668, "MATCHING: .cutscene_fountain_kirby_king_dedede moved")
 
-    /* player_18b84 — decompiled to C (src/player_18b84.c, carved by tools/carve.py) */
-    .player_18b84 : {
-        build/src/player_18b84.o(.text)
+    /* cutscene_fountain_actor_scripts — decompiled to C (src/cutscene_fountain_actor_scripts.c, carved by tools/carve.py) */
+    .cutscene_fountain_actor_scripts : {
+        build/src/cutscene_fountain_actor_scripts.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_18b84) == 0x08018B84, "MATCHING: .player_18b84 moved")
+    ASSERT(!MATCHING || ADDR(.cutscene_fountain_actor_scripts) == 0x08018B84, "MATCHING: .cutscene_fountain_actor_scripts moved")
 
-    /* player_18e14 — decompiled to C (src/player_18e14.c, carved by tools/carve.py) */
-    .player_18e14 : {
-        build/src/player_18e14.o(.text)
+    /* cutscene_fountain_sparkles — decompiled to C (src/cutscene_fountain_sparkles.c, carved by tools/carve.py) */
+    .cutscene_fountain_sparkles : {
+        build/src/cutscene_fountain_sparkles.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_18e14) == 0x08018E14, "MATCHING: .player_18e14 moved")
+    ASSERT(!MATCHING || ADDR(.cutscene_fountain_sparkles) == 0x08018E14, "MATCHING: .cutscene_fountain_sparkles moved")
 
-    /* player_19000 — decompiled to C (src/player_19000.c, carved by tools/carve.py) */
-    .player_19000 : {
-        build/src/player_19000.o(.text)
+    /* cutscene_fountain_power_orb_star_rod — decompiled to C (src/cutscene_fountain_power_orb_star_rod.c, carved by tools/carve.py) */
+    .cutscene_fountain_power_orb_star_rod : {
+        build/src/cutscene_fountain_power_orb_star_rod.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_19000) == 0x08019000, "MATCHING: .player_19000 moved")
+    ASSERT(!MATCHING || ADDR(.cutscene_fountain_power_orb_star_rod) == 0x08019000, "MATCHING: .cutscene_fountain_power_orb_star_rod moved")
 
-    /* player_19eec — decompiled to C (src/player_19eec.c, carved by tools/carve.py) */
-    .player_19eec : {
-        build/src/player_19eec.o(.text)
+    /* cutscene_fountain_blend — decompiled to C (src/cutscene_fountain_blend.c, carved by tools/carve.py) */
+    .cutscene_fountain_blend : {
+        build/src/cutscene_fountain_blend.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_19eec) == 0x08019EEC, "MATCHING: .player_19eec moved")
+    ASSERT(!MATCHING || ADDR(.cutscene_fountain_blend) == 0x08019EEC, "MATCHING: .cutscene_fountain_blend moved")
 
-    /* player_1a07c — decompiled to C (src/player_1a07c.c, carved by tools/carve.py) */
-    .player_1a07c : {
-        build/src/player_1a07c.o(.text)
+    /* cutscene_fountain_kirby_draw — decompiled to C (src/cutscene_fountain_kirby_draw.c, carved by tools/carve.py) */
+    .cutscene_fountain_kirby_draw : {
+        build/src/cutscene_fountain_kirby_draw.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_1a07c) == 0x0801A07C, "MATCHING: .player_1a07c moved")
+    ASSERT(!MATCHING || ADDR(.cutscene_fountain_kirby_draw) == 0x0801A07C, "MATCHING: .cutscene_fountain_kirby_draw moved")
 
-    /* player_1a3e4 — decompiled to C (src/player_1a3e4.c, carved by tools/carve.py) */
-    .player_1a3e4 : {
-        build/src/player_1a3e4.o(.text)
+    /* cutscene_fountain_sprite_draw — decompiled to C (src/cutscene_fountain_sprite_draw.c, carved by tools/carve.py) */
+    .cutscene_fountain_sprite_draw : {
+        build/src/cutscene_fountain_sprite_draw.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_1a3e4) == 0x0801A3E4, "MATCHING: .player_1a3e4 moved")
+    ASSERT(!MATCHING || ADDR(.cutscene_fountain_sprite_draw) == 0x0801A3E4, "MATCHING: .cutscene_fountain_sprite_draw moved")
 
-    /* player_1a76c — decompiled to C (src/player_1a76c.c, carved by tools/carve.py) */
-    .player_1a76c : {
-        build/src/player_1a76c.o(.text)
+    /* collision_collider_lists — decompiled to C (src/collision_collider_lists.c, carved by tools/carve.py) */
+    .collision_collider_lists : {
+        build/src/collision_collider_lists.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_1a76c) == 0x0801A76C, "MATCHING: .player_1a76c moved")
+    ASSERT(!MATCHING || ADDR(.collision_collider_lists) == 0x0801A76C, "MATCHING: .collision_collider_lists moved")
 
-    /* hitbox_1a8c8 — decompiled to C (src/hitbox_1a8c8.c, carved by tools/carve.py) */
-    .hitbox_1a8c8 : {
-        build/src/hitbox_1a8c8.o(.text)
+    /* collision_hit_test_players_class10 — decompiled to C (src/collision_hit_test_players_class10.c, carved by tools/carve.py) */
+    .collision_hit_test_players_class10 : {
+        build/src/collision_hit_test_players_class10.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.hitbox_1a8c8) == 0x0801A8C8, "MATCHING: .hitbox_1a8c8 moved")
+    ASSERT(!MATCHING || ADDR(.collision_hit_test_players_class10) == 0x0801A8C8, "MATCHING: .collision_hit_test_players_class10 moved")
 
-    /* hitbox_1b24c — decompiled to C (src/hitbox_1b24c.c, carved by tools/carve.py) */
-    .hitbox_1b24c : {
-        build/src/hitbox_1b24c.o(.text)
+    /* collision_hit_test_class20 — decompiled to C (src/collision_hit_test_class20.c, carved by tools/carve.py) */
+    .collision_hit_test_class20 : {
+        build/src/collision_hit_test_class20.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.hitbox_1b24c) == 0x0801B24C, "MATCHING: .hitbox_1b24c moved")
+    ASSERT(!MATCHING || ADDR(.collision_hit_test_class20) == 0x0801B24C, "MATCHING: .collision_hit_test_class20 moved")
 
-    /* hitbox_1b7dc — decompiled to C (src/hitbox_1b7dc.c, carved by tools/carve.py) */
-    .hitbox_1b7dc : {
-        build/src/hitbox_1b7dc.o(.text)
+    /* collision_hit_test_helpers — decompiled to C (src/collision_hit_test_helpers.c, carved by tools/carve.py) */
+    .collision_hit_test_helpers : {
+        build/src/collision_hit_test_helpers.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.hitbox_1b7dc) == 0x0801B7DC, "MATCHING: .hitbox_1b7dc moved")
+    ASSERT(!MATCHING || ADDR(.collision_hit_test_helpers) == 0x0801B7DC, "MATCHING: .collision_hit_test_helpers moved")
 
-    /* terrain_1baa4 — decompiled to C (src/terrain_1baa4.c, carved by tools/carve.py) */
-    .terrain_1baa4 : {
-        build/src/terrain_1baa4.o(.text)
+    /* collision_player_probe — decompiled to C (src/collision_player_probe.c, carved by tools/carve.py) */
+    .collision_player_probe : {
+        build/src/collision_player_probe.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_1baa4) == 0x0801BAA4, "MATCHING: .terrain_1baa4 moved")
+    ASSERT(!MATCHING || ADDR(.collision_player_probe) == 0x0801BAA4, "MATCHING: .collision_player_probe moved")
 
-    /* terrain_1bcac — decompiled to C (src/terrain_1bcac.c, carved by tools/carve.py) */
-    .terrain_1bcac : {
-        build/src/terrain_1bcac.o(.text)
+    /* collision_collide_box — decompiled to C (src/collision_collide_box.c, carved by tools/carve.py) */
+    .collision_collide_box : {
+        build/src/collision_collide_box.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_1bcac) == 0x0801BCAC, "MATCHING: .terrain_1bcac moved")
+    ASSERT(!MATCHING || ADDR(.collision_collide_box) == 0x0801BCAC, "MATCHING: .collision_collide_box moved")
 
-    /* terrain_1c30c — decompiled to C (src/terrain_1c30c.c, carved by tools/carve.py) */
-    .terrain_1c30c : {
-        build/src/terrain_1c30c.o(.text)
+    /* collision_collide_point — decompiled to C (src/collision_collide_point.c, carved by tools/carve.py) */
+    .collision_collide_point : {
+        build/src/collision_collide_point.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_1c30c) == 0x0801C30C, "MATCHING: .terrain_1c30c moved")
+    ASSERT(!MATCHING || ADDR(.collision_collide_point) == 0x0801C30C, "MATCHING: .collision_collide_point moved")
 
-    /* terrain_1c444 — decompiled to C (src/terrain_1c444.c, carved by tools/carve.py) */
-    .terrain_1c444 : {
-        build/src/terrain_1c444.o(.text)
+    /* collision_collide_box_tile_edge — decompiled to C (src/collision_collide_box_tile_edge.c, carved by tools/carve.py) */
+    .collision_collide_box_tile_edge : {
+        build/src/collision_collide_box_tile_edge.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_1c444) == 0x0801C444, "MATCHING: .terrain_1c444 moved")
+    ASSERT(!MATCHING || ADDR(.collision_collide_box_tile_edge) == 0x0801C444, "MATCHING: .collision_collide_box_tile_edge moved")
 
-    /* terrain_1c51c — decompiled to C (src/terrain_1c51c.c, carved by tools/carve.py) */
-    .terrain_1c51c : {
-        build/src/terrain_1c51c.o(.text)
+    /* collision_probe_begin_end — decompiled to C (src/collision_probe_begin_end.c, carved by tools/carve.py) */
+    .collision_probe_begin_end : {
+        build/src/collision_probe_begin_end.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_1c51c) == 0x0801C51C, "MATCHING: .terrain_1c51c moved")
+    ASSERT(!MATCHING || ADDR(.collision_probe_begin_end) == 0x0801C51C, "MATCHING: .collision_probe_begin_end moved")
 
-    /* terrain_1c690 — decompiled to C (src/terrain_1c690.c, carved by tools/carve.py) */
-    .terrain_1c690 : {
-        build/src/terrain_1c690.o(.text)
+    /* collision_probe_wall_on_ground — decompiled to C (src/collision_probe_wall_on_ground.c, carved by tools/carve.py) */
+    .collision_probe_wall_on_ground : {
+        build/src/collision_probe_wall_on_ground.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_1c690) == 0x0801C690, "MATCHING: .terrain_1c690 moved")
+    ASSERT(!MATCHING || ADDR(.collision_probe_wall_on_ground) == 0x0801C690, "MATCHING: .collision_probe_wall_on_ground moved")
 
-    /* terrain_1c8dc — decompiled to C (src/terrain_1c8dc.c, carved by tools/carve.py) */
-    .terrain_1c8dc : {
-        build/src/terrain_1c8dc.o(.text)
+    /* collision_probe_box_top — decompiled to C (src/collision_probe_box_top.c, carved by tools/carve.py) */
+    .collision_probe_box_top : {
+        build/src/collision_probe_box_top.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_1c8dc) == 0x0801C8DC, "MATCHING: .terrain_1c8dc moved")
+    ASSERT(!MATCHING || ADDR(.collision_probe_box_top) == 0x0801C8DC, "MATCHING: .collision_probe_box_top moved")
 
-    /* terrain_1c930 — decompiled to C (src/terrain_1c930.c, carved by tools/carve.py) */
-    .terrain_1c930 : {
-        build/src/terrain_1c930.o(.text)
+    /* collision_probe_floor_in_camera_bounds — decompiled to C (src/collision_probe_floor_in_camera_bounds.c, carved by tools/carve.py) */
+    .collision_probe_floor_in_camera_bounds : {
+        build/src/collision_probe_floor_in_camera_bounds.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_1c930) == 0x0801C930, "MATCHING: .terrain_1c930 moved")
+    ASSERT(!MATCHING || ADDR(.collision_probe_floor_in_camera_bounds) == 0x0801C930, "MATCHING: .collision_probe_floor_in_camera_bounds moved")
 
-    /* terrain_1d394 — decompiled to C (src/terrain_1d394.c, carved by tools/carve.py) */
-    .terrain_1d394 : {
-        build/src/terrain_1d394.o(.text)
+    /* collision_probe_floor — decompiled to C (src/collision_probe_floor.c, carved by tools/carve.py) */
+    .collision_probe_floor : {
+        build/src/collision_probe_floor.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_1d394) == 0x0801D394, "MATCHING: .terrain_1d394 moved")
+    ASSERT(!MATCHING || ADDR(.collision_probe_floor) == 0x0801D394, "MATCHING: .collision_probe_floor moved")
 
-    /* terrain_1d9c8 — decompiled to C (src/terrain_1d9c8.c, carved by tools/carve.py) */
-    .terrain_1d9c8 : {
-        build/src/terrain_1d9c8.o(.text)
+    /* collision_probe_wall_in_air_ceiling — decompiled to C (src/collision_probe_wall_in_air_ceiling.c, carved by tools/carve.py) */
+    .collision_probe_wall_in_air_ceiling : {
+        build/src/collision_probe_wall_in_air_ceiling.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_1d9c8) == 0x0801D9C8, "MATCHING: .terrain_1d9c8 moved")
+    ASSERT(!MATCHING || ADDR(.collision_probe_wall_in_air_ceiling) == 0x0801D9C8, "MATCHING: .collision_probe_wall_in_air_ceiling moved")
 
-    /* terrain_1e178 — decompiled to C (src/terrain_1e178.c, carved by tools/carve.py) */
-    .terrain_1e178 : {
-        build/src/terrain_1e178.o(.text)
+    /* collision_probe_landing_in_camera_bounds — decompiled to C (src/collision_probe_landing_in_camera_bounds.c, carved by tools/carve.py) */
+    .collision_probe_landing_in_camera_bounds : {
+        build/src/collision_probe_landing_in_camera_bounds.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_1e178) == 0x0801E178, "MATCHING: .terrain_1e178 moved")
+    ASSERT(!MATCHING || ADDR(.collision_probe_landing_in_camera_bounds) == 0x0801E178, "MATCHING: .collision_probe_landing_in_camera_bounds moved")
 
-    /* terrain_1ecd0 — decompiled to C (src/terrain_1ecd0.c, carved by tools/carve.py) */
-    .terrain_1ecd0 : {
-        build/src/terrain_1ecd0.o(.text)
+    /* collision_probe_landing — decompiled to C (src/collision_probe_landing.c, carved by tools/carve.py) */
+    .collision_probe_landing : {
+        build/src/collision_probe_landing.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_1ecd0) == 0x0801ECD0, "MATCHING: .terrain_1ecd0 moved")
+    ASSERT(!MATCHING || ADDR(.collision_probe_landing) == 0x0801ECD0, "MATCHING: .collision_probe_landing moved")
 
-    /* terrain_1f540 — decompiled to C (src/terrain_1f540.c, carved by tools/carve.py) */
-    .terrain_1f540 : {
-        build/src/terrain_1f540.o(.text)
+    /* collision_probe_no_slope_link — decompiled to C (src/collision_probe_no_slope_link.c, carved by tools/carve.py) */
+    .collision_probe_no_slope_link : {
+        build/src/collision_probe_no_slope_link.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_1f540) == 0x0801F540, "MATCHING: .terrain_1f540 moved")
+    ASSERT(!MATCHING || ADDR(.collision_probe_no_slope_link) == 0x0801F540, "MATCHING: .collision_probe_no_slope_link moved")
 
-    /* terrain_1ff84 — decompiled to C (src/terrain_1ff84.c, carved by tools/carve.py) */
-    .terrain_1ff84 : {
-        build/src/terrain_1ff84.o(.text)
+    /* collision_probe_along_velocity — decompiled to C (src/collision_probe_along_velocity.c, carved by tools/carve.py) */
+    .collision_probe_along_velocity : {
+        build/src/collision_probe_along_velocity.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_1ff84) == 0x0801FF84, "MATCHING: .terrain_1ff84 moved")
+    ASSERT(!MATCHING || ADDR(.collision_probe_along_velocity) == 0x0801FF84, "MATCHING: .collision_probe_along_velocity moved")
 
-    /* terrain_2069c — decompiled to C (src/terrain_2069c.c, carved by tools/carve.py) */
-    .terrain_2069c : {
-        build/src/terrain_2069c.o(.text)
+    /* collision_probe_point_stop — decompiled to C (src/collision_probe_point_stop.c, carved by tools/carve.py) */
+    .collision_probe_point_stop : {
+        build/src/collision_probe_point_stop.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_2069c) == 0x0802069C, "MATCHING: .terrain_2069c moved")
+    ASSERT(!MATCHING || ADDR(.collision_probe_point_stop) == 0x0802069C, "MATCHING: .collision_probe_point_stop moved")
 
-    /* terrain_207a0 — decompiled to C (src/terrain_207a0.c, carved by tools/carve.py) */
-    .terrain_207a0 : {
-        build/src/terrain_207a0.o(.text)
+    /* collision_probe_point_push_out_tile_edge — decompiled to C (src/collision_probe_point_push_out_tile_edge.c, carved by tools/carve.py) */
+    .collision_probe_point_push_out_tile_edge : {
+        build/src/collision_probe_point_push_out_tile_edge.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_207a0) == 0x080207A0, "MATCHING: .terrain_207a0 moved")
+    ASSERT(!MATCHING || ADDR(.collision_probe_point_push_out_tile_edge) == 0x080207A0, "MATCHING: .collision_probe_point_push_out_tile_edge moved")
 
-    /* terrain_21130 — decompiled to C (src/terrain_21130.c, carved by tools/carve.py) */
-    .terrain_21130 : {
-        build/src/terrain_21130.o(.text)
+    /* collision_probe_water_drift — decompiled to C (src/collision_probe_water_drift.c, carved by tools/carve.py) */
+    .collision_probe_water_drift : {
+        build/src/collision_probe_water_drift.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_21130) == 0x08021130, "MATCHING: .terrain_21130 moved")
+    ASSERT(!MATCHING || ADDR(.collision_probe_water_drift) == 0x08021130, "MATCHING: .collision_probe_water_drift moved")
 
-    /* terrain_2136c — decompiled to C (src/terrain_2136c.c, carved by tools/carve.py) */
-    .terrain_2136c : {
-        build/src/terrain_2136c.o(.text)
+    /* collision_probe_water — decompiled to C (src/collision_probe_water.c, carved by tools/carve.py) */
+    .collision_probe_water : {
+        build/src/collision_probe_water.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_2136c) == 0x0802136C, "MATCHING: .terrain_2136c moved")
+    ASSERT(!MATCHING || ADDR(.collision_probe_water) == 0x0802136C, "MATCHING: .collision_probe_water moved")
 
-    /* terrain_214e0 — decompiled to C (src/terrain_214e0.c, carved by tools/carve.py) */
-    .terrain_214e0 : {
-        build/src/terrain_214e0.o(.text)
+    /* collision_query_pixel — decompiled to C (src/collision_query_pixel.c, carved by tools/carve.py) */
+    .collision_query_pixel : {
+        build/src/collision_query_pixel.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_214e0) == 0x080214E0, "MATCHING: .terrain_214e0 moved")
+    ASSERT(!MATCHING || ADDR(.collision_query_pixel) == 0x080214E0, "MATCHING: .collision_query_pixel moved")
 
-    /* terrain_21b18 — decompiled to C (src/terrain_21b18.c, carved by tools/carve.py) */
-    .terrain_21b18 : {
-        build/src/terrain_21b18.o(.text)
+    /* collision_terrain_init — decompiled to C (src/collision_terrain_init.c, carved by tools/carve.py) */
+    .collision_terrain_init : {
+        build/src/collision_terrain_init.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.terrain_21b18) == 0x08021B18, "MATCHING: .terrain_21b18 moved")
+    ASSERT(!MATCHING || ADDR(.collision_terrain_init) == 0x08021B18, "MATCHING: .collision_terrain_init moved")
 
-    /* level_2296c — decompiled to C (src/level_2296c.c, carved by tools/carve.py) */
-    .level_2296c : {
-        build/src/level_2296c.o(.text)
+    /* room_reset_level_load_room — decompiled to C (src/room_reset_level_load_room.c, carved by tools/carve.py) */
+    .room_reset_level_load_room : {
+        build/src/room_reset_level_load_room.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.level_2296c) == 0x0802296C, "MATCHING: .level_2296c moved")
+    ASSERT(!MATCHING || ADDR(.room_reset_level_load_room) == 0x0802296C, "MATCHING: .room_reset_level_load_room moved")
 
-    /* roomtask_23618 — decompiled to C (src/roomtask_23618.c, carved by tools/carve.py) */
-    .roomtask_23618 : {
-        build/src/roomtask_23618.o(.text)
+    /* room_task — decompiled to C (src/room_task.c, carved by tools/carve.py) */
+    .room_task : {
+        build/src/room_task.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.roomtask_23618) == 0x08023618, "MATCHING: .roomtask_23618 moved")
+    ASSERT(!MATCHING || ADDR(.room_task) == 0x08023618, "MATCHING: .room_task moved")
 
-    /* level_23948 — decompiled to C (src/level_23948.c, carved by tools/carve.py) */
-    .level_23948 : {
-        build/src/level_23948.o(.text)
+    /* room_hub — decompiled to C (src/room_hub.c, carved by tools/carve.py) */
+    .room_hub : {
+        build/src/room_hub.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.level_23948) == 0x08023948, "MATCHING: .level_23948 moved")
+    ASSERT(!MATCHING || ADDR(.room_hub) == 0x08023948, "MATCHING: .room_hub moved")
 
-    /* level_242d0 — decompiled to C (src/level_242d0.c, carved by tools/carve.py) */
-    .level_242d0 : {
-        build/src/level_242d0.o(.text)
+    /* room_enter_exit — decompiled to C (src/room_enter_exit.c, carved by tools/carve.py) */
+    .room_enter_exit : {
+        build/src/room_enter_exit.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.level_242d0) == 0x080242D0, "MATCHING: .level_242d0 moved")
+    ASSERT(!MATCHING || ADDR(.room_enter_exit) == 0x080242D0, "MATCHING: .room_enter_exit moved")
 
-    /* stage_261c0 — decompiled to C (src/stage_261c0.c, carved by tools/carve.py) */
-    .stage_261c0 : {
-        build/src/stage_261c0.o(.text)
+    /* room_stage_helpers — decompiled to C (src/room_stage_helpers.c, carved by tools/carve.py) */
+    .room_stage_helpers : {
+        build/src/room_stage_helpers.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.stage_261c0) == 0x080261C0, "MATCHING: .stage_261c0 moved")
+    ASSERT(!MATCHING || ADDR(.room_stage_helpers) == 0x080261C0, "MATCHING: .room_stage_helpers moved")
 
-    /* door_26b60 — decompiled to C (src/door_26b60.c, carved by tools/carve.py) */
-    .door_26b60 : {
-        build/src/door_26b60.o(.text)
+    /* room_doors — decompiled to C (src/room_doors.c, carved by tools/carve.py) */
+    .room_doors : {
+        build/src/room_doors.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.door_26b60) == 0x08026B60, "MATCHING: .door_26b60 moved")
+    ASSERT(!MATCHING || ADDR(.room_doors) == 0x08026B60, "MATCHING: .room_doors moved")
 
-    /* stage_270d0 — decompiled to C (src/stage_270d0.c, carved by tools/carve.py) */
-    .stage_270d0 : {
-        build/src/stage_270d0.o(.text)
+    /* room_stop_pause — decompiled to C (src/room_stop_pause.c, carved by tools/carve.py) */
+    .room_stop_pause : {
+        build/src/room_stop_pause.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.stage_270d0) == 0x080270D0, "MATCHING: .stage_270d0 moved")
+    ASSERT(!MATCHING || ADDR(.room_stop_pause) == 0x080270D0, "MATCHING: .room_stop_pause moved")
 
-    /* stage_273a0 — decompiled to C (src/stage_273a0.c, carved by tools/carve.py) */
-    .stage_273a0 : {
-        build/src/stage_273a0.o(.text)
+    /* room_restart_point — decompiled to C (src/room_restart_point.c, carved by tools/carve.py) */
+    .room_restart_point : {
+        build/src/room_restart_point.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.stage_273a0) == 0x080273A0, "MATCHING: .stage_273a0 moved")
+    ASSERT(!MATCHING || ADDR(.room_restart_point) == 0x080273A0, "MATCHING: .room_restart_point moved")
 
-    /* level_27a6c — decompiled to C (src/level_27a6c.c, carved by tools/carve.py) */
-    .level_27a6c : {
-        build/src/level_27a6c.o(.text)
+    /* room_hub_map — decompiled to C (src/room_hub_map.c, carved by tools/carve.py) */
+    .room_hub_map : {
+        build/src/room_hub_map.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.level_27a6c) == 0x08027A6C, "MATCHING: .level_27a6c moved")
+    ASSERT(!MATCHING || ADDR(.room_hub_map) == 0x08027A6C, "MATCHING: .room_hub_map moved")
 
-    /* room_27e28 — decompiled to C (src/room_27e28.c, carved by tools/carve.py) */
-    .room_27e28 : {
-        build/src/room_27e28.o(.text)
+    /* room_bg_layout — decompiled to C (src/room_bg_layout.c, carved by tools/carve.py) */
+    .room_bg_layout : {
+        build/src/room_bg_layout.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.room_27e28) == 0x08027E28, "MATCHING: .room_27e28 moved")
+    ASSERT(!MATCHING || ADDR(.room_bg_layout) == 0x08027E28, "MATCHING: .room_bg_layout moved")
 
-    /* room_28320 — decompiled to C (src/room_28320.c, carved by tools/carve.py) */
-    .room_28320 : {
-        build/src/room_28320.o(.text)
+    /* room_spawn_door_objects — decompiled to C (src/room_spawn_door_objects.c, carved by tools/carve.py) */
+    .room_spawn_door_objects : {
+        build/src/room_spawn_door_objects.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.room_28320) == 0x08028320, "MATCHING: .room_28320 moved")
+    ASSERT(!MATCHING || ADDR(.room_spawn_door_objects) == 0x08028320, "MATCHING: .room_spawn_door_objects moved")
 
-    /* camera_28b8c — decompiled to C (src/camera_28b8c.c, carved by tools/carve.py) */
-    .camera_28b8c : {
-        build/src/camera_28b8c.o(.text)
+    /* room_camera_init — decompiled to C (src/room_camera_init.c, carved by tools/carve.py) */
+    .room_camera_init : {
+        build/src/room_camera_init.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.camera_28b8c) == 0x08028B8C, "MATCHING: .camera_28b8c moved")
+    ASSERT(!MATCHING || ADDR(.room_camera_init) == 0x08028B8C, "MATCHING: .room_camera_init moved")
 
-    /* camera_296a0 — decompiled to C (src/camera_296a0.c, carved by tools/carve.py) */
-    .camera_296a0 : {
-        build/src/camera_296a0.o(.text)
+    /* camera_stream_scroll — decompiled to C (src/camera_stream_scroll.c, carved by tools/carve.py) */
+    .camera_stream_scroll : {
+        build/src/camera_stream_scroll.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.camera_296a0) == 0x080296A0, "MATCHING: .camera_296a0 moved")
+    ASSERT(!MATCHING || ADDR(.camera_stream_scroll) == 0x080296A0, "MATCHING: .camera_stream_scroll moved")
 
-    /* camera_29c74 — decompiled to C (src/camera_29c74.c, carved by tools/carve.py) */
-    .camera_29c74 : {
-        build/src/camera_29c74.o(.text)
+    /* camera_player_group — decompiled to C (src/camera_player_group.c, carved by tools/carve.py) */
+    .camera_player_group : {
+        build/src/camera_player_group.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.camera_29c74) == 0x08029C74, "MATCHING: .camera_29c74 moved")
+    ASSERT(!MATCHING || ADDR(.camera_player_group) == 0x08029C74, "MATCHING: .camera_player_group moved")
 
-    /* bgmap_2a9cc — decompiled to C (src/bgmap_2a9cc.c, carved by tools/carve.py) */
-    .bgmap_2a9cc : {
-        build/src/bgmap_2a9cc.o(.text)
+    /* camera_draw_bg_map — decompiled to C (src/camera_draw_bg_map.c, carved by tools/carve.py) */
+    .camera_draw_bg_map : {
+        build/src/camera_draw_bg_map.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.bgmap_2a9cc) == 0x0802A9CC, "MATCHING: .bgmap_2a9cc moved")
+    ASSERT(!MATCHING || ADDR(.camera_draw_bg_map) == 0x0802A9CC, "MATCHING: .camera_draw_bg_map moved")
 
-    /* bgmap_2b2f0 — decompiled to C (src/bgmap_2b2f0.c, carved by tools/carve.py) */
-    .bgmap_2b2f0 : {
-        build/src/bgmap_2b2f0.o(.text)
+    /* camera_block_anim_clip — decompiled to C (src/camera_block_anim_clip.c, carved by tools/carve.py) */
+    .camera_block_anim_clip : {
+        build/src/camera_block_anim_clip.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.bgmap_2b2f0) == 0x0802B2F0, "MATCHING: .bgmap_2b2f0 moved")
+    ASSERT(!MATCHING || ADDR(.camera_block_anim_clip) == 0x0802B2F0, "MATCHING: .camera_block_anim_clip moved")
 
-    /* camera_2b4bc — decompiled to C (src/camera_2b4bc.c, carved by tools/carve.py) */
-    .camera_2b4bc : {
-        build/src/camera_2b4bc.o(.text)
+    /* camera_scroll_lock — decompiled to C (src/camera_scroll_lock.c, carved by tools/carve.py) */
+    .camera_scroll_lock : {
+        build/src/camera_scroll_lock.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.camera_2b4bc) == 0x0802B4BC, "MATCHING: .camera_2b4bc moved")
+    ASSERT(!MATCHING || ADDR(.camera_scroll_lock) == 0x0802B4BC, "MATCHING: .camera_scroll_lock moved")
 
-    /* camera_2c42c — decompiled to C (src/camera_2c42c.c, carved by tools/carve.py) */
-    .camera_2c42c : {
-        build/src/camera_2c42c.o(.text)
+    /* camera_hub — decompiled to C (src/camera_hub.c, carved by tools/carve.py) */
+    .camera_hub : {
+        build/src/camera_hub.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.camera_2c42c) == 0x0802C42C, "MATCHING: .camera_2c42c moved")
+    ASSERT(!MATCHING || ADDR(.camera_hub) == 0x0802C42C, "MATCHING: .camera_hub moved")
 
-    /* camera_2d01c — decompiled to C (src/camera_2d01c.c, carved by tools/carve.py) */
-    .camera_2d01c : {
-        build/src/camera_2d01c.o(.text)
+    /* camera_bg_anims — decompiled to C (src/camera_bg_anims.c, carved by tools/carve.py) */
+    .camera_bg_anims : {
+        build/src/camera_bg_anims.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.camera_2d01c) == 0x0802D01C, "MATCHING: .camera_2d01c moved")
+    ASSERT(!MATCHING || ADDR(.camera_bg_anims) == 0x0802D01C, "MATCHING: .camera_bg_anims moved")
 
-    /* camtask_2d38c — decompiled to C (src/camtask_2d38c.c, carved by tools/carve.py) */
-    .camtask_2d38c : {
-        build/src/camtask_2d38c.o(.text)
+    /* camera_map_events — decompiled to C (src/camera_map_events.c, carved by tools/carve.py) */
+    .camera_map_events : {
+        build/src/camera_map_events.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.camtask_2d38c) == 0x0802D38C, "MATCHING: .camtask_2d38c moved")
+    ASSERT(!MATCHING || ADDR(.camera_map_events) == 0x0802D38C, "MATCHING: .camera_map_events moved")
 
-    /* obj_2eac8 — decompiled to C (src/obj_2eac8.c, carved by tools/carve.py) */
-    .obj_2eac8 : {
-        build/src/obj_2eac8.o(.text)
+    /* camera_door_signs — decompiled to C (src/camera_door_signs.c, carved by tools/carve.py) */
+    .camera_door_signs : {
+        build/src/camera_door_signs.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.obj_2eac8) == 0x0802EAC8, "MATCHING: .obj_2eac8 moved")
+    ASSERT(!MATCHING || ADDR(.camera_door_signs) == 0x0802EAC8, "MATCHING: .camera_door_signs moved")
 
-    /* obj_2f62c — decompiled to C (src/obj_2f62c.c, carved by tools/carve.py) */
-    .obj_2f62c : {
-        build/src/obj_2f62c.o(.text)
+    /* camera_warp_star_station_door — decompiled to C (src/camera_warp_star_station_door.c, carved by tools/carve.py) */
+    .camera_warp_star_station_door : {
+        build/src/camera_warp_star_station_door.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.obj_2f62c) == 0x0802F62C, "MATCHING: .obj_2f62c moved")
+    ASSERT(!MATCHING || ADDR(.camera_warp_star_station_door) == 0x0802F62C, "MATCHING: .camera_warp_star_station_door moved")
 
-    /* obj_30238 — decompiled to C (src/obj_30238.c, carved by tools/carve.py) */
-    .obj_30238 : {
-        build/src/obj_30238.o(.text)
+    /* camera_stage_effect — decompiled to C (src/camera_stage_effect.c, carved by tools/carve.py) */
+    .camera_stage_effect : {
+        build/src/camera_stage_effect.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.obj_30238) == 0x08030238, "MATCHING: .obj_30238 moved")
+    ASSERT(!MATCHING || ADDR(.camera_stage_effect) == 0x08030238, "MATCHING: .camera_stage_effect moved")
 
-    /* obj_306b4 — decompiled to C (src/obj_306b4.c, carved by tools/carve.py) */
-    .obj_306b4 : {
-        build/src/obj_306b4.o(.text)
+    /* camera_world_sprite_block_anims — decompiled to C (src/camera_world_sprite_block_anims.c, carved by tools/carve.py) */
+    .camera_world_sprite_block_anims : {
+        build/src/camera_world_sprite_block_anims.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.obj_306b4) == 0x080306B4, "MATCHING: .obj_306b4 moved")
+    ASSERT(!MATCHING || ADDR(.camera_world_sprite_block_anims) == 0x080306B4, "MATCHING: .camera_world_sprite_block_anims moved")
 
-    /* block_30804 — decompiled to C (src/block_30804.c, carved by tools/carve.py) */
-    .block_30804 : {
-        build/src/block_30804.o(.text)
+    /* player_break_blocks — decompiled to C (src/player_break_blocks.c, carved by tools/carve.py) */
+    .player_break_blocks : {
+        build/src/player_break_blocks.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.block_30804) == 0x08030804, "MATCHING: .block_30804 moved")
+    ASSERT(!MATCHING || ADDR(.player_break_blocks) == 0x08030804, "MATCHING: .player_break_blocks moved")
 
-    /* block_318b4 — decompiled to C (src/block_318b4.c, carved by tools/carve.py) */
-    .block_318b4 : {
-        build/src/block_318b4.o(.text)
+    /* player_block_anims — decompiled to C (src/player_block_anims.c, carved by tools/carve.py) */
+    .player_block_anims : {
+        build/src/player_block_anims.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.block_318b4) == 0x080318B4, "MATCHING: .block_318b4 moved")
+    ASSERT(!MATCHING || ADDR(.player_block_anims) == 0x080318B4, "MATCHING: .player_block_anims moved")
 
-    /* player_32688 — decompiled to C (src/player_32688.c, carved by tools/carve.py) */
-    .player_32688 : {
-        build/src/player_32688.o(.text)
+    /* player_task — decompiled to C (src/player_task.c, carved by tools/carve.py) */
+    .player_task : {
+        build/src/player_task.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_32688) == 0x08032688, "MATCHING: .player_32688 moved")
+    ASSERT(!MATCHING || ADDR(.player_task) == 0x08032688, "MATCHING: .player_task moved")
 
-    /* player_337f4 — decompiled to C (src/player_337f4.c, carved by tools/carve.py) */
-    .player_337f4 : {
-        build/src/player_337f4.o(.text)
+    /* player_stand_walk — decompiled to C (src/player_stand_walk.c, carved by tools/carve.py) */
+    .player_stand_walk : {
+        build/src/player_stand_walk.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_337f4) == 0x080337F4, "MATCHING: .player_337f4 moved")
+    ASSERT(!MATCHING || ADDR(.player_stand_walk) == 0x080337F4, "MATCHING: .player_stand_walk moved")
 
-    /* player_343c0 — decompiled to C (src/player_343c0.c, carved by tools/carve.py) */
-    .player_343c0 : {
-        build/src/player_343c0.o(.text)
+    /* player_run_jump — decompiled to C (src/player_run_jump.c, carved by tools/carve.py) */
+    .player_run_jump : {
+        build/src/player_run_jump.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_343c0) == 0x080343C0, "MATCHING: .player_343c0 moved")
+    ASSERT(!MATCHING || ADDR(.player_run_jump) == 0x080343C0, "MATCHING: .player_run_jump moved")
 
-    /* player_34f8c — decompiled to C (src/player_34f8c.c, carved by tools/carve.py) */
-    .player_34f8c : {
-        build/src/player_34f8c.o(.text)
+    /* player_fall_float — decompiled to C (src/player_fall_float.c, carved by tools/carve.py) */
+    .player_fall_float : {
+        build/src/player_fall_float.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_34f8c) == 0x08034F8C, "MATCHING: .player_34f8c moved")
+    ASSERT(!MATCHING || ADDR(.player_fall_float) == 0x08034F8C, "MATCHING: .player_fall_float moved")
 
-    /* player_36280 — decompiled to C (src/player_36280.c, carved by tools/carve.py) */
-    .player_36280 : {
-        build/src/player_36280.o(.text)
+    /* player_duck_slide — decompiled to C (src/player_duck_slide.c, carved by tools/carve.py) */
+    .player_duck_slide : {
+        build/src/player_duck_slide.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_36280) == 0x08036280, "MATCHING: .player_36280 moved")
+    ASSERT(!MATCHING || ADDR(.player_duck_slide) == 0x08036280, "MATCHING: .player_duck_slide moved")
 
-    /* player_36c94 — decompiled to C (src/player_36c94.c, carved by tools/carve.py) */
-    .player_36c94 : {
-        build/src/player_36c94.o(.text)
+    /* player_ladder_inhale — decompiled to C (src/player_ladder_inhale.c, carved by tools/carve.py) */
+    .player_ladder_inhale : {
+        build/src/player_ladder_inhale.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_36c94) == 0x08036C94, "MATCHING: .player_36c94 moved")
+    ASSERT(!MATCHING || ADDR(.player_ladder_inhale) == 0x08036C94, "MATCHING: .player_ladder_inhale moved")
 
-    /* player_37ed8 — decompiled to C (src/player_37ed8.c, carved by tools/carve.py) */
-    .player_37ed8 : {
-        build/src/player_37ed8.o(.text)
+    /* player_hurt — decompiled to C (src/player_hurt.c, carved by tools/carve.py) */
+    .player_hurt : {
+        build/src/player_hurt.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_37ed8) == 0x08037ED8, "MATCHING: .player_37ed8 moved")
+    ASSERT(!MATCHING || ADDR(.player_hurt) == 0x08037ED8, "MATCHING: .player_hurt moved")
 
-    /* player_3919c — decompiled to C (src/player_3919c.c, carved by tools/carve.py) */
-    .player_3919c : {
-        build/src/player_3919c.o(.text)
+    /* player_die_enter_door — decompiled to C (src/player_die_enter_door.c, carved by tools/carve.py) */
+    .player_die_enter_door : {
+        build/src/player_die_enter_door.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_3919c) == 0x0803919C, "MATCHING: .player_3919c moved")
+    ASSERT(!MATCHING || ADDR(.player_die_enter_door) == 0x0803919C, "MATCHING: .player_die_enter_door moved")
 
-    /* player_39c24 — decompiled to C (src/player_39c24.c, carved by tools/carve.py) */
-    .player_39c24 : {
-        build/src/player_39c24.o(.text)
+    /* player_exit_door — decompiled to C (src/player_exit_door.c, carved by tools/carve.py) */
+    .player_exit_door : {
+        build/src/player_exit_door.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_39c24) == 0x08039C24, "MATCHING: .player_39c24 moved")
+    ASSERT(!MATCHING || ADDR(.player_exit_door) == 0x08039C24, "MATCHING: .player_exit_door moved")
 
-    /* player_3aa64 — decompiled to C (src/player_3aa64.c, carved by tools/carve.py) */
-    .player_3aa64 : {
-        build/src/player_3aa64.o(.text)
+    /* player_water — decompiled to C (src/player_water.c, carved by tools/carve.py) */
+    .player_water : {
+        build/src/player_water.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_3aa64) == 0x0803AA64, "MATCHING: .player_3aa64 moved")
+    ASSERT(!MATCHING || ADDR(.player_water) == 0x0803AA64, "MATCHING: .player_water moved")
 
-    /* player_3bde8 — decompiled to C (src/player_3bde8.c, carved by tools/carve.py) */
-    .player_3bde8 : {
-        build/src/player_3bde8.o(.text)
+    /* player_share_item — decompiled to C (src/player_share_item.c, carved by tools/carve.py) */
+    .player_share_item : {
+        build/src/player_share_item.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_3bde8) == 0x0803BDE8, "MATCHING: .player_3bde8 moved")
+    ASSERT(!MATCHING || ADDR(.player_share_item) == 0x0803BDE8, "MATCHING: .player_share_item moved")
 
-    /* stage_3cd60 — decompiled to C (src/stage_3cd60.c, carved by tools/carve.py) */
-    .stage_3cd60 : {
-        build/src/stage_3cd60.o(.text)
+    /* player_helpers — decompiled to C (src/player_helpers.c, carved by tools/carve.py) */
+    .player_helpers : {
+        build/src/player_helpers.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.stage_3cd60) == 0x0803CD60, "MATCHING: .stage_3cd60 moved")
+    ASSERT(!MATCHING || ADDR(.player_helpers) == 0x0803CD60, "MATCHING: .player_helpers moved")
 
-    /* stage_40b40 — decompiled to C (src/stage_40b40.c, carved by tools/carve.py) */
-    .stage_40b40 : {
-        build/src/stage_40b40.o(.text)
+    /* player_motion_x_preset — decompiled to C (src/player_motion_x_preset.c, carved by tools/carve.py) */
+    .player_motion_x_preset : {
+        build/src/player_motion_x_preset.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.stage_40b40) == 0x08040B40, "MATCHING: .stage_40b40 moved")
+    ASSERT(!MATCHING || ADDR(.player_motion_x_preset) == 0x08040B40, "MATCHING: .player_motion_x_preset moved")
 
-    /* stage_413a4 — decompiled to C (src/stage_413a4.c, carved by tools/carve.py) */
-    .stage_413a4 : {
-        build/src/stage_413a4.o(.text)
+    /* player_meta_knight_actions — decompiled to C (src/player_meta_knight_actions.c, carved by tools/carve.py) */
+    .player_meta_knight_actions : {
+        build/src/player_meta_knight_actions.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.stage_413a4) == 0x080413A4, "MATCHING: .stage_413a4 moved")
+    ASSERT(!MATCHING || ADDR(.player_meta_knight_actions) == 0x080413A4, "MATCHING: .player_meta_knight_actions moved")
 
-    /* stage_4335c — decompiled to C (src/stage_4335c.c, carved by tools/carve.py) */
-    .stage_4335c : {
-        build/src/stage_4335c.o(.text)
+    /* player_meta_knight_swim_update — decompiled to C (src/player_meta_knight_swim_update.c, carved by tools/carve.py) */
+    .player_meta_knight_swim_update : {
+        build/src/player_meta_knight_swim_update.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.stage_4335c) == 0x0804335C, "MATCHING: .stage_4335c moved")
+    ASSERT(!MATCHING || ADDR(.player_meta_knight_swim_update) == 0x0804335C, "MATCHING: .player_meta_knight_swim_update moved")
 
-    /* stage_43654 — decompiled to C (src/stage_43654.c, carved by tools/carve.py) */
-    .stage_43654 : {
-        build/src/stage_43654.o(.text)
+    /* player_meta_knight_slash — decompiled to C (src/player_meta_knight_slash.c, carved by tools/carve.py) */
+    .player_meta_knight_slash : {
+        build/src/player_meta_knight_slash.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.stage_43654) == 0x08043654, "MATCHING: .stage_43654 moved")
+    ASSERT(!MATCHING || ADDR(.player_meta_knight_slash) == 0x08043654, "MATCHING: .player_meta_knight_slash moved")
 
-    /* player_449c8 — decompiled to C (src/player_449c8.c, carved by tools/carve.py) */
-    .player_449c8 : {
-        build/src/player_449c8.o(.text)
+    /* player_spark_cutter — decompiled to C (src/player_spark_cutter.c, carved by tools/carve.py) */
+    .player_spark_cutter : {
+        build/src/player_spark_cutter.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_449c8) == 0x080449C8, "MATCHING: .player_449c8 moved")
+    ASSERT(!MATCHING || ADDR(.player_spark_cutter) == 0x080449C8, "MATCHING: .player_spark_cutter moved")
 
-    /* player_44d04 — decompiled to C (src/player_44d04.c, carved by tools/carve.py) */
-    .player_44d04 : {
-        build/src/player_44d04.o(.text)
+    /* player_sword — decompiled to C (src/player_sword.c, carved by tools/carve.py) */
+    .player_sword : {
+        build/src/player_sword.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_44d04) == 0x08044D04, "MATCHING: .player_44d04 moved")
+    ASSERT(!MATCHING || ADDR(.player_sword) == 0x08044D04, "MATCHING: .player_sword moved")
 
-    /* player_455c8 — decompiled to C (src/player_455c8.c, carved by tools/carve.py) */
-    .player_455c8 : {
-        build/src/player_455c8.o(.text)
+    /* player_burning_laser — decompiled to C (src/player_burning_laser.c, carved by tools/carve.py) */
+    .player_burning_laser : {
+        build/src/player_burning_laser.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_455c8) == 0x080455C8, "MATCHING: .player_455c8 moved")
+    ASSERT(!MATCHING || ADDR(.player_burning_laser) == 0x080455C8, "MATCHING: .player_burning_laser moved")
 
-    /* player_45d34 — decompiled to C (src/player_45d34.c, carved by tools/carve.py) */
-    .player_45d34 : {
-        build/src/player_45d34.o(.text)
+    /* player_mike — decompiled to C (src/player_mike.c, carved by tools/carve.py) */
+    .player_mike : {
+        build/src/player_mike.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_45d34) == 0x08045D34, "MATCHING: .player_45d34 moved")
+    ASSERT(!MATCHING || ADDR(.player_mike) == 0x08045D34, "MATCHING: .player_mike moved")
 
-    /* player_46330 — decompiled to C (src/player_46330.c, carved by tools/carve.py) */
-    .player_46330 : {
-        build/src/player_46330.o(.text)
+    /* player_wheel — decompiled to C (src/player_wheel.c, carved by tools/carve.py) */
+    .player_wheel : {
+        build/src/player_wheel.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_46330) == 0x08046330, "MATCHING: .player_46330 moved")
+    ASSERT(!MATCHING || ADDR(.player_wheel) == 0x08046330, "MATCHING: .player_wheel moved")
 
-    /* player_46c00 — decompiled to C (src/player_46c00.c, carved by tools/carve.py) */
-    .player_46c00 : {
-        build/src/player_46c00.o(.text)
+    /* player_hammer — decompiled to C (src/player_hammer.c, carved by tools/carve.py) */
+    .player_hammer : {
+        build/src/player_hammer.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_46c00) == 0x08046C00, "MATCHING: .player_46c00 moved")
+    ASSERT(!MATCHING || ADDR(.player_hammer) == 0x08046C00, "MATCHING: .player_hammer moved")
 
-    /* player_474e8 — decompiled to C (src/player_474e8.c, carved by tools/carve.py) */
-    .player_474e8 : {
-        build/src/player_474e8.o(.text)
+    /* player_sleep — decompiled to C (src/player_sleep.c, carved by tools/carve.py) */
+    .player_sleep : {
+        build/src/player_sleep.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_474e8) == 0x080474E8, "MATCHING: .player_474e8 moved")
+    ASSERT(!MATCHING || ADDR(.player_sleep) == 0x080474E8, "MATCHING: .player_sleep moved")
 
-    /* player_47fe8 — decompiled to C (src/player_47fe8.c, carved by tools/carve.py) */
-    .player_47fe8 : {
-        build/src/player_47fe8.o(.text)
+    /* player_get_ability — decompiled to C (src/player_get_ability.c, carved by tools/carve.py) */
+    .player_get_ability : {
+        build/src/player_get_ability.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_47fe8) == 0x08047FE8, "MATCHING: .player_47fe8 moved")
+    ASSERT(!MATCHING || ADDR(.player_get_ability) == 0x08047FE8, "MATCHING: .player_get_ability moved")
 
-    /* player_49738 — decompiled to C (src/player_49738.c, carved by tools/carve.py) */
-    .player_49738 : {
-        build/src/player_49738.o(.text)
+    /* player_ability_tiles — decompiled to C (src/player_ability_tiles.c, carved by tools/carve.py) */
+    .player_ability_tiles : {
+        build/src/player_ability_tiles.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_49738) == 0x08049738, "MATCHING: .player_49738 moved")
+    ASSERT(!MATCHING || ADDR(.player_ability_tiles) == 0x08049738, "MATCHING: .player_ability_tiles moved")
 
-    /* player_49b48 — decompiled to C (src/player_49b48.c, carved by tools/carve.py) */
-    .player_49b48 : {
-        build/src/player_49b48.o(.text)
+    /* player_ice_freeze — decompiled to C (src/player_ice_freeze.c, carved by tools/carve.py) */
+    .player_ice_freeze : {
+        build/src/player_ice_freeze.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_49b48) == 0x08049B48, "MATCHING: .player_49b48 moved")
+    ASSERT(!MATCHING || ADDR(.player_ice_freeze) == 0x08049B48, "MATCHING: .player_ice_freeze moved")
 
-    /* player_49f98 — decompiled to C (src/player_49f98.c, carved by tools/carve.py) */
-    .player_49f98 : {
-        build/src/player_49f98.o(.text)
+    /* player_hi_jump — decompiled to C (src/player_hi_jump.c, carved by tools/carve.py) */
+    .player_hi_jump : {
+        build/src/player_hi_jump.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_49f98) == 0x08049F98, "MATCHING: .player_49f98 moved")
+    ASSERT(!MATCHING || ADDR(.player_hi_jump) == 0x08049F98, "MATCHING: .player_hi_jump moved")
 
-    /* player_4a54c — decompiled to C (src/player_4a54c.c, carved by tools/carve.py) */
-    .player_4a54c : {
-        build/src/player_4a54c.o(.text)
+    /* player_beam_stone — decompiled to C (src/player_beam_stone.c, carved by tools/carve.py) */
+    .player_beam_stone : {
+        build/src/player_beam_stone.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_4a54c) == 0x0804A54C, "MATCHING: .player_4a54c moved")
+    ASSERT(!MATCHING || ADDR(.player_beam_stone) == 0x0804A54C, "MATCHING: .player_beam_stone moved")
 
-    /* player_4ab70 — decompiled to C (src/player_4ab70.c, carved by tools/carve.py) */
-    .player_4ab70 : {
-        build/src/player_4ab70.o(.text)
+    /* player_tornado_crash — decompiled to C (src/player_tornado_crash.c, carved by tools/carve.py) */
+    .player_tornado_crash : {
+        build/src/player_tornado_crash.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_4ab70) == 0x0804AB70, "MATCHING: .player_4ab70 moved")
+    ASSERT(!MATCHING || ADDR(.player_tornado_crash) == 0x0804AB70, "MATCHING: .player_tornado_crash moved")
 
-    /* player_4b5b4 — decompiled to C (src/player_4b5b4.c, carved by tools/carve.py) */
-    .player_4b5b4 : {
-        build/src/player_4b5b4.o(.text)
+    /* player_light — decompiled to C (src/player_light.c, carved by tools/carve.py) */
+    .player_light : {
+        build/src/player_light.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_4b5b4) == 0x0804B5B4, "MATCHING: .player_4b5b4 moved")
+    ASSERT(!MATCHING || ADDR(.player_light) == 0x0804B5B4, "MATCHING: .player_light moved")
 
-    /* player_4b858 — decompiled to C (src/player_4b858.c, carved by tools/carve.py) */
-    .player_4b858 : {
-        build/src/player_4b858.o(.text)
+    /* player_backdrop_hold — decompiled to C (src/player_backdrop_hold.c, carved by tools/carve.py) */
+    .player_backdrop_hold : {
+        build/src/player_backdrop_hold.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_4b858) == 0x0804B858, "MATCHING: .player_4b858 moved")
+    ASSERT(!MATCHING || ADDR(.player_backdrop_hold) == 0x0804B858, "MATCHING: .player_backdrop_hold moved")
 
-    /* player_4c64c — decompiled to C (src/player_4c64c.c, carved by tools/carve.py) */
-    .player_4c64c : {
-        build/src/player_4c64c.o(.text)
+    /* player_throw_hold — decompiled to C (src/player_throw_hold.c, carved by tools/carve.py) */
+    .player_throw_hold : {
+        build/src/player_throw_hold.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_4c64c) == 0x0804C64C, "MATCHING: .player_4c64c moved")
+    ASSERT(!MATCHING || ADDR(.player_throw_hold) == 0x0804C64C, "MATCHING: .player_throw_hold moved")
 
-    /* player_4cc7c — decompiled to C (src/player_4cc7c.c, carved by tools/carve.py) */
-    .player_4cc7c : {
-        build/src/player_4cc7c.o(.text)
+    /* player_ufo — decompiled to C (src/player_ufo.c, carved by tools/carve.py) */
+    .player_ufo : {
+        build/src/player_ufo.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_4cc7c) == 0x0804CC7C, "MATCHING: .player_4cc7c moved")
+    ASSERT(!MATCHING || ADDR(.player_ufo) == 0x0804CC7C, "MATCHING: .player_ufo moved")
 
-    /* player_4dc08 — decompiled to C (src/player_4dc08.c, carved by tools/carve.py) */
-    .player_4dc08 : {
-        build/src/player_4dc08.o(.text)
+    /* player_backdrop_throw — decompiled to C (src/player_backdrop_throw.c, carved by tools/carve.py) */
+    .player_backdrop_throw : {
+        build/src/player_backdrop_throw.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_4dc08) == 0x0804DC08, "MATCHING: .player_4dc08 moved")
+    ASSERT(!MATCHING || ADDR(.player_backdrop_throw) == 0x0804DC08, "MATCHING: .player_backdrop_throw moved")
 
-    /* sub_0804e3a0 — decompiled to C (src/sub_0804e3a0.c, carved by tools/carve.py) */
-    .sub_0804e3a0 : {
-        build/src/sub_0804e3a0.o(.text)
+    /* player_throw_update — decompiled to C (src/player_throw_update.c, carved by tools/carve.py) */
+    .player_throw_update : {
+        build/src/player_throw_update.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.sub_0804e3a0) == 0x0804E3A0, "MATCHING: .sub_0804e3a0 moved")
+    ASSERT(!MATCHING || ADDR(.player_throw_update) == 0x0804E3A0, "MATCHING: .player_throw_update moved")
 
-    /* player_4e5a4 — decompiled to C (src/player_4e5a4.c, carved by tools/carve.py) */
-    .player_4e5a4 : {
-        build/src/player_4e5a4.o(.text)
+    /* player_ball — decompiled to C (src/player_ball.c, carved by tools/carve.py) */
+    .player_ball : {
+        build/src/player_ball.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_4e5a4) == 0x0804E5A4, "MATCHING: .player_4e5a4 moved")
+    ASSERT(!MATCHING || ADDR(.player_ball) == 0x0804E5A4, "MATCHING: .player_ball moved")
 
-    /* player_4e78c — decompiled to C (src/player_4e78c.c, carved by tools/carve.py) */
-    .player_4e78c : {
-        build/src/player_4e78c.o(.text)
+    /* player_ball_roll — decompiled to C (src/player_ball_roll.c, carved by tools/carve.py) */
+    .player_ball_roll : {
+        build/src/player_ball_roll.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_4e78c) == 0x0804E78C, "MATCHING: .player_4e78c moved")
+    ASSERT(!MATCHING || ADDR(.player_ball_roll) == 0x0804E78C, "MATCHING: .player_ball_roll moved")
 
-    /* player_4ee08 — decompiled to C (src/player_4ee08.c, carved by tools/carve.py) */
-    .player_4ee08 : {
-        build/src/player_4ee08.o(.text)
+    /* player_ball_jump — decompiled to C (src/player_ball_jump.c, carved by tools/carve.py) */
+    .player_ball_jump : {
+        build/src/player_ball_jump.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_4ee08) == 0x0804EE08, "MATCHING: .player_4ee08 moved")
+    ASSERT(!MATCHING || ADDR(.player_ball_jump) == 0x0804EE08, "MATCHING: .player_ball_jump moved")
 
-    /* player_4f614 — decompiled to C (src/player_4f614.c, carved by tools/carve.py) */
-    .player_4f614 : {
-        build/src/player_4f614.o(.text)
+    /* player_ball_helpers — decompiled to C (src/player_ball_helpers.c, carved by tools/carve.py) */
+    .player_ball_helpers : {
+        build/src/player_ball_helpers.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_4f614) == 0x0804F614, "MATCHING: .player_4f614 moved")
+    ASSERT(!MATCHING || ADDR(.player_ball_helpers) == 0x0804F614, "MATCHING: .player_ball_helpers moved")
 
-    /* player_4f948 — decompiled to C (src/player_4f948.c, carved by tools/carve.py) */
-    .player_4f948 : {
-        build/src/player_4f948.o(.text)
+    /* player_star_rod — decompiled to C (src/player_star_rod.c, carved by tools/carve.py) */
+    .player_star_rod : {
+        build/src/player_star_rod.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_4f948) == 0x0804F948, "MATCHING: .player_4f948 moved")
+    ASSERT(!MATCHING || ADDR(.player_star_rod) == 0x0804F948, "MATCHING: .player_star_rod moved")
 
-    /* player_4ffdc — decompiled to C (src/player_4ffdc.c, carved by tools/carve.py) */
-    .player_4ffdc : {
-        build/src/player_4ffdc.o(.text)
+    /* player_star_rod_flight — decompiled to C (src/player_star_rod_flight.c, carved by tools/carve.py) */
+    .player_star_rod_flight : {
+        build/src/player_star_rod_flight.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.player_4ffdc) == 0x0804FFDC, "MATCHING: .player_4ffdc moved")
+    ASSERT(!MATCHING || ADDR(.player_star_rod_flight) == 0x0804FFDC, "MATCHING: .player_star_rod_flight moved")
 
-    /* plobj_507bc — decompiled to C (src/plobj_507bc.c, carved by tools/carve.py) */
-    .plobj_507bc : {
-        build/src/plobj_507bc.o(.text)
+    /* player_object_task — decompiled to C (src/player_object_task.c, carved by tools/carve.py) */
+    .player_object_task : {
+        build/src/player_object_task.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.plobj_507bc) == 0x080507BC, "MATCHING: .plobj_507bc moved")
+    ASSERT(!MATCHING || ADDR(.player_object_task) == 0x080507BC, "MATCHING: .player_object_task moved")
 
-    /* plobj_509ec — decompiled to C (src/plobj_509ec.c, carved by tools/carve.py) */
-    .plobj_509ec : {
-        build/src/plobj_509ec.o(.text)
+    /* player_object_air_puff — decompiled to C (src/player_object_air_puff.c, carved by tools/carve.py) */
+    .player_object_air_puff : {
+        build/src/player_object_air_puff.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.plobj_509ec) == 0x080509EC, "MATCHING: .plobj_509ec moved")
+    ASSERT(!MATCHING || ADDR(.player_object_air_puff) == 0x080509EC, "MATCHING: .player_object_air_puff moved")
 
-    /* plobj_514f8 — decompiled to C (src/plobj_514f8.c, carved by tools/carve.py) */
-    .plobj_514f8 : {
-        build/src/plobj_514f8.o(.text)
+    /* player_object_laser_beam — decompiled to C (src/player_object_laser_beam.c, carved by tools/carve.py) */
+    .player_object_laser_beam : {
+        build/src/player_object_laser_beam.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.plobj_514f8) == 0x080514F8, "MATCHING: .plobj_514f8 moved")
+    ASSERT(!MATCHING || ADDR(.player_object_laser_beam) == 0x080514F8, "MATCHING: .player_object_laser_beam moved")
 
-    /* plobj_5239c — decompiled to C (src/plobj_5239c.c, carved by tools/carve.py) */
-    .plobj_5239c : {
-        build/src/plobj_5239c.o(.text)
+    /* player_object_ice_breath — decompiled to C (src/player_object_ice_breath.c, carved by tools/carve.py) */
+    .player_object_ice_breath : {
+        build/src/player_object_ice_breath.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.plobj_5239c) == 0x0805239C, "MATCHING: .plobj_5239c moved")
+    ASSERT(!MATCHING || ADDR(.player_object_ice_breath) == 0x0805239C, "MATCHING: .player_object_ice_breath moved")
 
-    /* plobj_52f6c — decompiled to C (src/plobj_52f6c.c, carved by tools/carve.py) */
-    .plobj_52f6c : {
-        build/src/plobj_52f6c.o(.text)
+    /* player_object_ufo_shot — decompiled to C (src/player_object_ufo_shot.c, carved by tools/carve.py) */
+    .player_object_ufo_shot : {
+        build/src/player_object_ufo_shot.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.plobj_52f6c) == 0x08052F6C, "MATCHING: .plobj_52f6c moved")
+    ASSERT(!MATCHING || ADDR(.player_object_ufo_shot) == 0x08052F6C, "MATCHING: .player_object_ufo_shot moved")
 
-    /* effect_53af4 — decompiled to C (src/effect_53af4.c, carved by tools/carve.py) */
-    .effect_53af4 : {
-        build/src/effect_53af4.o(.text)
+    /* effect_skid_dust — decompiled to C (src/effect_skid_dust.c, carved by tools/carve.py) */
+    .effect_skid_dust : {
+        build/src/effect_skid_dust.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.effect_53af4) == 0x08053AF4, "MATCHING: .effect_53af4 moved")
+    ASSERT(!MATCHING || ADDR(.effect_skid_dust) == 0x08053AF4, "MATCHING: .effect_skid_dust moved")
 
-    /* effect_54330 — decompiled to C (src/effect_54330.c, carved by tools/carve.py) */
-    .effect_54330 : {
-        build/src/effect_54330.o(.text)
+    /* effect_slide_dust — decompiled to C (src/effect_slide_dust.c, carved by tools/carve.py) */
+    .effect_slide_dust : {
+        build/src/effect_slide_dust.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.effect_54330) == 0x08054330, "MATCHING: .effect_54330 moved")
+    ASSERT(!MATCHING || ADDR(.effect_slide_dust) == 0x08054330, "MATCHING: .effect_slide_dust moved")
 
-    /* effect_54a80 — decompiled to C (src/effect_54a80.c, carved by tools/carve.py) */
-    .effect_54a80 : {
-        build/src/effect_54a80.o(.text)
+    /* effect_death_star_ring_ability — decompiled to C (src/effect_death_star_ring_ability.c, carved by tools/carve.py) */
+    .effect_death_star_ring_ability : {
+        build/src/effect_death_star_ring_ability.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.effect_54a80) == 0x08054A80, "MATCHING: .effect_54a80 moved")
+    ASSERT(!MATCHING || ADDR(.effect_death_star_ring_ability) == 0x08054A80, "MATCHING: .effect_death_star_ring_ability moved")
 
-    /* effect_55460 — decompiled to C (src/effect_55460.c, carved by tools/carve.py) */
-    .effect_55460 : {
-        build/src/effect_55460.o(.text)
+    /* effect_dance_star_burst — decompiled to C (src/effect_dance_star_burst.c, carved by tools/carve.py) */
+    .effect_dance_star_burst : {
+        build/src/effect_dance_star_burst.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.effect_55460) == 0x08055460, "MATCHING: .effect_55460 moved")
+    ASSERT(!MATCHING || ADDR(.effect_dance_star_burst) == 0x08055460, "MATCHING: .effect_dance_star_burst moved")
 
-    /* effect_55b24 — decompiled to C (src/effect_55b24.c, carved by tools/carve.py) */
-    .effect_55b24 : {
-        build/src/effect_55b24.o(.text)
+    /* effect_hurt_flames_sparks — decompiled to C (src/effect_hurt_flames_sparks.c, carved by tools/carve.py) */
+    .effect_hurt_flames_sparks : {
+        build/src/effect_hurt_flames_sparks.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.effect_55b24) == 0x08055B24, "MATCHING: .effect_55b24 moved")
+    ASSERT(!MATCHING || ADDR(.effect_hurt_flames_sparks) == 0x08055B24, "MATCHING: .effect_hurt_flames_sparks moved")
 
-    /* effect_56448 — decompiled to C (src/effect_56448.c, carved by tools/carve.py) */
-    .effect_56448 : {
-        build/src/effect_56448.o(.text)
+    /* effect_ability_puffs — decompiled to C (src/effect_ability_puffs.c, carved by tools/carve.py) */
+    .effect_ability_puffs : {
+        build/src/effect_ability_puffs.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.effect_56448) == 0x08056448, "MATCHING: .effect_56448 moved")
+    ASSERT(!MATCHING || ADDR(.effect_ability_puffs) == 0x08056448, "MATCHING: .effect_ability_puffs moved")
 
-    /* effect_56dd4 — decompiled to C (src/effect_56dd4.c, carved by tools/carve.py) */
-    .effect_56dd4 : {
-        build/src/effect_56dd4.o(.text)
+    /* effect_fire_breath_spark_aura — decompiled to C (src/effect_fire_breath_spark_aura.c, carved by tools/carve.py) */
+    .effect_fire_breath_spark_aura : {
+        build/src/effect_fire_breath_spark_aura.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.effect_56dd4) == 0x08056DD4, "MATCHING: .effect_56dd4 moved")
+    ASSERT(!MATCHING || ADDR(.effect_fire_breath_spark_aura) == 0x08056DD4, "MATCHING: .effect_fire_breath_spark_aura moved")
 
-    /* effect_57494 — decompiled to C (src/effect_57494.c, carved by tools/carve.py) */
-    .effect_57494 : {
-        build/src/effect_57494.o(.text)
+    /* effect_burning_flames_wheel — decompiled to C (src/effect_burning_flames_wheel.c, carved by tools/carve.py) */
+    .effect_burning_flames_wheel : {
+        build/src/effect_burning_flames_wheel.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.effect_57494) == 0x08057494, "MATCHING: .effect_57494 moved")
+    ASSERT(!MATCHING || ADDR(.effect_burning_flames_wheel) == 0x08057494, "MATCHING: .effect_burning_flames_wheel moved")
 
-    /* effect_57ce0 — decompiled to C (src/effect_57ce0.c, carved by tools/carve.py) */
-    .effect_57ce0 : {
-        build/src/effect_57ce0.o(.text)
+    /* effect_mike_attack — decompiled to C (src/effect_mike_attack.c, carved by tools/carve.py) */
+    .effect_mike_attack : {
+        build/src/effect_mike_attack.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.effect_57ce0) == 0x08057CE0, "MATCHING: .effect_57ce0 moved")
+    ASSERT(!MATCHING || ADDR(.effect_mike_attack) == 0x08057CE0, "MATCHING: .effect_mike_attack moved")
 
-    /* effect_58810 — decompiled to C (src/effect_58810.c, carved by tools/carve.py) */
-    .effect_58810 : {
-        build/src/effect_58810.o(.text)
+    /* effect_ice_breath_freeze_aura — decompiled to C (src/effect_ice_breath_freeze_aura.c, carved by tools/carve.py) */
+    .effect_ice_breath_freeze_aura : {
+        build/src/effect_ice_breath_freeze_aura.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.effect_58810) == 0x08058810, "MATCHING: .effect_58810 moved")
+    ASSERT(!MATCHING || ADDR(.effect_ice_breath_freeze_aura) == 0x08058810, "MATCHING: .effect_ice_breath_freeze_aura moved")
 
-    /* effect_59570 — decompiled to C (src/effect_59570.c, carved by tools/carve.py) */
-    .effect_59570 : {
-        build/src/effect_59570.o(.text)
+    /* effect_hi_jump_ball — decompiled to C (src/effect_hi_jump_ball.c, carved by tools/carve.py) */
+    .effect_hi_jump_ball : {
+        build/src/effect_hi_jump_ball.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.effect_59570) == 0x08059570, "MATCHING: .effect_59570 moved")
+    ASSERT(!MATCHING || ADDR(.effect_hi_jump_ball) == 0x08059570, "MATCHING: .effect_hi_jump_ball moved")
 
-    /* effect_5a358 — decompiled to C (src/effect_5a358.c, carved by tools/carve.py) */
-    .effect_5a358 : {
-        build/src/effect_5a358.o(.text)
+    /* effect_crash_blast — decompiled to C (src/effect_crash_blast.c, carved by tools/carve.py) */
+    .effect_crash_blast : {
+        build/src/effect_crash_blast.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.effect_5a358) == 0x0805A358, "MATCHING: .effect_5a358 moved")
+    ASSERT(!MATCHING || ADDR(.effect_crash_blast) == 0x0805A358, "MATCHING: .effect_crash_blast moved")
 
-    /* effect_5afac — decompiled to C (src/effect_5afac.c, carved by tools/carve.py) */
-    .effect_5afac : {
-        build/src/effect_5afac.o(.text)
+    /* effect_goal_game_dance — decompiled to C (src/effect_goal_game_dance.c, carved by tools/carve.py) */
+    .effect_goal_game_dance : {
+        build/src/effect_goal_game_dance.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.effect_5afac) == 0x0805AFAC, "MATCHING: .effect_5afac moved")
+    ASSERT(!MATCHING || ADDR(.effect_goal_game_dance) == 0x0805AFAC, "MATCHING: .effect_goal_game_dance moved")
 
-    /* actor_62584 — decompiled to C (src/actor_62584.c, carved by tools/carve.py) */
-    .actor_62584 : {
-        build/src/actor_62584.o(.text)
+    /* player_dance — decompiled to C (src/player_dance.c, carved by tools/carve.py) */
+    .player_dance : {
+        build/src/player_dance.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_62584) == 0x08062584, "MATCHING: .actor_62584 moved")
+    ASSERT(!MATCHING || ADDR(.player_dance) == 0x08062584, "MATCHING: .player_dance moved")
 
-    /* actor_63698 — decompiled to C (src/actor_63698.c, carved by tools/carve.py) */
-    .actor_63698 : {
-        build/src/actor_63698.o(.text)
+    /* actor — decompiled to C (src/actor.c, carved by tools/carve.py) */
+    .actor : {
+        build/src/actor.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_63698) == 0x08063698, "MATCHING: .actor_63698 moved")
+    ASSERT(!MATCHING || ADDR(.actor) == 0x08063698, "MATCHING: .actor moved")
 
-    /* actor_653ec — decompiled to C (src/actor_653ec.c, carved by tools/carve.py) */
-    .actor_653ec : {
-        build/src/actor_653ec.o(.text)
+    /* actor_helpers — decompiled to C (src/actor_helpers.c, carved by tools/carve.py) */
+    .actor_helpers : {
+        build/src/actor_helpers.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_653ec) == 0x080653EC, "MATCHING: .actor_653ec moved")
+    ASSERT(!MATCHING || ADDR(.actor_helpers) == 0x080653EC, "MATCHING: .actor_helpers moved")
 
-    /* actor_673ec — decompiled to C (src/actor_673ec.c, carved by tools/carve.py) */
-    .actor_673ec : {
-        build/src/actor_673ec.o(.text)
+    /* actor_held_player — decompiled to C (src/actor_held_player.c, carved by tools/carve.py) */
+    .actor_held_player : {
+        build/src/actor_held_player.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_673ec) == 0x080673EC, "MATCHING: .actor_673ec moved")
+    ASSERT(!MATCHING || ADDR(.actor_held_player) == 0x080673EC, "MATCHING: .actor_held_player moved")
 
-    /* actor_692fc — decompiled to C (src/actor_692fc.c, carved by tools/carve.py) */
-    .actor_692fc : {
-        build/src/actor_692fc.o(.text)
+    /* actor_collision — decompiled to C (src/actor_collision.c, carved by tools/carve.py) */
+    .actor_collision : {
+        build/src/actor_collision.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_692fc) == 0x080692FC, "MATCHING: .actor_692fc moved")
+    ASSERT(!MATCHING || ADDR(.actor_collision) == 0x080692FC, "MATCHING: .actor_collision moved")
 
-    /* actor_6a344 — decompiled to C (src/actor_6a344.c, carved by tools/carve.py) */
-    .actor_6a344 : {
-        build/src/actor_6a344.o(.text)
+    /* actor_defeat — decompiled to C (src/actor_defeat.c, carved by tools/carve.py) */
+    .actor_defeat : {
+        build/src/actor_defeat.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_6a344) == 0x0806A344, "MATCHING: .actor_6a344 moved")
+    ASSERT(!MATCHING || ADDR(.actor_defeat) == 0x0806A344, "MATCHING: .actor_defeat moved")
 
-    /* actor_6ad18 — decompiled to C (src/actor_6ad18.c, carved by tools/carve.py) */
-    .actor_6ad18 : {
-        build/src/actor_6ad18.o(.text)
+    /* actor_boss_defeat — decompiled to C (src/actor_boss_defeat.c, carved by tools/carve.py) */
+    .actor_boss_defeat : {
+        build/src/actor_boss_defeat.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_6ad18) == 0x0806AD18, "MATCHING: .actor_6ad18 moved")
+    ASSERT(!MATCHING || ADDR(.actor_boss_defeat) == 0x0806AD18, "MATCHING: .actor_boss_defeat moved")
 
-    /* actor_6b2e4 — decompiled to C (src/actor_6b2e4.c, carved by tools/carve.py) */
-    .actor_6b2e4 : {
-        build/src/actor_6b2e4.o(.text)
+    /* actor_attached — decompiled to C (src/actor_attached.c, carved by tools/carve.py) */
+    .actor_attached : {
+        build/src/actor_attached.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_6b2e4) == 0x0806B2E4, "MATCHING: .actor_6b2e4 moved")
+    ASSERT(!MATCHING || ADDR(.actor_attached) == 0x0806B2E4, "MATCHING: .actor_attached moved")
 
-    /* actor_6c2a4 — decompiled to C (src/actor_6c2a4.c, carved by tools/carve.py) */
-    .actor_6c2a4 : {
-        build/src/actor_6c2a4.o(.text)
+    /* actor_attached_throw_star_flash — decompiled to C (src/actor_attached_throw_star_flash.c, carved by tools/carve.py) */
+    .actor_attached_throw_star_flash : {
+        build/src/actor_attached_throw_star_flash.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_6c2a4) == 0x0806C2A4, "MATCHING: .actor_6c2a4 moved")
+    ASSERT(!MATCHING || ADDR(.actor_attached_throw_star_flash) == 0x0806C2A4, "MATCHING: .actor_attached_throw_star_flash moved")
 
-    /* actor_6cd40 — decompiled to C (src/actor_6cd40.c, carved by tools/carve.py) */
-    .actor_6cd40 : {
-        build/src/actor_6cd40.o(.text)
+    /* actor_dust — decompiled to C (src/actor_dust.c, carved by tools/carve.py) */
+    .actor_dust : {
+        build/src/actor_dust.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_6cd40) == 0x0806CD40, "MATCHING: .actor_6cd40 moved")
+    ASSERT(!MATCHING || ADDR(.actor_dust) == 0x0806CD40, "MATCHING: .actor_dust moved")
 
-    /* actor_6d22c — decompiled to C (src/actor_6d22c.c, carved by tools/carve.py) */
-    .actor_6d22c : {
-        build/src/actor_6d22c.o(.text)
+    /* actor_burst_effects — decompiled to C (src/actor_burst_effects.c, carved by tools/carve.py) */
+    .actor_burst_effects : {
+        build/src/actor_burst_effects.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_6d22c) == 0x0806D22C, "MATCHING: .actor_6d22c moved")
+    ASSERT(!MATCHING || ADDR(.actor_burst_effects) == 0x0806D22C, "MATCHING: .actor_burst_effects moved")
 
-    /* actor_6e0f0 — decompiled to C (src/actor_6e0f0.c, carved by tools/carve.py) */
-    .actor_6e0f0 : {
-        build/src/actor_6e0f0.o(.text)
+    /* actor_hit_effects — decompiled to C (src/actor_hit_effects.c, carved by tools/carve.py) */
+    .actor_hit_effects : {
+        build/src/actor_hit_effects.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_6e0f0) == 0x0806E0F0, "MATCHING: .actor_6e0f0 moved")
+    ASSERT(!MATCHING || ADDR(.actor_hit_effects) == 0x0806E0F0, "MATCHING: .actor_hit_effects moved")
 
-    /* actor_6ef5c — decompiled to C (src/actor_6ef5c.c, carved by tools/carve.py) */
-    .actor_6ef5c : {
-        build/src/actor_6ef5c.o(.text)
+    /* player_warp_star_ride — decompiled to C (src/player_warp_star_ride.c, carved by tools/carve.py) */
+    .player_warp_star_ride : {
+        build/src/player_warp_star_ride.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_6ef5c) == 0x0806EF5C, "MATCHING: .actor_6ef5c moved")
+    ASSERT(!MATCHING || ADDR(.player_warp_star_ride) == 0x0806EF5C, "MATCHING: .player_warp_star_ride moved")
 
-    /* actor_6ff24 — decompiled to C (src/actor_6ff24.c, carved by tools/carve.py) */
-    .actor_6ff24 : {
-        build/src/actor_6ff24.o(.text)
+    /* player_meta_knight_warp_star_ride — decompiled to C (src/player_meta_knight_warp_star_ride.c, carved by tools/carve.py) */
+    .player_meta_knight_warp_star_ride : {
+        build/src/player_meta_knight_warp_star_ride.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_6ff24) == 0x0806FF24, "MATCHING: .actor_6ff24 moved")
+    ASSERT(!MATCHING || ADDR(.player_meta_knight_warp_star_ride) == 0x0806FF24, "MATCHING: .player_meta_knight_warp_star_ride moved")
 
-    /* actor_70ec0 — decompiled to C (src/actor_70ec0.c, carved by tools/carve.py) */
-    .actor_70ec0 : {
-        build/src/actor_70ec0.o(.text)
+    /* cutscene_warp_star — decompiled to C (src/cutscene_warp_star.c, carved by tools/carve.py) */
+    .cutscene_warp_star : {
+        build/src/cutscene_warp_star.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_70ec0) == 0x08070EC0, "MATCHING: .actor_70ec0 moved")
+    ASSERT(!MATCHING || ADDR(.cutscene_warp_star) == 0x08070EC0, "MATCHING: .cutscene_warp_star moved")
 
-    /* actor_72d8c — decompiled to C (src/actor_72d8c.c, carved by tools/carve.py) */
-    .actor_72d8c : {
-        build/src/actor_72d8c.o(.text)
+    /* cutscene_warp_star_flights — decompiled to C (src/cutscene_warp_star_flights.c, carved by tools/carve.py) */
+    .cutscene_warp_star_flights : {
+        build/src/cutscene_warp_star_flights.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_72d8c) == 0x08072D8C, "MATCHING: .actor_72d8c moved")
+    ASSERT(!MATCHING || ADDR(.cutscene_warp_star_flights) == 0x08072D8C, "MATCHING: .cutscene_warp_star_flights moved")
 
-    /* actor_74c0c — decompiled to C (src/actor_74c0c.c, carved by tools/carve.py) */
-    .actor_74c0c : {
-        build/src/actor_74c0c.o(.text)
+    /* cutscene_nightmare_power_orb_escape — decompiled to C (src/cutscene_nightmare_power_orb_escape.c, carved by tools/carve.py) */
+    .cutscene_nightmare_power_orb_escape : {
+        build/src/cutscene_nightmare_power_orb_escape.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_74c0c) == 0x08074C0C, "MATCHING: .actor_74c0c moved")
+    ASSERT(!MATCHING || ADDR(.cutscene_nightmare_power_orb_escape) == 0x08074C0C, "MATCHING: .cutscene_nightmare_power_orb_escape moved")
 
-    /* actor_763e8 — decompiled to C (src/actor_763e8.c, carved by tools/carve.py) */
-    .actor_763e8 : {
-        build/src/actor_763e8.o(.text)
+    /* cutscene_cannon — decompiled to C (src/cutscene_cannon.c, carved by tools/carve.py) */
+    .cutscene_cannon : {
+        build/src/cutscene_cannon.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_763e8) == 0x080763E8, "MATCHING: .actor_763e8 moved")
+    ASSERT(!MATCHING || ADDR(.cutscene_cannon) == 0x080763E8, "MATCHING: .cutscene_cannon moved")
 
-    /* actor_77ae0 — decompiled to C (src/actor_77ae0.c, carved by tools/carve.py) */
-    .actor_77ae0 : {
-        build/src/actor_77ae0.o(.text)
+    /* cutscene_big_switch_room_particles — decompiled to C (src/cutscene_big_switch_room_particles.c, carved by tools/carve.py) */
+    .cutscene_big_switch_room_particles : {
+        build/src/cutscene_big_switch_room_particles.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.actor_77ae0) == 0x08077AE0, "MATCHING: .actor_77ae0 moved")
+    ASSERT(!MATCHING || ADDR(.cutscene_big_switch_room_particles) == 0x08077AE0, "MATCHING: .cutscene_big_switch_room_particles moved")
 
-    /* enemy_78b68 — decompiled to C (src/enemy_78b68.c, carved by tools/carve.py) */
-    .enemy_78b68 : {
-        build/src/enemy_78b68.o(.text)
+    /* enemy_sparky — decompiled to C (src/enemy_sparky.c, carved by tools/carve.py) */
+    .enemy_sparky : {
+        build/src/enemy_sparky.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_78b68) == 0x08078B68, "MATCHING: .enemy_78b68 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_sparky) == 0x08078B68, "MATCHING: .enemy_sparky moved")
 
-    /* enemy_7aa5c — decompiled to C (src/enemy_7aa5c.c, carved by tools/carve.py) */
-    .enemy_7aa5c : {
-        build/src/enemy_7aa5c.o(.text)
+    /* enemy_sword_and_blade_knight — decompiled to C (src/enemy_sword_and_blade_knight.c, carved by tools/carve.py) */
+    .enemy_sword_and_blade_knight : {
+        build/src/enemy_sword_and_blade_knight.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_7aa5c) == 0x0807AA5C, "MATCHING: .enemy_7aa5c moved")
+    ASSERT(!MATCHING || ADDR(.enemy_sword_and_blade_knight) == 0x0807AA5C, "MATCHING: .enemy_sword_and_blade_knight moved")
 
-    /* enemy_7d3b0 — decompiled to C (src/enemy_7d3b0.c, carved by tools/carve.py) */
-    .enemy_7d3b0 : {
-        build/src/enemy_7d3b0.o(.text)
+    /* enemy_rocky — decompiled to C (src/enemy_rocky.c, carved by tools/carve.py) */
+    .enemy_rocky : {
+        build/src/enemy_rocky.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_7d3b0) == 0x0807D3B0, "MATCHING: .enemy_7d3b0 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_rocky) == 0x0807D3B0, "MATCHING: .enemy_rocky moved")
 
-    /* enemy_7f044 — decompiled to C (src/enemy_7f044.c, carved by tools/carve.py) */
-    .enemy_7f044 : {
-        build/src/enemy_7f044.o(.text)
+    /* enemy_kabu — decompiled to C (src/enemy_kabu.c, carved by tools/carve.py) */
+    .enemy_kabu : {
+        build/src/enemy_kabu.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_7f044) == 0x0807F044, "MATCHING: .enemy_7f044 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_kabu) == 0x0807F044, "MATCHING: .enemy_kabu moved")
 
-    /* enemy_80b70 — decompiled to C (src/enemy_80b70.c, carved by tools/carve.py) */
-    .enemy_80b70 : {
-        build/src/enemy_80b70.o(.text)
+    /* enemy_starman_poppy_bros_jr — decompiled to C (src/enemy_starman_poppy_bros_jr.c, carved by tools/carve.py) */
+    .enemy_starman_poppy_bros_jr : {
+        build/src/enemy_starman_poppy_bros_jr.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_80b70) == 0x08080B70, "MATCHING: .enemy_80b70 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_starman_poppy_bros_jr) == 0x08080B70, "MATCHING: .enemy_starman_poppy_bros_jr moved")
 
-    /* enemy_820b8 — decompiled to C (src/enemy_820b8.c, carved by tools/carve.py) */
-    .enemy_820b8 : {
-        build/src/enemy_820b8.o(.text)
+    /* enemy_poppy_bros_jr_wheelie — decompiled to C (src/enemy_poppy_bros_jr_wheelie.c, carved by tools/carve.py) */
+    .enemy_poppy_bros_jr_wheelie : {
+        build/src/enemy_poppy_bros_jr_wheelie.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_820b8) == 0x080820B8, "MATCHING: .enemy_820b8 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_poppy_bros_jr_wheelie) == 0x080820B8, "MATCHING: .enemy_poppy_bros_jr_wheelie moved")
 
-    /* enemy_82e68 — decompiled to C (src/enemy_82e68.c, carved by tools/carve.py) */
-    .enemy_82e68 : {
-        build/src/enemy_82e68.o(.text)
+    /* enemy_flamer — decompiled to C (src/enemy_flamer.c, carved by tools/carve.py) */
+    .enemy_flamer : {
+        build/src/enemy_flamer.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_82e68) == 0x08082E68, "MATCHING: .enemy_82e68 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_flamer) == 0x08082E68, "MATCHING: .enemy_flamer moved")
 
-    /* enemy_844c4 — decompiled to C (src/enemy_844c4.c, carved by tools/carve.py) */
-    .enemy_844c4 : {
-        build/src/enemy_844c4.o(.text)
+    /* enemy_noddy — decompiled to C (src/enemy_noddy.c, carved by tools/carve.py) */
+    .enemy_noddy : {
+        build/src/enemy_noddy.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_844c4) == 0x080844C4, "MATCHING: .enemy_844c4 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_noddy) == 0x080844C4, "MATCHING: .enemy_noddy moved")
 
-    /* enemy_84d14 — decompiled to C (src/enemy_84d14.c, carved by tools/carve.py) */
-    .enemy_84d14 : {
-        build/src/enemy_84d14.o(.text)
+    /* enemy_waddle_doo — decompiled to C (src/enemy_waddle_doo.c, carved by tools/carve.py) */
+    .enemy_waddle_doo : {
+        build/src/enemy_waddle_doo.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_84d14) == 0x08084D14, "MATCHING: .enemy_84d14 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_waddle_doo) == 0x08084D14, "MATCHING: .enemy_waddle_doo moved")
 
-    /* enemy_860f8 — decompiled to C (src/enemy_860f8.c, carved by tools/carve.py) */
-    .enemy_860f8 : {
-        build/src/enemy_860f8.o(.text)
+    /* enemy_bronto_burt_twizzy — decompiled to C (src/enemy_bronto_burt_twizzy.c, carved by tools/carve.py) */
+    .enemy_bronto_burt_twizzy : {
+        build/src/enemy_bronto_burt_twizzy.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_860f8) == 0x080860F8, "MATCHING: .enemy_860f8 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_bronto_burt_twizzy) == 0x080860F8, "MATCHING: .enemy_bronto_burt_twizzy moved")
 
-    /* enemy_88000 — decompiled to C (src/enemy_88000.c, carved by tools/carve.py) */
-    .enemy_88000 : {
-        build/src/enemy_88000.o(.text)
+    /* enemy_slippy — decompiled to C (src/enemy_slippy.c, carved by tools/carve.py) */
+    .enemy_slippy : {
+        build/src/enemy_slippy.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_88000) == 0x08088000, "MATCHING: .enemy_88000 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_slippy) == 0x08088000, "MATCHING: .enemy_slippy moved")
 
-    /* enemy_8aa68 — decompiled to C (src/enemy_8aa68.c, carved by tools/carve.py) */
-    .enemy_8aa68 : {
-        build/src/enemy_8aa68.o(.text)
+    /* enemy_blipper_gip — decompiled to C (src/enemy_blipper_gip.c, carved by tools/carve.py) */
+    .enemy_blipper_gip : {
+        build/src/enemy_blipper_gip.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_8aa68) == 0x0808AA68, "MATCHING: .enemy_8aa68 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_blipper_gip) == 0x0808AA68, "MATCHING: .enemy_blipper_gip moved")
 
-    /* enemy_8cce8 — decompiled to C (src/enemy_8cce8.c, carved by tools/carve.py) */
-    .enemy_8cce8 : {
-        build/src/enemy_8cce8.o(.text)
+    /* enemy_broom_hatter — decompiled to C (src/enemy_broom_hatter.c, carved by tools/carve.py) */
+    .enemy_broom_hatter : {
+        build/src/enemy_broom_hatter.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_8cce8) == 0x0808CCE8, "MATCHING: .enemy_8cce8 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_broom_hatter) == 0x0808CCE8, "MATCHING: .enemy_broom_hatter moved")
 
-    /* enemy_8e404 — decompiled to C (src/enemy_8e404.c, carved by tools/carve.py) */
-    .enemy_8e404 : {
-        build/src/enemy_8e404.o(.text)
+    /* enemy_shotzo — decompiled to C (src/enemy_shotzo.c, carved by tools/carve.py) */
+    .enemy_shotzo : {
+        build/src/enemy_shotzo.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_8e404) == 0x0808E404, "MATCHING: .enemy_8e404 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_shotzo) == 0x0808E404, "MATCHING: .enemy_shotzo moved")
 
-    /* enemy_8f41c — decompiled to C (src/enemy_8f41c.c, carved by tools/carve.py) */
-    .enemy_8f41c : {
-        build/src/enemy_8f41c.o(.text)
+    /* enemy_shotzo_coner — decompiled to C (src/enemy_shotzo_coner.c, carved by tools/carve.py) */
+    .enemy_shotzo_coner : {
+        build/src/enemy_shotzo_coner.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_8f41c) == 0x0808F41C, "MATCHING: .enemy_8f41c moved")
+    ASSERT(!MATCHING || ADDR(.enemy_shotzo_coner) == 0x0808F41C, "MATCHING: .enemy_shotzo_coner moved")
 
-    /* enemy_9000c — decompiled to C (src/enemy_9000c.c, carved by tools/carve.py) */
-    .enemy_9000c : {
-        build/src/enemy_9000c.o(.text)
+    /* enemy_bonkers — decompiled to C (src/enemy_bonkers.c, carved by tools/carve.py) */
+    .enemy_bonkers : {
+        build/src/enemy_bonkers.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_9000c) == 0x0809000C, "MATCHING: .enemy_9000c moved")
+    ASSERT(!MATCHING || ADDR(.enemy_bonkers) == 0x0809000C, "MATCHING: .enemy_bonkers moved")
 
-    /* enemy_9113c — decompiled to C (src/enemy_9113c.c, carved by tools/carve.py) */
-    .enemy_9113c : {
-        build/src/enemy_9113c.o(.text)
+    /* enemy_poppy_bros_sr — decompiled to C (src/enemy_poppy_bros_sr.c, carved by tools/carve.py) */
+    .enemy_poppy_bros_sr : {
+        build/src/enemy_poppy_bros_sr.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_9113c) == 0x0809113C, "MATCHING: .enemy_9113c moved")
+    ASSERT(!MATCHING || ADDR(.enemy_poppy_bros_sr) == 0x0809113C, "MATCHING: .enemy_poppy_bros_sr moved")
 
-    /* enemy_91f9c — decompiled to C (src/enemy_91f9c.c, carved by tools/carve.py) */
-    .enemy_91f9c : {
-        build/src/enemy_91f9c.o(.text)
+    /* enemy_bugzzy — decompiled to C (src/enemy_bugzzy.c, carved by tools/carve.py) */
+    .enemy_bugzzy : {
+        build/src/enemy_bugzzy.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_91f9c) == 0x08091F9C, "MATCHING: .enemy_91f9c moved")
+    ASSERT(!MATCHING || ADDR(.enemy_bugzzy) == 0x08091F9C, "MATCHING: .enemy_bugzzy moved")
 
-    /* enemy_93f64 — decompiled to C (src/enemy_93f64.c, carved by tools/carve.py) */
-    .enemy_93f64 : {
-        build/src/enemy_93f64.o(.text)
+    /* enemy_grand_wheelie — decompiled to C (src/enemy_grand_wheelie.c, carved by tools/carve.py) */
+    .enemy_grand_wheelie : {
+        build/src/enemy_grand_wheelie.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_93f64) == 0x08093F64, "MATCHING: .enemy_93f64 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_grand_wheelie) == 0x08093F64, "MATCHING: .enemy_grand_wheelie moved")
 
-    /* enemy_957bc — decompiled to C (src/enemy_957bc.c, carved by tools/carve.py) */
-    .enemy_957bc : {
-        build/src/enemy_957bc.o(.text)
+    /* enemy_fire_lion — decompiled to C (src/enemy_fire_lion.c, carved by tools/carve.py) */
+    .enemy_fire_lion : {
+        build/src/enemy_fire_lion.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_957bc) == 0x080957BC, "MATCHING: .enemy_957bc moved")
+    ASSERT(!MATCHING || ADDR(.enemy_fire_lion) == 0x080957BC, "MATCHING: .enemy_fire_lion moved")
 
-    /* enemy_970c4 — decompiled to C (src/enemy_970c4.c, carved by tools/carve.py) */
-    .enemy_970c4 : {
-        build/src/enemy_970c4.o(.text)
+    /* enemy_fire_lion_flame — decompiled to C (src/enemy_fire_lion_flame.c, carved by tools/carve.py) */
+    .enemy_fire_lion_flame : {
+        build/src/enemy_fire_lion_flame.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_970c4) == 0x080970C4, "MATCHING: .enemy_970c4 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_fire_lion_flame) == 0x080970C4, "MATCHING: .enemy_fire_lion_flame moved")
 
-    /* enemy_974c8 — decompiled to C (src/enemy_974c8.c, carved by tools/carve.py) */
-    .enemy_974c8 : {
-        build/src/enemy_974c8.o(.text)
+    /* enemy_phan_phan — decompiled to C (src/enemy_phan_phan.c, carved by tools/carve.py) */
+    .enemy_phan_phan : {
+        build/src/enemy_phan_phan.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_974c8) == 0x080974C8, "MATCHING: .enemy_974c8 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_phan_phan) == 0x080974C8, "MATCHING: .enemy_phan_phan moved")
 
-    /* enemy_988f8 — decompiled to C (src/enemy_988f8.c, carved by tools/carve.py) */
-    .enemy_988f8 : {
-        build/src/enemy_988f8.o(.text)
+    /* enemy_mr_frosty — decompiled to C (src/enemy_mr_frosty.c, carved by tools/carve.py) */
+    .enemy_mr_frosty : {
+        build/src/enemy_mr_frosty.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_988f8) == 0x080988F8, "MATCHING: .enemy_988f8 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_mr_frosty) == 0x080988F8, "MATCHING: .enemy_mr_frosty moved")
 
-    /* enemy_99b20 — decompiled to C (src/enemy_99b20.c, carved by tools/carve.py) */
-    .enemy_99b20 : {
-        build/src/enemy_99b20.o(.text)
+    /* enemy_mr_tick_tock — decompiled to C (src/enemy_mr_tick_tock.c, carved by tools/carve.py) */
+    .enemy_mr_tick_tock : {
+        build/src/enemy_mr_tick_tock.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_99b20) == 0x08099B20, "MATCHING: .enemy_99b20 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_mr_tick_tock) == 0x08099B20, "MATCHING: .enemy_mr_tick_tock moved")
 
-    /* enemy_9ba44 — decompiled to C (src/enemy_9ba44.c, carved by tools/carve.py) */
-    .enemy_9ba44 : {
-        build/src/enemy_9ba44.o(.text)
+    /* enemy_meta_knights — decompiled to C (src/enemy_meta_knights.c, carved by tools/carve.py) */
+    .enemy_meta_knights : {
+        build/src/enemy_meta_knights.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_9ba44) == 0x0809BA44, "MATCHING: .enemy_9ba44 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_meta_knights) == 0x0809BA44, "MATCHING: .enemy_meta_knights moved")
 
-    /* enemy_9c028 — decompiled to C (src/enemy_9c028.c, carved by tools/carve.py) */
-    .enemy_9c028 : {
-        build/src/enemy_9c028.o(.text)
+    /* enemy_meta_knights_lineup — decompiled to C (src/enemy_meta_knights_lineup.c, carved by tools/carve.py) */
+    .enemy_meta_knights_lineup : {
+        build/src/enemy_meta_knights_lineup.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_9c028) == 0x0809C028, "MATCHING: .enemy_9c028 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_meta_knights_lineup) == 0x0809C028, "MATCHING: .enemy_meta_knights_lineup moved")
 
-    /* enemy_9c0a8 — decompiled to C (src/enemy_9c0a8.c, carved by tools/carve.py) */
-    .enemy_9c0a8 : {
-        build/src/enemy_9c0a8.o(.text)
+    /* enemy_axe_knight — decompiled to C (src/enemy_axe_knight.c, carved by tools/carve.py) */
+    .enemy_axe_knight : {
+        build/src/enemy_axe_knight.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_9c0a8) == 0x0809C0A8, "MATCHING: .enemy_9c0a8 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_axe_knight) == 0x0809C0A8, "MATCHING: .enemy_axe_knight moved")
 
-    /* enemy_9cb90 — decompiled to C (src/enemy_9cb90.c, carved by tools/carve.py) */
-    .enemy_9cb90 : {
-        build/src/enemy_9cb90.o(.text)
+    /* enemy_axe_knight_slash_loop_update — decompiled to C (src/enemy_axe_knight_slash_loop_update.c, carved by tools/carve.py) */
+    .enemy_axe_knight_slash_loop_update : {
+        build/src/enemy_axe_knight_slash_loop_update.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_9cb90) == 0x0809CB90, "MATCHING: .enemy_9cb90 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_axe_knight_slash_loop_update) == 0x0809CB90, "MATCHING: .enemy_axe_knight_slash_loop_update moved")
 
-    /* enemy_9cc24 — decompiled to C (src/enemy_9cc24.c, carved by tools/carve.py) */
-    .enemy_9cc24 : {
-        build/src/enemy_9cc24.o(.text)
+    /* enemy_javelin_knight — decompiled to C (src/enemy_javelin_knight.c, carved by tools/carve.py) */
+    .enemy_javelin_knight : {
+        build/src/enemy_javelin_knight.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_9cc24) == 0x0809CC24, "MATCHING: .enemy_9cc24 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_javelin_knight) == 0x0809CC24, "MATCHING: .enemy_javelin_knight moved")
 
-    /* enemy_9d994 — decompiled to C (src/enemy_9d994.c, carved by tools/carve.py) */
-    .enemy_9d994 : {
-        build/src/enemy_9d994.o(.text)
+    /* enemy_javelin_knight_overlay — decompiled to C (src/enemy_javelin_knight_overlay.c, carved by tools/carve.py) */
+    .enemy_javelin_knight_overlay : {
+        build/src/enemy_javelin_knight_overlay.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_9d994) == 0x0809D994, "MATCHING: .enemy_9d994 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_javelin_knight_overlay) == 0x0809D994, "MATCHING: .enemy_javelin_knight_overlay moved")
 
-    /* enemy_9da1c — decompiled to C (src/enemy_9da1c.c, carved by tools/carve.py) */
-    .enemy_9da1c : {
-        build/src/enemy_9da1c.o(.text)
+    /* enemy_mace_knight_trident_knight — decompiled to C (src/enemy_mace_knight_trident_knight.c, carved by tools/carve.py) */
+    .enemy_mace_knight_trident_knight : {
+        build/src/enemy_mace_knight_trident_knight.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_9da1c) == 0x0809DA1C, "MATCHING: .enemy_9da1c moved")
+    ASSERT(!MATCHING || ADDR(.enemy_mace_knight_trident_knight) == 0x0809DA1C, "MATCHING: .enemy_mace_knight_trident_knight moved")
 
-    /* enemy_9f2f4 — decompiled to C (src/enemy_9f2f4.c, carved by tools/carve.py) */
-    .enemy_9f2f4 : {
-        build/src/enemy_9f2f4.o(.text)
+    /* enemy_trident_knight_overlay — decompiled to C (src/enemy_trident_knight_overlay.c, carved by tools/carve.py) */
+    .enemy_trident_knight_overlay : {
+        build/src/enemy_trident_knight_overlay.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_9f2f4) == 0x0809F2F4, "MATCHING: .enemy_9f2f4 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_trident_knight_overlay) == 0x0809F2F4, "MATCHING: .enemy_trident_knight_overlay moved")
 
-    /* enemy_9f37c — decompiled to C (src/enemy_9f37c.c, carved by tools/carve.py) */
-    .enemy_9f37c : {
-        build/src/enemy_9f37c.o(.text)
+    /* enemy_meta_knights_knight — decompiled to C (src/enemy_meta_knights_knight.c, carved by tools/carve.py) */
+    .enemy_meta_knights_knight : {
+        build/src/enemy_meta_knights_knight.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_9f37c) == 0x0809F37C, "MATCHING: .enemy_9f37c moved")
+    ASSERT(!MATCHING || ADDR(.enemy_meta_knights_knight) == 0x0809F37C, "MATCHING: .enemy_meta_knights_knight moved")
 
-    /* enemy_9f9dc — decompiled to C (src/enemy_9f9dc.c, carved by tools/carve.py) */
-    .enemy_9f9dc : {
-        build/src/enemy_9f9dc.o(.text)
+    /* enemy_meta_knights_knight_palette — decompiled to C (src/enemy_meta_knights_knight_palette.c, carved by tools/carve.py) */
+    .enemy_meta_knights_knight_palette : {
+        build/src/enemy_meta_knights_knight_palette.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_9f9dc) == 0x0809F9DC, "MATCHING: .enemy_9f9dc moved")
+    ASSERT(!MATCHING || ADDR(.enemy_meta_knights_knight_palette) == 0x0809F9DC, "MATCHING: .enemy_meta_knights_knight_palette moved")
 
-    /* enemy_9fbd0 — decompiled to C (src/enemy_9fbd0.c, carved by tools/carve.py) */
-    .enemy_9fbd0 : {
-        build/src/enemy_9fbd0.o(.text)
+    /* enemy_king_dedede_damage — decompiled to C (src/enemy_king_dedede_damage.c, carved by tools/carve.py) */
+    .enemy_king_dedede_damage : {
+        build/src/enemy_king_dedede_damage.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_9fbd0) == 0x0809FBD0, "MATCHING: .enemy_9fbd0 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_king_dedede_damage) == 0x0809FBD0, "MATCHING: .enemy_king_dedede_damage moved")
 
-    /* enemy_a00ec — decompiled to C (src/enemy_a00ec.c, carved by tools/carve.py) */
-    .enemy_a00ec : {
-        build/src/enemy_a00ec.o(.text)
+    /* enemy_king_dedede_inhale_particles — decompiled to C (src/enemy_king_dedede_inhale_particles.c, carved by tools/carve.py) */
+    .enemy_king_dedede_inhale_particles : {
+        build/src/enemy_king_dedede_inhale_particles.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_a00ec) == 0x080A00EC, "MATCHING: .enemy_a00ec moved")
+    ASSERT(!MATCHING || ADDR(.enemy_king_dedede_inhale_particles) == 0x080A00EC, "MATCHING: .enemy_king_dedede_inhale_particles moved")
 
-    /* enemy_a0274 — decompiled to C (src/enemy_a0274.c, carved by tools/carve.py) */
-    .enemy_a0274 : {
-        build/src/enemy_a0274.o(.text)
+    /* enemy_king_dedede — decompiled to C (src/enemy_king_dedede.c, carved by tools/carve.py) */
+    .enemy_king_dedede : {
+        build/src/enemy_king_dedede.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_a0274) == 0x080A0274, "MATCHING: .enemy_a0274 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_king_dedede) == 0x080A0274, "MATCHING: .enemy_king_dedede moved")
 
-    /* enemy_a1590 — decompiled to C (src/enemy_a1590.c, carved by tools/carve.py) */
-    .enemy_a1590 : {
-        build/src/enemy_a1590.o(.text)
+    /* enemy_mr_shine_and_mr_bright — decompiled to C (src/enemy_mr_shine_and_mr_bright.c, carved by tools/carve.py) */
+    .enemy_mr_shine_and_mr_bright : {
+        build/src/enemy_mr_shine_and_mr_bright.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_a1590) == 0x080A1590, "MATCHING: .enemy_a1590 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_mr_shine_and_mr_bright) == 0x080A1590, "MATCHING: .enemy_mr_shine_and_mr_bright moved")
 
-    /* enemy_a5644 — decompiled to C (src/enemy_a5644.c, carved by tools/carve.py) */
-    .enemy_a5644 : {
-        build/src/enemy_a5644.o(.text)
+    /* enemy_meta_knight — decompiled to C (src/enemy_meta_knight.c, carved by tools/carve.py) */
+    .enemy_meta_knight : {
+        build/src/enemy_meta_knight.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_a5644) == 0x080A5644, "MATCHING: .enemy_a5644 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_meta_knight) == 0x080A5644, "MATCHING: .enemy_meta_knight moved")
 
-    /* enemy_a78a0 — decompiled to C (src/enemy_a78a0.c, carved by tools/carve.py) */
-    .enemy_a78a0 : {
-        build/src/enemy_a78a0.o(.text)
+    /* enemy_meta_knight_sword_hit_box — decompiled to C (src/enemy_meta_knight_sword_hit_box.c, carved by tools/carve.py) */
+    .enemy_meta_knight_sword_hit_box : {
+        build/src/enemy_meta_knight_sword_hit_box.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_a78a0) == 0x080A78A0, "MATCHING: .enemy_a78a0 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_meta_knight_sword_hit_box) == 0x080A78A0, "MATCHING: .enemy_meta_knight_sword_hit_box moved")
 
-    /* enemy_a7998 — decompiled to C (src/enemy_a7998.c, carved by tools/carve.py) */
-    .enemy_a7998 : {
-        build/src/enemy_a7998.o(.text)
+    /* enemy_kracko_jr — decompiled to C (src/enemy_kracko_jr.c, carved by tools/carve.py) */
+    .enemy_kracko_jr : {
+        build/src/enemy_kracko_jr.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_a7998) == 0x080A7998, "MATCHING: .enemy_a7998 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_kracko_jr) == 0x080A7998, "MATCHING: .enemy_kracko_jr moved")
 
-    /* enemy_a860c — decompiled to C (src/enemy_a860c.c, carved by tools/carve.py) */
-    .enemy_a860c : {
-        build/src/enemy_a860c.o(.text)
+    /* enemy_kracko_jr_transform_update — decompiled to C (src/enemy_kracko_jr_transform_update.c, carved by tools/carve.py) */
+    .enemy_kracko_jr_transform_update : {
+        build/src/enemy_kracko_jr_transform_update.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_a860c) == 0x080A860C, "MATCHING: .enemy_a860c moved")
+    ASSERT(!MATCHING || ADDR(.enemy_kracko_jr_transform_update) == 0x080A860C, "MATCHING: .enemy_kracko_jr_transform_update moved")
 
-    /* enemy_a87c8 — decompiled to C (src/enemy_a87c8.c, carved by tools/carve.py) */
-    .enemy_a87c8 : {
-        build/src/enemy_a87c8.o(.text)
+    /* enemy_kracko — decompiled to C (src/enemy_kracko.c, carved by tools/carve.py) */
+    .enemy_kracko : {
+        build/src/enemy_kracko.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_a87c8) == 0x080A87C8, "MATCHING: .enemy_a87c8 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_kracko) == 0x080A87C8, "MATCHING: .enemy_kracko moved")
 
-    /* enemy_a932c — decompiled to C (src/enemy_a932c.c, carved by tools/carve.py) */
-    .enemy_a932c : {
-        build/src/enemy_a932c.o(.text)
+    /* enemy_kracko_jr_clamp_to_view — decompiled to C (src/enemy_kracko_jr_clamp_to_view.c, carved by tools/carve.py) */
+    .enemy_kracko_jr_clamp_to_view : {
+        build/src/enemy_kracko_jr_clamp_to_view.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_a932c) == 0x080A932C, "MATCHING: .enemy_a932c moved")
+    ASSERT(!MATCHING || ADDR(.enemy_kracko_jr_clamp_to_view) == 0x080A932C, "MATCHING: .enemy_kracko_jr_clamp_to_view moved")
 
-    /* enemy_a93ec — decompiled to C (src/enemy_a93ec.c, carved by tools/carve.py) */
-    .enemy_a93ec : {
-        build/src/enemy_a93ec.o(.text)
+    /* enemy_kracko_cloud_lightning — decompiled to C (src/enemy_kracko_cloud_lightning.c, carved by tools/carve.py) */
+    .enemy_kracko_cloud_lightning : {
+        build/src/enemy_kracko_cloud_lightning.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_a93ec) == 0x080A93EC, "MATCHING: .enemy_a93ec moved")
+    ASSERT(!MATCHING || ADDR(.enemy_kracko_cloud_lightning) == 0x080A93EC, "MATCHING: .enemy_kracko_cloud_lightning moved")
 
-    /* enemy_aa338 — decompiled to C (src/enemy_aa338.c, carved by tools/carve.py) */
-    .enemy_aa338 : {
-        build/src/enemy_aa338.o(.text)
+    /* enemy_nightmare_wizard_heavy_mole — decompiled to C (src/enemy_nightmare_wizard_heavy_mole.c, carved by tools/carve.py) */
+    .enemy_nightmare_wizard_heavy_mole : {
+        build/src/enemy_nightmare_wizard_heavy_mole.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_aa338) == 0x080AA338, "MATCHING: .enemy_aa338 moved")
+    ASSERT(!MATCHING || ADDR(.enemy_nightmare_wizard_heavy_mole) == 0x080AA338, "MATCHING: .enemy_nightmare_wizard_heavy_mole moved")
 
-    /* enemy_ae3bc — decompiled to C (src/enemy_ae3bc.c, carved by tools/carve.py) */
-    .enemy_ae3bc : {
-        build/src/enemy_ae3bc.o(.text)
+    /* enemy_nightmare_power_orb — decompiled to C (src/enemy_nightmare_power_orb.c, carved by tools/carve.py) */
+    .enemy_nightmare_power_orb : {
+        build/src/enemy_nightmare_power_orb.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.enemy_ae3bc) == 0x080AE3BC, "MATCHING: .enemy_ae3bc moved")
+    ASSERT(!MATCHING || ADDR(.enemy_nightmare_power_orb) == 0x080AE3BC, "MATCHING: .enemy_nightmare_power_orb moved")
 
-    /* hud_b2fe8 — decompiled to C (src/hud_b2fe8.c, carved by tools/carve.py) */
-    .hud_b2fe8 : {
-        build/src/hud_b2fe8.o(.text)
+    /* actor_whispy_woods_items — decompiled to C (src/actor_whispy_woods_items.c, carved by tools/carve.py) */
+    .actor_whispy_woods_items : {
+        build/src/actor_whispy_woods_items.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.hud_b2fe8) == 0x080B2FE8, "MATCHING: .hud_b2fe8 moved")
+    ASSERT(!MATCHING || ADDR(.actor_whispy_woods_items) == 0x080B2FE8, "MATCHING: .actor_whispy_woods_items moved")
 
-    /* hud_b4ea8 — decompiled to C (src/hud_b4ea8.c, carved by tools/carve.py) */
-    .hud_b4ea8 : {
-        build/src/hud_b4ea8.o(.text)
+    /* room_object_gfx — decompiled to C (src/room_object_gfx.c, carved by tools/carve.py) */
+    .room_object_gfx : {
+        build/src/room_object_gfx.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.hud_b4ea8) == 0x080B4EA8, "MATCHING: .hud_b4ea8 moved")
+    ASSERT(!MATCHING || ADDR(.room_object_gfx) == 0x080B4EA8, "MATCHING: .room_object_gfx moved")
 
-    /* hud_b5024 — decompiled to C (src/hud_b5024.c, carved by tools/carve.py) */
-    .hud_b5024 : {
-        build/src/hud_b5024.o(.text)
+    /* room_spawn_objects — decompiled to C (src/room_spawn_objects.c, carved by tools/carve.py) */
+    .room_spawn_objects : {
+        build/src/room_spawn_objects.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.hud_b5024) == 0x080B5024, "MATCHING: .hud_b5024 moved")
+    ASSERT(!MATCHING || ADDR(.room_spawn_objects) == 0x080B5024, "MATCHING: .room_spawn_objects moved")
 
-    /* hud_b5670 — decompiled to C (src/hud_b5670.c, carved by tools/carve.py) */
-    .hud_b5670 : {
-        build/src/hud_b5670.o(.text)
+    /* room_enemy_gfx — decompiled to C (src/room_enemy_gfx.c, carved by tools/carve.py) */
+    .room_enemy_gfx : {
+        build/src/room_enemy_gfx.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.hud_b5670) == 0x080B5670, "MATCHING: .hud_b5670 moved")
+    ASSERT(!MATCHING || ADDR(.room_enemy_gfx) == 0x080B5670, "MATCHING: .room_enemy_gfx moved")
 
-    /* hud_b5840 — decompiled to C (src/hud_b5840.c, carved by tools/carve.py) */
-    .hud_b5840 : {
-        build/src/hud_b5840.o(.text)
+    /* room_gfx_spawns — decompiled to C (src/room_gfx_spawns.c, carved by tools/carve.py) */
+    .room_gfx_spawns : {
+        build/src/room_gfx_spawns.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.hud_b5840) == 0x080B5840, "MATCHING: .hud_b5840 moved")
+    ASSERT(!MATCHING || ADDR(.room_gfx_spawns) == 0x080B5840, "MATCHING: .room_gfx_spawns moved")
 
-    /* save_b6154 — decompiled to C (src/save_b6154.c, carved by tools/carve.py) */
-    .save_b6154 : {
-        build/src/save_b6154.o(.text)
+    /* main_hblank_bands_in_blend — decompiled to C (src/main_hblank_bands_in_blend.c, carved by tools/carve.py) */
+    .main_hblank_bands_in_blend : {
+        build/src/main_hblank_bands_in_blend.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b6154) == 0x080B6154, "MATCHING: .save_b6154 moved")
+    ASSERT(!MATCHING || ADDR(.main_hblank_bands_in_blend) == 0x080B6154, "MATCHING: .main_hblank_bands_in_blend moved")
 
-    /* save_b6290 — decompiled to C (src/save_b6290.c, carved by tools/carve.py) */
-    .save_b6290 : {
-        build/src/save_b6290.o(.text)
+    /* main_hblank_bands_out_blend — decompiled to C (src/main_hblank_bands_out_blend.c, carved by tools/carve.py) */
+    .main_hblank_bands_out_blend : {
+        build/src/main_hblank_bands_out_blend.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b6290) == 0x080B6290, "MATCHING: .save_b6290 moved")
+    ASSERT(!MATCHING || ADDR(.main_hblank_bands_out_blend) == 0x080B6290, "MATCHING: .main_hblank_bands_out_blend moved")
 
-    /* save_b63a4 — decompiled to C (src/save_b63a4.c, carved by tools/carve.py) */
-    .save_b63a4 : {
-        build/src/save_b63a4.o(.text)
+    /* main_hblank_bands_out — decompiled to C (src/main_hblank_bands_out.c, carved by tools/carve.py) */
+    .main_hblank_bands_out : {
+        build/src/main_hblank_bands_out.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b63a4) == 0x080B63A4, "MATCHING: .save_b63a4 moved")
+    ASSERT(!MATCHING || ADDR(.main_hblank_bands_out) == 0x080B63A4, "MATCHING: .main_hblank_bands_out moved")
 
-    /* save_b6474 — decompiled to C (src/save_b6474.c, carved by tools/carve.py) */
-    .save_b6474 : {
-        build/src/save_b6474.o(.text)
+    /* main_hblank_bands_in_link_play — decompiled to C (src/main_hblank_bands_in_link_play.c, carved by tools/carve.py) */
+    .main_hblank_bands_in_link_play : {
+        build/src/main_hblank_bands_in_link_play.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b6474) == 0x080B6474, "MATCHING: .save_b6474 moved")
+    ASSERT(!MATCHING || ADDR(.main_hblank_bands_in_link_play) == 0x080B6474, "MATCHING: .main_hblank_bands_in_link_play moved")
 
-    /* save_b6a90 — decompiled to C (src/save_b6a90.c, carved by tools/carve.py) */
-    .save_b6a90 : {
-        build/src/save_b6a90.o(.text)
+    /* main_room_hblank_scroll — decompiled to C (src/main_room_hblank_scroll.c, carved by tools/carve.py) */
+    .main_room_hblank_scroll : {
+        build/src/main_room_hblank_scroll.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b6a90) == 0x080B6A90, "MATCHING: .save_b6a90 moved")
+    ASSERT(!MATCHING || ADDR(.main_room_hblank_scroll) == 0x080B6A90, "MATCHING: .main_room_hblank_scroll moved")
 
-    /* save_b6b08 — decompiled to C (src/save_b6b08.c, carved by tools/carve.py) */
-    .save_b6b08 : {
-        build/src/save_b6b08.o(.text)
+    /* main_hblank_row_scroll — decompiled to C (src/main_hblank_row_scroll.c, carved by tools/carve.py) */
+    .main_hblank_row_scroll : {
+        build/src/main_hblank_row_scroll.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b6b08) == 0x080B6B08, "MATCHING: .save_b6b08 moved")
+    ASSERT(!MATCHING || ADDR(.main_hblank_row_scroll) == 0x080B6B08, "MATCHING: .main_hblank_row_scroll moved")
 
-    /* save_b6c40 — decompiled to C (src/save_b6c40.c, carved by tools/carve.py) */
-    .save_b6c40 : {
-        build/src/save_b6c40.o(.text)
+    /* main_hblank_uniform_scroll — decompiled to C (src/main_hblank_uniform_scroll.c, carved by tools/carve.py) */
+    .main_hblank_uniform_scroll : {
+        build/src/main_hblank_uniform_scroll.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b6c40) == 0x080B6C40, "MATCHING: .save_b6c40 moved")
+    ASSERT(!MATCHING || ADDR(.main_hblank_uniform_scroll) == 0x080B6C40, "MATCHING: .main_hblank_uniform_scroll moved")
 
-    /* save_b6d04 — decompiled to C (src/save_b6d04.c, carved by tools/carve.py) */
-    .save_b6d04 : {
-        build/src/save_b6d04.o(.text)
+    /* main_hblank_row_scroll_reverse — decompiled to C (src/main_hblank_row_scroll_reverse.c, carved by tools/carve.py) */
+    .main_hblank_row_scroll_reverse : {
+        build/src/main_hblank_row_scroll_reverse.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b6d04) == 0x080B6D04, "MATCHING: .save_b6d04 moved")
+    ASSERT(!MATCHING || ADDR(.main_hblank_row_scroll_reverse) == 0x080B6D04, "MATCHING: .main_hblank_row_scroll_reverse moved")
 
-    /* save_b6e44 — decompiled to C (src/save_b6e44.c, carved by tools/carve.py) */
-    .save_b6e44 : {
-        build/src/save_b6e44.o(.text)
+    /* main_hblank_scroll — decompiled to C (src/main_hblank_scroll.c, carved by tools/carve.py) */
+    .main_hblank_scroll : {
+        build/src/main_hblank_scroll.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b6e44) == 0x080B6E44, "MATCHING: .save_b6e44 moved")
+    ASSERT(!MATCHING || ADDR(.main_hblank_scroll) == 0x080B6E44, "MATCHING: .main_hblank_scroll moved")
 
-    /* save_b6f38 — decompiled to C (src/save_b6f38.c, carved by tools/carve.py) */
-    .save_b6f38 : {
-        build/src/save_b6f38.o(.text)
+    /* save_input_recorder_start — decompiled to C (src/save_input_recorder_start.c, carved by tools/carve.py) */
+    .save_input_recorder_start : {
+        build/src/save_input_recorder_start.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b6f38) == 0x080B6F38, "MATCHING: .save_b6f38 moved")
+    ASSERT(!MATCHING || ADDR(.save_input_recorder_start) == 0x080B6F38, "MATCHING: .save_input_recorder_start moved")
 
-    /* save_b72bc — decompiled to C (src/save_b72bc.c, carved by tools/carve.py) */
-    .save_b72bc : {
-        build/src/save_b72bc.o(.text)
+    /* save_input_recorder_restore — decompiled to C (src/save_input_recorder_restore.c, carved by tools/carve.py) */
+    .save_input_recorder_restore : {
+        build/src/save_input_recorder_restore.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b72bc) == 0x080B72BC, "MATCHING: .save_b72bc moved")
+    ASSERT(!MATCHING || ADDR(.save_input_recorder_restore) == 0x080B72BC, "MATCHING: .save_input_recorder_restore moved")
 
-    /* save_b75a4 — decompiled to C (src/save_b75a4.c, carved by tools/carve.py) */
-    .save_b75a4 : {
-        build/src/save_b75a4.o(.text)
+    /* save_input_recorder_frame — decompiled to C (src/save_input_recorder_frame.c, carved by tools/carve.py) */
+    .save_input_recorder_frame : {
+        build/src/save_input_recorder_frame.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b75a4) == 0x080B75A4, "MATCHING: .save_b75a4 moved")
+    ASSERT(!MATCHING || ADDR(.save_input_recorder_frame) == 0x080B75A4, "MATCHING: .save_input_recorder_frame moved")
 
-    /* save_b77d4 — decompiled to C (src/save_b77d4.c, carved by tools/carve.py) */
-    .save_b77d4 : {
-        build/src/save_b77d4.o(.text)
+    /* save_init_slots — decompiled to C (src/save_init_slots.c, carved by tools/carve.py) */
+    .save_init_slots : {
+        build/src/save_init_slots.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b77d4) == 0x080B77D4, "MATCHING: .save_b77d4 moved")
+    ASSERT(!MATCHING || ADDR(.save_init_slots) == 0x080B77D4, "MATCHING: .save_init_slots moved")
 
-    /* save_b79b8 — decompiled to C (src/save_b79b8.c, carved by tools/carve.py) */
-    .save_b79b8 : {
-        build/src/save_b79b8.o(.text)
+    /* save_completion_percent — decompiled to C (src/save_completion_percent.c, carved by tools/carve.py) */
+    .save_completion_percent : {
+        build/src/save_completion_percent.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b79b8) == 0x080B79B8, "MATCHING: .save_b79b8 moved")
+    ASSERT(!MATCHING || ADDR(.save_completion_percent) == 0x080B79B8, "MATCHING: .save_completion_percent moved")
 
-    /* save_b7a9c — decompiled to C (src/save_b7a9c.c, carved by tools/carve.py) */
-    .save_b7a9c : {
-        build/src/save_b7a9c.o(.text)
+    /* save_write_slot — decompiled to C (src/save_write_slot.c, carved by tools/carve.py) */
+    .save_write_slot : {
+        build/src/save_write_slot.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b7a9c) == 0x080B7A9C, "MATCHING: .save_b7a9c moved")
+    ASSERT(!MATCHING || ADDR(.save_write_slot) == 0x080B7A9C, "MATCHING: .save_write_slot moved")
 
-    /* save_b7df4 — decompiled to C (src/save_b7df4.c, carved by tools/carve.py) */
-    .save_b7df4 : {
-        build/src/save_b7df4.o(.text)
+    /* save_slot_checksum — decompiled to C (src/save_slot_checksum.c, carved by tools/carve.py) */
+    .save_slot_checksum : {
+        build/src/save_slot_checksum.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b7df4) == 0x080B7DF4, "MATCHING: .save_b7df4 moved")
+    ASSERT(!MATCHING || ADDR(.save_slot_checksum) == 0x080B7DF4, "MATCHING: .save_slot_checksum moved")
 
-    /* save_b7e14 — decompiled to C (src/save_b7e14.c, carved by tools/carve.py) */
-    .save_b7e14 : {
-        build/src/save_b7e14.o(.text)
+    /* save_store_progress — decompiled to C (src/save_store_progress.c, carved by tools/carve.py) */
+    .save_store_progress : {
+        build/src/save_store_progress.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b7e14) == 0x080B7E14, "MATCHING: .save_b7e14 moved")
+    ASSERT(!MATCHING || ADDR(.save_store_progress) == 0x080B7E14, "MATCHING: .save_store_progress moved")
 
-    /* save_b8694 — decompiled to C (src/save_b8694.c, carved by tools/carve.py) */
-    .save_b8694 : {
-        build/src/save_b8694.o(.text)
+    /* save_receive_link_slots — decompiled to C (src/save_receive_link_slots.c, carved by tools/carve.py) */
+    .save_receive_link_slots : {
+        build/src/save_receive_link_slots.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b8694) == 0x080B8694, "MATCHING: .save_b8694 moved")
+    ASSERT(!MATCHING || ADDR(.save_receive_link_slots) == 0x080B8694, "MATCHING: .save_receive_link_slots moved")
 
-    /* save_b8888 — decompiled to C (src/save_b8888.c, carved by tools/carve.py) */
-    .save_b8888 : {
-        build/src/save_b8888.o(.text)
+    /* save_exchange_link_slots — decompiled to C (src/save_exchange_link_slots.c, carved by tools/carve.py) */
+    .save_exchange_link_slots : {
+        build/src/save_exchange_link_slots.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b8888) == 0x080B8888, "MATCHING: .save_b8888 moved")
+    ASSERT(!MATCHING || ADDR(.save_exchange_link_slots) == 0x080B8888, "MATCHING: .save_exchange_link_slots moved")
 
-    /* save_b8918 — decompiled to C (src/save_b8918.c, carved by tools/carve.py) */
-    .save_b8918 : {
-        build/src/save_b8918.o(.text)
+    /* save_merge_link_slots — decompiled to C (src/save_merge_link_slots.c, carved by tools/carve.py) */
+    .save_merge_link_slots : {
+        build/src/save_merge_link_slots.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b8918) == 0x080B8918, "MATCHING: .save_b8918 moved")
+    ASSERT(!MATCHING || ADDR(.save_merge_link_slots) == 0x080B8918, "MATCHING: .save_merge_link_slots moved")
 
-    /* save_b8ea0 — decompiled to C (src/save_b8ea0.c, carved by tools/carve.py) */
-    .save_b8ea0 : {
-        build/src/save_b8ea0.o(.text)
+    /* player_life_request — decompiled to C (src/player_life_request.c, carved by tools/carve.py) */
+    .player_life_request : {
+        build/src/player_life_request.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.save_b8ea0) == 0x080B8EA0, "MATCHING: .save_b8ea0 moved")
+    ASSERT(!MATCHING || ADDR(.player_life_request) == 0x080B8EA0, "MATCHING: .player_life_request moved")
 
-    /* subgame_b9d0c — decompiled to C (src/subgame_b9d0c.c, carved by tools/carve.py) */
-    .subgame_b9d0c : {
-        build/src/subgame_b9d0c.o(.text)
+    /* subgame — decompiled to C (src/subgame.c, carved by tools/carve.py) */
+    .subgame : {
+        build/src/subgame.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_b9d0c) == 0x080B9D0C, "MATCHING: .subgame_b9d0c moved")
+    ASSERT(!MATCHING || ADDR(.subgame) == 0x080B9D0C, "MATCHING: .subgame moved")
 
-    /* subgame_ba774 — decompiled to C (src/subgame_ba774.c, carved by tools/carve.py) */
-    .subgame_ba774 : {
-        build/src/subgame_ba774.o(.text)
+    /* subgame_quick_draw — decompiled to C (src/subgame_quick_draw.c, carved by tools/carve.py) */
+    .subgame_quick_draw : {
+        build/src/subgame_quick_draw.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_ba774) == 0x080BA774, "MATCHING: .subgame_ba774 moved")
+    ASSERT(!MATCHING || ADDR(.subgame_quick_draw) == 0x080BA774, "MATCHING: .subgame_quick_draw moved")
 
-    /* subgame_bb528 — decompiled to C (src/subgame_bb528.c, carved by tools/carve.py) */
-    .subgame_bb528 : {
-        build/src/subgame_bb528.o(.text)
+    /* subgame_quick_draw_results — decompiled to C (src/subgame_quick_draw_results.c, carved by tools/carve.py) */
+    .subgame_quick_draw_results : {
+        build/src/subgame_quick_draw_results.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_bb528) == 0x080BB528, "MATCHING: .subgame_bb528 moved")
+    ASSERT(!MATCHING || ADDR(.subgame_quick_draw_results) == 0x080BB528, "MATCHING: .subgame_quick_draw_results moved")
 
-    /* subgame_bc0cc — decompiled to C (src/subgame_bc0cc.c, carved by tools/carve.py) */
-    .subgame_bc0cc : {
-        build/src/subgame_bc0cc.o(.text)
+    /* subgame_quick_draw_objects — decompiled to C (src/subgame_quick_draw_objects.c, carved by tools/carve.py) */
+    .subgame_quick_draw_objects : {
+        build/src/subgame_quick_draw_objects.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_bc0cc) == 0x080BC0CC, "MATCHING: .subgame_bc0cc moved")
+    ASSERT(!MATCHING || ADDR(.subgame_quick_draw_objects) == 0x080BC0CC, "MATCHING: .subgame_quick_draw_objects moved")
 
-    /* subgame_bd9e8 — decompiled to C (src/subgame_bd9e8.c, carved by tools/carve.py) */
-    .subgame_bd9e8 : {
-        build/src/subgame_bd9e8.o(.text)
+    /* subgame_bomb_rally_main — decompiled to C (src/subgame_bomb_rally_main.c, carved by tools/carve.py) */
+    .subgame_bomb_rally_main : {
+        build/src/subgame_bomb_rally_main.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_bd9e8) == 0x080BD9E8, "MATCHING: .subgame_bd9e8 moved")
+    ASSERT(!MATCHING || ADDR(.subgame_bomb_rally_main) == 0x080BD9E8, "MATCHING: .subgame_bomb_rally_main moved")
 
-    /* subgame_bda2c — decompiled to C (src/subgame_bda2c.c, carved by tools/carve.py) */
-    .subgame_bda2c : {
-        build/src/subgame_bda2c.o(.text)
+    /* subgame_bomb_rally — decompiled to C (src/subgame_bomb_rally.c, carved by tools/carve.py) */
+    .subgame_bomb_rally : {
+        build/src/subgame_bomb_rally.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_bda2c) == 0x080BDA2C, "MATCHING: .subgame_bda2c moved")
+    ASSERT(!MATCHING || ADDR(.subgame_bomb_rally) == 0x080BDA2C, "MATCHING: .subgame_bomb_rally moved")
 
-    /* subgame_bf994 — decompiled to C (src/subgame_bf994.c, carved by tools/carve.py) */
-    .subgame_bf994 : {
-        build/src/subgame_bf994.o(.text)
+    /* subgame_bomb_rally_bomb — decompiled to C (src/subgame_bomb_rally_bomb.c, carved by tools/carve.py) */
+    .subgame_bomb_rally_bomb : {
+        build/src/subgame_bomb_rally_bomb.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_bf994) == 0x080BF994, "MATCHING: .subgame_bf994 moved")
+    ASSERT(!MATCHING || ADDR(.subgame_bomb_rally_bomb) == 0x080BF994, "MATCHING: .subgame_bomb_rally_bomb moved")
 
-    /* subgame_c0de8 — decompiled to C (src/subgame_c0de8.c, carved by tools/carve.py) */
-    .subgame_c0de8 : {
-        build/src/subgame_c0de8.o(.text)
+    /* subgame_bomb_rally_star_burst — decompiled to C (src/subgame_bomb_rally_star_burst.c, carved by tools/carve.py) */
+    .subgame_bomb_rally_star_burst : {
+        build/src/subgame_bomb_rally_star_burst.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_c0de8) == 0x080C0DE8, "MATCHING: .subgame_c0de8 moved")
+    ASSERT(!MATCHING || ADDR(.subgame_bomb_rally_star_burst) == 0x080C0DE8, "MATCHING: .subgame_bomb_rally_star_burst moved")
 
-    /* subgame_c1ffc — decompiled to C (src/subgame_c1ffc.c, carved by tools/carve.py) */
-    .subgame_c1ffc : {
-        build/src/subgame_c1ffc.o(.text)
+    /* subgame_air_grind — decompiled to C (src/subgame_air_grind.c, carved by tools/carve.py) */
+    .subgame_air_grind : {
+        build/src/subgame_air_grind.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_c1ffc) == 0x080C1FFC, "MATCHING: .subgame_c1ffc moved")
+    ASSERT(!MATCHING || ADDR(.subgame_air_grind) == 0x080C1FFC, "MATCHING: .subgame_air_grind moved")
 
-    /* subgame_c243c — decompiled to C (src/subgame_c243c.c, carved by tools/carve.py) */
-    .subgame_c243c : {
-        build/src/subgame_c243c.o(.text)
+    /* subgame_air_grind_results_sky — decompiled to C (src/subgame_air_grind_results_sky.c, carved by tools/carve.py) */
+    .subgame_air_grind_results_sky : {
+        build/src/subgame_air_grind_results_sky.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_c243c) == 0x080C243C, "MATCHING: .subgame_c243c moved")
+    ASSERT(!MATCHING || ADDR(.subgame_air_grind_results_sky) == 0x080C243C, "MATCHING: .subgame_air_grind_results_sky moved")
 
-    /* subgame_c2ff8 — decompiled to C (src/subgame_c2ff8.c, carved by tools/carve.py) */
-    .subgame_c2ff8 : {
-        build/src/subgame_c2ff8.o(.text)
+    /* subgame_air_grind_racer — decompiled to C (src/subgame_air_grind_racer.c, carved by tools/carve.py) */
+    .subgame_air_grind_racer : {
+        build/src/subgame_air_grind_racer.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_c2ff8) == 0x080C2FF8, "MATCHING: .subgame_c2ff8 moved")
+    ASSERT(!MATCHING || ADDR(.subgame_air_grind_racer) == 0x080C2FF8, "MATCHING: .subgame_air_grind_racer moved")
 
-    /* subgame_c3648 — decompiled to C (src/subgame_c3648.c, carved by tools/carve.py) */
-    .subgame_c3648 : {
-        build/src/subgame_c3648.o(.text)
+    /* subgame_air_grind_racer_steps — decompiled to C (src/subgame_air_grind_racer_steps.c, carved by tools/carve.py) */
+    .subgame_air_grind_racer_steps : {
+        build/src/subgame_air_grind_racer_steps.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_c3648) == 0x080C3648, "MATCHING: .subgame_c3648 moved")
+    ASSERT(!MATCHING || ADDR(.subgame_air_grind_racer_steps) == 0x080C3648, "MATCHING: .subgame_air_grind_racer_steps moved")
 
-    /* subgame_c3f44 — decompiled to C (src/subgame_c3f44.c, carved by tools/carve.py) */
-    .subgame_c3f44 : {
-        build/src/subgame_c3f44.o(.text)
+    /* subgame_air_grind_effects — decompiled to C (src/subgame_air_grind_effects.c, carved by tools/carve.py) */
+    .subgame_air_grind_effects : {
+        build/src/subgame_air_grind_effects.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_c3f44) == 0x080C3F44, "MATCHING: .subgame_c3f44 moved")
+    ASSERT(!MATCHING || ADDR(.subgame_air_grind_effects) == 0x080C3F44, "MATCHING: .subgame_air_grind_effects moved")
 
-    /* subgame_c4630 — decompiled to C (src/subgame_c4630.c, carved by tools/carve.py) */
-    .subgame_c4630 : {
-        build/src/subgame_c4630.o(.text)
+    /* subgame_air_grind_scenery — decompiled to C (src/subgame_air_grind_scenery.c, carved by tools/carve.py) */
+    .subgame_air_grind_scenery : {
+        build/src/subgame_air_grind_scenery.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_c4630) == 0x080C4630, "MATCHING: .subgame_c4630 moved")
+    ASSERT(!MATCHING || ADDR(.subgame_air_grind_scenery) == 0x080C4630, "MATCHING: .subgame_air_grind_scenery moved")
 
-    /* subgame_c4d08 — decompiled to C (src/subgame_c4d08.c, carved by tools/carve.py) */
-    .subgame_c4d08 : {
-        build/src/subgame_c4d08.o(.text)
+    /* subgame_air_grind_sprites — decompiled to C (src/subgame_air_grind_sprites.c, carved by tools/carve.py) */
+    .subgame_air_grind_sprites : {
+        build/src/subgame_air_grind_sprites.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_c4d08) == 0x080C4D08, "MATCHING: .subgame_c4d08 moved")
+    ASSERT(!MATCHING || ADDR(.subgame_air_grind_sprites) == 0x080C4D08, "MATCHING: .subgame_air_grind_sprites moved")
 
-    /* subgame_c5284 — decompiled to C (src/subgame_c5284.c, carved by tools/carve.py) */
-    .subgame_c5284 : {
-        build/src/subgame_c5284.o(.text)
+    /* subgame_air_grind_course — decompiled to C (src/subgame_air_grind_course.c, carved by tools/carve.py) */
+    .subgame_air_grind_course : {
+        build/src/subgame_air_grind_course.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_c5284) == 0x080C5284, "MATCHING: .subgame_c5284 moved")
+    ASSERT(!MATCHING || ADDR(.subgame_air_grind_course) == 0x080C5284, "MATCHING: .subgame_air_grind_course moved")
 
-    /* subgame_c623c — decompiled to C (src/subgame_c623c.c, carved by tools/carve.py) */
-    .subgame_c623c : {
-        build/src/subgame_c623c.o(.text)
+    /* subgame_air_grind_depth_scale — decompiled to C (src/subgame_air_grind_depth_scale.c, carved by tools/carve.py) */
+    .subgame_air_grind_depth_scale : {
+        build/src/subgame_air_grind_depth_scale.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.subgame_c623c) == 0x080C623C, "MATCHING: .subgame_c623c moved")
+    ASSERT(!MATCHING || ADDR(.subgame_air_grind_depth_scale) == 0x080C623C, "MATCHING: .subgame_air_grind_depth_scale moved")
 
-    /* sub_080c6258 — decompiled to C (src/sub_080c6258.c, carved by tools/carve.py) */
-    .sub_080c6258 : {
-        build/src/sub_080c6258.o(.text)
+    /* subgame_air_grind_half_depth — decompiled to C (src/subgame_air_grind_half_depth.c, carved by tools/carve.py) */
+    .subgame_air_grind_half_depth : {
+        build/src/subgame_air_grind_half_depth.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.sub_080c6258) == 0x080C6258, "MATCHING: .sub_080c6258 moved")
+    ASSERT(!MATCHING || ADDR(.subgame_air_grind_half_depth) == 0x080C6258, "MATCHING: .subgame_air_grind_half_depth moved")
 
-    /* mode_c6260 — decompiled to C (src/mode_c6260.c, carved by tools/carve.py) */
-    .mode_c6260 : {
-        build/src/mode_c6260.o(.text)
+    /* ending_main — decompiled to C (src/ending_main.c, carved by tools/carve.py) */
+    .ending_main : {
+        build/src/ending_main.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.mode_c6260) == 0x080C6260, "MATCHING: .mode_c6260 moved")
+    ASSERT(!MATCHING || ADDR(.ending_main) == 0x080C6260, "MATCHING: .ending_main moved")
 
-    /* results_c6420 — decompiled to C (src/results_c6420.c, carved by tools/carve.py) */
-    .results_c6420 : {
-        build/src/results_c6420.o(.text)
+    /* ending_final_results — decompiled to C (src/ending_final_results.c, carved by tools/carve.py) */
+    .ending_final_results : {
+        build/src/ending_final_results.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.results_c6420) == 0x080C6420, "MATCHING: .results_c6420 moved")
+    ASSERT(!MATCHING || ADDR(.ending_final_results) == 0x080C6420, "MATCHING: .ending_final_results moved")
 
-    /* ending_c6c64 — decompiled to C (src/ending_c6c64.c, carved by tools/carve.py) */
-    .ending_c6c64 : {
-        build/src/ending_c6c64.o(.text)
+    /* ending_epilogue — decompiled to C (src/ending_epilogue.c, carved by tools/carve.py) */
+    .ending_epilogue : {
+        build/src/ending_epilogue.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.ending_c6c64) == 0x080C6C64, "MATCHING: .ending_c6c64 moved")
+    ASSERT(!MATCHING || ADDR(.ending_epilogue) == 0x080C6C64, "MATCHING: .ending_epilogue moved")
 
-    /* ending_c7e4c — decompiled to C (src/ending_c7e4c.c, carved by tools/carve.py) */
-    .ending_c7e4c : {
-        build/src/ending_c7e4c.o(.text)
+    /* ending_epilogue_kirby — decompiled to C (src/ending_epilogue_kirby.c, carved by tools/carve.py) */
+    .ending_epilogue_kirby : {
+        build/src/ending_epilogue_kirby.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.ending_c7e4c) == 0x080C7E4C, "MATCHING: .ending_c7e4c moved")
+    ASSERT(!MATCHING || ADDR(.ending_epilogue_kirby) == 0x080C7E4C, "MATCHING: .ending_epilogue_kirby moved")
 
-    /* ending_c9004 — decompiled to C (src/ending_c9004.c, carved by tools/carve.py) */
-    .ending_c9004 : {
-        build/src/ending_c9004.o(.text)
+    /* ending_star_rod_return — decompiled to C (src/ending_star_rod_return.c, carved by tools/carve.py) */
+    .ending_star_rod_return : {
+        build/src/ending_star_rod_return.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.ending_c9004) == 0x080C9004, "MATCHING: .ending_c9004 moved")
+    ASSERT(!MATCHING || ADDR(.ending_star_rod_return) == 0x080C9004, "MATCHING: .ending_star_rod_return moved")
 
-    /* boot_caa3c — decompiled to C (src/boot_caa3c.c, carved by tools/carve.py) */
-    .boot_caa3c : {
-        build/src/boot_caa3c.o(.text)
+    /* boot_logo_init_objects — decompiled to C (src/boot_logo_init_objects.c, carved by tools/carve.py) */
+    .boot_logo_init_objects : {
+        build/src/boot_logo_init_objects.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.boot_caa3c) == 0x080CAA3C, "MATCHING: .boot_caa3c moved")
+    ASSERT(!MATCHING || ADDR(.boot_logo_init_objects) == 0x080CAA3C, "MATCHING: .boot_logo_init_objects moved")
 
-    /* boot_caab8 — decompiled to C (src/boot_caab8.c, carved by tools/carve.py) */
-    .boot_caab8 : {
-        build/src/boot_caab8.o(.text)
+    /* boot_logo_update_objects — decompiled to C (src/boot_logo_update_objects.c, carved by tools/carve.py) */
+    .boot_logo_update_objects : {
+        build/src/boot_logo_update_objects.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.boot_caab8) == 0x080CAAB8, "MATCHING: .boot_caab8 moved")
+    ASSERT(!MATCHING || ADDR(.boot_logo_update_objects) == 0x080CAAB8, "MATCHING: .boot_logo_update_objects moved")
 
-    /* gameover_cacf0 — decompiled to C (src/gameover_cacf0.c, carved by tools/carve.py) */
-    .gameover_cacf0 : {
-        build/src/gameover_cacf0.o(.text)
+    /* game_over_screen — decompiled to C (src/game_over_screen.c, carved by tools/carve.py) */
+    .game_over_screen : {
+        build/src/game_over_screen.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.gameover_cacf0) == 0x080CACF0, "MATCHING: .gameover_cacf0 moved")
+    ASSERT(!MATCHING || ADDR(.game_over_screen) == 0x080CACF0, "MATCHING: .game_over_screen moved")
 
-    /* gameover_cb354 — decompiled to C (src/gameover_cb354.c, carved by tools/carve.py) */
-    .gameover_cb354 : {
-        build/src/gameover_cb354.o(.text)
+    /* game_over_tasks — decompiled to C (src/game_over_tasks.c, carved by tools/carve.py) */
+    .game_over_tasks : {
+        build/src/game_over_tasks.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.gameover_cb354) == 0x080CB354, "MATCHING: .gameover_cb354 moved")
+    ASSERT(!MATCHING || ADDR(.game_over_tasks) == 0x080CB354, "MATCHING: .game_over_tasks moved")
 
-    /* gameover_cb64c — decompiled to C (src/gameover_cb64c.c, carved by tools/carve.py) */
-    .gameover_cb64c : {
-        build/src/gameover_cb64c.o(.text)
+    /* game_over_player — decompiled to C (src/game_over_player.c, carved by tools/carve.py) */
+    .game_over_player : {
+        build/src/game_over_player.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.gameover_cb64c) == 0x080CB64C, "MATCHING: .gameover_cb64c moved")
+    ASSERT(!MATCHING || ADDR(.game_over_player) == 0x080CB64C, "MATCHING: .game_over_player moved")
 
-    /* gameover_cbed4 — decompiled to C (src/gameover_cbed4.c, carved by tools/carve.py) */
-    .gameover_cbed4 : {
-        build/src/gameover_cbed4.o(.text)
+    /* game_over_choice — decompiled to C (src/game_over_choice.c, carved by tools/carve.py) */
+    .game_over_choice : {
+        build/src/game_over_choice.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.gameover_cbed4) == 0x080CBED4, "MATCHING: .gameover_cbed4 moved")
+    ASSERT(!MATCHING || ADDR(.game_over_choice) == 0x080CBED4, "MATCHING: .game_over_choice moved")
 
-    /* gameover_ccd4c — decompiled to C (src/gameover_ccd4c.c, carved by tools/carve.py) */
-    .gameover_ccd4c : {
-        build/src/gameover_ccd4c.o(.text)
+    /* game_over_objects — decompiled to C (src/game_over_objects.c, carved by tools/carve.py) */
+    .game_over_objects : {
+        build/src/game_over_objects.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.gameover_ccd4c) == 0x080CCD4C, "MATCHING: .gameover_ccd4c moved")
+    ASSERT(!MATCHING || ADDR(.game_over_objects) == 0x080CCD4C, "MATCHING: .game_over_objects moved")
 
-    /* credits_cd330 — decompiled to C (src/credits_cd330.c, carved by tools/carve.py) */
-    .credits_cd330 : {
-        build/src/credits_cd330.o(.text)
+    /* ending_credits — decompiled to C (src/ending_credits.c, carved by tools/carve.py) */
+    .ending_credits : {
+        build/src/ending_credits.o(.text)
     } > ROM
-    ASSERT(!MATCHING || ADDR(.credits_cd330) == 0x080CD330, "MATCHING: .credits_cd330 moved")
+    ASSERT(!MATCHING || ADDR(.ending_credits) == 0x080CD330, "MATCHING: .ending_credits moved")
 
     /* m4a sound engine: asm core (pret m4a_1.s equivalent; hand-scheduled
      * SDK asm, stays asm forever — issue #52). SoundMainRAM's ROM image
@@ -1950,13 +1950,13 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.irq_handler_table_14) == 0x080CFDE8, "MATCHING: .irq_handler_table_14 moved")
 
-    /* The SRAM id string "AGB  KIRBY" (gSramIdString), WriteSramEx(.., 0x0E000000, 10) src/save_b7a9c.c:29 (#36 phase 2 run 3; formerly the head of lib_misc) */
+    /* The SRAM id string "AGB  KIRBY" (gSramIdString), WriteSramEx(.., 0x0E000000, 10) src/save_write_slot.c:29 (#36 phase 2 run 3; formerly the head of lib_misc) */
     .sram_id_string : {
         KEEP(*(.sram_id_string))
     } > ROM
     ASSERT(!MATCHING || ADDR(.sram_id_string) == 0x080CFE20, "MATCHING: .sram_id_string moved")
 
-    /* Air Grind (M37) rodata (#36 phase 2 run 3; formerly lib_misc, lib_rodata_fir_tables and the head of level_object_tables, not sound-driver or FIR tables, #98): gAirGrindLocalPlayerSlots-gUnk_080CFFDA (src/subgame_c243c.c ... src/subgame_c4d08.c), palette gUnk_080D0198, sine table gAirGrindSineTable, gAirGrindDepthScales-gUnk_080D0766 (src/subgame_c5284.c); 0x080D0768-0x080D0788 has no consumer */
+    /* Air Grind (M37) rodata (#36 phase 2 run 3; formerly lib_misc, lib_rodata_fir_tables and the head of level_object_tables, not sound-driver or FIR tables, #98): gAirGrindLocalPlayerSlots-gUnk_080CFFDA (src/subgame_air_grind_results_sky.c ... src/subgame_air_grind_sprites.c), palette gUnk_080D0198, sine table gAirGrindSineTable, gAirGrindDepthScales-gUnk_080D0766 (src/subgame_air_grind_course.c); 0x080D0768-0x080D0788 has no consumer */
     .air_grind_rodata : {
         KEEP(*(.air_grind_rodata))
     } > ROM
@@ -1968,7 +1968,7 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.sprite_sheets) == 0x080D0788, "MATCHING: .sprite_sheets moved")
 
-    /* Room BG animations (#36 phase 2): 30 scripts, 181 tile frames, 14 palette fades, 28 palettes (LoadRoomBgAnims, src/camera_2d01c.c) (ldgroup.py: 80 rows in one output section) */
+    /* Room BG animations (#36 phase 2): 30 scripts, 181 tile frames, 14 palette fades, 28 palettes (LoadRoomBgAnims, src/camera_bg_anims.c) (ldgroup.py: 80 rows in one output section) */
     .room_bg_anims : {
         KEEP(*(.room_bg_anims))
         build/src/data/bg_anim_scripts.o(.bg_anim_083356e0)
@@ -4356,13 +4356,13 @@ SECTIONS
     ASSERT(!MATCHING || gUnk_08758324 == 0x08758324, "MATCHING: late_tbl_08758324 moved")
     ASSERT(!MATCHING || late_game_rodata_08758334 == 0x08758334, "MATCHING: late_game_rodata_08758334 moved")
 
-    /* The 14 recorded input demos of the staff credits' rows 1 and 2 (gCreditsDemoRecordings, CreditsMain src/credits_cd330.c; InputRecorderStart) */
+    /* The 14 recorded input demos of the staff credits' rows 1 and 2 (gCreditsDemoRecordings, CreditsMain src/ending_credits.c; InputRecorderStart) */
     .credits_demos : {
         KEEP(*(.credits_demos))
     } > ROM
     ASSERT(!MATCHING || ADDR(.credits_demos) == 0x08758448, "MATCHING: .credits_demos moved")
 
-    /* Player frame records {oam | 1, palette, tiles, palette2, tiles2} (PlayerLoadFrameTilesAndPalette, src/stage_3cd60.c) (#36 phase 2 run 3) */
+    /* Player frame records {oam | 1, palette, tiles, palette2, tiles2} (PlayerLoadFrameTilesAndPalette, src/player_helpers.c) (#36 phase 2 run 3) */
     .player_frame_records : {
         KEEP(*(.player_frame_records))
     } > ROM
@@ -4374,25 +4374,25 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.player_frame_lists) == 0x08769250, "MATCHING: .player_frame_lists moved")
 
-    /* Separately linked GBA program (asset): the single-pak link client, MultiBootInitWithParams(gUnk_0876B1FC, gUnk_0876F690) src/menu_0d450.c, ExtraModeTitleLoadMultiBootImage src/mode_07b68.c */
+    /* Separately linked GBA program (asset): the single-pak link client, MultiBootInitWithParams(gUnk_0876B1FC, gUnk_0876F690) src/menu_sound_test_link_play.c, ExtraModeTitleLoadMultiBootImage src/mode_extra_mode_title.c */
     .multiboot_program : {
         KEEP(*(.multiboot_program))
     } > ROM
     ASSERT(!MATCHING || ADDR(.multiboot_program) == 0x0876B1FC, "MATCHING: .multiboot_program moved")
 
-    /* Separately linked GBA program (asset): sub-game 0 (Quick Draw), sent to the other players by ExtraModeTitleSendModeData (src/mode_07b68.c) */
+    /* Separately linked GBA program (asset): sub-game 0 (Quick Draw), sent to the other players by ExtraModeTitleSendModeData (src/mode_extra_mode_title.c) */
     .quick_draw_program : {
         KEEP(*(.quick_draw_program))
     } > ROM
     ASSERT(!MATCHING || ADDR(.quick_draw_program) == 0x0876F690, "MATCHING: .quick_draw_program moved")
 
-    /* Separately linked GBA program (asset): sub-game 1 (Bomb Rally), sent to the other players by ExtraModeTitleSendModeData (src/mode_07b68.c) */
+    /* Separately linked GBA program (asset): sub-game 1 (Bomb Rally), sent to the other players by ExtraModeTitleSendModeData (src/mode_extra_mode_title.c) */
     .bomb_rally_program : {
         KEEP(*(.bomb_rally_program))
     } > ROM
     ASSERT(!MATCHING || ADDR(.bomb_rally_program) == 0x087954C0, "MATCHING: .bomb_rally_program moved")
 
-    /* Separately linked GBA program (asset): sub-game 2 (Air Grind), sent to the other players by ExtraModeTitleSendModeData (src/mode_07b68.c) */
+    /* Separately linked GBA program (asset): sub-game 2 (Air Grind), sent to the other players by ExtraModeTitleSendModeData (src/mode_extra_mode_title.c) */
     .air_grind_program : {
         KEEP(*(.air_grind_program))
     } > ROM

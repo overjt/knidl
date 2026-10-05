@@ -36,12 +36,12 @@ extern const struct SongEntry gSfxTable[];
 struct MusicPlayerInfo;
 struct MusicPlayerTrack;
 
-/* src/early_3110.c */
+/* src/sound_bgm.c */
 s32 PlayBgm(s32 songId);
 void ResetBgmPlayer(void);
 s32 GetCurrentBgm(void);
 
-/* src/early_3484.c */
+/* src/sound_control.c */
 void StopAllSound(void);
 void PauseAllSound(void);
 void ResumeAllSound(void);

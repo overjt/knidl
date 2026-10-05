@@ -13,7 +13,7 @@ extern u32 gStageClearDanceBgmPlayed[];
 extern u8 gUnk_02006A14[];
 extern s8 gDanceId;
 extern u16 gObjPaletteBlendBase[];
-extern u16 gScreenAttackTasks[]; /* 20 task indices, 0xFFFF = empty; non-volatile, signed reads cast (s16) (variant 37 in effect_57ce0.c) */
+extern u16 gScreenAttackTasks[]; /* 20 task indices, 0xFFFF = empty; non-volatile, signed reads cast (s16) (variant 37 in effect_mike_attack.c) */
 
 /* IWRAM */
 extern u16 gObjPaletteBank8[]; /* palette buffer */
@@ -112,7 +112,7 @@ extern u32 gUnk_087548A0[];
 
 /* Functions (defined in the files named above each group). */
 
-/* src/effect_53af4.c */
+/* src/effect_skid_dust.c */
 void Task_PlayerEffect(void);
 void PlayerEffectInhaleAir(void);
 void PlayerEffectInhaleAirUpdate(void);
@@ -126,7 +126,7 @@ void PlayerEffectDeathStar(void);
 void PlayerEffectSkidDust(void);
 void PlayerEffectSkidDustUpdate(void);
 
-/* src/effect_54330.c */
+/* src/effect_slide_dust.c */
 void PlayerEffectRunDust(void);
 void PlayerEffectRunDustUpdate(void);
 void PlayerEffectSlideDust(void);
@@ -136,7 +136,7 @@ void PlayerEffectLeaveWaterSplash(void);
 void PlayerEffectBubble(void);
 void PlayerEffectBubbleUpdate(void);
 
-/* src/effect_54a80.c */
+/* src/effect_death_star_ring_ability.c */
 void PlayerEffectDeathStarRing(void);
 void PlayerEffectDeathStarRingLateUpdate(void);
 void PlayerEffectMetaKnightDeathBlast(void);
@@ -145,7 +145,7 @@ void sub_08054fe4(void);
 void sub_080552fc(void);
 void sub_080553d4(void);
 
-/* src/effect_55460.c */
+/* src/effect_dance_star_burst.c */
 void PlayerEffectAbilityLoss(void);
 void sub_08055520(void);
 void PlayerEffectDanceStarBurst(void);
@@ -155,7 +155,7 @@ void sub_0805587c(void);
 void PlayerEffectLocalPlayerArrow(void);
 void PlayerEffectLocalPlayerArrowUpdate(void);
 
-/* src/effect_55b24.c */
+/* src/effect_hurt_flames_sparks.c */
 void PlayerEffectHurtFlames(void);
 void PlayerEffectHurtFlamesUpdate(void);
 void PlayerEffectHurtSparks(void);
@@ -165,27 +165,27 @@ void sub_08056300(void);
 void sub_08056320(void);
 void sub_08056428(void);
 
-/* src/effect_56448.c */
+/* src/effect_ability_puffs.c */
 void PlayerEffectHurtBurst(void);
 void sub_080564ac(void);
 void sub_08056770(void);
 void sub_08056da8(void);
 
-/* src/effect_56dd4.c */
+/* src/effect_fire_breath_spark_aura.c */
 void PlayerEffectFireBreathFlames(void);
 void PlayerEffectFireBreathFlamesUpdate(void);
 void PlayerEffectSparkAura(void);
 void PlayerEffectSparkAuraUpdate(void);
 void PlayerEffectSwordSparkle(void);
 
-/* src/effect_57494.c */
+/* src/effect_burning_flames_wheel.c */
 void PlayerEffectBurningFlames(void);
 void PlayerEffectBurningFlamesUpdate(void);
 void PlayerEffectUFOLaserTrail(void);
 void sub_08057ad4(void);
 void sub_08057c98(void);
 
-/* src/effect_57ce0.c */
+/* src/effect_mike_attack.c */
 void PlayerEffectHammerDust(void);
 void PlayerEffectParasolSparkle(void);
 void PlayerEffectMikeAttack(void);
@@ -194,13 +194,13 @@ void PlayerEffectSleepBubble(void);
 void PlayerEffectSleepBubbleUpdate(void);
 void sub_08058720(void);
 
-/* src/effect_58810.c */
+/* src/effect_ice_breath_freeze_aura.c */
 void PlayerEffectIceBreathCloud(void);
 void PlayerEffectIceBreathCloudUpdate(void);
 void PlayerEffectFreezeAura(void);
 void PlayerEffectFreezeAuraUpdate(void);
 
-/* src/effect_59570.c */
+/* src/effect_hi_jump_ball.c */
 void sub_08059570(void);
 void sub_08059aac(void);
 void sub_08059b18(void);
@@ -208,7 +208,7 @@ void PlayerEffectStonePuff(void);
 void sub_08059d7c(void);
 void sub_0805a320(void);
 
-/* src/effect_5a358.c */
+/* src/effect_crash_blast.c */
 void PlayerEffectTornadoDust(void);
 void PlayerEffectTornadoDustUpdate(void);
 void PlayerEffectCrashBlast(void);
@@ -220,7 +220,7 @@ void PlayerEffectUFOChargeSparkle(void);
 void PlayerEffectUFOChargeSparkleUpdate(void);
 void sub_0805af80(void);
 
-/* src/effect_5afac.c */
+/* src/effect_goal_game_dance.c */
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 s32 CreatePlayerEffectHighSlot(s32 a0, s32 a1, s32 a2);
 void GoalGameMain(void);

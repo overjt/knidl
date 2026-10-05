@@ -30,7 +30,7 @@
 #define abilityStarPickupDelay unk30 /* s32: frames (48) before the star's hits are checked, so it cannot be taken at once */
 
 /* Actor - every actor: a task made by CreateActor, CreateChildActor or
-   CreateItemOrObject (src/actor_63698.c), which also bind Task.u8C.actor; the
+   CreateItemOrObject (src/actor.c), which also bind Task.u8C.actor; the
    room objects of kinds 0-6 come through CreateActor */
 #define actorAnimDelay18 unk18 /* s32: frames until the next animation-script step (ActorStartAnim / ActorTickAnim) in unk18 */
 #define actorDrownFrame unk18 /* s16: frame a drowning actor holds (ActorStartDrown's argument; -2 means 0) */

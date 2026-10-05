@@ -47,26 +47,26 @@ def _next_label(labels, a):
 
 # ---- 1. the file-select completion pictures (compressed_graphics) --------
 #
-# sub_0800bda4 (src/menu_0b920.c:212-217): for a save slot that is neither
+# sub_0800bda4 (src/menu_main_save_slots.c:212-217): for a save slot that is neither
 # erased (unk04 != 0x99999999) nor extra-mode-cleared (!(milestoneFlags & 2))
 # it runs IntToDigits(completionPercent[0]) and copies, with
 # RequestCopy(3, ..., 0x180) (mode 3: raw copies of <= 0x200-byte chunks into
-# OBJ VRAM, src/early_1518.c:244-279), the two 0x180-byte halves
+# OBJ VRAM, src/main_copy_queue.c:244-279), the two 0x180-byte halves
 # n = 2 * (tens + 10 * hundreds) and n + 1 of u8 gUnk_08551110[]
 # (include/menu.h:42).  100 is a displayed value: CalcCompletionPercent
-# (src/save_b79b8.c:11-14) and MergeProgressIntoSaveSlot
-# (src/save_b8918.c:104-106) write exactly 100 once milestone bit
+# (src/save_completion_percent.c:11-14) and MergeProgressIntoSaveSlot
+# (src/save_merge_link_slots.c:104-106) write exactly 100 once milestone bit
 # 4 << mode is set, which the same functions set when the sum reaches 100
-# (src/save_b79b8.c:31-32, src/save_b8918.c:132-133), and bit 1 (the extra
-# mode's clear, src/level_242d0.c:913-914) is independent of it.  So index
+# (src/save_completion_percent.c:31-32, src/save_merge_link_slots.c:132-133), and bit 1 (the extra
+# mode's clear, src/room_enter_exit.c:913-914) is independent of it.  So index
 # 21 is read, and the array's 22 halves (11 two-part pictures 0%, 10%, ...
 # 100%) run exactly up to the next label gUnk_08553210, which the same
 # function copies as the extra-mode picture.  Slots the menu shows come only
 # from checksum-valid SRAM copies or new files: ReadSaveSlot checks the
 # 28-word sum of both copies and InitSaveSlots clears a slot whose copies
-# both fail to 0x99999999 (src/save_b77d4.c:23-99), which takes the erased
+# both fail to 0x99999999 (src/save_init_slots.c:23-99), which takes the erased
 # branch, and a new file starts at 0 (InitNewSaveFile -> ResetProgress,
-# src/save_b7e14.c:106-126).
+# src/save_store_progress.c:106-126).
 DIGITS = (0x08551110, 22 * 0x180)
 
 # ---- 2. seg 18 value tables with consumer extents (were next-label) -------
@@ -75,87 +75,87 @@ DIGITS = (0x08551110, 22 * 0x180)
 SEG18_VALUES = [
     (0x08732428, 0x08732428 + 42 * 3,
      "s8 gUnk_08732428[level * 6 + stage][3] hub camera-pan steps: map event 5 "
-     "sub_0802dcb4 (src/camtask_2d38c.c:344-365), spawned by sub_0802672c "
-     "(src/stage_261c0.c:253) on a stage's first clear (gUnk_0200AF00 == 1, "
-     "src/player_39c24.c:380, src/stage_413a4.c:1392), indexes it gStageIndex * 6 "
+     "sub_0802dcb4 (src/camera_map_events.c:344-365), spawned by sub_0802672c "
+     "(src/room_stage_helpers.c:253) on a stage's first clear (gUnk_0200AF00 == 1, "
+     "src/player_exit_door.c:380, src/player_meta_knight_actions.c:1392), indexes it gStageIndex * 6 "
      "+ gUnk_0200001C - 1 with gStageIndex = the level (the hub's stage, "
-     "src/level_242d0.c:762-763) and gUnk_0200001C = the cleared stage + 1 "
-     "(src/level_242d0.c:744, the goal door kind 0x22B8); every non-boss stage of "
+     "src/room_enter_exit.c:762-763) and gUnk_0200001C = the cleared stage + 1 "
+     "(src/room_enter_exit.c:744, the goal door kind 0x22B8); every non-boss stage of "
      "levels 0-6 has a 0x22B8 door (RoomDef.doors), stage 5 of level 6 among "
      "them, so rows 0-41 are read: 0x7E bytes, ending at gUnk_087324A6"),
     (0x087493A4 + 52, 0x087493A4 + 56,
      "s8 gUnk_087493A4[frame] entries 52-55: Nightmare Wizard state 7 "
-     "(gNightmareWizardStates[7] = sub_080aa998, src/enemy_aa338.c:408-422, "
-     "entered from state 4, src/enemy_aa338.c:395-396) shows frames 52-55 while "
+     "(gNightmareWizardStates[7] = sub_080aa998, src/enemy_nightmare_wizard_heavy_mole.c:408-422, "
+     "entered from state 4, src/enemy_nightmare_wizard_heavy_mole.c:395-396) shows frames 52-55 while "
      "its draw callback is sub_080a9ed8 (set by Task_NightmareWizard "
-     "src/enemy_a93ec.c:659 and restored by every teleport-in sub_080ab670, "
-     "src/enemy_aa338.c:918, which state 2 runs after each teleport-out), and "
-     "sub_080a9ef4 reads gUnk_087493A4[frame] (src/enemy_a93ec.c:577)"),
+     "src/enemy_kracko_cloud_lightning.c:659 and restored by every teleport-in sub_080ab670, "
+     "src/enemy_nightmare_wizard_heavy_mole.c:918, which state 2 runs after each teleport-out), and "
+     "sub_080a9ef4 reads gUnk_087493A4[frame] (src/enemy_kracko_cloud_lightning.c:577)"),
     (0x087494C8 + 28, 0x087494C8 + 32,
      "s8 gUnk_087494C8[frame] entries 28-31: the same state 7 starts the "
-     "animation gUnk_087492C0 {28, 29, 30, 31, loop} (src/enemy_aa338.c:428, "
-     "struct AnimCmd, ActorStepAnim src/actor_63698.c:665-692), and "
+     "animation gUnk_087492C0 {28, 29, 30, 31, loop} (src/enemy_nightmare_wizard_heavy_mole.c:428, "
+     "struct AnimCmd, ActorStepAnim src/actor.c:665-692), and "
      "sub_080ac530 reads gUnk_087494C8[parent->frame] for the Wizard parent "
-     "(unk76 == 8, src/enemy_aa338.c:1545-1553)"),
+     "(unk76 == 8, src/enemy_nightmare_wizard_heavy_mole.c:1545-1553)"),
     (0x0874B63E, 0x0874B63E + 66,
      "u8 gUnk_0874B63E[frame] entries 0-65: sub_080b1890 reads it at "
-     "t->frame (src/enemy_ae3bc.c:2955); state 4 (gUnk_0874B5E4[4] = "
+     "t->frame (src/enemy_nightmare_power_orb.c:2955); state 4 (gUnk_0874B5E4[4] = "
      "sub_080b21a0, chosen by state 1 from gUnk_0874B831 {2, 3, 4, 5}, "
-     "src/enemy_ae3bc.c:3227) sets unk34 from s16 gUnk_0874B8C8[k] (facing -1, "
+     "src/enemy_nightmare_power_orb.c:3227) sets unk34 from s16 gUnk_0874B8C8[k] (facing -1, "
      "max 60) or gUnk_0874B8F8[k] (facing 1, max 120), k = 23..0 "
-     "(src/enemy_ae3bc.c:3513-3530), and its update sub_080b2228 shows frames "
-     "unk34 + 0..5 (src/enemy_ae3bc.c:3534-3556): index 65 is read whatever "
+     "(src/enemy_nightmare_power_orb.c:3513-3530), and its update sub_080b2228 shows frames "
+     "unk34 + 0..5 (src/enemy_nightmare_power_orb.c:3534-3556): index 65 is read whatever "
      "the facing"),
 ]
 
 # ---- 2b. the room wavy-scroll wave table s8 gUnk_087561CC (seg 18) ------
 #
-# Readers: gHBlankScrollEffects[8] = sub_080b6b08 (src/save_b6b08.c:54-61) and
-# [10] = sub_080b6d04 (src/save_b6d04.c:55-69), the only two ROM words that
+# Readers: gHBlankScrollEffects[8] = sub_080b6b08 (src/main_hblank_row_scroll.c:54-61) and
+# [10] = sub_080b6d04 (src/main_hblank_row_scroll_reverse.c:55-69), the only two ROM words that
 # point at the table (their pools, 0x080B6C24 and 0x080B6E28).  Both read
 # gUnk_087561CC[i >> 3] with i = (u16)gSpriteCameraY + n, n = 0..159.
 # gHBlankScrollEffect is written only by StartHBlankScroll/StartRoomHBlankScroll
-# (src/save_b6e44.c:19-33); effects 8 and 10 are started only by
+# (src/main_hblank_scroll.c:19-33); effects 8 and 10 are started only by
 # StartRoomHBlankScroll(8) for a room with RoomDef.unk54 == 4
-# (src/room_27e28.c:98-106) and StartRoomHBlankScroll(10) in sub_08028280(0)
-# (src/room_27e28.c:170-181), reached only through sub_08024610, which loads
-# level 7 stage 0 room 2 (src/level_242d0.c:186-196, 209-258).  The menu's
+# (src/room_bg_layout.c:98-106) and StartRoomHBlankScroll(10) in sub_08028280(0)
+# (src/room_bg_layout.c:170-181), reached only through sub_08024610, which loads
+# level 7 stage 0 room 2 (src/room_enter_exit.c:186-196, 209-258).  The menu's
 # StartHBlankScroll passes 0-5 and 7.  Every room loader re-runs CalcRoomBounds
 # and, with the camera mode 5 these rooms set, CameraHoldAnchor + CameraInitPos
-# + a CameraWriteScroll* before its first frame (src/level_242d0.c:259-276).
+# + a CameraWriteScroll* before its first frame (src/room_enter_exit.c:259-276).
 # The bound on gSpriteCameraY in those rooms:
 #   * gSpriteCameraY = gCameraPos[1] + gScreenShake.unk4 (the four
-#     CameraWriteScroll*, src/camera_296a0.c:160-201, its only writers), and
+#     CameraWriteScroll*, src/camera_stream_scroll.c:160-201, its only writers), and
 #     gCameraPos[1] = (gCameraCenterY >> 16) - 80 (CameraUpdatePos*,
-#     src/camera_28b8c.c:390-410, its only writers);
+#     src/room_camera_init.c:390-410, its only writers);
 #   * every write of gCameraCenterY is y << 16 with y clamped to
 #     gRoomBounds[2..3] (CameraHoldAnchor, sub_08028b8c, CameraSnapBoundsToAnchor,
 #     CameraSnapPlayersToAnchor) or to gCameraBounds[2..3]
-#     (the follow and scroll-lock modes, src/camera_2b4bc.c, src/camera_2c42c.c,
-#     src/camera_28b8c.c), or approaches such a y in steps
-#     (src/camera_2c42c.c:195-232), or is gCameraAnchorY << 16 after its callers
-#     clamped it (CameraStartHoldAnchor, src/stage_261c0.c:270-285, 306-315), or
-#     sub_08027798(x, y) (src/stage_273a0.c:226-235), whose one caller passes
-#     the spawn point gViewRect[2] + 80 of task type #97 (src/actor_70ec0.c:436,
-#     src/actor_72d8c.c:1349), and gViewRect[2] + 80 is always such a clamped y,
+#     (the follow and scroll-lock modes, src/camera_scroll_lock.c, src/camera_hub.c,
+#     src/room_camera_init.c), or approaches such a y in steps
+#     (src/camera_hub.c:195-232), or is gCameraAnchorY << 16 after its callers
+#     clamped it (CameraStartHoldAnchor, src/room_stage_helpers.c:270-285, 306-315), or
+#     sub_08027798(x, y) (src/room_restart_point.c:226-235), whose one caller passes
+#     the spawn point gViewRect[2] + 80 of task type #97 (src/cutscene_warp_star.c:436,
+#     src/cutscene_warp_star_flights.c:1349), and gViewRect[2] + 80 is always such a clamped y,
 #     gRoomBounds[2] or the minimum of the player cameras
-#     (SetViewRectToPlayers/sub_0802a568, src/camera_29c74.c:406-475);
+#     (SetViewRectToPlayers/sub_0802a568, src/camera_player_group.c:406-475);
 #   * gCameraBounds[3] is only ever gRoomBounds[3], a scroll-lock y1 clamped to
-#     it (StartScrollLock src/camera_2c42c.c:496-503, src/camera_2b4bc.c:610), a
+#     it (StartScrollLock src/camera_hub.c:496-503, src/camera_scroll_lock.c:610), a
 #     player camera or group centre built from such values
-#     (src/room_28320.c:241-299, src/camera_29c74.c) or a smaller focus y
-#     (src/camera_2b4bc.c:32-36);
+#     (src/room_spawn_door_objects.c:241-299, src/camera_player_group.c) or a smaller focus y
+#     (src/camera_scroll_lock.c:32-36);
 #   * gRoomBounds[3] = height * 16 - borderY - 80 (CalcRoomBounds,
-#     src/room_28320.c:233-239); its only other writer is a kind-5 subtype-4
-#     room object (src/hud_b5024.c:176-183), which neither room has;
+#     src/room_spawn_door_objects.c:233-239); its only other writer is a kind-5 subtype-4
+#     room object (src/room_spawn_objects.c:176-183), which neither room has;
 #   * |gScreenShake.unk4| <= the largest y offset of gScreenShakePatterns[1..7]:
-#     RequestScreenShake ignores a > 7 (src/stage_261c0.c:38-55) and
-#     UpdateScreenShake (src/camera_2c42c.c:439-460) is the only other writer.
+#     RequestScreenShake ignores a > 7 (src/room_stage_helpers.c:38-55) and
+#     UpdateScreenShake (src/camera_hub.c:439-460) is the only other writer.
 # So i <= height * 16 - borderY - 160 + shake + 159, and >= borderY - shake
 # (no u16 wrap).  Both rooms are 68 metatiles high with borderY 8.
 WAVE_TABLE = 0x087561CC
 SHAKE_PATTERNS = 0x08732880   # u16 *gScreenShakePatterns[8], entry 0 NULL
-WAVE_ROOM = (7, 0, 2)         # sub_08024610: effect 10 (src/level_242d0.c:186-196)
+WAVE_ROOM = (7, 0, 2)         # sub_08024610: effect 10 (src/room_enter_exit.c:186-196)
 
 
 def wave_bound(rom):
@@ -194,17 +194,17 @@ def wave_bound(rom):
 
 # ---- 3. the credits demos (struct LinkSave, include/save.h:25) ------------
 #
-# CreditsMain (src/credits_cd330.c:62-158) plays the scenes of
+# CreditsMain (src/ending_credits.c:62-158) plays the scenes of
 # gUnk_087583CC[v] with v = gUnk_030023B0, 1 or 2 (l.74-77; row 0 is never
 # played), each for 15 + (length - 1) frames plus 15 before the next scene
 # or 30 after the last (l.112-147), lengths u16 [v][7] from 0x0875841E + 14 v
 # (include/ending.h:96).  gInputRecorderMode is only ever 0 or 3
-# (src/mode_075b8.c:179, src/mode_0b44c.c:59, src/mode_08664.c:151,
-# src/credits_cd330.c:86), so these ROM records are the only recordings ever
-# played.  InputRecorderStart mode 3 -> sub_080b72bc (src/save_b72bc.c:10-72)
+# (src/mode_hub_stage.c:179, src/mode_hub_stage_init.c:59, src/mode_pause_boss_endurance.c:151,
+# src/ending_credits.c:86), so these ROM records are the only recordings ever
+# played.  InputRecorderStart mode 3 -> sub_080b72bc (src/save_input_recorder_restore.c:10-72)
 # reads the 0x12C-byte header as numbers and starts each player i at entry i
 # with count 0 and end Div(0x3B6A, players) - 4; InputRecorderPlayFrame
-# (src/save_b75a4.c:62-91) reads entry unk12C[pos] (key | count << 10) when
+# (src/save_input_recorder_frame.c:62-91) reads entry unk12C[pos] (key | count << 10) when
 # the player's count runs out, steps pos by the player count, and stops
 # everyone at key 0x3FF.  The entries read depend only on the entries
 # themselves, so replaying the frame counts gives the exact extent read.
@@ -268,42 +268,42 @@ UNREACHABLE = [
     (0x080DCAA8, 0x080DCC28,
      "u8 gUnk_080DCA28[] (include/player.h:104) past its four player palettes: "
      "its only readers are the two RequestCopy(2, &gUnk_080DCA28[k * 32], .., "
-     "32) of sub_0803db74 (src/stage_3cd60.c:779-782, the pool words 0x0803DD88 "
+     "32) of sub_0803db74 (src/player_helpers.c:779-782, the pool words 0x0803DD88 "
      "and 0x0803DDB8, the only ROM words that point into the object), k = "
      "PlayerState.playerIndex or gUnk_02000028; playerIndex is only written as "
-     "gPlayerStates[a0].playerIndex = a0 (src/stage_3cd60.c:188/263/331) and "
+     "gPlayerStates[a0].playerIndex = a0 (src/player_helpers.c:188/263/331) and "
      "gPlayerStates holds four 0x74-byte records (0x03002170-0x03002340, "
-     "gActivePlayerMask next), gUnk_02000028 = gLocalPlayer (src/mode_c6260.c:36, "
+     "gActivePlayerMask next), gUnk_02000028 = gLocalPlayer (src/ending_main.c:36, "
      "EWRAM cleared by AgbInit) and gLocalPlayer is 0 or the 2-bit SIOMULTICNT "
-     "id (src/early_6d28.c:84/105; the demo copy src/save_b72bc.c:51 runs only "
+     "id (src/link_serial_cb.c:84/105; the demo copy src/save_input_recorder_restore.c:51 runs only "
      "with gUnk_030023B0 == 0, never in the credits): k <= 3, so bytes 0x80-0x1FF "
      "are read by nothing; the next object is gUnk_080DCC28"),
     (0x08740628, 0x08740630,
      "the two words after u8 gUnk_08740620[8] (include/cutscene.h:110): its one "
-     "reader sub_0807817c (src/actor_77ae0.c:401) indexes it by Task.unk28, "
+     "reader sub_0807817c (src/cutscene_big_switch_room_particles.c:401) indexes it by Task.unk28, "
      "which its six callers loop over 0-7, 0-2, 0-3 and 3-5, the eight credits "
-     "particles gUnk_03000FE0[] (src/actor_77ae0.c:617-737); next label "
+     "particles gUnk_03000FE0[] (src/cutscene_big_switch_room_particles.c:617-737); next label "
      "gWaddleDeeVariants"),
     (0x0874101C, 0x08741020,
      "word 3 of the palette-variant record gUnk_08741010 (gUnk_0873EF74[] "
      "target): its readers take word paletteVariant - 1 or level - 1 with "
-     "paletteVariant, level <= 3 (src/actor_653ec.c:565-575, 605-621, 813-820) "
+     "paletteVariant, level <= 3 (src/actor_helpers.c:565-575, 605-621, 813-820) "
      "and words 4-5, never word 3, and no record of either table starts where "
      "one of those indices would land on it; next record gUnk_08741028"),
     (0x08741DE8, 0x08741DEC,
      "word 3 of the palette-variant record gUnk_08741DDC (gUnk_0873EF74[] "
-     "target), read by nothing as for gUnk_08741010 (src/actor_653ec.c:565-575, "
+     "target), read by nothing as for gUnk_08741010 (src/actor_helpers.c:565-575, "
      "605-621, 813-820); next record gUnk_08741DF4"),
     (0x08745A34, 0x08745A3C,
      "a second struct ActorAux {hitDuration, altAttackBox} after the one at "
      "gUnk_08745A2C: Actor.unk60 is set only from ActorDef+0x10 or "
-     "sub_080639f0's argument (src/actor_63698.c:258) and read only as "
-     "->hitDuration/->altAttackBox (src/actor_653ec.c:1088/1174, "
-     "src/actor_673ec.c:1313-1430, src/enemy_a1590.c:416-417), never indexed, "
+     "sub_080639f0's argument (src/actor.c:258) and read only as "
+     "->hitDuration/->altAttackBox (src/actor_helpers.c:1088/1174, "
+     "src/actor_held_player.c:1313-1430, src/enemy_mr_shine_and_mr_bright.c:416-417), never indexed, "
      "and no word points at 0x08745A34; next label gUnk_08745A3C"),
     (0x0874B4D8, 0x0874B4E0,
      "a second struct ActorAux after the one at gUnk_0874B4D0, unreached as "
-     "for 0x08745A34 (Actor.unk60 readers src/actor_673ec.c:1313-1430); next "
+     "for 0x08745A34 (Actor.unk60 readers src/actor_held_player.c:1313-1430); next "
      "label gUnk_0874B4E0"),
     (0x08769414, 0x08769418,
      "the last entry of the frame list 0x087693F0 (10 entries, trailer "
@@ -323,8 +323,8 @@ def provide(rom, cfg, segs):
     co.append((DIGITS[0], DIGITS[0] + DIGITS[1], "raw-tiles",
                "u8 gUnk_08551110[22 * 0x180]: the file-select completion pictures, "
                "halves n = 2 * (percent / 10) and n + 1 copied raw by RequestCopy(3, "
-               ".., 0x180) (sub_0800bda4, src/menu_0b920.c:212-217); percent 100 is "
-               "displayed (src/save_b79b8.c:11-14, src/save_b8918.c:104-106), so "
+               ".., 0x180) (sub_0800bda4, src/menu_main_save_slots.c:212-217); percent 100 is "
+               "displayed (src/save_completion_percent.c:11-14, src/save_merge_link_slots.c:104-106), so "
                "index 21 is read and the array ends at gUnk_08553210"))
     # 2
     for s, e, why in SEG18_VALUES:
@@ -334,16 +334,16 @@ def provide(rom, cfg, segs):
     nxt = _next_label(labels, WAVE_TABLE)
     co.append((WAVE_TABLE, WAVE_TABLE + top + 1, "value",
                "s8 gUnk_087561CC[(gSpriteCameraY + line) >> 3] entries 0-%d, read by "
-               "sub_080b6b08/sub_080b6d04 (src/save_b6b08.c:54-61, src/save_b6d04.c:55-69) "
+               "sub_080b6b08/sub_080b6d04 (src/main_hblank_row_scroll.c:54-61, src/main_hblank_row_scroll_reverse.c:55-69) "
                "in the two effect rooms; %s" % (top, wwhy)))
     if WAVE_TABLE + top + 1 < nxt:
         co.append((WAVE_TABLE + top + 1, nxt, "unreachable",
                    "s8 gUnk_087561CC entries %d-%d: its two readers "
-                   "(src/save_b6b08.c:54-61, src/save_b6d04.c:55-69) index it "
+                   "(src/main_hblank_row_scroll.c:54-61, src/main_hblank_row_scroll_reverse.c:55-69) index it "
                    "((u16)gSpriteCameraY + 0..159) >> 3 <= %d (%s; the chain of clamps "
                    "in tools/census_bounds.py 2b), no other code reads it, and the "
                    "table before it, gHBlankScrollEffects[], is indexed only by "
-                   "gHBlankScrollEffect <= 10 (src/save_b6e44.c:19-33); next label "
+                   "gHBlankScrollEffect <= 10 (src/main_hblank_scroll.c:19-33); next label "
                    "gUnk_0875625C" % (top + 1, nxt - WAVE_TABLE - 1, top, wwhy)))
     # 3
     for v, k, d, frames, end in demos(rom):
@@ -352,18 +352,18 @@ def provide(rom, cfg, segs):
             raise ValueError("credits demo 0x%08X read past its next label" % d)
         co.append((d, d + 0x12C, "value",
                    "credits demo gUnk_087583CC[%d][%d] header (struct LinkSave, "
-                   "numbers, sub_080b72bc src/save_b72bc.c:10-72)" % (v, k)))
+                   "numbers, sub_080b72bc src/save_input_recorder_restore.c:10-72)" % (v, k)))
         co.append((d + 0x12C, end, "value",
                    "credits demo gUnk_087583CC[%d][%d] input entries key | count << 10 "
                    "that %d frames of playback read (InputRecorderPlayFrame "
-                   "src/save_b75a4.c:62-91, CreditsMain src/credits_cd330.c:112-147)"
+                   "src/save_input_recorder_frame.c:62-91, CreditsMain src/ending_credits.c:112-147)"
                    % (v, k, frames)))
         if end < nxt:
             co.append((end, nxt, "unreachable",
                        "credits demo gUnk_087583CC[%d][%d] entries after the last one "
                        "its scene plays (%d frames: 15 + gUnk_0875841E[%d][%d] - 1 + "
-                       "the fade, src/credits_cd330.c:112-147); the playback index "
-                       "only grows by the player count (src/save_b75a4.c:74-78) and no "
+                       "the fade, src/ending_credits.c:112-147); the playback index "
+                       "only grows by the player count (src/save_input_recorder_frame.c:74-78) and no "
                        "other code reads the record (the only recordings played are "
                        "these, gInputRecorderMode is 0 or 3); next label 0x%08X"
                        % (v, k, frames, v, k, nxt)))
@@ -374,7 +374,7 @@ def provide(rom, cfg, segs):
                    "struct TaskGfx record (tagged: {oam | 1, palette, tiles, palette2, "
                    "tiles2}) in the player record chain that no frame table entry "
                    "points at: PlayerLoadFrameTilesAndPalette and sub_0803dfc8 reach a "
-                   "record only through tbl[frame + a0] (src/stage_3cd60.c:492), and no "
+                   "record only through tbl[frame + a0] (src/player_helpers.c:492), and no "
                    "ROM word points into it"))
     for s, e, why in UNREACHABLE:
         co.append((s, e, "unreachable", why))

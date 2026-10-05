@@ -145,7 +145,7 @@ void HuffUnComp(const void *src, void *dest);                  /* 0x080CFA68 */
 
 /* MultiBoot: the thunk hardcodes mode = 1 (master).  Returns 0 on
  * success, a nonzero error code otherwise, as an int: MultiBootMain
- * (src/early_4984.c) tests the untruncated r0, and the SDK (pokeemerald)
+ * (src/link_multiboot_main.c) tests the untruncated r0, and the SDK (pokeemerald)
  * declares it the same way.  struct MultiBootParam is defined with the
  * multiboot/communication module. */
 int MultiBoot(struct MultiBootParam *param);                   /* 0x080CFA74 */

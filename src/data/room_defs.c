@@ -5,13 +5,13 @@
  * 333 struct RoomDef records (0x58 bytes) the stage room lists point at
  * (src/data/room_lists.c), in address order.  Every room loader reads
  * gRoomTable[level][stage][room] into gCurRoomDef (LoadRoom,
- * src/level_2296c.c:274; LoadHubRoom, src/level_23948.c:44;
- * LoadEndingRoom, src/level_242d0.c:221; and five more) and copies its
+ * src/room_reset_level_load_room.c:274; LoadHubRoom, src/room_hub.c:44;
+ * LoadEndingRoom, src/room_enter_exit.c:221; and five more) and copies its
  * sizes, borders, object count and flags into the room cells; the camera
  * loads its palettes, tiles, metatile tiles and BG3 map
- * (src/camera_28b8c.c:298-340) and its entry point (:151), the doors are
- * walked by SetDoorsOpenNearRoomEntry (src/door_26b60.c:26) and EnterDoor, the block
- * table unk10 by src/block_30804.c:459.  filler00 is {level, stage, room,
+ * (src/room_camera_init.c:298-340) and its entry point (:151), the doors are
+ * walked by SetDoorsOpenNearRoomEntry (src/room_doors.c:26) and EnterDoor, the block
+ * table unk10 by src/player_break_blocks.c:459.  filler00 is {level, stage, room,
  * 0} in every record, but no code reads it.
  *
  * Each room lays out its metatile map, block layer, block table (unk10),
@@ -36,7 +36,7 @@
 #define ROOM_DEF(addr) __attribute__((section(".room_def_" #addr)))
 
 /* bg2Palette, bg3Palette: {u16 byteSize, colours}, copied by
- * LoadBg2Gfx/LoadBg3Gfx (src/camera_28b8c.c:298-308) */
+ * LoadBg2Gfx/LoadBg3Gfx (src/room_camera_init.c:298-308) */
 extern u16 gUnk_0835D548[];
 extern u16 gUnk_0835D60C[];
 extern u16 gUnk_0835D710[];
@@ -260,7 +260,7 @@ extern u8 gUnk_08531C38[];
 extern u8 gUnk_08534160[];
 extern u8 gUnk_08536548[];
 
-/* metatileTiles: LZ77 metatile tables (LoadRoom, src/level_2296c.c) */
+/* metatileTiles: LZ77 metatile tables (LoadRoom, src/room_reset_level_load_room.c) */
 extern u8 gUnk_083A862C[];
 extern u8 gUnk_083A8B50[];
 extern u8 gUnk_083AA000[];
@@ -298,7 +298,7 @@ extern u8 gUnk_0852E7CC[];
 extern u8 gUnk_0852F03C[];
 
 /* bg3Map: struct BgMap (SelectBg3MapShape and LoadBg3Map,
- * src/camera_28b8c.c:321-340; DrawBg3Tile, src/bgmap_2a9cc.c) */
+ * src/room_camera_init.c:321-340; DrawBg3Tile, src/camera_draw_bg_map.c) */
 extern struct BgMap gUnk_083B5538;
 extern struct BgMap gUnk_083B5E54;
 extern struct BgMap gUnk_083B6770;

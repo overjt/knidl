@@ -22,9 +22,9 @@ census-proven ones:
                                  sprite-sheet zones (LZ77 sources, sized
                                  palettes, raw sheet headers, chained OAM)
     pictures gUnk_087319C8 rows: palette + LZ77 tiles + LZ77 map each,
-             the map rendered to a PNG (gfx_08b8c.c sub_08008d98)
+             the map rendered to a PNG (mode_gfx_loaders.c sub_08008d98)
     stage    gUnk_08731F78 GfxHeaders: palette + LZ77 tiles, rendered to
-             tile strips (mode_100ac.c sub_080102c0)
+             tile strips (cutscene_main.c sub_080102c0)
     headers  the four raw-tiles sheet headers the code reads
     misclz   gUnk_08731980, TransferNode mode 8 sources, direct LZ77 calls
              and the consumer-sized palette/tile blocks (census_sheets.SIZED)
@@ -369,7 +369,7 @@ class Extractor(object):
                     "attr1_flip": "0x%04X" % u16(rom, a + 4),
                     "attr2": "0x%04X" % u16(rom, a + 6)}
                    for a in range(vma, end, 8)]
-        obj = {"format": "BuildOam template stream (src/early_1b08.c): 8-byte "
+        obj = {"format": "BuildOam template stream (src/main_build_oam.c): 8-byte "
                          "entries up to and including the one whose attr0 has "
                          "bit 12 set",
                "evidence": evidence, "entries": entries}
@@ -480,7 +480,7 @@ class Extractor(object):
             pal, til, m = u32(rom, a), u32(rom, a + 4), u32(rom, a + 8)
             if not pal or not til:
                 continue
-            ev = "gUnk_087319C8[%d], sub_08008d98 src/gfx_08b8c.c:109-113" % i
+            ev = "gUnk_087319C8[%d], sub_08008d98 src/mode_gfx_loaders.c:109-113" % i
             if self._claim(pal, "pictures"):
                 self.add_palette(pal, pal + 64, False,
                                  ev + " (BG palette, RequestCopy 64 bytes)",
@@ -514,7 +514,7 @@ class Extractor(object):
             if not h:
                 continue
             ev = ("gUnk_08731F78[%d] -> GfxHeader 0x%08X, sub_080102c0 "
-                  "src/mode_100ac.c:88-93" % (i, h))
+                  "src/cutscene_main.c:88-93" % (i, h))
             banks, tcount = u16(rom, h), u16(rom, h + 2)
             pal, til = u32(rom, h + 8), u32(rom, h + 12)
             palette = None
@@ -594,7 +594,7 @@ class Extractor(object):
                              "stream" % v)
                     continue
                 self.add_lz77(v, "gUnk_08731980[%d][%d][%d], LZ77UnCompWram "
-                              "sub_08008d10 src/gfx_08b8c.c:96-100"
+                              "sub_08008d10 src/mode_gfx_loaders.c:96-100"
                               % (k // 4, k // 2 % 2, k % 2), "misclz")
         end = self.next_label(census_sheets.GFX_SETS)
         for a in range(census_sheets.GFX_SETS, end, 4):
@@ -612,7 +612,7 @@ class Extractor(object):
                     self.add_lz77(u32(rom, p + 4),
                                   "TransferNode 0x%08X {mode 8} source, "
                                   "LZ77UnCompVram (RequestCopyList "
-                                  "src/early_1518.c:203)" % p, "misclz")
+                                  "src/main_copy_queue.c:203)" % p, "misclz")
                 p += 12
         for v, why in sorted(census_sheets.DIRECT_LZ77.items()):
             if self._claim(v, "misclz"):

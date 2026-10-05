@@ -98,7 +98,7 @@ extern u32 gUnk_087556D4[];
 
 /* Functions (defined in the files named above each group). */
 
-/* src/menu_0b920.c */
+/* src/menu_main_save_slots.c */
 void MainMenuMain(void);
 void MenuDrawSaveSlots(void);
 void MenuLoadSaveSlotLabel(s32 slot);
@@ -106,7 +106,7 @@ void MenuLoadSaveSlotPicture(s32 slot, u32 pal);
 s32 MenuLoadSaveSlotPalette(s32 slot, u32 pal);
 void MenuLoadSaveSlotPercent(s32 slot, s32 value, s32 mode);
 
-/* src/menu_0c09c.c */
+/* src/menu_file_select.c */
 void MenuFileSelect(void);
 void MenuSetupFileMenu(void);
 void MenuFileMenuSelect(void);
@@ -114,7 +114,7 @@ void MenuNormalExtraSelect(void);
 void MenuPlayerCountSelect(void);
 void MenuEraseSelect(void);
 
-/* src/menu_0ca10.c */
+/* src/menu_mode_list.c */
 void MenuEnterModeList(void);
 void MenuDrawModeList(void);
 void MenuModeListSelect(void);
@@ -125,14 +125,14 @@ void SoundTestHighlightCursor(void);
 void SoundTestDrawNumber(s32 a);
 void SoundTestPlaySfx(void);
 
-/* src/menu_0d450.c */
+/* src/menu_sound_test_link_play.c */
 void MenuSoundTest(void);
 void MenuLinkPlay(void);
 void MenuSetLinkSessionMode(void);
 s32 sub_0800da74(void);
 void CreateFileSelectSprites(s32 mode);
 
-/* src/menutask_0daf8.c */
+/* src/menu_file_select_tasks.c */
 void Task_FileSelectSlotLabel(void);
 void Task_FileSelectSlot(void);
 void FileSelectSlotUpdate(void);
@@ -146,7 +146,7 @@ void FileMenuHighlightUpdate(void);
 void MenuUpdateFileMenuPalette(void);
 s32 MenuLoadPicture(s32 id, s32 part);
 
-/* src/menutask_0e314.c */
+/* src/menu_panel_tasks.c */
 void Task_NormalExtraPanel(void);
 void NormalExtraPanelUpdate(void);
 void Task_PlayerCountPanel(void);
@@ -158,7 +158,7 @@ void Task_ModePlayerCountPanel(void);
 void ModePlayerCountPanelUpdate(void);
 void Task_EraseConfirmDialog(void);
 
-/* src/menutask_0ea0c.c */
+/* src/menu_sound_test_tasks.c */
 void EraseConfirmDialogUpdate(void);
 void Task_EraseFileWipe(void);
 void EraseFileWipeDraw(void);
@@ -168,7 +168,7 @@ void Task_SoundTestPulse(void);
 void Task_LinkPlayPalettePulse(void);
 void Task_LinkPlayColorCycle(void);
 
-/* src/menutask_0f180.c */
+/* src/menu_link_play_tasks.c */
 void Task_LinkPlayPlayerList(void);
 void LinkPlayPlayerListUpdate(void);
 void Task_LinkPlayConsole(void);
@@ -180,7 +180,7 @@ void MenuScreenTitleUpdate(void);
 void Task_MenuBgPaletteCycle(void);
 void Task_MenuBackground(void);
 
-/* src/bgscroll_0fcbc.c */
+/* src/menu_bg_scroll.c */
 void BgScrollInit(void);
 void BgScrollStart(s32 xspeed, s32 yspeed, s32 xdist, s32 ydist, s32 bg);
 void BgScrollStartX(s32 speed, s32 dist, s32 bg);

@@ -19,19 +19,19 @@ provide(rom, cfg, segs) -> {"coincidence": [(start, end, kind, why)],
 * seg 19 from 0x0876B1FC: four complete GBA program images that the game
   only copies to another GBA, whose extents the consumers give as label
   differences: MultiBootInitWithParams(gUnk_0876B1FC, gUnk_0876F690)
-  (src/menu_0d450.c:137, src/early_3964.c:114) sends [start+0xC0, end)
+  (src/menu_sound_test_link_play.c:137, src/link_setup.c:114) sends [start+0xC0, end)
   as the multiboot program, sub_08007e04 copies gUnk_0876F690 -
-  gUnk_0876B1FC bytes of it to 0x02020000 (src/mode_07b68.c:164-165), and
+  gUnk_0876B1FC bytes of it to 0x02020000 (src/mode_extra_mode_title.c:164-165), and
   sub_08007c5c sends one of [gUnk_0876F690, gUnk_087954C0),
   [gUnk_087954C0, gUnk_087C0A4C), [gUnk_087C0A4C, gRoomTable) to the other
-  players with LinkBlockAnnounce (src/mode_07b68.c:99-111,
-  src/early_4000.c:265).  Each image starts with its own cartridge header
+  players with LinkBlockAnnounce (src/mode_extra_mode_title.c:99-111,
+  src/link_setup_intr_block.c:265).  Each image starts with its own cartridge header
   (checked here: `b 0xC0` and the Nintendo logo of this ROM).  An image is
   a separately linked program that runs from the receiver's EWRAM; its
   words do not depend on this ROM's layout, and no code of this game reads
   inside it (its only references are the four starts, include/mode.h).
 * gUnk_0872EB14, u8 [shape][size][2] sprite half-dimensions read as bytes
-  by the affine sprite emitter (src/early_1cc8.c:54-55), up to
+  by the affine sprite emitter (src/main_affine_sprite.c:54-55), up to
   gBootSignature (0x0872EB2C).
 """
 
@@ -51,24 +51,24 @@ ROM_BASE = 0x08000000
 KIND = "m4a song data"
 
 # the multiboot / link images, in address order, and what ends the last one
-# (src/mode_07b68.c:99-111 and :164, src/menu_0d450.c:137)
+# (src/mode_extra_mode_title.c:99-111 and :164, src/menu_sound_test_link_play.c:137)
 IMAGE_STARTS = [
     (0x0876B1FC, "the single-pak multiboot program: MultiBootInitWithParams("
-     "gUnk_0876B1FC, gUnk_0876F690), src/menu_0d450.c:137; sub_08007e04 "
-     "copies it to 0x02020000, src/mode_07b68.c:164-165"),
+     "gUnk_0876B1FC, gUnk_0876F690), src/menu_sound_test_link_play.c:137; sub_08007e04 "
+     "copies it to 0x02020000, src/mode_extra_mode_title.c:164-165"),
     (0x0876F690, "sub-game image 0: sub_08007c5c sends gUnk_087954C0 - "
-     "gUnk_0876F690 bytes to the other players, src/mode_07b68.c:99-101"),
+     "gUnk_0876F690 bytes to the other players, src/mode_extra_mode_title.c:99-101"),
     (0x087954C0, "sub-game image 1: sub_08007c5c sends gUnk_087C0A4C - "
-     "gUnk_087954C0 bytes, src/mode_07b68.c:103-105"),
+     "gUnk_087954C0 bytes, src/mode_extra_mode_title.c:103-105"),
     (0x087C0A4C, "sub-game image 2: sub_08007c5c sends gRoomTable - "
-     "gUnk_087C0A4C bytes, src/mode_07b68.c:107-109"),
+     "gUnk_087C0A4C bytes, src/mode_extra_mode_title.c:107-109"),
 ]
 IMAGES_END = 0x087E1D58  # gRoomTable
 
 HALF_DIMS = (0x0872EB14, 0x0872EB2C,
              "gUnk_0872EB14: u8 {w, h} sprite half-dimensions by shape and "
              "size, read as bytes by the affine sprite emitter "
-             "(src/early_1cc8.c:54-55; include/main.h:128), up to "
+             "(src/main_affine_sprite.c:54-55; include/main.h:128), up to "
              "gBootSignature")
 
 

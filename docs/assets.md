@@ -104,11 +104,11 @@ and written in place over their slot `[vma, rom_end)`:
 | --- | --- |
 | `pal-raw` / `pal-counted` | JASC-PAL colours quantized back to BGR555 (8→5 bits; `>> 3` round-trips the extractor's `(v << 3) \| (v >> 2)` expansion exactly); the counted form re-writes the `u16` byte count |
 | `tiles-raw` | the `.4bpp` bytes verbatim |
-| `tiles-chunks` | re-framed with the manifest's chunk layout: chunk count and the `0xFFFF` terminator kept, per-chunk sizes may change — a blob that grew or shrank resizes the *last* chunk, because chunks are copied to VRAM pages `0x400` apart (`TaskLoadFrameTiles`, `src/early_5acc.c`), so earlier chunks keep their pages |
+| `tiles-chunks` | re-framed with the manifest's chunk layout: chunk count and the `0xFFFF` terminator kept, per-chunk sizes may change — a blob that grew or shrank resizes the *last* chunk, because chunks are copied to VRAM pages `0x400` apart (`TaskLoadFrameTiles`, `src/task_frame_tiles.c`), so earlier chunks keep their pages |
 | `lz77` | re-compressed with a BIOS LZ77 (type 0x10) writer; every stream is decoded back through `extract_assets.lz77_decode` and compared before it is spliced, and its size may differ from Nintendo's original |
 | `raw-map` / `bgmap-raw` | map bytes verbatim / behind the 6-byte `{size, width, height}` header; the dimensions are fixed by the RoomDef, so the file length must not change |
 | `bgmap-lz77` | the same header (the `u16` flag word at +6 is preserved from the ROM) and the re-compressed stream at the recorded `stream_vma` |
-| `oam` | JSON entries packed back to little-endian halfwords; attr0 bit 12 (BuildOam's "last" flag, `src/early_1b08.c`) must be set on exactly the final entry |
+| `oam` | JSON entries packed back to little-endian halfwords; attr0 bit 12 (BuildOam's "last" flag, `src/main_build_oam.c`) must be set on exactly the final entry |
 
 `graphics/*.png` are rendered **views**: an edit fails with the list of
 view-only files and the underlying `palettes/`, `tiles/` or `maps/` file to

@@ -568,7 +568,7 @@ REASONS = {
     "fn-engine": "tracked by #155: engine-zone helpers whose role is not settled",
     "fn-lib": "runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8)",
     "ram": "tracked by #155: role not proven; many are proven shared scratch or hold two encodings",
-    "io": "none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and early_4734.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_*",
+    "io": "none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and link_block_main.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_*",
     "rom-asset": "asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md)",
     "rom-data": "tracked by #155: functional data whose consumer does not settle a name",
     "rom-position": "documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4)",
@@ -578,7 +578,7 @@ REASONS = {
     "field-local": "local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`)",
     "loc": "none left: the code is C",
     "field-player-scratch": "struct PlayerState's per-action scratch: each player action keeps its own value there, named per action by the aliases in include/task_vars.h (#155 run 7; the member keeps its unk name)",
-    "field-task-family-local": "the per-family registers in the task engine's local copies of struct Task (src/early_58e4.c, early_5c4c.c): named per family by the aliases of include/task_vars.h, which the engine never uses",
+    "field-task-family-local": "the per-family registers in the task engine's local copies of struct Task (src/task_move.c, task_draw_screen.c): named per family by the aliases of include/task_vars.h, which the engine never uses",
     # ROM labels by their referrers (#155 run 7, mechanical)
     "rom-shared": "shared: two or more slots, records or consumers point at it, so no single slot or role is its identity (docs/naming.md section 2.4)",
     "rom-via-unnamed": "reached only through a record or consumer that is itself unnamed (a `gUnk_` record, a `sub_*`): it is named with that referrer",

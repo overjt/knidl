@@ -98,14 +98,14 @@ extern u16 gCreditsDemoLengths[][7]; /* credits: per variant, the scenes' length
 
 /* Functions (defined in the files named above each group). */
 
-/* src/mode_c6260.c */
+/* src/ending_main.c */
 void EndingMain(void);
 void EndingEpilogueScene(void);
 void CreateEndingEpilogue(void);
 void EndingStarRodReturnScene(void);
 void CreateEndingStarRodReturn(void);
 
-/* src/results_c6420.c */
+/* src/ending_final_results.c */
 void FinalResultsScreen(void);
 void DrawLargeClockScreen(void);
 void ShowMilestonePicture(void);
@@ -114,7 +114,7 @@ void DrawScoreToBgMap(s32 v, s32 x, s32 y);
 void DrawClockToBgMap(u16 *time, s32 x, s32 y);
 void CopyToBgMap(u16 *src, s32 x, s32 y, s32 n);
 
-/* src/ending_c6c64.c */
+/* src/ending_epilogue.c */
 void Task_EndingEpilogue(void);
 void EndingEpilogueLoadGraphics(void);
 void CreateEndingEpilogueObjects(void);
@@ -124,7 +124,7 @@ void CreateEndingEpilogueWarpStarEffects(void);
 void EndingEpilogueWarpStarEffect(void);
 void EndingEpilogueTrailStar(void);
 
-/* src/ending_c7e4c.c */
+/* src/ending_epilogue_kirby.c */
 void EndingEpilogueKirby(void);
 void EndingEpilogueKirbyDraw(void);
 void CreateEndingEpilogueStarRod(void);
@@ -138,7 +138,7 @@ void EndingEpilogueCamera(void);
 void EndingEpilogueCameraUpdate(void);
 void EndingEpilogueStoryText(void);
 
-/* src/ending_c9004.c */
+/* src/ending_star_rod_return.c */
 void Task_EndingStarRodReturn(void);
 void EndingStarRodReturnLoadGraphics(void);
 void CreateEndingStarRodReturnObjects(void);
@@ -161,13 +161,13 @@ void EndingStarRodReturnFountainJet(void);
 void sub_080ca830(void);
 void sub_080ca8f0(void);
 
-/* src/boot_caa3c.c */
+/* src/boot_logo_init_objects.c */
 void BootLogoInitObjects(void);
 
-/* src/boot_caab8.c */
+/* src/boot_logo_update_objects.c */
 void BootLogoUpdateObjects(void);
 
-/* src/gameover_cacf0.c */
+/* src/game_over_screen.c */
 void GameOverMain(void);
 void GameOverScreen(void);
 void GameOverMetaKnightmareScreen(void);
@@ -182,7 +182,7 @@ void GameOverLoadGraphics(void);
 void GameOverResetWait(void);
 void CreateGameOverObjects(void);
 
-/* src/gameover_cb354.c */
+/* src/game_over_tasks.c */
 void Task_GameOverSprite(void);
 void Task_GameOverCursor(void);
 void Task_GameOverPalette(void);
@@ -192,7 +192,7 @@ void GameOverPlayer(void);
 void GameOverPlayerUpdate(void);
 void GameOverPlayerEnterState(void);
 
-/* src/gameover_cb64c.c */
+/* src/game_over_player.c */
 void GameOverPlayerWait(void);
 void GameOverPlayerWaitUpdate(void);
 void GameOverPlayerContinue(void);
@@ -200,7 +200,7 @@ void GameOverPlayerContinueUpdate(void);
 void GameOverPlayerGiveUp(void);
 void GameOverPlayerGiveUpUpdate(void);
 
-/* src/gameover_cbed4.c */
+/* src/game_over_choice.c */
 void GameOverChoice(void);
 void GameOverChoiceUpdate(void);
 void CreateGameOverObject(u8 variant);
@@ -220,7 +220,7 @@ void GameOverChoiceGiveUpStartUpdate(void);
 void GameOverChoiceGiveUpEnd(void);
 void GameOverChoiceGiveUpEndUpdate(void);
 
-/* src/gameover_ccd4c.c */
+/* src/game_over_objects.c */
 void sub_080ccd4c(void);
 void sub_080cce98(void);
 void sub_080ccec8(void);
@@ -232,7 +232,7 @@ void sub_080cd248(void);
 void sub_080cd24c(void);
 void GameOverKnockedOutPlayers(void);
 
-/* src/credits_cd330.c */
+/* src/ending_credits.c */
 void CreditsMain(void);
 void CreditsLoadScene(void);
 void CreditsInitText(void);

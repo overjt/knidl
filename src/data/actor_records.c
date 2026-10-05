@@ -5,9 +5,9 @@
 /* The actor records of seg 18 (0x0873F2B8-0x0874C3CF, issue #36 phase 2
  * run 3): 136 struct ActorDef (0x2C bytes) and 43 struct ActorAux (8 bytes)
  * records in 34 runs, each run in address order.  ActorInitFromDefSlot and
- * ActorLoadDefSlot (src/actor_63698.c) read an ActorDef when a task binds
+ * ActorLoadDefSlot (src/actor.c) read an ActorDef when a task binds
  * it (Actor.def); ActorDef.aux becomes Actor.aux, the ActorAux whose
- * altAttackBox becomes gAttackBox (src/actor_673ec.c).  The six pointer
+ * altAttackBox becomes gAttackBox (src/actor_held_player.c).  The six pointer
  * tables are src/data/actor_defs.c; since #167 the behaviour tables and
  * scripts between the runs are src/data/actor_tables.c and the terrain
  * handlers and hit reactions the records point at src/data/

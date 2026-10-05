@@ -4,7 +4,7 @@
 /* The rooms' BG animation scripts and palette fades (room_bg_anims,
  * 0x08334EC0-0x0835CFD3, issue #167): 30 scripts (struct BgAnimCmd
  * arrays) and 14 palette fades (struct BgAnimPaletteFade) in 40 runs, in
- * address order.  LoadRoomBgAnims (src/camera_2d01c.c) loads the
+ * address order.  LoadRoomBgAnims (src/camera_bg_anims.c) loads the
  * NULL-ended script list gRoomBgAnimScripts[RoomDef.bgAnimSet] into the
  * slots gBgAnims[]; UpdateBgAnims runs each script one 8-byte command
  * {op, arg, ptr} at a time:

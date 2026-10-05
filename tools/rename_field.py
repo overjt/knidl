@@ -39,7 +39,7 @@ branch token by token (field renames are accepted only after `.` / `->` or
 at a member declarator inside a definition of their struct).
 
 Local copies: several files declare their own copy of a shared struct with
-other member names (src/early_4fec.c's `struct Task` calls Task.unk14
+other member names (src/task_init.c's `struct Task` calls Task.unk14
 `b14`).  With `copies` the member at the same offset in every definition of
 the struct is renamed too, whatever its old name, and each such copy is
 logged as its own renames.csv row; a copy whose member at that offset is an
@@ -90,8 +90,8 @@ UNKNOWN_FIELD_RE = re.compile(r"^unknown field '(?P<field>\w+)' specified in ini
 # Local copies of a shared struct under another tag, renamed with `copies`
 # like the same-tag copies: (file, tag) per shared struct.
 ALIASES = {
-    # early_5d9c.c's draw callbacks see the task block as `struct Sprite`.
-    "Task": [("src/early_5d9c.c", "Sprite")],
+    # task_draw_world.c's draw callbacks see the task block as `struct Sprite`.
+    "Task": [("src/task_draw_world.c", "Sprite")],
 }
 
 
