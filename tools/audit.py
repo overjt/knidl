@@ -30,7 +30,11 @@ committed tree only), so CI runs it on every push.  The checks:
      such a site (or, for kind `stand-in`, at a line of that function).
   6. The placeholder census: `sub_*` functions, `gUnk_*` RAM, I/O and ROM
      symbols, `unk*` struct fields and `loc_*` labels, by kind, category and
-     zone, each category with its reason.  The generated summary lives in
+     zone, each category with its reason.  The asset labels (#183) are
+     classed by tools/name_assets.py from their owner chains: named by
+     their owner (semantic, position, format-only, by consumer), or kept
+     with a computed reason; the audit fails on one the docs/naming.md 2.5
+     rules would still name.  The generated summary lives in
      docs/naming.md between the `audit:placeholders` markers; the audit
      fails when the committed summary is stale (regenerate with `--write`).
   7. Source file names (#182, docs/naming.md section 8): every row of
@@ -578,7 +582,17 @@ REASONS = {
     "fn-lib": "runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8)",
     "ram": "tracked by #155: role not proven; many are proven shared scratch or hold two encodings",
     "io": "none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and link_block_main.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_*",
-    "rom-asset": "asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md)",
+    # asset labels (#183, docs/naming.md 2.5): named after their owner, or
+    # the reason tools/name_assets.py computes from the same chains
+    "asset-semantic": "asset label named after a semantic owner: the named record whose consumer-proven word points at it, by the pointer chain (docs/naming.md 2.5 A1-A3)",
+    "asset-position": "asset label named after a position owner: a position record or a table whose slots are position names, such as gPlayerFrame189, a RoomDef or a BG animation script (docs/naming.md 2.5 A4)",
+    "asset-format": "asset label named by a format-only frame list alone: no code reads the list (docs/naming.md 2.5 Q1, docs/data.md 5.3)",
+    "asset-consumer": "asset label no record points at, named by its one consuming function and the kind its call proves (docs/naming.md 2.5, code only)",
+    "asset-shared": "asset label whose referrers span owners: records of several tables or stages, or records and code, or several functions (docs/naming.md 2.5 A3)",
+    "asset-via-unnamed": "asset label reached only through an unnamed record or a `sub_*` (a functional `gUnk_` table, a frame table or player frame record #155 left unnamed): it is named with that referrer",
+    "asset-via-unnamed-field": "asset label its owner points at through a word with no field name: a struct field still `unkNN`, a word the struct does not declare (the player's 20-byte frame records' +0xC/+0x10), or a 2D table column whose kind no consumer proves (docs/naming.md 2.5 A2)",
+    "asset-positional-table": "asset label in a slot of a table whose own name is a position (it ends in its index, gEnemyPaletteVariant0), so A1 has no singular (docs/naming.md 2.5 Q4)",
+    "asset-no-owner": "asset label no record points at: unreferenced, or only a `sub_*` function's code names it (docs/naming.md 2.5)",
     "rom-data": "tracked by #155: functional data whose consumer does not settle a name",
     "rom-position": "documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4)",
     "rom-position-format": "documented by position in a format-only chain: a slot no code reads, such as the frame list a graphics descriptor's trailer word points at (docs/naming.md section 2.4, docs/data.md 5.3)",
@@ -616,7 +630,8 @@ UNNAMED_REASONS = {
     "write-only": "written but never read, or only cleared",
     "never-accessed": "no code reads or writes it",
     "unproven-bits": "a flag word whose bits are not all proven (docs/naming.md 7.0, R3)",
-    "asset": "a graphic, palette, tilemap or text picture in a functional segment: an asset label, unnamed by the data policy (docs/naming.md 5)",
+    "consumer-ambiguous": "an asset label only its one named consumer's code mentions, which loads several of its kind that no destination the code proves tells apart (docs/naming.md 2.5)",
+    "no-kind": "an asset label only its one named consumer's code mentions, and the call it is passed to proves no kind (Palette, Tiles, Map, OamTemplate) (docs/naming.md 2.5)",
 }
 UNNAMED_KINDS = {"function": "fn", "ram": "ram", "field": "field", "rom": "rom"}
 
@@ -754,9 +769,37 @@ def position_names(format_only=False):
         with open(path, encoding="utf-8") as f:
             for row in csv.DictReader(f):
                 ev = row.get("evidence", "")
+                if row.get("kind") == "asset":
+                    continue  # counted by owner (#183, asset_names())
                 if ev.startswith("slot:") and (not format_only or "format-only" in ev):
                     names.add(row["new"])
     return names
+
+
+def asset_names():
+    """{name: (root owner, format-only, by consumer)} of the asset labels
+    #183 named (docs/analysis/renames.csv rows of kind `asset`): the chain's
+    named owner is the first symbol of a `slot:` evidence"""
+    out = {}
+    path = os.path.join(ROOT, "docs/analysis/renames.csv")
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            for row in csv.DictReader(f):
+                if row.get("kind") != "asset":
+                    continue
+                ev = row.get("evidence", "")
+                m = re.match(r"slot:\s*([A-Za-z_]\w*)", ev)
+                out[row["new"]] = (m.group(1) if m else None, ", format-only" in ev, not m)
+    return out
+
+
+def asset_model():
+    """tools/name_assets.py's reference model of the tree (#183)"""
+    spec = importlib.util.spec_from_file_location(
+        "name_assets", os.path.join(ROOT, "tools", "name_assets.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.Model()
 
 
 LABEL_RE = re.compile(r"^([A-Za-z_][\w.$]*):")
@@ -864,6 +907,29 @@ def placeholder_census():
         if cat == "rom-several" and unnamed is not None:
             return reason("rom", name, cat)
         return cat
+    # asset labels (#183): named after their owner, or a computed reason
+    anames = asset_names()
+    amodel = asset_model()
+    unapplied, areasons = amodel.census()
+    extra["asset_unapplied"] = sorted("%s -> %s" % (t, p["new"]) for t, p in unapplied.items())
+    asset_by = {}
+
+    def asset_cat(name):
+        if name in anames:
+            root, fmt, consumer = anames[name]
+            if consumer:
+                cls = "consumer"
+            else:
+                cls = amodel.owner_class(root, fmt)
+            asset_by[cls] = asset_by.get(cls, 0) + 1
+            return "asset-" + cls
+        r = areasons.get(name, ("no-owner", ""))[0]
+        if r == "by-consumer":
+            # one named function's code alone: its unnamed.csv row says why
+            return reason("rom", name, "asset-no-owner")
+        if r == "collision":
+            return "asset-shared"
+        return "asset-" + r
     rom_named = rom_unk_asset = rom_unk_data = rom_pos = 0
     for path in files_under("data", (".s",)):
         seg = os.path.splitext(os.path.basename(path))[0]
@@ -879,19 +945,19 @@ def placeholder_census():
             name = m.group(1)
             if name == seg or name.startswith(".L"):
                 continue
-            if name in formats:
+            if seg in assets and (name in anames or name.startswith("gUnk_")):
+                if name.startswith("gUnk_"):
+                    rom_unk_asset += 1
+                add("ROM label", asset_cat(name))
+            elif name in formats:
                 rom_pos += 1
                 add("ROM label", "rom-position-format")
             elif name in positions:
                 rom_pos += 1
                 add("ROM label", "rom-position")
             elif name.startswith("gUnk_"):
-                if seg in assets:
-                    rom_unk_asset += 1
-                    add("ROM label", "rom-asset")
-                else:
-                    rom_unk_data += 1
-                    add("ROM label", rom_cat(name))
+                rom_unk_data += 1
+                add("ROM label", rom_cat(name))
             else:
                 rom_named += 1
     # ROM labels the C tables of src/data/ define (c_data rows): they left
@@ -910,6 +976,7 @@ def placeholder_census():
         else:
             rom_named += 1
     extra["rom"] = (rom_named, rom_unk_asset, rom_unk_data, rom_pos)
+    extra["asset_by"] = asset_by
     # struct fields
     header_structs = {}
     for path in files_under("include", (".h",)):
@@ -988,7 +1055,9 @@ def census_markdown(rows, by_zone, extra):
     kinds = ["function", "RAM cell", "I/O register", "ROM label", "struct field", "label"]
     fixed = ["fn-game", "fn-engine", "fn-lib", "ram", "io", "rom-data", "rom-shared",
              "rom-via-unnamed", "rom-via-slot", "rom-local", "rom-several", "rom-unreferenced",
-             "rom-asset", "rom-position", "rom-position-format", "field-task-family",
+             "asset-shared", "asset-via-unnamed", "asset-via-unnamed-field", "asset-positional-table",
+             "asset-no-owner", "rom:consumer-ambiguous", "rom:no-kind", "asset-semantic", "asset-position",
+             "asset-format", "asset-consumer", "rom-position", "rom-position-format", "field-task-family",
              "field-player-scratch", "field-task-family-local", "field-header", "field-local", "loc"]
     pattern = {"function": "`sub_*`", "RAM cell": "`gUnk_02*`, `gUnk_03*`",
                "I/O register": "`gUnk_04*`", "ROM label": "`gUnk_08*`",
@@ -1000,13 +1069,19 @@ def census_markdown(rows, by_zone, extra):
         return (kinds.index(kind), 1 if coded and cat.endswith(":unexamined") else 0,
                 fixed.index(cat) if cat in fixed else len(fixed), -n, cat)
     for (kind, cat), n in sorted(rows.items(), key=key):
-        pat = "(named)" if cat.startswith("rom-position") else pattern[kind]
+        named = cat.startswith("rom-position") or cat in ("asset-semantic", "asset-position",
+                                                           "asset-format", "asset-consumer")
+        pat = "(named)" if named else pattern[kind]
         out.append("| %s | %s | %d | %s |" % (kind, pat, n, category_reason(cat)))
     ram_named, ram_unk, ram_pos = extra["ram"]
     rom_named, rom_asset, rom_data, rom_pos = extra["rom"]
     out.append("")
-    out.append("Named for comparison: %d RAM cells by role and %d by position, %d ROM labels by role and %d by position."
-               % (ram_named, ram_pos, rom_named, rom_pos))
+    ab = extra.get("asset_by", {})
+    out.append("Named for comparison: %d RAM cells by role and %d by position, %d ROM labels by role and %d by position; "
+               "%d asset labels by their owner (#183, docs/naming.md 2.5): %d semantic, %d position, %d format-only, "
+               "%d by consumer."
+               % (ram_named, ram_pos, rom_named, rom_pos, sum(ab.values()), ab.get("semantic", 0),
+                  ab.get("position", 0), ab.get("format", 0), ab.get("consumer", 0)))
     out.append("")
     out.append("Functions by zone (the #34 module map, docs/analysis/module-map.md):")
     out.append("")
@@ -1064,6 +1139,9 @@ def check_census(rep, write):
         rep.fail("%s: the placeholder census is stale (run `python3 tools/audit.py --write`)" % NAMING_DOC)
     for m in extra.get("missing", []):
         rep.fail("placeholder not examined (no %s row): %s" % (UNNAMED_CSV, m))
+    for m in extra.get("asset_unapplied", []):
+        rep.fail("asset label the docs/naming.md 2.5 rules name, still a placeholder "
+                 "(tools/name_assets.py): %s" % m)
     for s in extra.get("stale", []):
         rep.fail("%s row for a symbol that is no placeholder (renamed?): %s" % (UNNAMED_CSV, s))
     for (kind, cat), n in rows.items():

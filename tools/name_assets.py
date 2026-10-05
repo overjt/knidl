@@ -29,7 +29,9 @@ settled, so a chain is named from its owner down (a frame table -> its
 TaskGfx record -> the record's OAM template, palette and tiles), by the
 rules A1-A5 and Q1-Q7 of docs/naming.md 2.5; what is left gets a reason
 (`shared`, `via-unnamed`, `via-unnamed-field`, `positional-table`,
-`no-owner`), which tools/audit.py's census uses.  The tool proposes; the
+`no-owner`, or `by-consumer` for a label only one named function's code
+mentions, whose docs/analysis/unnamed.csv row gives the reason), which
+tools/audit.py's census uses (census()).  The tool proposes; the
 names are applied with tools/rename.py (kind `asset`).
 """
 
@@ -488,7 +490,7 @@ class Model(object):
         self.slot_of = {}
         for r in self.rows:
             m = SLOT_EV_RE.match(r["evidence"])
-            if m:
+            if m and r["kind"] != "asset":
                 self.slot_of[r["new"]] = (m.group(1), int(m.group(2)))
         self.position_tables = set(t for t, k in self.slot_of.values())
         known = set(self.labels) | set(self.crecords)
@@ -706,6 +708,13 @@ class Model(object):
 
     run = propose
 
+    def census(self):
+        """(unapplied, reasons) for the audit: the asset placeholders the
+        rules would still name ({old: proposal}, empty in a consistent tree)
+        and the reason of every other asset placeholder ({old: (code,
+        note)})"""
+        return self.propose()
+
     # ---- the rules -----------------------------------------------------------
 
     # family: the table whose slots hold a record (A3)
@@ -763,7 +772,13 @@ class Model(object):
         recs = [e for e in use if e.kind == "record"]
         if code and not recs:
             fns = sorted(set(name(e.ref) for e in code))
-            return ("reason", "no-owner", "code only: " + ", ".join(fns))
+            if len(fns) > 1:
+                return ("reason", "shared", "code only, several functions: " + ", ".join(fns))
+            if is_placeholder(fns[0]):
+                return ("reason", "no-owner", "code only, a placeholder function: " + fns[0])
+            # one named consumer: named by the kind its call proves, else its
+            # docs/analysis/unnamed.csv row says why not (docs/naming.md 2.5)
+            return ("reason", "by-consumer", "code only: " + fns[0])
         if code:
             return ("reason", "shared", "records and code: " + ", ".join(sorted(set(name(e.ref) for e in use))))
         notes = ""
