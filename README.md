@@ -65,7 +65,7 @@ for the game and labeled assembly for the runtime zones kept as asm by
 design (each its own `[asm]` unit there, docs/decomp-dev.md). It measures
 code only; naming and data readability are the figures below.
 
-<!-- Figures from `make progress` after #176; refresh after any asm, naming or data change. -->
+<!-- Figures from `make progress` after #180; refresh after any asm, naming or data change. -->
 
 ```
 851196 total bytes of code
@@ -76,8 +76,8 @@ code only; naming and data readability are the figures below.
         4168 bytes excluded from decompilation tracking
 
 34017 total symbols
-    9524 symbols documented (27.9978%)
-    24493 symbols undocumented (72.0022%)
+    14208 symbols documented (41.7674%)
+    19809 symbols undocumented (58.2326%)
 
 7537432 total bytes of data
     95640 bytes of data in src (1.2689%)
