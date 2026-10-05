@@ -745,13 +745,13 @@ codes:
 | ROM label | `gUnk_08*` | 1 | no code or record names it: a record boundary the data census cut, reached by an offset from a named neighbour |
 | ROM label | `gUnk_08*` | 397 | asset label whose referrers span owners: records of several tables or stages, or records and code, or several functions (docs/naming.md 2.5 A3) |
 | ROM label | `gUnk_08*` | 2245 | asset label reached only through an unnamed record or a `sub_*` (a functional `gUnk_` table, a frame table or player frame record #155 left unnamed): it is named with that referrer |
-| ROM label | `gUnk_08*` | 1877 | asset label its owner points at through a word with no field name: a struct field still `unkNN`, a word the struct does not declare (the player's 20-byte frame records' +0xC/+0x10), or a 2D table column whose kind no consumer proves (docs/naming.md 2.5 A2) |
+| ROM label | `gUnk_08*` | 71 | asset label its owner points at through a word with no field name: a struct field still `unkNN`, a word past the end of the struct (an unlabeled 12-byte TaskGfx after a labeled one; #186 declared the player's 20-byte frame records as struct TaskGfxExtended), or a 2D table column whose kind no consumer proves (docs/naming.md 2.5 A2) |
 | ROM label | `gUnk_08*` | 165 | asset label in a slot of a table whose own name is a position (it ends in its index, gEnemyPaletteVariant0), so A1 has no singular (docs/naming.md 2.5 Q4) |
 | ROM label | `gUnk_08*` | 10 | asset label no record points at: unreferenced, or only a `sub_*` function's code names it (docs/naming.md 2.5) |
 | ROM label | `gUnk_08*` | 71 | an asset label only its one named consumer's code mentions, which loads several of its kind that no destination the code proves tells apart (docs/naming.md 2.5) |
 | ROM label | `gUnk_08*` | 15 | an asset label only its one named consumer's code mentions, and the call it is passed to proves no kind (Palette, Tiles, Map, OamTemplate) (docs/naming.md 2.5) |
 | ROM label | (named) | 5024 | asset label named after a semantic owner: the named record whose consumer-proven word points at it, by the pointer chain (docs/naming.md 2.5 A1-A3) |
-| ROM label | (named) | 7213 | asset label named after a position owner: a position record or a table whose slots are position names, such as gPlayerFrame189, a RoomDef or a BG animation script (docs/naming.md 2.5 A4) |
+| ROM label | (named) | 9019 | asset label named after a position owner: a position record or a table whose slots are position names, such as gPlayerFrame189, a RoomDef or a BG animation script (docs/naming.md 2.5 A4) |
 | ROM label | (named) | 9 | asset label named by a format-only frame list alone: no code reads the list (docs/naming.md 2.5 Q1, docs/data.md 5.3) |
 | ROM label | (named) | 46 | asset label no record points at, named by its one consuming function and the kind its call proves (docs/naming.md 2.5, code only) |
 | ROM label | (named) | 5336 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
@@ -775,7 +775,7 @@ codes:
 | struct field | `unk*` | 1 | a flag word whose bits are not all proven (docs/naming.md 7.0, R3) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 518 RAM cells by role and 24 by position, 3323 ROM labels by role and 5396 by position; 12292 asset labels by their owner (#183, docs/naming.md 2.5): 5024 semantic, 7213 position, 9 format-only, 46 by consumer.
+Named for comparison: 518 RAM cells by role and 24 by position, 3323 ROM labels by role and 5396 by position; 14098 asset labels by their owner (#183, #186, docs/naming.md 2.5): 5024 semantic, 9019 position, 9 format-only, 46 by consumer.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 
