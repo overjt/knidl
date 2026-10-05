@@ -128,6 +128,12 @@ code only; naming and data readability are the figures below.
   `unk*` fields and the functional ROM labels) has its reason in
   `docs/analysis/unnamed.csv` or in its referrers, and `make audit` keeps
   that census in [docs/naming.md](docs/naming.md) section 5.1.
+- **File names** (#182). The source files are named after what they hold,
+  `<subsystem>_<content>.c` in a flat `src/` (`src/enemy_fire_lion.c`,
+  `src/actor_defeat.c`, `src/player_ladder_inhale.c`, `src/task.c`;
+  [docs/naming.md](docs/naming.md) section 8). The address names they had
+  before, which closed issues and PRs quote, resolve through
+  `docs/analysis/file-renames.csv`.
 
 ## For modders
 

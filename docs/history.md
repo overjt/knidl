@@ -1180,3 +1180,35 @@ moved the record here; `AGENTS.md`'s `## Status` stays the current state.
   3,980 -> 4,637 sites; struct tags 33 -> 36.  No change moved a byte:
   `make compare` after every batch, `make shifttest` unchanged.  New
   lessons 3.530 and 4.173-4.176.
+- Source file names (issue #182): **every decompiled translation unit is
+  named after its content.**  298 of the 306 `src/*.c` were named
+  `<zone>_<addr>.c` and two after their only function; all 300 are now
+  `<prefix>_<content>.c` in a flat `src/` (`src/actor_defeat.c`,
+  `src/enemy_fire_lion.c`, `src/task.c`; docs/naming.md section 8).  The
+  prefix is the subsystem: the `include/*.h` header that declares most of
+  the file's public functions, except 33 files whose header's name
+  misdescribes them (the owner's decision: the HBlank-scroll driver in
+  `save.h` is `main_hblank_*`, the fountain cutscene's scripts in
+  `player.h` are `cutscene_fountain_*`, the room-object loaders in `hud.h`
+  are `room_*`, the boot logo and the game-over screen of `ending.h` take
+  the two extra prefixes `boot_` and `game_over_`) and 5 files no header
+  declares; each carries its reason in the table, and their prototypes
+  are candidates to move to the header their file is named after.  The
+  content part comes from the functions and task bodies by code bytes:
+  one family, two in ROM order, or the shared theme or dominant family of
+  more; a family is named where most of its bytes are; the `sub_*` files
+  by the role their callers prove.  The stem is also the segment name, the
+  output section and object path in `linker.ld` and a word in the tools,
+  generated analysis files, comments and docs: `tools/rename_tu.py` did
+  the `git mv` and rewrote about 22,800 references in 291 files (history
+  and lessons included); the old names survive only in
+  `docs/analysis/file-renames.csv` (`old,new,prefix_header,deviation,
+  evidence`), which resolves the names closed issues and PRs quote, and
+  `make audit` (check 7) fails on an old name anywhere else, a prefix
+  outside the vocabulary, a deviation without its reason or a `src/*.c`
+  named by an address.  No byte moved: the per-file assembly of all 319
+  TUs is identical across the rename (agbcc reads `cpp -P` output from
+  stdin and emits no `.file` line), `make compare`, `make symbols`,
+  `make split` and `make modmap` unchanged (`module-map.csv`'s two rows
+  named after the symbol-named files regenerated), `make shifttest`
+  unchanged.  New lessons 3.531 and 4.177.

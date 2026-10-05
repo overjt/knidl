@@ -5002,6 +5002,22 @@ field's store truncates `~FLAG` to the same value the literal had.  The
 oracle stays the proof, because a complement that reaches a 32-bit
 context (a `u32` mask, a comparison) is a different pool word.
 
+### 3.531 A source file's name never reaches agbcc's output: a TU rename is proven by the `.s` oracle alone
+
+The Makefile pipes `cpp -P` into agbcc's standard input (`cpp -P ... |
+agbcc ... -o - -`), so agbcc never sees the file name: it emits no
+`.file` directive, and `-P` drops the line markers that would carry it.
+#182 compiled all 306 `src/*.c` and the 13 `src/data/*.c` to assembly
+before and after renaming 300 of them, paired the outputs through
+`docs/analysis/file-renames.csv`, and every one of the 319 was
+byte-identical (no `.file` line to allow for).  The object path and the
+output section move with the stem in `linker.ld`, and neither reaches the
+binary: the linker places the sections in script order, so `make compare`
+and the shift test came out unchanged as well.  A comment that quotes a
+file name is stripped by cpp before agbcc runs, so rewriting the comments
+of 291 files cannot move a byte either; `make compare` stays the final
+proof, and the oracle is the per-file one.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -11959,6 +11975,53 @@ one struct's constants on another's bits.
 * An account usage limit stopped two agents mid-round for about two hours;
   their files were intact and a `SendMessage` naming what had been applied
   resumed both.  The census merge showed what the stop had left open.
+
+### 4.177 Harness notes from #182 (source files named after their content)
+
+* **A stem can be a symbol's name.**  PR #133 had named two files after
+  their only function; one function was renamed in #155 (and is still an
+  `old` in `renames.csv`), the other is still `sub_*`.  A plain token
+  rewrite renamed that function in C, in `split_config.json`'s
+  `external_defined` and in the alias table: the ROM still matched (a
+  symbol never reaches the bytes, 3.515), but `make split` then wrote an
+  absolute definition of the old symbol into `asm/rom_syms.s` and `make
+  symbols` kept the function's name, so the regeneration diff caught it.
+  `tools/rename_tu.py` now rewrites and checks such a stem only in its
+  file forms (`old.c`, `old.o`, the section `.old`, the segment name after
+  `c_code`, `linker.ld`'s block comment).  Check every new and old stem
+  against `symbols.csv` and `renames.csv` before a file rename.
+* **Abbreviated file lists name files by their address alone.**
+  `src/enemy_<a>.c/<b>.c/<c>.c` and `(subgame_<a>.c, <b>.c)` in
+  `tools/modmap.py`, `module-map.csv`, `renames.csv` and `unnamed.csv`
+  (94 tokens) were expanded to full old stems first, so the token rewrite
+  caught them; 22 globs (`src/save_b*.c`, `level_*.c`, `obj_*.c`,
+  `hitbox_*.c` ...) that no longer describe one prefix were rewritten by
+  hand.  The lessons' short forms (`b4ea8`, `a78a0`) name functions of
+  their time and stay.
+* **`git` cannot see a git worktree from inside the toolchain image**: its
+  `.git` file points at the main checkout, which is not mounted, so `git
+  ls-files` fails in `make audit` there; `rename_tu.py` falls back to a
+  walk of the tree minus `.gitignore`'s patterns (and passes `-c
+  safe.directory=*` for CI, where the container's root does not own the
+  checkout).
+* **Generated files follow by regeneration, not by rewrite, where a row
+  is derived.**  `module-map.csv` names already-landed modules after
+  their segment, so after the rewrite `make modmap` changed exactly the
+  two symbol-named stems' rows, which were committed as regenerated;
+  `make symbols` and `make split` came out with no diff.
+* **The whole rename was rehearsed in a scratch git worktree under
+  `pending/`** (with its own `baserom.gba` copy): `--write`, `make clean
+  && make compare`, the regenerations, the audit and the shift test ran
+  there before the real tree was touched, which is where the two traps
+  above showed up.
+* **Naming by bytes, not by function count.**  A family is named in the
+  file that holds most of its code bytes, and a file is named after the
+  families holding a tenth of its bytes; computing that per file
+  (`inventory.csv`: functions with sizes, header shares) made the three
+  hard cases mechanical: the enemy banks (four or five enemies a file:
+  the dominant one), the spill of a family into the next file (its update
+  tail names nothing), and the files holding only such a part (the family
+  plus the part's role: `enemy_fire_lion_flame`).
 
 ## 5. Workflow that worked
 
