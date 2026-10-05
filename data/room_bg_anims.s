@@ -15,29 +15,29 @@
 	.section .room_bg_anims, "a"
 	.global	room_bg_anims
 room_bg_anims:
-	.global	gUnk_08334EC0
-gUnk_08334EC0:
+	.global	gRoomBgAnimSet1Script0Cmd0TileFrame
+gRoomBgAnimSet1Script0Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x334EC0, 0x104
-	.global	gUnk_08334FC4
-gUnk_08334FC4:
+	.global	gRoomBgAnimSet1Script0Cmd1TileFrame
+gRoomBgAnimSet1Script0Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x334FC4, 0x104
-	.global	gUnk_083350C8
-gUnk_083350C8:
+	.global	gRoomBgAnimSet1Script0Cmd2TileFrame
+gRoomBgAnimSet1Script0Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x3350C8, 0x104
-	.global	gUnk_083351CC
-gUnk_083351CC:
+	.global	gRoomBgAnimSet1Script0Cmd3TileFrame
+gRoomBgAnimSet1Script0Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x3351CC, 0x104
-	.global	gUnk_083352D0
-gUnk_083352D0:
+	.global	gRoomBgAnimSet1Script0Cmd4TileFrame
+gRoomBgAnimSet1Script0Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x3352D0, 0x104
-	.global	gUnk_083353D4
-gUnk_083353D4:
+	.global	gRoomBgAnimSet1Script0Cmd5TileFrame
+gRoomBgAnimSet1Script0Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x3353D4, 0x104
-	.global	gUnk_083354D8
-gUnk_083354D8:
+	.global	gRoomBgAnimSet1Script0Cmd6TileFrame
+gRoomBgAnimSet1Script0Cmd6TileFrame:
 	.incbin	"baserom.gba", 0x3354D8, 0x104
-	.global	gUnk_083355DC
-gUnk_083355DC:
+	.global	gRoomBgAnimSet1Script0Cmd7TileFrame
+gRoomBgAnimSet1Script0Cmd7TileFrame:
 	.incbin	"baserom.gba", 0x3355DC, 0x104
 
 @ 0x083356E0-0x08335728: C, row bg_anim_083356e0 (src/data/bg_anim_scripts.c section .bg_anim_083356e0)
@@ -47,29 +47,29 @@ gUnk_083355DC:
 	.section .room_bg_anims_08335728, "a"
 	.global	room_bg_anims_08335728
 room_bg_anims_08335728:
-	.global	gUnk_08335728
-gUnk_08335728:
+	.global	gRoomBgAnimSet1Script1Cmd0TileFrame
+gRoomBgAnimSet1Script1Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x335728, 0x84
-	.global	gUnk_083357AC
-gUnk_083357AC:
+	.global	gRoomBgAnimSet1Script1Cmd1TileFrame
+gRoomBgAnimSet1Script1Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x3357AC, 0x84
-	.global	gUnk_08335830
-gUnk_08335830:
+	.global	gRoomBgAnimSet1Script1Cmd2TileFrame
+gRoomBgAnimSet1Script1Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x335830, 0x84
-	.global	gUnk_083358B4
-gUnk_083358B4:
+	.global	gRoomBgAnimSet1Script1Cmd3TileFrame
+gRoomBgAnimSet1Script1Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x3358B4, 0x84
-	.global	gUnk_08335938
-gUnk_08335938:
+	.global	gRoomBgAnimSet1Script1Cmd4TileFrame
+gRoomBgAnimSet1Script1Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x335938, 0x84
-	.global	gUnk_083359BC
-gUnk_083359BC:
+	.global	gRoomBgAnimSet1Script1Cmd5TileFrame
+gRoomBgAnimSet1Script1Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x3359BC, 0x84
-	.global	gUnk_08335A40
-gUnk_08335A40:
+	.global	gRoomBgAnimSet1Script1Cmd6TileFrame
+gRoomBgAnimSet1Script1Cmd6TileFrame:
 	.incbin	"baserom.gba", 0x335A40, 0x84
-	.global	gUnk_08335AC4
-gUnk_08335AC4:
+	.global	gRoomBgAnimSet1Script1Cmd7TileFrame
+gRoomBgAnimSet1Script1Cmd7TileFrame:
 	.incbin	"baserom.gba", 0x335AC4, 0x84
 
 @ 0x08335B48-0x08335B90: C, row bg_anim_08335b48 (src/data/bg_anim_scripts.c section .bg_anim_08335b48)
@@ -79,29 +79,29 @@ gUnk_08335AC4:
 	.section .room_bg_anims_08335b90, "a"
 	.global	room_bg_anims_08335b90
 room_bg_anims_08335b90:
-	.global	gUnk_08335B90
-gUnk_08335B90:
+	.global	gRoomBgAnimSet1Script2Cmd0TileFrame
+gRoomBgAnimSet1Script2Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x335B90, 0x44
-	.global	gUnk_08335BD4
-gUnk_08335BD4:
+	.global	gRoomBgAnimSet1Script2Cmd1TileFrame
+gRoomBgAnimSet1Script2Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x335BD4, 0x44
-	.global	gUnk_08335C18
-gUnk_08335C18:
+	.global	gRoomBgAnimSet1Script2Cmd2TileFrame
+gRoomBgAnimSet1Script2Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x335C18, 0x44
-	.global	gUnk_08335C5C
-gUnk_08335C5C:
+	.global	gRoomBgAnimSet1Script2Cmd3TileFrame
+gRoomBgAnimSet1Script2Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x335C5C, 0x44
-	.global	gUnk_08335CA0
-gUnk_08335CA0:
+	.global	gRoomBgAnimSet1Script2Cmd4TileFrame
+gRoomBgAnimSet1Script2Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x335CA0, 0x44
-	.global	gUnk_08335CE4
-gUnk_08335CE4:
+	.global	gRoomBgAnimSet1Script2Cmd5TileFrame
+gRoomBgAnimSet1Script2Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x335CE4, 0x44
-	.global	gUnk_08335D28
-gUnk_08335D28:
+	.global	gRoomBgAnimSet1Script2Cmd6TileFrame
+gRoomBgAnimSet1Script2Cmd6TileFrame:
 	.incbin	"baserom.gba", 0x335D28, 0x44
-	.global	gUnk_08335D6C
-gUnk_08335D6C:
+	.global	gRoomBgAnimSet1Script2Cmd7TileFrame
+gRoomBgAnimSet1Script2Cmd7TileFrame:
 	.incbin	"baserom.gba", 0x335D6C, 0x44
 
 @ 0x08335DB0-0x08335DF8: C, row bg_anim_08335db0 (src/data/bg_anim_scripts.c section .bg_anim_08335db0)
@@ -111,29 +111,29 @@ gUnk_08335D6C:
 	.section .room_bg_anims_08335df8, "a"
 	.global	room_bg_anims_08335df8
 room_bg_anims_08335df8:
-	.global	gUnk_08335DF8
-gUnk_08335DF8:
+	.global	gRoomBgAnimSet1Script3Cmd0TileFrame
+gRoomBgAnimSet1Script3Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x335DF8, 0x104
-	.global	gUnk_08335EFC
-gUnk_08335EFC:
+	.global	gRoomBgAnimSet1Script3Cmd1TileFrame
+gRoomBgAnimSet1Script3Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x335EFC, 0x104
-	.global	gUnk_08336000
-gUnk_08336000:
+	.global	gRoomBgAnimSet1Script3Cmd2TileFrame
+gRoomBgAnimSet1Script3Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x336000, 0x104
-	.global	gUnk_08336104
-gUnk_08336104:
+	.global	gRoomBgAnimSet1Script3Cmd3TileFrame
+gRoomBgAnimSet1Script3Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x336104, 0x104
-	.global	gUnk_08336208
-gUnk_08336208:
+	.global	gRoomBgAnimSet1Script3Cmd4TileFrame
+gRoomBgAnimSet1Script3Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x336208, 0x104
-	.global	gUnk_0833630C
-gUnk_0833630C:
+	.global	gRoomBgAnimSet1Script3Cmd5TileFrame
+gRoomBgAnimSet1Script3Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x33630C, 0x104
-	.global	gUnk_08336410
-gUnk_08336410:
+	.global	gRoomBgAnimSet1Script3Cmd6TileFrame
+gRoomBgAnimSet1Script3Cmd6TileFrame:
 	.incbin	"baserom.gba", 0x336410, 0x104
-	.global	gUnk_08336514
-gUnk_08336514:
+	.global	gRoomBgAnimSet1Script3Cmd7TileFrame
+gRoomBgAnimSet1Script3Cmd7TileFrame:
 	.incbin	"baserom.gba", 0x336514, 0x104
 
 @ 0x08336618-0x08336660: C, row bg_anim_08336618 (src/data/bg_anim_scripts.c section .bg_anim_08336618)
@@ -143,29 +143,29 @@ gUnk_08336514:
 	.section .room_bg_anims_08336660, "a"
 	.global	room_bg_anims_08336660
 room_bg_anims_08336660:
-	.global	gUnk_08336660
-gUnk_08336660:
+	.global	gRoomBgAnimSet1Script4Cmd0TileFrame
+gRoomBgAnimSet1Script4Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x336660, 0x104
-	.global	gUnk_08336764
-gUnk_08336764:
+	.global	gRoomBgAnimSet1Script4Cmd1TileFrame
+gRoomBgAnimSet1Script4Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x336764, 0x104
-	.global	gUnk_08336868
-gUnk_08336868:
+	.global	gRoomBgAnimSet1Script4Cmd2TileFrame
+gRoomBgAnimSet1Script4Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x336868, 0x104
-	.global	gUnk_0833696C
-gUnk_0833696C:
+	.global	gRoomBgAnimSet1Script4Cmd3TileFrame
+gRoomBgAnimSet1Script4Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x33696C, 0x104
-	.global	gUnk_08336A70
-gUnk_08336A70:
+	.global	gRoomBgAnimSet1Script4Cmd4TileFrame
+gRoomBgAnimSet1Script4Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x336A70, 0x104
-	.global	gUnk_08336B74
-gUnk_08336B74:
+	.global	gRoomBgAnimSet1Script4Cmd5TileFrame
+gRoomBgAnimSet1Script4Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x336B74, 0x104
-	.global	gUnk_08336C78
-gUnk_08336C78:
+	.global	gRoomBgAnimSet1Script4Cmd6TileFrame
+gRoomBgAnimSet1Script4Cmd6TileFrame:
 	.incbin	"baserom.gba", 0x336C78, 0x104
-	.global	gUnk_08336D7C
-gUnk_08336D7C:
+	.global	gRoomBgAnimSet1Script4Cmd7TileFrame
+gRoomBgAnimSet1Script4Cmd7TileFrame:
 	.incbin	"baserom.gba", 0x336D7C, 0x104
 
 @ 0x08336E80-0x08336EC8: C, row bg_anim_08336e80 (src/data/bg_anim_scripts.c section .bg_anim_08336e80)
@@ -175,29 +175,29 @@ gUnk_08336D7C:
 	.section .room_bg_anims_08336ec8, "a"
 	.global	room_bg_anims_08336ec8
 room_bg_anims_08336ec8:
-	.global	gUnk_08336EC8
-gUnk_08336EC8:
+	.global	gRoomBgAnimSet1Script5Cmd0TileFrame
+gRoomBgAnimSet1Script5Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x336EC8, 0x104
-	.global	gUnk_08336FCC
-gUnk_08336FCC:
+	.global	gRoomBgAnimSet1Script5Cmd1TileFrame
+gRoomBgAnimSet1Script5Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x336FCC, 0x104
-	.global	gUnk_083370D0
-gUnk_083370D0:
+	.global	gRoomBgAnimSet1Script5Cmd2TileFrame
+gRoomBgAnimSet1Script5Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x3370D0, 0x104
-	.global	gUnk_083371D4
-gUnk_083371D4:
+	.global	gRoomBgAnimSet1Script5Cmd3TileFrame
+gRoomBgAnimSet1Script5Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x3371D4, 0x104
-	.global	gUnk_083372D8
-gUnk_083372D8:
+	.global	gRoomBgAnimSet1Script5Cmd4TileFrame
+gRoomBgAnimSet1Script5Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x3372D8, 0x104
-	.global	gUnk_083373DC
-gUnk_083373DC:
+	.global	gRoomBgAnimSet1Script5Cmd5TileFrame
+gRoomBgAnimSet1Script5Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x3373DC, 0x104
-	.global	gUnk_083374E0
-gUnk_083374E0:
+	.global	gRoomBgAnimSet1Script5Cmd6TileFrame
+gRoomBgAnimSet1Script5Cmd6TileFrame:
 	.incbin	"baserom.gba", 0x3374E0, 0x104
-	.global	gUnk_083375E4
-gUnk_083375E4:
+	.global	gRoomBgAnimSet1Script5Cmd7TileFrame
+gRoomBgAnimSet1Script5Cmd7TileFrame:
 	.incbin	"baserom.gba", 0x3375E4, 0x104
 
 @ 0x083376E8-0x08337730: C, row bg_anim_083376e8 (src/data/bg_anim_scripts.c section .bg_anim_083376e8)
@@ -207,29 +207,29 @@ gUnk_083375E4:
 	.section .room_bg_anims_08337730, "a"
 	.global	room_bg_anims_08337730
 room_bg_anims_08337730:
-	.global	gUnk_08337730
-gUnk_08337730:
+	.global	gRoomBgAnimSet1Script6Cmd0TileFrame
+gRoomBgAnimSet1Script6Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x337730, 0x84
-	.global	gUnk_083377B4
-gUnk_083377B4:
+	.global	gRoomBgAnimSet1Script6Cmd1TileFrame
+gRoomBgAnimSet1Script6Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x3377B4, 0x84
-	.global	gUnk_08337838
-gUnk_08337838:
+	.global	gRoomBgAnimSet1Script6Cmd2TileFrame
+gRoomBgAnimSet1Script6Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x337838, 0x84
-	.global	gUnk_083378BC
-gUnk_083378BC:
+	.global	gRoomBgAnimSet1Script6Cmd3TileFrame
+gRoomBgAnimSet1Script6Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x3378BC, 0x84
-	.global	gUnk_08337940
-gUnk_08337940:
+	.global	gRoomBgAnimSet1Script6Cmd4TileFrame
+gRoomBgAnimSet1Script6Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x337940, 0x84
-	.global	gUnk_083379C4
-gUnk_083379C4:
+	.global	gRoomBgAnimSet1Script6Cmd5TileFrame
+gRoomBgAnimSet1Script6Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x3379C4, 0x84
-	.global	gUnk_08337A48
-gUnk_08337A48:
+	.global	gRoomBgAnimSet1Script6Cmd6TileFrame
+gRoomBgAnimSet1Script6Cmd6TileFrame:
 	.incbin	"baserom.gba", 0x337A48, 0x84
-	.global	gUnk_08337ACC
-gUnk_08337ACC:
+	.global	gRoomBgAnimSet1Script6Cmd7TileFrame
+gRoomBgAnimSet1Script6Cmd7TileFrame:
 	.incbin	"baserom.gba", 0x337ACC, 0x84
 
 @ 0x08337B50-0x08337B98: C, row bg_anim_08337b50 (src/data/bg_anim_scripts.c section .bg_anim_08337b50)
@@ -239,29 +239,29 @@ gUnk_08337ACC:
 	.section .room_bg_anims_08337b98, "a"
 	.global	room_bg_anims_08337b98
 room_bg_anims_08337b98:
-	.global	gUnk_08337B98
-gUnk_08337B98:
+	.global	gRoomBgAnimSet1Script7Cmd0TileFrame
+gRoomBgAnimSet1Script7Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x337B98, 0x364
-	.global	gUnk_08337EFC
-gUnk_08337EFC:
+	.global	gRoomBgAnimSet1Script7Cmd1TileFrame
+gRoomBgAnimSet1Script7Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x337EFC, 0x364
-	.global	gUnk_08338260
-gUnk_08338260:
+	.global	gRoomBgAnimSet1Script7Cmd2TileFrame
+gRoomBgAnimSet1Script7Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x338260, 0x364
-	.global	gUnk_083385C4
-gUnk_083385C4:
+	.global	gRoomBgAnimSet1Script7Cmd3TileFrame
+gRoomBgAnimSet1Script7Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x3385C4, 0x364
-	.global	gUnk_08338928
-gUnk_08338928:
+	.global	gRoomBgAnimSet1Script7Cmd4TileFrame
+gRoomBgAnimSet1Script7Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x338928, 0x364
-	.global	gUnk_08338C8C
-gUnk_08338C8C:
+	.global	gRoomBgAnimSet1Script7Cmd5TileFrame
+gRoomBgAnimSet1Script7Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x338C8C, 0x364
-	.global	gUnk_08338FF0
-gUnk_08338FF0:
+	.global	gRoomBgAnimSet1Script7Cmd6TileFrame
+gRoomBgAnimSet1Script7Cmd6TileFrame:
 	.incbin	"baserom.gba", 0x338FF0, 0x364
-	.global	gUnk_08339354
-gUnk_08339354:
+	.global	gRoomBgAnimSet1Script7Cmd7TileFrame
+gRoomBgAnimSet1Script7Cmd7TileFrame:
 	.incbin	"baserom.gba", 0x339354, 0x364
 
 @ 0x083396B8-0x08339700: C, row bg_anim_083396b8 (src/data/bg_anim_scripts.c section .bg_anim_083396b8)
@@ -271,29 +271,29 @@ gUnk_08339354:
 	.section .room_bg_anims_08339700, "a"
 	.global	room_bg_anims_08339700
 room_bg_anims_08339700:
-	.global	gUnk_08339700
-gUnk_08339700:
+	.global	gRoomBgAnimSet1Script8Cmd0TileFrame
+gRoomBgAnimSet1Script8Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x339700, 0x84
-	.global	gUnk_08339784
-gUnk_08339784:
+	.global	gRoomBgAnimSet1Script8Cmd1TileFrame
+gRoomBgAnimSet1Script8Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x339784, 0x84
-	.global	gUnk_08339808
-gUnk_08339808:
+	.global	gRoomBgAnimSet1Script8Cmd2TileFrame
+gRoomBgAnimSet1Script8Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x339808, 0x84
-	.global	gUnk_0833988C
-gUnk_0833988C:
+	.global	gRoomBgAnimSet1Script8Cmd3TileFrame
+gRoomBgAnimSet1Script8Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x33988C, 0x84
-	.global	gUnk_08339910
-gUnk_08339910:
+	.global	gRoomBgAnimSet1Script8Cmd4TileFrame
+gRoomBgAnimSet1Script8Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x339910, 0x84
-	.global	gUnk_08339994
-gUnk_08339994:
+	.global	gRoomBgAnimSet1Script8Cmd5TileFrame
+gRoomBgAnimSet1Script8Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x339994, 0x84
-	.global	gUnk_08339A18
-gUnk_08339A18:
+	.global	gRoomBgAnimSet1Script8Cmd6TileFrame
+gRoomBgAnimSet1Script8Cmd6TileFrame:
 	.incbin	"baserom.gba", 0x339A18, 0x84
-	.global	gUnk_08339A9C
-gUnk_08339A9C:
+	.global	gRoomBgAnimSet1Script8Cmd7TileFrame
+gRoomBgAnimSet1Script8Cmd7TileFrame:
 	.incbin	"baserom.gba", 0x339A9C, 0x84
 
 @ 0x08339B20-0x08339B68: C, row bg_anim_08339b20 (src/data/bg_anim_scripts.c section .bg_anim_08339b20)
@@ -303,29 +303,29 @@ gUnk_08339A9C:
 	.section .room_bg_anims_08339b68, "a"
 	.global	room_bg_anims_08339b68
 room_bg_anims_08339b68:
-	.global	gUnk_08339B68
-gUnk_08339B68:
+	.global	gRoomBgAnimSet1Script9Cmd0TileFrame
+gRoomBgAnimSet1Script9Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x339B68, 0x44
-	.global	gUnk_08339BAC
-gUnk_08339BAC:
+	.global	gRoomBgAnimSet1Script9Cmd1TileFrame
+gRoomBgAnimSet1Script9Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x339BAC, 0x44
-	.global	gUnk_08339BF0
-gUnk_08339BF0:
+	.global	gRoomBgAnimSet1Script9Cmd2TileFrame
+gRoomBgAnimSet1Script9Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x339BF0, 0x44
-	.global	gUnk_08339C34
-gUnk_08339C34:
+	.global	gRoomBgAnimSet1Script9Cmd3TileFrame
+gRoomBgAnimSet1Script9Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x339C34, 0x44
-	.global	gUnk_08339C78
-gUnk_08339C78:
+	.global	gRoomBgAnimSet1Script9Cmd4TileFrame
+gRoomBgAnimSet1Script9Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x339C78, 0x44
-	.global	gUnk_08339CBC
-gUnk_08339CBC:
+	.global	gRoomBgAnimSet1Script9Cmd5TileFrame
+gRoomBgAnimSet1Script9Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x339CBC, 0x44
-	.global	gUnk_08339D00
-gUnk_08339D00:
+	.global	gRoomBgAnimSet1Script9Cmd6TileFrame
+gRoomBgAnimSet1Script9Cmd6TileFrame:
 	.incbin	"baserom.gba", 0x339D00, 0x44
-	.global	gUnk_08339D44
-gUnk_08339D44:
+	.global	gRoomBgAnimSet1Script9Cmd7TileFrame
+gRoomBgAnimSet1Script9Cmd7TileFrame:
 	.incbin	"baserom.gba", 0x339D44, 0x44
 
 @ 0x08339D88-0x08339DD0: C, row bg_anim_08339d88 (src/data/bg_anim_scripts.c section .bg_anim_08339d88)
@@ -335,23 +335,23 @@ gUnk_08339D44:
 	.section .room_bg_anims_08339dd0, "a"
 	.global	room_bg_anims_08339dd0
 room_bg_anims_08339dd0:
-	.global	gUnk_08339DD0
-gUnk_08339DD0:
+	.global	gRoomBgAnimSet2Script0Cmd0TileFrame
+gRoomBgAnimSet2Script0Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x339DD0, 0x84
-	.global	gUnk_08339E54
-gUnk_08339E54:
+	.global	gRoomBgAnimSet2Script0Cmd1TileFrame
+gRoomBgAnimSet2Script0Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x339E54, 0x84
-	.global	gUnk_08339ED8
-gUnk_08339ED8:
+	.global	gRoomBgAnimSet2Script0Cmd2TileFrame
+gRoomBgAnimSet2Script0Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x339ED8, 0x84
-	.global	gUnk_08339F5C
-gUnk_08339F5C:
+	.global	gRoomBgAnimSet2Script0Cmd3TileFrame
+gRoomBgAnimSet2Script0Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x339F5C, 0x84
-	.global	gUnk_08339FE0
-gUnk_08339FE0:
+	.global	gRoomBgAnimSet2Script0Cmd4TileFrame
+gRoomBgAnimSet2Script0Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x339FE0, 0x84
-	.global	gUnk_0833A064
-gUnk_0833A064:
+	.global	gRoomBgAnimSet2Script0Cmd5TileFrame
+gRoomBgAnimSet2Script0Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x33A064, 0x84
 
 @ 0x0833A0E8-0x0833A120: C, row bg_anim_0833a0e8 (src/data/bg_anim_scripts.c section .bg_anim_0833a0e8)
@@ -361,23 +361,23 @@ gUnk_0833A064:
 	.section .room_bg_anims_0833a120, "a"
 	.global	room_bg_anims_0833a120
 room_bg_anims_0833a120:
-	.global	gUnk_0833A120
-gUnk_0833A120:
+	.global	gRoomBgAnimSet3Script0Cmd0TileFrame
+gRoomBgAnimSet3Script0Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x33A120, 0x1C4
-	.global	gUnk_0833A2E4
-gUnk_0833A2E4:
+	.global	gRoomBgAnimSet3Script0Cmd1TileFrame
+gRoomBgAnimSet3Script0Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x33A2E4, 0x1C4
-	.global	gUnk_0833A4A8
-gUnk_0833A4A8:
+	.global	gRoomBgAnimSet3Script0Cmd2TileFrame
+gRoomBgAnimSet3Script0Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x33A4A8, 0x1C4
-	.global	gUnk_0833A66C
-gUnk_0833A66C:
+	.global	gRoomBgAnimSet3Script0Cmd3TileFrame
+gRoomBgAnimSet3Script0Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x33A66C, 0x1C4
-	.global	gUnk_0833A830
-gUnk_0833A830:
+	.global	gRoomBgAnimSet3Script0Cmd4TileFrame
+gRoomBgAnimSet3Script0Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x33A830, 0x1C4
-	.global	gUnk_0833A9F4
-gUnk_0833A9F4:
+	.global	gRoomBgAnimSet3Script0Cmd5TileFrame
+gRoomBgAnimSet3Script0Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x33A9F4, 0x1C4
 
 @ 0x0833ABB8-0x0833ABF0: C, row bg_anim_0833abb8 (src/data/bg_anim_scripts.c section .bg_anim_0833abb8)
@@ -387,29 +387,29 @@ gUnk_0833A9F4:
 	.section .room_bg_anims_0833abf0, "a"
 	.global	room_bg_anims_0833abf0
 room_bg_anims_0833abf0:
-	.global	gUnk_0833ABF0
-gUnk_0833ABF0:
+	.global	gRoomBgAnimSet4Script0Cmd0TileFrame
+gRoomBgAnimSet4Script0Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x33ABF0, 0x804
-	.global	gUnk_0833B3F4
-gUnk_0833B3F4:
+	.global	gRoomBgAnimSet4Script0Cmd1TileFrame
+gRoomBgAnimSet4Script0Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x33B3F4, 0x804
-	.global	gUnk_0833BBF8
-gUnk_0833BBF8:
+	.global	gRoomBgAnimSet4Script0Cmd2TileFrame
+gRoomBgAnimSet4Script0Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x33BBF8, 0x804
-	.global	gUnk_0833C3FC
-gUnk_0833C3FC:
+	.global	gRoomBgAnimSet4Script0Cmd3TileFrame
+gRoomBgAnimSet4Script0Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x33C3FC, 0x804
-	.global	gUnk_0833CC00
-gUnk_0833CC00:
+	.global	gRoomBgAnimSet4Script0Cmd4TileFrame
+gRoomBgAnimSet4Script0Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x33CC00, 0x804
-	.global	gUnk_0833D404
-gUnk_0833D404:
+	.global	gRoomBgAnimSet4Script0Cmd5TileFrame
+gRoomBgAnimSet4Script0Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x33D404, 0x804
-	.global	gUnk_0833DC08
-gUnk_0833DC08:
+	.global	gRoomBgAnimSet4Script0Cmd6TileFrame
+gRoomBgAnimSet4Script0Cmd6TileFrame:
 	.incbin	"baserom.gba", 0x33DC08, 0x804
-	.global	gUnk_0833E40C
-gUnk_0833E40C:
+	.global	gRoomBgAnimSet4Script0Cmd7TileFrame
+gRoomBgAnimSet4Script0Cmd7TileFrame:
 	.incbin	"baserom.gba", 0x33E40C, 0x804
 
 @ 0x0833EC10-0x0833EC58: C, row bg_anim_0833ec10 (src/data/bg_anim_scripts.c section .bg_anim_0833ec10)
@@ -419,32 +419,32 @@ gUnk_0833E40C:
 	.section .room_bg_anims_0833ec58, "a"
 	.global	room_bg_anims_0833ec58
 room_bg_anims_0833ec58:
-	.global	gUnk_0833EC58
-gUnk_0833EC58:
+	.global	gRoomBgAnimSet5Script2Cmd2TileFrame
+gRoomBgAnimSet5Script2Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x33EC58, 0xE4
-	.global	gUnk_0833ED3C
-gUnk_0833ED3C:
+	.global	gRoomBgAnimSet5Script2Cmd3TileFrame
+gRoomBgAnimSet5Script2Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x33ED3C, 0xE4
-	.global	gUnk_0833EE20
-gUnk_0833EE20:
+	.global	gRoomBgAnimSet5Script2Cmd4TileFrame
+gRoomBgAnimSet5Script2Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x33EE20, 0xE4
-	.global	gUnk_0833EF04
-gUnk_0833EF04:
+	.global	gRoomBgAnimSet5Script2Cmd5TileFrame
+gRoomBgAnimSet5Script2Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x33EF04, 0xE4
-	.global	gUnk_0833EFE8
-gUnk_0833EFE8:
+	.global	gRoomBgAnimSet5Script2Cmd6TileFrame
+gRoomBgAnimSet5Script2Cmd6TileFrame:
 	.incbin	"baserom.gba", 0x33EFE8, 0xE4
-	.global	gUnk_0833F0CC
-gUnk_0833F0CC:
+	.global	gRoomBgAnimSet5Script2Cmd7TileFrame
+gRoomBgAnimSet5Script2Cmd7TileFrame:
 	.incbin	"baserom.gba", 0x33F0CC, 0xE4
-	.global	gUnk_0833F1B0
-gUnk_0833F1B0:
+	.global	gRoomBgAnimSet5Script2Cmd8TileFrame
+gRoomBgAnimSet5Script2Cmd8TileFrame:
 	.incbin	"baserom.gba", 0x33F1B0, 0xE4
-	.global	gUnk_0833F294
-gUnk_0833F294:
+	.global	gRoomBgAnimSet5Script2Cmd9TileFrame
+gRoomBgAnimSet5Script2Cmd9TileFrame:
 	.incbin	"baserom.gba", 0x33F294, 0xE4
-	.global	gUnk_0833F378
-gUnk_0833F378:
+	.global	gRoomBgAnimSet5Script2Cmd10TileFrame
+gRoomBgAnimSet5Script2Cmd10TileFrame:
 	.incbin	"baserom.gba", 0x33F378, 0xE4
 
 @ 0x0833F45C-0x0833F4C4: C, row bg_anim_0833f45c (src/data/bg_anim_scripts.c section .bg_anim_0833f45c)
@@ -454,32 +454,32 @@ gUnk_0833F378:
 	.section .room_bg_anims_0833f4c4, "a"
 	.global	room_bg_anims_0833f4c4
 room_bg_anims_0833f4c4:
-	.global	gUnk_0833F4C4
-gUnk_0833F4C4:
+	.global	gRoomBgAnimSet6Script0Cmd2TileFrame
+gRoomBgAnimSet6Script0Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x33F4C4, 0xE4
-	.global	gUnk_0833F5A8
-gUnk_0833F5A8:
+	.global	gRoomBgAnimSet6Script0Cmd3TileFrame
+gRoomBgAnimSet6Script0Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x33F5A8, 0xE4
-	.global	gUnk_0833F68C
-gUnk_0833F68C:
+	.global	gRoomBgAnimSet6Script0Cmd4TileFrame
+gRoomBgAnimSet6Script0Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x33F68C, 0xE4
-	.global	gUnk_0833F770
-gUnk_0833F770:
+	.global	gRoomBgAnimSet6Script0Cmd5TileFrame
+gRoomBgAnimSet6Script0Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x33F770, 0xE4
-	.global	gUnk_0833F854
-gUnk_0833F854:
+	.global	gRoomBgAnimSet6Script0Cmd6TileFrame
+gRoomBgAnimSet6Script0Cmd6TileFrame:
 	.incbin	"baserom.gba", 0x33F854, 0xE4
-	.global	gUnk_0833F938
-gUnk_0833F938:
+	.global	gRoomBgAnimSet6Script0Cmd7TileFrame
+gRoomBgAnimSet6Script0Cmd7TileFrame:
 	.incbin	"baserom.gba", 0x33F938, 0xE4
-	.global	gUnk_0833FA1C
-gUnk_0833FA1C:
+	.global	gRoomBgAnimSet6Script0Cmd8TileFrame
+gRoomBgAnimSet6Script0Cmd8TileFrame:
 	.incbin	"baserom.gba", 0x33FA1C, 0xE4
-	.global	gUnk_0833FB00
-gUnk_0833FB00:
+	.global	gRoomBgAnimSet6Script0Cmd9TileFrame
+gRoomBgAnimSet6Script0Cmd9TileFrame:
 	.incbin	"baserom.gba", 0x33FB00, 0xE4
-	.global	gUnk_0833FBE4
-gUnk_0833FBE4:
+	.global	gRoomBgAnimSet6Script0Cmd10TileFrame
+gRoomBgAnimSet6Script0Cmd10TileFrame:
 	.incbin	"baserom.gba", 0x33FBE4, 0xE4
 
 @ 0x0833FCC8-0x0833FD30: C, row bg_anim_0833fcc8 (src/data/bg_anim_scripts.c section .bg_anim_0833fcc8)
@@ -489,11 +489,11 @@ gUnk_0833FBE4:
 	.section .room_bg_anims_0833fd30, "a"
 	.global	room_bg_anims_0833fd30
 room_bg_anims_0833fd30:
-	.global	gUnk_0833FD30
-gUnk_0833FD30:
+	.global	gRoomBgAnimSet5Script0Cmd1PaletteFadeSrc
+gRoomBgAnimSet5Script0Cmd1PaletteFadeSrc:
 	.incbin	"baserom.gba", 0x33FD30, 0x80
-	.global	gUnk_0833FDB0
-gUnk_0833FDB0:
+	.global	gRoomBgAnimSet5Script0Cmd1PaletteFadeDst
+gRoomBgAnimSet5Script0Cmd1PaletteFadeDst:
 	.incbin	"baserom.gba", 0x33FDB0, 0x80
 
 @ 0x0833FE30-0x0833FE40: C, row bg_anim_0833fe30 (src/data/bg_anim_scripts.c section .bg_anim_0833fe30)
@@ -503,11 +503,11 @@ gUnk_0833FDB0:
 	.section .room_bg_anims_0833fe40, "a"
 	.global	room_bg_anims_0833fe40
 room_bg_anims_0833fe40:
-	.global	gUnk_0833FE40
-gUnk_0833FE40:
+	.global	gRoomBgAnimSet5Script0Cmd2PaletteFadeSrc
+gRoomBgAnimSet5Script0Cmd2PaletteFadeSrc:
 	.incbin	"baserom.gba", 0x33FE40, 0x80
-	.global	gUnk_0833FEC0
-gUnk_0833FEC0:
+	.global	gRoomBgAnimSet5Script0Cmd2PaletteFadeDst
+gRoomBgAnimSet5Script0Cmd2PaletteFadeDst:
 	.incbin	"baserom.gba", 0x33FEC0, 0x80
 
 @ 0x0833FF40-0x0833FF50: C, row bg_anim_0833ff40 (src/data/bg_anim_scripts.c section .bg_anim_0833ff40)
@@ -517,11 +517,11 @@ gUnk_0833FEC0:
 	.section .room_bg_anims_0833ff50, "a"
 	.global	room_bg_anims_0833ff50
 room_bg_anims_0833ff50:
-	.global	gUnk_0833FF50
-gUnk_0833FF50:
+	.global	gRoomBgAnimSet5Script0Cmd3PaletteFadeSrc
+gRoomBgAnimSet5Script0Cmd3PaletteFadeSrc:
 	.incbin	"baserom.gba", 0x33FF50, 0x80
-	.global	gUnk_0833FFD0
-gUnk_0833FFD0:
+	.global	gRoomBgAnimSet5Script0Cmd3PaletteFadeDst
+gRoomBgAnimSet5Script0Cmd3PaletteFadeDst:
 	.incbin	"baserom.gba", 0x33FFD0, 0x80
 
 @ 0x08340050-0x08340088: C, row bg_anim_08340050 (src/data/bg_anim_scripts.c section .bg_anim_08340050)
@@ -531,11 +531,11 @@ gUnk_0833FFD0:
 	.section .room_bg_anims_08340088, "a"
 	.global	room_bg_anims_08340088
 room_bg_anims_08340088:
-	.global	gUnk_08340088
-gUnk_08340088:
+	.global	gRoomBgAnimSet5Script1Cmd1PaletteFadeSrc
+gRoomBgAnimSet5Script1Cmd1PaletteFadeSrc:
 	.incbin	"baserom.gba", 0x340088, 0x40
-	.global	gUnk_083400C8
-gUnk_083400C8:
+	.global	gRoomBgAnimSet5Script1Cmd1PaletteFadeDst
+gRoomBgAnimSet5Script1Cmd1PaletteFadeDst:
 	.incbin	"baserom.gba", 0x3400C8, 0x40
 
 @ 0x08340108-0x08340118: C, row bg_anim_08340108 (src/data/bg_anim_scripts.c section .bg_anim_08340108)
@@ -545,11 +545,11 @@ gUnk_083400C8:
 	.section .room_bg_anims_08340118, "a"
 	.global	room_bg_anims_08340118
 room_bg_anims_08340118:
-	.global	gUnk_08340118
-gUnk_08340118:
+	.global	gRoomBgAnimSet5Script1Cmd2PaletteFadeSrc
+gRoomBgAnimSet5Script1Cmd2PaletteFadeSrc:
 	.incbin	"baserom.gba", 0x340118, 0x40
-	.global	gUnk_08340158
-gUnk_08340158:
+	.global	gRoomBgAnimSet5Script1Cmd2PaletteFadeDst
+gRoomBgAnimSet5Script1Cmd2PaletteFadeDst:
 	.incbin	"baserom.gba", 0x340158, 0x40
 
 @ 0x08340198-0x083401A8: C, row bg_anim_08340198 (src/data/bg_anim_scripts.c section .bg_anim_08340198)
@@ -559,11 +559,11 @@ gUnk_08340158:
 	.section .room_bg_anims_083401a8, "a"
 	.global	room_bg_anims_083401a8
 room_bg_anims_083401a8:
-	.global	gUnk_083401A8
-gUnk_083401A8:
+	.global	gRoomBgAnimSet5Script1Cmd3PaletteFadeSrc
+gRoomBgAnimSet5Script1Cmd3PaletteFadeSrc:
 	.incbin	"baserom.gba", 0x3401A8, 0x40
-	.global	gUnk_083401E8
-gUnk_083401E8:
+	.global	gRoomBgAnimSet5Script1Cmd3PaletteFadeDst
+gRoomBgAnimSet5Script1Cmd3PaletteFadeDst:
 	.incbin	"baserom.gba", 0x3401E8, 0x40
 
 @ 0x08340228-0x08340260: C, row bg_anim_08340228 (src/data/bg_anim_scripts.c section .bg_anim_08340228)
@@ -573,11 +573,11 @@ gUnk_083401E8:
 	.section .room_bg_anims_08340260, "a"
 	.global	room_bg_anims_08340260
 room_bg_anims_08340260:
-	.global	gUnk_08340260
-gUnk_08340260:
+	.global	gRoomBgAnimSet6Script1Cmd1PaletteFadeSrc
+gRoomBgAnimSet6Script1Cmd1PaletteFadeSrc:
 	.incbin	"baserom.gba", 0x340260, 0x80
-	.global	gUnk_083402E0
-gUnk_083402E0:
+	.global	gRoomBgAnimSet6Script1Cmd1PaletteFadeDst
+gRoomBgAnimSet6Script1Cmd1PaletteFadeDst:
 	.incbin	"baserom.gba", 0x3402E0, 0x80
 
 @ 0x08340360-0x08340370: C, row bg_anim_08340360 (src/data/bg_anim_scripts.c section .bg_anim_08340360)
@@ -587,11 +587,11 @@ gUnk_083402E0:
 	.section .room_bg_anims_08340370, "a"
 	.global	room_bg_anims_08340370
 room_bg_anims_08340370:
-	.global	gUnk_08340370
-gUnk_08340370:
+	.global	gRoomBgAnimSet6Script1Cmd2PaletteFadeSrc
+gRoomBgAnimSet6Script1Cmd2PaletteFadeSrc:
 	.incbin	"baserom.gba", 0x340370, 0x80
-	.global	gUnk_083403F0
-gUnk_083403F0:
+	.global	gRoomBgAnimSet6Script1Cmd2PaletteFadeDst
+gRoomBgAnimSet6Script1Cmd2PaletteFadeDst:
 	.incbin	"baserom.gba", 0x3403F0, 0x80
 
 @ 0x08340470-0x08340480: C, row bg_anim_08340470 (src/data/bg_anim_scripts.c section .bg_anim_08340470)
@@ -601,11 +601,11 @@ gUnk_083403F0:
 	.section .room_bg_anims_08340480, "a"
 	.global	room_bg_anims_08340480
 room_bg_anims_08340480:
-	.global	gUnk_08340480
-gUnk_08340480:
+	.global	gRoomBgAnimSet6Script1Cmd3PaletteFadeSrc
+gRoomBgAnimSet6Script1Cmd3PaletteFadeSrc:
 	.incbin	"baserom.gba", 0x340480, 0x80
-	.global	gUnk_08340500
-gUnk_08340500:
+	.global	gRoomBgAnimSet6Script1Cmd3PaletteFadeDst
+gRoomBgAnimSet6Script1Cmd3PaletteFadeDst:
 	.incbin	"baserom.gba", 0x340500, 0x80
 
 @ 0x08340580-0x08340590: C, row bg_anim_08340580 (src/data/bg_anim_scripts.c section .bg_anim_08340580)
@@ -615,11 +615,11 @@ gUnk_08340500:
 	.section .room_bg_anims_08340590, "a"
 	.global	room_bg_anims_08340590
 room_bg_anims_08340590:
-	.global	gUnk_08340590
-gUnk_08340590:
+	.global	gRoomBgAnimSet6Script1Cmd4PaletteFadeSrc
+gRoomBgAnimSet6Script1Cmd4PaletteFadeSrc:
 	.incbin	"baserom.gba", 0x340590, 0x80
-	.global	gUnk_08340610
-gUnk_08340610:
+	.global	gRoomBgAnimSet6Script1Cmd4PaletteFadeDst
+gRoomBgAnimSet6Script1Cmd4PaletteFadeDst:
 	.incbin	"baserom.gba", 0x340610, 0x80
 
 @ 0x08340690-0x083406D0: C, row bg_anim_08340690 (src/data/bg_anim_scripts.c section .bg_anim_08340690)
@@ -629,11 +629,11 @@ gUnk_08340610:
 	.section .room_bg_anims_083406d0, "a"
 	.global	room_bg_anims_083406d0
 room_bg_anims_083406d0:
-	.global	gUnk_083406D0
-gUnk_083406D0:
+	.global	gRoomBgAnimSet6Script2Cmd1PaletteFadeSrc
+gRoomBgAnimSet6Script2Cmd1PaletteFadeSrc:
 	.incbin	"baserom.gba", 0x3406D0, 0x40
-	.global	gUnk_08340710
-gUnk_08340710:
+	.global	gRoomBgAnimSet6Script2Cmd1PaletteFadeDst
+gRoomBgAnimSet6Script2Cmd1PaletteFadeDst:
 	.incbin	"baserom.gba", 0x340710, 0x40
 
 @ 0x08340750-0x08340760: C, row bg_anim_08340750 (src/data/bg_anim_scripts.c section .bg_anim_08340750)
@@ -643,11 +643,11 @@ gUnk_08340710:
 	.section .room_bg_anims_08340760, "a"
 	.global	room_bg_anims_08340760
 room_bg_anims_08340760:
-	.global	gUnk_08340760
-gUnk_08340760:
+	.global	gRoomBgAnimSet6Script2Cmd2PaletteFadeSrc
+gRoomBgAnimSet6Script2Cmd2PaletteFadeSrc:
 	.incbin	"baserom.gba", 0x340760, 0x40
-	.global	gUnk_083407A0
-gUnk_083407A0:
+	.global	gRoomBgAnimSet6Script2Cmd2PaletteFadeDst
+gRoomBgAnimSet6Script2Cmd2PaletteFadeDst:
 	.incbin	"baserom.gba", 0x3407A0, 0x40
 
 @ 0x083407E0-0x083407F0: C, row bg_anim_083407e0 (src/data/bg_anim_scripts.c section .bg_anim_083407e0)
@@ -657,11 +657,11 @@ gUnk_083407A0:
 	.section .room_bg_anims_083407f0, "a"
 	.global	room_bg_anims_083407f0
 room_bg_anims_083407f0:
-	.global	gUnk_083407F0
-gUnk_083407F0:
+	.global	gRoomBgAnimSet6Script2Cmd3PaletteFadeSrc
+gRoomBgAnimSet6Script2Cmd3PaletteFadeSrc:
 	.incbin	"baserom.gba", 0x3407F0, 0x40
-	.global	gUnk_08340830
-gUnk_08340830:
+	.global	gRoomBgAnimSet6Script2Cmd3PaletteFadeDst
+gRoomBgAnimSet6Script2Cmd3PaletteFadeDst:
 	.incbin	"baserom.gba", 0x340830, 0x40
 
 @ 0x08340870-0x08340880: C, row bg_anim_08340870 (src/data/bg_anim_scripts.c section .bg_anim_08340870)
@@ -671,11 +671,11 @@ gUnk_08340830:
 	.section .room_bg_anims_08340880, "a"
 	.global	room_bg_anims_08340880
 room_bg_anims_08340880:
-	.global	gUnk_08340880
-gUnk_08340880:
+	.global	gRoomBgAnimSet6Script2Cmd4PaletteFadeSrc
+gRoomBgAnimSet6Script2Cmd4PaletteFadeSrc:
 	.incbin	"baserom.gba", 0x340880, 0x40
-	.global	gUnk_083408C0
-gUnk_083408C0:
+	.global	gRoomBgAnimSet6Script2Cmd4PaletteFadeDst
+gRoomBgAnimSet6Script2Cmd4PaletteFadeDst:
 	.incbin	"baserom.gba", 0x3408C0, 0x40
 
 @ 0x08340900-0x08340940: C, row bg_anim_08340900 (src/data/bg_anim_scripts.c section .bg_anim_08340900)
@@ -685,17 +685,17 @@ gUnk_083408C0:
 	.section .room_bg_anims_08340940, "a"
 	.global	room_bg_anims_08340940
 room_bg_anims_08340940:
-	.global	gUnk_08340940
-gUnk_08340940:
+	.global	gRoomBgAnimSet7Script0Cmd0TileFrame
+gRoomBgAnimSet7Script0Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x340940, 0xFA4
-	.global	gUnk_083418E4
-gUnk_083418E4:
+	.global	gRoomBgAnimSet7Script0Cmd1TileFrame
+gRoomBgAnimSet7Script0Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x3418E4, 0xFA4
-	.global	gUnk_08342888
-gUnk_08342888:
+	.global	gRoomBgAnimSet7Script0Cmd2TileFrame
+gRoomBgAnimSet7Script0Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x342888, 0xFA4
-	.global	gUnk_0834382C
-gUnk_0834382C:
+	.global	gRoomBgAnimSet7Script0Cmd3TileFrame
+gRoomBgAnimSet7Script0Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x34382C, 0xFA4
 
 @ 0x083447D0-0x083447F8: C, row bg_anim_083447d0 (src/data/bg_anim_scripts.c section .bg_anim_083447d0)
@@ -705,17 +705,17 @@ gUnk_0834382C:
 	.section .room_bg_anims_083447f8, "a"
 	.global	room_bg_anims_083447f8
 room_bg_anims_083447f8:
-	.global	gUnk_083447F8
-gUnk_083447F8:
+	.global	gRoomBgAnimSet8Script0Cmd0TileFrame
+gRoomBgAnimSet8Script0Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x3447F8, 0x104
-	.global	gUnk_083448FC
-gUnk_083448FC:
+	.global	gRoomBgAnimSet8Script0Cmd1TileFrame
+gRoomBgAnimSet8Script0Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x3448FC, 0x104
-	.global	gUnk_08344A00
-gUnk_08344A00:
+	.global	gRoomBgAnimSet8Script0Cmd2TileFrame
+gRoomBgAnimSet8Script0Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x344A00, 0x104
-	.global	gUnk_08344B04
-gUnk_08344B04:
+	.global	gRoomBgAnimSet8Script0Cmd3TileFrame
+gRoomBgAnimSet8Script0Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x344B04, 0x104
 
 @ 0x08344C08-0x08344C30: C, row bg_anim_08344c08 (src/data/bg_anim_scripts.c section .bg_anim_08344c08)
@@ -725,23 +725,23 @@ gUnk_08344B04:
 	.section .room_bg_anims_08344c30, "a"
 	.global	room_bg_anims_08344c30
 room_bg_anims_08344c30:
-	.global	gUnk_08344C30
-gUnk_08344C30:
+	.global	gRoomBgAnimSet10Script0Cmd0TileFrame
+gRoomBgAnimSet10Script0Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x344C30, 0x904
-	.global	gUnk_08345534
-gUnk_08345534:
+	.global	gRoomBgAnimSet10Script0Cmd1TileFrame
+gRoomBgAnimSet10Script0Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x345534, 0x904
-	.global	gUnk_08345E38
-gUnk_08345E38:
+	.global	gRoomBgAnimSet10Script0Cmd2TileFrame
+gRoomBgAnimSet10Script0Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x345E38, 0x904
-	.global	gUnk_0834673C
-gUnk_0834673C:
+	.global	gRoomBgAnimSet10Script0Cmd3TileFrame
+gRoomBgAnimSet10Script0Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x34673C, 0x904
-	.global	gUnk_08347040
-gUnk_08347040:
+	.global	gRoomBgAnimSet10Script0Cmd4TileFrame
+gRoomBgAnimSet10Script0Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x347040, 0x904
-	.global	gUnk_08347944
-gUnk_08347944:
+	.global	gRoomBgAnimSet10Script0Cmd5TileFrame
+gRoomBgAnimSet10Script0Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x347944, 0x904
 
 @ 0x08348248-0x08348280: C, row bg_anim_08348248 (src/data/bg_anim_scripts.c section .bg_anim_08348248)
@@ -751,23 +751,23 @@ gUnk_08347944:
 	.section .room_bg_anims_08348280, "a"
 	.global	room_bg_anims_08348280
 room_bg_anims_08348280:
-	.global	gUnk_08348280
-gUnk_08348280:
+	.global	gRoomBgAnimSet10Script1Cmd0TileFrame
+gRoomBgAnimSet10Script1Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x348280, 0x904
-	.global	gUnk_08348B84
-gUnk_08348B84:
+	.global	gRoomBgAnimSet10Script1Cmd1TileFrame
+gRoomBgAnimSet10Script1Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x348B84, 0x904
-	.global	gUnk_08349488
-gUnk_08349488:
+	.global	gRoomBgAnimSet10Script1Cmd2TileFrame
+gRoomBgAnimSet10Script1Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x349488, 0x904
-	.global	gUnk_08349D8C
-gUnk_08349D8C:
+	.global	gRoomBgAnimSet10Script1Cmd3TileFrame
+gRoomBgAnimSet10Script1Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x349D8C, 0x904
-	.global	gUnk_0834A690
-gUnk_0834A690:
+	.global	gRoomBgAnimSet10Script1Cmd4TileFrame
+gRoomBgAnimSet10Script1Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x34A690, 0x904
-	.global	gUnk_0834AF94
-gUnk_0834AF94:
+	.global	gRoomBgAnimSet10Script1Cmd5TileFrame
+gRoomBgAnimSet10Script1Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x34AF94, 0x904
 
 @ 0x0834B898-0x0834B8D0: C, row bg_anim_0834b898 (src/data/bg_anim_scripts.c section .bg_anim_0834b898)
@@ -777,23 +777,23 @@ gUnk_0834AF94:
 	.section .room_bg_anims_0834b8d0, "a"
 	.global	room_bg_anims_0834b8d0
 room_bg_anims_0834b8d0:
-	.global	gUnk_0834B8D0
-gUnk_0834B8D0:
+	.global	gRoomBgAnimSet10Script2Cmd0TileFrame
+gRoomBgAnimSet10Script2Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x34B8D0, 0x904
-	.global	gUnk_0834C1D4
-gUnk_0834C1D4:
+	.global	gRoomBgAnimSet10Script2Cmd1TileFrame
+gRoomBgAnimSet10Script2Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x34C1D4, 0x904
-	.global	gUnk_0834CAD8
-gUnk_0834CAD8:
+	.global	gRoomBgAnimSet10Script2Cmd2TileFrame
+gRoomBgAnimSet10Script2Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x34CAD8, 0x904
-	.global	gUnk_0834D3DC
-gUnk_0834D3DC:
+	.global	gRoomBgAnimSet10Script2Cmd3TileFrame
+gRoomBgAnimSet10Script2Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x34D3DC, 0x904
-	.global	gUnk_0834DCE0
-gUnk_0834DCE0:
+	.global	gRoomBgAnimSet10Script2Cmd4TileFrame
+gRoomBgAnimSet10Script2Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x34DCE0, 0x904
-	.global	gUnk_0834E5E4
-gUnk_0834E5E4:
+	.global	gRoomBgAnimSet10Script2Cmd5TileFrame
+gRoomBgAnimSet10Script2Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x34E5E4, 0x904
 
 @ 0x0834EEE8-0x0834EF20: C, row bg_anim_0834eee8 (src/data/bg_anim_scripts.c section .bg_anim_0834eee8)
@@ -803,23 +803,23 @@ gUnk_0834E5E4:
 	.section .room_bg_anims_0834ef20, "a"
 	.global	room_bg_anims_0834ef20
 room_bg_anims_0834ef20:
-	.global	gUnk_0834EF20
-gUnk_0834EF20:
+	.global	gRoomBgAnimSet12Script0Cmd0TileFrame
+gRoomBgAnimSet12Script0Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x34EF20, 0x4A4
-	.global	gUnk_0834F3C4
-gUnk_0834F3C4:
+	.global	gRoomBgAnimSet12Script0Cmd1TileFrame
+gRoomBgAnimSet12Script0Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x34F3C4, 0x4A4
-	.global	gUnk_0834F868
-gUnk_0834F868:
+	.global	gRoomBgAnimSet12Script0Cmd2TileFrame
+gRoomBgAnimSet12Script0Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x34F868, 0x4A4
-	.global	gUnk_0834FD0C
-gUnk_0834FD0C:
+	.global	gRoomBgAnimSet12Script0Cmd3TileFrame
+gRoomBgAnimSet12Script0Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x34FD0C, 0x4A4
-	.global	gUnk_083501B0
-gUnk_083501B0:
+	.global	gRoomBgAnimSet12Script0Cmd4TileFrame
+gRoomBgAnimSet12Script0Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x3501B0, 0x4A4
-	.global	gUnk_08350654
-gUnk_08350654:
+	.global	gRoomBgAnimSet12Script0Cmd5TileFrame
+gRoomBgAnimSet12Script0Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x350654, 0x4A4
 
 @ 0x08350AF8-0x08350B30: C, row bg_anim_08350af8 (src/data/bg_anim_scripts.c section .bg_anim_08350af8)
@@ -829,23 +829,23 @@ gUnk_08350654:
 	.section .room_bg_anims_08350b30, "a"
 	.global	room_bg_anims_08350b30
 room_bg_anims_08350b30:
-	.global	gUnk_08350B30
-gUnk_08350B30:
+	.global	gRoomBgAnimSet9Script0Cmd0TileFrame
+gRoomBgAnimSet9Script0Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x350B30, 0x684
-	.global	gUnk_083511B4
-gUnk_083511B4:
+	.global	gRoomBgAnimSet9Script0Cmd1TileFrame
+gRoomBgAnimSet9Script0Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x3511B4, 0x684
-	.global	gUnk_08351838
-gUnk_08351838:
+	.global	gRoomBgAnimSet9Script0Cmd2TileFrame
+gRoomBgAnimSet9Script0Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x351838, 0x684
-	.global	gUnk_08351EBC
-gUnk_08351EBC:
+	.global	gRoomBgAnimSet9Script0Cmd3TileFrame
+gRoomBgAnimSet9Script0Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x351EBC, 0x684
-	.global	gUnk_08352540
-gUnk_08352540:
+	.global	gRoomBgAnimSet9Script0Cmd4TileFrame
+gRoomBgAnimSet9Script0Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x352540, 0x684
-	.global	gUnk_08352BC4
-gUnk_08352BC4:
+	.global	gRoomBgAnimSet9Script0Cmd5TileFrame
+gRoomBgAnimSet9Script0Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x352BC4, 0x684
 
 @ 0x08353248-0x08353280: C, row bg_anim_08353248 (src/data/bg_anim_scripts.c section .bg_anim_08353248)
@@ -855,23 +855,23 @@ gUnk_08352BC4:
 	.section .room_bg_anims_08353280, "a"
 	.global	room_bg_anims_08353280
 room_bg_anims_08353280:
-	.global	gUnk_08353280
-gUnk_08353280:
+	.global	gRoomBgAnimSet9Script1Cmd0TileFrame
+gRoomBgAnimSet9Script1Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x353280, 0x684
-	.global	gUnk_08353904
-gUnk_08353904:
+	.global	gRoomBgAnimSet9Script1Cmd1TileFrame
+gRoomBgAnimSet9Script1Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x353904, 0x684
-	.global	gUnk_08353F88
-gUnk_08353F88:
+	.global	gRoomBgAnimSet9Script1Cmd2TileFrame
+gRoomBgAnimSet9Script1Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x353F88, 0x684
-	.global	gUnk_0835460C
-gUnk_0835460C:
+	.global	gRoomBgAnimSet9Script1Cmd3TileFrame
+gRoomBgAnimSet9Script1Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x35460C, 0x684
-	.global	gUnk_08354C90
-gUnk_08354C90:
+	.global	gRoomBgAnimSet9Script1Cmd4TileFrame
+gRoomBgAnimSet9Script1Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x354C90, 0x684
-	.global	gUnk_08355314
-gUnk_08355314:
+	.global	gRoomBgAnimSet9Script1Cmd5TileFrame
+gRoomBgAnimSet9Script1Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x355314, 0x684
 
 @ 0x08355998-0x083559D0: C, row bg_anim_08355998 (src/data/bg_anim_scripts.c section .bg_anim_08355998)
@@ -881,23 +881,23 @@ gUnk_08355314:
 	.section .room_bg_anims_083559d0, "a"
 	.global	room_bg_anims_083559d0
 room_bg_anims_083559d0:
-	.global	gUnk_083559D0
-gUnk_083559D0:
+	.global	gRoomBgAnimSet9Script2Cmd0TileFrame
+gRoomBgAnimSet9Script2Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x3559D0, 0x684
-	.global	gUnk_08356054
-gUnk_08356054:
+	.global	gRoomBgAnimSet9Script2Cmd1TileFrame
+gRoomBgAnimSet9Script2Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x356054, 0x684
-	.global	gUnk_083566D8
-gUnk_083566D8:
+	.global	gRoomBgAnimSet9Script2Cmd2TileFrame
+gRoomBgAnimSet9Script2Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x3566D8, 0x684
-	.global	gUnk_08356D5C
-gUnk_08356D5C:
+	.global	gRoomBgAnimSet9Script2Cmd3TileFrame
+gRoomBgAnimSet9Script2Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x356D5C, 0x684
-	.global	gUnk_083573E0
-gUnk_083573E0:
+	.global	gRoomBgAnimSet9Script2Cmd4TileFrame
+gRoomBgAnimSet9Script2Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x3573E0, 0x684
-	.global	gUnk_08357A64
-gUnk_08357A64:
+	.global	gRoomBgAnimSet9Script2Cmd5TileFrame
+gRoomBgAnimSet9Script2Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x357A64, 0x684
 
 @ 0x083580E8-0x08358120: C, row bg_anim_083580e8 (src/data/bg_anim_scripts.c section .bg_anim_083580e8)
@@ -907,26 +907,26 @@ gUnk_08357A64:
 	.section .room_bg_anims_08358120, "a"
 	.global	room_bg_anims_08358120
 room_bg_anims_08358120:
-	.global	gUnk_08358120
-gUnk_08358120:
+	.global	gRoomBgAnimSet11Script1Cmd0TileFrame
+gRoomBgAnimSet11Script1Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x358120, 0x784
-	.global	gUnk_083588A4
-gUnk_083588A4:
+	.global	gRoomBgAnimSet11Script1Cmd1TileFrame
+gRoomBgAnimSet11Script1Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x3588A4, 0x784
-	.global	gUnk_08359028
-gUnk_08359028:
+	.global	gRoomBgAnimSet11Script1Cmd2TileFrame
+gRoomBgAnimSet11Script1Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x359028, 0x784
-	.global	gUnk_083597AC
-gUnk_083597AC:
+	.global	gRoomBgAnimSet11Script1Cmd3TileFrame
+gRoomBgAnimSet11Script1Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x3597AC, 0x784
-	.global	gUnk_08359F30
-gUnk_08359F30:
+	.global	gRoomBgAnimSet11Script1Cmd4TileFrame
+gRoomBgAnimSet11Script1Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x359F30, 0x784
-	.global	gUnk_0835A6B4
-gUnk_0835A6B4:
+	.global	gRoomBgAnimSet11Script1Cmd6TileFrame
+gRoomBgAnimSet11Script1Cmd6TileFrame:
 	.incbin	"baserom.gba", 0x35A6B4, 0x784
-	.global	gUnk_0835AE38
-gUnk_0835AE38:
+	.global	gRoomBgAnimSet11Script1Cmd7TileFrame
+gRoomBgAnimSet11Script1Cmd7TileFrame:
 	.incbin	"baserom.gba", 0x35AE38, 0x784
 
 @ 0x0835B5BC-0x0835B604: C, row bg_anim_0835b5bc (src/data/bg_anim_scripts.c section .bg_anim_0835b5bc)
@@ -936,21 +936,21 @@ gUnk_0835AE38:
 	.section .room_bg_anims_0835b604, "a"
 	.global	room_bg_anims_0835b604
 room_bg_anims_0835b604:
-	.global	gUnk_0835B604
-gUnk_0835B604:
+	.global	gRoomBgAnimSet11Script0Cmd0TileFrame
+gRoomBgAnimSet11Script0Cmd0TileFrame:
 	.incbin	"baserom.gba", 0x35B604, 0x444
-	.global	gUnk_0835BA48
-gUnk_0835BA48:
+	.global	gRoomBgAnimSet11Script0Cmd1TileFrame
+gRoomBgAnimSet11Script0Cmd1TileFrame:
 	.incbin	"baserom.gba", 0x35BA48, 0x444
-	.global	gUnk_0835BE8C
-gUnk_0835BE8C:
+	.global	gRoomBgAnimSet11Script0Cmd2TileFrame
+gRoomBgAnimSet11Script0Cmd2TileFrame:
 	.incbin	"baserom.gba", 0x35BE8C, 0x444
-	.global	gUnk_0835C2D0
-gUnk_0835C2D0:
+	.global	gRoomBgAnimSet11Script0Cmd3TileFrame
+gRoomBgAnimSet11Script0Cmd3TileFrame:
 	.incbin	"baserom.gba", 0x35C2D0, 0x444
-	.global	gUnk_0835C714
-gUnk_0835C714:
+	.global	gRoomBgAnimSet11Script0Cmd4TileFrame
+gRoomBgAnimSet11Script0Cmd4TileFrame:
 	.incbin	"baserom.gba", 0x35C714, 0x444
-	.global	gUnk_0835CB58
-gUnk_0835CB58:
+	.global	gRoomBgAnimSet11Script0Cmd5TileFrame
+gRoomBgAnimSet11Script0Cmd5TileFrame:
 	.incbin	"baserom.gba", 0x35CB58, 0x444

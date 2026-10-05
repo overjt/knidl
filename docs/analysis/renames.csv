@@ -26329,3 +26329,212 @@ gUnk_0853DE04,gLevel1Stage1Room3Bg3Palette,asset,"slot: gLevel1Stage1Room3 -> Ro
 gUnk_0853E110,gLevel1Stage2Room0Bg3Palette,asset,"slot: gLevel1Stage2Room0 -> RoomDef.bg3Palette, gLevel1Stage2Room2 -> RoomDef.bg3Palette, gLevel1Stage2Room3 -> RoomDef.bg3Palette, gLevel1Stage2Room4 -> RoomDef.bg3Palette, gLevel1Stage2Room5 -> RoomDef.bg3Palette (src/data/room_defs.c); docs/naming.md 2.5 A3",183
 gUnk_0853E214,gLevel1Stage3Bg3Palette,asset,"slot: gLevel1Stage3Room0 -> RoomDef.bg3Palette, gLevel1Stage3Room1 -> RoomDef.bg3Palette, gLevel1Stage3Room2 -> RoomDef.bg3Palette, gLevel1Stage3Room3 -> RoomDef.bg3Palette, gLevel1Stage3Room4 -> RoomDef.bg3Palette, gLevel1Stage3Room5 -> RoomDef.bg3Palette, gLevel1Stage3Room6 -> RoomDef.bg3Palette (src/data/room_defs.c); docs/naming.md 2.5 A3",183
 gUnk_0853E7EC,gLevel6Stage5Bg2Palette,asset,"slot: gLevel6Stage5Room0 -> RoomDef.bg2Palette, gLevel6Stage5Room1 -> RoomDef.bg2Palette, gLevel6Stage5Room2 -> RoomDef.bg2Palette, gLevel6Stage5Room3 -> RoomDef.bg2Palette, gLevel6Stage5Room4 -> RoomDef.bg2Palette, gLevel6Stage5Room5 -> RoomDef.bg2Palette, gLevel6Stage5Room6 -> RoomDef.bg2Palette, gLevel6Stage5Room7 -> RoomDef.bg2Palette, gLevel6Stage5Room8 -> RoomDef.bg2Palette (src/data/room_defs.c); docs/naming.md 2.5 A3",183
+gUnk_08334EC0,gRoomBgAnimSet1Script0Cmd0TileFrame,asset,"slot: gRoomBgAnimSet1Script0[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08334FC4,gRoomBgAnimSet1Script0Cmd1TileFrame,asset,"slot: gRoomBgAnimSet1Script0[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083350C8,gRoomBgAnimSet1Script0Cmd2TileFrame,asset,"slot: gRoomBgAnimSet1Script0[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083351CC,gRoomBgAnimSet1Script0Cmd3TileFrame,asset,"slot: gRoomBgAnimSet1Script0[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083352D0,gRoomBgAnimSet1Script0Cmd4TileFrame,asset,"slot: gRoomBgAnimSet1Script0[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083353D4,gRoomBgAnimSet1Script0Cmd5TileFrame,asset,"slot: gRoomBgAnimSet1Script0[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083354D8,gRoomBgAnimSet1Script0Cmd6TileFrame,asset,"slot: gRoomBgAnimSet1Script0[6] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083355DC,gRoomBgAnimSet1Script0Cmd7TileFrame,asset,"slot: gRoomBgAnimSet1Script0[7] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08335728,gRoomBgAnimSet1Script1Cmd0TileFrame,asset,"slot: gRoomBgAnimSet1Script1[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083357AC,gRoomBgAnimSet1Script1Cmd1TileFrame,asset,"slot: gRoomBgAnimSet1Script1[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08335830,gRoomBgAnimSet1Script1Cmd2TileFrame,asset,"slot: gRoomBgAnimSet1Script1[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083358B4,gRoomBgAnimSet1Script1Cmd3TileFrame,asset,"slot: gRoomBgAnimSet1Script1[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08335938,gRoomBgAnimSet1Script1Cmd4TileFrame,asset,"slot: gRoomBgAnimSet1Script1[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083359BC,gRoomBgAnimSet1Script1Cmd5TileFrame,asset,"slot: gRoomBgAnimSet1Script1[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08335A40,gRoomBgAnimSet1Script1Cmd6TileFrame,asset,"slot: gRoomBgAnimSet1Script1[6] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08335AC4,gRoomBgAnimSet1Script1Cmd7TileFrame,asset,"slot: gRoomBgAnimSet1Script1[7] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08335B90,gRoomBgAnimSet1Script2Cmd0TileFrame,asset,"slot: gRoomBgAnimSet1Script2[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08335BD4,gRoomBgAnimSet1Script2Cmd1TileFrame,asset,"slot: gRoomBgAnimSet1Script2[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08335C18,gRoomBgAnimSet1Script2Cmd2TileFrame,asset,"slot: gRoomBgAnimSet1Script2[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08335C5C,gRoomBgAnimSet1Script2Cmd3TileFrame,asset,"slot: gRoomBgAnimSet1Script2[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08335CA0,gRoomBgAnimSet1Script2Cmd4TileFrame,asset,"slot: gRoomBgAnimSet1Script2[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08335CE4,gRoomBgAnimSet1Script2Cmd5TileFrame,asset,"slot: gRoomBgAnimSet1Script2[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08335D28,gRoomBgAnimSet1Script2Cmd6TileFrame,asset,"slot: gRoomBgAnimSet1Script2[6] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08335D6C,gRoomBgAnimSet1Script2Cmd7TileFrame,asset,"slot: gRoomBgAnimSet1Script2[7] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08335DF8,gRoomBgAnimSet1Script3Cmd0TileFrame,asset,"slot: gRoomBgAnimSet1Script3[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08335EFC,gRoomBgAnimSet1Script3Cmd1TileFrame,asset,"slot: gRoomBgAnimSet1Script3[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08336000,gRoomBgAnimSet1Script3Cmd2TileFrame,asset,"slot: gRoomBgAnimSet1Script3[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08336104,gRoomBgAnimSet1Script3Cmd3TileFrame,asset,"slot: gRoomBgAnimSet1Script3[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08336208,gRoomBgAnimSet1Script3Cmd4TileFrame,asset,"slot: gRoomBgAnimSet1Script3[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833630C,gRoomBgAnimSet1Script3Cmd5TileFrame,asset,"slot: gRoomBgAnimSet1Script3[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08336410,gRoomBgAnimSet1Script3Cmd6TileFrame,asset,"slot: gRoomBgAnimSet1Script3[6] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08336514,gRoomBgAnimSet1Script3Cmd7TileFrame,asset,"slot: gRoomBgAnimSet1Script3[7] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08336660,gRoomBgAnimSet1Script4Cmd0TileFrame,asset,"slot: gRoomBgAnimSet1Script4[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08336764,gRoomBgAnimSet1Script4Cmd1TileFrame,asset,"slot: gRoomBgAnimSet1Script4[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08336868,gRoomBgAnimSet1Script4Cmd2TileFrame,asset,"slot: gRoomBgAnimSet1Script4[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833696C,gRoomBgAnimSet1Script4Cmd3TileFrame,asset,"slot: gRoomBgAnimSet1Script4[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08336A70,gRoomBgAnimSet1Script4Cmd4TileFrame,asset,"slot: gRoomBgAnimSet1Script4[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08336B74,gRoomBgAnimSet1Script4Cmd5TileFrame,asset,"slot: gRoomBgAnimSet1Script4[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08336C78,gRoomBgAnimSet1Script4Cmd6TileFrame,asset,"slot: gRoomBgAnimSet1Script4[6] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08336D7C,gRoomBgAnimSet1Script4Cmd7TileFrame,asset,"slot: gRoomBgAnimSet1Script4[7] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08336EC8,gRoomBgAnimSet1Script5Cmd0TileFrame,asset,"slot: gRoomBgAnimSet1Script5[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08336FCC,gRoomBgAnimSet1Script5Cmd1TileFrame,asset,"slot: gRoomBgAnimSet1Script5[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083370D0,gRoomBgAnimSet1Script5Cmd2TileFrame,asset,"slot: gRoomBgAnimSet1Script5[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083371D4,gRoomBgAnimSet1Script5Cmd3TileFrame,asset,"slot: gRoomBgAnimSet1Script5[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083372D8,gRoomBgAnimSet1Script5Cmd4TileFrame,asset,"slot: gRoomBgAnimSet1Script5[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083373DC,gRoomBgAnimSet1Script5Cmd5TileFrame,asset,"slot: gRoomBgAnimSet1Script5[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083374E0,gRoomBgAnimSet1Script5Cmd6TileFrame,asset,"slot: gRoomBgAnimSet1Script5[6] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083375E4,gRoomBgAnimSet1Script5Cmd7TileFrame,asset,"slot: gRoomBgAnimSet1Script5[7] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08337730,gRoomBgAnimSet1Script6Cmd0TileFrame,asset,"slot: gRoomBgAnimSet1Script6[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083377B4,gRoomBgAnimSet1Script6Cmd1TileFrame,asset,"slot: gRoomBgAnimSet1Script6[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08337838,gRoomBgAnimSet1Script6Cmd2TileFrame,asset,"slot: gRoomBgAnimSet1Script6[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083378BC,gRoomBgAnimSet1Script6Cmd3TileFrame,asset,"slot: gRoomBgAnimSet1Script6[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08337940,gRoomBgAnimSet1Script6Cmd4TileFrame,asset,"slot: gRoomBgAnimSet1Script6[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083379C4,gRoomBgAnimSet1Script6Cmd5TileFrame,asset,"slot: gRoomBgAnimSet1Script6[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08337A48,gRoomBgAnimSet1Script6Cmd6TileFrame,asset,"slot: gRoomBgAnimSet1Script6[6] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08337ACC,gRoomBgAnimSet1Script6Cmd7TileFrame,asset,"slot: gRoomBgAnimSet1Script6[7] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08337B98,gRoomBgAnimSet1Script7Cmd0TileFrame,asset,"slot: gRoomBgAnimSet1Script7[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08337EFC,gRoomBgAnimSet1Script7Cmd1TileFrame,asset,"slot: gRoomBgAnimSet1Script7[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08338260,gRoomBgAnimSet1Script7Cmd2TileFrame,asset,"slot: gRoomBgAnimSet1Script7[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083385C4,gRoomBgAnimSet1Script7Cmd3TileFrame,asset,"slot: gRoomBgAnimSet1Script7[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08338928,gRoomBgAnimSet1Script7Cmd4TileFrame,asset,"slot: gRoomBgAnimSet1Script7[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08338C8C,gRoomBgAnimSet1Script7Cmd5TileFrame,asset,"slot: gRoomBgAnimSet1Script7[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08338FF0,gRoomBgAnimSet1Script7Cmd6TileFrame,asset,"slot: gRoomBgAnimSet1Script7[6] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339354,gRoomBgAnimSet1Script7Cmd7TileFrame,asset,"slot: gRoomBgAnimSet1Script7[7] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339700,gRoomBgAnimSet1Script8Cmd0TileFrame,asset,"slot: gRoomBgAnimSet1Script8[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339784,gRoomBgAnimSet1Script8Cmd1TileFrame,asset,"slot: gRoomBgAnimSet1Script8[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339808,gRoomBgAnimSet1Script8Cmd2TileFrame,asset,"slot: gRoomBgAnimSet1Script8[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833988C,gRoomBgAnimSet1Script8Cmd3TileFrame,asset,"slot: gRoomBgAnimSet1Script8[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339910,gRoomBgAnimSet1Script8Cmd4TileFrame,asset,"slot: gRoomBgAnimSet1Script8[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339994,gRoomBgAnimSet1Script8Cmd5TileFrame,asset,"slot: gRoomBgAnimSet1Script8[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339A18,gRoomBgAnimSet1Script8Cmd6TileFrame,asset,"slot: gRoomBgAnimSet1Script8[6] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339A9C,gRoomBgAnimSet1Script8Cmd7TileFrame,asset,"slot: gRoomBgAnimSet1Script8[7] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339B68,gRoomBgAnimSet1Script9Cmd0TileFrame,asset,"slot: gRoomBgAnimSet1Script9[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339BAC,gRoomBgAnimSet1Script9Cmd1TileFrame,asset,"slot: gRoomBgAnimSet1Script9[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339BF0,gRoomBgAnimSet1Script9Cmd2TileFrame,asset,"slot: gRoomBgAnimSet1Script9[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339C34,gRoomBgAnimSet1Script9Cmd3TileFrame,asset,"slot: gRoomBgAnimSet1Script9[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339C78,gRoomBgAnimSet1Script9Cmd4TileFrame,asset,"slot: gRoomBgAnimSet1Script9[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339CBC,gRoomBgAnimSet1Script9Cmd5TileFrame,asset,"slot: gRoomBgAnimSet1Script9[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339D00,gRoomBgAnimSet1Script9Cmd6TileFrame,asset,"slot: gRoomBgAnimSet1Script9[6] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339D44,gRoomBgAnimSet1Script9Cmd7TileFrame,asset,"slot: gRoomBgAnimSet1Script9[7] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339DD0,gRoomBgAnimSet2Script0Cmd0TileFrame,asset,"slot: gRoomBgAnimSet2Script0[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339E54,gRoomBgAnimSet2Script0Cmd1TileFrame,asset,"slot: gRoomBgAnimSet2Script0[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339ED8,gRoomBgAnimSet2Script0Cmd2TileFrame,asset,"slot: gRoomBgAnimSet2Script0[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339F5C,gRoomBgAnimSet2Script0Cmd3TileFrame,asset,"slot: gRoomBgAnimSet2Script0[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08339FE0,gRoomBgAnimSet2Script0Cmd4TileFrame,asset,"slot: gRoomBgAnimSet2Script0[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833A064,gRoomBgAnimSet2Script0Cmd5TileFrame,asset,"slot: gRoomBgAnimSet2Script0[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833A120,gRoomBgAnimSet3Script0Cmd0TileFrame,asset,"slot: gRoomBgAnimSet3Script0[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833A2E4,gRoomBgAnimSet3Script0Cmd1TileFrame,asset,"slot: gRoomBgAnimSet3Script0[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833A4A8,gRoomBgAnimSet3Script0Cmd2TileFrame,asset,"slot: gRoomBgAnimSet3Script0[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833A66C,gRoomBgAnimSet3Script0Cmd3TileFrame,asset,"slot: gRoomBgAnimSet3Script0[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833A830,gRoomBgAnimSet3Script0Cmd4TileFrame,asset,"slot: gRoomBgAnimSet3Script0[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833A9F4,gRoomBgAnimSet3Script0Cmd5TileFrame,asset,"slot: gRoomBgAnimSet3Script0[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833ABF0,gRoomBgAnimSet4Script0Cmd0TileFrame,asset,"slot: gRoomBgAnimSet4Script0[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833B3F4,gRoomBgAnimSet4Script0Cmd1TileFrame,asset,"slot: gRoomBgAnimSet4Script0[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833BBF8,gRoomBgAnimSet4Script0Cmd2TileFrame,asset,"slot: gRoomBgAnimSet4Script0[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833C3FC,gRoomBgAnimSet4Script0Cmd3TileFrame,asset,"slot: gRoomBgAnimSet4Script0[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833CC00,gRoomBgAnimSet4Script0Cmd4TileFrame,asset,"slot: gRoomBgAnimSet4Script0[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833D404,gRoomBgAnimSet4Script0Cmd5TileFrame,asset,"slot: gRoomBgAnimSet4Script0[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833DC08,gRoomBgAnimSet4Script0Cmd6TileFrame,asset,"slot: gRoomBgAnimSet4Script0[6] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833E40C,gRoomBgAnimSet4Script0Cmd7TileFrame,asset,"slot: gRoomBgAnimSet4Script0[7] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833EC58,gRoomBgAnimSet5Script2Cmd2TileFrame,asset,"slot: gRoomBgAnimSet5Script2[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833ED3C,gRoomBgAnimSet5Script2Cmd3TileFrame,asset,"slot: gRoomBgAnimSet5Script2[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833EE20,gRoomBgAnimSet5Script2Cmd4TileFrame,asset,"slot: gRoomBgAnimSet5Script2[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833EF04,gRoomBgAnimSet5Script2Cmd5TileFrame,asset,"slot: gRoomBgAnimSet5Script2[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833EFE8,gRoomBgAnimSet5Script2Cmd6TileFrame,asset,"slot: gRoomBgAnimSet5Script2[6] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833F0CC,gRoomBgAnimSet5Script2Cmd7TileFrame,asset,"slot: gRoomBgAnimSet5Script2[7] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833F1B0,gRoomBgAnimSet5Script2Cmd8TileFrame,asset,"slot: gRoomBgAnimSet5Script2[8] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833F294,gRoomBgAnimSet5Script2Cmd9TileFrame,asset,"slot: gRoomBgAnimSet5Script2[9] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833F378,gRoomBgAnimSet5Script2Cmd10TileFrame,asset,"slot: gRoomBgAnimSet5Script2[10] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833F4C4,gRoomBgAnimSet6Script0Cmd2TileFrame,asset,"slot: gRoomBgAnimSet6Script0[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833F5A8,gRoomBgAnimSet6Script0Cmd3TileFrame,asset,"slot: gRoomBgAnimSet6Script0[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833F68C,gRoomBgAnimSet6Script0Cmd4TileFrame,asset,"slot: gRoomBgAnimSet6Script0[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833F770,gRoomBgAnimSet6Script0Cmd5TileFrame,asset,"slot: gRoomBgAnimSet6Script0[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833F854,gRoomBgAnimSet6Script0Cmd6TileFrame,asset,"slot: gRoomBgAnimSet6Script0[6] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833F938,gRoomBgAnimSet6Script0Cmd7TileFrame,asset,"slot: gRoomBgAnimSet6Script0[7] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833FA1C,gRoomBgAnimSet6Script0Cmd8TileFrame,asset,"slot: gRoomBgAnimSet6Script0[8] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833FB00,gRoomBgAnimSet6Script0Cmd9TileFrame,asset,"slot: gRoomBgAnimSet6Script0[9] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833FBE4,gRoomBgAnimSet6Script0Cmd10TileFrame,asset,"slot: gRoomBgAnimSet6Script0[10] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0833FD30,gRoomBgAnimSet5Script0Cmd1PaletteFadeSrc,asset,slot: gRoomBgAnimSet5Script0Cmd1PaletteFade -> BgAnimPaletteFade.src (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_0833FDB0,gRoomBgAnimSet5Script0Cmd1PaletteFadeDst,asset,slot: gRoomBgAnimSet5Script0Cmd1PaletteFade -> BgAnimPaletteFade.dst (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_0833FE40,gRoomBgAnimSet5Script0Cmd2PaletteFadeSrc,asset,slot: gRoomBgAnimSet5Script0Cmd2PaletteFade -> BgAnimPaletteFade.src (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_0833FEC0,gRoomBgAnimSet5Script0Cmd2PaletteFadeDst,asset,slot: gRoomBgAnimSet5Script0Cmd2PaletteFade -> BgAnimPaletteFade.dst (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_0833FF50,gRoomBgAnimSet5Script0Cmd3PaletteFadeSrc,asset,slot: gRoomBgAnimSet5Script0Cmd3PaletteFade -> BgAnimPaletteFade.src (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_0833FFD0,gRoomBgAnimSet5Script0Cmd3PaletteFadeDst,asset,slot: gRoomBgAnimSet5Script0Cmd3PaletteFade -> BgAnimPaletteFade.dst (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_08340088,gRoomBgAnimSet5Script1Cmd1PaletteFadeSrc,asset,slot: gRoomBgAnimSet5Script1Cmd1PaletteFade -> BgAnimPaletteFade.src (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_083400C8,gRoomBgAnimSet5Script1Cmd1PaletteFadeDst,asset,slot: gRoomBgAnimSet5Script1Cmd1PaletteFade -> BgAnimPaletteFade.dst (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_08340118,gRoomBgAnimSet5Script1Cmd2PaletteFadeSrc,asset,slot: gRoomBgAnimSet5Script1Cmd2PaletteFade -> BgAnimPaletteFade.src (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_08340158,gRoomBgAnimSet5Script1Cmd2PaletteFadeDst,asset,slot: gRoomBgAnimSet5Script1Cmd2PaletteFade -> BgAnimPaletteFade.dst (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_083401A8,gRoomBgAnimSet5Script1Cmd3PaletteFadeSrc,asset,slot: gRoomBgAnimSet5Script1Cmd3PaletteFade -> BgAnimPaletteFade.src (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_083401E8,gRoomBgAnimSet5Script1Cmd3PaletteFadeDst,asset,slot: gRoomBgAnimSet5Script1Cmd3PaletteFade -> BgAnimPaletteFade.dst (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_08340260,gRoomBgAnimSet6Script1Cmd1PaletteFadeSrc,asset,slot: gRoomBgAnimSet6Script1Cmd1PaletteFade -> BgAnimPaletteFade.src (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_083402E0,gRoomBgAnimSet6Script1Cmd1PaletteFadeDst,asset,slot: gRoomBgAnimSet6Script1Cmd1PaletteFade -> BgAnimPaletteFade.dst (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_08340370,gRoomBgAnimSet6Script1Cmd2PaletteFadeSrc,asset,slot: gRoomBgAnimSet6Script1Cmd2PaletteFade -> BgAnimPaletteFade.src (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_083403F0,gRoomBgAnimSet6Script1Cmd2PaletteFadeDst,asset,slot: gRoomBgAnimSet6Script1Cmd2PaletteFade -> BgAnimPaletteFade.dst (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_08340480,gRoomBgAnimSet6Script1Cmd3PaletteFadeSrc,asset,slot: gRoomBgAnimSet6Script1Cmd3PaletteFade -> BgAnimPaletteFade.src (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_08340500,gRoomBgAnimSet6Script1Cmd3PaletteFadeDst,asset,slot: gRoomBgAnimSet6Script1Cmd3PaletteFade -> BgAnimPaletteFade.dst (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_08340590,gRoomBgAnimSet6Script1Cmd4PaletteFadeSrc,asset,slot: gRoomBgAnimSet6Script1Cmd4PaletteFade -> BgAnimPaletteFade.src (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_08340610,gRoomBgAnimSet6Script1Cmd4PaletteFadeDst,asset,slot: gRoomBgAnimSet6Script1Cmd4PaletteFade -> BgAnimPaletteFade.dst (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_083406D0,gRoomBgAnimSet6Script2Cmd1PaletteFadeSrc,asset,slot: gRoomBgAnimSet6Script2Cmd1PaletteFade -> BgAnimPaletteFade.src (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_08340710,gRoomBgAnimSet6Script2Cmd1PaletteFadeDst,asset,slot: gRoomBgAnimSet6Script2Cmd1PaletteFade -> BgAnimPaletteFade.dst (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_08340760,gRoomBgAnimSet6Script2Cmd2PaletteFadeSrc,asset,slot: gRoomBgAnimSet6Script2Cmd2PaletteFade -> BgAnimPaletteFade.src (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_083407A0,gRoomBgAnimSet6Script2Cmd2PaletteFadeDst,asset,slot: gRoomBgAnimSet6Script2Cmd2PaletteFade -> BgAnimPaletteFade.dst (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_083407F0,gRoomBgAnimSet6Script2Cmd3PaletteFadeSrc,asset,slot: gRoomBgAnimSet6Script2Cmd3PaletteFade -> BgAnimPaletteFade.src (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_08340830,gRoomBgAnimSet6Script2Cmd3PaletteFadeDst,asset,slot: gRoomBgAnimSet6Script2Cmd3PaletteFade -> BgAnimPaletteFade.dst (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_08340880,gRoomBgAnimSet6Script2Cmd4PaletteFadeSrc,asset,slot: gRoomBgAnimSet6Script2Cmd4PaletteFade -> BgAnimPaletteFade.src (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_083408C0,gRoomBgAnimSet6Script2Cmd4PaletteFadeDst,asset,slot: gRoomBgAnimSet6Script2Cmd4PaletteFade -> BgAnimPaletteFade.dst (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2,183
+gUnk_08340940,gRoomBgAnimSet7Script0Cmd0TileFrame,asset,"slot: gRoomBgAnimSet7Script0[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083418E4,gRoomBgAnimSet7Script0Cmd1TileFrame,asset,"slot: gRoomBgAnimSet7Script0[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08342888,gRoomBgAnimSet7Script0Cmd2TileFrame,asset,"slot: gRoomBgAnimSet7Script0[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0834382C,gRoomBgAnimSet7Script0Cmd3TileFrame,asset,"slot: gRoomBgAnimSet7Script0[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083447F8,gRoomBgAnimSet8Script0Cmd0TileFrame,asset,"slot: gRoomBgAnimSet8Script0[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083448FC,gRoomBgAnimSet8Script0Cmd1TileFrame,asset,"slot: gRoomBgAnimSet8Script0[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08344A00,gRoomBgAnimSet8Script0Cmd2TileFrame,asset,"slot: gRoomBgAnimSet8Script0[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08344B04,gRoomBgAnimSet8Script0Cmd3TileFrame,asset,"slot: gRoomBgAnimSet8Script0[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08344C30,gRoomBgAnimSet10Script0Cmd0TileFrame,asset,"slot: gRoomBgAnimSet10Script0[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08345534,gRoomBgAnimSet10Script0Cmd1TileFrame,asset,"slot: gRoomBgAnimSet10Script0[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08345E38,gRoomBgAnimSet10Script0Cmd2TileFrame,asset,"slot: gRoomBgAnimSet10Script0[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0834673C,gRoomBgAnimSet10Script0Cmd3TileFrame,asset,"slot: gRoomBgAnimSet10Script0[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08347040,gRoomBgAnimSet10Script0Cmd4TileFrame,asset,"slot: gRoomBgAnimSet10Script0[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08347944,gRoomBgAnimSet10Script0Cmd5TileFrame,asset,"slot: gRoomBgAnimSet10Script0[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08348280,gRoomBgAnimSet10Script1Cmd0TileFrame,asset,"slot: gRoomBgAnimSet10Script1[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08348B84,gRoomBgAnimSet10Script1Cmd1TileFrame,asset,"slot: gRoomBgAnimSet10Script1[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08349488,gRoomBgAnimSet10Script1Cmd2TileFrame,asset,"slot: gRoomBgAnimSet10Script1[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08349D8C,gRoomBgAnimSet10Script1Cmd3TileFrame,asset,"slot: gRoomBgAnimSet10Script1[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0834A690,gRoomBgAnimSet10Script1Cmd4TileFrame,asset,"slot: gRoomBgAnimSet10Script1[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0834AF94,gRoomBgAnimSet10Script1Cmd5TileFrame,asset,"slot: gRoomBgAnimSet10Script1[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0834B8D0,gRoomBgAnimSet10Script2Cmd0TileFrame,asset,"slot: gRoomBgAnimSet10Script2[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0834C1D4,gRoomBgAnimSet10Script2Cmd1TileFrame,asset,"slot: gRoomBgAnimSet10Script2[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0834CAD8,gRoomBgAnimSet10Script2Cmd2TileFrame,asset,"slot: gRoomBgAnimSet10Script2[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0834D3DC,gRoomBgAnimSet10Script2Cmd3TileFrame,asset,"slot: gRoomBgAnimSet10Script2[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0834DCE0,gRoomBgAnimSet10Script2Cmd4TileFrame,asset,"slot: gRoomBgAnimSet10Script2[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0834E5E4,gRoomBgAnimSet10Script2Cmd5TileFrame,asset,"slot: gRoomBgAnimSet10Script2[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0834EF20,gRoomBgAnimSet12Script0Cmd0TileFrame,asset,"slot: gRoomBgAnimSet12Script0[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0834F3C4,gRoomBgAnimSet12Script0Cmd1TileFrame,asset,"slot: gRoomBgAnimSet12Script0[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0834F868,gRoomBgAnimSet12Script0Cmd2TileFrame,asset,"slot: gRoomBgAnimSet12Script0[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0834FD0C,gRoomBgAnimSet12Script0Cmd3TileFrame,asset,"slot: gRoomBgAnimSet12Script0[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083501B0,gRoomBgAnimSet12Script0Cmd4TileFrame,asset,"slot: gRoomBgAnimSet12Script0[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08350654,gRoomBgAnimSet12Script0Cmd5TileFrame,asset,"slot: gRoomBgAnimSet12Script0[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08350B30,gRoomBgAnimSet9Script0Cmd0TileFrame,asset,"slot: gRoomBgAnimSet9Script0[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083511B4,gRoomBgAnimSet9Script0Cmd1TileFrame,asset,"slot: gRoomBgAnimSet9Script0[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08351838,gRoomBgAnimSet9Script0Cmd2TileFrame,asset,"slot: gRoomBgAnimSet9Script0[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08351EBC,gRoomBgAnimSet9Script0Cmd3TileFrame,asset,"slot: gRoomBgAnimSet9Script0[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08352540,gRoomBgAnimSet9Script0Cmd4TileFrame,asset,"slot: gRoomBgAnimSet9Script0[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08352BC4,gRoomBgAnimSet9Script0Cmd5TileFrame,asset,"slot: gRoomBgAnimSet9Script0[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08353280,gRoomBgAnimSet9Script1Cmd0TileFrame,asset,"slot: gRoomBgAnimSet9Script1[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08353904,gRoomBgAnimSet9Script1Cmd1TileFrame,asset,"slot: gRoomBgAnimSet9Script1[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08353F88,gRoomBgAnimSet9Script1Cmd2TileFrame,asset,"slot: gRoomBgAnimSet9Script1[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0835460C,gRoomBgAnimSet9Script1Cmd3TileFrame,asset,"slot: gRoomBgAnimSet9Script1[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08354C90,gRoomBgAnimSet9Script1Cmd4TileFrame,asset,"slot: gRoomBgAnimSet9Script1[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08355314,gRoomBgAnimSet9Script1Cmd5TileFrame,asset,"slot: gRoomBgAnimSet9Script1[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083559D0,gRoomBgAnimSet9Script2Cmd0TileFrame,asset,"slot: gRoomBgAnimSet9Script2[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08356054,gRoomBgAnimSet9Script2Cmd1TileFrame,asset,"slot: gRoomBgAnimSet9Script2[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083566D8,gRoomBgAnimSet9Script2Cmd2TileFrame,asset,"slot: gRoomBgAnimSet9Script2[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08356D5C,gRoomBgAnimSet9Script2Cmd3TileFrame,asset,"slot: gRoomBgAnimSet9Script2[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083573E0,gRoomBgAnimSet9Script2Cmd4TileFrame,asset,"slot: gRoomBgAnimSet9Script2[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08357A64,gRoomBgAnimSet9Script2Cmd5TileFrame,asset,"slot: gRoomBgAnimSet9Script2[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08358120,gRoomBgAnimSet11Script1Cmd0TileFrame,asset,"slot: gRoomBgAnimSet11Script1[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083588A4,gRoomBgAnimSet11Script1Cmd1TileFrame,asset,"slot: gRoomBgAnimSet11Script1[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_08359028,gRoomBgAnimSet11Script1Cmd2TileFrame,asset,"slot: gRoomBgAnimSet11Script1[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_083597AC,gRoomBgAnimSet11Script1Cmd3TileFrame,asset,"slot: gRoomBgAnimSet11Script1[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame), gRoomBgAnimSet11Script1[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A3",183
+gUnk_08359F30,gRoomBgAnimSet11Script1Cmd4TileFrame,asset,"slot: gRoomBgAnimSet11Script1[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0835A6B4,gRoomBgAnimSet11Script1Cmd6TileFrame,asset,"slot: gRoomBgAnimSet11Script1[6] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0835AE38,gRoomBgAnimSet11Script1Cmd7TileFrame,asset,"slot: gRoomBgAnimSet11Script1[7] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0835B604,gRoomBgAnimSet11Script0Cmd0TileFrame,asset,"slot: gRoomBgAnimSet11Script0[0] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0835BA48,gRoomBgAnimSet11Script0Cmd1TileFrame,asset,"slot: gRoomBgAnimSet11Script0[1] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0835BE8C,gRoomBgAnimSet11Script0Cmd2TileFrame,asset,"slot: gRoomBgAnimSet11Script0[2] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0835C2D0,gRoomBgAnimSet11Script0Cmd3TileFrame,asset,"slot: gRoomBgAnimSet11Script0[3] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0835C714,gRoomBgAnimSet11Script0Cmd4TileFrame,asset,"slot: gRoomBgAnimSet11Script0[4] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
+gUnk_0835CB58,gRoomBgAnimSet11Script0Cmd5TileFrame,asset,"slot: gRoomBgAnimSet11Script0[5] -> BgAnimCmd.ptr (op 0, struct BgAnimTileFrame) (src/data/bg_anim_scripts.c); docs/naming.md 2.5 A2",183
