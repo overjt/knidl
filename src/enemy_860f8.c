@@ -58,19 +58,19 @@ void BrontoBurtWave(void)
 
     gCurTask->updateState = BRONTO_BURT_WAVE_STATE_WAVE;
     TaskStop();
-    TaskSetMotionXFacing(gUnk_08742088[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gBrontoBurtFlySpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     p = &gCurTask->pixelY;
     if (*p < gTasks[TaskFindNearestPlayer()].pixelY)
     {
         t = gCurTask;
-        t->velY = gUnk_08742090[0];
-        t->accelY = -gUnk_08742098[0];
+        t->velY = gBrontoBurtWaveVelY[0];
+        t->accelY = -gBrontoBurtWaveAccelY[0];
     }
     else
     {
         t = gCurTask;
-        t->velY = -gUnk_08742090[0];
-        t->accelY = gUnk_08742098[0];
+        t->velY = -gBrontoBurtWaveVelY[0];
+        t->accelY = gBrontoBurtWaveAccelY[0];
     }
     t = gCurTask;
     t->brontoBurtTurnCount = 4;
@@ -115,13 +115,13 @@ void BrontoBurtWaveState0Update(void)
     {
         if (n < 0)
             return;
-        t->velY = -gUnk_08742090[0];
-        t->accelY = gUnk_08742098[0];
+        t->velY = -gBrontoBurtWaveVelY[0];
+        t->accelY = gBrontoBurtWaveAccelY[0];
     }
     else
     {
-        t->velY = gUnk_08742090[0];
-        t->accelY = -gUnk_08742098[0];
+        t->velY = gBrontoBurtWaveVelY[0];
+        t->accelY = -gBrontoBurtWaveAccelY[0];
     }
     gCurTask->brontoBurtTurnTimer = 40;
 }
@@ -155,19 +155,19 @@ void BrontoBurtWeave(void)
 
     gCurTask->updateState = BRONTO_BURT_WEAVE_STATE_WEAVE;
     TaskStop();
-    TaskSetMotionXFacing(gUnk_08742088[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gBrontoBurtFlySpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     p = &gCurTask->pixelY;
     if (*p < gTasks[TaskFindNearestPlayer()].pixelY)
     {
         t = gCurTask;
-        t->velY = gUnk_08742090[1];
-        t->accelY = -gUnk_08742098[1];
+        t->velY = gBrontoBurtWaveVelY[1];
+        t->accelY = -gBrontoBurtWaveAccelY[1];
     }
     else
     {
         t = gCurTask;
-        t->velY = -gUnk_08742090[1];
-        t->accelY = gUnk_08742098[1];
+        t->velY = -gBrontoBurtWaveVelY[1];
+        t->accelY = gBrontoBurtWaveAccelY[1];
     }
     gCurTask->brontoBurtTurnTimer = 40;
     while (1)
@@ -229,13 +229,13 @@ void sub_08086444(void)
         return;
     if (gCurTask->accelY < 0)
     {
-        gCurTask->velY = -gUnk_08742090[1];
-        gCurTask->accelY = gUnk_08742098[1];
+        gCurTask->velY = -gBrontoBurtWaveVelY[1];
+        gCurTask->accelY = gBrontoBurtWaveAccelY[1];
     }
     else
     {
-        gCurTask->velY = gUnk_08742090[1];
-        gCurTask->accelY = -gUnk_08742098[1];
+        gCurTask->velY = gBrontoBurtWaveVelY[1];
+        gCurTask->accelY = -gBrontoBurtWaveAccelY[1];
     }
     gCurTask->brontoBurtTurnTimer = 40;
 }
@@ -367,7 +367,7 @@ void BrontoBurtDiagonalInit(void)
         k += 4;
     gCurTask->brontoBurtFlightAngle = (k << 7) + 64;
     AngleToVector(gCurTask->brontoBurtFlightAngle,
-                 gUnk_087420F4[gCurTask->actorSpawnArg] << 8 >> 16);
+                 gBrontoBurtDiagonalSpeeds[gCurTask->actorSpawnArg] << 8 >> 16);
     gCurTask->velX = gUnk_030023B4;
     gCurTask->velY = gUnk_030023D4;
     gCurTask->brontoBurtBounceTimer = 0;
@@ -390,7 +390,7 @@ void BrontoBurtDiagonalUpdate(void)
     if (TaskReflectFlightAngle() != 0)
     {
         AngleToVector((s16)gCurTask->brontoBurtFlightAngle,
-                     gUnk_087420F4[gCurTask->actorSpawnArg] << 8 >> 16);
+                     gBrontoBurtDiagonalSpeeds[gCurTask->actorSpawnArg] << 8 >> 16);
         v = gCurTask->velX = gUnk_030023B4;
         gCurTask->velY = gUnk_030023D4;
         if (v > 0)
@@ -663,7 +663,7 @@ void BrontoBurtTakeOffState2Update(void)
 void BrontoBurtIdle(void)
 {
     gCurTask->updateCallback = (u32)BrontoBurtIdleUpdate;
-    ActorSetAttackBox((u32)gUnk_0873F500);
+    ActorSetAttackBox((u32)gIdleAttackBox);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
     while (1)
@@ -776,17 +776,17 @@ void TwizzyWave(void)
 
     gCurTask->updateState = TWIZZY_WAVE_STATE_WAVE;
     TaskStop();
-    TaskSetMotionXFacing(gUnk_087425B8[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gTwizzyFlySpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     p = &gCurTask->pixelY;
     if (*p < gTasks[TaskFindNearestPlayer()].pixelY)
     {
-        gCurTask->velY = gUnk_087425C0[0];
-        gCurTask->accelY = -gUnk_087425C8[0];
+        gCurTask->velY = gTwizzyWaveVelY[0];
+        gCurTask->accelY = -gTwizzyWaveAccelY[0];
     }
     else
     {
-        gCurTask->velY = -gUnk_087425C0[0];
-        gCurTask->accelY = gUnk_087425C8[0];
+        gCurTask->velY = -gTwizzyWaveVelY[0];
+        gCurTask->accelY = gTwizzyWaveAccelY[0];
     }
     gCurTask->twizzyTurnCount = 4;
     gCurTask->twizzyTurnTimer = 40;
@@ -822,13 +822,13 @@ void TwizzyWaveState0Update(void)
     {
         if (n < 0)
             return;
-        t->velY = -gUnk_087425C0[0];
-        t->accelY = gUnk_087425C8[0];
+        t->velY = -gTwizzyWaveVelY[0];
+        t->accelY = gTwizzyWaveAccelY[0];
     }
     else
     {
-        t->velY = gUnk_087425C0[0];
-        t->accelY = -gUnk_087425C8[0];
+        t->velY = gTwizzyWaveVelY[0];
+        t->accelY = -gTwizzyWaveAccelY[0];
     }
     gCurTask->twizzyTurnTimer = 40;
 }
@@ -859,17 +859,17 @@ void TwizzyWeave(void)
 
     gCurTask->updateState = TWIZZY_WEAVE_STATE_WEAVE;
     TaskStop();
-    TaskSetMotionXFacing(gUnk_087425B8[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gTwizzyFlySpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     p = &gCurTask->pixelY;
     if (*p < gTasks[TaskFindNearestPlayer()].pixelY)
     {
-        gCurTask->velY = gUnk_087425C0[1];
-        gCurTask->accelY = -gUnk_087425C8[1];
+        gCurTask->velY = gTwizzyWaveVelY[1];
+        gCurTask->accelY = -gTwizzyWaveAccelY[1];
     }
     else
     {
-        gCurTask->velY = -gUnk_087425C0[1];
-        gCurTask->accelY = gUnk_087425C8[1];
+        gCurTask->velY = -gTwizzyWaveVelY[1];
+        gCurTask->accelY = gTwizzyWaveAccelY[1];
     }
     gCurTask->twizzyTurnTimer = 40;
     while (1)
@@ -923,13 +923,13 @@ void sub_080873b0(void)
         return;
     if (gCurTask->accelY < 0)
     {
-        gCurTask->velY = -gUnk_087425C0[1];
-        gCurTask->accelY = gUnk_087425C8[1];
+        gCurTask->velY = -gTwizzyWaveVelY[1];
+        gCurTask->accelY = gTwizzyWaveAccelY[1];
     }
     else
     {
-        gCurTask->velY = gUnk_087425C0[1];
-        gCurTask->accelY = -gUnk_087425C8[1];
+        gCurTask->velY = gTwizzyWaveVelY[1];
+        gCurTask->accelY = -gTwizzyWaveAccelY[1];
     }
     gCurTask->twizzyTurnTimer = 40;
 }
@@ -1061,7 +1061,7 @@ void TwizzyDiagonalInit(void)
         k += 4;
     gCurTask->twizzyFlightAngle = (k << 7) + 64;
     AngleToVector(gCurTask->twizzyFlightAngle,
-                 gUnk_08742600[gCurTask->actorSpawnArg] << 8 >> 16);
+                 gTwizzyDiagonalSpeeds[gCurTask->actorSpawnArg] << 8 >> 16);
     gCurTask->velX = gUnk_030023B4;
     gCurTask->velY = gUnk_030023D4;
     gCurTask->twizzyBounceTimer = 0;
@@ -1086,7 +1086,7 @@ void TwizzyDiagonalUpdate(void)
     if (TaskReflectFlightAngle() != 0)
     {
         AngleToVector((s16)gCurTask->twizzyFlightAngle,
-                     gUnk_08742600[gCurTask->actorSpawnArg] << 8 >> 16);
+                     gTwizzyDiagonalSpeeds[gCurTask->actorSpawnArg] << 8 >> 16);
         v = gCurTask->velX = gUnk_030023B4;
         gCurTask->velY = gUnk_030023D4;
         if (v > 0)

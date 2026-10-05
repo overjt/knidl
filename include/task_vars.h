@@ -624,7 +624,7 @@
 /* HotHead - Hot Head (task type #32, Task_HotHead; gHotHeadVariants,
    gHotHeadWalkStates, gHotHeadStandStates, gHotHeadIdleStates) */
 #define hotHeadShotTimer unk28 /* s32: frames until it may shoot (90; 60 again after a check that did not shoot) */
-#define hotHeadOddsIndex unk2C /* s32: index of the shot odds gUnk_087414B0 (2, 3): 0 at the first check, 1 after a miss */
+#define hotHeadOddsIndex unk2C /* s32: index of the shot odds gHotHeadShootOdds (2, 3): 0 at the first check, 1 after a miss */
 #define hotHeadLoopFrame unk30 /* s32: frame of the body loop (4-8 and back, sub_08080b2c); set again when a shot stops */
 #define hotHeadFrameStep unk34 /* s32: step of the body loop's frame (-1 or +1), reversed at frames 4 and 8 */
 #define hotHeadFireSlot unk46 /* s16: slot of the last Task_HotHeadFire it spawned (task type #108) */
@@ -1547,7 +1547,7 @@
 #define scarfyShakeTimer unk28 /* s32: frames until the transform's shake flips its velX (2) */
 #define scarfyWaveSign unk28 /* s32: sign of the hover's velY wave (+1 or -1), flipped after each half of the wave */
 #define scarfyChaseAccel unk2C /* s32: acceleration step of the chase (TaskAccelerateTowardNearestPlayer's step) */
-#define scarfyShakePhase unk2C /* s32: which of the two shake velocities gUnk_08740934 the transform applies (0/1) */
+#define scarfyShakePhase unk2C /* s32: which of the two shake velocities gScarfyShakeSpeeds the transform applies (0/1) */
 #define scarfyChaseSpeedLimit unk30 /* s32: speed limit of the chase (TaskAccelerateTowardNearestPlayer's limit) */
 #define scarfyShakeDir unk30 /* s32: sign of the transform shake's velX (-facing) */
 #define scarfyLoopCount unk6C /* s16: the running state's loop counter (the transform's two shakes; the explode's six) */
@@ -1557,16 +1557,16 @@
 #define shotzoPrevBarrelDir unk18 /* s32: barrel direction before ShotzoStepBarrel's last step (picks the in-between frame 6) */
 #define shotzoBarrelOnTarget unk1C /* s32: 1 when the barrel direction unk34 equals the target direction unk30 */
 #define shotzoTargetInArc unk20 /* s32: 1 unless the nearest player is over 22.5 degrees below the horizontal (out of the arc) */
-#define shotzoAimTimer unk28 /* s32: frames to the next aim check (gUnk_08743248[shotzoSpeedLevel]: 80/60/40/20) */
+#define shotzoAimTimer unk28 /* s32: frames to the next aim check (gShotzoAimTimes[shotzoSpeedLevel]: 80/60/40/20) */
 #define shotzoShotDone unk28 /* s32: 1 once the shot (the Fixed row: the first volley) is over; the Shoot update may leave */
 #define shotzoArmed unk2C /* s32: 1 after one on-target aim check since the last shot; the next on-target check fires */
-#define shotzoFixedRecoilStep unk2C /* s32: recoil step 0-3 of the Fixed row's shot: index into gUnk_0874325A[variant] */
+#define shotzoFixedRecoilStep unk2C /* s32: recoil step 0-3 of the Fixed row's shot: index into gShotzoRecoilVelocities[variant] */
 #define shotzoTargetBarrelDir unk30 /* s32: barrel direction 0-4 that points at the nearest player; ShotzoStepBarrel steps unk34 to it */
 #define shotzoBarrelDir unk34 /* s32: barrel direction 0-4 (right, up-right, up, up-left, left): frame, muzzle and recoil index */
 #define shotzoSmokeRingSlot unk46 /* s16: slot of the Task_SmokeRing (type 172) puffed at the muzzle with each cannonball */
 #define shotzoLoopCount unk6C /* s16: the Shoot states' loop counter (aiming rows: 4 recoil steps; Fixed: 3 shots per volley) */
 #define shotzoFixedRecoilCount unk6E /* s16: recoil steps done in the Fixed row's shot (loop of 4, 2 frames each) */
-#define shotzoRecoilStep unk6E /* s16: recoil step 0-3 of the aiming rows' shot: index into gUnk_0874325A[shotzoBarrelDir] */
+#define shotzoRecoilStep unk6E /* s16: recoil step 0-3 of the aiming rows' shot: index into gShotzoRecoilVelocities[shotzoBarrelDir] */
 #define shotzoRecoilDone unk70 /* s16: 1 while no recoil runs: cleared as a cannonball is fired, set after its recoil */
 #define shotzoSpeedLevel unk74 /* u8: speed level 0-3 (the spawn arg; ParasolShotzoAim forces 1): aim period, cannonball speed */
 
@@ -1577,7 +1577,7 @@
 
 /* SirKibble - Sir Kibble (task type #15, Task_SirKibble; gSirKibbleVariants,
    gSirKibbleStandStates, gSirKibbleWalkStates, gSirKibbleIdleStates) */
-#define sirKibbleStateTimer unk28 /* s32: frames left of the state: Wait/Walk gUnk_08741216[spawn arg]; Shoot 88 on the ground */
+#define sirKibbleStateTimer unk28 /* s32: frames left of the state: Wait/Walk gSirKibbleStateTimes[spawn arg]; Shoot 88 on the ground */
 #define sirKibbleSavedFacing unk30 /* s32: facing toward the player; the jump throw faces away and restores it */
 #define sirKibbleCutterSlot unk46 /* s16: slot of the last Task_SirKibbleCutter it threw (task type #105) */
 
@@ -1724,7 +1724,7 @@
 /* WaddleDee - Waddle Dee (task type #8, Task_WaddleDee; gWaddleDeeVariants
    and its rows' state tables, the Parasol rows included) */
 #define waddleDeeJumpTimer unk28 /* s32: frames until the next jump check (80 at first, then 30; 1 in 4 checks jumps) */
-#define waddleDeeTurnTimer unk28 /* s32: frames until the pacing Waddle Dee turns around (gUnk_08740668[spawn arg]) */
+#define waddleDeeTurnTimer unk28 /* s32: frames until the pacing Waddle Dee turns around (gWaddleDeePaceTurnTimes[spawn arg]) */
 #define waddleDeeJumpLaunched unk2C /* s32: 1 once the jump left its crouch; the update waits for the landing only then */
 #define waddleDeeLoopCount unk6C /* s16: the running state's loop counter (the jump's two crouch cycles) */
 

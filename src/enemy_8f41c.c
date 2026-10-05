@@ -9,7 +9,7 @@
  *   * script 4's bodies and guards (tables `0x0874329C`/`0x087432A8`,
  *     `0x087432B4`/`0x087432C0`, `0x087432CC`/`0x087432D8` and the
  *     single-row `0x087432E4`/`0x087432E8`); the bodies walk the `s16[][4]`
- *     aim table `gUnk_0874325A` one row per Task.unk34 / Task.variant through
+ *     aim table `gShotzoRecoilVelocities` one row per Task.unk34 / Task.variant through
  *     `ShotzoSetRecoilVelocity`;
  *   * the class-3 hook row `0x08743518` — `ConerLand`, `ConerStartFall`,
  *     `ConerEnterWater` and `ConerBounceOffWall`;
@@ -73,7 +73,7 @@ void ShotzoAimShoot(void)
     do
     {
         v = gCurTask;
-        ShotzoSetRecoilVelocity(gUnk_0874325A[v->shotzoBarrelDir][v->shotzoRecoilStep]);
+        ShotzoSetRecoilVelocity(gShotzoRecoilVelocities[v->shotzoBarrelDir][v->shotzoRecoilStep]);
         w = gCurTask;
         w->shotzoRecoilStep++;
         TaskYieldTrampoline(2);
@@ -184,7 +184,7 @@ void ShotzoFixedShoot(void)
             do
             {
                 v = gCurTask;
-                ShotzoSetRecoilVelocity(gUnk_0874325A[v->variant][v->shotzoFixedRecoilStep]);
+                ShotzoSetRecoilVelocity(gShotzoRecoilVelocities[v->variant][v->shotzoFixedRecoilStep]);
                 w = gCurTask;
                 w->shotzoFixedRecoilStep++;
                 TaskYieldTrampoline(2);
@@ -246,7 +246,7 @@ void ParasolShotzoAim(void)
     gCurTask->updateState = PARASOL_SHOTZO_STATE_AIM;
     gCurTask->shotzoSpeedLevel = 1;
     t = gCurTask;
-    t->shotzoAimTimer = gUnk_08743248[t->shotzoSpeedLevel];
+    t->shotzoAimTimer = gShotzoAimTimes[t->shotzoSpeedLevel];
     TaskStop();
     while (1)
         ShotzoAimBarrel();
@@ -285,7 +285,7 @@ void ParasolShotzoShoot(void)
     do
     {
         v = gCurTask;
-        ShotzoSetRecoilVelocity(gUnk_0874325A[v->shotzoBarrelDir][v->shotzoRecoilStep]);
+        ShotzoSetRecoilVelocity(gShotzoRecoilVelocities[v->shotzoBarrelDir][v->shotzoRecoilStep]);
         w = gCurTask;
         w->shotzoRecoilStep++;
         TaskYieldTrampoline(2);
@@ -342,7 +342,7 @@ void ParasolShotzoState2Update(void)
 void ShotzoIdleInit(void)
 {
     gCurTask->updateCallback = (u32)ShotzoIdleUpdate;
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(SHOTZO_IDLE_STATE_IDLE);
     gCurTask->facing = 255;
@@ -487,7 +487,7 @@ void ConerIdleInit(void)
 {
     gCurTask->updateCallback = (u32)ConerIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(CONER_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gConerIdleStates);

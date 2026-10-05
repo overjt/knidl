@@ -381,7 +381,7 @@ void RockyIdleInit(void)
 {
     gCurTask->updateCallback = (u32)RockyIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(ROCKY_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gRockyIdleStates);
@@ -637,7 +637,7 @@ void SirKibbleWait(void)
 
     gCurTask->updateState = SIR_KIBBLE_STAND_STATE_WAIT;
     t = gCurTask;
-    t->sirKibbleStateTimer = gUnk_08741216[t->actorSpawnArg];
+    t->sirKibbleStateTimer = gSirKibbleStateTimes[t->actorSpawnArg];
     sub_0807e484();
 }
 
@@ -649,7 +649,7 @@ void SirKibbleWaitUpdate(void)
     {
         if (abs(TaskGetNearestPlayerDx()) <= 63)
         {
-            if (RandomRange(gUnk_08741214[gCurTask->actorSpawnArg]) == 0)
+            if (RandomRange(gSirKibbleJumpOdds[gCurTask->actorSpawnArg]) == 0)
                 ActorSetState(SIR_KIBBLE_STAND_STATE_JUMP);
             else
                 ActorSetState(SIR_KIBBLE_STAND_STATE_SHOOT);
@@ -689,7 +689,7 @@ void SirKibbleWalk(void)
 
     gCurTask->updateState = SIR_KIBBLE_WALK_STATE_WALK;
     t = gCurTask;
-    t->sirKibbleStateTimer = gUnk_08741216[t->actorSpawnArg];
+    t->sirKibbleStateTimer = gSirKibbleStateTimes[t->actorSpawnArg];
     TaskSetMotionXFacing(gUnk_08741218[t->actorSpawnArg], 0x5A5A5A5A);
     while (1)
     {
@@ -712,7 +712,7 @@ void SirKibbleWalkState0Update(void)
     {
         if (abs(TaskGetNearestPlayerDx()) <= 63)
         {
-            if (RandomRange(gUnk_08741214[gCurTask->actorSpawnArg]) == 0)
+            if (RandomRange(gSirKibbleJumpOdds[gCurTask->actorSpawnArg]) == 0)
                 ActorSetState(SIR_KIBBLE_WALK_STATE_JUMP);
             else
                 ActorSetState(SIR_KIBBLE_WALK_STATE_SHOOT);
@@ -861,7 +861,7 @@ void SirKibbleIdleInit(void)
 {
     gCurTask->updateCallback = (u32)SirKibbleIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(SIR_KIBBLE_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gSirKibbleIdleStates);
@@ -1103,7 +1103,7 @@ void CappyStandInit(void)
     t->updateCallback = (u32)CappyStandUpdate;
     t->frameTable = gCappyFrames;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(CAPPY_STAND_STATE_HOP);
     CallTableEntry(gCurTask->state, 1, gCappyStandStates);
@@ -1393,7 +1393,7 @@ void CoolSpookBobInit(void)
 {
     gCurTask->updateCallback = (u32)CoolSpookBobUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(COOL_SPOOK_BOB_STATE_BOB);
     CallTableEntry(gCurTask->state, 1, gCoolSpookBobStates);

@@ -14280,3 +14280,37 @@ Task.unk2C,Task.playerEffectRingStarVelY,alias,"code: as playerEffectRingStarVel
 Task.unk30,Task.playerEffectRingOppositeVelX,alias,"code: PlayerEffectDeathStarRing stores row (k + 4) column 0 << 8 (src/effect_54a80.c:66-71) and posX / posY = pixelX / pixelY (pixel units, :65-66); the late update draws the second star at posX / posY, adds [k + 4][2] << 8 and posX += its high half (:111-133)",155
 Task.unk34,Task.playerEffectRingOppositeVelY,alias,"code: as playerEffectRingOppositeVelX with column 1 / 3 (src/effect_54a80.c:72-76, 132-134)",155
 Task.unk2C,Task.roomParticlesCopyIndex,alias,"code: RoomParticleDrawRepeated stores 0, draws the particle at pixelX - camera + unk2C * 192 when on screen, ++ while <= 4 (src/actor_77ae0.c:431-449); only caller RoomParticlesDrawRepeated (:342-356); no other unk2C use in the family",155
+gUnk_0873F500,gIdleAttackBox,rom,"code: the attack box every Idle row sets (ActorSetAttackBox in BlipperIdle, BomberIdleInit, BrontoBurtIdle, ... WaddleDeeIdleInit, WheelieIdleInit: 36 readers, every one an Idle row's init or body, plus NoddyAsleep - the Idle rows' stand-in attack box, run 6 F), its only readers",155
+gUnk_08740648,gWaddleDeeWalkSpeeds,rom,"code: the X speed TaskSetMotionXFacing takes by actorSpawnArg in WaddleDeeWalk, WaddleDeePaceWalk and WaddleDeeJumpWalk, its only readers",155
+gUnk_08740668,gWaddleDeePaceTurnTimes,rom,"code: s16 by actorSpawnArg: waddleDeeTurnTimer's start value in WaddleDeePaceWalk / ...Update (the frames before the pacing Waddle Dee turns), its only readers",155
+gUnk_08740854,gScarfyAnim,rom,"code: the animation script (ActorStartAnim) of ScarfyState1 and of ScarfyHover's set-up for variant 0 (sub_0807a8fc), its only readers",155
+gUnk_08740934,gScarfyShakeSpeeds,rom,"code: the velX of each scarfyShakePhase, times scarfyShakeDir, in ScarfyTransform / ScarfyTransformUpdate, its only readers",155
+gUnk_08740A88,gNeedlousLevelTimes,rom,"code: needlousLevelTimer's start value by actorSpawnArg (NeedlousWalk's set-up sub_0807bf0c, NeedlousWalkUpdate), its only readers",155
+gUnk_08740A90,gNeedlousDashSpeeds,rom,"code: the X speed by actorSpawnArg of NeedlousDash (its set-up sub_0807c030), NeedlousDashUpdate and NeedlousStartFall, its only readers",155
+gUnk_08740AAC,gNeedlousBounceAnim,rom,"code: the animation script NeedlousBounce1's body starts after the curl frames and NeedlousLand restarts before Bounce3 (src/enemy_7aa5c.c:1080-1092, :1008-1010), its only readers",155
+gUnk_08740B08,gUFOAnim,rom,"code: the animation script (ActorStartAnimNoFlip) of UFOInit's set-up and UFOShootUpdate, its only readers",155
+gUnk_08741214,gSirKibbleJumpOdds,rom,"code: u8 by actorSpawnArg: with a player within 64 px, the Wait / Walk updates jump when RandomRange(gUnk_08741214[arg]) == 0, else throw (src/enemy_7d3b0.c:650-656, :713-719)",155
+gUnk_08741216,gSirKibbleStateTimes,rom,"code: u8 by actorSpawnArg: sirKibbleStateTimer's start value in SirKibbleWait and SirKibbleWalk, its only readers",155
+gUnk_08741318,gKabuFrameDelays,rom,"code: u8 by actorSpawnArg: kabuFrameDelay in KabuJumpSpin / KabuJumpFall, its only readers",155
+gUnk_087414B0,gHotHeadShootOdds,rom,"code: u8 by hotHeadOddsIndex: when hotHeadShotTimer runs out, Hot Head shoots unless RandomRange(gUnk_087414B0[i]) == 0 (HotHeadWalkState0Update, HotHeadStandWaitUpdate, src/enemy_7f044.c:1248-1254, :1426-1432)",155
+gUnk_087415AC,gPoppyBrosJrSpeeds,rom,"code: s32 by actorSpawnArg: the X speed of PoppyBrosJrHop and PoppyBrosJrWalk, its only readers",155
+gUnk_087415F0,gPoppyBrosJrRiderRollTimes,rom,"code: u8 by actorSpawnArg: poppyBrosJrRollTimer's start value in PoppyBrosJrRiderHop / ...Update, its only readers",155
+gUnk_08741738,gFlamerSteerTimes,rom,"code: u8 by flamerSpeedLevel: flamerSteerTimer's value in FlamerState4Update / FlamerState6Update, its only readers",155
+gUnk_0874173C,gFlamerFlightSpeeds,rom,"code: s16 by flamerSpeedLevel: the speed AngleToVector turns flamerFlightAngle into velocity in FlamerState4Update / FlamerState6Update, its only readers",155
+gUnk_08741FB4,gNoddyWalkFrameDelays,rom,"code: s8 by actorSpawnArg: the delay of every frame of the walk-frame loop in NoddyWalk and NoddyState5 (src/enemy_844c4.c:117-135), its only readers",155
+gUnk_08742010,gWaddleDooWalkSpeeds,rom,"code: s32 by actorSpawnArg: the X speed of WaddleDooWalk and ParasolWaddleDooWalk, its only readers",155
+gUnk_08742028,gWaddleDooBeamChargeCounts,rom,code: u8 by actorSpawnArg: the rounds of the frame-6 charge loop before sound 110 and the beam in WaddleDooWalkShoot / ParasolWaddleDooShoot (src/enemy_84d14.c:600-611),155
+gUnk_0874202C,gWaddleDooBeamCounts,rom,code: u8 by actorSpawnArg: how many TASK_WADDLE_DOO_BEAM pieces WaddleDooWalkShoot / ParasolWaddleDooShoot create (src/enemy_84d14.c:614-...),155
+gUnk_08742088,gBrontoBurtFlySpeeds,rom,"code: s32 by actorSpawnArg: the X speed of BrontoBurtWave and BrontoBurtWeave (src/enemy_860f8.c:61), its only readers",155
+gUnk_08742090,gBrontoBurtWaveVelY,rom,"code: the vertical speed (+-) the Wave and Weave rows start each half wave with (src/enemy_860f8.c:66-73, :118), read by BrontoBurtWave, its State0Update, BrontoBurtWeave and its update",155
+gUnk_08742098,gBrontoBurtWaveAccelY,rom,"code: the vertical acceleration (-+) paired with gBrontoBurtWaveVelY in the same four readers (src/enemy_860f8.c:67-73, :119)",155
+gUnk_087420F4,gBrontoBurtDiagonalSpeeds,rom,"code: s32 by actorSpawnArg: the speed of BrontoBurtDiagonalInit / ...Update, its only readers",155
+gUnk_087425B8,gTwizzyFlySpeeds,rom,"code: s32 by actorSpawnArg: the X speed of TwizzyWave and TwizzyWeave, its only readers (Bronto Burt's twin table)",155
+gUnk_087425C0,gTwizzyWaveVelY,rom,"code: the vertical speed the Twizzy Wave / Weave rows start each half wave with (TwizzyWave, TwizzyWaveState0Update, TwizzyWeave, its update) - Bronto Burt's twin",155
+gUnk_087425C8,gTwizzyWaveAccelY,rom,code: the vertical acceleration paired with gTwizzyWaveVelY in the same four readers,155
+gUnk_08742600,gTwizzyDiagonalSpeeds,rom,"code: s32 by actorSpawnArg: the speed of TwizzyDiagonalInit / ...Update, its only readers",155
+gUnk_08742818,gSlippyJumpSpeeds,rom,"code: s32 by actorSpawnArg: the X speed of the forward jumps SlippyWait / SlippyLookAround pick and of SlippyLeap (src/enemy_88000.c:1454-1637), its only readers",155
+gUnk_08742C14,gBubblesAttackBox,rom,"code: the attack box BubblesFall, BubblesLand, BubblesBounceOffWall and BubblesBounceOffCeiling set (the bounce states also set gBubblesBounceOffWallAttackBox / gUnk_08742C68 while bouncing), its only readers",155
+gUnk_08743248,gShotzoAimTimes,rom,"code: u8 by shotzoSpeedLevel: the frames between aim steps (shotzoAimTimer / TaskYieldTrampoline) in ShotzoAim, ShotzoAimBarrel, ShotzoCheckShoot and ParasolShotzoAim, its only readers",155
+gUnk_08743251,gShotzoBarrelOffsetY,rom,"code: s8 by barrel direction: the Y offset of the cannonball (CreateShotzoCannonball / CreateShotzoFixedCannonball) and the smoke ring, paired with the X offsets gUnk_0874324C[dir] (src/enemy_8e404.c)",155
+gUnk_0874325A,gShotzoRecoilVelocities,rom,"code: s16 [barrel direction][4]: ShotzoSetRecoilVelocity(gUnk_0874325A[shotzoBarrelDir][shotzoRecoilStep]) in ShotzoAimShoot, ShotzoFixedShoot and ParasolShotzoShoot, its only readers",155

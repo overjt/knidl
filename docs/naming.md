@@ -569,7 +569,7 @@ copies and module-local records).
 | ROM label | `gUnk_08*` | 705 | reached only through a record or consumer that is itself unnamed (a `gUnk_` record, a `sub_*`): it is named with that referrer |
 | ROM label | `gUnk_08*` | 40 | one slot of a named record holds it and nothing else names it; its position name waits for the slot's word (docs/naming.md section 2.4) |
 | ROM label | `gUnk_08*` | 793 | read by one function only: its meaning is local to that function's algorithm, as for RAM cells (docs/naming.md section 5) |
-| ROM label | `gUnk_08*` | 117 | read by several named functions; the row in docs/analysis/unnamed.csv gives its reason |
+| ROM label | `gUnk_08*` | 83 | read by several named functions; the row in docs/analysis/unnamed.csv gives its reason |
 | ROM label | `gUnk_08*` | 1 | no code or record names it: a record boundary the data census cut, reached by an offset from a named neighbour |
 | ROM label | `gUnk_08*` | 17073 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
 | ROM label | (named) | 5279 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
@@ -580,7 +580,7 @@ copies and module-local records).
 | struct field | `unk*` | 141 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 508 RAM cells by role and 24 by position, 3269 ROM labels by role and 5334 by position.
+Named for comparison: 508 RAM cells by role and 24 by position, 3303 ROM labels by role and 5334 by position.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 

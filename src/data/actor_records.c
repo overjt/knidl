@@ -76,7 +76,7 @@ extern const u8 gSirKibbleCutterAttackBox[];
 extern const u8 gHotHeadFireAttackBox[];
 extern const u8 gHotHeadFireTerrainBox[];
 extern const u8 gChillyAttackBox[];
-extern const u8 gUnk_08742C14[];
+extern const u8 gBubblesAttackBox[];
 extern const u8 gChillyTerrainBox[];
 extern const u8 gBubblesTerrainBox[];
 extern const u8 gGipTerrainBox[];
@@ -1369,7 +1369,7 @@ struct ActorDef gBubblesDef ACTOR_REC(087429e8) = {
     .isItem = 0x0,
     .unk0E = 0x0,
     .aux = &gUnk_0873F8EC,
-    .attackBox = (u32)gUnk_08742C14,
+    .attackBox = (u32)gBubblesAttackBox,
     .terrainBox = (s32)gBubblesTerrainBox,
     .terrainHandlers = (u32)&gBubblesTerrainHandlers,
     .hitReactions = (u32)&gBubblesHitReactions,

@@ -713,7 +713,7 @@ void Task_BlipperDroplet(void)
 void BlipperIdle(void)
 {
     gCurTask->updateCallback = (u32)BlipperIdleUpdate;
-    ActorSetAttackBox((u32)gUnk_0873F500);
+    ActorSetAttackBox((u32)gIdleAttackBox);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
     TaskSetFrame(4);
@@ -1232,7 +1232,7 @@ void GipShootUpdate(void)
 void GipIdle(void)
 {
     gCurTask->updateCallback = (u32)GipIdleUpdate;
-    ActorSetAttackBox((u32)gUnk_0873F500);
+    ActorSetAttackBox((u32)gIdleAttackBox);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
     while (1)

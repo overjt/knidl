@@ -209,8 +209,8 @@ gAbilityStarAttackBox:
 	.global	gUnk_0873F4E4
 gUnk_0873F4E4:
 	.incbin	"baserom.gba", 0x73F4E4, 0x1C
-	.global	gUnk_0873F500
-gUnk_0873F500:
+	.global	gIdleAttackBox
+gIdleAttackBox:
 	.incbin	"baserom.gba", 0x73F500, 0x1C
 	.global	gUnk_0873F51C
 gUnk_0873F51C:
@@ -588,8 +588,8 @@ gUnk_08740620:
 	.section .actor_rodata_08740648, "a"
 	.global	actor_rodata_08740648
 actor_rodata_08740648:
-	.global	gUnk_08740648
-gUnk_08740648:
+	.global	gWaddleDeeWalkSpeeds
+gWaddleDeeWalkSpeeds:
 	.incbin	"baserom.gba", 0x740648, 0x10
 
 @ 0x08740658-0x08740668: C, row actor_tbl_08740658 (src/data/actor_tables.c section .actor_tbl_08740658)
@@ -599,8 +599,8 @@ gUnk_08740648:
 	.section .actor_rodata_08740668, "a"
 	.global	actor_rodata_08740668
 actor_rodata_08740668:
-	.global	gUnk_08740668
-gUnk_08740668:
+	.global	gWaddleDeePaceTurnTimes
+gWaddleDeePaceTurnTimes:
 	.incbin	"baserom.gba", 0x740668, 0x8
 
 @ 0x08740670-0x08740680: C, row actor_tbl_08740670 (src/data/actor_tables.c section .actor_tbl_08740670)
@@ -695,8 +695,8 @@ actor_rodata_08740824:
 	.global	gUnk_08740824
 gUnk_08740824:
 	.incbin	"baserom.gba", 0x740824, 0x30
-	.global	gUnk_08740854
-gUnk_08740854:
+	.global	gScarfyAnim
+gScarfyAnim:
 	.incbin	"baserom.gba", 0x740854, 0x10
 	.global	gUnk_08740864
 gUnk_08740864:
@@ -704,8 +704,8 @@ gUnk_08740864:
 	.global	gUnk_087408AC
 gUnk_087408AC:
 	.incbin	"baserom.gba", 0x7408AC, 0x88
-	.global	gUnk_08740934
-gUnk_08740934:
+	.global	gScarfyShakeSpeeds
+gScarfyShakeSpeeds:
 	.incbin	"baserom.gba", 0x740934, 0x8
 	.global	gScarfyChaseAnim
 gScarfyChaseAnim:
@@ -744,17 +744,17 @@ actor_rodata_08740a80:
 	.global	gUnk_08740A80
 gUnk_08740A80:
 	.incbin	"baserom.gba", 0x740A80, 0x8
-	.global	gUnk_08740A88
-gUnk_08740A88:
+	.global	gNeedlousLevelTimes
+gNeedlousLevelTimes:
 	.incbin	"baserom.gba", 0x740A88, 0x8
-	.global	gUnk_08740A90
-gUnk_08740A90:
+	.global	gNeedlousDashSpeeds
+gNeedlousDashSpeeds:
 	.incbin	"baserom.gba", 0x740A90, 0x8
 	.global	gUnk_08740A98
 gUnk_08740A98:
 	.incbin	"baserom.gba", 0x740A98, 0x14
-	.global	gUnk_08740AAC
-gUnk_08740AAC:
+	.global	gNeedlousBounceAnim
+gNeedlousBounceAnim:
 	.incbin	"baserom.gba", 0x740AAC, 0x1C
 
 @ 0x08740AC8-0x08740B08: C, row actor_tbl_08740ac8 (src/data/actor_tables.c section .actor_tbl_08740ac8)
@@ -764,8 +764,8 @@ gUnk_08740AAC:
 	.section .actor_rodata_08740b08, "a"
 	.global	actor_rodata_08740b08
 actor_rodata_08740b08:
-	.global	gUnk_08740B08
-gUnk_08740B08:
+	.global	gUFOAnim
+gUFOAnim:
 	.incbin	"baserom.gba", 0x740B08, 0x34
 	.global	gUnk_08740B3C
 gUnk_08740B3C:
@@ -918,11 +918,11 @@ gUFOLaserTerrainBox:
 	.section .actor_rodata_08741214, "a"
 	.global	actor_rodata_08741214
 actor_rodata_08741214:
-	.global	gUnk_08741214
-gUnk_08741214:
+	.global	gSirKibbleJumpOdds
+gSirKibbleJumpOdds:
 	.incbin	"baserom.gba", 0x741214, 0x2
-	.global	gUnk_08741216
-gUnk_08741216:
+	.global	gSirKibbleStateTimes
+gSirKibbleStateTimes:
 	.incbin	"baserom.gba", 0x741216, 0x2
 	.global	gUnk_08741218
 gUnk_08741218:
@@ -963,8 +963,8 @@ gCoolSpookAnim:
 	.section .actor_rodata_08741318, "a"
 	.global	actor_rodata_08741318
 actor_rodata_08741318:
-	.global	gUnk_08741318
-gUnk_08741318:
+	.global	gKabuFrameDelays
+gKabuFrameDelays:
 	.incbin	"baserom.gba", 0x741318, 0x2
 	.global	gUnk_0874131A
 gUnk_0874131A:
@@ -1036,8 +1036,8 @@ gUnk_08741454:
 	.section .actor_rodata_087414b0, "a"
 	.global	actor_rodata_087414b0
 actor_rodata_087414b0:
-	.global	gUnk_087414B0
-gUnk_087414B0:
+	.global	gHotHeadShootOdds
+gHotHeadShootOdds:
 	.incbin	"baserom.gba", 0x7414B0, 0x4
 
 @ 0x087414B4-0x087414F8: C, row actor_tbl_087414b4 (src/data/actor_tables.c section .actor_tbl_087414b4)
@@ -1076,8 +1076,8 @@ gUnk_08741524:
 	.section .actor_rodata_087415ac, "a"
 	.global	actor_rodata_087415ac
 actor_rodata_087415ac:
-	.global	gUnk_087415AC
-gUnk_087415AC:
+	.global	gPoppyBrosJrSpeeds
+gPoppyBrosJrSpeeds:
 	.incbin	"baserom.gba", 0x7415AC, 0xC
 
 @ 0x087415B8-0x087415E4: C, row actor_tbl_087415b8 (src/data/actor_tables.c section .actor_tbl_087415b8)
@@ -1090,8 +1090,8 @@ actor_rodata_087415e4:
 	.global	gUnk_087415E4
 gUnk_087415E4:
 	.incbin	"baserom.gba", 0x7415E4, 0xC
-	.global	gUnk_087415F0
-gUnk_087415F0:
+	.global	gPoppyBrosJrRiderRollTimes
+gPoppyBrosJrRiderRollTimes:
 	.incbin	"baserom.gba", 0x7415F0, 0x4
 	.global	gUnk_087415F4
 gUnk_087415F4:
@@ -1184,11 +1184,11 @@ gUnk_08741718:
 	.global	gUnk_08741728
 gUnk_08741728:
 	.incbin	"baserom.gba", 0x741728, 0x10
-	.global	gUnk_08741738
-gUnk_08741738:
+	.global	gFlamerSteerTimes
+gFlamerSteerTimes:
 	.incbin	"baserom.gba", 0x741738, 0x4
-	.global	gUnk_0874173C
-gUnk_0874173C:
+	.global	gFlamerFlightSpeeds
+gFlamerFlightSpeeds:
 	.incbin	"baserom.gba", 0x74173C, 0x8
 	.global	gUnk_08741744
 gUnk_08741744:
@@ -1380,8 +1380,8 @@ gUnk_08741FA8:
 	.global	gUnk_08741FAC
 gUnk_08741FAC:
 	.incbin	"baserom.gba", 0x741FAC, 0x8
-	.global	gUnk_08741FB4
-gUnk_08741FB4:
+	.global	gNoddyWalkFrameDelays
+gNoddyWalkFrameDelays:
 	.incbin	"baserom.gba", 0x741FB4, 0x4
 
 @ 0x08741FB8-0x08742010: C, row actor_tbl_08741fb8 (src/data/actor_tables.c section .actor_tbl_08741fb8)
@@ -1391,8 +1391,8 @@ gUnk_08741FB4:
 	.section .actor_rodata_08742010, "a"
 	.global	actor_rodata_08742010
 actor_rodata_08742010:
-	.global	gUnk_08742010
-gUnk_08742010:
+	.global	gWaddleDooWalkSpeeds
+gWaddleDooWalkSpeeds:
 	.incbin	"baserom.gba", 0x742010, 0x10
 	.global	gUnk_08742020
 gUnk_08742020:
@@ -1400,11 +1400,11 @@ gUnk_08742020:
 	.global	gUnk_08742024
 gUnk_08742024:
 	.incbin	"baserom.gba", 0x742024, 0x4
-	.global	gUnk_08742028
-gUnk_08742028:
+	.global	gWaddleDooBeamChargeCounts
+gWaddleDooBeamChargeCounts:
 	.incbin	"baserom.gba", 0x742028, 0x4
-	.global	gUnk_0874202C
-gUnk_0874202C:
+	.global	gWaddleDooBeamCounts
+gWaddleDooBeamCounts:
 	.incbin	"baserom.gba", 0x74202C, 0x4
 
 @ 0x08742030-0x08742050: C, row actor_tbl_08742030 (src/data/actor_tables.c section .actor_tbl_08742030)
@@ -1425,14 +1425,14 @@ gParasolWaddleDooDriftAnim:
 	.section .actor_rodata_08742088, "a"
 	.global	actor_rodata_08742088
 actor_rodata_08742088:
-	.global	gUnk_08742088
-gUnk_08742088:
+	.global	gBrontoBurtFlySpeeds
+gBrontoBurtFlySpeeds:
 	.incbin	"baserom.gba", 0x742088, 0x8
-	.global	gUnk_08742090
-gUnk_08742090:
+	.global	gBrontoBurtWaveVelY
+gBrontoBurtWaveVelY:
 	.incbin	"baserom.gba", 0x742090, 0x8
-	.global	gUnk_08742098
-gUnk_08742098:
+	.global	gBrontoBurtWaveAccelY
+gBrontoBurtWaveAccelY:
 	.incbin	"baserom.gba", 0x742098, 0x8
 
 @ 0x087420A0-0x087420AC: C, row actor_tbl_087420a0 (src/data/actor_tables.c section .actor_tbl_087420a0)
@@ -1470,8 +1470,8 @@ gUnk_087420E8:
 	.section .actor_rodata_087420f4, "a"
 	.global	actor_rodata_087420f4
 actor_rodata_087420f4:
-	.global	gUnk_087420F4
-gUnk_087420F4:
+	.global	gBrontoBurtDiagonalSpeeds
+gBrontoBurtDiagonalSpeeds:
 	.incbin	"baserom.gba", 0x7420F4, 0xC
 
 @ 0x08742100-0x0874210C: C, row actor_tbl_08742100 (src/data/actor_tables.c section .actor_tbl_08742100)
@@ -1520,14 +1520,14 @@ gUnk_087425A4:
 	.section .actor_rodata_087425b8, "a"
 	.global	actor_rodata_087425b8
 actor_rodata_087425b8:
-	.global	gUnk_087425B8
-gUnk_087425B8:
+	.global	gTwizzyFlySpeeds
+gTwizzyFlySpeeds:
 	.incbin	"baserom.gba", 0x7425B8, 0x8
-	.global	gUnk_087425C0
-gUnk_087425C0:
+	.global	gTwizzyWaveVelY
+gTwizzyWaveVelY:
 	.incbin	"baserom.gba", 0x7425C0, 0x8
-	.global	gUnk_087425C8
-gUnk_087425C8:
+	.global	gTwizzyWaveAccelY
+gTwizzyWaveAccelY:
 	.incbin	"baserom.gba", 0x7425C8, 0x8
 
 @ 0x087425D0-0x087425DC: C, row actor_tbl_087425d0 (src/data/actor_tables.c section .actor_tbl_087425d0)
@@ -1559,8 +1559,8 @@ gUnk_087425F0:
 	.section .actor_rodata_08742600, "a"
 	.global	actor_rodata_08742600
 actor_rodata_08742600:
-	.global	gUnk_08742600
-gUnk_08742600:
+	.global	gTwizzyDiagonalSpeeds
+gTwizzyDiagonalSpeeds:
 	.incbin	"baserom.gba", 0x742600, 0xC
 
 @ 0x0874260C-0x08742614: C, row actor_tbl_0874260c (src/data/actor_tables.c section .actor_tbl_0874260c)
@@ -1654,8 +1654,8 @@ actor_rodata_08742814:
 	.global	gUnk_08742814
 gUnk_08742814:
 	.incbin	"baserom.gba", 0x742814, 0x4
-	.global	gUnk_08742818
-gUnk_08742818:
+	.global	gSlippyJumpSpeeds
+gSlippyJumpSpeeds:
 	.incbin	"baserom.gba", 0x742818, 0x8
 	.global	gUnk_08742820
 gUnk_08742820:
@@ -1765,8 +1765,8 @@ actor_rodata_08742bf8:
 	.global	gChillyAttackBox
 gChillyAttackBox:
 	.incbin	"baserom.gba", 0x742BF8, 0x1C
-	.global	gUnk_08742C14
-gUnk_08742C14:
+	.global	gBubblesAttackBox
+gBubblesAttackBox:
 	.incbin	"baserom.gba", 0x742C14, 0x1C
 	.global	gUnk_08742C30
 gUnk_08742C30:
@@ -1950,20 +1950,20 @@ gUnk_0874321C:
 	.section .actor_rodata_08743248, "a"
 	.global	actor_rodata_08743248
 actor_rodata_08743248:
-	.global	gUnk_08743248
-gUnk_08743248:
+	.global	gShotzoAimTimes
+gShotzoAimTimes:
 	.incbin	"baserom.gba", 0x743248, 0x4
 	.global	gUnk_0874324C
 gUnk_0874324C:
 	.incbin	"baserom.gba", 0x74324C, 0x5
-	.global	gUnk_08743251
-gUnk_08743251:
+	.global	gShotzoBarrelOffsetY
+gShotzoBarrelOffsetY:
 	.incbin	"baserom.gba", 0x743251, 0x5
 	.global	gUnk_08743256
 gUnk_08743256:
 	.incbin	"baserom.gba", 0x743256, 0x4
-	.global	gUnk_0874325A
-gUnk_0874325A:
+	.global	gShotzoRecoilVelocities
+gShotzoRecoilVelocities:
 	.incbin	"baserom.gba", 0x74325A, 0x2A
 
 @ 0x08743284-0x087432EC: C, row actor_tbl_08743284 (src/data/actor_tables.c section .actor_tbl_08743284)

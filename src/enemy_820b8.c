@@ -223,7 +223,7 @@ void PoppyBrosJrRideIdleInit(void)
 
     t->updateCallback = (u32)PoppyBrosJrRideIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(POPPY_BROS_JR_RIDE_IDLE_STATE_RIDE_IDLE);
     CallTableEntry(gCurTask->state, 1, gPoppyBrosJrRideIdleStates);
@@ -270,7 +270,7 @@ void PoppyBrosJrRiderHop(void)
     struct Task *v;
 
     TaskSetFrame(9);
-    gCurTask->poppyBrosJrRollTimer = gUnk_087415F0[gCurTask->actorSpawnArg];
+    gCurTask->poppyBrosJrRollTimer = gPoppyBrosJrRiderRollTimes[gCurTask->actorSpawnArg];
     while (1)
     {
         t = gCurTask;
@@ -311,7 +311,7 @@ void PoppyBrosJrRiderHopUpdate(void)
     t = gCurTask;
     if (--t->poppyBrosJrRollTimer == 0)
     {
-        t->poppyBrosJrRollTimer = gUnk_087415F0[t->actorSpawnArg];
+        t->poppyBrosJrRollTimer = gPoppyBrosJrRiderRollTimes[t->actorSpawnArg];
         if (++t->frame > 16)
             t->frame = 9;
     }
@@ -605,7 +605,7 @@ void WheelieIdleInit(void)
 
     t->updateCallback = (u32)WheelieIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(WHEELIE_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gWheelieIdleStates);

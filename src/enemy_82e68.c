@@ -404,8 +404,8 @@ void FlamerState4Update(void)
         else
         {
             w = gCurTask;
-            w->flamerSteerTimer = gUnk_08741738[w->flamerSpeedLevel];
-            AngleToVector((s16)w->flamerFlightAngle, gUnk_0874173C[w->flamerSpeedLevel]);
+            w->flamerSteerTimer = gFlamerSteerTimes[w->flamerSpeedLevel];
+            AngleToVector((s16)w->flamerFlightAngle, gFlamerFlightSpeeds[w->flamerSpeedLevel]);
             x = gCurTask;
             x->velX = gUnk_030023B4;
             x->velY = gUnk_030023D4;
@@ -545,8 +545,8 @@ void FlamerState6Update(void)
             if (gUnk_03001F2C != 0)
             {
                 v = gCurTask;
-                v->flamerSteerTimer = gUnk_08741738[v->flamerSpeedLevel];
-                AngleToVector((s16)v->flamerFlightAngle, gUnk_0874173C[v->flamerSpeedLevel]);
+                v->flamerSteerTimer = gFlamerSteerTimes[v->flamerSpeedLevel];
+                AngleToVector((s16)v->flamerFlightAngle, gFlamerFlightSpeeds[v->flamerSpeedLevel]);
                 w = gCurTask;
                 w->velX = gUnk_030023B4;
                 w->velY = gUnk_030023D4;
@@ -561,7 +561,7 @@ void FlamerIdleInit(void)
 {
     gCurTask->updateCallback = (u32)FlamerIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(FLAMER_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gFlamerIdleStates);

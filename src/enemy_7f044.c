@@ -116,7 +116,7 @@ void KabuJumpSpin(void)
         TaskYieldTrampoline(15);
     }
     b = gCurTask;
-    b->kabuFrameDelay = gUnk_08741318[b->actorSpawnArg];
+    b->kabuFrameDelay = gKabuFrameDelays[b->actorSpawnArg];
     n = RandomRange(3);
     k = gCurTask;
     m = n + 1;
@@ -226,7 +226,7 @@ void KabuJumpFall(void)
     b = gCurTask;
     b->accelY = 0x2000;
     b->speedLimitY = 0x60000;
-    b->kabuFrameDelay = gUnk_08741318[b->actorSpawnArg];
+    b->kabuFrameDelay = gKabuFrameDelays[b->actorSpawnArg];
     while (1)
     {
         c = gCurTask;
@@ -671,7 +671,7 @@ void KabuIdleInit(void)
 
     t->updateCallback = (u32)KabuIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(KABU_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gKabuIdleStates);
@@ -1114,7 +1114,7 @@ void TwisterIdleInit(void)
 
     t->updateCallback = (u32)TwisterIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(TWISTER_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gTwisterIdleStates);
@@ -1247,7 +1247,7 @@ void HotHeadWalkState0Update(void)
 
     if (--t->hotHeadShotTimer == 0)
     {
-        if (RandomRange(gUnk_087414B0[t->hotHeadOddsIndex]) != 0)
+        if (RandomRange(gHotHeadShootOdds[t->hotHeadOddsIndex]) != 0)
         {
             ActorSetState(HOT_HEAD_WALK_STATE_SHOOT);
             TaskSetEntry(HotHeadWalkEnterState, gCurTaskIdx);
@@ -1350,7 +1350,7 @@ void HotHeadIdleInit(void)
     t = gCurTask;
     t->hotHeadLoopFrame = 6;
     t->hotHeadFrameStep = -1;
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(HOT_HEAD_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gHotHeadIdleStates);
@@ -1425,7 +1425,7 @@ void HotHeadStandWaitUpdate(void)
 
     if (--t->hotHeadShotTimer == 0)
     {
-        if (RandomRange(gUnk_087414B0[t->hotHeadOddsIndex]) != 0)
+        if (RandomRange(gHotHeadShootOdds[t->hotHeadOddsIndex]) != 0)
         {
             ActorSetState(HOT_HEAD_STAND_STATE_SHOOT);
             TaskSetEntry(HotHeadStandEnterState, gCurTaskIdx);

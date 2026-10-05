@@ -248,7 +248,7 @@ void TwizzyHoverState0Update(void)
 void TwizzyIdle(void)
 {
     gCurTask->updateCallback = (u32)TwizzyIdleUpdate;
-    ActorSetAttackBox((u32)gUnk_0873F500);
+    ActorSetAttackBox((u32)gIdleAttackBox);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
     TaskSetFrame(6);
@@ -725,7 +725,7 @@ void sub_08088f24(void)
 void SquishyIdle(void)
 {
     gCurTask->updateCallback = (u32)SquishyIdleUpdate;
-    ActorSetAttackBox((u32)gUnk_0873F500);
+    ActorSetAttackBox((u32)gIdleAttackBox);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
     while (1)
@@ -953,7 +953,7 @@ void BubblesBounceOffWall(void)
     }
     gCurTask->moveCallback = (u32)ActorMove;
     TaskSetMotionXFacing(abs(gCurTask->velX), 0x5A5A5A5A);
-    ActorSetAttackBox((u32)gUnk_08742C14);
+    ActorSetAttackBox((u32)gBubblesAttackBox);
     while (1)
     {
         BubblesSetRollFrame(gCurTask->bubblesRollPhase);
@@ -1007,7 +1007,7 @@ void BubblesBounceOffCeiling(void)
         TaskYieldTrampoline(3);
     }
     gCurTask->moveCallback = (u32)ActorMove;
-    ActorSetAttackBox((u32)gUnk_08742C14);
+    ActorSetAttackBox((u32)gBubblesAttackBox);
     while (1)
     {
         BubblesSetRollFrame(gCurTask->bubblesRollPhase);
@@ -1064,7 +1064,7 @@ void BubblesLand(void)
     }
     ActorSetState(BUBBLES_STATE_JUMP);
     gCurTask->moveCallback = (u32)ActorMove;
-    ActorSetAttackBox((u32)gUnk_08742C14);
+    ActorSetAttackBox((u32)gBubblesAttackBox);
     TaskSleepForever();
 }
 
@@ -1080,7 +1080,7 @@ void BubblesFall(void)
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->accelY = 0x1500;
     gCurTask->speedLimitY = 0x30000;
-    ActorSetAttackBox((u32)gUnk_08742C14);
+    ActorSetAttackBox((u32)gBubblesAttackBox);
     while (1)
     {
         BubblesSetRollFrame(gCurTask->bubblesRollPhase);
@@ -1118,7 +1118,7 @@ void BubblesFallUpdate(void)
 void BubblesIdle(void)
 {
     gCurTask->updateCallback = (u32)BubblesIdleUpdate;
-    ActorSetAttackBox((u32)gUnk_0873F500);
+    ActorSetAttackBox((u32)gIdleAttackBox);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
     while (1)
@@ -1326,7 +1326,7 @@ void Task_GlunkShotSpray(void)
 void GlunkIdle(void)
 {
     gCurTask->updateCallback = (u32)GlunkIdleUpdate;
-    ActorSetAttackBox((u32)gUnk_0873F500);
+    ActorSetAttackBox((u32)gIdleAttackBox);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
     while (1)
@@ -1472,17 +1472,17 @@ void SlippyWait(void)
         break;
     case 2:
         ActorSetState(SLIPPY_STATE_JUMP);
-        TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+        TaskSetMotionXFacing(gSlippyJumpSpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
         TaskSleepForever();
         break;
     case 3:
         ActorSetState(SLIPPY_STATE_HIGH_JUMP);
-        TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+        TaskSetMotionXFacing(gSlippyJumpSpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
         TaskSleepForever();
         break;
     case 4:
         ActorSetState(SLIPPY_STATE_JUMP);
-        TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+        TaskSetMotionXFacing(gSlippyJumpSpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
         TaskTurnAroundAndReverseX();
         TaskSleepForever();
         break;
@@ -1538,17 +1538,17 @@ void SlippyLookAround(void)
             break;
         case 2:
             ActorSetState(SLIPPY_STATE_JUMP);
-            TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+            TaskSetMotionXFacing(gSlippyJumpSpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
             TaskSleepForever();
             break;
         case 3:
             ActorSetState(SLIPPY_STATE_HIGH_JUMP);
-            TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+            TaskSetMotionXFacing(gSlippyJumpSpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
             TaskSleepForever();
             break;
         case 4:
             ActorSetState(SLIPPY_STATE_JUMP);
-            TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+            TaskSetMotionXFacing(gSlippyJumpSpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
             TaskTurnAroundAndReverseX();
             TaskSleepForever();
             break;
@@ -1626,7 +1626,7 @@ void SlippyLeap(void)
     TaskFaceNearestPlayer();
     gCurTask->velY = 0xFFFB0000;
     gCurTask->accelY = 0x4000;
-    TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gSlippyJumpSpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     TaskSetFrame(8);
     while (gCurTask->velY < 0)
         TaskYieldTrampoline(1);
@@ -1869,7 +1869,7 @@ void SlippyFallUpdate(void)
 void SlippyIdle(void)
 {
     gCurTask->updateCallback = (u32)SlippyIdleUpdate;
-    ActorSetAttackBox((u32)gUnk_0873F500);
+    ActorSetAttackBox((u32)gIdleAttackBox);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
     TaskSetFrame(4);

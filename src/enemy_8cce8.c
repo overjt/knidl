@@ -934,7 +934,7 @@ void BroomHatterIdleInit(void)
 {
     gCurTask->updateCallback = (u32)BroomHatterIdleUpdate;
     TaskFaceNearestPlayer();
-    ActorSetAttackBox(gUnk_0873F500);
+    ActorSetAttackBox(gIdleAttackBox);
     gCurTask->health = 2;
     ActorSetState(BROOM_HATTER_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gBroomHatterIdleStates);
