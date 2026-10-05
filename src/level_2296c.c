@@ -44,9 +44,9 @@ void ResetLevelStateAtHub(void)
     gHubUnlockSource = 0;
     gBigSwitchPressActive = 0;
     gUnk_0200B038 = 0;
-    gUnk_02007FF0 = 0;
-    gUnk_02007D60 = 0;
-    gUnk_0200AF0C = -1;
+    gBossRetryCount = 0;
+    gMidBossRetryCount = 0;
+    gMidBossRetryRoom = -1;
     gWarpStarStationLevels = 0;
     for (i = 0; i <= 7; i++)
         for (j = 7; j >= 0; j--)
@@ -134,9 +134,9 @@ void ResetLevelStateForContinue(void)
     gHubUnlockSource = 0;
     gBigSwitchPressActive = 0;
     gUnk_0200B038 = 0;
-    gUnk_02007FF0 = 0;
-    gUnk_02007D60 = 0;
-    gUnk_0200AF0C = -1;
+    gBossRetryCount = 0;
+    gMidBossRetryCount = 0;
+    gMidBossRetryRoom = -1;
     gWarpStarStationLevels = 0;
     for (i = 0; i <= 7; i++)
         for (j = 7; j >= 0; j--)

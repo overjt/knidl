@@ -35,7 +35,7 @@ void SpawnDoorObjects(void)
     gScrollLockSpeedY = 0;
     gRoomDriftVelX = 0;
     gRoomDriftVelY = 0;
-    gUnk_020055D4 = 0x4000;
+    gDoorMarkerSpriteFlags = 0x4000;
     if (gRoomEntryMode == ROOM_ENTRY_DOOR || gRoomEntryMode == ROOM_ENTRY_BIG_SWITCH)
     {
         r = GetCollisionTileAtPixel(gRoomEntryX, gRoomEntryY);
@@ -153,14 +153,14 @@ void SpawnDoorObjects(void)
                 gDoorObjectTasks[i][0] = CreateQuickDrawDoorSign(x, y, 0, i);
             break;
         case DOOR_KIND_WARP_STAR_STATION:
-            gUnk_020055D4 = 0x4000;
+            gDoorMarkerSpriteFlags = 0x4000;
             m = 0;
             if (gHubUnlockFlags != 0)
             {
                 if (gHubUnlockFlags & 16)
                     m = 1;
                 else
-                    gUnk_020055D4 = 0x2000;
+                    gDoorMarkerSpriteFlags = 0x2000;
             }
             if (gWarpStarStationLevels & ~(1 << gStageIndex))
                 gDoorObjectTasks[i][0] = CreateWarpStarStationDoorSign(x, y, 0, i);

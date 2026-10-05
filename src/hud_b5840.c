@@ -305,12 +305,12 @@ s32 SpawnRoomMapEvent(struct RoomObjectEntry *e)
     t->mapEventWaitScrollLock = 0;
     if (gUnk_02007D64 != 4)
     {
-        if (gUnk_0200AF0C != gRoomIndex)
+        if (gMidBossRetryRoom != gRoomIndex)
         {
-            gUnk_02007D60 = 0;
-            gUnk_0200AF0C = gRoomIndex;
+            gMidBossRetryCount = 0;
+            gMidBossRetryRoom = gRoomIndex;
         }
-        gUnk_02007D60 &= 0xFF;
+        gMidBossRetryCount &= 0xFF;
     }
     f = &gRoomObjectList.entries[e->unk2];
     for (i = e->unk2; i < e->unk2 + e->unk3; f++, i++)
@@ -398,16 +398,16 @@ void HBlankScrollVBlankCallback(void)
     {
         gVBlankCallback = 0;
         *(vu32 *)gHBlankDmaDest = *(vu32 *)gHBlankDmaSrc = *(vu32 *)gHBlankDmaCnt = 0;
-        gUnk_03000B74 = 0;
+        gHBlankDmaState = 0;
     }
     else
     {
-        if (gUnk_03000B74 & 1)
+        if (gHBlankDmaState & 1)
         {
             CpuSet(gHBlankScrollTable, gHBlankScrollDmaTable, 0x040000F0);
-            gUnk_03000B74 = 2;
+            gHBlankDmaState = 2;
         }
-        if (gUnk_03000B74 & 2)
+        if (gHBlankDmaState & 2)
         {
             REG_DMA0SAD = gHBlankDmaSrc[0];
             REG_DMA0DAD = gHBlankDmaDest[0];

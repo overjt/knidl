@@ -639,7 +639,7 @@ s32 EnterDoor(void)
                     gLevelIndex = gStageIndex;
                     gStageIndex = gLevelStageCounts[gLevelIndex] - 1;
                     gRoomIndex = 0;
-                    gUnk_02008054 = 0x100;
+                    gRestartPoint = 0x100;
                     gUnk_0200B038 = 1;
                     gStageRequest = STAGE_REQUEST_STAGE_START;
                     gRoomEntryMode = ROOM_ENTRY_NORMAL;
@@ -704,7 +704,7 @@ s32 EnterDoor(void)
                 gRoomEntryX = d->unk6;
                 gRoomEntryY = d->unk8 + 0xFFFD;
                 gRoomEntrySet = 1;
-                gUnk_02008054 = 0x200;
+                gRestartPoint = 0x200;
                 gUnk_0200B038 = 1;
                 gRoomEntryMode = ROOM_ENTRY_NORMAL;
                 gEntryDoorEvent = 0;
@@ -793,9 +793,9 @@ s32 EnterDoor(void)
         {
             if (gUnk_0200B038 != 0)
             {
-                gUnk_02008054 = gRoomIndex;
-                gUnk_0200AFF4 = d->unk2 * 16 + 16;
-                gUnk_02008050 = d->unk4 * 16 + 5;
+                gRestartPoint = gRoomIndex;
+                gRestartPointX = d->unk2 * 16 + 16;
+                gRestartPointY = d->unk4 * 16 + 5;
             }
             gRoomIndex = d->unk0;
             gRoomEntryX = d->unk6;
@@ -805,8 +805,8 @@ s32 EnterDoor(void)
             gEntryDoorEvent = 0;
             gRoomEntryMode = ROOM_ENTRY_NORMAL;
         }
-        if (gUnk_02007D60 & 0x8000)
-            gUnk_02007D60 = 0;
+        if (gMidBossRetryCount & 0x8000)
+            gMidBossRetryCount = 0;
     }
     return gFoundDoor >> 8;
 }
@@ -841,7 +841,7 @@ void ExitClearedStage(void)
         gRoomEntryMode = ROOM_ENTRY_DOOR;
         gCutscenePending = 1;
         UnlockNextLevel();
-        gUnk_02007FF0 = 0;
+        gBossRetryCount = 0;
     }
     else
     {
@@ -880,7 +880,7 @@ void ExitKingDededeStage(void)
     {
         gStageRequest = STAGE_REQUEST_ENDING;
     }
-    gUnk_02007FF0 = 0;
+    gBossRetryCount = 0;
     gStageExitFlags |= 2;
 }
 
@@ -903,7 +903,7 @@ void ExitToNextRoomOnWarpStar(void)
     gWarpStarStationDirection = 0;
     gRoomEntryMode = ROOM_ENTRY_WARP_STAR;
     gUnk_0200B038 = 0;
-    gUnk_02007FF0 = 0;
+    gBossRetryCount = 0;
 }
 
 void ExitToEnding(void)
@@ -918,7 +918,7 @@ void ExitToEnding(void)
         gCurStage = 32;
         gStageExitFlags |= 1;
     }
-    gUnk_02007FF0 = 0;
+    gBossRetryCount = 0;
     gStageRequest = STAGE_REQUEST_ENDING;
 }
 
@@ -1034,8 +1034,8 @@ s32 ExitOnWarpStar(void)
         gRoomEntryY = d->unk8;
         gRoomEntrySet = 1;
         gStageRequest = STAGE_REQUEST_CHANGE_ROOM;
-        if (gUnk_02007D60 & 0x8000)
-            gUnk_02007D60 = 0;
+        if (gMidBossRetryCount & 0x8000)
+            gMidBossRetryCount = 0;
     }
     else
     {
@@ -1108,7 +1108,7 @@ s32 ExitByCannon(void)
     gStageRequest = STAGE_REQUEST_CHANGE_ROOM;
     gRoomEntryMode = ROOM_ENTRY_CANNON;
     gUnk_0200B038 = 0;
-    if (gUnk_02007D60 & 0x8000)
-        gUnk_02007D60 = 0;
+    if (gMidBossRetryCount & 0x8000)
+        gMidBossRetryCount = 0;
     return 1;
 }

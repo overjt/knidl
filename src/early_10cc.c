@@ -30,7 +30,7 @@ extern vu16 gVolumeRampSpeed;
 extern vu16 gSoundDisabled;
 extern void (*gFrameCallback)(void);
 extern vu16 gUnk_03001014;
-extern u32 gUnk_03000B74;
+extern u32 gHBlankDmaState;
 extern vu16 gWaitingForVBlank;
 extern vu16 gFrameInProgress;
 extern vu16 gHeldKeys;

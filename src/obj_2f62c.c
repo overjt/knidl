@@ -194,7 +194,7 @@ void sub_0802f93c(void)
     if (u->frame != -1)
     {
         tbl = u->frameTable;
-        QueueWorldSprite(u->layer, tbl[u->frame], gUnk_020055D4, u->tileWord, u->pixelX, u->pixelY);
+        QueueWorldSprite(u->layer, tbl[u->frame], gDoorMarkerSpriteFlags, u->tileWord, u->pixelX, u->pixelY);
     }
 }
 
@@ -366,7 +366,7 @@ void sub_0802fd98(void)
     if (t->frame != -1)
     {
         tbl = t->frameTable;
-        QueueWorldSprite(t->layer, tbl[t->frame], gUnk_020055D4, t->tileWord, t->pixelX, t->pixelY);
+        QueueWorldSprite(t->layer, tbl[t->frame], gDoorMarkerSpriteFlags, t->tileWord, t->pixelX, t->pixelY);
     }
 }
 

@@ -34,7 +34,7 @@ void CreateExtraModeTitleSprites(void)
     s32 titleSpriteSlot;
     struct Task *titleSprite;
 
-    if (gUnk_02006090 <= 2) {
+    if (gExtraModeTitleIndex <= 2) {
         titleSpriteSlot = TaskCreateFrom(TASK_EXTRA_MODE_TITLE_SPRITE, 32);
         if (titleSpriteSlot != -1) {
             titleSprite = &gTasks[titleSpriteSlot];

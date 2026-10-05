@@ -40,9 +40,9 @@ extern s8 gLinkSessionMode;
 extern u32 gUnk_02004000[];
 extern u16 gPausingPlayer;
 extern u8 gExtraModeTitleSeen;
-extern u8 gUnk_02006090;
+extern u8 gExtraModeTitleIndex;
 extern s8 gBoardedWarpStarSlot;
-extern u8 gUnk_02007FCC;
+extern u8 gExtraModeIndex;
 extern u32 gUnk_02028000[];
 extern struct BootLogoObject gUnk_02030000[];
 

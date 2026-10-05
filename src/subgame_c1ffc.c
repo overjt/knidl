@@ -7,7 +7,7 @@
 
 /* subgame_c1ffc.c (0x080C1FFC-0x080C243B, issue #98).
  *
- * Sub-game 2 (gUnk_02007FCC == 2), the race screen: phase 0 of M35's
+ * Sub-game 2 (gExtraModeIndex == 2), the race screen: phase 0 of M35's
  * framework (M36's AirGrindMain dispatches gSubGamePhase through
  * gAirGrindPhases; entry 0 is AirGrindRace).
  * 

@@ -73,7 +73,7 @@ void MapEventMidBossFight(void)
     do
         TaskYieldTrampoline(1);
     while (gMidBossFightState == 1);
-    gUnk_02007D60 |= 0x8000;
+    gMidBossRetryCount |= 0x8000;
     CameraLeaveScrollLock();
     if (gCurTask->mapEventEndAction == 1)
     {
@@ -492,8 +492,8 @@ void MapEventStageUnlockPan(void)
         }
     }
     TaskYieldTrampoline(10);
-    if (gUnk_020055D4 == 0x2000)
-        gUnk_020055D4 = 0x4000;
+    if (gDoorMarkerSpriteFlags == 0x2000)
+        gDoorMarkerSpriteFlags = 0x4000;
     gCameraPanDone = 1;
     TaskExitTrampoline();
 }
@@ -680,8 +680,8 @@ void MapEventBigSwitchUnlockPan(void)
     if (ApplyEntryDoorEvent())
         TaskYieldTrampoline(20);
     TaskYieldTrampoline(10);
-    if (gUnk_020055D4 == 0x2000)
-        gUnk_020055D4 = 0x4000;
+    if (gDoorMarkerSpriteFlags == 0x2000)
+        gDoorMarkerSpriteFlags = 0x4000;
     ReturnFromBigSwitchView();
     gCameraPanDone = 1;
     TaskExitTrampoline();

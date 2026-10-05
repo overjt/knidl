@@ -97,7 +97,7 @@ extern vu8 gSfxPlayerSlots[];
 extern vu32 gPaletteSource;
 extern u32 gVBlankCallback;
 extern u32 gFrameCallback;
-extern u32 gUnk_03000B74;
+extern u32 gHBlankDmaState;
 extern vu16 gUnk_03001014;
 extern vu16 gUnk_03001170;
 extern vu16 gUnk_03000B7C;
@@ -300,7 +300,7 @@ void AgbInit(void)
     zeroC = 2;
 
     gFrameCallback = gVBlankCallback = 0;
-    gUnk_03001014 = gUnk_03000B74 = 0;
+    gUnk_03001014 = gHBlankDmaState = 0;
 
     gUnk_03000B24 = gUnk_03001008 = gUnk_03000B20 = gUnk_03001020 = gUnk_03001178 = gUnk_03000B7C = gUnk_03001170 = 0;
 

@@ -5,7 +5,7 @@
  *   ./tools/fnmatch.sh 0x080B9D0C 0x080BA774 src/subgame_b9d0c.c --newpb
  *
  * The sub-game framework: the code AgbMain enters for its sub-game state
- * (SubGameMain) and that every sub-game shares.  gUnk_02007FCC selects the
+ * (SubGameMain) and that every sub-game shares.  gExtraModeIndex selects the
  * sub-game (0 = the reaction duel in this module, 1 = the four-slot
  * bomb-pass game of M36, 2 = the game whose body is in M37) and indexes the
  * per-game tables 0x087562A8 (graphics set), 0x087562C0 (BGM), 0x087562CC
@@ -109,7 +109,7 @@ void SubGameQuit(void)
 
 s32 SubGameInit(void)
 {
-    return gSubGameInitHooks[gUnk_02007FCC]();
+    return gSubGameInitHooks[gExtraModeIndex]();
 }
 
 u8 SubGameAnyPressedAOrStart(void)
@@ -172,19 +172,19 @@ void SubGameCheckEnd(void)
 
 void SubGameLoadScreen(s32 a0)
 {
-    s32 m = gUnk_02007FCC;
+    s32 m = gExtraModeIndex;
 
     LoadBgLayout(gSubGameBgLayouts[m][a0]);
     m = m * 2 + a0;
     if (gSubGameGfxSets[m] != 0)
         LoadGfxSet(gSubGameGfxSets[m]);
-    SubGameLoadObjTiles(gUnk_02007FCC, a0);
+    SubGameLoadObjTiles(gExtraModeIndex, a0);
     gSubGamePhase = a0;
 }
 
 void SubGameSetDisplayLayers(s32 a0)
 {
-    switch (gUnk_02007FCC)
+    switch (gExtraModeIndex)
     {
     case 0:
         gDispCnt &= 0xE0FF;
@@ -215,7 +215,7 @@ void SubGameRunScreen(s32 a0)
 
     ResetFadeAndBlend();
     SubGameLoadScreen(a0);
-    if (a0 != 0 || gUnk_02007FCC != 2)
+    if (a0 != 0 || gExtraModeIndex != 2)
     {
         gBg0ScrollX = gBg1ScrollX = gBg2ScrollX = gBg3ScrollX = 0;
         /* Every link of a volatile chain is re-read after its store, but
@@ -235,7 +235,7 @@ void SubGameRunScreen(s32 a0)
     SubGameRunFrame();
     LinkStartKeyExchange();
     SubGameSetDisplayLayers(a0);
-    if (gUnk_02007FCC != 2)
+    if (gExtraModeIndex != 2)
     {
         BeginFastFadeInFromWhite();
         while (gFadeSteps != 0)
@@ -273,7 +273,7 @@ loop:
     }
 tail:
     LinkStopKeyExchange();
-    if (gUnk_02007FCC != 2)
+    if (gExtraModeIndex != 2)
     {
         BeginFastFadeOutToWhite();
         while (gFadeSteps != 0)
@@ -300,14 +300,14 @@ tail:
 void SubGameRunLinkFrame(void)
 {
     RunLinkFrame();
-    if (gUnk_02007FCC == 2)
+    if (gExtraModeIndex == 2)
         sub_080c1f88();
 }
 
 void SubGameRunFrame(void)
 {
     RunFrame();
-    if (gUnk_02007FCC == 2)
+    if (gExtraModeIndex == 2)
         sub_080c1f88();
 }
 
@@ -386,7 +386,7 @@ void SubGameSyncLink(void)
                 n = 0;
             }
         }
-        if (gUnk_02007FCC == 2)
+        if (gExtraModeIndex == 2)
             sub_080c1f88();
     }
 done:
@@ -433,7 +433,7 @@ void SubGameMain(void)
     if (gSubGamePhase != 3)
     {
         gGameState = gPrevGameState;
-        gPrevGameState = gUnk_02007FCC + 14;
+        gPrevGameState = gExtraModeIndex + 14;
     }
 }
 
@@ -451,7 +451,7 @@ void Task_SubGame(void)
 
 void SubGameStartBody(void)
 {
-    TaskSetEntry(gSubGameBodies[gUnk_02007FCC], gCurTaskIdx);
+    TaskSetEntry(gSubGameBodies[gExtraModeIndex], gCurTaskIdx);
 }
 
 void QuickDrawInit(void)

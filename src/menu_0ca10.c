@@ -16,7 +16,7 @@
  * and auto-repeat keys).  MenuEnterModeList opens the mode list (screen 4)
  * and draws its 3-5 rows with MenuDrawModeList according to the save slot
  * unlock bits; MenuModeListSelect is its input loop (A/START picks a mode and
- * sets gUnk_02007FCC, row 4 leaves for game state 13, B goes back to the
+ * sets gExtraModeIndex, row 4 leaves for game state 13, B goes back to the
  * file menu).  MenuModePlayerCountSelect runs screen 5 (one player, or link play
  * through MenuEnterLinkPlay, which opens the link-play screen 8),
  * MenuEnterSoundTest opens the sound test (screen 7), and
@@ -137,18 +137,18 @@ void MenuModeListSelect(void)
                 gExtraMode = 0;
                 gMetaKnightmareMode = 1;
                 gGameState = GAME_STATE_EXTRA_MODE_TITLE;
-                gUnk_02006090 = 7;
-                gUnk_02007FCC = 7;
+                gExtraModeTitleIndex = 7;
+                gExtraModeIndex = 7;
                 return;
             }
             if (gMenuCursor <= 2) {
-                gUnk_02006090 = gMenuCursor;
-                gUnk_02007FCC = gMenuCursor;
+                gExtraModeTitleIndex = gMenuCursor;
+                gExtraModeIndex = gMenuCursor;
             } else if (gMenuCursor == 3) {
                 gMetaKnightmareMode = 0;
                 gExtraMode = 0;
-                gUnk_02006090 = 6;
-                gUnk_02007FCC = 6;
+                gExtraModeTitleIndex = 6;
+                gExtraModeIndex = 6;
             }
             gSubGameLevel = 0;
             gMenuScreen = 5;

@@ -168,11 +168,11 @@ void MainMenuMain(void)
         gCutscenePending = 1;
         break;
     case GAME_STATE_EXTRA_MODE_TITLE:
-        if (gUnk_02006090 == 6 || gUnk_02006090 == 7)
+        if (gExtraModeTitleIndex == 6 || gExtraModeTitleIndex == 7)
         {
             LoadSaveSlot(gCurSaveSlot);
             CheckNewMilestones();
-            if (gUnk_02006090 == 7)
+            if (gExtraModeTitleIndex == 7)
                 ResetLevelProgress(gCurSaveSlot);
         }
         gPrevGameState = GAME_STATE_MAIN_MENU;

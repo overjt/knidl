@@ -95,7 +95,7 @@ void EndFrame(void)
     {
         gUnk_03001014 = 0;
         gFrameCallback();
-        gUnk_03000B74 |= 1;
+        gHBlankDmaState |= 1;
     }
 
     gWaitingForVBlank = 1;

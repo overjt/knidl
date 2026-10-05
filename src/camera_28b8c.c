@@ -17,8 +17,8 @@
  * or runs M08's multi-player updates; CalcRoomAndCameraBounds only sets the bounds.
  * SetRoomEntryPoint places the player at the room's start position
  * (RoomDef.entryX/unk52) unless a door already did, clamps it and records
- * the arrival for the next level change (gUnk_02008054, gUnk_0200AFF4,
- * gUnk_02008050).  ClampRoomEntryAndAnchorCamera clamps the arrival position into the room
+ * the arrival for the next level change (gRestartPoint, gRestartPointX,
+ * gRestartPointY).  ClampRoomEntryAndAnchorCamera clamps the arrival position into the room
  * and makes it the camera target, CameraSetFocusToLocalPlayer copies the current
  * player's camera position into the player cells, CameraInitPos and
  * CameraUpdatePos/CameraUpdatePosNoParallax/CameraUpdatePosBg3AutoScrollX
@@ -166,16 +166,16 @@ void SetRoomEntryPoint(void)
         gRoomEntryY = v;
     if (gUnk_0200B038 == 0)
     {
-        gUnk_02008054 = gRoomIndex;
+        gRestartPoint = gRoomIndex;
         if (gRoomEntryMode == ROOM_ENTRY_WARP_STAR)
         {
-            gUnk_0200AFF4 = gCurRoomDef->entryX;
-            gUnk_02008050 = gCurRoomDef->entryY;
+            gRestartPointX = gCurRoomDef->entryX;
+            gRestartPointY = gCurRoomDef->entryY;
         }
         else
         {
-            gUnk_0200AFF4 = gRoomEntryX;
-            gUnk_02008050 = gRoomEntryY;
+            gRestartPointX = gRoomEntryX;
+            gRestartPointY = gRoomEntryY;
         }
         gUnk_0200B038 = 0;
     }

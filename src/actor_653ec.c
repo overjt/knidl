@@ -769,14 +769,14 @@ s16 ActorComputeHealthSlot(u32 i)
     switch (t->actorKind)
     {
     case ACTOR_KIND_MID_BOSS:
-        m = gUnk_02007D60 & 15;
+        m = gMidBossRetryCount & 15;
         if (w > 30)
             adj = m << 2;
         else
             adj = m << 1;
         break;
     case ACTOR_KIND_BOSS:
-        m = gUnk_02007FF0 & 15;
+        m = gBossRetryCount & 15;
         if (w > 30)
             adj = m << 2;
         else
