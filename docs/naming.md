@@ -408,7 +408,8 @@ records and frame lists (seg 19, `player_frame_records`,
 table in `src/data/` reaches by slot are named after that slot, by a
 script, in their own commits.  A format-only chain (no code reads it;
 #161's `"proof": "format"`) may be named the same way; the census counts
-it apart.  Asset labels stay unnamed (section 5).
+it apart.  Asset labels are named after the record that owns them
+(section 2.5).
 
 **Records by consumer** (run 7).  A ROM record whose every use is one
 engine API's argument - stored in `Task.frameTable`, passed to
@@ -446,6 +447,120 @@ https://wikirby.com/wiki/Kirby:_Nightmare_in_Dream_Land).  Level 7's
 stage 0 holds the Nightmare Power Orb and Nightmare Wizard rooms and its
 stage 1 three rooms with Kracko, Whispy Woods and King Dedede; level 8
 spawns no boss.  What levels 7 and 8 are in the game is not proven here.
+
+### 2.5 Asset labels named after their owner (#183)
+
+The labels of the asset segments (`"asset": true` in
+`tools/split_config.json`, docs/data.md 4: sprite sheets, compressed
+graphics, room maps and metatiles, BG animation frames) name graphics,
+palettes, OAM template streams, tilemaps and tile frames.  #155 left them as
+placeholders because no code reads an asset: the code passes the pointer
+of a record that owns it (a frame table's `struct TaskGfx`, a RoomDef, a BG
+animation command) to a loader.  The data policy forbids committing asset
+**bytes**, not naming their **labels** (section 5): a name is an identifier
+for an address of the user's own `baserom.gba` slice, and `make assets`
+names its files after it (docs/assets.md).  #183 names every asset label
+that has one owner after that owner, by the pointer chain alone, with
+`tools/name_assets.py` (section 6).
+
+The **owner** is the named record whose consumer-proven word points at the
+label, directly or through records these rules name first (a frame table
+-> its `TaskGfx` record -> the record's OAM template, palette and tiles).
+The rules (the owner's coordinator approved them for #183 with the
+decisions Q1-Q7 folded in):
+
+- **A1, a slot of a named table** takes the table's name, singular, plus
+  the slot's 0-based index in decimal, as the code indexes it:
+  `gBonkersFrames[3]` -> `gBonkersFrame3` (the `gPlayerFrames` ->
+  `gPlayerFrame1537` precedent of 2.4).  A list's entry drops `List`
+  (`gMrTickTockGfxFrameList[13]` -> `gMrTickTockGfxFrame13`).  A table
+  whose own name is a position (it ends in its index: `gEnemyPaletteVariant0`,
+  `gBombRallyPlayerFrame0`, the seat-0 frames) has no singular, and its
+  targets keep the placeholder with the reason `positional-table` (Q4):
+  never `gBombRallyPlayerFrame0Frame3`.
+- **A2, a field of a named record** is `<Record><Field>`, the field in
+  PascalCase from the C struct (the RoomDef rule of 2.4):
+  `gBonkersFrame3OamTemplate`, `gBonkersFrame3Palette`,
+  `gBonkersFrame3Tiles`; a field of slot k of a struct array is
+  `<Table singular><k><Field>` (`gCutsceneSheets[1].palette` ->
+  `gCutsceneSheet1Palette`).  A field still named `unkNN` / `fillerNN`, or
+  a word the struct does not declare, keeps the placeholder with the reason
+  `via-unnamed-field`: the fields census names fields, not this rule.  The
+  player's 20-byte frame records hold a second palette and tiles at +0xC
+  and +0x10 that `struct TaskGfx` (three fields) does not declare
+  (PlayerLoadFrameTilesAndPalette reads them by pointer arithmetic,
+  `src/player_helpers.c`), so their targets stay (Q7; a struct for the
+  player's frame record is a candidate for later).  Two forms follow from
+  the consumer, with its line in the evidence:
+  - **BG animation commands** (Q2): op 0's `ptr` is the `struct
+    BgAnimTileFrame` that `BgAnimCopyTiles(cmd->ptr)` copies
+    (`src/camera_bg_anims.c`), named
+    `gRoomBgAnimSet<N>Script<I>Cmd<K>TileFrame`, the pattern #155 gave op
+    1's `...Cmd<K>PaletteFade`; K is the command's index (`cmdIndex`).
+  - **Columns of a 2D table** (Q3): `u32 gExtraModeTitlePictures[][3]` has
+    no field, so a column's kind (`Palette`, `Tiles`, `Map`, `OamTemplate`)
+    is named only when the API the consumer passes that column to proves
+    it (a copy to palette RAM, an LZ77 decompression to a character base or
+    to a screen base the code sets, `QueueSprite`'s template argument):
+    `<row A1><Kind>`, `gExtraModeTitlePicture6Tiles`.  A column whose use
+    proves no kind keeps its placeholder.  No struct and no type change:
+    names only.
+- **A3, shared within one owner.**  When every referrer belongs to ONE
+  named owner, the target is named after it: slots of one table take the
+  lowest slot (`gBonkersFrame0` for slots 0, 1, 2, 31, 32 and 33), every
+  slot listed in the evidence; a field target that several records of one
+  family share (the records one table's slots hold) takes
+  `<OwnerStem><Field>`, the stem being the table's name without its kind
+  word (`gPlayerObjectWaterShotFrames` -> `gPlayerObjectWaterShotPalette`),
+  only when the family has that one target of the field (Q5).  When the
+  family has several, each takes the A2 name of its lowest-slot record
+  (`gBonkersFrame0Palette`, `gBonkersFrame12Palette`), every record in the
+  evidence.  Referrers that span owners keep the placeholder (`shared`),
+  except when the owners' names share a whole identity stem (a `Task_<X>`
+  family, 2.3: `gMetaKnight...`) and that identity has one target of the
+  field: `g<Identity><Field>`.  Never a partial word, never a stem the
+  identities do not prove.
+- **A4, position owners give position names**, counted apart: an owner that
+  is a position name (`gPlayerFrame189`, the RoomDef slots,
+  `gRoomBgAnimSet<N>Script<I>`) or a table whose slots are position names
+  (`gPlayerFrames`, `gEnemyGfx`, `gRoomTable`, Q7) names its targets by
+  A1-A3 (`gPlayerFrame189Tiles`; the BG2 tiles every room of a stage
+  shares, `gLevel6Stage5Bg2Tiles`).
+- **A5, loader tables.**  A label reached only through a generic loader's
+  table takes A1 (and Q3) names when the table is a named functional
+  record.  An unnamed table whose one consumer is a named function that
+  proves its role may be named first by 2.4's records by consumer
+  (`g<Consumer><Kind>`, its own commit and evidence row); otherwise the
+  target keeps the placeholder (`via-unnamed`).
+- **Code only** (Q6, 2.4's records by consumer applied to assets): a label
+  that no record points at and exactly one named function references is
+  `g<Consumer><Kind>` when the call it is passed to proves the kind
+  (`Palette`, `Tiles`, `Map`, `OamTemplate`), the consumer without `Task_`
+  and a trailing `Init` (run 7).  Several of one kind in that function are
+  told apart only by a destination the code proves (`BgPalette` /
+  `ObjPalette`, `BgTiles` / `ObjTiles`, `Bg<N>Tiles`); if they cannot be,
+  they keep the placeholder (`consumer-ambiguous`), and a call that proves
+  no kind keeps it too (`no-kind`).  A `sub_*` consumer leaves it
+  `no-owner`.
+- **Format-only words** (Q1): a word of a format-only structure (the frame
+  lists and the GfxHeader trailers, docs/data.md 5.3: no code reads them) is
+  not an owner when a consumer-proven word points at the same label; the
+  evidence cites it (`also format-only gWaddleDeeGfxFrameList[5]`).  Only a
+  label that format-only words alone point at is named by them, and the
+  census counts it as format-only.
+- **The chain only.**  Names come from the pointer chain the census proves,
+  never from what a picture shows (that would need 2.3's three agreeing
+  sources).  Renders are not needed; one made to sanity-check a chain stays
+  in `pending/`.
+
+The evidence (`renames.csv` rows of kind `asset`) is the chain from the
+named owner, its file and the rule: `slot: gBonkersFrames[3] ->
+TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2`.  What
+stays a placeholder has its reason in the audit's census (5.1), computed by
+`tools/name_assets.py` from the same chains: `shared`, `via-unnamed`,
+`via-unnamed-field`, `positional-table`, `no-owner`, and for the code-only
+labels a row of `docs/analysis/unnamed.csv` (`consumer-ambiguous`,
+`no-kind`).
 
 ## 3. Words with a fixed meaning
 
@@ -704,8 +819,9 @@ tools/rename.py --verify-diff master       # the branch is a pure rename
 ```
 
 A batch CSV has the header `old,new,kind,evidence` (optional `issue`);
-`kind` is `function`, `ram`, `io`, `rom`, `const` or `tag` (a struct or
-union tag, run 6) and is checked against the address.  `--locals CSV`
+`kind` is `function`, `ram`, `io`, `rom`, `asset` (a ROM label inside an
+asset segment, named after its owner: section 2.5, #183), `const` or `tag`
+(a struct or union tag, run 6) and is checked against the address.  `--locals CSV`
 (`file,function,old,new,evidence`) renames locals inside their function
 (section 7.1).  The tool refuses a name that is not a C identifier, is a
 keyword, uses a placeholder prefix, breaks the style of section 2 (unless
