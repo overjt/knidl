@@ -346,7 +346,7 @@ void BonkersDash(void)
         }
     }
     PlaySfx(502);
-    gCurTask->unk20 = ActorStartAnim(gUnk_087437C8[gCurTask->actorSpawnArg]);
+    gCurTask->actorAnimDelay20 = ActorStartAnim(gUnk_087437C8[gCurTask->actorSpawnArg]);
     TaskSetMotionXFacing(gUnk_08743750[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     y = gCurTask;
     zero = 0;
@@ -355,11 +355,11 @@ void BonkersDash(void)
     while ((s16)gCurTask->bonkersLoopCount < gCurTask->bonkersMoveLength)
     {
         TaskYieldTrampoline(1);
-        if (--gCurTask->unk20 == 0)
+        if (--gCurTask->actorAnimDelay20 == 0)
         {
             if ((++gCurTask->bonkersDashStepCount & 1) != 0)
                 CreateDustTrail(1, 1, -16, 8);
-            gCurTask->unk20 = ActorStepAnim();
+            gCurTask->actorAnimDelay20 = ActorStepAnim();
         }
         gCurTask->bonkersLoopCount++;
     }

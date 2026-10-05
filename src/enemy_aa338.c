@@ -1143,16 +1143,16 @@ void Task_NightmareWizardDefeatFlash(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 10;
     gCurTask->frameTable = gUnk_08754738;
-    gCurTask->unk6C = 0;
+    gCurTask->nightmareWizardDefeatFlashLoopCount = 0;
     do
     {
         gCurTask->frame = 16;
         TaskYieldTrampoline(2);
         gCurTask->frame = 0xFFFF;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 9);
-    gCurTask->unk6C = 0;
+        gCurTask->nightmareWizardDefeatFlashLoopCount++;
+    } while ((s16)gCurTask->nightmareWizardDefeatFlashLoopCount <= 9);
+    gCurTask->nightmareWizardDefeatFlashLoopCount = 0;
     do
     {
         gCurTask->frame = 13;
@@ -1161,9 +1161,9 @@ void Task_NightmareWizardDefeatFlash(void)
         TaskYieldTrampoline(1);
         gCurTask->frame = 14;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 9);
-    gCurTask->unk6C = 0;
+        gCurTask->nightmareWizardDefeatFlashLoopCount++;
+    } while ((s16)gCurTask->nightmareWizardDefeatFlashLoopCount <= 9);
+    gCurTask->nightmareWizardDefeatFlashLoopCount = 0;
     do
     {
         gCurTask->frame = 14;
@@ -1172,8 +1172,8 @@ void Task_NightmareWizardDefeatFlash(void)
         TaskYieldTrampoline(1);
         gCurTask->frame = 13;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 9);
+        gCurTask->nightmareWizardDefeatFlashLoopCount++;
+    } while ((s16)gCurTask->nightmareWizardDefeatFlashLoopCount <= 9);
     gCurTask->frame = 15;
     TaskYieldTrampoline(2);
     gCurTask->frame--;

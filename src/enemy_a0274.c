@@ -239,7 +239,7 @@ void sub_080a05c8(void)
     t = gCurTask;
     t->unk34 = 0;
     t->kingDededeSlamSetupCount = 0;
-    t->unk2C = 0;
+    t->kingDededeSkipWait = 0;
     t->unk28 = 0;
     t->unk24 = 0;
     t->unk20 = 0;
@@ -297,11 +297,11 @@ void KingDededeStartWait(void)
             gCurTask->actorAnimDelay24 = n2;
         }
         u = gCurTask;
-        if (u->unk2C != 0)
+        if (u->kingDededeSkipWait != 0)
             u->kingDededeWaitTimer = 0;
         else
             u->kingDededeWaitTimer = gUnk_08748374[i];
-        gCurTask->unk2C = 0;
+        gCurTask->kingDededeSkipWait = 0;
     }
     else
     {
@@ -539,7 +539,7 @@ void KingDededeIntro(void)
     ActorIntroPoseUntilScrollLocked(gKingDededeWaitAnim);
     ActorIntroPoseUntilHpBarFull(gKingDededeWaitAnim);
     ActorSetExtraAttackBox((u32)gKingDededeIntroExtraAttackBox);
-    gCurTask->unk2C = z;
+    gCurTask->kingDededeSkipWait = z;
     KingDededeStartWait();
     TaskSleepForever();
 }

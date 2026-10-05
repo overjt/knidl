@@ -241,7 +241,7 @@ void MaceKnightStandUpdate(void)
         if (*p != -1)
         {
             w = &gTasks[*p];
-            w->unk2C = 1;
+            w->maceKnightMaceDismissed = 1;
         }
     }
 }
@@ -292,7 +292,7 @@ void MaceKnightUpdate(void)
         if (*p != -1)
         {
             w = &gTasks[*p];
-            w->unk2C = 1;
+            w->maceKnightMaceDismissed = 1;
         }
     }
 }
@@ -393,7 +393,7 @@ void MaceKnightSwingUpdate(void)
         if (*p != -1)
         {
             w = &gTasks[*p];
-            w->unk2C = 1;
+            w->maceKnightMaceDismissed = 1;
         }
     }
 }
@@ -487,7 +487,7 @@ s32 CreateMaceKnightMace(void)
     sp.taskType = TASK_MACE_KNIGHT_MACE;
     sp.variant = (t = gCurTask)->variant;
     z = 0;
-    sp.spawnArg = t->unk74;
+    sp.spawnArg = t->actorSpawnArg;
     sp.x = z;
     sp.y = 0xFFF0;
     sp.tileWord = gMetaKnightsKnightTileWords[2];

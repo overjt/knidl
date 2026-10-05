@@ -207,10 +207,10 @@ void CreateQuickDrawBonus(u8 a0, s16 a1, s16 a2, s8 a3)
         struct Task *quickDrawObject = &gTasks[i];
 
         quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_BONUS;
-        quickDrawObject->unk18 = a0;
+        quickDrawObject->quickDrawObjectBonusIndex = a0;
         quickDrawObject->pixelX = a1;
         quickDrawObject->pixelY = a2;
-        quickDrawObject->unk1C = a3;
+        quickDrawObject->quickDrawObjectBonusPlayer = a3;
     }
 }
 
@@ -452,16 +452,16 @@ void CreateQuickDrawDefeatedLabel(void)
         struct Task *quickDrawObject = &gTasks[id];
 
         quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
-        quickDrawObject->unk18 = gUnk_0200B048;
-        quickDrawObject->unk1C = 4;
-        quickDrawObject->unk20 = -1;
-        quickDrawObject->unk24 = 6;
+        quickDrawObject->quickDrawObjectLabelFrame = gUnk_0200B048;
+        quickDrawObject->quickDrawObjectLabelKind = 4;
+        quickDrawObject->quickDrawObjectLabelLifetime = -1;
+        quickDrawObject->quickDrawObjectSubFrame = 6;
         quickDrawObject->pixelX = 80;
         quickDrawObject->pixelY = 16;
-        quickDrawObject->unk28 = -12;
-        quickDrawObject->unk2C = 80;
-        quickDrawObject->unk30 = (s32)gQuickDrawDefeatedFrames;
-        quickDrawObject->unk34 = 0;
+        quickDrawObject->quickDrawObjectSubOffsetX = -12;
+        quickDrawObject->quickDrawObjectSubOffsetY = 80;
+        quickDrawObject->quickDrawObjectSubFrames = (s32)gQuickDrawDefeatedFrames;
+        quickDrawObject->quickDrawObjectSubTileWord = 0;
     }
 }
 
@@ -476,14 +476,14 @@ void CreateQuickDrawBestTimeLabel(void)
         s32 n;
 
         quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
-        quickDrawObject->unk1C = 5;
-        quickDrawObject->unk20 = -1;
+        quickDrawObject->quickDrawObjectLabelKind = 5;
+        quickDrawObject->quickDrawObjectLabelLifetime = -1;
         quickDrawObject->pixelX = 172;
         quickDrawObject->pixelY = 96;
-        quickDrawObject->unk28 = -8;
-        quickDrawObject->unk2C = 0;
-        quickDrawObject->unk30 = (s32)gQuickDrawDigitFrames;
-        quickDrawObject->unk34 = 0;
+        quickDrawObject->quickDrawObjectSubOffsetX = -8;
+        quickDrawObject->quickDrawObjectSubOffsetY = 0;
+        quickDrawObject->quickDrawObjectSubFrames = (s32)gQuickDrawDigitFrames;
+        quickDrawObject->quickDrawObjectSubTileWord = 0;
         v = gQuickDrawBestTime;
         n = 0;
         while (v > 9)
@@ -491,8 +491,8 @@ void CreateQuickDrawBestTimeLabel(void)
             v -= 10;
             n++;
         }
-        quickDrawObject->unk24 = n;
-        quickDrawObject->unk18 = v;
+        quickDrawObject->quickDrawObjectSubFrame = n;
+        quickDrawObject->quickDrawObjectLabelFrame = v;
     }
 }
 

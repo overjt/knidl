@@ -474,7 +474,7 @@ void BugzzyCharge(void)
     PlaySfx(500);
     x = gCurTask;
     x->bugzzyBoxSet = 3;
-    gTasks[CreateChildTask(TASK_BUGZZY_AFTERIMAGE, x->pixelX, x->pixelY, ActorGetGfxTileWord())].unk74 =
+    gTasks[CreateChildTask(TASK_BUGZZY_AFTERIMAGE, x->pixelX, x->pixelY, ActorGetGfxTileWord())].bugzzyAfterimageSpawnArg =
         gCurTask->actorSpawnArg;
     gCurTask->bugzzyRushing = 1;
     TaskSetMotionXFacing(gUnk_08743A94[gCurTask->actorSpawnArg], 0x5A5A5A5A);

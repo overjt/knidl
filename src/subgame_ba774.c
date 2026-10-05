@@ -115,7 +115,7 @@ void QuickDrawResetRound(void)
     o->quickDrawObjectRunning = 0;
     o->quickDrawObjectCount = 0;
     o->frame = 0;
-    o->unk24 = 0;
+    o->quickDrawObjectSubFrame = 0;
     t->quickDrawReactionTime = 0;
 }
 
@@ -127,13 +127,13 @@ void CreateQuickDrawRedrawSign(void)
     {
         struct Task *quickDrawObject = &gTasks[i];
         quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
-        quickDrawObject->unk18 = 0;
-        quickDrawObject->unk1C = 1;
-        quickDrawObject->unk20 = 120;
-        quickDrawObject->unk24 = -1;
+        quickDrawObject->quickDrawObjectLabelFrame = 0;
+        quickDrawObject->quickDrawObjectLabelKind = 1;
+        quickDrawObject->quickDrawObjectLabelLifetime = 120;
+        quickDrawObject->quickDrawObjectSubFrame = -1;
         quickDrawObject->pixelX = 88;
         quickDrawObject->pixelY = 24;
-        quickDrawObject->unk34 = 0;
+        quickDrawObject->quickDrawObjectSubTileWord = 0;
     }
 }
 
@@ -201,7 +201,7 @@ void QuickDrawAwardRound(void)
         if (gCurTask->quickDrawPressMask & bit)
         {
             QuickDrawSetPlayerState(i, 2);
-            o->unk20 = 4;
+            o->quickDrawObjectStrikeSpot = 4;
             gQuickDrawWins[o->quickDrawObjectPlayerIndex]++;
             QuickDrawUpdateRanking(o->quickDrawObjectPlayerIndex);
             if (gQuickDrawBestTime > gCurTask->quickDrawReactionTime)
@@ -225,7 +225,7 @@ void QuickDrawPoseTiedPlayers(void)
         if (gCurTask->quickDrawPressMask & bit)
         {
             QuickDrawSetPlayerState(i, 2);
-            o->unk20 = i;
+            o->quickDrawObjectStrikeSpot = i;
         }
     }
 }

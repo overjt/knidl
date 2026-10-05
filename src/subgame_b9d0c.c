@@ -546,13 +546,13 @@ void CreateQuickDrawSignal(void)
         struct Task *quickDrawObject = &gTasks[idx];
 
         quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
-        quickDrawObject->unk18 = 0;
-        quickDrawObject->unk1C = 3;
-        quickDrawObject->unk20 = 16;
-        quickDrawObject->unk24 = -1;
+        quickDrawObject->quickDrawObjectLabelFrame = 0;
+        quickDrawObject->quickDrawObjectLabelKind = 3;
+        quickDrawObject->quickDrawObjectLabelLifetime = 16;
+        quickDrawObject->quickDrawObjectSubFrame = -1;
         quickDrawObject->pixelX = 120;
         quickDrawObject->pixelY = 88;
-        quickDrawObject->unk34 = 0;
+        quickDrawObject->quickDrawObjectSubTileWord = 0;
     }
 }
 

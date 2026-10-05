@@ -149,12 +149,12 @@ void KabuJumpSpin(void)
         e = *g;
         e->unk1C = n2;
         e->unk18 = z;
-        *(s16 *)&e->unk6C = z;
+        *(s16 *)&e->kabuLoopCount = z;
     inner:
         f = *g;
-        p = (s16 *)&f->unk6C;
+        p = (s16 *)&f->kabuLoopCount;
         q = *p;
-        q += f->unk74 * 5;
+        q += f->actorSpawnArg * 5;
         f->unk18 += *(u8 *)(q + (s32)tbl);
         if (f->unk18 <= f->unk1C)
         {
@@ -162,9 +162,9 @@ void KabuJumpSpin(void)
                 goto inner;
         }
         r = *g;
-    } while (r->unk28 == *(s16 *)&r->unk6C);
+    } while (r->kabuJumpIndex == *(s16 *)&r->kabuLoopCount);
     j = *h;
-    j->unk28 = *(s16 *)&j->unk6C;
+    j->kabuJumpIndex = *(s16 *)&j->kabuLoopCount;
     ActorSetState(KABU_JUMP_STATE_JUMP);
     TaskSleepForever();
 }
@@ -328,17 +328,17 @@ void KabuTeleport(void)
     gCurTask->updateState = KABU_TELEPORT_STATE_TELEPORT;
     a = gCurTask;
     a->kabuBlinkTimer = 48;
-    a->unk30 = 7;
+    a->kabuBlinkRow = 7;
     a->kabuBlinkFrame = a->frame;
-    a->unk34 = 4;
+    a->kabuBlinkStepTimer = 4;
     do
     {
         b = gCurTask;
-        if (b->unk34-- == 0)
+        if (b->kabuBlinkStepTimer-- == 0)
         {
             if (++b->kabuBlinkFrame > 11)
                 b->kabuBlinkFrame = 4;
-            gCurTask->unk34 = 4;
+            gCurTask->kabuBlinkStepTimer = 4;
         }
         TaskYieldTrampoline(1);
     } while (gCurTask->kabuBlinkTimer != 0);
@@ -351,11 +351,11 @@ void KabuTeleport(void)
         TaskYieldTrampoline(1);
         n = RandomRange(6);
         c = gCurTask;
-        c->unk30 = o->pixelX + (s8)gUnk_08741367[n];
+        c->kabuTeleportX = o->pixelX + (s8)gUnk_08741367[n];
         m = RandomRange(9);
         d = gCurTask;
-        d->unk34 = o->pixelY + (s8)gUnk_0874136D[m];
-        if (sub_0807f6a8(d->unk30, d->unk34, (s8 *)d->u8C.actor->terrainBox) != 0)
+        d->kabuTeleportY = o->pixelY + (s8)gUnk_0874136D[m];
+        if (sub_0807f6a8(d->kabuTeleportX, d->kabuTeleportY, (s8 *)d->u8C.actor->terrainBox) != 0)
             break;
         if (++*(s16 *)&gCurTask->kabuLoopCount > 59)
             break;
@@ -363,21 +363,21 @@ void KabuTeleport(void)
     if (*(s16 *)&gCurTask->kabuLoopCount == 60)
         ActorDestroy();
     e = gCurTask;
-    e->posX = e->unk30 << 16;
-    e->posY = e->unk34 << 16;
+    e->posX = e->kabuTeleportX << 16;
+    e->posY = e->kabuTeleportY << 16;
     e->onGround = 0;
     f = gCurTask;
     f->kabuBlinkTimer = 48;
-    f->unk30 = 0;
-    f->unk34 = 4;
+    f->kabuBlinkRow = 0;
+    f->kabuBlinkStepTimer = 4;
     do
     {
         b = gCurTask;
-        if (b->unk34-- == 0)
+        if (b->kabuBlinkStepTimer-- == 0)
         {
             if (++b->kabuBlinkFrame > 11)
                 b->kabuBlinkFrame = 4;
-            gCurTask->unk34 = 4;
+            gCurTask->kabuBlinkStepTimer = 4;
         }
         TaskYieldTrampoline(1);
     } while (gCurTask->kabuBlinkTimer != 0);

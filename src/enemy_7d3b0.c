@@ -74,7 +74,7 @@ void SwordAndBladeKnightSlashUpdate(void)
         if ((u16)(o->u76.subtype - 28) > 1)
             goto kill2;
         s = &o->pixelX;
-        t->pixelX = o->unk2C * 20 + *s;
+        t->pixelX = o->swordAndBladeKnightLungeDir * 20 + *s;
         t->pixelY = o->pixelY;
         if (t->swordAndBladeKnightSlashStruck != 0)
         {

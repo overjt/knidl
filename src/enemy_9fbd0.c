@@ -121,11 +121,11 @@ u8 KingDededeReactToDefeat(void)
     ActorSetHitReactions(gKingDededeDefeatedHitReactions);
     TaskSetFrame(9);
     t = gCurTask;
-    p = &t->unk46;
+    p = &t->kingDededeChildSlot;
     if (*p != -1)
     {
         TaskFree(*p);
-        gCurTask->unk46 = 0xFFFF;
+        gCurTask->kingDededeChildSlot = 0xFFFF;
     }
     if (gUnk_02007D00[8] != -1 && gUnk_02007D00[1] != -1)
     {
@@ -174,7 +174,7 @@ u8 KingDededeReactToDamage(void)
         }
         else
         {
-            u->unk2C = 1;
+            u->kingDededeSkipWait = 1;
             gUnk_02006190[2] = 4;
             ActorSetState(KING_DEDEDE_STATE_WAIT);
         }
@@ -191,7 +191,7 @@ u8 KingDededeReactToDamage(void)
         }
         else
         {
-            v->unk2C = 1;
+            v->kingDededeSkipWait = 1;
             gUnk_02006190[2] = 4;
             ActorSetState(KING_DEDEDE_STATE_WAIT);
         }
@@ -199,7 +199,7 @@ u8 KingDededeReactToDamage(void)
         goto install;
     case KING_DEDEDE_STATE_SLAM:
         w = gCurTask;
-        if (w->unk24 == 2)
+        if (w->kingDededeSlamKind == 2)
         {
             if (gUnk_0300244C != 0)
                 gUnk_02006190[2] = 43;
@@ -209,7 +209,7 @@ u8 KingDededeReactToDamage(void)
         }
         else
         {
-            w->unk2C = 1;
+            w->kingDededeSkipWait = 1;
             gUnk_02006190[2] = 4;
             ActorSetState(KING_DEDEDE_STATE_WAIT);
         }
@@ -217,10 +217,10 @@ u8 KingDededeReactToDamage(void)
         goto install;
     case KING_DEDEDE_STATE_WALK:
         x = gCurTask;
-        x->unk2C = 1;
+        x->kingDededeSkipWait = 1;
         gUnk_02006190[2] = 4;
         ActorSetState(KING_DEDEDE_STATE_WAIT);
-        a->prevState = gCurTask->unk1C;
+        a->prevState = gCurTask->kingDededeNextState;
     install:
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
         break;
@@ -236,7 +236,7 @@ u8 KingDededeReactToDamage(void)
         gCurTask->state = KING_DEDEDE_STATE_WAIT;
     case KING_DEDEDE_STATE_WAIT:
         z = gCurTask;
-        z->unk2C = 1;
+        z->kingDededeSkipWait = 1;
         gUnk_02006190[2] = 4;
         ActorSetState(KING_DEDEDE_STATE_WAIT);
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);

@@ -125,14 +125,43 @@
 /* BombRallyObject - BombRallyObject - Bomb Rally's objects (task type #95,
    Task_BombRallyObject; gBombRallyObjectVariants: player, bomb, smoke, star
    burst, start sign, results player, menu item) */
+#define bombRallyObjectItemIndex unk18 /* s32: the menu item's index (continue 0 / quit 1; level 0-2): its frame / 2, its cursor value */
 #define bombRallyObjectPlayerIndex unk18 /* s32: the player row's player index (0-3): whose buttons it reads */
+#define bombRallyObjectResultsSeat unk18 /* s32: the results row's seat (0-3; 0 alone): its slot gBombRallyResultsSlotX / Y, palette */
+#define bombRallyObjectSmokeScale unk18 /* s32: the smoke puff's affine scale: the bomb's scale when it puffed (creator's argument) */
 #define bombRallyObjectStartSeat unk18 /* s32: the bomb row's first seat (CreateBombRallyBomb's argument): where the camera pans from */
+#define bombRallyObjectItemCursor unk1C /* s32: the menu cursor when the items were made (creator's arg): which item starts in front */
 #define bombRallyObjectPanVelX unk1C /* s32: the BG3 scroll step in X of the pan between seats (ramps up, then down) */
+#define bombRallyObjectResultsKind unk1C /* s32: which results row = its first state: 0 the pose, 1 the place label, 2 the lives */
 #define bombRallyObjectSeat unk1C /* s32: the player row's seat (0-3): position, frames and layer, compared with the turn seat */
+#define bombRallyObjectSmokeAngle unk1C /* s32: the smoke puff's rotation (0-255): the bomb's angle at creation, +8 a frame */
 #define bombRallyObjectAimSide unk20 /* s32: the side a player aims: 0 toward seat + 1 (throws 0-2), 1 toward seat - 1 (3-5) */
 #define bombRallyObjectPanVelY unk20 /* s32: the BG3 scroll step in Y of the pan between seats */
+#define bombRallyObjectResultsPlayer unk20 /* s32: the player at that seat (gBombRallySeats[seat]): gBombRallyFinishOrder index */
 #define bombRallyObjectBombSeat unk24 /* s32: the seat the bomb sits at when the round starts (the sub-game task's turn seat) */
+#define bombRallyObjectWantedAimSide unk24 /* s32: the aim side the presses ask for (0 / 1); Ready turns while it differs from the aim side */
+#define bombRallyObjectBlastSeat unk28 /* s32: seat (0-3) the bomb blew up at: blast position, frames, star burst and screen shake */
+#define bombRallyObjectBlinkCount unk28 /* s32: frames the continue / quit item has been shown (0 once quitting): bit 1 blinks it */
+#define bombRallyObjectBombPhase unk28 /* s32: the bomb in Pass: 0 hidden, 1 served (drops to a seat), 2 in flight, 3 caught (shakes) */
+#define bombRallyObjectCpuIdleTimer unk28 /* s32: frames (20-80) before the waiting CPU reconsiders: at 0 a 1-in-8 turn, else a new draw */
+#define bombRallyObjectLivesTimer unk28 /* s32: frames since the lives row appeared (to 41): icons at 0, 20 and 40, sound 220 */
+#define bombRallyObjectWindupQuarter1 unk28 /* s32: frames of the throw's 1st windup quarter (of the frames left in the pass) */
+#define bombRallyObjectBubblesThrowDelay unk2C /* s32: frames the Bubbles row bobs before its throw (pass frames - 8), counted down */
+#define bombRallyObjectLivesOffsetX unk2C /* s32: X offset of the lives icons by the finish place (-16 / -8 / 0): centres the row */
+#define bombRallyObjectScaleStep unk2C /* s32: the bomb's scale change per pass frame, x16 (next seat's scale - this one's) / frames */
+#define bombRallyObjectShakeStep unk2C /* s32: step of the blast's screen shake through gBombRallyBlastShake (BombRallyShakeScreen) */
+#define bombRallyObjectWindupQuarter2 unk2C /* s32: frames of the throw's 2nd windup quarter (of the frames left in the pass) */
+#define bombRallyObjectBubblesFrameTimer unk30 /* s32: frames until the Bubbles row's bob shows its next frame (6 / 5) */
+#define bombRallyObjectFrameCount unk30 /* s32: frames since the bomb's state began: blink, fuse frames, smoke every 4th, the flash */
+#define bombRallyObjectWindupQuarter3 unk30 /* s32: frames of the throw's 3rd windup quarter (of the frames left in the pass) */
+#define bombRallyObjectBombAngle unk34 /* s32: the bomb sprite's rotation (0-511), turned in flight; the smoke puffs' start angle */
+#define bombRallyObjectBubblesFrameStep unk34 /* s32: step (0-3) of the Bubbles row's bob: index of gUnk_0875676C */
+#define bombRallyObjectLevelBlinkCount unk34 /* s32: frames the level item has been shown (0 once quitting): bit 1 blinks it */
+#define bombRallyObjectWindupQuarter4 unk34 /* s32: frames of the throw's 4th windup quarter (of the frames left in the pass) */
+#define bombRallyObjectLoopCount unk6C /* s16: the running body's loop counter (blast, blown-up debris, star bursts, level slots) */
 #define bombRallyObjectPanLoopCount unk6C /* s16: BombRallyPanToSeat's frame loop counter (32 frames) */
+#define bombRallyObjectBurstKind unk74 /* u8: star burst kind = its state: 0-3 a seat's burst (spawns 4 stars), 4-15 one star */
+#define bombRallyObjectMenuKind unk74 /* u8: the results menu the item is in = its state: 0 continue / quit, 1 the level */
 
 /* Bonkers - Bonkers (task type #49, Task_Bonkers; gBonkersVariants,
    gBonkersStates / gBonkersStateUpdates) */
@@ -396,6 +425,10 @@
 #define fireLionSequencePhase unk6E /* s16: step 0-7 through the state sequence gUnk_087445E8[actorSpawnArg] (FireLionChooseNextState) */
 #define fireLionPalettePhase unk70 /* s16: step 0-7 of the palette blend cycle, indexes the ratios gUnk_087445D8 */
 
+/* FireLionFlame - FireLionFlame - Fire Lion's flame (task type #214,
+   Task_FireLionFlame; made by Fire Lion, its slot in fireLionFlameSlot) */
+#define fireLionFlamePuffCount unk28 /* s32: puffs the flame has made (from 0); it flips its facing before each odd one */
+
 /* Flamer - Flamer (task type #43, Task_Flamer; gFlamerVariants,
    gFlamerStates, gFlamerIdleStates) */
 #define flamerSurfaceSlope unk18 /* s32: slope class of the surface tile it crawls on (gUnk_087416A4: 0 none, 1 flat, 2-9 slopes) */
@@ -614,6 +647,9 @@
 #define kabuBlinkRow unk30 /* s32: start of the blink masks in gUnk_08741357: 7 blinking out, 0 blinking in */
 #define kabuPassCount unk30 /* s32: passes left before the burst (3) */
 #define kabuSpinCount unk30 /* s32: spin cycles left before the jump (random 0-2) */
+#define kabuTeleportX unk30 /* s32: the X KabuTeleport tries for its new spot (near the nearest player), then moves to */
+#define kabuBlinkStepTimer unk34 /* s32: frames until the teleport blink advances kabuBlinkFrame (4: every fifth frame) */
+#define kabuTeleportY unk34 /* s32: the Y KabuTeleport tries for its new spot (near the nearest player), then moves to */
 #define kabuTurnTimer unk34 /* s32: frames until the slide turns for the next pass (180 at the target, turns at 120) */
 #define kabuLoopCount unk6C /* s16: the running state's loop counter (the spin's frame steps; KabuTeleport's spot tries) */
 
@@ -633,6 +669,7 @@
 #define kingDededeSlamKind unk24 /* s32: KingDededeSlam's kind: 0 one slam, 1 four slams, 2 KingDededeJumpSlam (player high) */
 #define kingDededeDefeatedAnimating unk28 /* s32: 1 once the Defeated state 1 started its animation; the update ticks it only then */
 #define kingDededeDefeatedCheckingPlayers unk2C /* s32: 1 while the Defeated update runs the per-player checks (KingDededeDefeatedCheckPlayers / 180c) */
+#define kingDededeSkipWait unk2C /* s32: 1 after a hit sent him to Wait: KingDededeStartWait then waits 0 frames, clears it */
 #define kingDededeSlamSetupCount unk30 /* s32: KingDededeSlam setups mod 4 (player low); at 0 the slam is the four-slam kind */
 #define kingDededeInhaleTimer unk34 /* s32: frames the inhale goes on catching nothing (90) before it stops */
 #define kingDededeWalkStopDist unk34 /* s32: distance to the target at which the walk hands over (46 Jump, 52 hammer, 8 spot, 0) */
@@ -653,6 +690,7 @@
 #define krackoJrSteerTimer unk1C /* s32: frames until Kracko Jr. turns its heading toward the player again (every 4) */
 #define krackoJrMoveDir unk20 /* s32: side of the player on the pass's axis when it began: 0 negative, 1 positive */
 #define krackoJrTargetY unk20 /* s32: Y of the spot sub-step 8 flies to (the player's pixelY, | 15 on ground) */
+#define krackoCrossArrived unk24 /* s32: nonzero once KrackoCross reached the far side's spot: stop, flip side, pick a move */
 #define krackoJrAccelTimer unk24 /* s32: frames until sub-step 3 accelerates toward the player again (every 4) */
 #define krackoThunderSfxTimer unk24 /* s32: frames until KrackoLightningSweep plays the next thunder sound (every 10) */
 #define krackoJrPhase unk28 /* s32: Kracko Jr.'s sub-step: KrackoJrState0Update's switch (0-10), KrackoJrTransformUpdate's */
@@ -1049,6 +1087,11 @@
 #define nightmareWizardCloakHandsBobY unk28 /* s32: Y offset (-3 to 0) the hands bob by; their update adds it to the parent's Y */
 #define nightmareWizardCloakHandsLoopCount unk6C /* s16: the bob loop's counter (3 frames each way) */
 
+/* NightmareWizardDefeatFlash - NightmareWizardDefeatFlash - the flash at the
+   Nightmare Wizard's defeat (task type #209, Task_NightmareWizardDefeatFlash;
+   made by the wizard's defeat with CreateChildTask) */
+#define nightmareWizardDefeatFlashLoopCount unk6C /* s16: the flash's loop counter: three loops of 10 passes */
+
 /* NightmareWizardHitBox - Nightmare Wizard's hit box (task type #208,
    Task_NightmareWizardHitBox) */
 #define nightmareWizardHitBoxIndex unk28 /* s32: row of the box tables gUnk_08749458 / gUnk_08749490 for the wizard's frame; -1 none */
@@ -1407,12 +1450,16 @@
 #define quickDrawObjectLabelKind unk1C /* s32: the label's kind (0-7): which frame table QuickDrawLabelShow gives it */
 #define quickDrawObjectReactionTime unk1C /* s32: the CPU opponent's reaction time (gQuickDrawOpponentReactionTimes[level * 5 + opponent]) */
 #define quickDrawObjectRunning unk1C /* s32: 1 while the timer row counts (from the signal until the round is decided) */
+#define quickDrawObjectHomeSpot unk20 /* s32: false start: spot 0-3 by quickDrawObjectHomeX (68, 188, 60, 164): shake, mark, sweat drop */
 #define quickDrawObjectLabelLifetime unk20 /* s32: frames the label stays before it exits; -1 = it stays */
 #define quickDrawObjectOpponentArriveDelay unk20 /* s32: frames the CPU opponent waits after its tag appears before it walks in (60) */
+#define quickDrawObjectStrikeSpot unk20 /* s32: the strike spot: 4 = the centre (120, 96), else a player index (gQuickDrawStrikeX column) */
+#define quickDrawObjectArrived unk24 /* s32: 1 once the slide-in reached its spot (pixelX 68 / 164); the arrive update slides while 0 */
 #define quickDrawObjectSubFrame unk24 /* s32: frame of the second sprite the label / timer draw adds (timer: the tens digit); -1 none */
 #define quickDrawObjectSubOffsetX unk28 /* s32: X offset of that second sprite (the timer: -8) */
 #define quickDrawObjectHomeX unk2C /* s32: the player's pixelX where QuickDrawPlacePlayer put it; picks its knock-back */
 #define quickDrawObjectSubOffsetY unk2C /* s32: Y offset of that second sprite (the timer: 0) */
+#define quickDrawObjectSubFrames unk30 /* s32: frame table of the label's second sprite (gQuickDrawDigitFrames / DefeatedFrames) */
 #define quickDrawObjectSweatDropSlot unk30 /* s32: task slot of the player's sweat drop (#94 row 6); -1 none */
 #define quickDrawObjectFalseStartMarkSlot unk34 /* s32: task slot of the player's false-start mark (#94 label); -1 none */
 #define quickDrawObjectSubTileWord unk34 /* s32: tileWord of the label's second sprite (its own tileWord) */
@@ -1657,6 +1704,7 @@
    #231, Task_WarpStarStationDoorSparkle; made by
    CreateWarpStarStationDoorSparkle) */
 #define warpStarStationDoorSparkleWaitReveal unk20 /* s32: non-zero: it stays hidden until the Warp Star Station door is revealed */
+#define warpStarStationDoorSparkleIndex unk24 /* s32: which of the door's two sparkles (0, 1): the second runs a lead-in path first */
 
 /* WarpStarStationLevelSign - Warp Star Station level sign (task type #234,
    Task_WarpStarStationLevelSign; made by CreateWarpStarStationLevelSign) */

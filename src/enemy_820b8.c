@@ -704,12 +704,12 @@ s32 WheelieHitWall(void)
         TaskTurnAroundAndReverseX();
         t = gCurTask;
         t->wheelieRestoreTimer = 2;
-        t->unk34 = t->posX;
+        t->wheelieSavedPosX = t->posX;
         t->wheelieSavedPosY = t->posY;
         break;
     case WHEELIE_STATE_SKID:
         TaskStopX();
-        gCurTask->unk34 = 1;
+        gCurTask->wheelieSkidStopped = 1;
         break;
     }
     return r;

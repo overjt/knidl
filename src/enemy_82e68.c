@@ -898,7 +898,7 @@ void HotHeadFireBreath(void)
     else
         u->hotHeadFireAngle = 256;
     v = gCurTask;
-    n = (s16)o->unk6E;
+    n = (s16)o->hotHeadFlameIndex;
     v->hotHeadFireFanIndex = n;
     m = (v->hotHeadFireAngle + gUnk_08741E70[n]) & 0x1FF;
     v->hotHeadFireAngle = m;

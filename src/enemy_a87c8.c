@@ -270,7 +270,7 @@ void KrackoCross(void)
         gCurTask->krackoSide = 1;
         gCurTask->velX = -0x14000;
     }
-    gCurTask->unk24 = 0;
+    gCurTask->krackoCrossArrived = 0;
     for (;;)
     {
         gCurTask->krackoLoopCount = 0;
@@ -294,15 +294,15 @@ void KrackoCrossUpdate(void)
         if (gUnk_030023B4 > 167)
         {
             t->posX = (gViewRect[0] + 168) << 16;
-            t->unk24++;
+            t->krackoCrossArrived++;
         }
     }
     else if (gUnk_030023B4 <= 72)
     {
         t->posX = (gViewRect[0] + 72) << 16;
-        t->unk24++;
+        t->krackoCrossArrived++;
     }
-    if (gCurTask->unk24 != 0)
+    if (gCurTask->krackoCrossArrived != 0)
     {
         struct Task *u = gCurTask;
 
