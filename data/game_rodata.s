@@ -3479,35 +3479,35 @@ gTileDrifts:
 	.global	gTileDriftsDoubled
 gTileDriftsDoubled:
 	.incbin	"baserom.gba", 0x73A398, 0x80
-	.global	gUnk_0873A418
-gUnk_0873A418:
+	.global	gBlockBreakScript1
+gBlockBreakScript1:
 	.incbin	"baserom.gba", 0x73A418, 0x8
-	.global	gUnk_0873A420
-gUnk_0873A420:
+	.global	gBlockBreakScript0
+gBlockBreakScript0:
 	.incbin	"baserom.gba", 0x73A420, 0x8
-	.global	gUnk_0873A428
-gUnk_0873A428:
+	.global	gBlockBreakScript2
+gBlockBreakScript2:
 	.incbin	"baserom.gba", 0x73A428, 0x8
-	.global	gUnk_0873A430
-gUnk_0873A430:
+	.global	gBlockBreakScript3
+gBlockBreakScript3:
 	.incbin	"baserom.gba", 0x73A430, 0x10
-	.global	gUnk_0873A440
-gUnk_0873A440:
+	.global	gBlockBreakScript4
+gBlockBreakScript4:
 	.incbin	"baserom.gba", 0x73A440, 0x10
-	.global	gUnk_0873A450
-gUnk_0873A450:
+	.global	gBlockBreakScript5
+gBlockBreakScript5:
 	.incbin	"baserom.gba", 0x73A450, 0x8
 	.global	gUnk_0873A458
 gUnk_0873A458:
 	.incbin	"baserom.gba", 0x73A458, 0x24
 	.global	gBlockBreakScripts
 gBlockBreakScripts:
-	.word	gUnk_0873A420
-	.word	gUnk_0873A418
-	.word	gUnk_0873A428
-	.word	gUnk_0873A430
-	.word	gUnk_0873A440
-	.word	gUnk_0873A450
+	.word	gBlockBreakScript0
+	.word	gBlockBreakScript1
+	.word	gBlockBreakScript2
+	.word	gBlockBreakScript3
+	.word	gBlockBreakScript4
+	.word	gBlockBreakScript5
 	.global	gBlockHardness
 gBlockHardness:
 	.incbin	"baserom.gba", 0x73A494, 0x140
