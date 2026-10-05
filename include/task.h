@@ -154,16 +154,18 @@ struct TaskGfx
 };
 
 /* The extended form of struct TaskGfx (0x14 bytes; issue #186): the first
-   three fields are TaskGfx's, and bit 0 of oamTemplate tags the record
+   three fields are TaskGfx's, and bit 0 of oamTemplate, TASK_GFX_EXTENDED
+   (include/constants/sprites.h), tags the record
    (PlayerLoadFrameTilesAndPalette, src/player_helpers.c:498, queues
-   oamTemplate & ~1).  The player's frame records (data/player_frame_records.s,
-   reached through gPlayerFrames and gCutsceneFountainKirbyFrames) are all of
-   this form.  Their sprite slot is two OBJ palette banks and 128 tiles:
-   Task_Player sets tileWord = (i << 13) | (i << 7) for player i
-   (src/player_task.c:85, src/collision_collider_lists.c:16), so banks 2i and
-   2i + 1 and tiles 128i to 128i + 127.  palette and tiles fill the lower
-   half (the bank tileWord names and the first 64 tiles); the two words after
-   them fill the upper half:
+   oamTemplate & ~TASK_GFX_EXTENDED).  The player's frame records
+   (data/player_frame_records.s, reached through gPlayerFrames and
+   gCutsceneFountainKirbyFrames) are all of this form.  Their sprite slot
+   is two OBJ palette banks and 128 tiles: Task_Player sets tileWord =
+   (i << 13) | (i << 7) for player i (src/player_task.c:85,
+   src/collision_collider_lists.c:16), so banks 2i and 2i + 1 and tiles 128i
+   to 128i + 127.  palette and tiles fill the lower half (the bank tileWord
+   names and the first 64 tiles); the two words after them fill the upper
+   half:
    - nextBankPalette, a counted palette like palette, is copied to the OBJ
      palette bank after the frame's (gObjPaletteBank1 + bank * 32,
      src/player_helpers.c:514-517; gObjPalette + 32 + bank * 32 in

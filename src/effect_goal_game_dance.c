@@ -1693,7 +1693,7 @@ void GoalGameHelperKirbyDraw(void)
     a = s->tileWord;
     tbl = s->frameTable;
     g = (struct TaskGfxExtended *)tbl[s->frame];
-    if ((g->oamTemplate & 1) != 0)
+    if ((g->oamTemplate & TASK_GFX_EXTENDED) != 0)
     {
         pal = &g->palette;
         if (g->palette != NULL)
@@ -1723,7 +1723,7 @@ void GoalGameHelperKirbyDraw(void)
         }
     }
     u = gCurTask;
-    QueueSprite(u->layer, g->oamTemplate & ~1, u->spriteFlags, 0x800 | u->tileWord,
+    QueueSprite(u->layer, g->oamTemplate & ~TASK_GFX_EXTENDED, u->spriteFlags, 0x800 | u->tileWord,
                  u->pixelX - gSpriteCameraX, (s16)(u->pixelY - gSpriteCameraY));
 }
 
