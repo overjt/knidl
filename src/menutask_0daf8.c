@@ -32,7 +32,7 @@ void Task_FileSelectSlotLabel(void)
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 8;
     gCurTask->frameTable = gUnk_08755620;
-    gCurTask->frame = gCurTask->unk1C + 3;
+    gCurTask->frame = gCurTask->fileSelectSlotLabelIndex + 3;
     FileSelectSlotSlideIn();
     while (gMenuScreen != 1)
         TaskYieldTrampoline(1);
@@ -48,8 +48,8 @@ void Task_FileSelectSlot(void)
     gCurTask->updateCallback = (u32)FileSelectSlotUpdate;
     gCurTask->layer = 9;
     gCurTask->frameTable = gUnk_08755620;
-    gCurTask->frame = gCurTask->unk1C;
-    gCurTask->unk28 = -1;
+    gCurTask->frame = gCurTask->fileSelectSlotIndex;
+    gCurTask->fileSelectSlotSavedCursor = -1;
     FileSelectSlotSlideIn();
     while (gMenuScreen != 1)
         TaskYieldTrampoline(1);
@@ -65,19 +65,19 @@ void FileSelectSlotUpdate(void)
     s32 slot;
     s32 i;
 
-    if (gMenuCursor != gCurTask->unk28) {
-        slot = gCurTask->unk1C;
+    if (gMenuCursor != gCurTask->fileSelectSlotSavedCursor) {
+        slot = gCurTask->fileSelectSlotIndex;
         s = gSaveSlots;
         i = slot * 256;
         if (gSaveSlots[slot].completionPercent[1] != 0 && gSaveSlots[slot].unk04 != 0x99999999)
             i++;
-        MenuLoadSaveSlotPalette(slot, (s8)s->unk16[i]);
-        gCurTask->unk28 = gMenuCursor;
+        MenuLoadSaveSlotPalette(slot, (s8)s->curLevel[i]);
+        gCurTask->fileSelectSlotSavedCursor = gMenuCursor;
     }
 
-    if (gSaveSlots[gCurTask->unk1C].completionPercent[1] != 0 && gSaveSlots[gCurTask->unk1C].unk04 != 0x99999999) {
+    if (gSaveSlots[gCurTask->fileSelectSlotIndex].completionPercent[1] != 0 && gSaveSlots[gCurTask->fileSelectSlotIndex].unk04 != 0x99999999) {
         t = gCurTask;
-        QueueSprite(t->layer - 1, gUnk_08755620[t->unk1C + 6], t->spriteFlags, t->tileWord, t->pixelX, t->pixelY);
+        QueueSprite(t->layer - 1, gUnk_08755620[t->fileSelectSlotIndex + 6], t->spriteFlags, t->tileWord, t->pixelX, t->pixelY);
     }
 }
 
@@ -87,7 +87,7 @@ void FileSelectSlotSlideIn(void)
     s32 n;
 
     t->posX = 0x1500000;
-    n = t->unk1C;
+    n = t->fileSelectSlotIndex;
     t->posY = ((n + 1) * 5) << 19;
     TaskYieldTrampoline(n * 5);
     gCurTask->velX = 0xFFE52000;
@@ -103,10 +103,10 @@ void Task_FileSelectCursor(void)
     gCurTask->layer = 6;
     gCurTask->frameTable = gUnk_08755620;
     gCurTask->frame = 9;
-    gCurTask->unk28 = -1;
-    gCurTask->unk2C = 0;
-    gCurTask->unk30 = 1;
-    gCurTask->unk34 = 0;
+    gCurTask->fileSelectCursorSavedCursor = -1;
+    gCurTask->fileSelectCursorBlendFrom = 0;
+    gCurTask->fileSelectCursorBlendTo = 1;
+    gCurTask->fileSelectCursorBlendRatio = 0;
     gCurTask->posX = 0x160000;
     gCurTask->posY = ((gMenuCursor * 5) << 19) + 0x240000;
     gCurTask->velX = 0x30000;
@@ -127,26 +127,26 @@ void FileSelectCursorUpdate(void)
     struct Task *u, *v, *w;
     s32 cur;
 
-    if (t->unk34 == 256) {
-        if (++t->unk2C > 1)
-            t->unk2C = 0;
+    if (t->fileSelectCursorBlendRatio == 256) {
+        if (++t->fileSelectCursorBlendFrom > 1)
+            t->fileSelectCursorBlendFrom = 0;
         u = gCurTask;
-        if (++u->unk30 > 1)
-            u->unk30 = 0;
-        gCurTask->unk34 = 0;
+        if (++u->fileSelectCursorBlendTo > 1)
+            u->fileSelectCursorBlendTo = 0;
+        gCurTask->fileSelectCursorBlendRatio = 0;
     }
     v = gCurTask;
-    if ((v->unk34 += 32) > 256)
-        v->unk34 = 256;
+    if ((v->fileSelectCursorBlendRatio += 32) > 256)
+        v->fileSelectCursorBlendRatio = 256;
     w = gCurTask;
-    BlendColors(gUnk_08554B60[w->unk2C], gUnk_08554B60[w->unk30], (u16)w->unk34, 4, gUnk_03001668);
+    BlendColors(gUnk_08554B60[w->fileSelectCursorBlendFrom], gUnk_08554B60[w->fileSelectCursorBlendTo], (u16)w->fileSelectCursorBlendRatio, 4, gObjPaletteBank15Color12);
     cur = gMenuCursor;
-    if (cur != gCurTask->unk28) {
+    if (cur != gCurTask->fileSelectCursorSavedCursor) {
         u8 *p;
         RequestCopy(3, (u32)&gUnk_08550B9C[cur * 192], OBJ_VRAM0 + 0x3580, 96);
         p = gUnk_08550B9C;
         RequestCopy(3, (u32)&p[gMenuCursor * 192 + 96], OBJ_VRAM0 + 0x3980, 96);
-        gCurTask->unk28 = gMenuCursor;
+        gCurTask->fileSelectCursorSavedCursor = gMenuCursor;
     }
 }
 
@@ -160,19 +160,19 @@ void Task_FileMenuSlot(void)
     t->drawCallback = 0;
     t->updateCallback = (u32)FileMenuSlotUpdate;
     t->spriteFlags = 0x2000;
-    t->unk28 = 0;
-    t->unk18 = 0;
-    t->unk1C = 0;
+    t->fileMenuSlotLeaving = 0;
+    t->fileMenuSlotOffsetX = 0;
+    t->fileMenuSlotOffsetY = 0;
     t->unk20 = 0;
-    t->unk6C = 0;
-    for (; (s16)gCurTask->unk6C <= 7; gCurTask->unk6C++) {
+    t->fileMenuSlotLoopCount = 0;
+    for (; (s16)gCurTask->fileMenuSlotLoopCount <= 7; gCurTask->fileMenuSlotLoopCount++) {
         u = gCurTask;
-        u->unk18 += 0xFFF90000;
+        u->fileMenuSlotOffsetX += 0xFFF90000;
         u->unk20 += 0xFFFA0000;
         TaskYieldTrampoline(1);
         s = gMenuScreen;
         if (s == 0 || s == 4 || s == 7 || s == 8) {
-            gCurTask->unk28 = 1;
+            gCurTask->fileMenuSlotLeaving = 1;
             break;
         }
     }
@@ -181,13 +181,13 @@ void Task_FileMenuSlot(void)
         s = gMenuScreen;
         if (s == 1) {
             v = gCurTask;
-            if (v->unk18 < (s32)0xFFC80000) {
+            if (v->fileMenuSlotOffsetX < (s32)0xFFC80000) {
                 v->spriteFlags = 0;
-                v->unk18 += 0x33000;
-                v->unk1C += 0xFFFD2000;
-                if (v->unk18 > (s32)0xFFC80000) {
-                    v->unk18 = 0xFFC80000;
-                    v->unk1C = 0;
+                v->fileMenuSlotOffsetX += 0x33000;
+                v->fileMenuSlotOffsetY += 0xFFFD2000;
+                if (v->fileMenuSlotOffsetX > (s32)0xFFC80000) {
+                    v->fileMenuSlotOffsetX = 0xFFC80000;
+                    v->fileMenuSlotOffsetY = 0;
                 }
             } else {
                 v->spriteFlags = 0x2000;
@@ -195,26 +195,26 @@ void Task_FileMenuSlot(void)
         } else if (s == 6) {
             v = gCurTask;
             v->spriteFlags = 0;
-            if (v->unk18 > (s32)0xFFA80000) {
-                v->unk18 += 0xFFFCD000;
-                v->unk1C += 0x2E000;
-                if (v->unk18 < (s32)0xFFA80000) {
-                    v->unk18 = 0xFFA80000;
-                    v->unk1C = 0x1D0000;
+            if (v->fileMenuSlotOffsetX > (s32)0xFFA80000) {
+                v->fileMenuSlotOffsetX += 0xFFFCD000;
+                v->fileMenuSlotOffsetY += 0x2E000;
+                if (v->fileMenuSlotOffsetX < (s32)0xFFA80000) {
+                    v->fileMenuSlotOffsetX = 0xFFA80000;
+                    v->fileMenuSlotOffsetY = 0x1D0000;
                 }
             }
         } else if (s == 0 || s == 4 || s == 7 || s == 8) {
-            gCurTask->unk28 = 1;
+            gCurTask->fileMenuSlotLeaving = 1;
             break;
         }
     }
-    gCurTask->unk6C = 0;
+    gCurTask->fileMenuSlotLoopCount = 0;
     do {
         w = gCurTask;
-        w->unk18 += 0x70000;
+        w->fileMenuSlotOffsetX += 0x70000;
         w->unk20 += 0x33000;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 7);
+    } while ((s16)++gCurTask->fileMenuSlotLoopCount <= 7);
     TaskExitTrampoline();
 }
 
@@ -225,14 +225,14 @@ void FileMenuSlotUpdate(void)
 
     if (TaskIsOnScreenNoCamera()) {
         tbl = gUnk_08755650;
-        QueueSprite(12, tbl[3], gCurTask->spriteFlags, 0, (gCurTask->unk18 >> 16) + 304, (gCurTask->unk1C >> 16) + 40);
-        QueueSprite(12, tbl[2], gCurTask->spriteFlags, 0, (gCurTask->unk18 >> 16) + 304, (gCurTask->unk1C >> 16) + 40);
-        QueueSprite(11, tbl[5], gCurTask->spriteFlags, 0, (gCurTask->unk18 >> 16) + 304, (gCurTask->unk1C >> 16) + 40);
+        QueueSprite(12, tbl[3], gCurTask->spriteFlags, 0, (gCurTask->fileMenuSlotOffsetX >> 16) + 304, (gCurTask->fileMenuSlotOffsetY >> 16) + 40);
+        QueueSprite(12, tbl[2], gCurTask->spriteFlags, 0, (gCurTask->fileMenuSlotOffsetX >> 16) + 304, (gCurTask->fileMenuSlotOffsetY >> 16) + 40);
+        QueueSprite(11, tbl[5], gCurTask->spriteFlags, 0, (gCurTask->fileMenuSlotOffsetX >> 16) + 304, (gCurTask->fileMenuSlotOffsetY >> 16) + 40);
         QueueSprite(13, tbl[4], gCurTask->spriteFlags, 0, (gCurTask->unk20 >> 16) + 296, 40);
         t = gCurTask;
-        if (t->unk28 == 0) {
+        if (t->fileMenuSlotLeaving == 0) {
             tbl = gUnk_08755620;
-            QueueSprite(11, tbl[gCurSaveSlot + 3], t->spriteFlags, 0, (t->unk18 >> 16) + 234, (t->unk1C >> 16) + 13);
+            QueueSprite(11, tbl[gCurSaveSlot + 3], t->spriteFlags, 0, (t->fileMenuSlotOffsetX >> 16) + 234, (t->fileMenuSlotOffsetY >> 16) + 13);
         }
     }
 }
@@ -245,10 +245,10 @@ void Task_FileMenuHighlight(void)
     gCurTask->drawCallback = 0;
     gCurTask->updateCallback = (u32)FileMenuHighlightUpdate;
     gCurTask->frameTable = gUnk_08755650;
-    gCurTask->unk28 = -1;
-    gCurTask->unk2C = 0;
-    gCurTask->unk30 = 1;
-    gCurTask->unk34 = 0;
+    gCurTask->fileMenuHighlightSavedCursor = -1;
+    gCurTask->fileMenuHighlightBlendFrom = 0;
+    gCurTask->fileMenuHighlightBlendTo = 1;
+    gCurTask->fileMenuHighlightBlendRatio = 0;
     gCurTask->posX = 0x640000;
     for (;;) {
         s = gMenuScreen;
@@ -266,30 +266,30 @@ void FileMenuHighlightUpdate(void)
     struct Task *u, *v, *w;
     u32 *tbl;
 
-    if (t->unk34 == 256) {
-        if (++t->unk2C > 1)
-            t->unk2C = 0;
+    if (t->fileMenuHighlightBlendRatio == 256) {
+        if (++t->fileMenuHighlightBlendFrom > 1)
+            t->fileMenuHighlightBlendFrom = 0;
         u = gCurTask;
-        if (++u->unk30 > 1)
-            u->unk30 = 0;
-        gCurTask->unk34 = 0;
+        if (++u->fileMenuHighlightBlendTo > 1)
+            u->fileMenuHighlightBlendTo = 0;
+        gCurTask->fileMenuHighlightBlendRatio = 0;
     }
     v = gCurTask;
-    if ((v->unk34 += 32) > 256)
-        v->unk34 = 256;
+    if ((v->fileMenuHighlightBlendRatio += 32) > 256)
+        v->fileMenuHighlightBlendRatio = 256;
     if (gMenuScreen == 1) {
         w = gCurTask;
-        BlendColors(gUnk_08559B68[w->unk2C], gUnk_08559B68[w->unk30], (u16)w->unk34, 10, gUnk_0300153C);
+        BlendColors(gUnk_08559B68[w->fileMenuHighlightBlendFrom], gUnk_08559B68[w->fileMenuHighlightBlendTo], (u16)w->fileMenuHighlightBlendRatio, 10, gObjPaletteBank6Color6);
         LoadGfxSet(23);
-        if (gFileMenuCursor != gCurTask->unk28) {
+        if (gFileMenuCursor != gCurTask->fileMenuHighlightSavedCursor) {
             MenuUpdateFileMenuPalette();
             MenuLoadPicture(0, gFileMenuCursor);
-            gCurTask->unk28 = gFileMenuCursor;
+            gCurTask->fileMenuHighlightSavedCursor = gFileMenuCursor;
         }
     } else {
-        BlendColors(gUnk_08559B90, gUnk_08559B90, (u16)gCurTask->unk34, 10, gUnk_0300153C);
+        BlendColors(gUnk_08559B90, gUnk_08559B90, (u16)gCurTask->fileMenuHighlightBlendRatio, 10, gObjPaletteBank6Color6);
         LoadGfxSet(24);
-        gCurTask->unk28 = -1;
+        gCurTask->fileMenuHighlightSavedCursor = -1;
     }
     if (TaskIsOnScreenNoCamera()) {
         tbl = gUnk_08755650;

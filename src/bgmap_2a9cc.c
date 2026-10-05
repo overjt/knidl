@@ -43,7 +43,7 @@ struct RoomDef
 struct MapTile
 {
     /*0x00*/ u16 metatile;
-    /*0x02*/ u8 unk2;
+    /*0x02*/ u8 slopeIndex;
     /*0x03*/ u8 collisionTile;
 };
 
@@ -447,7 +447,7 @@ void RestoreMapCell(s32 x, s32 y)
 
     i = x + y * gRoomWidth;
     gRoomMap[i].metatile = gRoomMap[i + 2048].metatile;
-    gRoomMap[i].unk2 = gRoomMap[i + 2048].unk2;
+    gRoomMap[i].slopeIndex = gRoomMap[i + 2048].slopeIndex;
     gRoomMap[i].collisionTile = gRoomMap[i + 2048].collisionTile;
     gBlockLayer[i] = gBlockLayer[i + 2048];
 }

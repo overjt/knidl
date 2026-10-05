@@ -50,7 +50,7 @@ s32 sub_08021b70(u32 x, u32 y)
     if (x >= w || y >= gRoomHeight)
         return 0;
     idx = y * w;
-    return (&gRoomMap[idx])[x].unk2;
+    return (&gRoomMap[idx])[x].slopeIndex;
 }
 
 s32 GetCollisionTileAtOffset(s16 x, s16 y, s16 dx, s16 dy)
@@ -100,11 +100,11 @@ void sub_08021c74(s8 *box, s32 id)
     TerrainQueryPixelAndBelow(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom);
     if (gCollisionTileShapeClass[gTerrainTile] == 0)
     {
-        tile = gUnk_08735018[gUnk_03005574];
+        tile = gSlopeIndexTiles[gTerrainSlopeIndex];
         if (tile != 0)
         {
             flags = 0;
-            if (gUnk_03005574 & 1)
+            if (gTerrainSlopeIndex & 1)
             {
                 if ((gTerrainProbeX & 0xFFF0) != ((gTerrainProbeX + gTerrainBoxLeft) & 0xFFF0))
                     flags = 1;
@@ -119,10 +119,10 @@ void sub_08021c74(s8 *box, s32 id)
         }
         if (gCollisionTileShapeClass[gTerrainTileBelow] == 0)
         {
-            tile = gUnk_08735018[gUnk_030055AC];
+            tile = gSlopeIndexTiles[gTerrainSlopeIndexBelow];
             if (tile == 0)
                 goto edges;
-            if (gUnk_030055AC & 1)
+            if (gTerrainSlopeIndexBelow & 1)
             {
                 if ((gTerrainProbeX & 0xFFF0) != ((gTerrainProbeX + gTerrainBoxLeft) & 0xFFF0))
                     flags = 1;
@@ -377,7 +377,7 @@ s32 IsFullBlockAtPixel(u16 x, u16 y)
 void TerrainClampBoxToPlayerBounds(void)
 {
     gTerrainBoundsClamp = 0;
-    gUnk_03005544 = 0;
+    gTerrainClampedTopY = 0;
     if (gPlayerBounds[gCurTaskIdx].x0 > gTerrainProbeX + gTerrainBoxLeft)
     {
         gTerrainProbeX = gPlayerBounds[gCurTaskIdx].x0 - gTerrainBoxLeft;
@@ -393,7 +393,7 @@ void TerrainClampBoxToPlayerBounds(void)
         gTerrainProbeY = gPlayerBounds[gCurTaskIdx].y0 - gTerrainBoxTop;
         gTerrainBoundsClamp |= 4;
         if (gUnk_02005574[0] == 0)
-            gUnk_03005544 = gPlayerBounds[gCurTaskIdx].y0;
+            gTerrainClampedTopY = gPlayerBounds[gCurTaskIdx].y0;
     }
 }
 

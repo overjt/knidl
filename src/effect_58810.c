@@ -35,7 +35,7 @@ void PlayerEffectIceBreathCloud(void)
     t->frameTable = gUnk_08751E5C;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 8;
     t->unk28 = 0;
-    switch (t->unk18 & 15)
+    switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
         t->layer = 5;
@@ -259,7 +259,7 @@ void PlayerEffectFreezeAura(void)
     t->frameTable = gUnk_08751E7C;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 12;
     t->unk28 = 0;
-    switch (t->unk18 & 15)
+    switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
         while (1)

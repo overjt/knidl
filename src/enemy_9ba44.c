@@ -20,7 +20,7 @@ extern void TaskSetEntry(void *fn, s32 i);
 extern void ActorSetState(u16 v);
 extern s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y, u32 prio);
 extern u32 ActorCheckHits(void);
-extern u8 sub_0806951c(void);
+extern u8 ActorCollideTerrainAlongVelocity(void);
 extern u32 ActorReactToHit(void);
 
 void MrTickTockNoteInit(void)
@@ -28,14 +28,14 @@ void MrTickTockNoteInit(void)
     struct Task *t = gCurTask;
 
     t->updateCallback = (u32)MrTickTockNoteUpdate;
-    t->unk2C = -gTasks[t->parent].facing;
+    t->mrTickTockNoteDir = -gTasks[t->parent].facing;
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 2, gMrTickTockNoteStates);
 }
 
 void MrTickTockNoteUpdate(void)
 {
-    if (sub_0806951c() == 0)
+    if (ActorCollideTerrainAlongVelocity() == 0)
     {
         CallTableEntry(gCurTask->updateState, 2, gMrTickTockNoteStateUpdates);
     }
@@ -62,7 +62,7 @@ void MrTickTockNoteFlight(void)
     gCurTask->onGround = 0;
     t = gCurTask;
     t->unk28 = 0;
-    t->velX = gUnk_08745B0C[t->unk74] * t->unk2C;
+    t->velX = gUnk_08745B0C[t->actorSpawnArg] * t->mrTickTockNoteDir;
     t->velY = 0xFFFD0000;
     t->accelY = 0xC0 << 6;
     t->speedLimitY = 0xC0 << 10;
@@ -76,7 +76,7 @@ void MrTickTockNoteFlightUpdate(void)
 {
 }
 
-void MrTickTockNoteState1(void)
+void MrTickTockNoteVanish(void)
 {
     struct Task *t;
 
@@ -100,7 +100,7 @@ void MrTickTockNoteState1(void)
     TaskSleepForever();
 }
 
-void MrTickTockNoteState1Update(void)
+void MrTickTockNoteVanishUpdate(void)
 {
 }
 
@@ -142,64 +142,64 @@ void sub_0809bc1c(void)
     if (gUnk_02007D00[0] == 0)
     {
         t = gCurTask;
-        q = (u8 *)(t->unk28 + (t->unk18 << 3));
+        q = (u8 *)(t->metaKnightsQueue0 + (t->metaKnightsQueue0Index << 3));
         r = CreateActor(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
                          gUnk_08745CEC[q[0]]);
         t2 = gCurTask;
-        p2 = &t2->unk46;
+        p2 = &t2->metaKnightsNewKnightSlot;
         *p2 = r;
-        ((struct Task *)(*p2 * 144 + (s32)gTasks))->unk6E = 0;
-        t2->unk18++;
+        ((struct Task *)(*p2 * 144 + (s32)gTasks))->metaKnightsKnightQueue = 0;
+        t2->metaKnightsQueue0Index++;
     }
     if (gUnk_02007D00[1] == 0)
     {
         u = gCurTask;
-        q = (u8 *)(u->unk2C + (u->unk1C << 3));
+        q = (u8 *)(u->metaKnightsQueue1 + (u->metaKnightsQueue1Index << 3));
         r = CreateActor(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
                          gUnk_08745CEC[q[0]]);
         u2 = gCurTask;
-        p2 = &u2->unk46;
+        p2 = &u2->metaKnightsNewKnightSlot;
         *p2 = r;
-        ((struct Task *)(*p2 * 144 + (s32)gTasks))->unk6E = 1;
-        u2->unk1C++;
+        ((struct Task *)(*p2 * 144 + (s32)gTasks))->metaKnightsKnightQueue = 1;
+        u2->metaKnightsQueue1Index++;
     }
     if (gUnk_02007D00[2] == 0)
     {
         v = gCurTask;
-        q = (u8 *)(v->unk30 + (v->unk20 << 3));
+        q = (u8 *)(v->metaKnightsQueue2 + (v->metaKnightsQueue2Index << 3));
         r = CreateActor(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
                          gUnk_08745CEC[q[0]]);
         v2 = gCurTask;
-        p2 = &v2->unk46;
+        p2 = &v2->metaKnightsNewKnightSlot;
         *p2 = r;
-        ((struct Task *)(*p2 * 144 + (s32)gTasks))->unk6E = 2;
-        v2->unk20++;
+        ((struct Task *)(*p2 * 144 + (s32)gTasks))->metaKnightsKnightQueue = 2;
+        v2->metaKnightsQueue2Index++;
     }
     if (gUnk_02007D00[3] == 0)
     {
         w = gCurTask;
-        q = (u8 *)(w->unk34 + (w->unk24 << 3));
+        q = (u8 *)(w->metaKnightsQueue3 + (w->metaKnightsQueue3Index << 3));
         r = CreateActor(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
                          gUnk_08745CEC[q[0]]);
         w2 = gCurTask;
-        p2 = &w2->unk46;
+        p2 = &w2->metaKnightsNewKnightSlot;
         *p2 = r;
-        ((struct Task *)(*p2 * 144 + (s32)gTasks))->unk6E = 3;
-        w2->unk24++;
+        ((struct Task *)(*p2 * 144 + (s32)gTasks))->metaKnightsKnightQueue = 3;
+        w2->metaKnightsQueue3Index++;
     }
-    if ((s16)gCurTask->unk6C > 63)
+    if ((s16)gCurTask->metaKnightsPaletteTimer > 63)
     {
         BlendColors(gUnk_0827AC78, gUnk_0827AC7C,
-                     (u16)(abs(72 - (s16)gCurTask->unk6C) * 255 / 8), 1, gUnk_0300158E);
+                     (u16)(abs(72 - (s16)gCurTask->metaKnightsPaletteTimer) * 255 / 8), 1, gObjPaletteBank8Color15);
         BlendColors(gUnk_0827B90C, gUnk_0827B914,
-                     (u16)(abs(72 - (s16)gCurTask->unk6C) * 255 / 8), 3, gUnk_030015A0);
+                     (u16)(abs(72 - (s16)gCurTask->metaKnightsPaletteTimer) * 255 / 8), 3, gObjPaletteBank9Color8);
         BlendColors(gUnk_0827CA5C, gUnk_0827CA60,
-                     (u16)(abs(72 - (s16)gCurTask->unk6C) * 255 / 8), 1, gUnk_030015CE);
+                     (u16)(abs(72 - (s16)gCurTask->metaKnightsPaletteTimer) * 255 / 8), 1, gObjPaletteBank10Color15);
         BlendColors(gUnk_0827D81C, gUnk_0827D820,
-                     (u16)(abs(72 - (s16)gCurTask->unk6C) * 255 / 8), 1, gUnk_030015EC);
+                     (u16)(abs(72 - (s16)gCurTask->metaKnightsPaletteTimer) * 255 / 8), 1, gObjPaletteBank11Color14);
     }
     x = gCurTask;
-    p = &x->unk6C;
+    p = &x->metaKnightsPaletteTimer;
     *p = *p + 1;
     if ((s16)*p > 80)
         *p = 0;
@@ -234,7 +234,7 @@ void MetaKnightsLoadGfx(void)
 
     RequestCopy(4, (u32)gUnk_02020000, OBJ_VRAM0, 240 << 6);
     g = (struct GfxHeader *)gAxeKnightGfx;
-    RequestCopy(2, (u32)g->palette, (u32)(p = (u16 *)gUnk_03001570), g->paletteBankCount << 5);
+    RequestCopy(2, (u32)g->palette, (u32)(p = (u16 *)gObjPaletteBank8), g->paletteBankCount << 5);
     g = (struct GfxHeader *)gJavelinKnightGfx;
     RequestCopy(2, (u32)g->palette, (u32)(p + 16), g->paletteBankCount << 5);
     g = (struct GfxHeader *)gMaceKnightGfx;

@@ -33,7 +33,7 @@ void PlayerEffectBurningFlames(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_08751CF0;
-    s = t->unk18 & 15;
+    s = t->playerEffectSpawnWord & 15;
     row = gUnk_0873BAB0[s];
     switch (s)
     {
@@ -44,7 +44,7 @@ void PlayerEffectBurningFlames(void)
             u->moveCallback = (u32)TaskMove;
             u->frameTable = gUnk_0874C600;
             u->updateCallback = (u32)PlayerEffectBurningFlamesUpdate;
-            u->unk6C = 0;
+            u->playerEffectLoopCount = 0;
         }
         do
         {
@@ -93,8 +93,8 @@ void PlayerEffectBurningFlames(void)
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             TaskStop();
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 1);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 1);
         break;
     case 1:
         {
@@ -161,7 +161,7 @@ void PlayerEffectBurningFlames(void)
             u->moveCallback = (u32)TaskMove;
             u->tileWord = (u->u8C.parentTask)->tileWord | 0x1808;
             u->updateCallback = (u32)PlayerEffectBurningFlamesUpdate;
-            u->unk6C = 0;
+            u->playerEffectLoopCount = 0;
         }
         do
         {
@@ -176,8 +176,8 @@ void PlayerEffectBurningFlames(void)
             TaskYieldTrampoline(2);
             gCurTask->frame += 2;
             TaskYieldTrampoline(4);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 2);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 2);
         break;
     case 4:
         {
@@ -186,7 +186,7 @@ void PlayerEffectBurningFlames(void)
             u->moveCallback = (u32)TaskMove;
             u->tileWord = (u->u8C.parentTask)->tileWord | 0x1808;
             u->updateCallback = (u32)PlayerEffectBurningFlamesUpdate;
-            u->unk6C = 0;
+            u->playerEffectLoopCount = 0;
         }
         do
         {
@@ -201,8 +201,8 @@ void PlayerEffectBurningFlames(void)
             TaskYieldTrampoline(1);
             gCurTask->frame += 2;
             TaskYieldTrampoline(4);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 2);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 2);
         break;
     case 5:
     case 6:
@@ -267,7 +267,7 @@ void sub_08057a48(void)
     t = gCurTask;
     t->frameTable = gUnk_08751BF4;
     t->tileWord = gTasks[t->parent].tileWord;
-    t->frame = gUnk_0873BAE6[t->unk18 & 15];
+    t->frame = gUnk_0873BAE6[t->playerEffectSpawnWord & 15];
     TaskYieldTrampoline(1);
     gCurTask->frame += 2;
     TaskYieldTrampoline(1);
@@ -281,7 +281,7 @@ void sub_08057ad4(void)
     struct Task *t = gCurTask;
 
     t->moveCallback = (u32)TaskMove;
-    switch (t->unk18 & 15)
+    switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
         t->drawCallback = (u32)sub_0805af80;

@@ -130,16 +130,16 @@ struct M37Game
 /* the results screen's state (AirGrindResults, AirGrindResultsDraw, AirGrindResultsStep) */
 struct M37Results
 {
-    /*0x00*/ s8 unk00;          /* state */
+    /*0x00*/ s8 state;          /* state */
     /*0x01*/ s8 unk01;
     /*0x02*/ s8 unk02;
     /*0x03*/ s8 unk03;
-    /*0x04*/ u8 unk04[4];       /* the players, sorted by score */
-    /*0x08*/ u8 unk08[4];       /* each player's index into unk04 */
-    /*0x0C*/ u8 unk0C[4];       /* the places, ties shared */
-    /*0x10*/ s32 unk10;         /* the winner's pulsing scale */
-    /*0x14*/ s32 unk14;
-    /*0x18*/ s32 unk18;         /* frame timer */
+    /*0x04*/ u8 rankedPlayers[4];       /* the players, sorted by score */
+    /*0x08*/ u8 playerRank[4];       /* each player's index into unk04 */
+    /*0x0C*/ u8 rankPlace[4];       /* the places, ties shared */
+    /*0x10*/ s32 winnerScale;         /* the winner's pulsing scale */
+    /*0x14*/ s32 winnerScaleStep;
+    /*0x18*/ s32 timer;         /* frame timer */
     /*0x1C*/ s32 unk1C[4];
 };
 
@@ -157,16 +157,16 @@ struct M37Script
 /* four 40-byte records at gAirGrindPaletteFades (AirGrindStartPaletteFade fills one) */
 struct M37Timer
 {
-    /*0x00*/ s32 unk00;         /* in use */
-    /*0x04*/ s32 unk04;
-    /*0x08*/ s32 unk08;
-    /*0x0C*/ s32 unk0C;
-    /*0x10*/ s32 unk10;
-    /*0x14*/ s32 unk14;
-    /*0x18*/ s32 unk18;
-    /*0x1C*/ s32 unk1C;
-    /*0x20*/ s32 unk20;
-    /*0x24*/ s32 unk24;
+    /*0x00*/ s32 active;         /* in use */
+    /*0x04*/ s32 timer;
+    /*0x08*/ s32 period;
+    /*0x0C*/ s32 step;
+    /*0x10*/ s32 lastStep;
+    /*0x14*/ s32 ratioStep;
+    /*0x18*/ s32 colorCount;
+    /*0x1C*/ s32 src;
+    /*0x20*/ s32 dst;
+    /*0x24*/ s32 repeatCount;
 };
 
 /* EWRAM */
@@ -201,7 +201,7 @@ extern s16 gAirGrindStripHeights[4][256];
 extern s32 gAirGrindCoursePhase;
 
 /* IWRAM */
-extern u16 gUnk_03001510[];
+extern u16 gObjPaletteBank5[];
 extern struct M37Script gAirGrindScript;
 
 /* ROM */

@@ -4,8 +4,8 @@
  *   ./tools/fnmatch.sh 0x080653EC 0x080673EC src/actor_653ec.c --newpb
  *
  * Actor drawing and per-frame upkeep: OAM priority/palette packing
- * (sub_08066088), graphics upload out of the Task.frameTable descriptor table
- * (ActorFlashPalette/sub_08066A94), the per-task update sweep (sub_080668C8), and
+ * (ActorInitBossGfx), graphics upload out of the Task.frameTable descriptor table
+ * (ActorFlashPalette/ActorSetDefaultPalette), the per-task update sweep (BossDefeatSweep), and
  * the class-2/class-4 task bodies that drive them.
  */
 #include "gba/gba.h"
@@ -22,13 +22,13 @@
 #include "enemy.h"
 
 extern void PlaySfx(u32 a);
-extern void sub_08068f68(void);
+extern void ActorCheckHitsWithExtraBox(void);
 extern void ActorReactToHit(void);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 extern void HudStartTaskHpBar(s16 a, s16 b);
 extern void HudStartHpBar(s16 a, s16 b);
-void sub_08066c08(u32 def, u8 b);
+void ActorDropParasol(u32 def, u8 b);
 extern void ActorSetAttackBox(u32 v);
 extern void TaskSetEntry(void *fn, u32 i);
 extern void ActorLoadDef(u32 def);
@@ -45,9 +45,9 @@ extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void BlendColors(u32 a, u32 b, u32 c, u32 d, u32 e);
 
 s16 ActorComputeHealthSlot(u32 i);
-void sub_08066c08(u32 def, u8 b);
+void ActorDropParasol(u32 def, u8 b);
 
-void sub_080653ec(void)
+void ActorDrawStreamedFrameNearViewOrDestroy(void)
 {
     struct Task *p;
 
@@ -56,20 +56,20 @@ void sub_080653ec(void)
         return;
     if (p->frame == -1)
         return;
-    if (sub_08066a6c() != 0)
+    if (ActorIsInNearView() != 0)
     {
         if (TaskIsOnScreen() == 0)
             return;
-        sub_08065470();
+        ActorDrawStreamedFrame();
     }
-    else if (sub_08066a80() != 0)
+    else if (ActorIsInFarView() != 0)
     {
         HudRemoveHpBar();
         ActorDestroy();
     }
 }
 
-void sub_08065438(void)
+void ActorDrawStreamedFrameNearView(void)
 {
     struct Task *p;
 
@@ -78,15 +78,15 @@ void sub_08065438(void)
         return;
     if (p->frame == -1)
         return;
-    if (sub_08066a6c() == 0)
+    if (ActorIsInNearView() == 0)
         return;
     if (TaskIsOnScreen() == 0)
         return;
-    sub_08065470();
+    ActorDrawStreamedFrame();
 }
 
 /* Push the running task's tile stream into OBJ VRAM, then draw it. */
-void sub_08065470(void)
+void ActorDrawStreamedFrame(void)
 {
     struct Task *t;
     struct TaskGfx *g;
@@ -122,7 +122,7 @@ void sub_08065470(void)
 }
 
 /* Draw the running task's main sprite plus its optional second part. */
-void sub_0806555c(void)
+void ActorDrawSpriteAndExtra(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -143,7 +143,7 @@ void sub_0806555c(void)
     }
 }
 
-void sub_08065640(void)
+void ActorDrawWorldInViewOrDestroyWithExtra(void)
 {
     struct Task *p;
 
@@ -156,7 +156,7 @@ void sub_08065640(void)
     {
         if (TaskIsOnScreen() == 0)
             return;
-        sub_0806555c();
+        ActorDrawSpriteAndExtra();
     }
     else
     {
@@ -164,7 +164,7 @@ void sub_08065640(void)
     }
 }
 
-void sub_0806567c(void)
+void ActorDrawSpriteAndExtraInView(void)
 {
     struct Task *p;
 
@@ -177,7 +177,7 @@ void sub_0806567c(void)
         return;
     if (TaskIsOnScreen() == 0)
         return;
-    sub_0806555c();
+    ActorDrawSpriteAndExtra();
 }
 
 /* Integrate the running task's velocity, clamped to its per-axis maximum. */
@@ -257,7 +257,7 @@ void ResetBgPaletteBlend(void)
     if (j != -1)
     {
         t = &gTasks[j];
-        t->unk1C = 2;
+        t->paletteAnimBlendMode = 2;
     }
 }
 
@@ -270,8 +270,8 @@ void EndBgPaletteBlend(u32 v)
     if (j != -1)
     {
         t = &gTasks[j];
-        t->unk18 = v;
-        t->unk1C = 1;
+        t->paletteAnimBlendStep = v;
+        t->paletteAnimBlendMode = 1;
     }
 }
 
@@ -285,10 +285,10 @@ void StartBgPaletteBlend(u32 a, u32 b)
     if (j != -1)
     {
         t = &gTasks[j];
-        t->unk18 = a;
-        t->unk1C = 0;
-        t->unk24 = b;
-        CpuSet(gUnk_030012B0, gUnk_02005E10, 224);
+        t->paletteAnimBlendStep = a;
+        t->paletteAnimBlendMode = 0;
+        t->paletteAnimBlendTarget = b;
+        CpuSet(gBgPaletteBank2, gUnk_02005E10, 224);
     }
 }
 
@@ -306,9 +306,9 @@ void AcquirePaletteAnim(u32 p0, s32 idx)
         if (i != -1)
         {
             t = &gTasks[i];
-            t->unk18 = gCurTask->tileWord >> 12;
+            t->paletteAnimPaletteBank = gCurTask->tileWord >> 12;
             t->variant = p0;
-            t->unk74 = idx;
+            t->paletteAnimRefIndex = idx;
             gPaletteAnimTasks[idx] = i;
         }
     }
@@ -331,38 +331,38 @@ void PaletteAnimVariant0(void)
     struct Task *x;
     struct Task *y;
 
-    gCurTask->unk28 = 12;
-    gCurTask->unk2C = 2;
-    gCurTask->unk30 = 3;
-    gCurTask->unk34 = 0;
-    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0)
+    gCurTask->paletteAnimPairTimer = 12;
+    gCurTask->paletteAnimFromIndex = 2;
+    gCurTask->paletteAnimToIndex = 3;
+    gCurTask->paletteAnimPairRatio = 0;
+    while (gPaletteAnimRefCounts[gCurTask->paletteAnimRefIndex] != 0)
     {
         u = gCurTask;
-        u->unk28--;
-        if (u->unk28 == 0)
+        u->paletteAnimPairTimer--;
+        if (u->paletteAnimPairTimer == 0)
         {
-            u->unk28 = 12;
-            u->unk2C++;
-            if (u->unk2C > 3)
-                u->unk2C = 0;
+            u->paletteAnimPairTimer = 12;
+            u->paletteAnimFromIndex++;
+            if (u->paletteAnimFromIndex > 3)
+                u->paletteAnimFromIndex = 0;
             v = gCurTask;
-            v->unk30++;
-            if (v->unk30 > 3)
-                v->unk30 = 0;
-            gCurTask->unk34 = 0;
+            v->paletteAnimToIndex++;
+            if (v->paletteAnimToIndex > 3)
+                v->paletteAnimToIndex = 0;
+            gCurTask->paletteAnimPairRatio = 0;
         }
         w = gCurTask;
-        if (w->unk30 == 0)
-            w->unk34 = w->unk34 + 128;
+        if (w->paletteAnimToIndex == 0)
+            w->paletteAnimPairRatio = w->paletteAnimPairRatio + 128;
         else
-            w->unk34 = w->unk34 + 64;
+            w->paletteAnimPairRatio = w->paletteAnimPairRatio + 64;
         x = gCurTask;
-        if (x->unk34 > 256)
-            x->unk34 = 256;
+        if (x->paletteAnimPairRatio > 256)
+            x->paletteAnimPairRatio = 256;
         y = gCurTask;
-        BlendColors((u32)(gUnk_0825088C + (y->unk2C << 5)),
-                     (u32)(gUnk_0825088C + (y->unk30 << 5)), (u16)y->unk34,
-                     16, (u32)(gObjPalette + (y->unk18 << 5)));
+        BlendColors((u32)(gUnk_0825088C + (y->paletteAnimFromIndex << 5)),
+                     (u32)(gUnk_0825088C + (y->paletteAnimToIndex << 5)), (u16)y->paletteAnimPairRatio,
+                     16, (u32)(gObjPalette + (y->paletteAnimPaletteBank << 5)));
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();
@@ -370,7 +370,7 @@ void PaletteAnimVariant0(void)
 
 /* Task body: cycle the actor's 32-byte palette out of gUnk_0873DF38. */
 /* Task body: cycle the actor's 32-byte palette out of gUnk_0873DF38. */
-void PaletteAnimVariant1(void)
+void PaletteAnimCycle(void)
 {
     struct Task *w;
     struct Task *t;
@@ -381,31 +381,31 @@ void PaletteAnimVariant1(void)
 
     t = gCurTask;
     a = t->u8C.actor;
-    t->unk18 = 10;
-    t->unk1C = 0;
-    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0 && a->paletteVariant <= 3)
+    t->paletteAnimTimer = 10;
+    t->paletteAnimCycleStep = 0;
+    while (gPaletteAnimRefCounts[gCurTask->paletteAnimRefIndex] != 0 && a->paletteVariant <= 3)
     {
         u = gCurTask;
-        if (u->unk18 <= 0)
+        if (u->paletteAnimTimer <= 0)
         {
-            v = gUnk_0873DF38[a->paletteVariant][u->unk1C];
+            v = gUnk_0873DF38[a->paletteVariant][u->paletteAnimCycleStep];
             if (v == 0)
                 v = a->palette;
             RequestCopy(2, v,
                          (u32)(gObjPalette + ((u->tileWord >> 12) << 5)), 32);
             w = gCurTask;
-            w->unk18 = 10;
-            w->unk1C = (w->unk1C + 1) & 3;
+            w->paletteAnimTimer = 10;
+            w->paletteAnimCycleStep = (w->paletteAnimCycleStep + 1) & 3;
         }
         x = gCurTask;
-        x->unk18--;
+        x->paletteAnimTimer--;
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();
 }
 
 /* Task body: flash one palette entry on and off. */
-void PaletteAnimVariant2(void)
+void PaletteAnimFlashColor(void)
 {
     struct Task *w;
     struct Task *t;
@@ -414,27 +414,27 @@ void PaletteAnimVariant2(void)
     u32 off;
 
     t = gCurTask;
-    t->unk18 = 2;
-    t->unk1C = 0;
+    t->paletteAnimTimer = 2;
+    t->paletteAnimFlashOn = 0;
     off = (t->tileWord >> 12) << 5;
     off += 26;
-    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0)
+    while (gPaletteAnimRefCounts[gCurTask->paletteAnimRefIndex] != 0)
     {
         u = gCurTask;
-        if (u->unk18 <= 0)
+        if (u->paletteAnimTimer <= 0)
         {
-            if (u->unk1C != 0)
+            if (u->paletteAnimFlashOn != 0)
                 RequestCopy(2, (u32)gUnk_0873DF78,
                              (u32)(gObjPalette + off), 2);
             else
                 RequestCopy(2, (u32)gUnk_082530C8,
                              (u32)(gObjPalette + off), 2);
             w = gCurTask;
-            w->unk18 = 2;
-            w->unk1C ^= 1;
+            w->paletteAnimTimer = 2;
+            w->paletteAnimFlashOn ^= 1;
         }
         x = gCurTask;
-        x->unk18--;
+        x->paletteAnimTimer--;
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();
@@ -453,41 +453,41 @@ void PaletteAnimVariant3(void)
 
     t = gCurTask;
     a = t->u8C.actor;
-    t->unk28 = 10;
-    t->unk2C = 1;
-    t->unk30 = 2;
-    t->unk34 = 0;
-    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0)
+    t->paletteAnimPairTimer = 10;
+    t->paletteAnimFromIndex = 1;
+    t->paletteAnimToIndex = 2;
+    t->paletteAnimPairRatio = 0;
+    while (gPaletteAnimRefCounts[gCurTask->paletteAnimRefIndex] != 0)
     {
         u = gCurTask;
-        u->unk28--;
-        if (u->unk28 == 0)
+        u->paletteAnimPairTimer--;
+        if (u->paletteAnimPairTimer == 0)
         {
-            u->unk28 = 10;
-            u->unk2C++;
-            if (u->unk2C > 2)
+            u->paletteAnimPairTimer = 10;
+            u->paletteAnimFromIndex++;
+            if (u->paletteAnimFromIndex > 2)
             {
-                u->unk2C = 0;
-                u->unk28 = 2;
+                u->paletteAnimFromIndex = 0;
+                u->paletteAnimPairTimer = 2;
             }
             v = gCurTask;
-            v->unk30++;
-            if (v->unk30 > 2)
-                v->unk30 = 0;
-            gCurTask->unk34 = 0;
+            v->paletteAnimToIndex++;
+            if (v->paletteAnimToIndex > 2)
+                v->paletteAnimToIndex = 0;
+            gCurTask->paletteAnimPairRatio = 0;
         }
         w = gCurTask;
-        if (w->unk30 == 0)
-            w->unk34 = w->unk34 + 16;
+        if (w->paletteAnimToIndex == 0)
+            w->paletteAnimPairRatio = w->paletteAnimPairRatio + 16;
         else
-            w->unk34 = w->unk34 + 128;
+            w->paletteAnimPairRatio = w->paletteAnimPairRatio + 128;
         x = gCurTask;
-        if (x->unk34 > 256)
-            x->unk34 = 256;
+        if (x->paletteAnimPairRatio > 256)
+            x->paletteAnimPairRatio = 256;
         y = gCurTask;
-        BlendColors(gUnk_0873DF7C[a->paletteVariant][y->unk2C],
-                     gUnk_0873DF7C[a->paletteVariant][y->unk30], (u16)y->unk34, 16,
-                     (u32)(gObjPalette + (y->unk18 << 5)));
+        BlendColors(gUnk_0873DF7C[a->paletteVariant][y->paletteAnimFromIndex],
+                     gUnk_0873DF7C[a->paletteVariant][y->paletteAnimToIndex], (u16)y->paletteAnimPairRatio, 16,
+                     (u32)(gObjPalette + (y->paletteAnimPaletteBank << 5)));
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();
@@ -499,38 +499,38 @@ void PaletteAnimBgBlend(void)
     struct Task *t;
     struct Task *u;
 
-    gCurTask->unk20 = 0;
-    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0)
+    gCurTask->paletteAnimBlendRatio = 0;
+    while (gPaletteAnimRefCounts[gCurTask->paletteAnimRefIndex] != 0)
     {
         t = gCurTask;
-        switch (t->unk1C)
+        switch (t->paletteAnimBlendMode)
         {
         case 0:
-            t->unk20 += t->unk18;
-            if (t->unk20 > t->unk24)
+            t->paletteAnimBlendRatio += t->paletteAnimBlendStep;
+            if (t->paletteAnimBlendRatio > t->paletteAnimBlendTarget)
             {
-                t->unk20 = t->unk24;
-                t->unk1C = 3;
+                t->paletteAnimBlendRatio = t->paletteAnimBlendTarget;
+                t->paletteAnimBlendMode = 3;
             }
             u = gCurTask;
             BlendColors((u32)gUnk_02005E10, (u32)gUnk_0873DFAC,
-                         (u16)u->unk20, 224, (u32)gUnk_030012B0);
+                         (u16)u->paletteAnimBlendRatio, 224, (u32)gBgPaletteBank2);
             break;
         case 1:
-            t->unk20 -= t->unk18;
-            if (t->unk20 < 0)
+            t->paletteAnimBlendRatio -= t->paletteAnimBlendStep;
+            if (t->paletteAnimBlendRatio < 0)
             {
-                t->unk20 = 0;
-                t->unk1C = 3;
+                t->paletteAnimBlendRatio = 0;
+                t->paletteAnimBlendMode = 3;
             }
             u = gCurTask;
             BlendColors((u32)gUnk_02005E10, (u32)gUnk_0873DFAC,
-                         (u16)u->unk20, 224, (u32)gUnk_030012B0);
+                         (u16)u->paletteAnimBlendRatio, 224, (u32)gBgPaletteBank2);
             break;
         case 2:
             BlendColors((u32)gUnk_02005E10, (u32)gUnk_0873DFAC, 0, 224,
-                         (u32)gUnk_030012B0);
-            gCurTask->unk1C = 3;
+                         (u32)gBgPaletteBank2);
+            gCurTask->paletteAnimBlendMode = 3;
             break;
         }
         TaskYieldTrampoline(1);
@@ -539,7 +539,7 @@ void PaletteAnimBgBlend(void)
 }
 
 /* Point the actor at the palette its class/sub/level combination wants. */
-void sub_08065ce0(u32 i)
+void ActorSelectPaletteVariant(u32 i)
 {
     struct Task *t;
     struct Actor *a;
@@ -553,10 +553,10 @@ void sub_08065ce0(u32 i)
     switch (t->actorKind)
     {
     case 0:
-        tbl = gUnk_0873EF74[t->u76.subtype];
+        tbl = gEnemyPaletteVariants[t->u76.subtype];
         break;
     case 1:
-        tbl = gUnk_0873F118[t->u76.subtype];
+        tbl = gMidBossPaletteVariants[t->u76.subtype];
         break;
     default:
         tbl = NULL;
@@ -583,7 +583,7 @@ void sub_08065ce0(u32 i)
    the ROM's register use. */
 /* Copy one palette bank out of the class/sub/level palette tables.
    `sub` is reused as the table pointer, matching the ROM's register use. */
-void sub_08065d44(u32 slot, u32 sub, u32 level, u32 n, u8 kind, u32 src)
+void LoadActorPaletteVariant(u32 slot, u32 sub, u32 level, u32 n, u8 kind, u32 src)
 {
     u32 off;
     u32 k;
@@ -593,10 +593,10 @@ void sub_08065d44(u32 slot, u32 sub, u32 level, u32 n, u8 kind, u32 src)
     switch (kind)
     {
     case 0:
-        sub = (u32)gUnk_0873EF74[sub];
+        sub = (u32)gEnemyPaletteVariants[sub];
         break;
     case 1:
-        sub = (u32)gUnk_0873F118[sub];
+        sub = (u32)gMidBossPaletteVariants[sub];
         break;
     default:
         sub = 0;
@@ -627,9 +627,9 @@ void sub_08065d44(u32 slot, u32 sub, u32 level, u32 n, u8 kind, u32 src)
     RequestCopy(2, p, (u32)(gObjPalette + slot), n << 1);
 }
 
-void sub_08065dbc(u32 slot, u32 sub, u32 level)
+void LoadEnemyPaletteVariant(u32 slot, u32 sub, u32 level)
 {
-    sub_08065d44(slot, sub, level, 0, 0, 0);
+    LoadActorPaletteVariant(slot, sub, level, 0, 0, 0);
 }
 
 void sub_08065dd0(u32 slot, u32 i)
@@ -676,7 +676,7 @@ void ActorPlaySfx(u32 def, u32 which)
 }
 
 /* Set bit 0 of every live enemy actor's two flag bytes. */
-void sub_08065e6c(void)
+void LockAllActorPalettes(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -697,7 +697,7 @@ void sub_08065e6c(void)
     }
 }
 
-void sub_08065ed0(void)
+void ClearActorPaletteOverrides(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -807,7 +807,7 @@ u32 *sub_0806601c(void)
         r = gUnk_0873F0C4[t->u76.subtype];
         if (a->paletteVariant != 0)
         {
-            tbl = gUnk_0873F118[t->u76.subtype];
+            tbl = gMidBossPaletteVariants[t->u76.subtype];
             if (tbl != NULL)
             {
                 k = a->paletteVariant - 1;
@@ -825,7 +825,7 @@ u32 *sub_0806601c(void)
     return r;
 }
 
-u16 sub_08066088(u32 mode)
+u16 ActorInitBossGfx(u32 mode)
 {
     struct Task *t;
     struct Actor *a;
@@ -879,27 +879,27 @@ void sub_08066144(void)
         gUnk_02006190[i] = 0;
     for (i = 0; i < 10; i++)
         gUnk_02006040[i] = 0;
-    gUnk_0200AEF4 = gUnk_02004C90 = 0;
+    gBossHitStunCallback = gBossHitStunFlashPalette = 0;
 }
 
-void sub_0806619c(u32 p0, u32 p1, u32 p2, u16 p3, u8 p4)
+void BossStartHitStun(u32 p0, u32 p1, u32 p2, u16 p3, u8 p4)
 {
     struct Task *t;
 
     TaskSetSkipMask(7, gCurTaskIdx);
     t = gCurTask;
-    t->lateUpdateCallback = (u32)sub_080662d8;
+    t->lateUpdateCallback = (u32)BossHitStunLateUpdate;
     gUnk_02006190[0] = t->pixelX;
     gUnk_02006190[1] = t->pixelY;
     gUnk_02006190[2] = t->frame;
-    gUnk_02004C90 = p2;
+    gBossHitStunFlashPalette = p2;
     gUnk_02006190[4] = p3;
     gUnk_02006190[3] = p0;
-    gUnk_0200AEF4 = p1;
+    gBossHitStunCallback = p1;
     gUnk_02006190[5] = p4;
 }
 
-void sub_0806621c(void)
+void BossEndHitStun(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -911,7 +911,7 @@ void sub_0806621c(void)
     t->pixelX = gUnk_02006190[0];
     t->pixelY = gUnk_02006190[1];
     t->frame = gUnk_02006190[2];
-    if (gUnk_02004C90 != 0)
+    if (gBossHitStunFlashPalette != 0)
     {
         if (gUnk_02006190[5] != 0)
             ActorClearPaletteOverride();
@@ -921,7 +921,7 @@ void sub_0806621c(void)
 }
 
 /* Walk one step of the queued knock-back path. */
-void sub_0806627c(void)
+void BossHitStunShake(void)
 {
     struct Task *t;
     s32 i;
@@ -937,34 +937,34 @@ void sub_0806627c(void)
     gUnk_02006190[3]--;
 }
 
-void sub_080662d8(void)
+void BossHitStunLateUpdate(void)
 {
     struct Actor *a;
     u32 v;
 
     a = gCurTask->u8C.actor;
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
-    if (gUnk_02004C90 != 0)
+    if (gBossHitStunFlashPalette != 0)
     {
         v = gUnk_02006190[5];
         switch (v)
         {
         case 1:
-            ActorFlashPalette((void *)gUnk_02004C90, gUnk_02006190[4]);
+            ActorFlashPalette((void *)gBossHitStunFlashPalette, gUnk_02006190[4]);
             break;
         case 0:
-            sub_08066480(a->gfx.header, gUnk_02004C90, gUnk_02006190[4]);
+            ActorFlashHeaderPalette(a->gfx.header, gBossHitStunFlashPalette, gUnk_02006190[4]);
             break;
         }
     }
-    sub_0806627c();
-    if (gUnk_0200AEF4 != 0)
-        ((void (*)(void))gUnk_0200AEF4)();
+    BossHitStunShake();
+    if (gBossHitStunCallback != 0)
+        ((void (*)(void))gBossHitStunCallback)();
 }
 
 /* True when every active player is in state 1. */
-u8 sub_08066338(void)
+u8 AreAllPlayersOnGround(void)
 {
     s32 n;
     s32 m;
@@ -988,7 +988,7 @@ u8 sub_08066338(void)
     return 0;
 }
 
-s32 sub_08066394(void)
+s32 GetLivingActivePlayerHealth(void)
 {
     s32 i;
     s32 v;
@@ -1038,7 +1038,7 @@ void ActorClearPaletteOverride(void)
     gCurTask->u8C.actor->paletteOverridden &= 254;
 }
 
-void sub_08066480(struct GfxHeader *h, u32 src, u32 size)
+void ActorFlashHeaderPalette(struct GfxHeader *h, u32 src, u32 size)
 {
     struct Actor *a;
 
@@ -1057,18 +1057,18 @@ void ActorLoadHeaderPalette(struct GfxHeader *h)
 }
 
 /* Task body: hand the actor over to the "carried" routine at 0x08066754. */
-void sub_080664e0(struct AnimCmd *p)
+void ActorIntroPoseUntilHpBarFull(struct AnimCmd *p)
 {
     struct Task *t;
 
     sub_08066544();
     TaskSetSkipMask(8, gCurTaskIdx);
     t = gCurTask;
-    t->unk20 = t->updateCallback;
-    t->updateCallback = (u32)sub_08066754;
+    t->actorSavedUpdateCallback = t->updateCallback;
+    t->updateCallback = (u32)ActorIntroPoseUpdate;
     ActorStopAnim();
     if (p != NULL)
-        gCurTask->unk24 = ActorStartAnim(p);
+        gCurTask->actorAnimDelay24 = ActorStartAnim(p);
     if (gHudHpBarFilled == 0)
     {
         do
@@ -1077,7 +1077,7 @@ void sub_080664e0(struct AnimCmd *p)
         } while (gHudHpBarFilled == 0);
     }
     ActorResetAttackBox();
-    sub_080666a4();
+    ActorEndIntroPose();
 }
 
 void sub_08066544(void)
@@ -1128,12 +1128,12 @@ void ActorShowHpBar(void)
     }
 }
 
-u16 sub_080665fc(void)
+u16 ActorGetGfxTileWord(void)
 {
-    return sub_0806660c(0);
+    return ActorGetGfxTileWordPalOffset(0);
 }
 
-u16 sub_0806660c(u16 a)
+u16 ActorGetGfxTileWordPalOffset(u16 a)
 {
     struct Actor *p;
 
@@ -1141,7 +1141,7 @@ u16 sub_0806660c(u16 a)
     return ((a + p->gfx.paletteBank) << 12) | p->gfx.tileBits;
 }
 
-u16 sub_08066630(u16 a)
+u16 ActorGetTileWordPalOffset(u16 a)
 {
     struct Task *t;
     u16 v;
@@ -1158,78 +1158,78 @@ u16 sub_08066630(u16 a)
     return r | m;
 }
 
-void sub_08066658(struct AnimCmd *p)
+void ActorStartIntroPose(struct AnimCmd *p)
 {
     struct Task *t;
     struct Actor *a;
 
     t = gCurTask;
     a = t->u8C.actor;
-    t->unk20 = t->updateCallback;
-    t->updateCallback = (u32)sub_08066754;
+    t->actorSavedUpdateCallback = t->updateCallback;
+    t->updateCallback = (u32)ActorIntroPoseUpdate;
     ActorStopAnim();
     if (p != NULL)
-        gCurTask->unk24 = ActorStartAnim(p);
+        gCurTask->actorAnimDelay24 = ActorStartAnim(p);
     TaskSetSkipMask(8, gCurTaskIdx);
     ActorSetAttackBox(a->unk60->altAttackBox);
 }
 
-void sub_080666a4(void)
+void ActorEndIntroPose(void)
 {
     struct Task *t;
 
     TaskSetSkipMask(0, gCurTaskIdx);
     t = gCurTask;
-    t->updateCallback = t->unk20;
-    t->unk24 = 0;
-    t->unk20 = 0;
+    t->updateCallback = t->actorSavedUpdateCallback;
+    t->actorAnimDelay24 = 0;
+    t->actorSavedUpdateCallback = 0;
 }
 
-void sub_080666cc(struct AnimCmd *p)
+void ActorIntroPoseUntilMidBossFight(struct AnimCmd *p)
 {
-    sub_08066658(p);
-    if (gUnk_0200D080 == 0)
+    ActorStartIntroPose(p);
+    if (gMidBossFightState == 0)
     {
         do
         {
             TaskYieldTrampoline(1);
-        } while (gUnk_0200D080 == 0);
+        } while (gMidBossFightState == 0);
     }
-    sub_080666a4();
+    ActorEndIntroPose();
 }
 
-void sub_080666f8(struct AnimCmd *p)
+void ActorIntroPoseUntilScrollLocked(struct AnimCmd *p)
 {
-    sub_08066658(p);
-    while (sub_08066718() == 0)
+    ActorStartIntroPose(p);
+    while (BossCheckScrollLock() == 0)
         TaskYieldTrampoline(1);
-    sub_080666a4();
+    ActorEndIntroPose();
 }
 
-u32 sub_08066718(void)
+u32 BossCheckScrollLock(void)
 {
     switch (gCurTask->u76.subtype)
     {
     case 5:
-        return sub_08026a0c();
+        return WhispyWoodsCheckScrollLock();
     case 6:
-        return sub_08026a80();
+        return KrackoCheckScrollLock();
     case 0:
-        return sub_08026aec();
+        return KingDededeCheckScrollLock();
     }
     return 0;
 }
 
-void sub_08066754(void)
+void ActorIntroPoseUpdate(void)
 {
     struct Task *t;
 
     t = gCurTask;
     if (t->actorKind == 2 && t->u76.subtype == 5)
-        gCurTask->unk24 = ActorTickAnim(t->unk24);
+        gCurTask->actorAnimDelay24 = ActorTickAnim(t->actorAnimDelay24);
     else
-        gCurTask->unk24 = ActorTickAnimFacingNearestPlayer(gCurTask->unk24);
-    sub_08068f68();
+        gCurTask->actorAnimDelay24 = ActorTickAnimFacingNearestPlayer(gCurTask->actorAnimDelay24);
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
 
@@ -1247,14 +1247,14 @@ void sub_080667c0(u8 a, u16 b)
     p = gCurTask->u8C.actor;
     HudRemoveHpBar();
     t = gCurTask;
-    if (t->drawCallback == (u32)sub_08065438 || t->drawCallback == (u32)sub_080653ec)
-        t->drawCallback = (u32)sub_080653ec;
+    if (t->drawCallback == (u32)ActorDrawStreamedFrameNearView || t->drawCallback == (u32)ActorDrawStreamedFrameNearViewOrDestroy)
+        t->drawCallback = (u32)ActorDrawStreamedFrameNearViewOrDestroy;
     else
         t->drawCallback = (u32)sub_08065350;
     gCurTask->health += gUnk_0873E1B4[gActivePlayerCount - 1];
     p->hitState = 2;
     p->score = 0;
-    sub_08066a94(a);
+    ActorSetDefaultPalette(a);
     ActorFaceHitter();
     TaskSetFrame((s16)b);
     sub_0806ae94();
@@ -1262,7 +1262,7 @@ void sub_080667c0(u8 a, u16 b)
 
 void sub_0806684c(void)
 {
-    sub_080262dc();
+    EndMidBossFight();
     sub_08066798();
 }
 
@@ -1283,7 +1283,7 @@ void ActorLoadPalette(void *src, u32 size, u8 force)
 }
 
 /* Retire every other live task the running one is allowed to clean up. */
-void sub_080668c8(void)
+void BossDefeatSweep(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -1369,17 +1369,17 @@ u8 ActorIsInViewMargin(s16 dx, u16 dy)
     return 0;
 }
 
-u8 sub_08066a6c(void)
+u8 ActorIsInNearView(void)
 {
     return ActorIsInViewMargin(80, 40);
 }
 
-u8 sub_08066a80(void)
+u8 ActorIsInFarView(void)
 {
     return ActorIsInViewMargin(360, 240);
 }
 
-void sub_08066a94(u8 mode)
+void ActorSetDefaultPalette(u8 mode)
 {
     struct Task *t;
     struct Actor *a;
@@ -1439,7 +1439,7 @@ void sub_08066ae0(void)
     ActorResetHealth();
 }
 
-void sub_08066b34(u32 def)
+void ActorStartCarryingParasol(u32 def)
 {
     struct Task *t;
     struct Actor *a;
@@ -1448,13 +1448,13 @@ void sub_08066b34(u32 def)
     a = t->u8C.actor;
     if (a->extraFrame != -1)
     {
-        t->drawCallback = (u32)sub_08066c74;
+        t->drawCallback = (u32)ActorDrawWorldInViewOrDestroyWithParasol;
         ActorLoadDef(def);
         gCurTask->u8C.actor->unk16 = 6;
     }
 }
 
-void sub_08066b70(void)
+void TaskBounceParasolDriftOffWall(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -1464,9 +1464,9 @@ void sub_08066b70(void)
     if (a->extraFrame != -1)
     {
         if (t->velX >= 0)
-            t->unk1C = 3;
+            t->actorParasolSwayStep = 3;
         else
-            t->unk1C = 9;
+            t->actorParasolSwayStep = 9;
     }
     else
     {
@@ -1483,9 +1483,9 @@ void TaskStartParasolDrift(void)
     t = gCurTask;
     t->velY = 0x8000;
     if (t->facing == 1)
-        t->unk1C = 0;
+        t->actorParasolSwayStep = 0;
     else
-        t->unk1C = 6;
+        t->actorParasolSwayStep = 6;
 }
 
 void TaskStepParasolDrift(void)
@@ -1494,22 +1494,22 @@ void TaskStepParasolDrift(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk1C = t->unk1C + 1;
-    if (t->unk1C > 11)
-        t->unk1C = 0;
+    t->actorParasolSwayStep = t->actorParasolSwayStep + 1;
+    if (t->actorParasolSwayStep > 11)
+        t->actorParasolSwayStep = 0;
     u = gCurTask;
-    u->velX = gParasolDriftSwayVelX[u->unk1C];
+    u->velX = gParasolDriftSwayVelX[u->actorParasolSwayStep];
 }
 
-void sub_08066c08(u32 def, u8 b)
+void ActorDropParasol(u32 def, u8 b)
 {
     gCurTask->u8C.actor->extraFrame = 0xFFFF;
     ActorLoadDef(def);
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-    sub_08066e88(b);
+    CreateDroppedParasol(b);
 }
 
-void sub_08066c3c(u32 def)
+void ActorDropParasolOnLanding(u32 def)
 {
     struct Task *t;
     struct Actor *a;
@@ -1517,12 +1517,12 @@ void sub_08066c3c(u32 def)
     t = gCurTask;
     a = t->u8C.actor;
     if (a->extraFrame != -1 && t->unk74 != 2)
-        sub_08066c08(def, 1);
+        ActorDropParasol(def, 1);
 }
 
 /* Draw the running task plus its trailing "sparkle" sprite. */
 /* Draw the running task plus its trailing "sparkle" sprite. */
-void sub_08066c74(void)
+void ActorDrawWorldInViewOrDestroyWithParasol(void)
 {
     struct Task *p;
     struct Task *t;
@@ -1566,7 +1566,7 @@ void sub_08066c74(void)
                 }
             }
         }
-        sub_08066dcc();
+        ActorGetParasolOffset();
         t = gCurTask;
         x = t->pixelX - gSpriteCameraX + gUnk_030023B4;
         y = t->pixelY - gSpriteCameraY + gUnk_030023D4;
@@ -1585,7 +1585,7 @@ void sub_08066c74(void)
 /* Offset of the trailing sprite for the running task's animation. */
 /* Offset of the trailing sprite for the running task's animation. */
 /* Offset of the trailing sprite for the running task's animation. */
-void sub_08066dcc(void)
+void ActorGetParasolOffset(void)
 {
     struct Task *t;
     s32 i;
@@ -1618,7 +1618,7 @@ void sub_08066dcc(void)
     }
 }
 
-void sub_08066e88(u8 a)
+void CreateDroppedParasol(u8 a)
 {
     struct Task *t;
     struct Task *s;
@@ -1633,7 +1633,7 @@ void sub_08066e88(u8 a)
         kind = 1;
     else
         kind = 0;
-    sub_08066dcc();
+    ActorGetParasolOffset();
     t = gCurTask;
     x = t->pixelX + gUnk_030023B4;
     y = t->pixelY + gUnk_030023D4;
@@ -1657,7 +1657,7 @@ void sub_08066e88(u8 a)
     }
 }
 
-void sub_08066f50(s32 x, s32 y)
+void CreateNextRoomWarpStar(s32 x, s32 y)
 {
     CreateWarpStar(x - gViewRect[0], y - gViewRect[2], 23);
     PlayBgm(1);
@@ -1669,7 +1669,7 @@ void LoadStarRodPieceGfx(void)
 
     h = (struct GfxHeader *)gUnk_08334DC0;
     RequestCopy(4, (u32)h->tiles, OBJ_VRAM0 + 0x7800, h->tileCount << 5);
-    RequestCopy(2, gStarRodPiecePalettes[gLevelIndex], (u32)gUnk_03001610,
+    RequestCopy(2, gStarRodPiecePalettes[gLevelIndex], (u32)gObjPaletteBank13,
                  h->paletteBankCount << 5);
 }
 
@@ -1695,15 +1695,15 @@ void CreateStarRodPiece(u8 p3, s16 x, s16 y)
     }
 }
 
-void sub_0806704c(void)
+void CreateRoomStarRodPiece(void)
 {
     LoadStarRodPieceGfx();
     CreateStarRodPiece(0, 128, 104);
 }
 
-u8 sub_08067060(void)
+u8 IsMidBossDroppingIn(void)
 {
-    if (gUnk_0200B030 == 0)
+    if (gMidBossDropsIn == 0)
         return 0;
     return 1;
 }
@@ -1774,7 +1774,7 @@ s32 CreateInhalableStar(s16 x, s16 y, u16 dir, u8 p8)
     return i;
 }
 
-void sub_08067170(void)
+void InhalableStarInitVariant(void)
 {
     s32 v;
 
@@ -1804,14 +1804,14 @@ void Task_InhalableStar(void)
     t = gCurTask;
     t->frameTable = gInhalableStarFrames;
     t->updateCallback = (u32)InhalableStarUpdate;
-    sub_08067170();
+    InhalableStarInitVariant();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_0873E280);
+    CallTableEntry(gCurTask->state, 1, gInhalableStarStates);
 }
 
 void InhalableStarUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_0873E284);
+    CallTableEntry(gCurTask->updateState, 1, gInhalableStarStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -1820,7 +1820,7 @@ void InhalableStarUpdate(void)
 }
 
 /* Task body: the player's "spin out and vanish" death animation. */
-void sub_08067258(void)
+void InhalableStarState0(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1843,7 +1843,7 @@ void sub_08067258(void)
     TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
     u = gCurTask;
     u->velY = 0xFFFF8000;
-    u->unk6C = 0;
+    u->inhalableStarLoopCount = 0;
     do
     {
         t = gCurTask;
@@ -1872,8 +1872,8 @@ void sub_08067258(void)
         t->frame = 7;
         TaskYieldTrampoline(3);
         t = gCurTask;
-        t->unk6C++;
-    } while ((s16)t->unk6C <= 3);
+        t->inhalableStarLoopCount++;
+    } while ((s16)t->inhalableStarLoopCount <= 3);
     t = gCurTask;
     t->updateCallback = 0;
     t->frame = 11;
@@ -1887,7 +1887,7 @@ void sub_08067258(void)
     ActorDestroy();
 }
 
-void sub_08067378(void)
+void InhalableStarState0Update(void)
 {
 }
 

@@ -57,14 +57,14 @@ void LinkErrorScreen(void)
     SoftReset(0x1C);
 }
 
-void LoadBgLayout(s32 a0)
+void LoadBgLayout(s32 layout)
 {
-    ApplyBgLayout(gUnk_08730884[a0]);
+    ApplyBgLayout(gUnk_08730884[layout]);
 }
 
-void LoadGfxSet(u16 a0)
+void LoadGfxSet(u16 set)
 {
-    RequestCopyList(gUnk_0873185C[a0]);
+    RequestCopyList(gUnk_0873185C[set]);
 }
 
 void sub_08008c7c(void)
@@ -115,14 +115,14 @@ void sub_08008d98(s32 a0)
 
 void ExtraModeTitleLoadPicture(s32 a0)
 {
-    RequestCopy(2, gExtraModeTitlePictures[a0][0], (u32)gUnk_03001370, gExtraModeTitlePaletteSizes[a0] << 5);
+    RequestCopy(2, gExtraModeTitlePictures[a0][0], (u32)gBgPaletteBank8, gExtraModeTitlePaletteSizes[a0] << 5);
     LZ77UnCompVram((void *)gExtraModeTitlePictures[a0][1], (void *)(BG_VRAM + 0x8000));
     LZ77UnCompVram((void *)gExtraModeTitlePictures[a0][2], (void *)(BG_VRAM + 0x3000));
 }
 
 void sub_08008e6c(s32 a0)
 {
-    RequestCopy(2, (u32)gUnk_085A4904 + (a0 << 5), (u32)gUnk_030013B0, 32);
+    RequestCopy(2, (u32)gUnk_085A4904 + (a0 << 5), (u32)gBgPaletteBank10, 32);
     RequestCopy(8, (u32)gUnk_085A49E8, (u32)gUnk_02020000, 0);
     RequestCopy(1, (u32)gUnk_02020000 + (a0 << 11), BG_VRAM + 0x7800, 0x800);
 }
@@ -143,7 +143,7 @@ void HudLoadAbilityPicture(s32 a0)
    the calls and the if-block (-8 bytes, r7/r8 permutation). */
 void LoadMuseumAbilitySignGfx(s32 a0)
 {
-    RequestCopy(2, gUnk_08731B70[a0], (u32)gUnk_03001610, 32);
+    RequestCopy(2, gUnk_08731B70[a0], (u32)gObjPaletteBank13, 32);
     RequestCopy(8, (u32)gUnk_085A3CB8, EWRAM_START + 0x20000, 0);
     RequestCopy(4, gUnk_08731B88[a0][0] + (EWRAM_START + 0x20000), OBJ_VRAM0 + 0x7800, 0x100);
     RequestCopy(4, gUnk_08731B88[a0][0] + (EWRAM_START + 0x20100), OBJ_VRAM0 + 0x7C00, 0x100);
@@ -157,7 +157,7 @@ void PauseScreenLoadGraphics(s32 a0, s32 a1)
 {
     switch (a0) {
     case 28:
-        RequestCopy(2, (u32)gUnk_0856F2A8, (u32)gUnk_03001370, 96);
+        RequestCopy(2, (u32)gUnk_0856F2A8, (u32)gBgPaletteBank8, 96);
         HuffUnComp(gUnk_0856F308, gUnk_02020000);
         LZ77UnCompVram(gUnk_02020000, (void *)(BG_VRAM + 0x8800));
         HuffUnComp(gUnk_085707D4, gUnk_02028000);
@@ -171,13 +171,13 @@ void PauseScreenLoadGraphics(s32 a0, s32 a1)
         }
         break;
     case 27:
-        RequestCopy(2, (u32)gUnk_0857111C, (u32)gUnk_03001370, 0x100);
+        RequestCopy(2, (u32)gUnk_0857111C, (u32)gBgPaletteBank8, 0x100);
         LZ77UnCompVram(gUnk_08570F1C, (void *)(BG_VRAM + 0xF800));
         HuffUnComp(gUnk_08570B28, gUnk_02020000);
         LZ77UnCompVram(gUnk_02020000, (void *)(BG_VRAM + 0x8000));
         break;
     default:
-        RequestCopy(2, (u32)gUnk_0857111C, (u32)gUnk_03001370, 0x100);
+        RequestCopy(2, (u32)gUnk_0857111C, (u32)gBgPaletteBank8, 0x100);
         LZ77UnCompVram(gUnk_0857172C, (void *)(BG_VRAM + 0xE800));
         if (a1 != 0) {
             LZ77UnCompVram(gUnk_08571838, (void *)(BG_VRAM + 0xF000));
@@ -192,7 +192,7 @@ void PauseScreenLoadGraphics(s32 a0, s32 a1)
         LZ77UnCompVram(gUnk_02028000, (void *)(BG_VRAM + 0x9600));
         HuffUnComp((void *)gUnk_08731BA0[a0][1], gUnk_02030000);
         LZ77UnCompVram(gUnk_02030000, (void *)(BG_VRAM + 0xB400));
-        RequestCopy(2, gAbilityPictures[a0][0], (u32)gUnk_030013B0, 32);
+        RequestCopy(2, gAbilityPictures[a0][0], (u32)gBgPaletteBank10, 32);
         RequestCopy(1, gAbilityPictures[a0][1], BG_VRAM + 0xA800, 0x3E0);
         break;
     }

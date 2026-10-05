@@ -71,7 +71,7 @@ void LoadHubRoom(void)
     InitDoors();
     SetRoomEntryPoint();
     SpawnDoorObjects();
-    sub_08029194();
+    PlayHubRoomBgm();
     gActivePlayerMask = 0;
     gActivePlayerCount = 0;
     gLivingPlayerCount = 0;
@@ -114,14 +114,14 @@ void LoadHubRoom(void)
     default:
     case 0:
     case 3:
-        sub_0802c550();
+        HubCameraFollowFocus();
         break;
     case 2:
     case 4:
         CameraSnapPlayersToAnchor();
         break;
     case 1:
-        sub_0802c680();
+        HubCameraFollowFocusPlayer();
         break;
     }
     CameraInitPos();
@@ -197,9 +197,9 @@ void RoomTaskHubInit(void)
     t->drawCallback = (u32)RoomTaskDraw;
     t->updateCallback = (u32)RoomTaskHubUpdateCamera;
     if (gHubUnlockFlags != 0)
-        t->lateUpdateCallback = (u32)sub_08023f5c;
+        t->lateUpdateCallback = (u32)RoomTaskHubLateUpdateBg123;
     else
-        t->lateUpdateCallback = (u32)sub_08023f18;
+        t->lateUpdateCallback = (u32)RoomTaskHubLateUpdateBg23;
     TaskSleepForever();
 }
 
@@ -222,17 +222,17 @@ void RoomTaskHubUpdateCamera(void)
         {
         default:
         case 0:
-            sub_0802c550();
+            HubCameraFollowFocus();
             break;
         case 2:
         case 4:
             CameraSnapPlayersToAnchor();
             break;
         case 3:
-            sub_0802c7f4();
+            HubCameraGlideToPlayers();
             break;
         case 1:
-            sub_0802c680();
+            HubCameraFollowFocusPlayer();
             break;
         }
     }
@@ -244,7 +244,7 @@ void RoomTaskBigSwitchViewUpdateCamera(void)
         CameraSnapBoundsToAnchor();
 }
 
-void sub_08023f18(void)
+void RoomTaskHubLateUpdateBg23(void)
 {
     if (gRoomUpdateFlags & 2)
         UpdateScreenShake();
@@ -259,7 +259,7 @@ void sub_08023f18(void)
     HudUpdateAbilityPanel();
 }
 
-void sub_08023f5c(void)
+void RoomTaskHubLateUpdateBg123(void)
 {
     if (gRoomUpdateFlags & 2)
         UpdateScreenShake();

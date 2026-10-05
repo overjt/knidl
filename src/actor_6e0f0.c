@@ -286,12 +286,12 @@ void Task_AbilityReleaseFlash(void)
     u->posY = 0;
     u->frame = 0;
     TaskYieldTrampoline(1);
-    gCurTask->unk6C = 0;
+    gCurTask->abilityReleaseFlashLoopCount = 0;
     do
     {
         gCurTask->frame += 1;
         TaskYieldTrampoline(1);
-    } while ((s16)(++gCurTask->unk6C) <= 6);
+    } while ((s16)(++gCurTask->abilityReleaseFlashLoopCount) <= 6);
     TaskExitTrampoline();
 }
 
@@ -312,8 +312,8 @@ s32 CreateDashFlame(s16 x, s16 y)
     if (i != -1)
     {
         t = &gTasks[i];
-        t->unk24 = x;
-        t->unk20 = y;
+        t->dashFlameOffsetX = x;
+        t->dashFlameOffsetY = y;
     }
     return i;
 }
@@ -334,8 +334,8 @@ void Task_DashFlame(void)
     TaskFaceLikeParent();
     while (1)
     {
-        TaskSetPosXFacing(gCurTask->unk24);
-        gCurTask->posY = gCurTask->unk20 << 16;
+        TaskSetPosXFacing(gCurTask->dashFlameOffsetX);
+        gCurTask->posY = gCurTask->dashFlameOffsetY << 16;
         TaskSetMotionXFacing(0xFFFD0000, 0x5A5A5A5A);
         TaskSetFrame(0);
         TaskYieldTrampoline(2);
@@ -363,8 +363,8 @@ s32 CreateDashFireTrail(s16 x, s16 y)
     if (i != -1)
     {
         t = &gTasks[i];
-        t->unk24 = x;
-        t->unk20 = y;
+        t->dashFireTrailOffsetX = x;
+        t->dashFireTrailOffsetY = y;
     }
     return i;
 }
@@ -387,9 +387,9 @@ void Task_DashFireTrail(void)
     while (1)
     {
         gCurTask->posX = (RandomSpreadFacing(-8, 1, 16)
-            + gCurTask->unk24 * gCurTask->facing) << 16;
+            + gCurTask->dashFireTrailOffsetX * gCurTask->facing) << 16;
         gCurTask->posY = (RandomSpread(-8, 1, 16)
-            + gCurTask->unk20) << 16;
+            + gCurTask->dashFireTrailOffsetY) << 16;
         TaskSetMotionXFacing(0x30000, 0x5A5A5A5A);
         TaskSetFrame(0);
         TaskYieldTrampoline(2);
@@ -432,8 +432,8 @@ s32 CreateLandingImpact(u8 a, s16 x, s16 y)
     {
         t = &gTasks[i];
         t->variant = a;
-        t->unk24 = x;
-        t->unk20 = y;
+        t->landingImpactOffsetX = x;
+        t->landingImpactOffsetY = y;
     }
     return i;
 }
@@ -449,8 +449,8 @@ void Task_LandingImpact(void)
     t->layer = 10;
     u = gCurTask;
     u->frameTable = gUnk_0874C828;
-    u->pixelX += u->unk24;
-    u->pixelY += u->unk20;
+    u->pixelX += u->landingImpactOffsetX;
+    u->pixelY += u->landingImpactOffsetY;
     u->posX = u->pixelX << 16;
     u->posY = u->pixelY << 16;
     CallTableEntry(u->variant, 3, gLandingImpactVariants);
@@ -591,23 +591,23 @@ void IceBlockBlink(void)
     s32 i;
 
     t = gCurTask;
-    v = t->unk70;
+    v = t->iceBlockBlinkStep;
     i = (s16)v >> 1;
     if (i <= 5)
     {
-        if (t->unk20 <= 0)
+        if (t->iceBlockBlinkTimer <= 0)
         {
-            t->unk70 = v + 1;
-            if (t->unk1C != 0)
+            t->iceBlockBlinkStep = v + 1;
+            if (t->iceBlockBlinkHide != 0)
                 t->frame = 0xFFFF;
             else
                 t->frame = 4;
             u = gCurTask;
-            u->unk20 = gUnk_0873E5F8[i][u->unk1C];
-            u->unk1C ^= 1;
+            u->iceBlockBlinkTimer = gUnk_0873E5F8[i][u->iceBlockBlinkHide];
+            u->iceBlockBlinkHide ^= 1;
         }
         w = gCurTask;
-        w->unk20 -= 1;
+        w->iceBlockBlinkTimer -= 1;
     }
     else
     {
@@ -667,7 +667,7 @@ void PlayerWarpStarRideInit(void)
     t->updateCallback = (u32)PlayerWarpStarRideUpdate;
     t->lateUpdateCallback = 0;
     t->taskClass = 4;
-    gCurTask->frameTable = gUnk_0874CFEC;
+    gCurTask->frameTable = gPlayerFrames;
     TaskStop();
     u = gCurTask;
     u->spriteFlags &= 0x7FFF;

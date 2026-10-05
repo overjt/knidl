@@ -61,7 +61,7 @@ void PlayerActionDie(void)
     PlayerStopAxes(3);
     gCurTask->player->mouthState = 0;
     SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
-    sub_080276ac(gCurTask->player->playerIndex);
+    HoldPlayerCamera(gCurTask->player->playerIndex);
     gCurTask->player->unk16 = 255;
     anim = gUnk_0873D9FA[gCurTask->player->ability];
     n = 0;
@@ -81,7 +81,7 @@ void PlayerActionDie(void)
     }
     else
     {
-        sub_0803e868();
+        PlayerEndInvincibility();
     }
     if (gLocalPlayer == gCurTask->player->playerIndex)
     {
@@ -162,7 +162,7 @@ void PlayerActionDie(void)
     else if (gRoomExitKind != 1)
         PlaySfx(270);
     PlayerSetMotionYPreset(32);
-    gCurTask->unk46 = anim[1];
+    gCurTask->playerBaseFrame = anim[1];
     do
     {
         struct Task *w = gCurTask;
@@ -170,9 +170,9 @@ void PlayerActionDie(void)
 
         if (w->drawCallback != 0)
             CreatePlayerEffectHighSlot(w->player->playerIndex, 5, 0);
-        gCurTask->frame = gCurTask->unk46;
+        gCurTask->frame = gCurTask->playerBaseFrame;
         TaskYieldTrampoline(1);
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
+        for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 6; gCurTask->playerLoopCount++)
         {
             gCurTask->frame--;
             TaskYieldTrampoline(1);
@@ -180,7 +180,7 @@ void PlayerActionDie(void)
         x = gCurTask;
         if (x->drawCallback != 0)
             CreatePlayerEffectHighSlot(x->player->playerIndex, 5, 0);
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 7; gCurTask->unk6C++)
+        for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 7; gCurTask->playerLoopCount++)
         {
             gCurTask->frame--;
             TaskYieldTrampoline(1);
@@ -196,7 +196,7 @@ void PlayerActionDie(void)
         gStageRequest = 6;
         TaskExitTrampoline();
     }
-    sub_080276cc(gCurTask->player->playerIndex);
+    ReleaseDeadPlayerView(gCurTask->player->playerIndex);
     if (gPlayerLives[gCurTask->player->playerIndex] == 0)
         gCurTask->variant = 4;
     else
@@ -216,7 +216,7 @@ void sub_080396a4(void)
         t->updateCallback = 0;
         t->taskClass = 4;
         if (gGameState != 20)
-            TaskSetEntry(sub_080b9610, gCurTaskIdx);
+            TaskSetEntry(PlayerLifeRequestInit, gCurTaskIdx);
         else
             sub_080b9118();
         break;
@@ -359,18 +359,18 @@ void PlayerActionEnterDoor(void)
     }
     EnterDoor();
     if (gInHub != 0)
-        sub_080264b0();
+        CreateEntryDoorOpening();
     if (gInHub == 0)
         PlaySfx(181);
     t = gCurTask;
     if (!(t->waterFlags & 1))
     {
-        t->unk46 = gPlayerDoorAnims[t->player->ability][0];
+        t->playerBaseFrame = gPlayerDoorAnims[t->player->ability][0];
         switch (t->player->ability)
         {
         case 0:
         default:
-            TaskSetFrame(gCurTask->unk46);
+            TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
@@ -384,7 +384,7 @@ void PlayerActionEnterDoor(void)
         case 19:
         case 22:
         case 23:
-            TaskSetFrame(gCurTask->unk46);
+            TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
@@ -392,17 +392,17 @@ void PlayerActionEnterDoor(void)
             TaskYieldTrampoline(2);
             while (1)
             {
-                TaskSetFrame((s16)(gCurTask->unk46 + 3));
+                TaskSetFrame((s16)(gCurTask->playerBaseFrame + 3));
                 TaskYieldTrampoline(2);
-                TaskSetFrame((s16)(gCurTask->unk46 + 15));
+                TaskSetFrame((s16)(gCurTask->playerBaseFrame + 15));
                 TaskYieldTrampoline(2);
             }
         }
     }
     else
     {
-        gCurTask->unk46 = sub_0803f7e0(0);
-        TaskSetFrame(gCurTask->unk46);
+        gCurTask->playerBaseFrame = sub_0803f7e0(0);
+        TaskSetFrame(gCurTask->playerBaseFrame);
         TaskYieldTrampoline(3);
         gCurTask->frame++;
         TaskYieldTrampoline(3);

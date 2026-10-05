@@ -109,13 +109,13 @@ void sub_08055520(void)
     TaskYieldTrampoline(2);
     gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk6C = 0;
+    gCurTask->playerEffectLoopCount = 0;
     do
     {
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 7);
+        gCurTask->playerEffectLoopCount++;
+    } while ((s16)gCurTask->playerEffectLoopCount <= 7);
     TaskExitTrampoline();
 }
 
@@ -162,13 +162,13 @@ void sub_0805574c(void)
     t->pixelY = (t->u8C.parentTask)->pixelY;
     t->frame = 0;
     TaskYieldTrampoline(4);
-    gCurTask->unk6C = 0;
+    gCurTask->playerEffectLoopCount = 0;
     do
     {
         gCurTask->frame++;
         TaskYieldTrampoline(4);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 6);
+        gCurTask->playerEffectLoopCount++;
+    } while ((s16)gCurTask->playerEffectLoopCount <= 6);
     gCurTask->player->unk40 |= 0x80;
     TaskExitTrampoline();
 }
@@ -194,7 +194,7 @@ void sub_0805587c(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C600;
-    switch (t->unk18 & 15)
+    switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
         t->facing = 1;
@@ -255,15 +255,15 @@ void sub_08055a40(void)
     t->frameTable = gUnk_0874C780;
     t->posX = 0;
     t->posY = -0xC0000;
-    t->unk6C = 0;
+    t->playerEffectLoopCount = 0;
     do
     {
         gCurTask->frame = 0;
         TaskYieldTrampoline(8);
         gCurTask->frame = 0xFFFF;
         TaskYieldTrampoline(4);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 7);
+        gCurTask->playerEffectLoopCount++;
+    } while ((s16)gCurTask->playerEffectLoopCount <= 7);
     TaskExitTrampoline();
 }
 

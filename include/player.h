@@ -76,7 +76,7 @@ extern u8 gBlockCursorShake; /*   hit-box id bit 11 */
 extern s16 gBrokenBlockY[]; /*   y (pixels) */
 extern struct M11R8 gPlayerHitBoxSets[];
 extern u8 gUnk_020055C4;
-extern struct Unk02005E00 gUnk_02005E00;
+extern struct Unk02005E00 gLifeRequests;
 extern u16 gBlockCursorIndex; /*   map index */
 extern struct M11R20 gPlayerBodyBoxes[];
 extern u16 gBlockCursorAttack; /*   the block kind (hit-box id low byte) */
@@ -93,7 +93,7 @@ extern u16 gUnk_0200B060[];
 extern u32 gUnk_02020000[]; /* decompression buffer */
 
 /* IWRAM */
-extern u16 gUnk_03001490[];
+extern u16 gObjPaletteBank1[];
 extern u8 gCreditsDemoSet;
 
 /* ROM */
@@ -328,7 +328,7 @@ extern u32 gUnk_0874C4E4[];
 extern u32 gUnk_0874C650[];
 extern u32 gUnk_0874C7CC[];
 extern u32 gUnk_0874CE90[];
-extern u32 gUnk_0874CFEC[];
+extern u32 gPlayerFrames[];
 extern u32 gUnk_08751990[];
 extern u32 gUnk_087519CC[];
 extern u32 gUnk_087519E8[];
@@ -355,33 +355,33 @@ extern u8 gUnk_08757368[];
 /* Functions (defined in the files named above each group). */
 
 /* src/player_17668.c */
-void sub_08017668(void);
+void CutsceneActorScript50(void);
 void sub_08018464(void);
-void sub_08018498(void);
+void CutsceneActorScript51(void);
 
 /* src/player_18b84.c */
 void sub_08018b84(void);
-void sub_08018bb8(void);
-void sub_08018d7c(void);
+void CutsceneActorScript53(void);
+void CutsceneActorScript54(void);
 
 /* src/player_18e14.c */
-void sub_08018e14(void);
+void CutsceneActorScript52(void);
 
 /* src/player_19000.c */
-void sub_08019000(void);
+void CutsceneActorScript55(void);
 void sub_08019590(void);
-void sub_080195ec(void);
-void sub_08019b30(void);
-void sub_08019c44(void);
-void sub_08019d30(void);
-void sub_08019e48(void);
+void CutsceneActorScript57(void);
+void CutsceneActorScript58(void);
+void CutsceneActorScript59(void);
+void CutsceneActorScript60(void);
+void CutsceneActorScript61(void);
 void sub_08019ecc(void);
 
 /* src/player_19eec.c */
-void sub_08019eec(void);
+void CutsceneActorScript62(void);
 
 /* src/player_1a07c.c */
-void sub_0801a07c(void);
+void CutsceneActorScript56(void);
 void sub_0801a1ec(void);
 void sub_0801a310(void);
 
@@ -532,7 +532,7 @@ s32 sub_0803d870(void);
 void sub_0803db74(void);
 void sub_0803ddc0(void);
 void sub_0803dfc8(void);
-void PlayerStopAxes(s32 a0);
+void PlayerStopAxes(s32 axes);
 void sub_0803e080(void);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
 void sub_0803e28c(s32 a0);
@@ -550,11 +550,11 @@ s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6);
 s32 LoadPlayerHitBoxSet(s32 a0, s32 a1);
 void PlayerStartOffsetScript(s32 a0);
 void sub_0803e68c(s32 a0);
-s32 sub_0803e7d8(void);
-void sub_0803e868(void);
+s32 PlayerUpdateInvincibility(void);
+void PlayerEndInvincibility(void);
 void sub_0803e8ec(void);
 s32 sub_0803eaf8(s32 a0);
-void sub_0803f5fc(s8 a0);
+void FreePlayerEffectsAndObjects(s8 a0);
 void sub_0803f6e0(void);
 u16 sub_0803f7e0(u16 a0);
 void sub_0803f834(u16 a0, void *src);
@@ -587,7 +587,7 @@ void PlayerRequestStandOrFall(void);
 void LatchPlayerKeys(void);
 void sub_08040808(s32 a0);
 void sub_08040858(s32 a0);
-void sub_0804087c(s32 a0);
+void PlayerGiveInvincibleCandy(s32 a0);
 void PlayerStartItemShare(s32 a0, u8 a1);
 s32 sub_080408e4(void);
 void sub_08040934(s32 a0);
@@ -686,7 +686,7 @@ void PlayerActionGetAbilityUpdate(void);
 
 /* src/player_49738.c */
 void LoadAbilityTiles(void);
-void sub_08049a58(void);
+void PlayerLoadSparkTiles(void);
 
 /* src/player_49b48.c */
 void PlayerActionIce(void);

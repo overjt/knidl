@@ -31,13 +31,13 @@ void PlayerEffectHurtBurst(void)
     t->frameTable = gUnk_0874C930;
     t->frame = 0;
     TaskYieldTrampoline(1);
-    gCurTask->unk6C = 0;
+    gCurTask->playerEffectLoopCount = 0;
     do
     {
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 10);
+        gCurTask->playerEffectLoopCount++;
+    } while ((s16)gCurTask->playerEffectLoopCount <= 10);
     TaskExitTrampoline();
 }
 
@@ -50,7 +50,7 @@ void sub_080564ac(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C828;
-    switch (t->unk18 & 15)
+    switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
         t->posY = (t->pixelY + 4) << 16;
@@ -63,13 +63,13 @@ void sub_080564ac(void)
 
             u->waterFlags = (u->u8C.parentTask)->waterFlags;
         }
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 6);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 6);
         break;
     case 1:
         if (!((t->u8C.parentTask)->waterFlags & 1))
@@ -180,7 +180,7 @@ void sub_08056770(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C600;
-    switch (t->unk18 & 15)
+    switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
         CreatePlayerEffect(gCurTask->player->playerIndex, 28, 1);
@@ -437,6 +437,6 @@ void sub_08056da8(void)
 {
     struct Task *t = gCurTask;
 
-    if ((t->unk18 & 15) == 4 && t->unk28 == 0 && t->player->mode != 13)
+    if ((t->playerEffectSpawnWord & 15) == 4 && t->unk28 == 0 && t->player->mode != 13)
         t->unk28 = 1;
 }

@@ -1044,3 +1044,48 @@ moved the record here; `AGENTS.md`'s `## Status` stays the current state.
   BG3 headers, OAM JSON) and splices each over its slot, fit or fail.
   `assets-selftest` re-encodes the whole corpus (14,386 objects byte-exact,
   1,091 LZ77 streams decoded back).  Rebased after #165 by the coordinator.
+- Names, run 5 (issue #155): the family sweep and **per-family register
+  aliases**.  The owner's decisions D1-D5, applied: (D1) `struct Task`'s
+  registers `unk18`-`unk34`, `unk46`, `unk6C`-`unk70` and `unk74` (the
+  last three added with the coordinator's approval) are named the way
+  pret names `struct Task`'s `data[16]`: object-like alias macros in the
+  new `include/task_vars.h`, one block per family, each line giving the
+  member, the type the code reads it as and the role.  `tools/task_alias.py`
+  applies (file, function, pointer, field, alias) site rows inside the
+  named bodies and proves them twice: every translation unit's `cpp -P`
+  output equals the parent's, and gcc 12 accepts the tree with each
+  aliased member an anonymous union of the member and its aliases (so no
+  alias sits on another struct); `rename.py --verify-diff` accepts the
+  alias rows and their merge chains.  A role a shared helper's contract
+  fixes is one shared alias without a family prefix (`actorAnimDelay`,
+  `actorSpawnArg`, `actorDustTrailSlot`, `doorObjectKind`, the actor core's
+  drown, defeat, freeze, carry, throw and swallow registers); the rest are
+  `<family><Role>` with one word set across siblings (`<family>LoopCount`
+  for the running state's loop counter).  965 aliases in 198 families
+  cover 8,117 of the 10,456 register accesses.  (D2) the cells inside the palette shadow buffers
+  are named by position (`gObjPaletteBank6Color6`, 24 cells).  (D3) the
+  shared-scratch pattern is documented; no cell proved to be scratch.
+  (D4) functional ROM records by position: the ActorDef field records
+  (231), the player's frame table `gPlayerFrames` and its 2,590 records,
+  58 records of named data tables, and 55 frame lists that only a
+  descriptor's trailer reaches (format-only, counted apart); and, approved
+  by the coordinator, slot names for the named dispatch tables
+  (`CutsceneBeachActorScript10`, `WarpStarFlight5`, `PlayerDance3`,
+  `ActorDefeat2`: 104 functions).  (D5) the engine API's positional
+  parameters (`TaskSetMotionY(velY, accelY, speedLimitY)`, 18 functions,
+  27 parameters; every unit's agbcc assembly identical).  Four proposal
+  agents in two waves (mid-bosses, bosses, two enemy banks; then the
+  player, the actor core and stage, the cutscenes and ending, the menus
+  and sub-games, and RAM cells and fields) proposed names and aliases per
+  family; the coordinator expanded the alias proposals from a gcc
+  census of every `struct Task` member access (lesson 4.167).  Task bodies
+  #209 and #220 got effect names (`Task_NightmareWizardDefeatFlash`,
+  `Task_NightmarePowerOrbStreak`); #88 stays open.  Figures: functions
+  named 3,800 -> 4,366 of 5,348; task bodies 263 -> 265 of 266; `make
+  progress` 9,524 -> 13,102 of 34,017 symbols documented (27.99% ->
+  38.52%), about 6,950 semantic and 6,156 position names; `gUnk_` RAM cells
+  124 -> 84; functional ROM labels 5,747 -> 2,775; `unk*` fields 313 ->
+  257 (header) and 322 -> 282 (local copies), the 14 register members now
+  named per family.  No rename or alias changed a byte; `make shifttest`
+  unchanged (16,961 unrelocated, 0 proven pointers, 0 unknown).  New
+  lessons 4.166-4.170.

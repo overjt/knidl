@@ -41,7 +41,7 @@ void CreateKingDededeAirPuff(void)
     sp.y = 16;
     sp.tileWord = a->savedTileWord;
     sp.checkTerrain = 0;
-    gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 1);
+    gCurTask->kingDededeChildSlot = CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 
 void KingDededeCreateImpactStars(u8 a)
@@ -77,7 +77,7 @@ void sub_080a0358(void)
     s32 r;
 
     t = gCurTask;
-    switch (t->unk1C)
+    switch (t->kingDededeNextState)
     {
     case 3:
         n = 46;
@@ -85,27 +85,27 @@ void sub_080a0358(void)
     case 7:
         r = CreateChildTaskHere(182, 0);
         t = gCurTask;
-        t->unk46 = r;
+        t->kingDededeChildSlot = r;
         n = 52;
         break;
     case 8:
         TaskGetNearestPlayerPos();
-        gCurTask->unk20 = gUnk_030023B4;
+        gCurTask->kingDededeWalkTargetX = gUnk_030023B4;
         if (gUnk_030023B4 < gRoomBounds[0] - 87)
-            gCurTask->unk20 = gRoomBounds[0] - 87;
-        if (gCurTask->unk20 > gRoomBounds[1] + 87)
-            gCurTask->unk20 = gRoomBounds[1] + 87;
+            gCurTask->kingDededeWalkTargetX = gRoomBounds[0] - 87;
+        if (gCurTask->kingDededeWalkTargetX > gRoomBounds[1] + 87)
+            gCurTask->kingDededeWalkTargetX = gRoomBounds[1] + 87;
         if (gCurTask->pixelX == gUnk_030023B4)
             goto tail;
         if ((u8)TaskGetXDirBitToNearestPlayer() == 4)
         {
             t = gCurTask;
-            t->unk20 -= 16;
+            t->kingDededeWalkTargetX -= 16;
         }
         else
         {
             t = gCurTask;
-            t->unk20 += 16;
+            t->kingDededeWalkTargetX += 16;
         }
         t = gCurTask;
         n = 8;
@@ -115,12 +115,12 @@ void sub_080a0358(void)
         n = 0;
         break;
     }
-    t->unk34 = n;
+    t->kingDededeWalkStopDist = n;
 tail:
-    if (gCurTask->unk20 < gRoomBounds[0] - 87)
-        gCurTask->unk20 = gRoomBounds[0] - 87;
-    if (gCurTask->unk20 > gRoomBounds[1] + 87)
-        gCurTask->unk20 = gRoomBounds[1] + 87;
+    if (gCurTask->kingDededeWalkTargetX < gRoomBounds[0] - 87)
+        gCurTask->kingDededeWalkTargetX = gRoomBounds[0] - 87;
+    if (gCurTask->kingDededeWalkTargetX > gRoomBounds[1] + 87)
+        gCurTask->kingDededeWalkTargetX = gRoomBounds[1] + 87;
 }
 
 void sub_080a043c(void)
@@ -132,23 +132,23 @@ void sub_080a043c(void)
     TaskGetNearestPlayerScreenPos();
     t = gCurTask;
     one = 1;
-    t->unk20 = one;
+    t->kingDededeSlamCount = one;
     if (gUnk_030023D4 <= 111)
     {
-        t->unk24 = 2;
+        t->kingDededeSlamKind = 2;
     }
     else
     {
-        n = (t->unk30 + 1) & 3;
-        t->unk30 = n;
+        n = (t->kingDededeSlamSetupCount + 1) & 3;
+        t->kingDededeSlamSetupCount = n;
         if (n == 0)
         {
-            t->unk24 = one;
-            t->unk20 = 4;
+            t->kingDededeSlamKind = one;
+            t->kingDededeSlamCount = 4;
         }
         else
         {
-            t->unk24 = 0;
+            t->kingDededeSlamKind = 0;
         }
     }
 }
@@ -163,9 +163,9 @@ void sub_080a0480(u8 a)
     if (a == 0)
     {
         if (abs(TaskGetNearestPlayerDx()) <= 21)
-            gCurTask->unk24 = 0;
+            gCurTask->kingDededeJumpForward = 0;
         else
-            gCurTask->unk24 = 1;
+            gCurTask->kingDededeJumpForward = 1;
     }
     else
     {
@@ -174,21 +174,21 @@ void sub_080a0480(u8 a)
         TaskFaceNearestPlayer();
         u = gCurTask;
         if ((s16)f != u->facing)
-            u->unk24 = 0;
+            u->kingDededeJumpForward = 0;
         else
-            u->unk24 = 1;
+            u->kingDededeJumpForward = 1;
     }
     v = gCurTask;
-    if (v->unk24 == 1)
+    if (v->kingDededeJumpForward == 1)
     {
-        if (v->health < (s16)v->unk70)
+        if (v->health < (s16)v->kingDededeThirdHealth)
             TaskSetMotionXFacing(136 << 10, 0x5A5A5A5A);
         else
             TaskSetMotionXFacing(160 << 9, 0x5A5A5A5A);
     }
 }
 
-u8 sub_080a0538(void)
+u8 KingDededeLand(void)
 {
     struct Task *t;
     struct Task *u;
@@ -200,7 +200,7 @@ u8 sub_080a0538(void)
         TaskStopY();
         break;
     case 4:
-        t->unk24 = 4;
+        t->kingDededeFloatBumpTimer = 4;
         t->onGround = 0;
         sub_0806d08c(24, 8, 32);
         TaskSetFrame(23);
@@ -211,12 +211,12 @@ u8 sub_080a0538(void)
     return 0;
 }
 
-void sub_080a0588(void)
+void KingDededeHitWall(void)
 {
     gCurTask->velX = 0;
 }
 
-u8 sub_080a0598(void)
+u8 KingDededeHitCeiling(void)
 {
     struct Task *t;
     struct Task *u;
@@ -224,7 +224,7 @@ u8 sub_080a0598(void)
     t = gCurTask;
     if (t->state == 4)
     {
-        t->unk24 = 4;
+        t->kingDededeFloatBumpTimer = 4;
         TaskSetFrame(23);
         u = gCurTask;
         TaskSetMotionY(-u->velY, -u->accelY, u->speedLimitY);
@@ -238,16 +238,16 @@ void sub_080a05c8(void)
 
     t = gCurTask;
     t->unk34 = 0;
-    t->unk30 = 0;
+    t->kingDededeSlamSetupCount = 0;
     t->unk2C = 0;
     t->unk28 = 0;
     t->unk24 = 0;
     t->unk20 = 0;
-    t->unk1C = 0;
-    t->unk18 = 0;
-    t->unk46 = 0xFFFF;
+    t->kingDededeNextState = 0;
+    t->kingDededePickCount = 0;
+    t->kingDededeChildSlot = 0xFFFF;
     gUnk_02007D00[8] = -1;
-    t->unk46 = -1;
+    t->kingDededeChildSlot = -1;
     TaskFaceNearestPlayer();
     ActorSetState(0);
 }
@@ -289,26 +289,26 @@ void sub_080a0658(void)
         i = RandomRange(3);
         n = ActorStartAnim(gUnk_08748384);
         t = gCurTask;
-        t->unk24 = n;
-        if (t->health < (s16)t->unk70)
+        t->actorAnimDelay24 = n;
+        if (t->health < (s16)t->kingDededeThirdHealth)
         {
             i += 3;
             n2 = ActorStartAnim(gUnk_08748398);
-            gCurTask->unk24 = n2;
+            gCurTask->actorAnimDelay24 = n2;
         }
         u = gCurTask;
         if (u->unk2C != 0)
-            u->unk20 = 0;
+            u->kingDededeWaitTimer = 0;
         else
-            u->unk20 = gUnk_08748374[i];
+            u->kingDededeWaitTimer = gUnk_08748374[i];
         gCurTask->unk2C = 0;
     }
     else
     {
         n3 = ActorStartAnim(gUnk_08748398);
         v = gCurTask;
-        v->unk24 = n3;
-        v->unk20 = 1;
+        v->actorAnimDelay24 = n3;
+        v->kingDededeWaitTimer = 1;
     }
 }
 
@@ -324,11 +324,11 @@ void KingDededeChooseNextState(void)
 
     t = gCurTask;
     a = t->u8C.actor;
-    n = t->unk18 + 1;
-    t->unk18 = n;
+    n = t->kingDededePickCount + 1;
+    t->kingDededePickCount = n;
     if (n == 6)
     {
-        t->unk18 = 0;
+        t->kingDededePickCount = 0;
         ActorSetState(4);
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
     }
@@ -338,7 +338,7 @@ void KingDededeChooseNextState(void)
         i = RandomRange(8);
         q = i * 4 + (s32)tab;
         ActorSetState(*(u16 *)q);
-        gCurTask->unk1C = *(u16 *)(q + 2);
+        gCurTask->kingDededeNextState = *(u16 *)(q + 2);
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
     }
 }
@@ -391,7 +391,7 @@ void sub_080a0844(void)
     u16 d;
     s32 z;
 
-    i = (u16)(gCurTask->unk24 * 3);
+    i = (u16)(gCurTask->kingDededeSlamKind * 3);
     a = gUnk_08748420[i];
     b = gUnk_08748420[i + 1];
     c = gUnk_08748420[i + 2];
@@ -411,9 +411,9 @@ void sub_080a0844(void)
     u->frame--;
     TaskYieldTrampoline(c);
     v = gCurTask;
-    v->unk20--;
-    v->unk6C = z;
-    while ((s16)gCurTask->unk6C < gCurTask->unk20)
+    v->kingDededeSlamCount--;
+    v->kingDededeLoopCount = z;
+    while ((s16)gCurTask->kingDededeLoopCount < gCurTask->kingDededeSlamCount)
     {
         w = gCurTask;
         w->frame--;
@@ -425,7 +425,7 @@ void sub_080a0844(void)
         TaskYieldTrampoline(b);
         gCurTask->frame--;
         TaskYieldTrampoline(c);
-        gCurTask->unk6C++;
+        gCurTask->kingDededeLoopCount++;
     }
 }
 
@@ -438,7 +438,7 @@ void sub_080a094c(void)
     s32 anim;
 
     t = gCurTask;
-    anim = (t->unk1C == 7) ? 30 : 13;
+    anim = (t->kingDededeNextState == 7) ? 30 : 13;
     while (1)
     {
         gCurTask->onGround = 0;
@@ -536,8 +536,8 @@ void KingDededeState0(void)
     t->updateState = z;
     TaskStop();
     ActorCollideTerrain();
-    sub_080666f8(gUnk_08748384);
-    sub_080664e0(gUnk_08748384);
+    ActorIntroPoseUntilScrollLocked(gUnk_08748384);
+    ActorIntroPoseUntilHpBarFull(gUnk_08748384);
     sub_08063a00((u32)gUnk_08748820);
     gCurTask->unk2C = z;
     sub_080a0658();
@@ -551,14 +551,14 @@ void KingDededeState0Update(void)
     s32 n;
 
     t = gCurTask;
-    n = ActorTickAnimFacingNearestPlayer(t->unk24);
+    n = ActorTickAnimFacingNearestPlayer(t->actorAnimDelay24);
     u = gCurTask;
-    u->unk24 = n;
-    n = u->unk20 - 1;
-    u->unk20 = n;
+    u->actorAnimDelay24 = n;
+    n = u->kingDededeWaitTimer - 1;
+    u->kingDededeWaitTimer = n;
     if (n == 0)
     {
-        u->unk1C = 3;
+        u->kingDededeNextState = 3;
         ActorSetState(2);
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
     }
@@ -585,13 +585,13 @@ void KingDededeWaitUpdate(void)
     s32 n;
 
     t = gCurTask;
-    n = ActorTickAnimFacingNearestPlayer(t->unk24);
+    n = ActorTickAnimFacingNearestPlayer(t->actorAnimDelay24);
     u = gCurTask;
-    u->unk24 = n;
-    if (u->unk20 == 0)
+    u->actorAnimDelay24 = n;
+    if (u->kingDededeWaitTimer == 0)
         KingDededeChooseNextState();
     else
-        u->unk20--;
+        u->kingDededeWaitTimer--;
 }
 
 void KingDededeWalk(void)
@@ -613,9 +613,9 @@ void KingDededeWalkUpdate(void)
     s32 f2;
 
     t = gCurTask;
-    if (t->unk1C == 8)
+    if (t->kingDededeNextState == 8)
     {
-        v = t->unk20 - t->pixelX;
+        v = t->kingDededeWalkTargetX - t->pixelX;
         f = t->facing;
         if (v < 0)
         {
@@ -647,10 +647,10 @@ void KingDededeWalkUpdate(void)
     }
     w = abs(w);
     u = gCurTask;
-    if (w <= u->unk34 && u->unk1C != 11)
+    if (w <= u->kingDededeWalkStopDist && u->kingDededeNextState != 11)
     {
         u->onGround = 1;
-        ActorSetState(gCurTask->unk1C);
+        ActorSetState(gCurTask->kingDededeNextState);
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
     }
 }
@@ -679,7 +679,7 @@ void KingDededeJump(void)
     RequestScreenShake(4);
     r = CreateDustBurst(24, 32);
     u = gCurTask;
-    u->unk46 = r;
+    u->kingDededeChildSlot = r;
     CreateKingDededeLandingStar();
     TaskSetMotionXFacing(160 << 9, k = 0x5A5A5A5A);
     v = gCurTask;
@@ -706,11 +706,11 @@ void KingDededeJumpUpdate(void)
     t = gCurTask;
     if (t->state != 3)
     {
-        p = &t->unk46;
+        p = &t->kingDededeChildSlot;
         if (*p != -1)
         {
             TaskFree(*p);
-            gCurTask->unk46 = 0xFFFF;
+            gCurTask->kingDededeChildSlot = 0xFFFF;
         }
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
     }
@@ -730,18 +730,18 @@ void KingDededeFloat(void)
     t->updateState = 4;
     TaskStop();
     u = gCurTask;
-    u->unk20 = -2;
-    u->unk24 = -2;
+    u->kingDededeFloatTimer = -2;
+    u->kingDededeFloatBumpTimer = -2;
     TaskSetFrame(25);
     TaskYieldTrampoline(20);
-    gCurTask->unk6C = z;
+    gCurTask->kingDededeLoopCount = z;
     do
     {
         TaskSetFrame(26);
         TaskYieldTrampoline(10);
         gCurTask->frame++;
         TaskYieldTrampoline(10);
-    } while ((s16)++gCurTask->unk6C <= 3);
+    } while ((s16)++gCurTask->kingDededeLoopCount <= 3);
     PlaySfx(0x21F);
     gCurTask->onGround = 0;
     v = gCurTask;
@@ -756,7 +756,7 @@ void KingDededeFloat(void)
     w = gCurTask;
     w->speedLimitY = 192 << 9;
     w->speedLimitX = 192 << 9;
-    w->unk20 = 150 << 1;
+    w->kingDededeFloatTimer = 150 << 1;
     while (1)
     {
         TaskYieldTrampoline(12);
@@ -772,7 +772,7 @@ void KingDededeFloatUpdate(void)
     s32 n2;
 
     t = gCurTask;
-    n = t->unk20;
+    n = t->kingDededeFloatTimer;
     m2 = -2;
     if (n == m2)
         return;
@@ -782,15 +782,15 @@ void KingDededeFloatUpdate(void)
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
         return;
     }
-    t->unk20 = n - 1;
-    n2 = t->unk24;
+    t->kingDededeFloatTimer = n - 1;
+    n2 = t->kingDededeFloatBumpTimer;
     if (n2 != m2)
     {
-        t->unk24 = n2 - 1;
+        t->kingDededeFloatBumpTimer = n2 - 1;
         if (n2 <= 0)
         {
             TaskSetFrame(22);
-            gCurTask->unk24 = m2;
+            gCurTask->kingDededeFloatBumpTimer = m2;
         }
     }
     if ((u8)TaskGetYDirBitToNearestPlayer() == 2)
@@ -868,7 +868,7 @@ void KingDededeState6(void)
     v->frame++;
     v->accelY = 160 << 6;
     v->speedLimitY = 160 << 11;
-    if (v->unk24 != 0)
+    if (v->kingDededeJumpForward != 0)
         sub_080a0480(1);
     while ((gCurTask->onGround & 1) == 0)
         TaskYieldTrampoline(1);
@@ -893,7 +893,7 @@ void KingDededeSlam(void)
     gCurTask->updateState = 7;
     TaskStop();
     sub_080a043c();
-    if (gCurTask->unk24 != 2)
+    if (gCurTask->kingDededeSlamKind != 2)
         sub_080a0844();
     else
         sub_080a0768();
@@ -908,8 +908,8 @@ void KingDededeSlamUpdate(void)
     t = gCurTask;
     if (t->state != 7)
     {
-        TaskFree(t->unk46);
-        gCurTask->unk46 = 0xFFFF;
+        TaskFree(t->kingDededeChildSlot);
+        gCurTask->kingDededeChildSlot = 0xFFFF;
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
     }
 }
@@ -929,7 +929,7 @@ void KingDededeInhale(void)
     z = 0;
     t->updateState = 8;
     TaskStop();
-    gCurTask->unk20 = z;
+    gCurTask->kingDededeInhaling = z;
     TaskSetFrame(24);
     TaskYieldTrampoline(8);
     u = gCurTask;
@@ -946,29 +946,29 @@ void KingDededeInhale(void)
     }
     w = gCurTask;
     z2 = 0;
-    w->unk20 = z2;
+    w->kingDededeInhaling = z2;
     if (gUnk_02007D00[9] != -1)
     {
         StopSfxOnPlayer(gUnk_02007D00[9], 0x21B);
         gUnk_02007D00[9] = -1;
     }
     x = gCurTask;
-    p = &x->unk46;
+    p = &x->kingDededeChildSlot;
     if (*p != -1)
     {
         TaskFree(*p);
-        gCurTask->unk46 = 0xFFFF;
+        gCurTask->kingDededeChildSlot = 0xFFFF;
     }
     PlaySfx(135 << 2);
     TaskSetFrame(28);
-    gCurTask->unk6C = z2;
+    gCurTask->kingDededeLoopCount = z2;
     do
     {
         TaskStepForward(-2);
         TaskYieldTrampoline(2);
         TaskStepForward(2);
         TaskYieldTrampoline(2);
-    } while ((s16)++gCurTask->unk6C <= 3);
+    } while ((s16)++gCurTask->kingDededeLoopCount <= 3);
     TaskStepForward(0);
     TaskYieldTrampoline(14);
     ActorSetState(9);
@@ -995,14 +995,14 @@ void KingDededeInhaleUpdate(void)
         }
     }
     t = gCurTask;
-    if (t->unk20 != 0)
+    if (t->kingDededeInhaling != 0)
     {
         if (gUnk_02007D00[8] != -1)
         {
-            if (t->unk46 != -1)
+            if (t->kingDededeChildSlot != -1)
             {
-                TaskFree(t->unk46);
-                gCurTask->unk46 = 0xFFFF;
+                TaskFree(t->kingDededeChildSlot);
+                gCurTask->kingDededeChildSlot = 0xFFFF;
             }
         }
         sub_080a00ec();
@@ -1010,12 +1010,12 @@ void KingDededeInhaleUpdate(void)
         if (n == -1)
         {
             u = gCurTask;
-            if (u->unk34 <= 0)
+            if (u->kingDededeInhaleTimer <= 0)
             {
-                if (u->unk46 != -1)
+                if (u->kingDededeChildSlot != -1)
                 {
-                    TaskFree(u->unk46);
-                    gCurTask->unk46 = 0xFFFF;
+                    TaskFree(u->kingDededeChildSlot);
+                    gCurTask->kingDededeChildSlot = 0xFFFF;
                 }
                 if (gUnk_02007D00[9] != n)
                 {
@@ -1027,7 +1027,7 @@ void KingDededeInhaleUpdate(void)
             }
             else
             {
-                u->unk34--;
+                u->kingDededeInhaleTimer--;
             }
         }
     }
@@ -1108,7 +1108,7 @@ void sub_080a150c(void)
     struct Task *t;
 
     t = gCurTask;
-    t->drawCallback = (u32)sub_08065438;
+    t->drawCallback = (u32)ActorDrawStreamedFrameNearView;
     t->updateCallback = (u32)sub_080a1550;
     t->frameTable = gKingDededeFrames;
     TaskFaceNearestPlayer();

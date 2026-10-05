@@ -12,7 +12,7 @@
  * when the actor faces left, relative to the camera rectangle
  * gViewRect[]; CalcHitDamageAndDirection computes a hit's damage (gAttackHealth
  * minus the body box's defence) and knock-back direction (one of eight, from
- * ArcTan2 between the collider and the actor); sub_0801b9e4 copies the hit's
+ * ArcTan2 between the collider and the actor); HitRecordHitter copies the hit's
  * details out for the actor code. */
 
 /* Place the actor's attack box: move the actor position by the box's
@@ -75,7 +75,7 @@ void CalcHitDamageAndDirection(void)
 /* Shared tail of the hit tests: copy the hit's details out - the body
    box's flags, the entry's task and player index, the hit's duration and
    the midpoint between the entry and the actor. */
-void sub_0801b9e4(void)
+void HitRecordHitter(void)
 {
     gHitterColliderClass = gColliderBodyBox->unk08 & 0xF0;
     gHitterColliderKind = (u32)(gColliderBodyBox->unk08 << 28) >> 28;

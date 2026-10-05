@@ -82,7 +82,7 @@ void PlayerActionThrowHold(void)
             /* fallthrough */
         case 4:
             CreatePlayerEffect(gCurTask->player->playerIndex, 47, 0);
-            gCurTask->unk46 = 0;
+            gCurTask->playerThrowHoldFramePhase = 0;
             for (;;) {
                 {
                     struct Task *t = gCurTask;
@@ -195,7 +195,7 @@ void PlayerActionThrowHoldUpdate(void)
             gCurTask->unk28 = 1;
         {
             struct Task *v = gCurTask;
-            switch (v->unk46) {
+            switch (v->playerThrowHoldFramePhase) {
             case 0:
             case 1:
                 if (v->unk28 == 0) {
@@ -224,7 +224,7 @@ void PlayerActionThrowHoldUpdate(void)
                 break;
             }
         }
-        gCurTask->unk46 = (gCurTask->unk46 + 1) & 3;
+        gCurTask->playerThrowHoldFramePhase = (gCurTask->playerThrowHoldFramePhase + 1) & 3;
         break;
     case 0:
     case 1:

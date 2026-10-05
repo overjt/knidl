@@ -12,11 +12,11 @@
 extern u32 gUnk_020060CC[];
 extern u8 gUnk_02006A14[];
 extern s8 gUnk_02008010;
-extern u16 gUnk_0200AF20[];
+extern u16 gObjPaletteBlendBase[];
 extern u16 gScreenAttackTasks[]; /* 20 task indices, 0xFFFF = empty; non-volatile, signed reads cast (s16) (variant 37 in effect_57ce0.c) */
 
 /* IWRAM */
-extern u16 gUnk_03001570[]; /* palette buffer */
+extern u16 gObjPaletteBank8[]; /* palette buffer */
 
 /* ROM */
 extern u8 gUnk_081FD870[];
@@ -121,25 +121,25 @@ void sub_08053c48(void);
 void sub_08053d08(void);
 void PlayerEffectAbilityGetSparkle(void);
 void sub_08053e34(void);
-void sub_08053e38(void);
+void PlayerEffectImpactStar(void);
 void PlayerEffectDeathStar(void);
-void sub_080540d0(void);
-void sub_08054298(void);
+void PlayerEffectSkidDust(void);
+void PlayerEffectSkidDustUpdate(void);
 
 /* src/effect_54330.c */
-void sub_08054330(void);
-void sub_08054504(void);
-void sub_08054538(void);
-void sub_08054838(void);
+void PlayerEffectRunDust(void);
+void PlayerEffectRunDustUpdate(void);
+void PlayerEffectSlideDust(void);
+void PlayerEffectSlideDustUpdate(void);
 void PlayerEffectSplash(void);
 void sub_080548f0(void);
 void PlayerEffectBubble(void);
 void sub_08054a44(void);
 
 /* src/effect_54a80.c */
-void sub_08054a80(void);
-void sub_08054b98(void);
-void sub_08054d94(void);
+void PlayerEffectDeathStarRing(void);
+void PlayerEffectDeathStarRingLateUpdate(void);
+void PlayerEffectMetaKnightDeathBlast(void);
 void sub_08054de8(void);
 void sub_08054fe4(void);
 void sub_080552fc(void);
@@ -245,14 +245,14 @@ void sub_0805b83c(void);
 void sub_0805b8b8(void);
 void sub_0805b8f8(void);
 void PlayerGoalGameState5Update(void);
-void sub_0805b9a4(void);
-void PlayerGoalGameState6Update(void);
+void PlayerGoalGameFall(void);
+void PlayerGoalGameFallUpdate(void);
 void PlayerGoalGameLand(void);
 void PlayerGoalGameLandUpdate(void);
 void sub_0805bb90(void);
-void sub_0805bc1c(void);
-void PlayerGoalGameState8Update(void);
-void sub_0805bc5c(void);
+void PlayerGoalGameWait(void);
+void PlayerGoalGameWaitUpdate(void);
+void PlayerGoalGameWaitLateUpdate(void);
 void sub_0805bca4(void);
 void PlayerGoalGameDance(void);
 void PlayerGoalGameDanceUpdate(void);
@@ -300,15 +300,15 @@ void PlayerDance(void);
 void PlayerDanceInGoalGame(void);
 void PlayerDanceAfterStageClear(void);
 void sub_0805e2d4(void);
-void sub_0805e7b4(void);
-void sub_0805eb2c(s32 a0, s32 a1, s32 a2);
-void sub_0805ee90(void);
-void sub_0805f1bc(void);
-void sub_0805f778(void);
-void sub_0805fb88(void);
-void sub_08060308(void);
-void sub_08060c2c(void);
-void sub_080613e4(void);
-void sub_08061cac(void);
+void PlayerDance1(void);
+void PlayerDance2(s32 a0, s32 a1, s32 a2);
+void PlayerDance3(void);
+void PlayerDance4(void);
+void PlayerDance5(void);
+void PlayerDance7(void);
+void PlayerDance8(void);
+void PlayerDance9(void);
+void PlayerDance10(void);
+void PlayerDance11(void);
 
 #endif /* GUARD_EFFECT_H */

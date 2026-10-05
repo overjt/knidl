@@ -48,16 +48,16 @@ void PlayerActionBallUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk46 != -1)
+    if (t->playerBallRollFrame != -1)
     {
         if (t->unk24 == 0)
         {
             if (t->unk6E == 1)
-                TaskSetFrameNoFlip((s16)gUnk_0873DB0A[t->unk46]);
+                TaskSetFrameNoFlip((s16)gUnk_0873DB0A[t->playerBallRollFrame]);
             else
-                TaskSetFrameFlip(gUnk_0873DB0A[t->unk46]);
+                TaskSetFrameFlip(gUnk_0873DB0A[t->playerBallRollFrame]);
         }
-        if (gCurTask->unk46 == 9)
+        if (gCurTask->playerBallRollFrame == 9)
             gCurTask->unk6E = gCurTask->facing;
     }
     if (abs(gCurTask->velY) > 0x20000)

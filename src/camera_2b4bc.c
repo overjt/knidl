@@ -199,7 +199,7 @@ void CameraSlideToScrollLock(void)
     else
     {
         UpdatePlayerGroupCenter();
-        sub_08029ef4();
+        SetCameraBoundsToGroupInScrollLock();
         done = 0;
         if (gScrollLock.lockedAxes & 1)
         {
@@ -343,8 +343,8 @@ void CameraSlideToScrollLock(void)
                 gCameraBounds[2] = gScrollLock.y0;
             }
         }
-        sub_0802a260();
-        sub_0802a484();
+        UpdatePlayerCamerasInScrollLock();
+        SetPlayerBoundsFromCameraInScrollLock();
         if ((gActivePlayerMask >> gLocalPlayer) & 1)
         {
             if ((gScrollLock.unk0 >> gLocalPlayer) & 1)
@@ -395,11 +395,11 @@ void CameraSlideToScrollLock(void)
         }
         gCameraCenterX = x << 16;
         gCameraCenterY = y << 16;
-        sub_0802a568();
+        SetViewRectToPlayersInScrollLock();
         if (done == gScrollLock.lockedAxes)
             gCameraMode = 3;
         else
-            sub_0802a63c();
+            LockPlayersPastScrollLine();
     }
 }
 

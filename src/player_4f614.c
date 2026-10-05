@@ -96,19 +96,19 @@ void PlayerBallStepRoll(void)
     {
         if (t->velX < 0)
         {
-            if (--t->unk46 < 0)
-                t->unk46 = 15;
+            if (--t->playerBallRollFrame < 0)
+                t->playerBallRollFrame = 15;
             return;
         }
     }
     else if (t->velX > 0)
     {
-        if (--t->unk46 < 0)
-            t->unk46 = 15;
+        if (--t->playerBallRollFrame < 0)
+            t->playerBallRollFrame = 15;
         return;
     }
-    if (++t->unk46 > 15)
-        t->unk46 = 0;
+    if (++t->playerBallRollFrame > 15)
+        t->playerBallRollFrame = 0;
 }
 
 s32 PlayerBallCheckVariant(s32 a)

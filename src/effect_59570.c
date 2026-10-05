@@ -38,7 +38,7 @@ void sub_08059570(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->frameTable = gUnk_08751F0C;
-    switch (gCurTask->unk18 & 15)
+    switch (gCurTask->playerEffectSpawnWord & 15)
     {
     case 0:
         gCurTask->layer = 8;
@@ -200,24 +200,24 @@ void sub_08059570(void)
         TaskYieldTrampoline(5);
         gCurTask->frame -= 2;
         TaskYieldTrampoline(3);
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             gCurTask->frame = 2;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 1);
-        gCurTask->unk6C = 0;
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 1);
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             gCurTask->frame = 0;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 1);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 1);
         break;
     }
     TaskExitTrampoline();
@@ -227,7 +227,7 @@ void sub_08059aac(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk18 & 15)
+    switch (t->playerEffectSpawnWord & 15)
     {
     case 3:
         RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873C23C);
@@ -277,7 +277,7 @@ void sub_08059c28(void)
     gCurTask->posX = (RandomSpreadFacing(-4, 1, 8) + (gCurTask->u8C.parentTask)->pixelX) << 16;
     gCurTask->posY = (RandomSpread(-4, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
     u = gCurTask;
-    switch (u->unk18 & 15)
+    switch (u->playerEffectSpawnWord & 15)
     {
     case 0:
         u->drawCallback = (u32)sub_0803dfc8;
@@ -320,7 +320,7 @@ void sub_08059d7c(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk18 & 0xFF00)
+    switch (t->playerEffectSpawnWord & 0xFF00)
     {
     case 0x100:
         t->moveCallback = (u32)TaskMoveRelativeToParent;
@@ -462,7 +462,7 @@ void sub_08059d7c(void)
         gCurTask->posX = (gCurTask->pixelX + RandomSpreadFacing(0, 1, 8)) << 16;
         gCurTask->posY = (gCurTask->pixelY + RandomSpread(0, 1, 8)) << 16;
         {
-            u16 *row = gUnk_0873BB0E[gCurTask->unk18 & 15];
+            u16 *row = gUnk_0873BB0E[gCurTask->playerEffectSpawnWord & 15];
 
             {
                 s32 a = row[0];

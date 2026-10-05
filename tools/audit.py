@@ -555,9 +555,12 @@ ZONES = (
     ("data", 0x080CFDE4, "(data)"),
 )
 
-# Struct Task fields whose meaning changes with the task family.
+# Struct Task fields whose meaning changes with the task family: the
+# registers include/task_vars.h names per family (#155 run 5), and u76's
+# unk76 member.
 TASK_FAMILY_FIELDS = {"unk18", "unk1C", "unk20", "unk24", "unk28", "unk2C",
-                      "unk30", "unk34", "unk46", "unk74", "unk76"}
+                      "unk30", "unk34", "unk46", "unk6C", "unk6E", "unk70",
+                      "unk74", "unk76"}
 
 REASONS = {
     "fn-game": "tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5)",
@@ -568,7 +571,8 @@ REASONS = {
     "rom-asset": "asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md)",
     "rom-data": "tracked by #155: functional data whose consumer does not settle a name",
     "rom-position": "documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4)",
-    "field-task-family": "per-family Task fields: the meaning changes with the task type, a view per family needs the owner (#155)",
+    "rom-position-format": "documented by position in a format-only chain: a slot no code reads, such as the frame list a graphics descriptor's trailer word points at (docs/naming.md section 2.4, docs/data.md 5.3)",
+    "field-task-family": "per-family registers, named per family by the aliases in include/task_vars.h (docs/header-conventions.md; the member keeps its unk name, lessons and history cite it); `unk76` is u76's member for the player's bits",
     "field-header": "tracked by #155: the field's role is not proven",
     "field-local": "local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`)",
     "loc": "none left: the code is C",
@@ -602,13 +606,16 @@ def asset_segments():
     return {s["name"] for s in cfg["segments"] if s.get("asset")}
 
 
-def position_names():
+def position_names(format_only=False):
+    """Names whose renames.csv evidence is a slot (docs/naming.md 2.4); with
+    format_only, only those of a format-only chain."""
     names = set()
     path = os.path.join(ROOT, "docs/analysis/renames.csv")
     if os.path.exists(path):
         with open(path, encoding="utf-8") as f:
             for row in csv.DictReader(f):
-                if row.get("evidence", "").startswith("slot:"):
+                ev = row.get("evidence", "")
+                if ev.startswith("slot:") and (not format_only or "format-only" in ev):
                     names.add(row["new"])
     return names
 
@@ -676,21 +683,24 @@ def placeholder_census():
                     add("function", "fn-game")
     # RAM and I/O cells
     cfg = json.loads(read("tools/split_config.json"))
-    ram_named = ram_unk = 0
+    positions = position_names()
+    formats = position_names(format_only=True)
+    ram_named = ram_unk = ram_pos = 0
     for addr, name in cfg["data_symbols"].items():
         region = int(addr, 16) >> 24
         if region in (2, 3):
             if name.startswith("gUnk_"):
                 add("RAM cell", "ram")
                 ram_unk += 1
+            elif name in positions:
+                ram_pos += 1
             else:
                 ram_named += 1
         elif region == 4 and name.startswith("gUnk_"):
             add("I/O register", "io")
-    extra["ram"] = (ram_named, ram_unk)
+    extra["ram"] = (ram_named, ram_unk, ram_pos)
     # ROM labels: every label of data/*.s, by segment
     assets = asset_segments()
-    positions = position_names()
     segs = load_segments()
     rom_named = rom_unk_asset = rom_unk_data = rom_pos = 0
     for path in files_under("data", (".s",)):
@@ -707,7 +717,10 @@ def placeholder_census():
             name = m.group(1)
             if name == seg or name.startswith(".L"):
                 continue
-            if name in positions:
+            if name in formats:
+                rom_pos += 1
+                add("ROM label", "rom-position-format")
+            elif name in positions:
                 rom_pos += 1
                 add("ROM label", "rom-position")
             elif name.startswith("gUnk_"):
@@ -756,6 +769,19 @@ def placeholder_census():
     if local:
         add("struct field", "field-local", local)
     extra["header_structs"] = header_structs
+    # the per-family register aliases (include/task_vars.h, #155 run 5)
+    aliases = {}
+    vars_h = os.path.join(ROOT, "include", "task_vars.h")
+    if os.path.exists(vars_h):
+        fam = None
+        for line in read("include/task_vars.h").split("\n"):
+            m = re.match(r"/\* ([A-Z]\w*) - ", line)
+            if m:
+                fam = m.group(1)
+            m = re.match(r"#define (\w+) (unk[0-9A-F]+) ", line)
+            if m and fam:
+                aliases.setdefault(fam, []).append(m.group(1))
+    extra["aliases"] = aliases
     # loc_ labels
     loc = 0
     for top in ("asm", "src", "include", "data"):
@@ -770,24 +796,24 @@ def census_markdown(rows, by_zone, extra):
     out.append("| kind | placeholder | count | reason |")
     out.append("|---|---|---:|---|")
     order = ["fn-game", "fn-engine", "fn-lib", "ram", "io", "rom-data",
-             "rom-asset", "rom-position", "field-task-family", "field-header",
+             "rom-asset", "rom-position", "rom-position-format", "field-task-family", "field-header",
              "field-local", "loc"]
     pattern = {
         "fn-game": "`sub_*`", "fn-engine": "`sub_*`", "fn-lib": "`sub_*`",
         "ram": "`gUnk_02*`, `gUnk_03*`", "io": "`gUnk_04*`",
         "rom-data": "`gUnk_08*`", "rom-asset": "`gUnk_08*`",
-        "rom-position": "(named)", "field-task-family": "`unk*`",
+        "rom-position": "(named)", "rom-position-format": "(named)", "field-task-family": "`unk*`",
         "field-header": "`unk*`", "field-local": "`unk*`", "loc": "`loc_*`",
     }
     for cat in order:
         for (kind, c), n in sorted(rows.items()):
             if c == cat:
                 out.append("| %s | %s | %d | %s |" % (kind, pattern[cat], n, REASONS[cat]))
-    ram_named, ram_unk = extra["ram"]
+    ram_named, ram_unk, ram_pos = extra["ram"]
     rom_named, rom_asset, rom_data, rom_pos = extra["rom"]
     out.append("")
-    out.append("Named for comparison: %d RAM cells, %d ROM labels by role and %d by position."
-               % (ram_named, rom_named, rom_pos))
+    out.append("Named for comparison: %d RAM cells by role and %d by position, %d ROM labels by role and %d by position."
+               % (ram_named, ram_pos, rom_named, rom_pos))
     out.append("")
     out.append("Functions by zone (the #34 module map, docs/analysis/module-map.md):")
     out.append("")
@@ -801,6 +827,12 @@ def census_markdown(rows, by_zone, extra):
     unk = sum(v[1] for v in by_zone.values())
     out.append("| all | | %d | %d |" % (tot, unk))
     out.append("")
+    aliases = extra["aliases"]
+    if aliases:
+        out.append("Register aliases (include/task_vars.h): %d in %d families: " % (
+            sum(len(v) for v in aliases.values()), len(aliases)) + ", ".join(
+            "%s %d" % (f, len(v)) for f, v in sorted(aliases.items())) + ".")
+        out.append("")
     out.append("`unk*` fields by header struct: " + ", ".join(
         "`%s` %d" % (s, n) for s, n in sorted(extra["header_structs"].items(), key=lambda x: (-x[1], x[0]))) + ".")
     out.append("")

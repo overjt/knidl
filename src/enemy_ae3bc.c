@@ -47,10 +47,10 @@ extern s16 ActorComputeHealth(void);
 extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
-extern u32 sub_08068f68(void);
+extern u32 ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCollideTerrain(void);
-extern u32 sub_0806951c(void);
-extern u32 sub_08069888(void);
+extern u32 ActorCollideTerrainAlongVelocity(void);
+extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
 /* Module functions */
@@ -82,7 +82,7 @@ void Task_NightmarePowerOrb(void)
     b42 = &t->layer;
     z = 0;
     *b42 = 11;
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     sub_080b05e8();
     u = *c;
     u->updateCallback = (u32)NightmarePowerOrbUpdate;
@@ -91,7 +91,7 @@ void Task_NightmarePowerOrb(void)
     v = *c;
     v->posX = 192 << 16;
     v->posY = 152 << 15;
-    v->unk6C = z;
+    v->nightmarePowerOrbLoopCount = z;
     do
     {
         sub_080ae548();
@@ -109,8 +109,8 @@ void Task_NightmarePowerOrb(void)
         sub_080ae628();
         NightmarePowerOrbDash();
         u2 = gCurTask;
-        u2->unk6C++;
-    } while ((s16)u2->unk6C <= 1);
+        u2->nightmarePowerOrbLoopCount++;
+    } while ((s16)u2->nightmarePowerOrbLoopCount <= 1);
     sub_080aeef8();
     sub_080aef30();
 }
@@ -129,7 +129,7 @@ void NightmarePowerOrbUpdate(void)
     u = *c;
     if ((s16)u->health != 0)
     {
-        sub_08068f68();
+        ActorCheckHitsWithExtraBox();
         ActorReactToHit();
         sub_080af1d4();
         if (gUnk_02007D00[3] > 0)
@@ -154,10 +154,10 @@ void sub_080ae4c4(void)
     c = &gCurTask;
     t = *c;
     t->u8C.actor->animScript = 0;
-    t->unk28 = 0;
+    t->actorAnimDelay = 0;
     t->facing = 1;
     u = *c;
-    u->unk2C = 0;
+    u->nightmarePowerOrbAnimTimer = 0;
     p = gUnk_02007D00;
     p[0] = 0;
     p[1] = 0;
@@ -170,7 +170,7 @@ void sub_080ae4c4(void)
     p[9] = 0;
     w = ActorComputeHealth();
     t2 = *c;
-    t2->unk24 = w;
+    t2->nightmarePowerOrbMaxHealth = w;
 }
 
 void sub_080ae548(void)
@@ -195,8 +195,8 @@ void sub_080ae548(void)
     c = &gCurTask;
     t = *c;
     z = 0;
-    t->unk2C = z;
-    sub_080aefd4((u32)gUnk_0874AD74);
+    t->nightmarePowerOrbAnimTimer = z;
+    NightmarePowerOrbStartAnim((u32)gUnk_0874AD74);
     (*c)->updateState = z;
     u1 = *c;
     v1 = 0xFFFF0000;
@@ -269,7 +269,7 @@ void sub_080ae628(void)
     struct Task *u20;
 
     ActorSetState(1);
-    sub_080aefd4((u32)gUnk_0874ADA8);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874ADA8);
     c = &gCurTask;
     t = *c;
     z = 0;
@@ -365,7 +365,7 @@ void sub_080ae628(void)
 void sub_080ae79c(void)
 {
     ActorSetState(2);
-    sub_080aefd4((u32)gUnk_0874AEAC);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874AEAC);
     gCurTask->updateState = 3;
     TaskYieldTrampoline(40);
     CreateNightmarePowerOrbStar(0);
@@ -388,7 +388,7 @@ void NightmarePowerOrbShoot(void)
     struct Task *u5;
 
     ActorSetState(3);
-    sub_080aefd4((u32)gUnk_0874ADA8);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874ADA8);
     c = &gCurTask;
     (*c)->updateState = 3;
     TaskStop();
@@ -450,7 +450,7 @@ void NightmarePowerOrbShootStar(void)
 void NightmarePowerOrbDash(void)
 {
     ActorSetState(4);
-    sub_080aefd4((u32)gUnk_0874AF90);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874AF90);
     gCurTask->updateState = 3;
     switch ((u8)NightmarePowerOrbPickDashLane())
     {
@@ -580,7 +580,7 @@ void NightmarePowerOrbDash(void)
 
 void sub_080aec00(void)
 {
-    sub_080aefd4((u32)gUnk_0874B0A0);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874B0A0);
     gCurTask->updateState = 3;
     gCurTask->velX = 128 << 10;
     gCurTask->velY = 128 << 10;
@@ -673,7 +673,7 @@ void sub_080aed5c(void)
     struct Task *q18;
     struct Task *q19;
 
-    sub_080aefd4((u32)gUnk_0874B0A0);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874B0A0);
     c = &gCurTask;
     t = *c;
     z = 0;
@@ -791,7 +791,7 @@ void sub_080aeef8(void)
     struct Task *u;
 
     ActorSetState(5);
-    sub_080aefd4((u32)gUnk_0874B0C4);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874B0C4);
     c = &gCurTask;
     (*c)->updateState = 3;
     u = *c;
@@ -828,7 +828,7 @@ void sub_080aef5c(void)
     p[5]++;
 }
 
-void sub_080aefd4(u32 a)
+void NightmarePowerOrbStartAnim(u32 a)
 {
     struct Task *t;
     struct Task *u;
@@ -837,24 +837,24 @@ void sub_080aefd4(u32 a)
     t->u8C.actor->animScript = (struct AnimCmd *)a;
     t->u8C.actor->animScriptPos = 0;
     u = gCurTask;
-    u->unk28 = 0;
-    sub_080af020();
+    u->actorAnimDelay = 0;
+    NightmarePowerOrbStepAnim();
 }
 
-void sub_080aeff8(void)
+void NightmarePowerOrbTickAnim(void)
 {
     struct Task *t;
 
     t = gCurTask;
     if (t->u8C.actor->animScript != 0)
     {
-        t->unk28--;
-        if (t->unk28 <= 0)
-            sub_080af020();
+        t->actorAnimDelay--;
+        if (t->actorAnimDelay <= 0)
+            NightmarePowerOrbStepAnim();
     }
 }
 
-void sub_080af020(void)
+void NightmarePowerOrbStepAnim(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -898,7 +898,7 @@ top:
         a4 = t4->u8C.actor;
         r = ((s32 (*)(void))((s32 *)a4->animScript)[a4->animScriptPos++])();
         u = gCurTask;
-        u->unk28 = r;
+        u->actorAnimDelay = r;
         break;
     default:
         t5 = gCurTask;
@@ -906,7 +906,7 @@ top:
         t5->frame = ((s32 *)a5->animScript)[a5->animScriptPos++];
         t6 = gCurTask;
         a6 = t6->u8C.actor;
-        t6->unk28 = ((s32 *)a6->animScript)[a6->animScriptPos++];
+        t6->actorAnimDelay = ((s32 *)a6->animScript)[a6->animScriptPos++];
         break;
     }
 }
@@ -922,13 +922,13 @@ void sub_080af114(void)
     struct Task *t;
     struct Task *u;
 
-    sub_080aeff8();
+    NightmarePowerOrbTickAnim();
     c = &gCurTask;
     t = *c;
-    t->unk2C++;
-    if (t->unk2C > 39)
+    t->nightmarePowerOrbAnimTimer++;
+    if (t->nightmarePowerOrbAnimTimer > 39)
     {
-        sub_080aefd4((u32)gUnk_0874ADA8);
+        NightmarePowerOrbStartAnim((u32)gUnk_0874ADA8);
         u = *c;
         u->updateState = 1;
     }
@@ -954,24 +954,24 @@ void sub_080af188(void)
 {
     struct Task *t;
 
-    sub_080aeff8();
+    NightmarePowerOrbTickAnim();
     if (gUnk_02007D00[1] <= 0)
     {
-        sub_080aefd4((u32)gUnk_0874AD74);
+        NightmarePowerOrbStartAnim((u32)gUnk_0874AD74);
         t = gCurTask;
-        t->unk2C = 0;
+        t->nightmarePowerOrbAnimTimer = 0;
         t->updateState = 0;
     }
 }
 
 void sub_080af1b8(void)
 {
-    sub_080aefd4((u32)gUnk_0874B07C);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874B07C);
 }
 
 void sub_080af1c8(void)
 {
-    sub_080aeff8();
+    NightmarePowerOrbTickAnim();
 }
 
 void sub_080af1d4(void)
@@ -999,12 +999,12 @@ void CreateNightmarePowerOrbStar(u8 a)
         sp.subtype = 32;
         sp.taskType = 135;
         sp.variant = a;
-        sp.spawnArg = gCurTask->unk74;
+        sp.spawnArg = gCurTask->actorSpawnArg;
         sp.tileWord = 0xA110;
         sp.x = gCurTask->posX >> 16;
         sp.y = gCurTask->posY >> 16;
         sp.checkTerrain = 0;
-        gCurTask->unk46 = CreateActorFromDesc(&sp, 1);
+        gCurTask->nightmarePowerOrbStarSlot = CreateActorFromDesc(&sp, 1);
     }
 }
 
@@ -1034,10 +1034,10 @@ void NightmarePowerOrbDefeat(void)
     ActorSetAttackBox(0);
     (*c)->u8C.actor->sfxOverride = 0x23E;
     HudRemoveHpBar();
-    sub_0806b05c();
-    sub_0806b098();
+    BossDefeatFlash();
+    BossDefeatExplode();
     u = *c;
-    sub_08066f50(u->pixelX, u->pixelY);
+    CreateNextRoomWarpStar(u->pixelX, u->pixelY);
     sub_080aeef8();
     (*c)->updateCallback = (u32)sub_080aef50;
     sub_080b09ac();
@@ -1080,9 +1080,9 @@ void NightmarePowerOrbStarUpdate(void)
     if (gUnk_02007D00[0] != 0)
         ActorDestroy();
     c = &gCurTask;
-    r = ActorTickAnim((*c)->unk28);
+    r = ActorTickAnim((*c)->actorAnimDelay);
     u = *c;
-    u->unk28 = r;
+    u->actorAnimDelay = r;
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -1113,7 +1113,7 @@ void NightmarePowerOrbStarVariant0(void)
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
-    u1->unk28 = r;
+    u1->actorAnimDelay = r;
     va = 128 << 8;
     u1->velX = va;
     u1->velY = 0xFFFE0000;
@@ -1134,7 +1134,7 @@ void NightmarePowerOrbStarVariant0(void)
     TaskYieldTrampoline(32);
     r2 = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B220);
     u5 = *c;
-    u5->unk28 = r2;
+    u5->actorAnimDelay = r2;
     PlaySfx(139 << 2);
     u6 = *c;
     u6->velX = 0xFFFA0000;
@@ -1143,17 +1143,17 @@ top:
     t = *c;
     w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
-    t2->unk46 = w;
+    t2->nightmarePowerOrbStarTrailSlot = w;
     w2 = CreateChildTaskAt(211, t2->posX >> 16, t2->posY >> 16, 1);
-    (*c)->unk46 = w2;
+    (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(4);
     t4 = *c;
     w3 = CreateChildTaskAt(212, t4->posX >> 16, t4->posY >> 16, 1);
-    (*c)->unk46 = w3;
+    (*c)->nightmarePowerOrbStarTrailSlot = w3;
     TaskYieldTrampoline(2);
     t6 = *c;
     w4 = CreateChildTaskAt(210, t6->posX >> 16, t6->posY >> 16, 1);
-    (*c)->unk46 = w4;
+    (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(2);
     goto top;
 }
@@ -1184,7 +1184,7 @@ void NightmarePowerOrbStarVariant1(void)
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
-    u1->unk28 = r;
+    u1->actorAnimDelay = r;
     va = 128 << 6;
     u1->velX = va;
     u1->velY = 0xFFFF0000;
@@ -1205,7 +1205,7 @@ void NightmarePowerOrbStarVariant1(void)
     TaskYieldTrampoline(32);
     r2 = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B220);
     u5 = *c;
-    u5->unk28 = r2;
+    u5->actorAnimDelay = r2;
     PlaySfx(139 << 2);
     u6 = *c;
     u6->velX = 0xFFFA0000;
@@ -1214,17 +1214,17 @@ top:
     t = *c;
     w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
-    t2->unk46 = w;
+    t2->nightmarePowerOrbStarTrailSlot = w;
     w2 = CreateChildTaskAt(211, t2->posX >> 16, t2->posY >> 16, 1);
-    (*c)->unk46 = w2;
+    (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(4);
     t4 = *c;
     w3 = CreateChildTaskAt(212, t4->posX >> 16, t4->posY >> 16, 1);
-    (*c)->unk46 = w3;
+    (*c)->nightmarePowerOrbStarTrailSlot = w3;
     TaskYieldTrampoline(2);
     t6 = *c;
     w4 = CreateChildTaskAt(210, t6->posX >> 16, t6->posY >> 16, 1);
-    (*c)->unk46 = w4;
+    (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(2);
     goto top;
 }
@@ -1255,7 +1255,7 @@ void NightmarePowerOrbStarVariant2(void)
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
-    u1->unk28 = r;
+    u1->actorAnimDelay = r;
     va = 128 << 6;
     u1->velX = va;
     u1->velY = 128 << 9;
@@ -1276,7 +1276,7 @@ void NightmarePowerOrbStarVariant2(void)
     TaskYieldTrampoline(32);
     r2 = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B220);
     u5 = *c;
-    u5->unk28 = r2;
+    u5->actorAnimDelay = r2;
     PlaySfx(139 << 2);
     u6 = *c;
     u6->velX = 0xFFFA0000;
@@ -1285,17 +1285,17 @@ top:
     t = *c;
     w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
-    t2->unk46 = w;
+    t2->nightmarePowerOrbStarTrailSlot = w;
     w2 = CreateChildTaskAt(211, t2->posX >> 16, t2->posY >> 16, 1);
-    (*c)->unk46 = w2;
+    (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(4);
     t4 = *c;
     w3 = CreateChildTaskAt(212, t4->posX >> 16, t4->posY >> 16, 1);
-    (*c)->unk46 = w3;
+    (*c)->nightmarePowerOrbStarTrailSlot = w3;
     TaskYieldTrampoline(2);
     t6 = *c;
     w4 = CreateChildTaskAt(210, t6->posX >> 16, t6->posY >> 16, 1);
-    (*c)->unk46 = w4;
+    (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(2);
     goto top;
 }
@@ -1326,7 +1326,7 @@ void NightmarePowerOrbStarVariant3(void)
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
-    u1->unk28 = r;
+    u1->actorAnimDelay = r;
     va = 128 << 8;
     u1->velX = va;
     u1->velY = 128 << 10;
@@ -1347,7 +1347,7 @@ void NightmarePowerOrbStarVariant3(void)
     TaskYieldTrampoline(32);
     r2 = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B220);
     u5 = *c;
-    u5->unk28 = r2;
+    u5->actorAnimDelay = r2;
     PlaySfx(139 << 2);
     u6 = *c;
     u6->velX = 0xFFFA0000;
@@ -1356,17 +1356,17 @@ top:
     t = *c;
     w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
-    t2->unk46 = w;
+    t2->nightmarePowerOrbStarTrailSlot = w;
     w2 = CreateChildTaskAt(211, t2->posX >> 16, t2->posY >> 16, 1);
-    (*c)->unk46 = w2;
+    (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(4);
     t4 = *c;
     w3 = CreateChildTaskAt(212, t4->posX >> 16, t4->posY >> 16, 1);
-    (*c)->unk46 = w3;
+    (*c)->nightmarePowerOrbStarTrailSlot = w3;
     TaskYieldTrampoline(2);
     t6 = *c;
     w4 = CreateChildTaskAt(210, t6->posX >> 16, t6->posY >> 16, 1);
-    (*c)->unk46 = w4;
+    (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(2);
     goto top;
 }
@@ -1387,7 +1387,7 @@ void sub_080af7d4(void)
     i = t->parent;
     o = i * 144;
     e = (struct Task *)((u8 *)gTasks + o);
-    if ((s16)e->health < e->unk24 >> 1)
+    if ((s16)e->health < e->nightmarePowerOrbMaxHealth >> 1)
     {
         j = TaskFindNearestPlayer();
         o2 = j * 144;
@@ -1461,22 +1461,22 @@ void NightmarePowerOrbStarVariant5(void)
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
-    u1->unk28 = r;
+    u1->actorAnimDelay = r;
     u1->velX = 0xFFFC0000;
 top:
     t = *c;
     w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
-    t2->unk46 = w;
+    t2->nightmarePowerOrbStarTrailSlot = w;
     w2 = CreateChildTaskAt(210, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
-    (*c)->unk46 = w2;
+    (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
     w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
-    t4->unk46 = w3;
+    t4->nightmarePowerOrbStarTrailSlot = w3;
     w4 = CreateChildTaskAt(210, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
-    (*c)->unk46 = w4;
+    (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
 }
@@ -1500,23 +1500,23 @@ void NightmarePowerOrbStarVariant6(void)
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
-    u1->unk28 = r;
+    u1->actorAnimDelay = r;
     u1->velX = 0xFFFDCCCD;
     u1->velY = 0xFFFE4CCD;
 top:
     t = *c;
     w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
-    t2->unk46 = w;
+    t2->nightmarePowerOrbStarTrailSlot = w;
     w2 = CreateChildTaskAt(210, (s16)((t2->posX >> 16) + 1), (s16)((t2->posY >> 16) - 1), 1);
-    (*c)->unk46 = w2;
+    (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
     w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
-    t4->unk46 = w3;
+    t4->nightmarePowerOrbStarTrailSlot = w3;
     w4 = CreateChildTaskAt(210, (s16)((t4->posX >> 16) - 1), (s16)((t4->posY >> 16) + 1), 1);
-    (*c)->unk46 = w4;
+    (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
 }
@@ -1540,22 +1540,22 @@ void NightmarePowerOrbStarVariant7(void)
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
-    u1->unk28 = r;
+    u1->actorAnimDelay = r;
     u1->velX = 0xFFFD0000;
 top:
     t = *c;
     w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
-    t2->unk46 = w;
+    t2->nightmarePowerOrbStarTrailSlot = w;
     w2 = CreateChildTaskAt(210, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
-    (*c)->unk46 = w2;
+    (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
     w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
-    t4->unk46 = w3;
+    t4->nightmarePowerOrbStarTrailSlot = w3;
     w4 = CreateChildTaskAt(210, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
-    (*c)->unk46 = w4;
+    (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
 }
@@ -1579,23 +1579,23 @@ void NightmarePowerOrbStarVariant8(void)
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
-    u1->unk28 = r;
+    u1->actorAnimDelay = r;
     u1->velX = 0xFFFDCCCD;
     u1->velY = 0x0001B333;
 top:
     t = *c;
     w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
-    t2->unk46 = w;
+    t2->nightmarePowerOrbStarTrailSlot = w;
     w2 = CreateChildTaskAt(210, (s16)((t2->posX >> 16) - 1), (s16)((t2->posY >> 16) - 1), 1);
-    (*c)->unk46 = w2;
+    (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
     w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
-    t4->unk46 = w3;
+    t4->nightmarePowerOrbStarTrailSlot = w3;
     w4 = CreateChildTaskAt(210, (s16)((t4->posX >> 16) + 1), (s16)((t4->posY >> 16) + 1), 1);
-    (*c)->unk46 = w4;
+    (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
 }
@@ -1620,7 +1620,7 @@ void NightmarePowerOrbStarVariant9(void)
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
-    u1->unk28 = r;
+    u1->actorAnimDelay = r;
     u1->velX = 0xFFFE0000;
     u1->velY = 0xFFFE0000;
     TaskYieldTrampoline(16);
@@ -1631,16 +1631,16 @@ top:
     t = *c;
     w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
-    t2->unk46 = w;
+    t2->nightmarePowerOrbStarTrailSlot = w;
     w2 = CreateChildTaskAt(210, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
-    (*c)->unk46 = w2;
+    (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
     w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
-    t4->unk46 = w3;
+    t4->nightmarePowerOrbStarTrailSlot = w3;
     w4 = CreateChildTaskAt(210, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
-    (*c)->unk46 = w4;
+    (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
 }
@@ -1665,7 +1665,7 @@ void NightmarePowerOrbStarVariant10(void)
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
-    u1->unk28 = r;
+    u1->actorAnimDelay = r;
     u1->velX = 0xFFFE0000;
     u1->velY = 128 << 10;
     TaskYieldTrampoline(16);
@@ -1676,16 +1676,16 @@ top:
     t = *c;
     w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
-    t2->unk46 = w;
+    t2->nightmarePowerOrbStarTrailSlot = w;
     w2 = CreateChildTaskAt(210, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
-    (*c)->unk46 = w2;
+    (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
     w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
-    t4->unk46 = w3;
+    t4->nightmarePowerOrbStarTrailSlot = w3;
     w4 = CreateChildTaskAt(210, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
-    (*c)->unk46 = w4;
+    (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
 }
@@ -1703,12 +1703,12 @@ void NightmarePowerOrbStarVariant11(void)
     ActorSetAttackBox((u32)gUnk_0874B4A4);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B234);
     u1 = *c;
-    u1->unk28 = r;
+    u1->actorAnimDelay = r;
     u1->velX = 0xFFFA0000;
 top:
     t = *c;
     w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
-    (*c)->unk46 = w;
+    (*c)->nightmarePowerOrbStarTrailSlot = w;
     TaskYieldTrampoline(16);
     goto top;
 }
@@ -1743,7 +1743,7 @@ void Task_NightmarePowerOrbStarTrail(void)
     else
         w = v + gTasks[x->parent].velY;
     x->velY = w;
-    gCurTask->unk6C = 0;
+    gCurTask->nightmarePowerOrbStarTrailLoopCount = 0;
     do
     {
         gCurTask->frame = 19;
@@ -1754,8 +1754,8 @@ void Task_NightmarePowerOrbStarTrail(void)
         TaskYieldTrampoline(2);
         gCurTask->frame = 22;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->nightmarePowerOrbStarTrailLoopCount++;
+    } while ((s16)gCurTask->nightmarePowerOrbStarTrailLoopCount <= 1);
     TaskExitTrampoline();
 }
 
@@ -1815,7 +1815,7 @@ void Task_NightmarePowerOrbStarTrailUp(void)
             y = v + w + 0xFFFF8000;
     }
     x->velY = y;
-    gCurTask->unk6C = 0;
+    gCurTask->nightmarePowerOrbStarTrailUpLoopCount = 0;
     do
     {
         gCurTask->frame = 19;
@@ -1826,8 +1826,8 @@ void Task_NightmarePowerOrbStarTrailUp(void)
         TaskYieldTrampoline(2);
         gCurTask->frame = 22;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->nightmarePowerOrbStarTrailUpLoopCount++;
+    } while ((s16)gCurTask->nightmarePowerOrbStarTrailUpLoopCount <= 1);
     TaskExitTrampoline();
 }
 
@@ -1887,7 +1887,7 @@ void Task_NightmarePowerOrbStarTrailDown(void)
             y = v + w + (128 << 8);
     }
     x->velY = y;
-    gCurTask->unk6C = 0;
+    gCurTask->nightmarePowerOrbStarTrailDownLoopCount = 0;
     do
     {
         gCurTask->frame = 19;
@@ -1898,8 +1898,8 @@ void Task_NightmarePowerOrbStarTrailDown(void)
         TaskYieldTrampoline(2);
         gCurTask->frame = 22;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->nightmarePowerOrbStarTrailDownLoopCount++;
+    } while ((s16)gCurTask->nightmarePowerOrbStarTrailDownLoopCount <= 1);
     TaskExitTrampoline();
 }
 
@@ -1939,7 +1939,7 @@ void Task_NightmarePowerOrbStarAfterimage(void)
     case 1:
     case 2:
     case 3:
-        gCurTask->unk6C = 0;
+        gCurTask->nightmarePowerOrbStarAfterimageLoopCount = 0;
         do
         {
             gCurTask->frame = 17;
@@ -1950,8 +1950,8 @@ void Task_NightmarePowerOrbStarAfterimage(void)
             TaskYieldTrampoline(2);
             gCurTask->frame = 14;
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 1);
+            gCurTask->nightmarePowerOrbStarAfterimageLoopCount++;
+        } while ((s16)gCurTask->nightmarePowerOrbStarAfterimageLoopCount <= 1);
         break;
     case 5:
     case 6:
@@ -2057,7 +2057,7 @@ void sub_080b05e8(void)
     struct Task *u21;
 
     PlayBgm(32);
-    sub_08003184();
+    ResetBgmPlayer();
     SetBgmVolume(0);
     p = gUnk_02007D00;
     z = 0;
@@ -2069,12 +2069,12 @@ void sub_080b05e8(void)
     u->u8C.actor->animScript = (struct AnimCmd *)z;
     p[6] = z;
     p[7] = 3;
-    sub_08063698(80, 32);
+    TaskCreatePausedInScreenAttack(80, 32);
     (*c)->updateCallback = (u32)sub_080b07d8;
     TaskYieldTrampoline(65);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B240);
     u2 = *c;
-    u2->unk28 = r;
+    u2->actorAnimDelay = r;
     u2->posX = 128 << 17;
     u2->posY = 0xFFF80000;
     TaskYieldTrampoline(28);
@@ -2098,7 +2098,7 @@ void sub_080b05e8(void)
     PlaySfx(0x241);
     r2 = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B254);
     u7 = *c;
-    u7->unk28 = r2;
+    u7->actorAnimDelay = r2;
     vD = 128 << 11;
     u7->velX = vD;
     u7->velY = vA;
@@ -2125,7 +2125,7 @@ void sub_080b05e8(void)
     TaskYieldTrampoline(6);
     r3 = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B2C8);
     u13 = *c;
-    u13->unk28 = r3;
+    u13->actorAnimDelay = r3;
     u13->velX = 0xFFFC0000;
     vG = 192 << 8;
     u13->velY = vG;
@@ -2169,9 +2169,9 @@ void sub_080b07d8(void)
     s32 r;
 
     c = &gCurTask;
-    r = ActorTickAnimFacingNearestPlayer((*c)->unk28);
+    r = ActorTickAnimFacingNearestPlayer((*c)->actorAnimDelay);
     u = *c;
-    u->unk28 = r;
+    u->actorAnimDelay = r;
     p = gUnk_02007D00;
     if (p[5] > 23)
         p[5] = 0;
@@ -2191,19 +2191,19 @@ void Task_NightmarePowerOrbIntroScroll(void)
     c = &gCurTask;
     u = *c;
     u->updateCallback = (u32)sub_080b08a0;
-    u->unk28 = -4;
+    u->nightmarePowerOrbIntroScrollSpeed = -4;
     TaskYieldTrampoline(143);
     u2 = *c;
-    u2->unk28 = -3;
+    u2->nightmarePowerOrbIntroScrollSpeed = -3;
     TaskYieldTrampoline(32);
     u3 = *c;
-    u3->unk28 = -2;
+    u3->nightmarePowerOrbIntroScrollSpeed = -2;
     TaskYieldTrampoline(32);
     u4 = *c;
-    u4->unk28 = -1;
+    u4->nightmarePowerOrbIntroScrollSpeed = -1;
     TaskYieldTrampoline(32);
     u5 = *c;
-    u5->unk28 = 0;
+    u5->nightmarePowerOrbIntroScrollSpeed = 0;
     TaskYieldTrampoline(16);
     TaskExitTrampoline();
 }
@@ -2212,7 +2212,7 @@ void sub_080b08a0(void)
 {
     s32 *p;
 
-    *(u16 *)&gCameraAnchorY += gCurTask->unk28;
+    *(u16 *)&gCameraAnchorY += gCurTask->nightmarePowerOrbIntroScrollSpeed;
     p = gUnk_02007D00;
     if (p[9] < 0)
         SetBgmVolume(0);
@@ -2223,7 +2223,7 @@ void sub_080b08a0(void)
     }
 }
 
-void sub_080b08e4(void)
+void Task_NightmarePowerOrbStreak(void)
 {
     struct Task *t;
     struct Task *u;
@@ -2262,8 +2262,8 @@ void sub_080b09ac(void)
     sub_080b0b04();
     gCurTask->facing = 1;
     TaskSetFrame(0);
-    gCurTask->unk18 = 128 << 13;
-    gCurTask->unk28 = 0xFFFFF300;
+    gCurTask->nightmarePowerOrbScale = 128 << 13;
+    gCurTask->nightmarePowerOrbScaleSpeed = 0xFFFFF300;
     gCurTask->posX = 138 << 16;
     gCurTask->posY = 0xFFF00000;
     gCurTask->velX = 0xFFFF0000;
@@ -2288,8 +2288,8 @@ void sub_080b09ac(void)
     TaskYieldTrampoline(62);
     gCurTask->frame = 1;
     gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
-    gCurTask->unk18 = 0;
-    gCurTask->unk28 = 0;
+    gCurTask->nightmarePowerOrbScale = 0;
+    gCurTask->nightmarePowerOrbScaleSpeed = 0;
     TaskYieldTrampoline(48);
     gCurTask->velY = 128 << 5;
     TaskYieldTrampoline(84);
@@ -2305,7 +2305,7 @@ void sub_080b0b04(void)
 
     q = (u16 *)gUnk_082FFDF0;
     RequestCopy(4, ((u32 *)q)[3], OBJ_VRAM0, q[1] << 5);
-    RequestCopy(2, ((u32 *)q)[2], (u32)gUnk_03001570, 32);
+    RequestCopy(2, ((u32 *)q)[2], (u32)gObjPaletteBank8, 32);
     t = gCurTask;
     t->tileWord = 0x8010;
     t->frameTable = gUnk_08754560;
@@ -2318,13 +2318,13 @@ void sub_080b0b50(void)
     s8 sign;
     s32 r;
 
-    if (gCurTask->unk18 > 0)
+    if (gCurTask->nightmarePowerOrbScale > 0)
     {
-        gCurTask->unk18 += gCurTask->unk28;
-        if (gCurTask->unk18 < 0)
-            gCurTask->unk18 = 0;
-        if (gCurTask->unk18 > (252 << 14))
-            gCurTask->unk18 = 252 << 14;
+        gCurTask->nightmarePowerOrbScale += gCurTask->nightmarePowerOrbScaleSpeed;
+        if (gCurTask->nightmarePowerOrbScale < 0)
+            gCurTask->nightmarePowerOrbScale = 0;
+        if (gCurTask->nightmarePowerOrbScale > (252 << 14))
+            gCurTask->nightmarePowerOrbScale = 252 << 14;
     }
     if (gCurTask->frameTable == 0)
         return;
@@ -2336,11 +2336,11 @@ void sub_080b0b50(void)
     {
         t = gCurTask;
         tbl = t->frameTable;
-        if (t->unk18 > 0)
+        if (t->nightmarePowerOrbScale > 0)
         {
             sign = (t->spriteFlags & 0x8000) ? -1 : 1;
             t->spriteFlags &= 0x7FFF;
-            r = DrawAffineSprite(tbl[t->frame], (u16)gUnk_0873FF98[t->unk18 >> 16] * sign, gUnk_0873FF98[t->unk18 >> 16], 0);
+            r = DrawAffineSprite(tbl[t->frame], (u16)gUnk_0873FF98[t->nightmarePowerOrbScale >> 16] * sign, gUnk_0873FF98[t->nightmarePowerOrbScale >> 16], 0);
             QueueSprite(gCurTask->layer, r, gCurTask->spriteFlags, gCurTask->tileWord,
                          gCurTask->pixelX - gSpriteCameraX,
                          (s16)(gCurTask->pixelY - gSpriteCameraY));
@@ -2384,7 +2384,7 @@ void Task_PaintRollerPainting(void)
     TaskYieldTrampoline(2);
     TaskSetFrame(-1);
     TaskYieldTrampoline(2);
-    gCurTask->unk6C = 0;
+    gCurTask->paintRollerPaintingLoopCount = 0;
     do
     {
         TaskSetFrame(2);
@@ -2395,8 +2395,8 @@ void Task_PaintRollerPainting(void)
         TaskYieldTrampoline(2);
         TaskSetFrame(-1);
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 2);
+        gCurTask->paintRollerPaintingLoopCount++;
+    } while ((s16)gCurTask->paintRollerPaintingLoopCount <= 2);
     PaintRollerPaintingPickSubject();
     CallTableEntry(gCurTask->state, 8, gPaintRollerPaintingStates);
 }
@@ -2539,7 +2539,7 @@ void PaintRollerPaintingBomb(void)
     TaskSetFrame(4);
     TaskYieldTrampoline(60);
     gCurTask->updateCallback = (u32)PaintRollerPaintingBombUpdate;
-    gCurTask->unk28 = ActorStartAnim((struct AnimCmd *)gUnk_0874B560);
+    gCurTask->actorAnimDelay = ActorStartAnim((struct AnimCmd *)gUnk_0874B560);
     TaskFaceNearestPlayer();
     TaskSetMotionXFacing(128 << 8, 0x5A5A5A5A);
     gCurTask->velY = 128 << 8;
@@ -2561,9 +2561,9 @@ void PaintRollerPaintingBomb(void)
         TaskYieldTrampoline(1);
     TaskStop();
     TaskYieldTrampoline(10);
-    gCurTask->unk28 = ActorStartAnim((struct AnimCmd *)gUnk_0874B568);
+    gCurTask->actorAnimDelay = ActorStartAnim((struct AnimCmd *)gUnk_0874B568);
     TaskYieldTrampoline(44);
-    gCurTask->unk28 = ActorStartAnim(0);
+    gCurTask->actorAnimDelay = ActorStartAnim(0);
     TaskSetFrame(6);
     TaskYieldTrampoline(2);
     TaskSetFrame(4);
@@ -2587,9 +2587,9 @@ void PaintRollerPaintingBombUpdate(void)
     s32 r;
 
     c = &gCurTask;
-    r = ActorTickAnim((*c)->unk28);
+    r = ActorTickAnim((*c)->actorAnimDelay);
     u = *c;
-    u->unk28 = r;
+    u->actorAnimDelay = r;
     ActorCollideTerrain();
     ActorCheckHits();
     ActorReactToHit();
@@ -2612,7 +2612,7 @@ void PaintRollerPaintingCloud(void)
     TaskYieldTrampoline(8);
     TaskStop();
     TaskYieldTrampoline(16);
-    gCurTask->unk28 = ActorStartAnim((struct AnimCmd *)gUnk_0874B574);
+    gCurTask->actorAnimDelay = ActorStartAnim((struct AnimCmd *)gUnk_0874B574);
     TaskYieldTrampoline(16);
     TaskFaceNearestPlayer();
     TaskSetMotionXFacing(128 << 9, 0x5A5A5A5A);
@@ -2622,10 +2622,10 @@ void PaintRollerPaintingCloud(void)
         sp.subtype = 15;
         sp.taskType = 117;
         sp.variant = gCurTask->variant;
-        sp.spawnArg = gCurTask->unk74;
+        sp.spawnArg = gCurTask->actorSpawnArg;
         sp.checkTerrain = 1;
-        gCurTask->unk46 = CreateActorFromDescHere(&sp, 0);
-        gCurTask->unk6C = 0;
+        gCurTask->paintRollerPaintingLightningSlot = CreateActorFromDescHere(&sp, 0);
+        gCurTask->paintRollerPaintingLoopCount = 0;
         do
         {
             gCurTask->velY = 0xFFFF8000;
@@ -2640,8 +2640,8 @@ void PaintRollerPaintingCloud(void)
             TaskYieldTrampoline(6);
             gCurTask->velY = 128 << 8;
             TaskYieldTrampoline(6);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 1);
+            gCurTask->paintRollerPaintingLoopCount++;
+        } while ((s16)gCurTask->paintRollerPaintingLoopCount <= 1);
     }
 }
 
@@ -2652,9 +2652,9 @@ void PaintRollerPaintingCloudUpdate(void)
     s32 r;
 
     c = &gCurTask;
-    r = ActorTickAnim((*c)->unk28);
+    r = ActorTickAnim((*c)->actorAnimDelay);
     u = *c;
-    u->unk28 = r;
+    u->actorAnimDelay = r;
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -2711,8 +2711,8 @@ void PaintRollerPaintingParasol(void)
     (*c)->updateCallback = (u32)PaintRollerPaintingParasolUpdate;
     r = ActorStartAnim((struct AnimCmd *)gUnk_0874B590);
     u = *c;
-    u->unk28 = r;
-    u->unk2C = -32;
+    u->actorAnimDelay = r;
+    u->paintRollerPaintingParasolTimer = -32;
     TaskSleepForever();
 }
 
@@ -2724,11 +2724,11 @@ void PaintRollerPaintingParasolUpdate(void)
     s32 w;
 
     c = &gCurTask;
-    r = ActorTickAnim((*c)->unk28);
+    r = ActorTickAnim((*c)->actorAnimDelay);
     u = *c;
-    u->unk28 = r;
-    w = u->unk2C + 1;
-    u->unk2C = w;
+    u->actorAnimDelay = r;
+    w = u->paintRollerPaintingParasolTimer + 1;
+    u->paintRollerPaintingParasolTimer = w;
     if (w > 128 << 1)
     {
         ActorSetHitReactions((u32)gUnk_0874BFD4);
@@ -2736,7 +2736,7 @@ void PaintRollerPaintingParasolUpdate(void)
     }
     else if ((w & 15) == 0)
         TaskAccelerateTowardNearestPlayer(154 << 7, 0x18100);
-    if (gCurTask->unk2C > 0)
+    if (gCurTask->paintRollerPaintingParasolTimer > 0)
     {
         ActorCheckHits();
         ActorReactToHit();
@@ -2855,7 +2855,7 @@ void Task_HeavyMoleUpperArm(void)
     u2 = *c;
     u2->posX = z;
     u2->posY = z;
-    u2->unk28 = 0x10078;
+    u2->heavyMoleArmSpinLevel = 0x10078;
     ActorSetState(0);
     u3 = *c;
     CallTableEntry(u3->state, 6, gHeavyMoleArmStates);
@@ -2885,7 +2885,7 @@ void Task_HeavyMoleLowerArm(void)
     u2 = *c;
     u2->posX = z;
     u2->posY = z;
-    u2->unk28 = 0x10078;
+    u2->heavyMoleArmSpinLevel = 0x10078;
     ActorSetState(0);
     u3 = *c;
     CallTableEntry(u3->state, 6, gHeavyMoleArmStates);
@@ -3025,24 +3025,24 @@ void HeavyMoleArmEnterState(void)
 void HeavyMoleArmState0(void)
 {
     gCurTask->updateState = 0;
-    if (gCurTask->unk28 >> 16 > 2)
-        gCurTask->unk28 = (gCurTask->unk28 & 0xFFFF) + (128 << 10);
+    if (gCurTask->heavyMoleArmSpinLevel >> 16 > 2)
+        gCurTask->heavyMoleArmSpinLevel = (gCurTask->heavyMoleArmSpinLevel & 0xFFFF) + (128 << 10);
     gUnk_030023D4 = 0;
     if (gCurTask->facing == 1)
         gUnk_030023D4 = 1;
-    gCurTask->unk2C = gUnk_0874B824[gUnk_030023D4 * 2 + gUnk_02007D00[3]];
+    gCurTask->heavyMoleArmStateTimer = gUnk_0874B824[gUnk_030023D4 * 2 + gUnk_02007D00[3]];
     if (gCurTask->facing == -1)
     {
         while (1)
         {
             gCurTask->frame = 3;
-            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->unk28)[1]]);
+            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
             gCurTask->frame = 2;
-            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->unk28)[1]]);
+            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
             gCurTask->frame = 1;
-            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->unk28)[1]]);
+            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
             gCurTask->frame = 0;
-            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->unk28)[1]]);
+            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
         }
     }
     else
@@ -3050,13 +3050,13 @@ void HeavyMoleArmState0(void)
         while (1)
         {
             gCurTask->frame = 0;
-            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->unk28)[1]]);
+            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
             gCurTask->frame = 1;
-            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->unk28)[1]]);
+            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
             gCurTask->frame = 2;
-            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->unk28)[1]]);
+            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
             gCurTask->frame = 3;
-            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->unk28)[1]]);
+            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
         }
     }
 }
@@ -3067,40 +3067,40 @@ void HeavyMoleArmState0Update(void)
     s32 v;
 
     t = gCurTask;
-    v = t->unk28;
-    if (*(u16 *)&t->unk28 != 0)
+    v = t->heavyMoleArmSpinLevel;
+    if (*(u16 *)&t->heavyMoleArmSpinLevel != 0)
     {
-        t->unk28 = v - 1;
-        if ((t->unk28 & 15) == 0)
+        t->heavyMoleArmSpinLevel = v - 1;
+        if ((t->heavyMoleArmSpinLevel & 15) == 0)
         {
             gUnk_030023D4 = ((struct Task *)(t->parent * 144 + (u32)gTasks))->velX;
             if (gUnk_030023D4 > 0)
             {
-                if (t->unk28 >> 16 <= 1)
-                    t->unk28 += 0x10000;
+                if (t->heavyMoleArmSpinLevel >> 16 <= 1)
+                    t->heavyMoleArmSpinLevel += 0x10000;
             }
             else if (gUnk_030023D4 < 0)
             {
-                if (t->unk28 >> 16 != 0)
-                    t->unk28 -= 0x10000;
+                if (t->heavyMoleArmSpinLevel >> 16 != 0)
+                    t->heavyMoleArmSpinLevel -= 0x10000;
             }
             else if (((struct Task *)(t->parent * 144 + (u32)gTasks))->velY != 0)
             {
-                if (t->unk28 >> 16 <= 1)
-                    t->unk28 += 0x10000;
+                if (t->heavyMoleArmSpinLevel >> 16 <= 1)
+                    t->heavyMoleArmSpinLevel += 0x10000;
             }
         }
     }
     else
     {
         if (v & 0xFFFF0000)
-            t->unk28 = v - 0x10000;
-        gCurTask->unk28 += 120;
+            t->heavyMoleArmSpinLevel = v - 0x10000;
+        gCurTask->heavyMoleArmSpinLevel += 120;
     }
-    gCurTask->unk2C--;
-    if (gCurTask->unk2C == 0)
+    gCurTask->heavyMoleArmStateTimer--;
+    if (gCurTask->heavyMoleArmStateTimer == 0)
     {
-        gCurTask->unk2C = gUnk_0874B82E[gUnk_02007D00[3]];
+        gCurTask->heavyMoleArmStateTimer = gUnk_0874B82E[gUnk_02007D00[3]];
         ActorSetState(1);
         TaskSetEntry(HeavyMoleArmEnterState, gCurTaskIdx);
     }
@@ -3220,25 +3220,25 @@ void HeavyMoleArmState1Update(void)
 
     c = &gCurTask;
     t = *c;
-    t->unk2C--;
-    if (t->unk2C == 0)
+    t->heavyMoleArmStateTimer--;
+    if (t->heavyMoleArmStateTimer == 0)
     {
         tb = (u8 *)gUnk_0874B831;
         ActorSetState(tb[RandomRange(4)]);
         TaskSetEntry(HeavyMoleArmEnterState, gCurTaskIdx);
     }
     u = *c;
-    v = u->unk28;
-    lo = *(u16 *)&u->unk28;
+    v = u->heavyMoleArmSpinLevel;
+    lo = *(u16 *)&u->heavyMoleArmSpinLevel;
     if (lo != 0)
     {
         v2 = v - 1;
-        u->unk28 = v2;
+        u->heavyMoleArmSpinLevel = v2;
         if ((v2 & 15) == 0 && v2 >> 16 <= 2)
-            u->unk28 = v + 0xFFFF;
+            u->heavyMoleArmSpinLevel = v + 0xFFFF;
     }
     else
-        u->unk28 = v + 120;
+        u->heavyMoleArmSpinLevel = v + 120;
 }
 
 void HeavyMoleArmState2(void)
@@ -3262,27 +3262,27 @@ void HeavyMoleArmState2(void)
     t->updateState = 2;
     r = RandomRange(5);
     u = *c;
-    u->unk34 = r;
-    u->unk30 = z;
+    u->heavyMoleArmAngleIndex = r;
+    u->heavyMoleArmSwingStep = z;
     t35 = (u8 *)gUnk_0874B835;
     TaskYieldTrampoline(t35[gUnk_02007D00[3]]);
     u2 = *c;
-    u2->unk30 = 1;
-    w = u2->unk34;
+    u2->heavyMoleArmSwingStep = 1;
+    w = u2->heavyMoleArmAngleIndex;
     if (w == 4)
-        u2->unk30 = -u2->unk30;
+        u2->heavyMoleArmSwingStep = -u2->heavyMoleArmSwingStep;
     else if (w != 0 && RandomRange(2) != 0)
     {
         u3 = *c;
-        u3->unk30 = -u3->unk30;
+        u3->heavyMoleArmSwingStep = -u3->heavyMoleArmSwingStep;
     }
     sub_080b2058(0);
     c2 = &gCurTask;
     u4 = *c2;
-    u4->unk30 = -u4->unk30;
+    u4->heavyMoleArmSwingStep = -u4->heavyMoleArmSwingStep;
     sub_080b2058(1);
     u5 = *c2;
-    u5->unk30 = 0;
+    u5->heavyMoleArmSwingStep = 0;
     TaskYieldTrampoline(2);
     ActorSetState(0);
     TaskSleepForever();
@@ -3298,19 +3298,19 @@ void HeavyMoleArmState2Update(void)
         TaskSetEntry(HeavyMoleArmEnterState, gCurTaskIdx);
         return;
     }
-    if (t->unk30 == 0)
+    if (t->heavyMoleArmSwingStep == 0)
     {
         if (t->facing == -1)
-            gUnk_030023D4 = t->unk34 * 6 + 36;
+            gUnk_030023D4 = t->heavyMoleArmAngleIndex * 6 + 36;
         else
-            gUnk_030023D4 = t->unk34 * 6 + 96;
+            gUnk_030023D4 = t->heavyMoleArmAngleIndex * 6 + 96;
     }
     else
     {
         if (t->facing == -1)
-            gUnk_030023D4 = t->unk34 * 6 + 6;
+            gUnk_030023D4 = t->heavyMoleArmAngleIndex * 6 + 6;
         else
-            gUnk_030023D4 = t->unk34 * 6 + 66;
+            gUnk_030023D4 = t->heavyMoleArmAngleIndex * 6 + 66;
     }
     if (gFrameCount & 1)
         gCurTask->frame = gUnk_030023D4 + (((gFrameCount >> 1) & 1) + 4);
@@ -3339,27 +3339,27 @@ void HeavyMoleArmState3(void)
     t->updateState = 3;
     r = RandomRange(5);
     u = *c;
-    u->unk34 = r;
-    u->unk30 = z;
+    u->heavyMoleArmAngleIndex = r;
+    u->heavyMoleArmSwingStep = z;
     t35 = (u8 *)gUnk_0874B838;
     TaskYieldTrampoline(t35[gUnk_02007D00[3]]);
     u2 = *c;
-    u2->unk30 = 2;
-    w = u2->unk34;
+    u2->heavyMoleArmSwingStep = 2;
+    w = u2->heavyMoleArmAngleIndex;
     if (w == 4)
-        u2->unk30 = -u2->unk30;
+        u2->heavyMoleArmSwingStep = -u2->heavyMoleArmSwingStep;
     else if (w != 0 && RandomRange(2) != 0)
     {
         u3 = *c;
-        u3->unk30 = -u3->unk30;
+        u3->heavyMoleArmSwingStep = -u3->heavyMoleArmSwingStep;
     }
     sub_080b2058(0);
     c2 = &gCurTask;
     u4 = *c2;
-    u4->unk30 = -u4->unk30;
+    u4->heavyMoleArmSwingStep = -u4->heavyMoleArmSwingStep;
     sub_080b2058(1);
     u5 = *c2;
-    u5->unk30 = 0;
+    u5->heavyMoleArmSwingStep = 0;
     TaskYieldTrampoline(1);
     ActorSetState(0);
     TaskSleepForever();
@@ -3375,19 +3375,19 @@ void HeavyMoleArmState3Update(void)
         TaskSetEntry(HeavyMoleArmEnterState, gCurTaskIdx);
         return;
     }
-    if (t->unk30 == 0)
+    if (t->heavyMoleArmSwingStep == 0)
     {
         if (t->facing == -1)
-            gUnk_030023D4 = t->unk34 * 6 + 36;
+            gUnk_030023D4 = t->heavyMoleArmAngleIndex * 6 + 36;
         else
-            gUnk_030023D4 = t->unk34 * 6 + 96;
+            gUnk_030023D4 = t->heavyMoleArmAngleIndex * 6 + 96;
     }
     else
     {
         if (t->facing == -1)
-            gUnk_030023D4 = t->unk34 * 6 + 6;
+            gUnk_030023D4 = t->heavyMoleArmAngleIndex * 6 + 6;
         else
-            gUnk_030023D4 = t->unk34 * 6 + 66;
+            gUnk_030023D4 = t->heavyMoleArmAngleIndex * 6 + 66;
     }
     if (gFrameCount & 1)
         gCurTask->frame = gUnk_030023D4 + (((gFrameCount >> 1) & 1) + 4);
@@ -3409,23 +3409,23 @@ void sub_080b2058(u8 a)
     s32 w3;
     s32 w4;
 
-    w0 = gCurTask->unk30;
+    w0 = gCurTask->heavyMoleArmSwingStep;
     c = &gCurTask;
     if (w0 > 0)
     {
         a2 = a << 1;
         goto xbody1;
 xinc1:
-        u->unk34 = u->unk34 + 1;
+        u->heavyMoleArmAngleIndex = u->heavyMoleArmAngleIndex + 1;
 xbody1:
         tb = (u8 *)gUnk_0874B83B;
-        w = (*c)->unk30;
+        w = (*c)->heavyMoleArmSwingStep;
         if (w < 0)
             w = -w;
         w3 = a2 + w - 1;
         TaskYieldTrampoline(tb[w3]);
         u = *c;
-        if (u->unk34 <= 3)
+        if (u->heavyMoleArmAngleIndex <= 3)
             goto xinc1;
     }
     else
@@ -3433,16 +3433,16 @@ xbody1:
         a2 = a << 1;
         goto xbody2;
 xinc2:
-        u2->unk34 = u2->unk34 - 1;
+        u2->heavyMoleArmAngleIndex = u2->heavyMoleArmAngleIndex - 1;
 xbody2:
         tb2 = (u8 *)gUnk_0874B83B;
-        w2 = (*c)->unk30;
+        w2 = (*c)->heavyMoleArmSwingStep;
         if (w2 < 0)
             w2 = -w2;
         w4 = a2 + w2 - 1;
         TaskYieldTrampoline(tb2[w4]);
         u2 = *c;
-        if (u2->unk34 > 0)
+        if (u2->heavyMoleArmAngleIndex > 0)
             goto xinc2;
     }
 }
@@ -3464,20 +3464,20 @@ void HeavyMoleArmState5(void)
     z = 0;
     t->updateState = 5;
     t2 = gCurTask;
-    t2->unk2C = 11;
-    t2->unk34 = z;
+    t2->heavyMoleArmPathStep = 11;
+    t2->heavyMoleArmAngleIndex = z;
     c = &gCurTask;
     t40 = gUnk_0874B840;
 loop:
     u = *c;
-    v = u->unk2C - 1;
-    u->unk2C = v;
+    v = u->heavyMoleArmPathStep - 1;
+    u->heavyMoleArmPathStep = v;
     o = v * 4;
     u->velX = *(u32 *)(o + (u32)t40);
     k = u->facing;
     u->velY = *(u32 *)(o + (u32)gUnk_0874B86C) * k;
     TaskYieldTrampoline(*(u32 *)(o + (u32)gUnk_0874B898));
-    if ((*c)->unk2C > 0)
+    if ((*c)->heavyMoleArmPathStep > 0)
         goto loop;
     TaskStop();
     u2 = gCurTask;
@@ -3516,17 +3516,17 @@ void HeavyMoleArmState4(void)
 
     gCurTask->updateState = 4;
     t = gCurTask;
-    t->unk2C = 24;
-    t->unk30 = gUnk_0874B8C4[gUnk_02007D00[3]];
+    t->heavyMoleArmPathStep = 24;
+    t->heavyMoleArmTimeLimit = gUnk_0874B8C4[gUnk_02007D00[3]];
     do
     {
-        gCurTask->unk2C--;
+        gCurTask->heavyMoleArmPathStep--;
         if (gCurTask->facing == -1)
-            gCurTask->unk34 = gUnk_0874B8C8[gCurTask->unk2C];
+            gCurTask->heavyMoleArmBaseFrame = gUnk_0874B8C8[gCurTask->heavyMoleArmPathStep];
         else
-            gCurTask->unk34 = gUnk_0874B8F8[gCurTask->unk2C];
-        TaskYieldTrampoline(gUnk_0874B928[gCurTask->unk2C]);
-    } while (gCurTask->unk2C > 0);
+            gCurTask->heavyMoleArmBaseFrame = gUnk_0874B8F8[gCurTask->heavyMoleArmPathStep];
+        TaskYieldTrampoline(gUnk_0874B928[gCurTask->heavyMoleArmPathStep]);
+    } while (gCurTask->heavyMoleArmPathStep > 0);
     ActorSetState(0);
     TaskSleepForever();
 }
@@ -3540,8 +3540,8 @@ void HeavyMoleArmState4Update(void)
 
     c = &gCurTask;
     t = *c;
-    t->unk30--;
-    if (t->unk30 < 0)
+    t->heavyMoleArmTimeLimit--;
+    if (t->heavyMoleArmTimeLimit < 0)
         ActorSetState(0);
     t3 = *c;
     if (t3->state != 4)
@@ -3551,9 +3551,9 @@ void HeavyMoleArmState4Update(void)
     }
     pm = (vu16 *)&gFrameCount;
     if (*pm & 1)
-        t3->frame = t3->unk34 + (((*pm >> 1) & 1) + 4);
+        t3->frame = t3->heavyMoleArmBaseFrame + (((*pm >> 1) & 1) + 4);
     else
-        t3->frame = t3->unk34 + (*pm & 3);
+        t3->frame = t3->heavyMoleArmBaseFrame + (*pm & 3);
 }
 
 void sub_080b2294(void)
@@ -3618,7 +3618,7 @@ void Task_HeavyMoleYellowMissile(void)
     w = r + 1;
     a2 = (s16 *)((u8 *)u2 + 110);
     *a2 = w;
-    u2->unk6C = z;
+    u2->heavyMoleYellowMissileLoopCount = z;
     if (z < *a2)
     {
         c4 = c;
@@ -3636,8 +3636,8 @@ void Task_HeavyMoleYellowMissile(void)
             q3->frame++;
             TaskYieldTrampoline(2);
             q4 = *c4;
-            q4->unk6C++;
-        } while ((s16)q4->unk6C < *(s16 *)((u8 *)q4 + 110));
+            q4->heavyMoleYellowMissileLoopCount++;
+        } while ((s16)q4->heavyMoleYellowMissileLoopCount < *(s16 *)((u8 *)q4 + 110));
     }
     TaskSetFrame(8);
     TaskYieldTrampoline(2);
@@ -3702,7 +3702,7 @@ void Task_HeavyMoleRedMissile(void)
     w = r + 1;
     a2 = (s16 *)((u8 *)u2 + 110);
     *a2 = w;
-    u2->unk6C = z;
+    u2->heavyMoleRedMissileLoopCount = z;
     if (z < *a2)
     {
         c4 = c;
@@ -3720,8 +3720,8 @@ void Task_HeavyMoleRedMissile(void)
             q3->frame++;
             TaskYieldTrampoline(2);
             q4 = *c4;
-            q4->unk6C++;
-        } while ((s16)q4->unk6C < *(s16 *)((u8 *)q4 + 110));
+            q4->heavyMoleRedMissileLoopCount++;
+        } while ((s16)q4->heavyMoleRedMissileLoopCount < *(s16 *)((u8 *)q4 + 110));
     }
     TaskSetFrame(8);
     TaskYieldTrampoline(2);
@@ -3755,20 +3755,20 @@ void HeavyMoleMissileUpdate(void)
     TaskBreakBlocksNoPlayer(gUnk_0874C108);
 }
 
-void sub_080b2550(void)
+void WhispyWoodsReactToDefeat(void)
 {
     ActorSetHitReactions((u32)gUnk_0874C210);
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
-void sub_080b2574(void)
+void WhispyWoodsReactToDamage(void)
 {
     struct Task *t;
 
     RequestScreenShake(4);
     t = gCurTask;
-    t->unk2C = 32;
-    sub_0806619c(-1, (u32)sub_080b25e8, 0, 0, 0);
+    t->whispyWoodsHurtTimer = 32;
+    BossStartHitStun(-1, (u32)sub_080b25e8, 0, 0, 0);
 }
 
 void sub_080b25a4(void)
@@ -3791,7 +3791,7 @@ void sub_080b25e8(void)
     struct Task *u;
     s32 v;
 
-    switch (gCurTask->unk2C)
+    switch (gCurTask->whispyWoodsHurtTimer)
     {
     case 32:
         TaskSetFrame(9);
@@ -3803,12 +3803,12 @@ void sub_080b25e8(void)
         TaskSetFrame(4);
         break;
     case 0:
-        sub_0806621c();
+        BossEndHitStun();
         break;
     }
     t2 = gCurTask;
-    v = t2->unk30;
-    t2->unk30 = v - 1;
+    v = t2->whispyWoodsAppleTimer;
+    t2->whispyWoodsAppleTimer = v - 1;
     switch (v)
     {
     case 100:
@@ -3820,10 +3820,10 @@ void sub_080b25e8(void)
         break;
     }
     u = gCurTask;
-    u->unk2C--;
+    u->whispyWoodsHurtTimer--;
 }
 
-void sub_080b2664(void)
+void WhispyWoodsPickAttack(void)
 {
     struct Task **c2;
     struct Task *ta;
@@ -3836,7 +3836,7 @@ void sub_080b2664(void)
     struct Task *th;
     s32 w;
 
-    w = gCurTask->unk34;
+    w = gCurTask->whispyWoodsAttackPhase;
     c2 = &gCurTask;
     switch (w)
     {
@@ -3844,20 +3844,20 @@ void sub_080b2664(void)
         if (RandomRange(4) == 0)
         {
             ta = gCurTask;
-            ta->unk34 = 1;
+            ta->whispyWoodsAttackPhase = 1;
             ActorSetState(2);
         }
         else
         {
             tb = gCurTask;
-            tb->unk34 = 2;
+            tb->whispyWoodsAttackPhase = 2;
             ActorSetState(3);
         }
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
         break;
     case 1:
         tc = *c2;
-        tc->unk34 = 2;
+        tc->whispyWoodsAttackPhase = 2;
         ActorSetState(3);
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
         break;
@@ -3865,20 +3865,20 @@ void sub_080b2664(void)
         if (RandomRange(4) == 0)
         {
             td = gCurTask;
-            td->unk34 = 3;
+            td->whispyWoodsAttackPhase = 3;
             ActorSetState(3);
         }
         else
         {
             te = gCurTask;
-            te->unk34 = 0;
+            te->whispyWoodsAttackPhase = 0;
             ActorSetState(1);
         }
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
         break;
     case 3:
         tf = *c2;
-        tf->unk34 = 0;
+        tf->whispyWoodsAttackPhase = 0;
         ActorSetState(1);
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
         break;
@@ -3886,13 +3886,13 @@ void sub_080b2664(void)
         if (RandomRange(2) == 0)
         {
             tg = gCurTask;
-            tg->unk34 = 1;
+            tg->whispyWoodsAttackPhase = 1;
             ActorSetState(2);
         }
         else
         {
             th = gCurTask;
-            th->unk34 = 2;
+            th->whispyWoodsAttackPhase = 2;
             ActorSetState(3);
         }
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
@@ -3913,7 +3913,7 @@ void CreateWhispyWoodsAirPuff(void)
     z = 0;
     sp.x = 24;
     sp.y = 40;
-    sp.tileWord = sub_08066630(8);
+    sp.tileWord = ActorGetTileWordPalOffset(8);
     sp.checkTerrain = z;
     CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
@@ -3930,7 +3930,7 @@ void CreateWhispyWoodsApple(void)
     sp.x = (u8)sub_080b2804();
     z = 0;
     sp.y = 224;
-    sp.tileWord = sub_08066630(1);
+    sp.tileWord = ActorGetTileWordPalOffset(1);
     sp.checkTerrain = z;
     CreateChildTask(170, sp.x, sp.y, 0);
     CreateActorFromDesc(&sp, 1);
@@ -4004,7 +4004,7 @@ void sub_080b2890(void)
         return;
     if (t0->frame == -1)
         return;
-    if ((u8)sub_08066a6c() && TaskIsOnScreen())
+    if ((u8)ActorIsInNearView() && TaskIsOnScreen())
     {
         t = *c;
         a42v = t->layer;
@@ -4017,7 +4017,7 @@ void sub_080b2890(void)
     u = gCurTask;
     a74 = (u16 *)((u8 *)u + 74);
     *a74 += 26;
-    if ((u8)sub_08066a6c() && TaskIsOnScreen())
+    if ((u8)ActorIsInNearView() && TaskIsOnScreen())
     {
         t2 = gCurTask;
         aw = (u16 *)(74 + (u32)t2);
@@ -4033,7 +4033,7 @@ void sub_080b2890(void)
     u2 = gCurTask;
     a74b = (u16 *)((u8 *)u2 + 74);
     *a74b += 42;
-    if ((u8)sub_08066a6c() && TaskIsOnScreen())
+    if ((u8)ActorIsInNearView() && TaskIsOnScreen())
     {
         t3 = gCurTask;
         aw2 = (u16 *)(74 + (u32)t3);
@@ -4057,7 +4057,7 @@ void Task_WhispyWoods(void)
     struct Task *u2;
     struct Task *u3;
 
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     c = &gCurTask;
     t = *c;
     t->moveCallback = (u32)ActorMove;
@@ -4071,8 +4071,8 @@ void Task_WhispyWoods(void)
     u2->posX = 206 << 16;
     u2->posY = 128 << 17;
     k4 = (struct AnimCmd *)gUnk_0874C110;
-    sub_080666f8(k4);
-    sub_080664e0(k4);
+    ActorIntroPoseUntilScrollLocked(k4);
+    ActorIntroPoseUntilHpBarFull(k4);
     u3 = *c;
     CallTableEntry(u3->variant, 1, gWhispyWoodsVariants);
 }
@@ -4114,7 +4114,7 @@ void WhispyWoodsWait(void)
     z = 0;
     t->updateState = z;
     t2 = *c;
-    t2->unk28 = z;
+    t2->whispyWoodsWaitDone = z;
     TaskSetFrame(17);
     TaskYieldTrampoline(8);
     sub_080b25a4();
@@ -4122,14 +4122,14 @@ void WhispyWoodsWait(void)
     TaskYieldTrampoline(63);
     sub_080b25a4();
     u = *c;
-    u->unk28 = 1;
+    u->whispyWoodsWaitDone = 1;
     TaskSleepForever();
 }
 
 void WhispyWoodsWaitUpdate(void)
 {
-    if (gCurTask->unk28 != 0)
-        sub_080b2664();
+    if (gCurTask->whispyWoodsWaitDone != 0)
+        WhispyWoodsPickAttack();
 }
 
 void WhispyWoodsState1(void)
@@ -4149,7 +4149,7 @@ void WhispyWoodsState1(void)
     z = 0;
     t->updateState = 1;
     t2 = gCurTask;
-    t2->unk6C = z;
+    t2->whispyWoodsLoopCount = z;
     c = &gCurTask;
     do
     {
@@ -4170,8 +4170,8 @@ void WhispyWoodsState1(void)
         q4->frame--;
         TaskYieldTrampoline(2);
         q5 = *c;
-        q5->unk6C++;
-    } while ((s16)q5->unk6C <= 1);
+        q5->whispyWoodsLoopCount++;
+    } while ((s16)q5->whispyWoodsLoopCount <= 1);
     TaskSetFrame(14);
     TaskYieldTrampoline(8);
     TaskSetFrame(6);
@@ -4206,7 +4206,7 @@ void WhispyWoodsState2(void)
     z = 0;
     t->updateState = 2;
     t2 = gCurTask;
-    t2->unk6C = z;
+    t2->whispyWoodsLoopCount = z;
     c = &gCurTask;
     do
     {
@@ -4227,8 +4227,8 @@ void WhispyWoodsState2(void)
         q4->frame--;
         TaskYieldTrampoline(2);
         q5 = *c;
-        q5->unk6C++;
-    } while ((s16)q5->unk6C <= 3);
+        q5->whispyWoodsLoopCount++;
+    } while ((s16)q5->whispyWoodsLoopCount <= 3);
     TaskSetFrame(14);
     TaskYieldTrampoline(8);
     TaskSetFrame(6);
@@ -4262,8 +4262,8 @@ void WhispyWoodsDropApples(void)
     z = 0;
     t->updateState = 3;
     t2 = gCurTask;
-    t2->unk30 = 150;
-    t2->unk6C = z;
+    t2->whispyWoodsAppleTimer = 150;
+    t2->whispyWoodsLoopCount = z;
     c = &gCurTask;
     do
     {
@@ -4284,8 +4284,8 @@ void WhispyWoodsDropApples(void)
         TaskSetFrame(17);
         TaskYieldTrampoline(30);
         q5 = *c;
-        q5->unk6C++;
-    } while ((s16)q5->unk6C <= 2);
+        q5->whispyWoodsLoopCount++;
+    } while ((s16)q5->whispyWoodsLoopCount <= 2);
     ActorSetState(0);
     TaskSleepForever();
 }
@@ -4296,8 +4296,8 @@ void WhispyWoodsDropApplesUpdate(void)
     s32 v;
 
     t2 = gCurTask;
-    v = t2->unk30;
-    t2->unk30 = v - 1;
+    v = t2->whispyWoodsAppleTimer;
+    t2->whispyWoodsAppleTimer = v - 1;
     switch (v)
     {
     case 100:
@@ -4363,7 +4363,7 @@ void sub_080b2e58(void)
     TaskYieldTrampoline(4);
 top:
     u1 = *c;
-    u1->unk6C = 0;
+    u1->whispyWoodsLoopCount = 0;
     do
     {
         TaskSetFrame(12);
@@ -4371,12 +4371,12 @@ top:
         TaskSetFrame(13);
         TaskYieldTrampoline(4);
         q1 = *c;
-        q1->unk6C++;
-    } while ((s16)q1->unk6C <= 7);
+        q1->whispyWoodsLoopCount++;
+    } while ((s16)q1->whispyWoodsLoopCount <= 7);
     TaskSetFrame(12);
     TaskYieldTrampoline(30);
     u2 = *c;
-    u2->unk6C = 0;
+    u2->whispyWoodsLoopCount = 0;
     do
     {
         TaskSetFrame(12);
@@ -4384,8 +4384,8 @@ top:
         TaskSetFrame(13);
         TaskYieldTrampoline(2);
         q2 = *c;
-        q2->unk6C++;
-    } while ((s16)q2->unk6C <= 3);
+        q2->whispyWoodsLoopCount++;
+    } while ((s16)q2->whispyWoodsLoopCount <= 3);
     TaskSetFrame(12);
     TaskYieldTrampoline(180);
     TaskSetFrame(13);
@@ -4408,8 +4408,8 @@ s32 sub_080b2f38(void)
     z = t->state;
     if (z == 0)
     {
-        t->unk28 = z;
-        t->unk2C = t->pixelY;
+        t->whispyWoodsAppleFirstFall = z;
+        t->whispyWoodsAppleFloorY = t->pixelY;
         ActorSetState(1);
         TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
         return 1;

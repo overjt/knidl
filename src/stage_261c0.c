@@ -17,11 +17,11 @@
  * tabled position, WrapLoopingRoom wraps every camera, object and task
  * coordinate back by 0x200 pixels in a looping room, ClampCameraFocusToRoom clamps
  * the player to the room bounds and sub_0802695c starts the next stage.
- * sub_080264b0, sub_0802651c, sub_0802653c, sub_08026584 and sub_08026704
+ * CreateEntryDoorOpening, CloseDoorOpening, CreateEntryDoorStageClearFlag, sub_08026584 and sub_08026704
  * spawn and adjust the M08 stage objects of the door the player entered by
  * (gEntryDoorIndex, its slots in gDoorObjectTasks); CreateStageUnlockPan/CreateBigSwitchUnlockPan
  * spawn a map-event task and put the camera on the player or a partner.
- * sub_08026a0c, sub_08026a80 and sub_08026aec arm the scroll lock of one
+ * WhispyWoodsCheckScrollLock, KrackoCheckScrollLock and KingDededeCheckScrollLock arm the scroll lock of one
  * room each.  sub_08026994 is an empty dead export. */
 
 void PlaySfx(s32 id);
@@ -95,9 +95,9 @@ void SetCameraFocusOrAnchor(s32 x, s32 y)
     gCameraAnchorY = y;
 }
 
-void sub_080262dc(void)
+void EndMidBossFight(void)
 {
-    gUnk_0200D080 = 2;
+    gMidBossFightState = 2;
 }
 
 void sub_080262e8(s32 a)
@@ -134,10 +134,10 @@ void WrapLoopingRoom(void)
         gBrokenBlockX &= 31;
         for (i = 0; i < 64; i++)
         {
-            if (gBreakingBlocks[i].unk6 != 0xFFFF)
+            if (gBreakingBlocks[i].scriptPos != 0xFFFF)
             {
-                gBreakingBlocks[i].unk0 &= 31;
-                gBreakingBlocks[i].unk4 = gBreakingBlocks[i].unk0 + gBreakingBlocks[i].unk2 * gRoomWidth;
+                gBreakingBlocks[i].cellX &= 31;
+                gBreakingBlocks[i].mapIndex = gBreakingBlocks[i].cellX + gBreakingBlocks[i].cellY * gRoomWidth;
             }
         }
         for (i = 0; i < 64; i++)
@@ -151,7 +151,7 @@ void WrapLoopingRoom(void)
     }
 }
 
-s32 sub_080264b0(void)
+s32 CreateEntryDoorOpening(void)
 {
     s32 r = -1;
     struct Door *d;
@@ -159,18 +159,18 @@ s32 sub_080264b0(void)
     if (gDoorObjectTasks[gEntryDoorIndex][0] != -1 && gEntryDoorIndex != -1)
     {
         d = &gCurRoomDef->doors[gEntryDoorIndex];
-        r = CreateDoorOpening((d->unk2 << 4) + 16, (d->unk4 << 4) + 8, gTasks[gDoorObjectTasks[gEntryDoorIndex][0]].unk20);
+        r = CreateDoorOpening((d->unk2 << 4) + 16, (d->unk4 << 4) + 8, gTasks[gDoorObjectTasks[gEntryDoorIndex][0]].doorObjectKind);
     }
     return r;
 }
 
-void sub_0802651c(s32 i)
+void CloseDoorOpening(s32 i)
 {
     if (i != -1)
-        gTasks[i].unk1C = 1;
+        gTasks[i].doorOpeningClose = 1;
 }
 
-s32 sub_0802653c(void)
+s32 CreateEntryDoorStageClearFlag(void)
 {
     s32 r = -1;
     struct Door *d;
@@ -261,9 +261,9 @@ s32 CreateStageUnlockPan(void)
         t = &gTasks[id];
         f = gHubUnlockFlags & 16;
         if (f != 0)
-            t->unk24 = 1;
+            t->mapEventRevealDoor = 1;
         else
-            t->unk24 = 0;
+            t->mapEventRevealDoor = 0;
         if (gPlayerCount == 1)
         {
             gCameraAnchorX = gCameraFocusX;
@@ -299,9 +299,9 @@ s32 CreateBigSwitchUnlockPan(void)
         t = &gTasks[id];
         f = gHubUnlockFlags & 16;
         if (f != 0)
-            t->unk24 = 1;
+            t->mapEventRevealDoor = 1;
         else
-            t->unk24 = 0;
+            t->mapEventRevealDoor = 0;
         gCameraAnchorX = gCameraFocusX = gRoomEntryX;
         gCameraAnchorY = gCameraFocusY = gRoomEntryY;
         if (gCameraAnchorX < gRoomBounds[0])
@@ -366,7 +366,7 @@ void sub_080269e8(void)
             BreakBlockAt(i, j);
 }
 
-u32 sub_08026a0c(void)
+u32 WhispyWoodsCheckScrollLock(void)
 {
     switch (gCameraMode)
     {
@@ -388,7 +388,7 @@ u32 sub_08026a0c(void)
     return 0;
 }
 
-u32 sub_08026a80(void)
+u32 KrackoCheckScrollLock(void)
 {
     switch (gCameraMode)
     {
@@ -410,7 +410,7 @@ u32 sub_08026a80(void)
     return 0;
 }
 
-u32 sub_08026aec(void)
+u32 KingDededeCheckScrollLock(void)
 {
     switch (gCameraMode)
     {

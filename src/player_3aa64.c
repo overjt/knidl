@@ -54,14 +54,14 @@ void PlayerActionSwim(void)
         {
             TaskSetFrame(364);
             TaskYieldTrampoline(gCurTask->unk28);
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 3; gCurTask->playerLoopCount++)
             {
                 gCurTask->frame++;
                 TaskYieldTrampoline(gCurTask->unk28);
             }
             TaskSetFrame(0x161);
             TaskYieldTrampoline(gCurTask->unk28);
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 9; gCurTask->unk6C++)
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 9; gCurTask->playerLoopCount++)
             {
                 gCurTask->frame++;
                 TaskYieldTrampoline(gCurTask->unk28);
@@ -120,7 +120,7 @@ void PlayerActionSwim(void)
     case 1:
         PlayerSetMotionYPreset(13);
         PlayerSetMotionXPreset(11, 4);
-        gCurTask->unk46 = anim[1];
+        gCurTask->playerBaseFrame = anim[1];
         while (1)
         {
         lab1:
@@ -129,14 +129,14 @@ void PlayerActionSwim(void)
             if (gCurTask->player->prevWaterFlags & 1)
             {
                 PlayerSetMotionYPreset(15);
-                TaskSetFrame((s16)(gCurTask->unk46 + 1));
+                TaskSetFrame((s16)(gCurTask->playerBaseFrame + 1));
                 TaskYieldTrampoline(2);
-                for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+                for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
                 {
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
                 }
-                gCurTask->unk6C = 0;
+                gCurTask->playerLoopCount = 0;
                 do
                 {
                     gCurTask->frame++;
@@ -146,26 +146,26 @@ void PlayerActionSwim(void)
                     if (gCurTask->unk28 != 0)
                         goto lab1;
                     TaskYieldTrampoline(1);
-                } while ((s16)++gCurTask->unk6C <= 4);
+                } while ((s16)++gCurTask->playerLoopCount <= 4);
                 gCurTask->speedLimitY = 0x10000;
             }
-            TaskSetFrame(gCurTask->unk46);
-            gCurTask->unk6C = 0;
+            TaskSetFrame(gCurTask->playerBaseFrame);
+            gCurTask->playerLoopCount = 0;
             do
             {
                 if (gCurTask->unk28 != 0)
                     goto lab1;
                 TaskYieldTrampoline(1);
-            } while ((s16)++gCurTask->unk6C <= 14);
+            } while ((s16)++gCurTask->playerLoopCount <= 14);
             if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 65)
                 goto lab1;
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do
             {
                 if (gCurTask->unk28 != 0)
                     goto lab1;
                 TaskYieldTrampoline(1);
-            } while ((s16)++gCurTask->unk6C <= 44);
+            } while ((s16)++gCurTask->playerLoopCount <= 44);
             gCurTask->unk28 = -1;
             TaskSleepForever();
         }
@@ -195,11 +195,11 @@ void PlayerActionSwim(void)
             gCurTask->unk28 = 10;
         }
         gCurTask->player->unk14 = 15;
-        gCurTask->unk46 = anim[2];
+        gCurTask->playerBaseFrame = anim[2];
         while (1)
         {
             PlaySfxIfLocalPlayer(120, gCurTask->player->playerIndex);
-            TaskSetFrame(gCurTask->unk46);
+            TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(3);
             gCurTask->frame++;
             TaskYieldTrampoline(3);
@@ -445,27 +445,27 @@ void PlayerActionStandInWater(void)
     }
     if (gCurTask->player->mouthState == 1)
     {
-        gCurTask->unk46 = 352;
+        gCurTask->playerBaseFrame = 352;
     }
     else
     {
         switch (gCurTask->player->ability)
         {
         default:
-            gCurTask->unk46 = 221;
+            gCurTask->playerBaseFrame = 221;
             break;
         case 4:
-            gCurTask->unk46 = 1184;
+            gCurTask->playerBaseFrame = 1184;
             break;
         case 9:
-            gCurTask->unk46 = 0x7C1;
+            gCurTask->playerBaseFrame = 0x7C1;
             break;
         case 10:
-            gCurTask->unk46 = 0x8C1;
+            gCurTask->playerBaseFrame = 0x8C1;
             break;
         }
     }
-    TaskSetFrame(gCurTask->unk46);
+    TaskSetFrame(gCurTask->playerBaseFrame);
     TaskSleepForever();
 }
 
@@ -509,14 +509,14 @@ void PlayerActionWalkInWater(void)
         {
             TaskSetFrame(364);
             TaskYieldTrampoline(5);
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 3; gCurTask->playerLoopCount++)
             {
                 gCurTask->frame++;
                 TaskYieldTrampoline(5);
             }
             TaskSetFrame(0x161);
             TaskYieldTrampoline(5);
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 9; gCurTask->unk6C++)
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 9; gCurTask->playerLoopCount++)
             {
                 gCurTask->frame++;
                 TaskYieldTrampoline(5);
@@ -526,21 +526,21 @@ void PlayerActionWalkInWater(void)
     switch (gCurTask->player->ability)
     {
     default:
-        gCurTask->unk46 = 207;
+        gCurTask->playerBaseFrame = 207;
         break;
     case 4:
-        gCurTask->unk46 = 0x492;
+        gCurTask->playerBaseFrame = 0x492;
         break;
     case 9:
-        gCurTask->unk46 = 0x7B3;
+        gCurTask->playerBaseFrame = 0x7B3;
         break;
     case 10:
-        gCurTask->unk46 = 0x8B3;
+        gCurTask->playerBaseFrame = 0x8B3;
         break;
     }
     while (1)
     {
-        TaskSetFrame(gCurTask->unk46);
+        TaskSetFrame(gCurTask->playerBaseFrame);
         TaskYieldTrampoline(3);
         gCurTask->frame++;
         TaskYieldTrampoline(4);
@@ -548,18 +548,18 @@ void PlayerActionWalkInWater(void)
         TaskYieldTrampoline(10);
         gCurTask->frame++;
         TaskYieldTrampoline(4);
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+        for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
         {
             gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
         gCurTask->frame++;
         TaskYieldTrampoline(4);
-        TaskSetFrame((s16)(gCurTask->unk46 - 6));
+        TaskSetFrame((s16)(gCurTask->playerBaseFrame - 6));
         TaskYieldTrampoline(10);
         gCurTask->frame++;
         TaskYieldTrampoline(4);
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
+        for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 3; gCurTask->playerLoopCount++)
         {
             gCurTask->frame++;
             TaskYieldTrampoline(3);
@@ -590,7 +590,7 @@ void PlayerActionSwallowInWater(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 12;
     gCurTask->updateState = 25;
-    gCurTask->unk28 = 0;
+    gCurTask->playerActionDone28 = 0;
     gCurTask->player->mouthState = 0;
     TaskSetFrame(225);
     TaskYieldTrampoline(2);
@@ -609,7 +609,7 @@ void PlayerActionSwallowInWater(void)
     TaskYieldTrampoline(8);
     gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
@@ -617,7 +617,7 @@ void PlayerActionSwallowInWaterUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 != 0)
+    if (t->playerActionDone28 != 0)
     {
         gLatchedHeldKeys[t->player->playerIndex] = gLatchedPressedKeys[t->player->playerIndex] = 0;
         if (t->onGround & 1)
@@ -632,7 +632,7 @@ void PlayerActionSpitInWater(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 11;
     gCurTask->updateState = 24;
-    gCurTask->unk28 = 0;
+    gCurTask->playerActionDone28 = 0;
     gCurTask->player->mouthState = 0;
     TaskSetFrame(224);
     TaskYieldTrampoline(2);
@@ -644,7 +644,7 @@ void PlayerActionSpitInWater(void)
         CreatePlayerObject(gCurTask->player->playerIndex, 1, 0);
     gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
@@ -652,7 +652,7 @@ void PlayerActionSpitInWaterUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 != 0)
+    if (t->playerActionDone28 != 0)
     {
         if (!(t->onGround & 1) || (gLatchedHeldKeys[t->player->playerIndex] & 65))
             t->player->requestedAction = 23;

@@ -30,7 +30,7 @@ extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void TerrainCollideBox(u32 *p);
 extern void RequestScreenShake(u32 a);
 
-void sub_08072d8c(void)
+void WarpStarFlight13(void)
 {
     gCurTask->updateState = 13;
     gCurTask->facing = 255;
@@ -40,14 +40,14 @@ void sub_08072d8c(void)
         t->posX = (t->pixelX - gViewRect[0]) << 16;
         t->posY = (t->pixelY - gViewRect[2]) << 16;
         t->moveCallback = (u32)TaskMoveRelativeToView;
-        t->unk24 = 0;
+        t->warpStarExitRequested = 0;
     }
     {
         s32 r;
 
-        gUnk_02005584 = 251;
+        gWarpStarFlightSfx = 251;
         r = PlaySfx(251);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     WarpStarStopTrail();
     TaskStop();
@@ -94,7 +94,7 @@ void sub_08072d8c(void)
     TaskYieldTrampoline(8);
     gCurTask->velX = -0x10000;
     TaskYieldTrampoline(4);
-    gCurTask->unk6C = 0;
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -111,9 +111,9 @@ void sub_08072d8c(void)
             t->velY = -0x10000;
         }
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
-    gCurTask->unk6C = 0;
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 3);
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -130,9 +130,9 @@ void sub_08072d8c(void)
             t->velY = 0x10000;
         }
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
-    gCurTask->unk6C = 0;
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 3);
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -149,9 +149,9 @@ void sub_08072d8c(void)
             t->velY = -0x8000;
         }
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
-    gCurTask->unk6C = 0;
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 3);
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -168,8 +168,8 @@ void sub_08072d8c(void)
             t->velY = -0x8000;
         }
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 3);
     {
         struct Task *t = gCurTask;
 
@@ -177,7 +177,7 @@ void sub_08072d8c(void)
         t->velY = 0x20000;
     }
     TaskYieldTrampoline(8);
-    gCurTask->unk6C = 0;
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -189,8 +189,8 @@ void sub_08072d8c(void)
         TaskYieldTrampoline(2);
         gCurTask->velX = 0x20000;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 1);
     {
         struct Task *t = gCurTask;
 
@@ -198,7 +198,7 @@ void sub_08072d8c(void)
         t->velY = 0x8000;
     }
     TaskYieldTrampoline(8);
-    gCurTask->unk6C = 0;
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -215,8 +215,8 @@ void sub_08072d8c(void)
             t->velY = -0x30000;
         }
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 3);
     WarpStarSetTrail(0, 0, 6, 0x500);
     {
         struct Task *t = gCurTask;
@@ -273,16 +273,16 @@ void sub_08072d8c(void)
     gCurTask->velY = -0x40000;
     TaskYieldTrampoline(4);
     sub_08025f00();
-    gCurTask->unk24 = 1;
+    gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
 
-void sub_080731c4(void)
+void WarpStarFlight13Update(void)
 {
     WarpStarEmitTrailStars();
 }
 
-void sub_080731d0(void)
+void WarpStarFlight14(void)
 {
     gCurTask->updateState = 14;
     {
@@ -302,9 +302,9 @@ void sub_080731d0(void)
     }
     TaskYieldTrampoline(44);
     gCurTask->facing = 255;
-    sub_080277f0(gCurTask->pixelX, gCurTask->pixelY);
+    CameraStartFollowFocusAt(gCurTask->pixelX, gCurTask->pixelY);
     RequestScreenShake(4);
-    StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
+    StopSfxOnPlayer(gWarpStarFlightSfxPlayer, gWarpStarFlightSfx);
     PlaySfx(219);
     CreateBurstEffect(0, 0);
     PlaySfx(272);
@@ -316,12 +316,12 @@ void sub_080731d0(void)
     ActorDestroy();
 }
 
-void sub_0807328c(void)
+void WarpStarFlight14Update(void)
 {
     WarpStarEmitTrailStars();
 }
 
-void sub_08073298(void)
+void WarpStarFlight15(void)
 {
     gCurTask->updateState = 15;
     {
@@ -330,14 +330,14 @@ void sub_08073298(void)
         t->posX = (t->pixelX - gViewRect[0]) << 16;
         t->posY = (t->pixelY - gViewRect[2]) << 16;
         t->moveCallback = (u32)TaskMoveRelativeToView;
-        t->unk24 = 0;
+        t->warpStarExitRequested = 0;
     }
     {
         s32 r;
 
-        gUnk_02005584 = 250;
+        gWarpStarFlightSfx = 250;
         r = PlaySfx(250);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     WarpStarStopTrail();
     TaskStop();
@@ -361,7 +361,7 @@ void sub_08073298(void)
     gCurTask->velX = -0x1FF00;
     TaskYieldTrampoline(1);
     WarpStarSetTrail(0, 8, 6, 0x600);
-    gCurTask->unk6C = 0;
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -380,8 +380,8 @@ void sub_08073298(void)
             t->accelY = 0x2000;
         }
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 11);
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 11);
     TaskSetMotion(-0x40000, 0x4000, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(10);
     gCurTask->accelY = 0x3000;
@@ -456,16 +456,16 @@ void sub_08073298(void)
     TaskStop();
     TaskYieldTrampoline(10);
     sub_08025f00();
-    gCurTask->unk24 = 1;
+    gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
 
-void sub_08073578(void)
+void WarpStarFlight15Update(void)
 {
     WarpStarEmitTrailStars();
 }
 
-void sub_08073584(void)
+void WarpStarFlight17(void)
 {
     gCurTask->updateState = 17;
     {
@@ -474,14 +474,14 @@ void sub_08073584(void)
         t->posX = (t->pixelX - gViewRect[0]) << 16;
         t->posY = (t->pixelY - gViewRect[2]) << 16;
         t->moveCallback = (u32)TaskMoveRelativeToView;
-        t->unk24 = 0;
+        t->warpStarExitRequested = 0;
     }
     {
         s32 r;
 
-        gUnk_02005584 = 250;
+        gWarpStarFlightSfx = 250;
         r = PlaySfx(250);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     WarpStarStopTrail();
     TaskStop();
@@ -638,16 +638,16 @@ void sub_08073584(void)
     TaskYieldTrampoline(13);
     TaskStop();
     sub_08025f00();
-    gCurTask->unk24 = 1;
+    gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
 
-void sub_080737f8(void)
+void WarpStarFlight17Update(void)
 {
     WarpStarEmitTrailStars();
 }
 
-void sub_08073804(void)
+void WarpStarFlight18(void)
 {
     gCurTask->updateState = 18;
     {
@@ -656,9 +656,9 @@ void sub_08073804(void)
         t->posX = (t->pixelX - gViewRect[0]) << 16;
         t->posY = (t->pixelY - gViewRect[2]) << 16;
         t->moveCallback = (u32)TaskMoveRelativeToView;
-        t->unk24 = 0;
-        t->unk18 = 0x3F0000;
-        t->unk28 = -0x5000;
+        t->warpStarExitRequested = 0;
+        t->warpStarScale = 0x3F0000;
+        t->warpStarScaleSpeed = -0x5000;
     }
     TaskStop();
     WarpStarSetTrail(0, 4, 4, 0x300);
@@ -696,24 +696,24 @@ void sub_08073804(void)
     gCurTask->velX = 0x1000;
     TaskYieldTrampoline(40);
     sub_08025f00();
-    gCurTask->unk24 = 1;
+    gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
 
-void sub_0807395c(void)
+void WarpStarFlight18Update(void)
 {
     WarpStarEmitTrailStars();
 }
 
-void sub_08073968(void)
+void WarpStarFlight19(void)
 {
     gCurTask->updateState = 19;
     {
         s32 r;
 
-        gUnk_02005584 = 218;
+        gWarpStarFlightSfx = 218;
         r = PlaySfx(218);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     gCurTask->moveCallback = (u32)TaskMove;
     TaskStop();
@@ -722,7 +722,7 @@ void sub_08073968(void)
     TaskSleepForever();
 }
 
-void sub_080739bc(void)
+void WarpStarFlight19Update(void)
 {
     struct Task *t;
 
@@ -731,9 +731,9 @@ void sub_080739bc(void)
     t = gCurTask;
     if (t->onGround & 1)
     {
-        sub_080277f0(t->pixelX, t->pixelY);
+        CameraStartFollowFocusAt(t->pixelX, t->pixelY);
         RequestScreenShake(4);
-        StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
+        StopSfxOnPlayer(gWarpStarFlightSfxPlayer, gWarpStarFlightSfx);
         PlaySfx(219);
         CreateBurstEffect(0, 0);
         PlaySfx(272);
@@ -746,7 +746,7 @@ void sub_080739bc(void)
     }
 }
 
-void sub_08073a54(void)
+void WarpStarFlight20(void)
 {
     gCurTask->updateState = 20;
     {
@@ -755,14 +755,14 @@ void sub_08073a54(void)
         t->posX = (t->pixelX - gViewRect[0]) << 16;
         t->posY = (t->pixelY - gViewRect[2]) << 16;
         t->moveCallback = (u32)TaskMoveRelativeToView;
-        t->unk24 = 0;
+        t->warpStarExitRequested = 0;
     }
     {
         s32 r;
 
-        gUnk_02005584 = 250;
+        gWarpStarFlightSfx = 250;
         r = PlaySfx(250);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     WarpStarStopTrail();
     TaskStop();
@@ -876,16 +876,16 @@ void sub_08073a54(void)
     TaskYieldTrampoline(40);
     TaskStop();
     sub_08025f00();
-    gCurTask->unk24 = 1;
+    gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
 
-void sub_08073cd4(void)
+void WarpStarFlight20Update(void)
 {
     WarpStarEmitTrailStars();
 }
 
-void sub_08073ce0(void)
+void WarpStarFlight21(void)
 {
     gCurTask->updateState = 21;
     {
@@ -894,7 +894,7 @@ void sub_08073ce0(void)
         t->posX = (t->pixelX - gViewRect[0]) << 16;
         t->posY = (t->pixelY - gViewRect[2]) << 16;
         t->moveCallback = (u32)TaskMoveRelativeToView;
-        t->unk24 = 0;
+        t->warpStarExitRequested = 0;
     }
     WarpStarStopTrail();
     TaskStop();
@@ -926,16 +926,16 @@ void sub_08073ce0(void)
     WarpStarSetTrail(2, 0, -1, 0);
     TaskYieldTrampoline(7);
     sub_08025f00();
-    gCurTask->unk24 = 1;
+    gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
 
-void sub_08073e00(void)
+void WarpStarFlight21Update(void)
 {
     WarpStarEmitTrailStars();
 }
 
-void sub_08073e0c(void)
+void WarpStarFlight22(void)
 {
     gCurTask->updateState = 22;
     {
@@ -948,9 +948,9 @@ void sub_08073e0c(void)
     {
         s32 r;
 
-        gUnk_02005584 = 218;
+        gWarpStarFlightSfx = 218;
         r = PlaySfx(218);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     TaskStop();
     {
@@ -962,7 +962,7 @@ void sub_08073e0c(void)
     TaskSleepForever();
 }
 
-void sub_08073e80(void)
+void WarpStarFlight22Update(void)
 {
     struct Task *t;
 
@@ -971,9 +971,9 @@ void sub_08073e80(void)
     t = gCurTask;
     if (t->onGround & 1)
     {
-        sub_080277f0(t->pixelX, t->pixelY);
+        CameraStartFollowFocusAt(t->pixelX, t->pixelY);
         RequestScreenShake(4);
-        StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
+        StopSfxOnPlayer(gWarpStarFlightSfxPlayer, gWarpStarFlightSfx);
         PlaySfx(219);
         CreateBurstEffect(0, 0);
         PlaySfx(272);
@@ -986,16 +986,16 @@ void sub_08073e80(void)
     }
 }
 
-void sub_08073f18(void)
+void WarpStarFlight23(void)
 {
     gCurTask->updateState = 23;
     StopBgm();
     {
         s32 r;
 
-        gUnk_02005584 = 126;
+        gWarpStarFlightSfx = 126;
         r = PlaySfx(126);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     WarpStarStopTrail();
     TaskStop();
@@ -1015,19 +1015,19 @@ void sub_08073f18(void)
     while (gViewRect[2] > 8)
         TaskYieldTrampoline(1);
     TaskYieldTrampoline(60);
-    StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
+    StopSfxOnPlayer(gWarpStarFlightSfxPlayer, gWarpStarFlightSfx);
     {
         s32 r;
 
-        gUnk_02005584 = 217;
+        gWarpStarFlightSfx = 217;
         r = PlaySfx(217);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     {
         struct Task *t = gCurTask;
 
-        t->unk18 = 0x100000;
-        t->unk28 = -0xD00;
+        t->warpStarScale = 0x100000;
+        t->warpStarScaleSpeed = -0xD00;
         t->posX = 0x8A0000;
         t->posY = -0x100000;
         t->velX = -0x10000;
@@ -1058,7 +1058,7 @@ void sub_08073f18(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk28 = 0;
+        t->warpStarScaleSpeed = 0;
         t->frameTable = gUnk_08754560;
         t->tileWord = 0xF010;
         t->facing = 1;
@@ -1066,24 +1066,24 @@ void sub_08073f18(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk18 = -2;
-        t->unk28 = 0;
+        t->warpStarScale = -2;
+        t->warpStarScaleSpeed = 0;
     }
     TaskSetFrame(1);
     TaskYieldTrampoline(50);
     gCurTask->velY = 0x1000;
     TaskYieldTrampoline(84);
-    sub_08025b0c();
+    ExitToNextRoomOnWarpStar();
     TaskSleepForever();
 }
 
-void sub_0807409c(void)
+void WarpStarFlight23Update(void)
 {
     if ((gCurTask->posY >> 16) < -32)
         TaskStop();
 }
 
-void sub_080740bc(void)
+void WarpStarFlight24(void)
 {
     gCurTask->updateState = 24;
     PlayBgm(33);
@@ -1098,7 +1098,7 @@ void sub_080740bc(void)
     WarpStarStopTrail();
     TaskStop();
     TaskYieldTrampoline(16);
-    gCurTask->unk6C = 0;
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -1138,13 +1138,13 @@ void sub_080740bc(void)
             t->velY = 0x8000;
         }
         TaskYieldTrampoline(8);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 5);
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 5);
     gCurTask->velY = 0x2000;
     TaskYieldTrampoline(24);
     gCurTask->velY = 0x8000;
     TaskYieldTrampoline(16);
-    gCurTask->unk6C = 0;
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -1164,9 +1164,9 @@ void sub_080740bc(void)
         TaskYieldTrampoline(8);
         gCurTask->velY = 0x8000;
         TaskYieldTrampoline(8);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
-    gCurTask->unk6C = 0;
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 1);
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -1186,15 +1186,15 @@ void sub_080740bc(void)
         TaskYieldTrampoline(8);
         gCurTask->velY = 0x8000;
         TaskYieldTrampoline(8);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 2);
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 2);
     gCurTask->velY = 0x10000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x8000;
     TaskYieldTrampoline(8);
     gCurTask->velY = -0x8000;
     TaskYieldTrampoline(8);
-    gCurTask->unk6C = 0;
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -1226,8 +1226,8 @@ void sub_080740bc(void)
             t->velY = -0x20000;
         }
         TaskYieldTrampoline(16);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 1);
     PlayBgm(34);
     CreateNightmarePowerOrbEscapeStars(11);
     gCurTask->velX = -0x2000;
@@ -1256,7 +1256,7 @@ void sub_080740bc(void)
     RequestScreenShake(4);
     gCurTask->facing = 1;
     RequestScreenShake(4);
-    StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
+    StopSfxOnPlayer(gWarpStarFlightSfxPlayer, gWarpStarFlightSfx);
     PlaySfx(219);
     CreateBurstEffect(0, 0);
     PlaySfx(272);
@@ -1268,7 +1268,7 @@ void sub_080740bc(void)
     ActorDestroy();
 }
 
-void sub_080743c8(void)
+void WarpStarFlight24Update(void)
 {
 }
 
@@ -1283,10 +1283,10 @@ void sub_080743cc(void)
 void sub_080743f0(void)
 {
     TaskGetScreenPos();
-    if (gCurTask->unk24 == 0 && gUnk_030023D4 <= 0)
+    if (gCurTask->warpStarExitRequested == 0 && gUnk_030023D4 <= 0)
     {
         sub_08025f00();
-        gCurTask->unk24 = 1;
+        gCurTask->warpStarExitRequested = 1;
     }
 }
 
@@ -1301,9 +1301,9 @@ void sub_08074420(void)
     {
         s32 r;
 
-        gUnk_02005584 = 218;
+        gWarpStarFlightSfx = 218;
         r = PlaySfx(218);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     gCurTask->facing = 1;
     WarpStarSetTrail(1, 11, 4, 0x400);
@@ -1316,7 +1316,7 @@ void sub_08074420(void)
     TaskSleepForever();
 }
 
-void sub_0807447c(void)
+void WarpStarFlight4Update(void)
 {
     struct Task *t;
 
@@ -1325,9 +1325,9 @@ void sub_0807447c(void)
     t = gCurTask;
     if (t->onGround & 1)
     {
-        sub_080277f0(t->pixelX, t->pixelY);
+        CameraStartFollowFocusAt(t->pixelX, t->pixelY);
         RequestScreenShake(4);
-        StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
+        StopSfxOnPlayer(gWarpStarFlightSfxPlayer, gWarpStarFlightSfx);
         PlaySfx(219);
         CreateBurstEffect(0, 0);
         if (gMetaKnightmareMode == 0)
@@ -1357,7 +1357,7 @@ void WarpStarCameraUpdate(void)
     SetCameraFocusOrAnchor(t->pixelX, t->pixelY);
 }
 
-void sub_08074588(void)
+void WarpStarCameraFollowPlayer(void)
 {
     while (1)
     {
@@ -1393,7 +1393,7 @@ void sub_08074628(void)
     TaskExitTrampoline();
 }
 
-void sub_08074638(void)
+void WarpStarCameraPath5(void)
 {
     TaskStop();
     TaskYieldTrampoline(24);
@@ -1416,7 +1416,7 @@ void sub_08074638(void)
     TaskExitTrampoline();
 }
 
-void sub_080746c0(void)
+void WarpStarCameraPath6(void)
 {
     TaskStop();
     gCurTask->velY = -0x40000;
@@ -1429,7 +1429,7 @@ void sub_080746c0(void)
     TaskExitTrampoline();
 }
 
-void sub_0807470c(void)
+void WarpStarCameraPath8(void)
 {
     TaskStop();
     sub_08025e00();
@@ -1450,13 +1450,13 @@ void sub_0807470c(void)
     TaskExitTrampoline();
 }
 
-void sub_08074784(void)
+void WarpStarCameraPath10(void)
 {
     TaskStop();
     TaskExitTrampoline();
 }
 
-void sub_08074794(void)
+void WarpStarCameraPath11(void)
 {
     TaskStop();
     gCurTask->velY = -0x60000;
@@ -1471,13 +1471,13 @@ void sub_08074794(void)
     TaskExitTrampoline();
 }
 
-void sub_080747dc(void)
+void WarpStarCameraPath12(void)
 {
     TaskStop();
     TaskExitTrampoline();
 }
 
-void sub_080747ec(void)
+void WarpStarCameraPath13(void)
 {
     TaskStop();
     TaskYieldTrampoline(40);
@@ -1502,14 +1502,14 @@ void sub_080747ec(void)
     TaskExitTrampoline();
 }
 
-void sub_08074880(void)
+void WarpStarCameraPath14(void)
 {
     TaskStop();
     SetCameraFocusOrAnchor(gCurTask->pixelX, 0x10D);
     TaskExitTrampoline();
 }
 
-void sub_080748a8(void)
+void WarpStarCameraPath15(void)
 {
     TaskStop();
     TaskYieldTrampoline(130);
@@ -1530,7 +1530,7 @@ void sub_080748a8(void)
     TaskExitTrampoline();
 }
 
-void sub_08074904(void)
+void WarpStarCameraPath17(void)
 {
     TaskStop();
     TaskYieldTrampoline(32);
@@ -1551,14 +1551,14 @@ void sub_08074904(void)
     TaskExitTrampoline();
 }
 
-void sub_08074974(void)
+void WarpStarCameraPath18(void)
 {
     TaskStop();
     TaskStop();
     TaskExitTrampoline();
 }
 
-void sub_08074988(void)
+void WarpStarCameraPath20(void)
 {
     TaskStop();
     TaskYieldTrampoline(80);
@@ -1605,13 +1605,13 @@ void sub_08074988(void)
     TaskExitTrampoline();
 }
 
-void sub_08074ab8(void)
+void WarpStarCameraPath21(void)
 {
     TaskStop();
     TaskExitTrampoline();
 }
 
-void sub_08074ac8(void)
+void WarpStarCameraPath23(void)
 {
     TaskStop();
     TaskYieldTrampoline(20);
@@ -1637,7 +1637,7 @@ loop:
     goto loop;
 }
 
-void sub_08074b60(void)
+void WarpStarCameraPath24(void)
 {
     {
         struct Task *t = gCurTask;
@@ -1666,7 +1666,7 @@ void CreateWarpStarTrailStar(int a, int b, int c)
     gTasks[id].state = z;
     if (z != 2)
     {
-        gTasks[id].unk28 = x;
-        gTasks[id].unk2C = (s16)y;
+        gTasks[id].warpStarTrailStarAngle = x;
+        gTasks[id].warpStarTrailStarSpeed = (s16)y;
     }
 }

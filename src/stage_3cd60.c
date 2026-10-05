@@ -22,7 +22,7 @@ extern struct M11R20 gPlayerBodyBoxes[];
 extern struct M11Buf gUnk_02006A80[];
 extern u16 gUnk_02007F60[];
 extern u16 gPlayerBubbleTimers[];
-extern u16 gUnk_03001490[];
+extern u16 gObjPaletteBank1[];
 extern u8 gCreditsDemoSet;
 extern u8 gTerrainResult[];
 extern u16 gPlayerPalettes[][16];
@@ -64,7 +64,7 @@ s32 sub_0803d870(void);
 void sub_0803db74(void);
 void sub_0803e28c(s32 a0);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-s32 sub_0803e7d8(void);
+s32 PlayerUpdateInvincibility(void);
 void sub_0803e8ec(void);
 void PlayerStopAtCeilingAndWall(void);
 s32 PlayerStopAtWall(void);
@@ -242,7 +242,7 @@ void InitPlayerState(s32 a0)
     p->wallSide = 0;
     p->slope = 0;
     p->onSlipperyFloor = 0;
-    p->unk4E = -1;
+    p->clampedTopY = -1;
     p->driftVelY = 0;
     p->driftVelX = 0;
     p->prevPixelY = 0;
@@ -312,7 +312,7 @@ void sub_0803d1c4(s32 a0)
     p->wallSide = 0;
     p->slope = 0;
     p->onSlipperyFloor = 0;
-    p->unk4E = -1;
+    p->clampedTopY = -1;
     p->driftVelY = 0;
     p->driftVelX = 0;
     p->bodyBox = 0;
@@ -374,7 +374,7 @@ void sub_0803d2d4(s32 a0)
     p->wallSide = 0;
     p->slope = 0;
     p->onSlipperyFloor = 0;
-    p->unk4E = -1;
+    p->clampedTopY = -1;
     p->driftVelY = 0;
     p->driftVelX = 0;
     p->bodyBox = 0;
@@ -510,7 +510,7 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
         p++;
         if ((gCurTask->player->unk42 & 16) == 0 && *p != NULL)
             RequestCopy(2, (u32)(*p + 1),
-                         (u32)gUnk_03001490 + ((prio >> 12) << 5), **p);
+                         (u32)gObjPaletteBank1 + ((prio >> 12) << 5), **p);
         q = p[1];
         if (q != NULL) {
             s = q;
@@ -878,15 +878,15 @@ void sub_0803dfc8(void)
                  gCurTask->pixelY - gSpriteCameraY);
 }
 
-void PlayerStopAxes(s32 a0)
+void PlayerStopAxes(s32 axes)
 {
-    if (a0 & 1)
+    if (axes & 1)
     {
         gCurTask->speedLimitX = 0;
         gCurTask->accelX = 0;
         gCurTask->velX = 0;
     }
-    if (a0 & 2)
+    if (axes & 2)
     {
         gCurTask->speedLimitY = 0;
         gCurTask->accelY = 0;
@@ -1048,7 +1048,7 @@ void PlayerUpdateInvulnerability(void)
             }
         }
     }
-    sub_0803e7d8();
+    PlayerUpdateInvincibility();
 }
 
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1)
@@ -1331,7 +1331,7 @@ void sub_0803e68c(s32 a0)
     p->requestedAction = v;
 }
 
-s32 sub_0803e7d8(void)
+s32 PlayerUpdateInvincibility(void)
 {
     struct PlayerState *p = gCurTask->player;
     s32 i;
@@ -1362,7 +1362,7 @@ s32 sub_0803e7d8(void)
     sub_080270d0();
 }
 
-void sub_0803e868(void)
+void PlayerEndInvincibility(void)
 {
     s32 i;
     s32 ok;
@@ -2211,7 +2211,7 @@ s32 sub_0803eaf8(s32 a0)
     return (hi << 16) | lo;
 }
 
-void sub_0803f5fc(s8 a0)
+void FreePlayerEffectsAndObjects(s8 a0)
 {
     s32 i, n;
 
@@ -2917,7 +2917,7 @@ void sub_08040858(s32 a0)
     p->unk42 |= 2;
 }
 
-void sub_0804087c(s32 a0)
+void PlayerGiveInvincibleCandy(s32 a0)
 {
     (gPlayerStates + a0)->unk40 |= 64;
 }

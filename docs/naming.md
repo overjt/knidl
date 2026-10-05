@@ -140,6 +140,23 @@ role is not proven on every path; the offset comments (`/*0x14*/`) stay.
   `waterFlags`, `hitKind`, `hitDirection`, `hitterSlot`, `hitterPlayer`;
   and `player`, the task's `struct PlayerState`.
 
+### 2.2.1 Per-family registers: alias macros (run 5 of #155)
+
+`Task.unk18`-`unk34`, `unk46`, `unk6C`-`unk70` and `unk74` are named per
+family by object-like alias macros in `include/task_vars.h`
+(docs/header-conventions.md, "Per-family registers"; the owner's decision
+D1): `<family><Role>` in lowerCamelCase (`fireLionHopCount`), or a shared
+role alias `actor<Role>` when a shared engine helper's contract fixes the
+role (`actorAnimDelay`, `actorSpawnArg`).  The role words are those of 2.1
+and 2.2: a **Timer** counts frames to an event, a **Count** counts events,
+a **Slot** is a task index a spawner returned (`gTasks[...]`), an
+**AnimDelay** is what the animation-script helpers return; **Base** /
+**Start** / **Target** / **Saved** prefix a saved coordinate or value.
+`tools/task_alias.py` applies them (section 6.2) and logs one
+`renames.csv` row of kind `alias` per macro (`Task.unk28` ->
+`Task.actorAnimDelay`), whose evidence is the store or read that proves the
+role.
+
 ### 2.3 Enemies and the abilities (run 2 of #155)
 
 No string says which enemy a script is; the local sprite renders do
@@ -323,6 +340,47 @@ slot gets `State<N>Update` only where state N's body stores
 `updateState = N` (2.3, the state pair); the update tables of the
 families that index them otherwise keep their placeholders.
 
+**Dispatch-table slots** (run 5, approved by the owner's coordinator).
+The state-table rule covers the other named dispatch tables whose consumer
+is proven: a `sub_*` whose only referrer is one slot of `gCutsceneActors`
+(the cutscene actor's scripts; CreateCutsceneActor stores the index in
+`cutsceneActorScript`), `gWarpStarFlights` / `gWarpStarFlightUpdates`,
+`gWarpStarCameraPaths`, `gPlayerDances`, `gActorDefeats` or
+`gActorExplodeDefeatsByEffect` is `CutsceneActorScript<N>`,
+`WarpStarFlight<N>` / `WarpStarFlight<N>Update` (the update only where
+flight N's body stores `updateState = N`, lesson 4.160),
+`WarpStarCameraPath<N>`, `PlayerDance<N>`, `ActorDefeat<N>` or
+`ActorExplodeDefeat<N>`.  A cutscene script whose every
+`CreateCutsceneActor(N, ...)` call sits in one named scene (the level-intro
+scenes `Cutscene<Scene>Start` and their helpers) carries the scene:
+`Cutscene<Scene>ActorScript<N>` (`CutsceneBeachActorScript10`); N stays the
+table index.  Same rules as the state-table slots: counted apart, their own
+commits, and a verb proven later replaces them.
+
+**RAM position names** (run 5 of #155, the owner's decision D2).  Some
+RAM cells are not variables at all but addresses inside a larger buffer
+that the code passes to a copy, fade or blend routine: the cells inside the
+palette shadow buffers `gBgPalette` (0x03001270, 256 BG colours) and
+`gObjPalette` (0x03001470, 256 OBJ colours).  Each user copies or blends a
+run of colours from that address on, so the address's only identity is its
+position.  Such a cell is named after its position, 0-based and in
+decimal: `gBgPaletteBank<N>` / `gObjPaletteBank<N>` for the first colour of
+16-colour bank N, `g<Bg|Obj>PaletteBank<N>Color<C>` for colour C inside
+it (`gObjPaletteBank6Color6` is `gObjPalette` + 0xCC).  The evidence is
+`slot: <buffer> + <offset>`.  These are renames, never respellings: the C
+keeps the symbol and does not become `&gBgPalette[0x20]`, because gcc's
+cse may derive one `symbol+offset` from another and change the code.  They
+are counted with the position names.
+
+**Functional ROM records by position** (run 5, the owner's decision D4).
+The rule of this section covers any family size: the player's frame
+records and frame lists (seg 19, `player_frame_records`,
+`player_frame_lists`, docs/data.md) and the `*_rodata_*` records that a C
+table in `src/data/` reaches by slot are named after that slot, by a
+script, in their own commits.  A format-only chain (no code reads it;
+#161's `"proof": "format"`) may be named the same way; the census counts
+it apart.  Asset labels stay unnamed (section 5).
+
 **Class-value names** (run 4).  When the code sorts records by a value and
 no role word is true for every record in a group, the group is named by
 that value as the code writes it, which claims no role: the collider lists
@@ -398,6 +456,16 @@ are not evidence.
 
 ## 5. When to keep `sub_` / `gUnk_`, and what stays unnamed by design
 
+**Shared scratch** (run 5, the owner's decision D3).  A cell proven to be
+shared scratch - several unrelated users, and no value survives from one
+user to the next (every reader is preceded by its own writer on every
+path) - may take `gScratch<Shape>` (`gScratchBuffer`, `gScratchWord`), or
+`g<Subsystem>Scratch<Shape>` when one subsystem owns it and others borrow
+it.  The evidence lists every writer and reader.  A cell that holds two
+encodings gets one name only if one noun covers both (the stage's and the
+hub's arrival codes are both an arrival code); otherwise it stays `gUnk_`,
+with the reason in the census.
+
 Keep the placeholder when:
 
 - the role is known only from one caller of many, or the callers disagree;
@@ -420,7 +488,13 @@ Unnamed by design, for #37's audit:
   labels, split-only labels in `asm/rom_syms.s`, and the dead SDK exports
   that nothing references and no reference names;
 - **unknown parameters and locals** (`arg0`, `r4`, `sp00`), which keep
-  katam's positional form;
+  katam's positional form.  A parameter of a named function whose role is
+  proven gets its role in the definition and the `include/*.h` prototype
+  (the owner's decision D5, run 5: the engine API, `TaskSetMotionY(velY,
+  accelY, speedLimitY)`, `ActorSetState(state)`; `renames.csv` rows of
+  kind `param`, `Func.old` -> `Func.new`, proven by the per-file assembly
+  oracle); positional parameters are left only where the role is not
+  proven, and locals keep their positional form;
 - segment names (`docs/analysis/segments.txt`) and source file names, which
   are not symbols; renaming them is not part of #155.
 
@@ -440,70 +514,73 @@ copies and module-local records).
 
 | kind | placeholder | count | reason |
 |---|---|---:|---|
-| function | `sub_*` | 1535 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
-| function | `sub_*` | 5 | tracked by #155: engine-zone helpers whose role is not settled |
+| function | `sub_*` | 972 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
+| function | `sub_*` | 2 | tracked by #155: engine-zone helpers whose role is not settled |
 | function | `sub_*` | 8 | runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8) |
-| RAM cell | `gUnk_02*`, `gUnk_03*` | 124 | tracked by #155: role not proven; many are proven shared scratch or hold two encodings |
+| RAM cell | `gUnk_02*`, `gUnk_03*` | 84 | tracked by #155: role not proven; many are proven shared scratch or hold two encodings |
 | I/O register | `gUnk_04*` | 0 | none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and early_4734.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_* |
-| ROM label | `gUnk_08*` | 5747 | tracked by #155: functional data whose consumer does not settle a name |
+| ROM label | `gUnk_08*` | 2775 | tracked by #155: functional data whose consumer does not settle a name |
 | ROM label | `gUnk_08*` | 17074 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
-| ROM label | (named) | 2309 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
-| struct field | `unk*` | 11 | per-family Task fields: the meaning changes with the task type, a view per family needs the owner (#155) |
-| struct field | `unk*` | 313 | tracked by #155: the field's role is not proven |
-| struct field | `unk*` | 322 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
+| ROM label | (named) | 5193 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
+| ROM label | (named) | 55 | documented by position in a format-only chain: a slot no code reads, such as the frame list a graphics descriptor's trailer word points at (docs/naming.md section 2.4, docs/data.md 5.3) |
+| struct field | `unk*` | 14 | per-family registers, named per family by the aliases in include/task_vars.h (docs/header-conventions.md; the member keeps its unk name, lessons and history cite it); `unk76` is u76's member for the player's bits |
+| struct field | `unk*` | 257 | tracked by #155: the field's role is not proven |
+| struct field | `unk*` | 282 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 480 RAM cells, 2919 ROM labels by role and 2309 by position.
+Named for comparison: 496 RAM cells by role and 24 by position, 2952 ROM labels by role and 5248 by position.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 
 | zone | content | functions | `sub_*` |
 |---|---|---:|---:|
 | crt0 | cartridge header, crt0, master ISR and the ARM task switch | 6 | 1 |
-| engine | the engine zone: AgbInit, tasks, sprites, fades, sound front end, link | 184 | 5 |
+| engine | the engine zone: AgbInit, tasks, sprites, fades, sound front end, link | 184 | 2 |
 | M01 | AgbMain | 1 | 0 |
 | M02 | game-state bodies, title, screen loaders, pause, HUD | 109 | 17 |
 | M03 | main menu and its sprite tasks | 79 | 4 |
-| M04 | scripted-sequence director and scripts | 65 | 25 |
-| M05 | player animation bank and collision registry | 23 | 21 |
-| M06 | collision engine and hit tests | 55 | 11 |
-| M07 | level / room builder | 157 | 71 |
-| M08 | camera, BG streaming, map events, stage objects | 151 | 44 |
+| M04 | scripted-sequence director and scripts | 65 | 4 |
+| M05 | player animation bank and collision registry | 23 | 8 |
+| M06 | collision engine and hit tests | 55 | 5 |
+| M07 | level / room builder | 157 | 41 |
+| M08 | camera, BG streaming, map events, stage objects | 151 | 32 |
 | M09 | breakable blocks and the player task | 63 | 11 |
 | M10 | player action bodies, part 2 | 39 | 4 |
-| M11 | player mode machine and stage services | 121 | 34 |
+| M11 | player mode machine and stage services | 121 | 30 |
 | M12 | player action bodies, part 3 | 21 | 0 |
-| M13 | player action bodies, part 4 | 24 | 1 |
-| M14 | player action bodies, part 5, and task type #6 | 82 | 10 |
-| M15 | the player's effect objects (task type #7) | 84 | 58 |
-| M16 | effect spawner (task types #81-#90) | 89 | 35 |
-| M17 | actor core | 245 | 82 |
-| M18 | actor core, part 2 | 256 | 71 |
-| M19 | cutscenes and ending sequences | 220 | 114 |
-| M20 | enemies, bank 1 | 414 | 72 |
-| M21 | enemies, bank 2 | 200 | 54 |
-| M22 | enemies, bank 3 | 125 | 32 |
-| M23 | enemies, bank 4, and two bosses | 297 | 146 |
-| M24 | enemies, bank 5 | 158 | 54 |
-| M25 | bosses | 121 | 16 |
-| M26 | enemies, bank 7 | 148 | 69 |
-| M27 | mid-bosses | 145 | 27 |
-| M28 | enemies, bank 9, and the player's death sequence | 204 | 89 |
-| M29 | enemies, bank 10 | 226 | 82 |
-| M30 | enemies, bank 11 | 131 | 31 |
-| M31 | enemies, bank 12 | 123 | 42 |
-| M32 | enemies, bank 13 | 135 | 54 |
-| M33 | HUD effects | 110 | 20 |
-| M34 | wavy scroll, save file, input recorder | 105 | 61 |
+| M13 | player action bodies, part 4 | 24 | 0 |
+| M14 | player action bodies, part 5, and task type #6 | 82 | 9 |
+| M15 | the player's effect objects (task type #7) | 84 | 48 |
+| M16 | effect spawner (task types #81-#90) | 89 | 22 |
+| M17 | actor core | 245 | 29 |
+| M18 | actor core, part 2 | 256 | 31 |
+| M19 | cutscenes and ending sequences | 220 | 45 |
+| M20 | enemies, bank 1 | 414 | 33 |
+| M21 | enemies, bank 2 | 200 | 22 |
+| M22 | enemies, bank 3 | 125 | 12 |
+| M23 | enemies, bank 4, and two bosses | 297 | 88 |
+| M24 | enemies, bank 5 | 158 | 27 |
+| M25 | bosses | 121 | 8 |
+| M26 | enemies, bank 7 | 148 | 40 |
+| M27 | mid-bosses | 145 | 13 |
+| M28 | enemies, bank 9, and the player's death sequence | 204 | 73 |
+| M29 | enemies, bank 10 | 226 | 75 |
+| M30 | enemies, bank 11 | 131 | 27 |
+| M31 | enemies, bank 12 | 123 | 37 |
+| M32 | enemies, bank 13 | 135 | 47 |
+| M33 | HUD effects | 110 | 15 |
+| M34 | wavy scroll, save file, input recorder | 105 | 44 |
 | M35 | sub-game framework and Quick Draw | 196 | 9 |
 | M36 | Bomb Rally | 117 | 2 |
-| M37 | Air Grind and game state 11 | 82 | 8 |
+| M37 | Air Grind and game state 11 | 82 | 6 |
 | M38 | ending, staff credits, game over | 110 | 54 |
 | m4a | the m4a sound engine (asm core and C driver) | 95 | 3 |
 | sdk | SDK stubs: SWI thunks, SoftReset, SRAM driver, lib1funcs, trampolines, veneer | 32 | 4 |
-| all | | 5348 | 1548 |
+| all | | 5348 | 982 |
 
-`unk*` fields by header struct: `LinkSave` 33, `PlayerState` 22, `M37Player` 19, `Task` 17, `M37CoursePlayer` 13, `Unk020061F0` 12, `M37Results` 11, `AttackBox` 10, `M37Timer` 10, `SaveSlot` 10, `Unk02007D70` 10, `Actor` 9, `M37Game` 9, `Unk03005530` 9, `BodyBox` 8, `LinkRec` 8, `Unk03005550` 8, `M37Course` 7, `Door` 6, `M04Spark` 6, `GfxDesc` 5, `GfxSrc` 5, `HudBar` 5, `M37Obj` 5, `M37ObjSet` 5, `RoomDef` 5, `M19Frame` 4, `M19Particle` 4, `M19Script` 4, `Unk03005670` 4, `M12Fade` 3, `MapCell` 3, `Unk02005E00` 3, `Unk03004B00` 3, `Unk03005680` 3, `Unk0873A994` 3, `ActorDef` 2, `BgMap` 2, `M11Buf` 2, `M11R8` 2, `M37Script` 2, `Unk02004B90` 2, `Unk020060A0` 2, `Unk0873EAC0` 2, `ActorHandlers` 1, `ActorSpawn` 1, `GfxHeader` 1, `HitBoxSet` 1, `M38LogoObj` 1, `MapTile` 1, `Unk0873EEA0` 1.
+Register aliases (include/task_vars.h): 965 in 198 families: AbilityReleaseFlash 1, AbilityStar 3, Actor 38, AirGrind 6, AirGrindDoorSign 1, ArenaDoorSign 1, Blipper 9, BombRally 10, BombRallyDoorSign 1, BombRallyObject 8, Bomber 2, Bonkers 10, BonkersHammerHitBox 1, BonkersNut 1, BossDoorSign 3, BrontoBurt 9, BroomHatter 4, Bubbles 2, Bugzzy 9, BugzzyAfterimage 3, BugzzyLadybug 5, Burst 1, Cannon 4, CannonFuse 8, CannonFuseSpark 2, CannonSmoke 3, Cappy 2, Chilly 3, ChillyFreeze 4, CutsceneActor 11, CutsceneDirector 1, DashFireTrail 2, DashFlame 2, DoorObject 1, DoorOpening 3, DustBurst 2, DustTrail 3, EndingEpilogue 12, EndingStarRodReturn 8, EraseConfirmDialog 3, EraseFileWipe 4, ExplosionScreenFlash 1, FileMenuHighlight 4, FileMenuSlot 4, FileSelectCursor 4, FileSelectSlot 2, FileSelectSlotLabel 1, FireLion 11, Flamer 12, FlamerFlame 1, GameOverChoice 2, GameOverObject 2, GameOverPalette 4, GameOverPlayer 5, GameOverSprite 1, Gip 5, Glunk 2, GlunkShot 1, GoalGameBigTrailStar 1, GoalGameHelperKirby 1, GoalGameLaunchStars 1, GoalGameSign 1, GoalGameSmallTrailStar 1, GrandWheelie 17, GrandWheelieMiniWheelie 2, HalveScore 2, HeavyMole 5, HeavyMoleArm 7, HeavyMoleEye 1, HeavyMoleRedMissile 1, HeavyMoleSmoke 3, HeavyMoleYellowMissile 1, HitFrost 2, HotHead 7, HotHeadFire 3, IceBlock 3, ImpactStar 1, InhalableStar 1, IntroStoryPicture 1, Kabu 13, KingDedede 16, KingDededeStar 2, Kracko 19, KrackoCloud 4, KrackoJrOrbs 3, KrackoLightningMiddle 1, KrackoLightningTop 1, KrackoStarman 1, LandingImpact 2, LaserBall 12, LevelDoorSign 1, LinkPlayCable 4, LinkPlayColorCycle 4, LinkPlayConsole 4, LinkPlayPalettePulse 6, LinkPlayPlayerList 9, MaceKnightMace 2, MapEvent 20, MenuBackground 4, MenuBgPaletteCycle 7, MenuScreenTitle 3, MetaKnight 10, MetaKnightCape 1, MetaKnightMask 1, MetaKnightMaskHalf 2, MetaKnightSword 4, MetaKnightSwordHitBox 1, MetaKnights 11, MetaKnightsKnight 16, ModeListCursor 4, ModePlayerCountPanel 3, MrFrosty 10, MrFrostyIceCube 4, MrShineAndMrBright 19, MrShineAndMrBrightAttack 6, MrTickTock 14, MrTickTockNote 1, MrTickTockRing 2, MuseumAbilitySign 1, Needlous 5, NightmarePowerOrb 6, NightmarePowerOrbEscape 1, NightmarePowerOrbEscapeStar 5, NightmarePowerOrbIntroScroll 1, NightmarePowerOrbStar 1, NightmarePowerOrbStarAfterimage 1, NightmarePowerOrbStarTrail 1, NightmarePowerOrbStarTrailDown 1, NightmarePowerOrbStarTrailUp 1, NightmareWizard 11, NightmareWizardCloakHands 2, NightmareWizardHitBox 1, NightmareWizardPalmTornado 1, NightmareWizardPointTornado 1, NightmareWizardStar 3, Noddy 4, NormalExtraPanel 3, PaintRoller 3, PaintRollerPainting 3, PaletteAnim 13, Parasol 5, Pengy 5, PengyIceBreath 1, PengyIceBreathSparkle 1, PhanPhan 6, PhanPhanApple 1, Player 43, PlayerCountPanel 3, PlayerEffect 2, PlayerObject 2, PoppyBrosJr 14, PoppyBrosSr 11, PoppyBrosSrBomb 1, PoppyBrosSrHand 8, PoppyBrosSrHead 3, QuickDraw 16, QuickDrawDoorSign 1, QuickDrawObject 22, RingStar 1, Rocky 3, RoomParticles 3, Scarfy 8, Shotzo 15, ShotzoCannonball 2, SirKibble 3, Slippy 4, SoundTestCursors 3, SoundTestPulse 5, Sparky 4, Squishy 4, StageDoorSign 4, StageEffect 1, StarFlashOnParent 3, StarRodPiece 2, Starman 11, SubGame 1, SwordAndBladeKnight 8, SwordAndBladeKnightSlash 1, TitlePalette 1, TitleSprites 4, TridentKnightTrident 1, Twister 7, Twizzy 11, UFO 8, WaddleDee 4, WaddleDoo 5, WaddleDooBeam 2, WarpStar 12, WarpStarStationDoorSign 1, WarpStarStationDoorSparkle 1, WarpStarStationLevelSign 1, WarpStarStationNumber 1, WarpStarTrailStar 3, Wheelie 10, WhispyWoods 5, WhispyWoodsAirPuff 3, WhispyWoodsApple 4, WhispyWoodsLeaves 4.
+
+`unk*` fields by header struct: `LinkSave` 33, `PlayerState` 21, `M37Player` 19, `Task` 17, `M37CoursePlayer` 13, `AttackBox` 10, `M37Game` 9, `Unk03005530` 9, `BodyBox` 8, `LinkRec` 8, `Unk03005550` 8, `M37Course` 7, `Actor` 6, `Door` 6, `M04Spark` 6, `GfxDesc` 5, `GfxSrc` 5, `HudBar` 5, `M37Obj` 5, `M37ObjSet` 5, `RoomDef` 5, `M19Frame` 4, `M19Particle` 4, `M19Script` 4, `M37Results` 4, `Unk03005670` 4, `M12Fade` 3, `SaveSlot` 3, `Unk02005E00` 3, `Unk03004B00` 3, `Unk03005680` 3, `Unk0873A994` 3, `ActorDef` 2, `BgMap` 2, `M11Buf` 2, `M11R8` 2, `M37Script` 2, `Unk02004B90` 2, `Unk020060A0` 2, `Unk0873EAC0` 2, `ActorHandlers` 1, `ActorSpawn` 1, `GfxHeader` 1, `HitBoxSet` 1, `M38LogoObj` 1, `Unk02007D70` 1, `Unk0873EEA0` 1.
 
 <!-- audit:placeholders:end -->
 
@@ -569,6 +646,26 @@ follows; prose such as `task->unk14` does not.  Each field rename is a
 `renames.csv` row of kind `field`, written `Struct.old` -> `Struct.new`, one
 per local copy with its own old name.  Field names never reach code
 generation (lesson 3.516), and agbcc's `make compare` is still the proof.
+
+### 6.2 Register aliases: `tools/task_alias.py`
+
+```sh
+tools/task_alias.py --defs defs.csv --sites sites.csv          # dry run
+tools/task_alias.py --defs defs.csv --sites sites.csv --write  # apply
+tools/task_alias.py --verify-cpp HEAD    # every unit preprocesses the same
+tools/task_alias.py --verify-types       # gcc 12: aliases only on struct Task
+make clean && make compare
+tools/rename.py --verify-diff master     # covers the aliases too
+tools/task_alias.py --list               # the aliases per family
+```
+
+`defs.csv` (`family,header,alias,field,type,role,evidence`) gives one row
+per alias; `header` describes a new family's block.  `sites.csv`
+(`file,function,pointer,field,alias`) says where each alias is used: inside
+the body of FUNCTION, every `POINTER->FIELD` / `POINTER.FIELD` outside
+comments becomes `POINTER->ALIAS`, and a row that matches nothing is an
+error.  The tool writes `include/task_vars.h` (one block per family, the
+defines in offset order) and appends the `renames.csv` rows.
 
 Apply names in batches of about 50-100 and run `make clean && make compare`
 after every batch.  gcc 2.95 hashes some RTL by symbol name (lessons 4.79,

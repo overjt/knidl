@@ -21,7 +21,7 @@
  *   other BgAnimStop (op 4: the end of a one-shot script).
  * Nothing after a script's op 3 or op 4 is read.  A fade is the 16 bytes
  * BgAnimStartPaletteFade copies: BgAnimStepPaletteFade blends colorCount
- * colours from src to dst into gUnk_030012B0[colorIndex], rate/256 more of
+ * colours from src to dst into gBgPaletteBank2[colorIndex], rate/256 more of
  * the way each frame.
  *
  * The tile frames and the palettes are assets: they stay baserom slices
@@ -32,7 +32,7 @@
  * between the data pieces of room_bg_anims inside ONE output section
  * (docs/data.md 5.2).  The records are not const: the scripts are the
  * struct Unk02007D70Cmd * of gRoomBgAnimScripts' lists and of
- * Unk02007D70.unk4, a fade is a command's void * and
+ * Unk02007D70.script, a fade is a command's void * and
  * BgAnimStartPaletteFade's parameter, so the qualifier would not survive
  * -Werror; the section attribute is what places them in ROM. */
 

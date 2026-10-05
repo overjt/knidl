@@ -12,7 +12,7 @@
  * still attached, and or-s in 0x10000 while `gTerrainResult[4]` (the room's
  * kind) is outside 1-4.
  *
- * `sub_08084bc0` / `sub_08084c0c` / `sub_08084c5c` / `sub_08084cb8` plus the
+ * `NoddyLand` / `NoddyStartFall` / `NoddyEnterWater` / `NoddyBounceOffWall` plus the
  * shared `sub_08084c84` are the four class-3 hook rows at `0x08742CF0` /
  * `0x08742D00`: each returns 1 when it has handed the task to a new state and
  * 0 otherwise, and all four open with the same `Task.variant == 1` bail-out.
@@ -42,7 +42,7 @@ extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void ActorSetState(s32 a);
 extern void ActorSetAttackBox(u32 *p);
-extern u8 sub_080699a8(void);
+extern u8 ActorStepBackFromSlope(void);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern void ActorReactToHit(void);
@@ -79,12 +79,12 @@ void NoddyUpdate(void)
     if ((t->onGround & 1) != 0)
     {
         if ((u8)(gTerrainResult[4] - 1) > 3)
-            t->unk24 = (u16)t->unk24 | 0x10000;
+            t->actorFlatGroundY = (u16)t->actorFlatGroundY | 0x10000;
         if ((gCurTask->onGround & 1) != 0)
             goto skip;
     }
     u = gCurTask;
-    u->unk24 = (u16)u->unk24;
+    u->actorFlatGroundY = (u16)u->actorFlatGroundY;
 skip:
     if (r == 0)
     {
@@ -92,7 +92,7 @@ skip:
         CallTableEntry(gCurTask->updateState, 6, gNoddyStateUpdates);
     }
     v = gCurTask;
-    v->unk24 = (v->unk24 & 0xFFFF0000) | v->pixelY;
+    v->actorFlatGroundY = (v->actorFlatGroundY & 0xFFFF0000) | v->pixelY;
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -112,39 +112,39 @@ void NoddyWalk(void)
     TaskStop();
     TaskFaceNearestPlayer();
     t = gCurTask;
-    t->unk30 = gUnk_08741FA8[t->unk74];
-    TaskSetMotionXFacing(gUnk_08741FAC[t->unk74], 0x5A5A5A5A);
+    t->noddyWalkTimer = gUnk_08741FA8[t->actorSpawnArg];
+    TaskSetMotionXFacing(gUnk_08741FAC[t->actorSpawnArg], 0x5A5A5A5A);
     while (1)
     {
         TaskSetFrame(9);
-        TaskYieldTrampoline(gUnk_08741FB4[gCurTask->unk74]);
+        TaskYieldTrampoline(gUnk_08741FB4[gCurTask->actorSpawnArg]);
         u1 = gCurTask;
         u1->frame++;
-        TaskYieldTrampoline(gUnk_08741FB4[u1->unk74]);
+        TaskYieldTrampoline(gUnk_08741FB4[u1->actorSpawnArg]);
         u2 = gCurTask;
         u2->frame++;
-        TaskYieldTrampoline(gUnk_08741FB4[u2->unk74]);
+        TaskYieldTrampoline(gUnk_08741FB4[u2->actorSpawnArg]);
         u3 = gCurTask;
         u3->frame++;
-        TaskYieldTrampoline(gUnk_08741FB4[u3->unk74]);
+        TaskYieldTrampoline(gUnk_08741FB4[u3->actorSpawnArg]);
         u4 = gCurTask;
         u4->frame++;
-        TaskYieldTrampoline(gUnk_08741FB4[u4->unk74]);
+        TaskYieldTrampoline(gUnk_08741FB4[u4->actorSpawnArg]);
         u5 = gCurTask;
         u5->frame--;
-        TaskYieldTrampoline(gUnk_08741FB4[u5->unk74]);
+        TaskYieldTrampoline(gUnk_08741FB4[u5->actorSpawnArg]);
         u6 = gCurTask;
         u6->frame--;
-        TaskYieldTrampoline(gUnk_08741FB4[u6->unk74]);
+        TaskYieldTrampoline(gUnk_08741FB4[u6->actorSpawnArg]);
         u7 = gCurTask;
         u7->frame--;
-        TaskYieldTrampoline(gUnk_08741FB4[u7->unk74]);
+        TaskYieldTrampoline(gUnk_08741FB4[u7->actorSpawnArg]);
     }
 }
 
 void NoddyWalkUpdate(void)
 {
-    if (--gCurTask->unk30 == 0)
+    if (--gCurTask->noddyWalkTimer == 0)
     {
         ActorSetState(1);
         TaskSetEntry(NoddyEnterState, gCurTaskIdx);
@@ -166,9 +166,9 @@ void NoddyState5(void)
     gCurTask->updateState = 5;
     TaskStop();
     t = gCurTask;
-    if (t->unk74 != 0)
+    if (t->actorSpawnArg != 0)
     {
-        if (t->unk74 == 1)
+        if (t->actorSpawnArg == 1)
             t->velY = -0x30000;
     }
     u = gCurTask;
@@ -177,28 +177,28 @@ void NoddyState5(void)
     while (1)
     {
         TaskSetFrame(9);
-        TaskYieldTrampoline(gUnk_08741FB4[gCurTask->unk74]);
+        TaskYieldTrampoline(gUnk_08741FB4[gCurTask->actorSpawnArg]);
         u1 = gCurTask;
         u1->frame++;
-        TaskYieldTrampoline(gUnk_08741FB4[u1->unk74]);
+        TaskYieldTrampoline(gUnk_08741FB4[u1->actorSpawnArg]);
         u2 = gCurTask;
         u2->frame++;
-        TaskYieldTrampoline(gUnk_08741FB4[u2->unk74]);
+        TaskYieldTrampoline(gUnk_08741FB4[u2->actorSpawnArg]);
         u3 = gCurTask;
         u3->frame++;
-        TaskYieldTrampoline(gUnk_08741FB4[u3->unk74]);
+        TaskYieldTrampoline(gUnk_08741FB4[u3->actorSpawnArg]);
         u4 = gCurTask;
         u4->frame++;
-        TaskYieldTrampoline(gUnk_08741FB4[u4->unk74]);
+        TaskYieldTrampoline(gUnk_08741FB4[u4->actorSpawnArg]);
         u5 = gCurTask;
         u5->frame--;
-        TaskYieldTrampoline(gUnk_08741FB4[u5->unk74]);
+        TaskYieldTrampoline(gUnk_08741FB4[u5->actorSpawnArg]);
         u6 = gCurTask;
         u6->frame--;
-        TaskYieldTrampoline(gUnk_08741FB4[u6->unk74]);
+        TaskYieldTrampoline(gUnk_08741FB4[u6->actorSpawnArg]);
         u7 = gCurTask;
         u7->frame--;
-        TaskYieldTrampoline(gUnk_08741FB4[u7->unk74]);
+        TaskYieldTrampoline(gUnk_08741FB4[u7->actorSpawnArg]);
     }
 }
 
@@ -242,8 +242,8 @@ void NoddySleep(void)
     gCurTask->updateState = 2;
     TaskStop();
     t = gCurTask;
-    t->unk30 = 224;
-    t->unk34 = 1;
+    t->noddySleepTimer = 224;
+    t->noddySleepPeriodCount = 1;
     while (1)
     {
         TaskSetFrame(6);
@@ -251,7 +251,7 @@ void NoddySleep(void)
         u = gCurTask;
         u->frame++;
         TaskYieldTrampoline(22);
-        gCurTask->unk46 = CreateChildTaskAtOffsetFacing(194, 12, 0, 1);
+        gCurTask->noddyBubbleSlot = CreateChildTaskAtOffsetFacing(194, 12, 0, 1);
         gCurTask->frame++;
         TaskYieldTrampoline(26);
         w = gCurTask;
@@ -267,16 +267,16 @@ void NoddySleepUpdate(void)
     struct Task *v;
 
     t = gCurTask;
-    if (--t->unk30 == 0)
-        t->unk34--;
+    if (--t->noddySleepTimer == 0)
+        t->noddySleepPeriodCount--;
     u = gCurTask;
-    if (u->unk34 == 0 && u->unk30 == 0)
+    if (u->noddySleepPeriodCount == 0 && u->noddySleepTimer == 0)
     {
         ActorSetState(3);
         TaskSetEntry(NoddyEnterState, gCurTaskIdx);
     }
     v = gCurTask;
-    if (v->unk74 != 0 && v->unk34 != 0 && v->unk30 <= 119 && TaskGetNearestPlayerDistSq() <= 0xFFF)
+    if (v->actorSpawnArg != 0 && v->noddySleepPeriodCount != 0 && v->noddySleepTimer <= 119 && TaskGetNearestPlayerDistSq() <= 0xFFF)
     {
         ActorSetState(3);
         TaskSetEntry(NoddyEnterState, gCurTaskIdx);
@@ -320,8 +320,8 @@ void NoddySleepFall(void)
     t = gCurTask;
     t->accelY = 0x1500;
     t->speedLimitY = 0x30000;
-    t->unk30 = 224;
-    t->unk34 = 1;
+    t->noddySleepTimer = 224;
+    t->noddySleepPeriodCount = 1;
     while (1)
     {
         TaskSetFrame(6);
@@ -329,7 +329,7 @@ void NoddySleepFall(void)
         u = gCurTask;
         u->frame++;
         TaskYieldTrampoline(22);
-        gCurTask->unk46 = CreateChildTaskAtOffsetFacing(194, 12, 0, 1);
+        gCurTask->noddyBubbleSlot = CreateChildTaskAtOffsetFacing(194, 12, 0, 1);
         gCurTask->frame++;
         TaskYieldTrampoline(26);
         w = gCurTask;
@@ -345,16 +345,16 @@ void NoddySleepFallUpdate(void)
     s32 b;
 
     t = gCurTask;
-    a = t->unk30;
-    t->unk30 = a - 1;
-    if (t->unk30 == 0)
+    a = t->noddySleepTimer;
+    t->noddySleepTimer = a - 1;
+    if (t->noddySleepTimer == 0)
     {
-        b = t->unk34;
-        t->unk34 = b - 1;
-        if (t->unk34 < 0)
+        b = t->noddySleepPeriodCount;
+        t->noddySleepPeriodCount = b - 1;
+        if (t->noddySleepPeriodCount < 0)
         {
-            t->unk30 = a;
-            t->unk34 = b;
+            t->noddySleepTimer = a;
+            t->noddySleepPeriodCount = b;
         }
     }
 }
@@ -376,7 +376,7 @@ void NoddyVariant1(void)
         u = gCurTask;
         u->frame++;
         TaskYieldTrampoline(22);
-        gCurTask->unk46 = CreateChildTaskAtOffsetFacing(194, 12, 0, 1);
+        gCurTask->noddyBubbleSlot = CreateChildTaskAtOffsetFacing(194, 12, 0, 1);
         gCurTask->frame++;
         TaskYieldTrampoline(26);
         w = gCurTask;
@@ -421,7 +421,7 @@ void NoddyBubbleUpdate(void)
         TaskFree(gCurTaskIdx);
 }
 
-u8 sub_08084bc0(void)
+u8 NoddyLand(void)
 {
     struct Task *t;
     s32 v;
@@ -449,7 +449,7 @@ def:
     return 0;
 }
 
-u8 sub_08084c0c(void)
+u8 NoddyStartFall(void)
 {
     struct Task *t;
     s32 v;
@@ -478,7 +478,7 @@ out:
     return 0;
 }
 
-u8 sub_08084c5c(void)
+u8 NoddyEnterWater(void)
 {
     if (gCurTask->variant == 1)
         return 0;
@@ -496,7 +496,7 @@ s32 sub_08084c84(void)
         return 0;
     if (t->velX != 0)
     {
-        r = sub_080699a8();
+        r = ActorStepBackFromSlope();
         if (r != 0)
         {
             TaskTurnAroundAndReverseX();
@@ -505,7 +505,7 @@ s32 sub_08084c84(void)
     }
 }
 
-s32 sub_08084cb8(void)
+s32 NoddyBounceOffWall(void)
 {
     if (gCurTask->variant != 1)
         TaskTurnAroundAndReverseX();

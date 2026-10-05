@@ -23,7 +23,7 @@
    types than the definition takes (lessons 3.428, 3.517). */
 extern u16 ActorComputeHealth(u32 a);
 extern u16 ActorComputeHealthSlot(u32 i);
-extern void sub_08069ac4(u32 i);
+extern void ActorInitTerrainFlagsSlot(u32 i);
 extern void ReleaseRoomObject(u32 i);
 extern s32 GetShapeAtPixelIgnoringOneWay(s16 x, s16 y);
 extern u32 TaskIsOnScreen(void);
@@ -37,7 +37,7 @@ s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg, int prioArg,
 s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
                  u16 prio);
 
-s32 sub_08063698(u32 type, s32 start)
+s32 TaskCreatePausedInScreenAttack(u32 type, s32 start)
 {
     s32 i;
     struct Task *t;
@@ -58,7 +58,7 @@ void ActorInitSlot(u32 i)
     ActorBindDefSlot(i);
     ActorInitFromDefSlot(i);
     TaskFindNearestPlayerSlot(i);
-    sub_08069ac4(i);
+    ActorInitTerrainFlagsSlot(i);
 }
 
 void ActorBindDefSlot(u32 i)
@@ -80,7 +80,7 @@ void ActorBindDefSlot(u32 i)
         break;
     case 2:
         a->def = gBossDefs[t->u76.subtype];
-        gUnk_02007F50 = t->u76.subtype;
+        gBossSubtype = t->u76.subtype;
         break;
     case 4:
         a->def = gChildActorDefs[t->u76.subtype];
@@ -118,8 +118,8 @@ void ActorInitFromDefSlot(u32 i)
     a->prevState = 0xFFFF;
     a->unk04 = 0;
     a->hitState = 0;
-    a->unk06 = 0;
-    a->unk07 = 0;
+    a->hitterClass = 0;
+    a->hitterKind = 0;
     a->animScript = 0;
     a->hitStunTimer = 0;
     a->animNoFlip = 0;
@@ -135,7 +135,7 @@ void ActorInitFromDefSlot(u32 i)
     a->paletteVariant = t->variant >> 4;
     t->variant = t->variant & 15;
     if (a->paletteVariant != 0)
-        sub_08065ce0(i);
+        ActorSelectPaletteVariant(i);
     t->serial = gNextActorSerial;
     if (gNextActorSerial > 0xFFFE)
         gNextActorSerial = 0;
@@ -155,7 +155,7 @@ void ActorInitFromDefSlot(u32 i)
     if (d != NULL)
     {
         a->attackBox = d->attackBox;
-        a->unk4C = 0;
+        a->extraAttackBox = 0;
         a->terrainBox = d->terrainBox;
         a->prevTerrainHandlers = a->terrainHandlers = d->terrainHandlers;
         a->hitReactions = d->hitReactions;
@@ -170,7 +170,7 @@ void ActorInitFromDefSlot(u32 i)
     else
     {
         a->attackBox = 0;
-        a->unk4C = 0;
+        a->extraAttackBox = 0;
         a->terrainBox = 0;
         a->terrainHandlers = 0;
         a->prevTerrainHandlers = 0;
@@ -183,9 +183,9 @@ void ActorInitFromDefSlot(u32 i)
     }
 }
 
-void ActorLoadDef(struct ActorDef *d)
+void ActorLoadDef(struct ActorDef *def)
 {
-    ActorLoadDefSlot(gCurTaskIdx, d);
+    ActorLoadDefSlot(gCurTaskIdx, def);
 }
 
 void ActorLoadDefSlot(u32 i, struct ActorDef *d)
@@ -205,13 +205,13 @@ void ActorLoadDefSlot(u32 i, struct ActorDef *d)
     ActorResetHealthSlot(i);
 }
 
-void ActorSetState(u8 v)
+void ActorSetState(u8 state)
 {
     struct Task *t;
 
     t = gCurTask;
     t->u8C.actor->prevState = t->state;
-    t->state = v;
+    t->state = state;
 }
 
 void ActorSetStateSlot(u32 i, u8 v)
@@ -232,14 +232,14 @@ void ActorSetTerrainHandlers(u32 v)
     a->terrainHandlers = v;
 }
 
-void ActorSetHitReactions(u32 v)
+void ActorSetHitReactions(u32 reactions)
 {
-    gCurTask->u8C.actor->hitReactions = v;
+    gCurTask->u8C.actor->hitReactions = reactions;
 }
 
-void ActorSetAttackBox(u32 v)
+void ActorSetAttackBox(u32 box)
 {
-    ActorSetAttackBoxSlot(gCurTaskIdx, v);
+    ActorSetAttackBoxSlot(gCurTaskIdx, box);
 }
 
 void ActorSetAttackBoxSlot(u32 i, u32 v)
@@ -250,9 +250,9 @@ void ActorSetAttackBoxSlot(u32 i, u32 v)
     t->u8C.actor->attackBox = v;
 }
 
-void ActorSetTerrainBox(u32 v)
+void ActorSetTerrainBox(u32 box)
 {
-    gCurTask->u8C.actor->terrainBox = v;
+    gCurTask->u8C.actor->terrainBox = box;
 }
 
 void sub_080639f0(struct ActorAux *v)
@@ -270,7 +270,7 @@ void sub_08063a14(u32 i, u32 v)
     struct Task *t;
 
     t = &gTasks[i];
-    t->u8C.actor->unk4C = v;
+    t->u8C.actor->extraAttackBox = v;
 }
 
 /* Nearest task in slots 4..15 to the running one, along X. */
@@ -693,29 +693,29 @@ s32 ActorStepAnim(void)
     return delay;
 }
 
-s32 ActorTickAnimFacingNearestPlayer(s32 n)
+s32 ActorTickAnimFacingNearestPlayer(s32 delay)
 {
     if (gCurTask->u8C.actor->animScript != NULL)
     {
-        if (n <= 0)
+        if (delay <= 0)
         {
             TaskFaceNearestPlayer();
-            n = ActorStepAnim();
+            delay = ActorStepAnim();
         }
-        n--;
+        delay--;
     }
-    return n;
+    return delay;
 }
 
-s32 ActorTickAnim(s32 n)
+s32 ActorTickAnim(s32 delay)
 {
     if (gCurTask->u8C.actor->animScript != NULL)
     {
-        if (n <= 0)
-            n = ActorStepAnim();
-        n--;
+        if (delay <= 0)
+            delay = ActorStepAnim();
+        delay--;
     }
-    return n;
+    return delay;
 }
 
 /* Dead export: split `mag` into the trig-table components of the angle from
@@ -1259,7 +1259,7 @@ s32 sub_08064a78(struct ActorSpawn *p)
         if (GetShapeAtPixelIgnoringOneWay(p->x, p->y) != 0)
             return -1;
     }
-    i = sub_08063698(p->taskType, 32);
+    i = TaskCreatePausedInScreenAttack(p->taskType, 32);
     if (i != -1)
     {
         t = &gTasks[i];
@@ -1312,12 +1312,12 @@ s32 CreateActorFromDesc(struct ActorSpawn *p, u8 keepPrio)
 
 /* Cycle the running task's frame between 4 and 7 every other tick. */
 /* Cycle the running task's frame between 4 and 7 every other tick. */
-void sub_08064bcc(void)
+void TaskStepSpinFrameFacing(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk24 <= 0)
+    if (t->actorSpinFrameTimer <= 0)
     {
         if (t->facing == 1)
         {
@@ -1331,11 +1331,11 @@ void sub_08064bcc(void)
             if (t->frame <= 3)
                 t->frame = 7;
         }
-        gCurTask->unk24 = 2;
+        gCurTask->actorSpinFrameTimer = 2;
     }
     else
     {
-        t->unk24--;
+        t->actorSpinFrameTimer--;
     }
 }
 
@@ -1354,7 +1354,7 @@ s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg)
     u16 y = yArg;
     u16 prio = prioArg;
 
-    i = sub_08063698(type, 32);
+    i = TaskCreatePausedInScreenAttack(type, 32);
     if (i != -1)
     {
         t = &gTasks[i];
@@ -1444,7 +1444,7 @@ s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
     u16 prio = prioArg;
     u8 alt = altArg;
 
-    i = sub_08063698(type, 32);
+    i = TaskCreatePausedInScreenAttack(type, 32);
     if (i != -1)
     {
         t = &gTasks[i];
@@ -1512,7 +1512,7 @@ s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
     struct Task *t;
     s32 i;
 
-    i = sub_08063698(type, 32);
+    i = TaskCreatePausedInScreenAttack(type, 32);
     if (i != -1)
     {
         t = &gTasks[i];
@@ -1672,7 +1672,7 @@ void sub_080652c8(void)
         return;
     if (p->frame == -1)
         return;
-    if (sub_08066a6c() == 0)
+    if (ActorIsInNearView() == 0)
         return;
     if (TaskIsOnScreen() == 0)
         return;
@@ -1694,7 +1694,7 @@ void sub_08065350(void)
         return;
     if (p->frame == -1)
         return;
-    if (sub_08066a6c() != 0)
+    if (ActorIsInNearView() != 0)
     {
         if (TaskIsOnScreen() == 0)
             return;
@@ -1704,7 +1704,7 @@ void sub_08065350(void)
                      t->pixelX - gSpriteCameraX,
                      (s16)(t->pixelY - gSpriteCameraY));
     }
-    else if (sub_08066a80() != 0)
+    else if (ActorIsInFarView() != 0)
     {
         HudRemoveHpBar();
         ActorDestroy();

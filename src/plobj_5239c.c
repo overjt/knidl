@@ -52,7 +52,7 @@ void PlayerObjectIceBreath(void)
     }
     {
         struct Task *t = gCurTask;
-        switch (t->unk18 & 15)
+        switch (t->playerObjectSpawnWord & 15)
         {
         case 0:
             t->drawCallback = (u32)sub_0803dfc8;
@@ -77,7 +77,7 @@ void PlayerObjectIceBreath(void)
                 gCurTask->accelY = (RandomRange(36) - 24) << 8;
                 TaskSetFrameByFacing(0);
                 TaskYieldTrampoline(2);
-                for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+                for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 4; gCurTask->playerObjectLoopCount++)
                 {
                     gCurTask->frame += 2;
                     TaskYieldTrampoline(2);
@@ -97,7 +97,7 @@ void PlayerObjectIceBreath(void)
                 gCurTask->accelY = (RandomRange(36) - 24) << 8;
                 TaskSetFrameByFacing(14);
                 TaskYieldTrampoline(2);
-                for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+                for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 4; gCurTask->playerObjectLoopCount++)
                 {
                     gCurTask->frame += 2;
                     TaskYieldTrampoline(2);
@@ -170,7 +170,7 @@ void PlayerObjectIceBreathUpdate(void)
     }
     {
         struct Task *u = gCurTask;
-        if ((u->unk18 & 15) == 1)
+        if ((u->playerObjectSpawnWord & 15) == 1)
         {
             u->health = 127;
             RegisterCollider(gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873BE24);
@@ -226,32 +226,32 @@ s32 PlayerObjectBeamOrb(void)
     {
         struct Task *t = gCurTask;
         t->unk2C = 2;
-        switch (t->unk18 & 15)
+        switch (t->playerObjectSpawnWord & 15)
         {
         case 0:
             if (!(t->player->unk42 & 0x80))
                 PlaySfxIfLocalPlayer(129, t->parent);
             xs = gUnk_0873B7C0[0][0];
             ys = gUnk_0873B7C0[0][1];
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 5; gCurTask->unk6C++)
+            for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 5; gCurTask->playerObjectLoopCount++)
             {
                 s32 v;
                 {
                     struct Task *u = gCurTask;
                     u->posX = u->unk28 << 16;
                     u->posY = u->unk2C << 16;
-                    v = xs[(s16)u->unk6C] << 8;
-                    if (xs[(s16)u->unk6C] & 0x8000)
+                    v = xs[(s16)u->playerObjectLoopCount] << 8;
+                    if (xs[(s16)u->playerObjectLoopCount] & 0x8000)
                         v |= 0xFF000000;
                 }
                 TaskSetMotionXFacing(v, 0x5A5A5A5A);
                 {
                     struct Task *u = gCurTask;
-                    v = ys[(s16)u->unk6C] << 8;
-                    if (ys[(s16)u->unk6C] & 0x8000)
+                    v = ys[(s16)u->playerObjectLoopCount] << 8;
+                    if (ys[(s16)u->playerObjectLoopCount] & 0x8000)
                         v |= 0xFF000000;
                     u->velY = v;
-                    e = gUnk_0873B808[0][(s16)u->unk6C];
+                    e = gUnk_0873B808[0][(s16)u->playerObjectLoopCount];
                     u->unk6E = 0;
                 }
                 do
@@ -271,25 +271,25 @@ s32 PlayerObjectBeamOrb(void)
             TaskYieldTrampoline(1);
             xs = gUnk_0873B7C0[1][0];
             ys = gUnk_0873B7C0[1][1];
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 5; gCurTask->unk6C++)
+            for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 5; gCurTask->playerObjectLoopCount++)
             {
                 s32 v;
                 {
                     struct Task *u = gCurTask;
                     u->posX = u->unk28 << 16;
                     u->posY = u->unk2C << 16;
-                    v = xs[(s16)u->unk6C] << 8;
-                    if (xs[(s16)u->unk6C] & 0x8000)
+                    v = xs[(s16)u->playerObjectLoopCount] << 8;
+                    if (xs[(s16)u->playerObjectLoopCount] & 0x8000)
                         v |= 0xFF000000;
                 }
                 TaskSetMotionXFacing(v, 0x5A5A5A5A);
                 {
                     struct Task *u = gCurTask;
-                    v = ys[(s16)u->unk6C] << 8;
-                    if (ys[(s16)u->unk6C] & 0x8000)
+                    v = ys[(s16)u->playerObjectLoopCount] << 8;
+                    if (ys[(s16)u->playerObjectLoopCount] & 0x8000)
                         v |= 0xFF000000;
                     u->velY = v;
-                    e = gUnk_0873B808[1][(s16)u->unk6C];
+                    e = gUnk_0873B808[1][(s16)u->playerObjectLoopCount];
                     u->unk6E = 0;
                 }
                 do
@@ -309,25 +309,25 @@ s32 PlayerObjectBeamOrb(void)
             TaskYieldTrampoline(2);
             xs = gUnk_0873B7C0[2][0];
             ys = gUnk_0873B7C0[2][1];
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 5; gCurTask->unk6C++)
+            for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 5; gCurTask->playerObjectLoopCount++)
             {
                 s32 v;
                 {
                     struct Task *u = gCurTask;
                     u->posX = u->unk28 << 16;
                     u->posY = u->unk2C << 16;
-                    v = xs[(s16)u->unk6C] << 8;
-                    if (xs[(s16)u->unk6C] & 0x8000)
+                    v = xs[(s16)u->playerObjectLoopCount] << 8;
+                    if (xs[(s16)u->playerObjectLoopCount] & 0x8000)
                         v |= 0xFF000000;
                 }
                 TaskSetMotionXFacing(v, 0x5A5A5A5A);
                 {
                     struct Task *u = gCurTask;
-                    v = ys[(s16)u->unk6C] << 8;
-                    if (ys[(s16)u->unk6C] & 0x8000)
+                    v = ys[(s16)u->playerObjectLoopCount] << 8;
+                    if (ys[(s16)u->playerObjectLoopCount] & 0x8000)
                         v |= 0xFF000000;
                     u->velY = v;
-                    e = gUnk_0873B808[2][(s16)u->unk6C];
+                    e = gUnk_0873B808[2][(s16)u->playerObjectLoopCount];
                     u->unk6E = 0;
                 }
                 do
@@ -356,7 +356,7 @@ s32 sub_08052b08(void)
     {
         TaskFree(gCurTaskIdx);
     }
-    else if ((t->unk18 & 15) == 0)
+    else if ((t->playerObjectSpawnWord & 15) == 0)
     {
         if (t->frame != -1)
             RegisterCollider(gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873BE38);
@@ -371,7 +371,7 @@ void sub_08052b88(void)
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)TaskDrawScreen;
     t->frameTable = gUnk_0875204C;
-    switch (t->unk18 & 15)
+    switch (t->playerObjectSpawnWord & 15)
     {
     case 0:
         t->layer = 5;
@@ -397,14 +397,14 @@ void sub_08052b88(void)
         }
         PlaySfx(175);
         gCurTask->velY = 0x6000;
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
+        for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 1; gCurTask->playerObjectLoopCount++)
         {
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             gCurTask->frame = 0;
             TaskYieldTrampoline(1);
         }
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
+        for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 3; gCurTask->playerObjectLoopCount++)
         {
             gCurTask->frame = 0;
             TaskYieldTrampoline(1);
@@ -413,7 +413,7 @@ void sub_08052b88(void)
         }
         gCurTask->velX = Div((120 - gCurTask->pixelX) << 16, 30);
         gCurTask->velY = Div(-gCurTask->pixelY << 16, 30);
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 14; gCurTask->unk6C++)
+        for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 14; gCurTask->playerObjectLoopCount++)
         {
             gCurTask->frame = 1;
             TaskYieldTrampoline(1);
@@ -468,7 +468,7 @@ void sub_08052b88(void)
         TaskYieldTrampoline(1);
         gCurTask->frame = 6;
         TaskYieldTrampoline(1);
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
+        for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 3; gCurTask->playerObjectLoopCount++)
         {
             ((volatile struct Task *)gCurTask)->frame = 0xFFFF;
             TaskYieldTrampoline(1);

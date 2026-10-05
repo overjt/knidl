@@ -16,15 +16,15 @@
  * player leaves mode 13.  Variant 46 (PlayerEffectCrashBlast, M13) is the twin of
  * variant 37 (src/effect_57ce0.c): the same stop and release of the tasks of
  * kinds 1, 2, 7 and 8 through gScreenAttackTasks and the task skip mask, around a
- * palette effect - it saves the palette buffer (CpuSet of gUnk_03001570 into
- * gUnk_0200AF20) and calls M11's sub_0803f834/ FreezeOtherTasks, M17's
- * sub_08065e6c and a VRAM transfer.  Its callbacks are PlayerEffectCrashBlastUpdate, which
+ * palette effect - it saves the palette buffer (CpuSet of gObjPaletteBank8 into
+ * gObjPaletteBlendBase) and calls M11's sub_0803f834/ FreezeOtherTasks, M17's
+ * LockAllActorPalettes and a VRAM transfer.  Its callbacks are PlayerEffectCrashBlastUpdate, which
  * blends the saved palette towards gUnk_0873BC3E (while gInHub is
  * set) or gUnk_0873BB7E with BlendColors (80 or 96 colours by
  * gUnk_02007D64), raising the ratio Task.unk2C by 10 up to 0x100 in state 1
  * (with the collider row gUnk_0873C2B4 at the player's camera position
  * gPlayerCameraPos) and lowering it by 46 to 0 in state 2 (then calling M17's
- * sub_08065ed0), and the draw hook PlayerEffectCrashBlastDraw.  Variant 47 (sub_0805acec,
+ * ClearActorPaletteOverrides), and the draw hook PlayerEffectCrashBlastDraw.  Variant 47 (sub_0805acec,
  * M13) is an animation in world space; its callback sub_0805ae00 clears
  * Task.unk28 in sub-state 0 when the player leaves mode 13 or the spawner's
  * Task.variant is not 4 (and copies the spawner's facing), and in the other
@@ -60,7 +60,7 @@ void PlayerEffectTornadoDust(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_08751FCC;
-    switch (t->unk18 & 15)
+    switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
         t->posX = 0;
@@ -69,50 +69,50 @@ void PlayerEffectTornadoDust(void)
         TaskYieldTrampoline(6);
         gCurTask->frame = 0;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 10);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 10);
         u = gCurTask;
         u->posX = 0;
         u->posY = -0x180000;
         u->frame = 0;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 10);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 10);
         break;
     case 1:
         t->posX = 0;
         t->posY = 0;
         t->frame = 0;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 10);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 10);
         u = gCurTask;
         u->posX = 0;
         u->posY = -0x100000;
         u->frame = 0;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 10);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 10);
         break;
     case 2:
         t->posX = 0;
@@ -121,13 +121,13 @@ void PlayerEffectTornadoDust(void)
         TaskYieldTrampoline(20);
         gCurTask->frame = 14;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 5);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 5);
         break;
     }
     TaskExitTrampoline();
@@ -155,7 +155,7 @@ void PlayerEffectCrashBlast(void)
     u16 x0;
     u16 y0;
 
-    switch (t->unk18 & 15)
+    switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
         t->moveCallback = (u32)TaskMoveRelativeToParent;
@@ -227,19 +227,19 @@ void PlayerEffectCrashBlast(void)
         v = gCurTask;
         v->unk28 = 0;
         v->unk2C = 0;
-        sub_08065e6c();
-        CpuSet(gUnk_03001570, gUnk_0200AF20, 96);
+        LockAllActorPalettes();
+        CpuSet(gObjPaletteBank8, gObjPaletteBlendBase, 96);
         gCurTask->frame = 0;
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
-            if ((s16)gCurTask->unk6C == 10)
+            if ((s16)gCurTask->playerEffectLoopCount == 10)
                 BeginFade(6, 5, gUnk_02007F60);
-            if ((s16)gCurTask->unk6C == 4)
+            if ((s16)gCurTask->playerEffectLoopCount == 4)
                 gCurTask->unk28 = 1;
             TaskYieldTrampoline(4);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 10);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 10);
         gCurTask->frame = 0xFFFF;
         TaskYieldTrampoline(1);
         gScreenAttackActive = 0;
@@ -375,9 +375,9 @@ void PlayerEffectCrashBlastUpdate(void)
         break;
     case 1:
         if (gInHub != 0)
-            BlendColors(gUnk_0200AF20, gUnk_0873BC3E, (u16)gCurTask->unk2C, n << 4, gUnk_03001570);
+            BlendColors(gObjPaletteBlendBase, gUnk_0873BC3E, (u16)gCurTask->unk2C, n << 4, gObjPaletteBank8);
         else
-            BlendColors(gUnk_0200AF20, gUnk_0873BB7E, (u16)gCurTask->unk2C, n << 4, gUnk_03001570);
+            BlendColors(gObjPaletteBlendBase, gUnk_0873BB7E, (u16)gCurTask->unk2C, n << 4, gObjPaletteBank8);
         t = gCurTask;
         if (t->unk2C != 0x100)
         {
@@ -390,9 +390,9 @@ void PlayerEffectCrashBlastUpdate(void)
         break;
     case 2:
         if (gInHub != 0)
-            BlendColors(gUnk_0200AF20, gUnk_0873BC3E, (u16)gCurTask->unk2C, n << 4, gUnk_03001570);
+            BlendColors(gObjPaletteBlendBase, gUnk_0873BC3E, (u16)gCurTask->unk2C, n << 4, gObjPaletteBank8);
         else
-            BlendColors(gUnk_0200AF20, gUnk_0873BB7E, (u16)gCurTask->unk2C, n << 4, gUnk_03001570);
+            BlendColors(gObjPaletteBlendBase, gUnk_0873BB7E, (u16)gCurTask->unk2C, n << 4, gObjPaletteBank8);
         u = gCurTask;
         if (u->unk2C != 0)
         {
@@ -403,7 +403,7 @@ void PlayerEffectCrashBlastUpdate(void)
         else
         {
             u->unk28 = 0;
-            sub_08065ed0();
+            ClearActorPaletteOverrides();
         }
         break;
     }
@@ -418,7 +418,7 @@ void PlayerEffectCrashBlastDraw(void)
     if (gCurTask->frame != -1 && IsInView(gCurTask->posX, gCurTask->posY)
         && IsWorldPosOnScreen(gCurTask->posX, gCurTask->posY))
     {
-        x = gUnk_0873BB26[(s16)gCurTask->unk6C];
+        x = gUnk_0873BB26[(s16)gCurTask->playerEffectLoopCount];
         g = DrawAffineSprite(*gCurTask->frameTable, x, x, 0);
         t = gCurTask;
         QueueSprite(t->layer, g, t->spriteFlags, t->tileWord, t->pixelX, t->pixelY);
@@ -432,7 +432,7 @@ void sub_0805acec(void)
     struct Task *v;
 
     t = gCurTask;
-    if ((t->unk18 & 15) == 0)
+    if ((t->playerEffectSpawnWord & 15) == 0)
     {
         t->moveCallback = (u32)TaskMove;
         t->drawCallback = (u32)TaskDrawWorld;
@@ -482,7 +482,7 @@ void sub_0805acec(void)
 void sub_0805ae00(void)
 {
     struct Task *t = gCurTask;
-    s32 s = t->unk18 & 15;
+    s32 s = t->playerEffectSpawnWord & 15;
 
     if (s == 0)
     {

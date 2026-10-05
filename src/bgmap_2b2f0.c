@@ -7,13 +7,13 @@
 
 /* bgmap_2b2f0.c (0x0802B2F0-0x0802B4BB, issue #86).
  *
- * sub_0802b2f0, sub_0802b368 and sub_0802b3e4 (called from M09) compute
+ * SetBlockAnimClipRect, SetBg1BlockAnimClipRect and SetBlockAnimClipRectWithEdges (called from M09) compute
  * the tile rectangle gBlockAnimClipRect[4] (x0, x1, y0, y1) around the last
  * streamed camera position, clamped to the room; the three differ only in
  * the window width.  SetBg23ScreenSize and SetBg3ScreenSize set the screen-size
  * bits (15:14) of the BG2CNT/BG3CNT shadows gBg2Cnt/gBg3Cnt. */
 
-void sub_0802b2f0(void)
+void SetBlockAnimClipRect(void)
 {
     s16 x0;
     gBlockAnimClipRect[0] = x0 = (gCameraStreamPos[0] >> 3) + 0xFFFD;
@@ -30,7 +30,7 @@ void sub_0802b2f0(void)
         gBlockAnimClipRect[3] = gRoomHeight * 2 - 1;
 }
 
-void sub_0802b368(void)
+void SetBg1BlockAnimClipRect(void)
 {
     s16 x0;
     gBlockAnimClipRect[0] = x0 = (gCameraStreamPos[0] >> 3) + 0xFFFF;
@@ -47,7 +47,7 @@ void sub_0802b368(void)
         gBlockAnimClipRect[3] = gRoomHeight * 2 - 1;
 }
 
-void sub_0802b3e4(void)
+void SetBlockAnimClipRectWithEdges(void)
 {
     s16 x0;
     gBlockAnimClipRect[0] = x0 = (gCameraStreamPos[0] >> 3) + 0xFFFF;

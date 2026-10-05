@@ -15,7 +15,7 @@
 #include "effect.h"
 #include "actor.h"
 
-void sub_08062584(void)
+void PlayerDance12(void)
 {
     struct Task *t;
 
@@ -376,7 +376,7 @@ void sub_08062584(void)
     gCurTask->frame = 0x92;
     TaskYieldTrampoline(0x15);
 }
-void sub_08062f88(void)
+void PlayerDance13(void)
 {
     gCurTask->spriteFlags |= 0x8000;
     TaskSetMotion(0xFFFF0000, 0xC00, 0x5A5A5A5A, 0xFFFE7800, 0x3800, 0x5A5A5A5A);

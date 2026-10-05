@@ -39,7 +39,7 @@ void PlayerActionBeam(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = 44;
-    gCurTask->unk28 = 0;
+    gCurTask->playerActionDone28 = 0;
     gCurTask->u80.attackAbility = 0;
     TaskSetFrame(0xBBD);
     TaskYieldTrampoline(6);
@@ -48,36 +48,36 @@ void PlayerActionBeam(void)
     CreatePlayerObject(gCurTask->player->playerIndex, 8, 0);
     CreatePlayerObject(gCurTask->player->playerIndex, 8, 1);
     CreatePlayerObject(gCurTask->player->playerIndex, 8, 2);
-    gCurTask->unk6C = 0;
+    gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xBBF);
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-    } while ((s16)++gCurTask->unk6C <= 1);
-    gCurTask->unk6C = 0;
+    } while ((s16)++gCurTask->playerLoopCount <= 1);
+    gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xBC1);
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-    } while ((s16)++gCurTask->unk6C <= 1);
-    gCurTask->unk6C = 0;
+    } while ((s16)++gCurTask->playerLoopCount <= 1);
+    gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xBC3);
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-    } while ((s16)++gCurTask->unk6C <= 1);
+    } while ((s16)++gCurTask->playerLoopCount <= 1);
     TaskSetFrame(0xBBF);
     TaskYieldTrampoline(4);
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
 void PlayerActionBeamUpdate(void)
 {
-    if (gCurTask->unk28 != 0)
+    if (gCurTask->playerActionDone28 != 0)
         PlayerRequestLocomotion();
     sub_0803e55c();
 }
@@ -111,11 +111,11 @@ void PlayerActionStone(void)
         }
         TaskSetFrame(0xC40);
         TaskYieldTrampoline(1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 3);
+        } while ((s16)++gCurTask->playerLoopCount <= 3);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->frame++;
@@ -160,11 +160,11 @@ void PlayerActionStone(void)
         CreatePlayerEffect(gCurTask->player->playerIndex, 43, 3);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 3);
+        } while ((s16)++gCurTask->playerLoopCount <= 3);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->variant = 3;

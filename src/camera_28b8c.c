@@ -11,21 +11,21 @@
 
 /* camera_28b8c.c (0x08028B8C-0x0802969F, issue #93).
  *
- * Camera start-up for a new room.  sub_08028b8c (camera modes other than
+ * Camera start-up for a new room.  CameraResetRoomView (camera modes other than
  * 5) copies the room bounds into the camera bounds and puts the camera,
  * its 16.16 target and the visible rectangle on the player (one player)
- * or runs M08's multi-player updates; sub_08028e3c only sets the bounds.
+ * or runs M08's multi-player updates; CalcRoomAndCameraBounds only sets the bounds.
  * SetRoomEntryPoint places the player at the room's start position
  * (RoomDef.entryX/unk52) unless a door already did, clamps it and records
  * the arrival for the next level change (gUnk_02008054, gUnk_0200AFF4,
  * gUnk_02008050).  sub_08029034 clamps the arrival position into the room
- * and makes it the camera target, sub_080290ac copies the current
+ * and makes it the camera target, CameraSetFocusToLocalPlayer copies the current
  * player's camera position into the player cells, CameraInitPos and
  * CameraUpdatePos/CameraUpdatePosNoParallax/CameraUpdatePosBg3AutoScrollX
  * set the camera and BG3 positions (BG3 moves by the parallax factors of
  * room_28320.c), StreamBg2Map/StreamBg3Map stream the BG and BG3 maps
  * for a camera move (M08's StreamBg23Maps again), PlayRoomBgm/
- * sub_08029194 start the room's BGM, LoadBg2Gfx ... SpawnRoomObjectsInView load
+ * PlayHubRoomBgm start the room's BGM, LoadBg2Gfx ... SpawnRoomObjectsInView load
  * the room palettes, tiles and BG map (SelectBg3MapShape picks the BG layout
  * gBg3MapShape from the map size) and InitDoors builds the door
  * objects. */
@@ -40,7 +40,7 @@ struct Unk020055D8Entry
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void PlaySfx(s32 id);
 
-void sub_08028b8c(void)
+void CameraResetRoomView(void)
 {
     s32 x;
     s32 y;
@@ -136,7 +136,7 @@ void sub_08028b8c(void)
     }
 }
 
-void sub_08028e3c(void)
+void CalcRoomAndCameraBounds(void)
 {
     CalcRoomBounds();
     CameraResetBounds();
@@ -232,7 +232,7 @@ void sub_08029034(void)
     gCameraAnchorY = gRoomEntryY;
 }
 
-void sub_080290ac(void)
+void CameraSetFocusToLocalPlayer(void)
 {
     gCameraFocusX = gPlayerCameraPos[gLocalPlayer].x;
     gCameraFocusY = gPlayerCameraPos[gLocalPlayer].y;
@@ -280,7 +280,7 @@ void PlayRoomBgm(void)
         PlaySfx(249);
 }
 
-void sub_08029194(void)
+void PlayHubRoomBgm(void)
 {
     if (gSkipNextHubBgm == 0)
     {
@@ -298,7 +298,7 @@ void sub_08029194(void)
 void LoadBg2Gfx(void)
 {
     RequestCopy(8, (u32)gCurRoomDef->bg2Tiles, BG_VRAM + 0x4000, 0);
-    RequestCopy(2, (u32)(gCurRoomDef->bg2Palette + 1), (u32)gUnk_030012B0, gCurRoomDef->bg2Palette[0]);
+    RequestCopy(2, (u32)(gCurRoomDef->bg2Palette + 1), (u32)gBgPaletteBank2, gCurRoomDef->bg2Palette[0]);
 }
 
 void LoadBg3Gfx(void)

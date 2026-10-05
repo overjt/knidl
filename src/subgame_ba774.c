@@ -47,7 +47,7 @@ void TaskSetEntry(void *fn, u32 i);
 
 u8 QuickDrawIsTimeUp(void)
 {
-    if (gCurTask->unk20 > 98)
+    if (gCurTask->quickDrawReactionTime > 98)
         return 1;
     return 0;
 }
@@ -57,8 +57,8 @@ void QuickDrawEndRoundTimeUp(void)
     StopBgm();
     CreateQuickDrawRedrawSign();
     TaskYieldTrampoline(120);
-    gCurTask->unk30 = 1;
-    gCurTask->unk24 = 1;
+    gCurTask->quickDrawRestartPose = 1;
+    gCurTask->quickDrawPlayersReady = 1;
 }
 
 void QuickDrawEndRoundFalseStart(void)
@@ -68,8 +68,8 @@ void QuickDrawEndRoundFalseStart(void)
     StopBgm();
     CreateQuickDrawRedrawSign();
     TaskYieldTrampoline(120);
-    gCurTask->unk30 = 1;
-    gCurTask->unk24 = 1;
+    gCurTask->quickDrawRestartPose = 1;
+    gCurTask->quickDrawPlayersReady = 1;
 }
 
 void QuickDrawEndRoundWin(u8 a0)
@@ -83,8 +83,8 @@ void QuickDrawEndRoundWin(u8 a0)
     CreateQuickDrawBurst();
     if (a0 == 1)
         PlaySfx(253);
-    gCurTask->unk30 = 0;
-    gCurTask->unk24 = 0;
+    gCurTask->quickDrawRestartPose = 0;
+    gCurTask->quickDrawPlayersReady = 0;
 }
 
 void QuickDrawEndRoundTie(void)
@@ -100,8 +100,8 @@ void QuickDrawEndRoundTie(void)
     TaskYieldTrampoline(68);
     CreateQuickDrawRedrawSign();
     TaskYieldTrampoline(120);
-    gCurTask->unk30 = 0;
-    gCurTask->unk24 = 0;
+    gCurTask->quickDrawRestartPose = 0;
+    gCurTask->quickDrawPlayersReady = 0;
 }
 
 void QuickDrawResetRound(void)
@@ -109,14 +109,14 @@ void QuickDrawResetRound(void)
     struct Task *t;
     struct Task *o;
 
-    QuickDrawSetAllPlayersState(gCurTask->unk30);
+    QuickDrawSetAllPlayersState(gCurTask->quickDrawRestartPose);
     t = gCurTask;
-    o = &gTasks[t->unk28];
-    o->unk1C = 0;
-    o->unk18 = 0;
+    o = &gTasks[t->quickDrawTimerSlot];
+    o->quickDrawObjectRunning = 0;
+    o->quickDrawObjectCount = 0;
     o->frame = 0;
     o->unk24 = 0;
-    t->unk20 = 0;
+    t->quickDrawReactionTime = 0;
 }
 
 void CreateQuickDrawRedrawSign(void)
@@ -198,14 +198,14 @@ void QuickDrawAwardRound(void)
     {
         struct Task *o = &gTasks[i];
         s32 bit = 1 << i;
-        if (gCurTask->unk2C & bit)
+        if (gCurTask->quickDrawPressMask & bit)
         {
             QuickDrawSetPlayerState(i, 2);
             o->unk20 = 4;
-            gQuickDrawWins[o->unk18]++;
-            QuickDrawUpdateRanking(o->unk18);
-            if (gQuickDrawBestTime > gCurTask->unk20)
-                gQuickDrawBestTime = gCurTask->unk20;
+            gQuickDrawWins[o->quickDrawObjectPlayerIndex]++;
+            QuickDrawUpdateRanking(o->quickDrawObjectPlayerIndex);
+            if (gQuickDrawBestTime > gCurTask->quickDrawReactionTime)
+                gQuickDrawBestTime = gCurTask->quickDrawReactionTime;
         }
         else
         {
@@ -222,7 +222,7 @@ void QuickDrawPoseTiedPlayers(void)
     {
         struct Task *o = &gTasks[i];
         s32 bit = 1 << i;
-        if (gCurTask->unk2C & bit)
+        if (gCurTask->quickDrawPressMask & bit)
         {
             QuickDrawSetPlayerState(i, 2);
             o->unk20 = i;
@@ -266,7 +266,7 @@ void QuickDrawFalseStart(s32 a0)
     {
         struct Task *o = &gTasks[i];
         s32 bit = 1 << i;
-        if (gCurTask->unk2C & bit)
+        if (gCurTask->quickDrawPressMask & bit)
         {
             QuickDrawSetPlayerState(i, 4);
             o->unk20 = 4;
@@ -275,9 +275,9 @@ void QuickDrawFalseStart(s32 a0)
         }
     }
     t = gCurTask;
-    t->unk70 += a0;
-    t->unk6E |= t->unk2C;
-    if (gPlayerCount != 1 && (s16)t->unk70 == gPlayerCount)
+    t->quickDrawFalseStartCount += a0;
+    t->quickDrawFalseStartMask |= t->quickDrawPressMask;
+    if (gPlayerCount != 1 && (s16)t->quickDrawFalseStartCount == gPlayerCount)
     {
         t->state = 3;
         if (gTaskSlotTypes[62] != -1)
@@ -292,7 +292,7 @@ u8 QuickDrawFindMatchWinner(void)
 
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (gQuickDrawWins[i] >= gCurTask->unk34)
+        if (gQuickDrawWins[i] >= gCurTask->quickDrawWinsToWin)
         {
             gQuickDrawMatchWinner = i;
             found = 1;
@@ -320,7 +320,7 @@ void QuickDrawRoundWait(void)
 {
     gCurTask->updateState = 0;
     PlayBgm(0x823);
-    while (gCurTask->unk24 == 0)
+    while (gCurTask->quickDrawPlayersReady == 0)
         TaskYieldTrampoline(1);
     QuickDrawWaitForSignal();
     gCurTask->state = 1;
@@ -329,7 +329,7 @@ void QuickDrawRoundWait(void)
 
 void QuickDrawRoundWaitUpdate(void)
 {
-    if (gCurTask->unk24 != 0)
+    if (gCurTask->quickDrawPlayersReady != 0)
     {
         s32 r = QuickDrawCountPresses();
         if (r != 0)
@@ -401,10 +401,10 @@ void QuickDrawRoundWinUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->state != 4 && t->unk18 != 2)
+    if (t->state != 4 && t->subGameNextPhase != 2)
     {
         if (QuickDrawFindMatchWinner())
-            gCurTask->unk18 = 2;
+            gCurTask->subGameNextPhase = 2;
         else
             TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
     }
@@ -443,7 +443,7 @@ void QuickDrawRoundNextUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->state != 6 && t->unk18 != 2)
+    if (t->state != 6 && t->subGameNextPhase != 2)
         TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
 }
 
@@ -456,7 +456,7 @@ void QuickDrawFalseStartVsCpu(s32 a0)
     {
         struct Task *o = &gTasks[i];
         s32 bit = 1 << i;
-        if (gCurTask->unk2C & bit)
+        if (gCurTask->quickDrawPressMask & bit)
         {
             QuickDrawSetPlayerState(i, 4);
             o->unk20 = 4;
@@ -465,9 +465,9 @@ void QuickDrawFalseStartVsCpu(s32 a0)
         }
     }
     t = gCurTask;
-    t->unk70 += a0;
-    t->unk6E |= t->unk2C;
-    if (gPlayerCount != 1 && (s16)t->unk70 == gPlayerCount)
+    t->quickDrawFalseStartCount += a0;
+    t->quickDrawFalseStartMask |= t->quickDrawPressMask;
+    if (gPlayerCount != 1 && (s16)t->quickDrawFalseStartCount == gPlayerCount)
     {
         t->state = 2;
         if (gTaskSlotTypes[62] != -1)
@@ -487,18 +487,18 @@ void CreateQuickDrawOpponent(void)
         t = &gTasks[i];
         t->parent = gCurTaskIdx;
         t->variant = 5;
-        t->unk74 = gSubGameLevel;
+        t->quickDrawObjectLevel = gSubGameLevel;
         t->u76.unk76 = 0;
-        gCurTask->unk46 = i;
+        gCurTask->quickDrawOpponentSlot = i;
     }
 }
 
 void QuickDrawDecideRoundVsCpu(s32 a0)
 {
     struct Task *t = gCurTask;
-    struct Task *o = &gTasks[t->unk46];
+    struct Task *o = &gTasks[t->quickDrawOpponentSlot];
 
-    if (t->unk20 == o->unk1C)
+    if (t->quickDrawReactionTime == o->quickDrawObjectReactionTime)
     {
         if (a0 == 0)
             t->state = 4;
@@ -513,35 +513,35 @@ void QuickDrawDecideRoundVsCpu(s32 a0)
 
 void QuickDrawResetRoundVsCpu(void)
 {
-    if (gCurTask->unk1C != 0)
+    if (gCurTask->quickDrawCpuRoundWon != 0)
     {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x400;
         QuickDrawLoadOpponentGraphics(gUnk_0200B048);
     }
-    QuickDrawSetOpponentState(gCurTask->unk46, gCurTask->unk30);
+    QuickDrawSetOpponentState(gCurTask->quickDrawOpponentSlot, gCurTask->quickDrawRestartPose);
     QuickDrawResetRound();
 }
 
 void QuickDrawEndRoundWinVsCpu(void)
 {
-    QuickDrawSetOpponentState(gCurTask->unk46, 3);
+    QuickDrawSetOpponentState(gCurTask->quickDrawOpponentSlot, 3);
     QuickDrawEndRoundWin(1);
-    gCurTask->unk1C = 1;
+    gCurTask->quickDrawCpuRoundWon = 1;
 }
 
 void QuickDrawEndRoundLoseVsCpu(void)
 {
-    QuickDrawSetOpponentState(gCurTask->unk46, 2);
+    QuickDrawSetOpponentState(gCurTask->quickDrawOpponentSlot, 2);
     QuickDrawEndRoundWin(0);
-    gCurTask->unk1C = 0;
+    gCurTask->quickDrawCpuRoundWon = 0;
 }
 
 void QuickDrawEndRoundTieVsCpu(void)
 {
-    QuickDrawSetOpponentState(gCurTask->unk46, 4);
+    QuickDrawSetOpponentState(gCurTask->quickDrawOpponentSlot, 4);
     QuickDrawEndRoundTie();
-    gCurTask->unk1C = 0;
+    gCurTask->quickDrawCpuRoundWon = 0;
 }
 
 u8 QuickDrawFindMatchWinnerVsCpu(void)
@@ -570,7 +570,7 @@ void QuickDrawRoundWaitVsCpu(void)
 {
     gCurTask->updateState = 0;
     PlayBgm(0x823);
-    while (gCurTask->unk24 == 0)
+    while (gCurTask->quickDrawPlayersReady == 0)
         TaskYieldTrampoline(1);
     QuickDrawWaitForSignal();
     gCurTask->state = 1;
@@ -579,7 +579,7 @@ void QuickDrawRoundWaitVsCpu(void)
 
 void QuickDrawRoundWaitVsCpuUpdate(void)
 {
-    if (gCurTask->unk24 != 0)
+    if (gCurTask->quickDrawPlayersReady != 0)
     {
         s32 r = QuickDrawCountPresses();
         if (r != 0)
@@ -610,7 +610,7 @@ void QuickDrawRoundFalseStartVsCpu(void)
 {
     gCurTask->updateState = 2;
     QuickDrawEndRoundFalseStart();
-    gCurTask->unk1C = 0;
+    gCurTask->quickDrawCpuRoundWon = 0;
     TaskYieldTrampoline(8);
     gCurTask->state = 6;
     TaskSleepForever();
@@ -635,10 +635,10 @@ void QuickDrawRoundWinVsCpuUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->state != 3 && t->unk18 != 2)
+    if (t->state != 3 && t->subGameNextPhase != 2)
     {
         if (QuickDrawFindMatchWinnerVsCpu())
-            gCurTask->unk18 = 2;
+            gCurTask->subGameNextPhase = 2;
         else
             TaskSetEntry(QuickDrawEnterStateVsCpu, gCurTaskIdx);
     }
@@ -657,8 +657,8 @@ void QuickDrawRoundLoseVsCpuUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->state != 4 && t->unk18 != 2)
-        t->unk18 = 2;
+    if (t->state != 4 && t->subGameNextPhase != 2)
+        t->subGameNextPhase = 2;
 }
 
 void QuickDrawRoundTieVsCpu(void)
@@ -697,6 +697,6 @@ void QuickDrawRoundNextVsCpuUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->state != 6 && t->unk18 != 2)
+    if (t->state != 6 && t->subGameNextPhase != 2)
         TaskSetEntry(QuickDrawEnterStateVsCpu, gCurTaskIdx);
 }

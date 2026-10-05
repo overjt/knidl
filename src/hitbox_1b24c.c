@@ -7,7 +7,7 @@
  *
  * The third actor-vs-collider hit test (the first two, HitTestPlayerColliders and
  * HitTestColliderClass10, are src/hitbox_1a8c8.c; the shared tails CalcHitDamageAndDirection and
- * sub_0801b9e4 are src/hitbox_1b7dc.c).  HitTestColliderClass20 walks the third
+ * HitRecordHitter are src/hitbox_1b7dc.c).  HitTestColliderClass20 walks the third
  * collider list gColliderClass20 (gColliderClass20Count entries) that M05's
  * RegisterCollider fills, places each entry's body box (mirrored by its task's
  * facing, unk43) against the camera rectangle, tests it against the actor's
@@ -112,7 +112,7 @@ extern u32 gColliderClass20KindBits[];
 extern u32 gUnk_0873229C[];
 
 void CalcHitDamageAndDirection(void);
-void sub_0801b9e4(void);
+void HitRecordHitter(void);
 
 /* Hit test of the actor's attack box against the third collider list.
    There is no local for the player index: cse gives the byte load of
@@ -217,7 +217,7 @@ u8 HitTestColliderClass20(void)
                     continue;
                 gHitKind = 7;
                 gHitHealthLeft = gAttackHealth;
-                sub_0801b9e4();
+                HitRecordHitter();
                 return 1;
             }
             if (!(gAttackBox->unk1A & 1) && !(k == 5 && (gAttackBox->unk1A & 0x80))
@@ -248,7 +248,7 @@ u8 HitTestColliderClass20(void)
                 CalcHitDamageAndDirection();
                 break;
             }
-            sub_0801b9e4();
+            HitRecordHitter();
             return 1;
         }
         if (!(a->unk1A & 1) && !(k == 5 && (a->unk1A & 0x80)) && gColliderPlayer != 4)
@@ -268,7 +268,7 @@ u8 HitTestColliderClass20(void)
         gHitKind = 6;
         gHitEffect = gUnk_08732242[k];
         gHitHealthLeft = gAttackHealth;
-        sub_0801b9e4();
+        HitRecordHitter();
         return 1;
     }
     return 0;

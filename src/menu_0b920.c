@@ -189,7 +189,7 @@ void MenuDrawSaveSlots(void)
     for (i = 0; i < 3; i++)
     {
         MenuLoadSaveSlotLabel(i);
-        MenuLoadSaveSlotPicture(i, (s8)gSaveSlots[i].unk16[gSaveSlots[i].completionPercent[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0]);
+        MenuLoadSaveSlotPicture(i, (s8)gSaveSlots[i].curLevel[gSaveSlots[i].completionPercent[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0]);
         MenuLoadSaveSlotPercent(i, gSaveSlots[i].completionPercent[gSaveSlots[i].completionPercent[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0], 0);
     }
 }
@@ -236,9 +236,9 @@ s32 MenuLoadSaveSlotPalette(s32 slot, u32 pal)
     if (pal > 6)
         pal = 7;
     if (slot == gMenuCursor)
-        RequestCopy(2, (u32)&gUnk_08554B78[pal * 16], (u32)&gUnk_03001490[slot * 16], 32);
+        RequestCopy(2, (u32)&gUnk_08554B78[pal * 16], (u32)&gObjPaletteBank1[slot * 16], 32);
     else
-        RequestCopy(2, (u32)&gUnk_08554B78[(pal + 8) * 16], (u32)&gUnk_03001490[slot * 16], 32);
+        RequestCopy(2, (u32)&gUnk_08554B78[(pal + 8) * 16], (u32)&gObjPaletteBank1[slot * 16], 32);
 }
 
 void MenuLoadSaveSlotPercent(s32 slot, s32 value, s32 mode)

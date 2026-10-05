@@ -7,10 +7,10 @@
  * (0x080694E0-0x080696A0) snapshot the current task's directional state into a
  * 6-byte stack record (ActorGetTerrainBox) and hand it to one of the input decoders
  * at 0x0801BCAC..0x0801C3A4; the three big dispatchers (ActorCollideTerrain,
- * sub_080696a0, sub_08069888) then walk the actor's seven-entry handler table
+ * ActorCollideTerrainInCameraBounds, ActorCollideTerrainFloor) then walk the actor's seven-entry handler table
  * at Actor.terrainHandlers, calling the first handler that claims the frame.  The tail
  * of the module is the class-1 "carried" task body: state machine entry
- * points (ActorReactToHitKind/sub_08069bbc), the ActorPlayHitSfx sound dispatcher and
+ * points (ActorReactToHitKind/PickupReactToHit), the ActorPlayHitSfx sound dispatcher and
  * the ActorStartHitStun/ActorEndHitStun push/pop of the actor's transform.
  */
 #include "gba/gba.h"
@@ -166,7 +166,7 @@ u32 sub_080694e0(void)
     sub_0802205c(&v);
 }
 
-u32 sub_0806951c(void)
+u32 ActorCollideTerrainAlongVelocity(void)
 {
     struct InputState v;
     u32 r;
@@ -184,7 +184,7 @@ u32 sub_0806951c(void)
     return 0;
 }
 
-u32 sub_0806956c(void)
+u32 ActorCollideTerrainCeilingAndFloor(void)
 {
     struct InputState v;
     u32 r;
@@ -202,7 +202,7 @@ u32 sub_0806956c(void)
     return 0;
 }
 
-u32 sub_080695bc(void)
+u32 ActorCollideTerrainWalls(void)
 {
     struct InputState v;
     u32 r;
@@ -220,7 +220,7 @@ u32 sub_080695bc(void)
     return 0;
 }
 
-u32 sub_08069604(void)
+u32 ActorCollideTerrainPointPushOut(void)
 {
     struct InputState v;
     u32 r;
@@ -235,7 +235,7 @@ u32 sub_08069604(void)
     return r;
 }
 
-u32 sub_08069660(void)
+u32 ActorCollideTerrainPointStop(void)
 {
     struct InputState v;
     u32 r;
@@ -252,7 +252,7 @@ u32 sub_08069660(void)
     return r;
 }
 
-u32 sub_080696a0(void)
+u32 ActorCollideTerrainInCameraBounds(void)
 {
     struct Task *t;
     struct Task *u;
@@ -348,7 +348,7 @@ s3:
     return r;
 }
 
-u32 sub_08069888(void)
+u32 ActorCollideTerrainFloor(void)
 {
     struct Task *t;
     struct Task *u;
@@ -407,7 +407,7 @@ s2:
     return r;
 }
 
-u32 sub_080699a8(void)
+u32 ActorStepBackFromSlope(void)
 {
     struct Task *t;
     struct Task *u;
@@ -418,7 +418,7 @@ u32 sub_080699a8(void)
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         t = gCurTask;
-        if ((t->unk24 & 0xFFFF0000) != 0
+        if ((t->actorFlatGroundY & 0xFFFF0000) != 0
          && (t->onGround & 1) != 0
          && (gTerrainResult[4] == 1 || gTerrainResult[4] == 2
           || gTerrainResult[4] == 3 || gTerrainResult[4] == 4))
@@ -436,7 +436,7 @@ u32 sub_080699a8(void)
             u = gCurTask;
             d = y - u->pixelX;
             u->pixelX = y + d;
-            u->pixelY = u->unk24;
+            u->pixelY = u->actorFlatGroundY;
             u->posX = u->pixelX << 16;
             u->posY = u->pixelY << 16;
             return 1;
@@ -469,7 +469,7 @@ void ActorGetTerrainBox(struct InputState *out)
     }
 }
 
-void sub_08069ac4(s32 i)
+void ActorInitTerrainFlagsSlot(s32 i)
 {
     struct Task *t;
 
@@ -513,14 +513,14 @@ u32 ActorReactToHit(void)
     return ActorReactToHitKind(gCurTask->hitKind);
 }
 
-u32 sub_08069b84(void)
+u32 ActorReactToHitOrTerrainDamage(void)
 {
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
-    return ActorReactToHitKind(sub_08069c48());
+    return ActorReactToHitKind(ActorHitKindWithTerrainDamage());
 }
 
-u32 sub_08069bbc(void)
+u32 PickupReactToHit(void)
 {
     u32 r;
 
@@ -551,7 +551,7 @@ u32 sub_08069bbc(void)
     return r;
 }
 
-s8 sub_08069c48(void)
+s8 ActorHitKindWithTerrainDamage(void)
 {
     struct Task *t;
     u8 *g;
@@ -587,7 +587,7 @@ void ActorPlayHitSfx(void)
     struct Task *u;
 
     t = gCurTask;
-    if (t->u8C.actor->unk06 == 16 || t->u8C.actor->unk06 == 32)
+    if (t->u8C.actor->hitterClass == 16 || t->u8C.actor->hitterClass == 32)
     {
         u = &gTasks[t->hitterSlot];
         switch (u->u80.attackAbility)
@@ -670,7 +670,7 @@ void ActorStartHitStun(void)
     u->posY = u->pixelY << 16;
     a->savedFrame = u->frame;
     TaskSetFrame(0);
-    gCurTask->lateUpdateCallback = (u32)sub_08069fb0;
+    gCurTask->lateUpdateCallback = (u32)ActorHitStunLateUpdate;
     a->hitStunTimer = 11;
     v = gCurTask;
     v->u8C.actor->savedPaletteBits = v->tileWord & 0xF000;
@@ -731,7 +731,7 @@ u32 ActorReactToDamage(void)
     return r;
 }
 
-void sub_08069f0c(void)
+void ActorHitStunShake(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -746,7 +746,7 @@ void sub_08069f0c(void)
         ActorEndHitStun();
 }
 
-void sub_08069f70(void)
+void ActorHitStunBlink(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -759,12 +759,12 @@ void sub_08069f70(void)
         t->tileWord = (t->tileWord & 0xFFF) | a->savedPaletteBits;
 }
 
-void sub_08069fb0(void)
+void ActorHitStunLateUpdate(void)
 {
     ActorCheckHits();
     ActorReactToHit();
-    sub_08069f70();
-    sub_08069f0c();
+    ActorHitStunBlink();
+    ActorHitStunShake();
 }
 
 void sub_08069fc8(void)
@@ -839,9 +839,9 @@ void ActorStartDrown(s32 a)
     t = gCurTask;
     b = t->u8C.actor;
     if (a == -2)
-        t->unk18 = 0;
+        t->actorDrownFrame = 0;
     else
-        t->unk18 = a;
+        t->actorDrownFrame = a;
     b->hitState = 2;
     ActorSetTerrainHandlers((u32)gActorDrownTerrainHandlers);
     if (gCurTask->onGround & 1)
@@ -852,7 +852,7 @@ void ActorStartDrown(s32 a)
 }
 
 /* No return value: the ROM's epilogue is `pop {r0}; bx r0`.  Its caller
-   sub_08069bbc nevertheless propagates whatever r0 holds - see the comment
+   PickupReactToHit nevertheless propagates whatever r0 holds - see the comment
    there. */
 void PickupCollect(void)
 {
@@ -872,7 +872,7 @@ void PickupCollect(void)
     case 3:
         if (gLocalPlayer == t->hitterSlot)
             PlaySfx(198);
-        sub_0804087c(gCurTask->hitterSlot);
+        PlayerGiveInvincibleCandy(gCurTask->hitterSlot);
         ActorDestroy();
         break;
     case 2:

@@ -66,10 +66,10 @@ extern s16 ActorComputeHealth(void);
 extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
-extern u32 sub_08068f68(void);
+extern u32 ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCollideTerrain(void);
-extern u32 sub_0806951c(void);
-extern u32 sub_08069888(void);
+extern u32 ActorCollideTerrainAlongVelocity(void);
+extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 extern void SaveBossEnduranceBestTime();
 
@@ -199,7 +199,7 @@ void LoadRoomMetaKnightsGfx(u8 *e, s32 idx, s32 n)
         }
     }
     if (d->paletteBankCount != 0)
-        RequestCopy(2, d->palette, (u32)gUnk_03001570, d->paletteBankCount << 5);
+        RequestCopy(2, d->palette, (u32)gObjPaletteBank8, d->paletteBankCount << 5);
     for (i = 1; i <= 4; i++)
     {
         d = gMetaKnightsGfx[i];
@@ -301,8 +301,8 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
     if (slot == -1)
         return slot;
     t = &gTasks[slot];
-    t->unk18 = 0;
-    t->unk24 = 0;
+    t->mapEventEndAction = 0;
+    t->mapEventWaitScrollLock = 0;
     if (gUnk_02007D64 != 4)
     {
         if (gUnk_0200AF0C != gRoomIndex)
@@ -327,7 +327,7 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
                 else
                     gScrollLock.unkA = e->x - 156;
                 StartScrollLock(f->x, f->x + 240, 0xFFFF, 0xFFFF);
-                t->unk24 = 1;
+                t->mapEventWaitScrollLock = 1;
                 break;
             case 3:
                 if (e->y < (gViewRect[3] + gViewRect[2]) >> 1)
@@ -335,17 +335,17 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
                 else
                     gScrollLock.unkC = e->y - 120;
                 StartScrollLock(0xFFFF, 0xFFFF, f->y, f->y + 160);
-                t->unk24 = 1;
+                t->mapEventWaitScrollLock = 1;
                 break;
             case 4:
-                t->unk18 = 1;
-                t->unk1C = f->x;
-                t->unk20 = f->y;
+                t->mapEventEndAction = 1;
+                t->mapEventTargetX = f->x;
+                t->mapEventTargetY = f->y;
                 break;
             case 5:
-                t->unk18 = 2;
-                t->unk1C = f->x;
-                t->unk20 = f->y;
+                t->mapEventEndAction = 2;
+                t->mapEventTargetX = f->x;
+                t->mapEventTargetY = f->y;
                 break;
             }
         }
@@ -358,23 +358,23 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
     {
         if (f->kind == 7)
         {
-            gUnk_0200D080 = 0;
-            if (t->unk24 != 0)
+            gMidBossFightState = 0;
+            if (t->mapEventWaitScrollLock != 0)
             {
                 if (gActivePlayerCount == 1)
                 {
-                    gUnk_0200B030 = 0;
+                    gMidBossDropsIn = 0;
                     y = f->y;
                 }
                 else
                 {
-                    gUnk_0200B030 = 1;
+                    gMidBossDropsIn = 1;
                     y = -16;
                 }
             }
             else
             {
-                gUnk_0200B030 = 0;
+                gMidBossDropsIn = 0;
                 y = f->y;
             }
             r = CreateActorByKind(1, f->unk1, f->unk2, f->unk3, f->x, y,

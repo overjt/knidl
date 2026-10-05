@@ -47,9 +47,9 @@ extern struct M38LogoObj gUnk_02030000[];
 
 /* IWRAM */
 extern vu16 gUnk_03000B24;
-extern u16 gUnk_03001390[];
-extern u8 gUnk_030013B0[];
-extern u16 gUnk_03001430[];
+extern u16 gBgPaletteBank9[];
+extern u8 gBgPaletteBank10[];
+extern u16 gBgPaletteBank14[];
 extern u16 gPrevGameState; /* requested/next game state */
 extern s32 gExtraModeTitlePhase;
 
@@ -149,8 +149,8 @@ void BossEnduranceMain(void);
 
 /* src/gfx_08b8c.c */
 void LinkErrorScreen(void);
-void LoadBgLayout(s32 a0);
-void LoadGfxSet(u16 a0);
+void LoadBgLayout(s32 layout);
+void LoadGfxSet(u16 set);
 void sub_08008c7c(void);
 void sub_08008cb8(void);
 void sub_08008d10(s32 a0, s32 a1);

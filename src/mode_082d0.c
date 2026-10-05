@@ -139,7 +139,7 @@ void ExtraModeTitleLevelBarUpdate(void)
         } else {
             r <<= 6;
         }
-        BlendColors(gUnk_085B6E78[gSubGameLevel][0], gUnk_085B6E78[gSubGameLevel][2], (u16)r, 16, gUnk_03001490);
+        BlendColors(gUnk_085B6E78[gSubGameLevel][0], gUnk_085B6E78[gSubGameLevel][2], (u16)r, 16, gObjPaletteBank1);
     } else if (gExtraModeTitlePhase == 3) {
         r = gFrameCount & 15;
         if (r > 7) {
@@ -148,7 +148,7 @@ void ExtraModeTitleLevelBarUpdate(void)
         } else {
             r <<= 5;
         }
-        BlendColors(gUnk_085B6E78[gSubGameLevel][0], gUnk_085B6E78[gSubGameLevel][1], (u16)r, 16, gUnk_03001490);
+        BlendColors(gUnk_085B6E78[gSubGameLevel][0], gUnk_085B6E78[gSubGameLevel][1], (u16)r, 16, gObjPaletteBank1);
     } else {
         for (i = 0; i < 16; i++)
             gBgPalette[0x110 + i] = gUnk_085B6E78[0][0][i];

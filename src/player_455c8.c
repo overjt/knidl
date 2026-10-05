@@ -73,7 +73,7 @@ void PlayerActionBurning(void)
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
         gCurTask->player->bodyBox = (u32)gUnk_0873BD3C;
         gCurTask->player->unk42 |= 16;
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         gCurTask->unk2C = 0;
         TaskSetFrame(0x5CF);
         TaskYieldTrampoline(1);
@@ -85,11 +85,11 @@ void PlayerActionBurning(void)
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         gCurTask->unk2C = 1;
         TaskSetFrame(0x5D3);
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         gCurTask->unk2C = 2;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
@@ -97,17 +97,17 @@ void PlayerActionBurning(void)
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         gCurTask->unk2C = 0;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         gCurTask->unk2C = 1;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         gCurTask->unk2C = 2;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
@@ -115,13 +115,13 @@ void PlayerActionBurning(void)
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         gCurTask->unk2C = 0;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         gCurTask->unk2C = 1;
         TaskSetFrame(0x5DF);
         TaskYieldTrampoline(2);
@@ -247,7 +247,7 @@ void PlayerActionLaser(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = 34;
-    gCurTask->unk28 = 0;
+    gCurTask->playerActionDone28 = 0;
     gCurTask->u80.attackAbility = 0;
     TaskSetFrame(0x658);
     TaskYieldTrampoline(2);
@@ -259,20 +259,20 @@ void PlayerActionLaser(void)
     TaskYieldTrampoline(2);
     CreatePlayerObject(gCurTask->player->playerIndex, 6, 0);
     PlaySfxIfLocalPlayer(172, gCurTask->player->playerIndex);
-    gCurTask->unk6C = 0;
+    gCurTask->playerLoopCount = 0;
     do {
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 15);
+    } while ((s16)++gCurTask->playerLoopCount <= 15);
     TaskSetFrame(0x658);
     TaskYieldTrampoline(2);
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
 void PlayerActionLaserUpdate(void)
 {
-    if (gCurTask->unk28 != 0)
+    if (gCurTask->playerActionDone28 != 0)
         PlayerRequestLocomotion();
     sub_0803e55c();
 }

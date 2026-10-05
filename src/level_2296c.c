@@ -439,7 +439,7 @@ void sub_080233e0(void)
     LoadRoomObjectGfx();
     InitDoors();
     StartBlockAnims();
-    sub_080290ac();
+    CameraSetFocusToLocalPlayer();
     if (gPlayerCount == 1)
         CameraResetBounds();
     else

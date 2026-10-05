@@ -167,6 +167,60 @@ Rules (run 1 applied them mechanically; follow them by hand from now on):
   translation unit (`make check-headers`): a symbol declared twice with
   two types, a struct defined twice or a missing definition fails there.
 
+### Per-family registers of `struct Task`: alias macros (#155 run 5)
+
+`Task.unk18`-`unk34`, `unk46`, `unk6C`-`unk70` and `unk74` are the task's
+registers: each task family keeps its own values there (a timer, a hop
+count, a child's slot), and run 4's census found 46-125 task types per
+register, about 10,000 accesses in all.  A union would need one member per
+family, so these registers are named the way pret names `struct Task`'s
+`data[16]` (pokeemerald's `#define tState data[0]`): with object-like
+alias macros in `include/task_vars.h`, which `include/task.h` includes at
+its end.
+
+```c
+/* Actor - every actor: a task made by CreateActor, ... */
+#define actorAnimDelay unk28 /* s32: frames until the next animation-script step (ActorStartAnim / ActorTickAnim) */
+#define actorSpawnArg unk74 /* u8: the spawn argument (CreateActor's p4, ActorSpawn.spawnArg), set once at creation */
+```
+
+- **Names.**  `<family><Role>` in lowerCamelCase, where `<family>` is the
+  word the family's functions use (`FireLion...` gives
+  `fireLionHopCount`); the prefix keeps every alias unique in the tree.  A
+  role that the contract of a SHARED engine helper fixes (the delay the
+  animation-script helpers return, the spawn argument every actor spawner
+  stores) gets one role alias without a family prefix in the `Actor` block
+  (`actorAnimDelay`, `actorSpawnArg`), used by every family that keeps
+  that helper's value in that register; a macro maps one member, so the
+  same role in another register carries the offset (`actorAnimDelay34`).
+- **Blocks.**  One block per family: a header comment that names the
+  family, its task types and its state table, then one `#define` per
+  alias with the member, the type the code reads it as (the sites keep
+  their `(s16)` casts and `*(s16 *)&` reads) and a one-line role.
+- **Use.**  Only on a pointer proven to hold a task of the family: the
+  family's own bodies on `gCurTask` and the locals that copy it, a spawner
+  on the child it has just created.  A helper several families share keeps
+  the plain `unkXX`.  One register may have two aliases when a family uses
+  it for two things in different states; one alias never covers two
+  meanings.
+- **The members keep their `unk` names** in `struct Task` (the lessons,
+  the history and `renames.csv` cite them), and the comment above them in
+  `task.h` points here.  The audit counts the aliases per family
+  (docs/naming.md 5.1).
+- **Proof.**  An alias changes no token after preprocessing:
+  `tools/task_alias.py --verify-cpp REF` compares every translation unit's
+  `cpp -P` output (whitespace collapsed) with the parent commit's,
+  `--verify-types` compiles a copy of the tree in which each aliased member
+  is an anonymous union of the member and its aliases and the macros are
+  gone (gcc 12 then rejects an alias used on any other struct), and `make
+  compare` passes.  `tools/rename.py --verify-diff` accepts the logged
+  aliases (`renames.csv` rows of kind `alias`, `Task.unk28` ->
+  `Task.actorAnimDelay`) after `.`/`->`, so a branch of renames and aliases
+  verifies in one pass.
+- **Not views.**  An alias is not a type change: no union, no cast, no new
+  member.  A field that holds one meaning in every family that uses it gets
+  a plain `tools/rename_field.py` rename instead.
+
 ### Per-family views of `struct Task` (#155 runs 3 and 4)
 
 Some `struct Task` fields hold a different thing in different task

@@ -59,11 +59,11 @@ again:
             TaskYieldTrampoline(4);
             CreatePlayerEffect(gCurTask->player->playerIndex, 6, 30);
             PlayerSetMotionXPreset(11, 45);
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do {
                 gCurTask->frame++;
                 TaskYieldTrampoline(1);
-            } while ((s16)++gCurTask->unk6C <= 7);
+            } while ((s16)++gCurTask->playerLoopCount <= 7);
             PlayerStartSfx(154, gCurTask->player->playerIndex);
             gCurTask->variant = 1;
             PlayerSetMotionXPreset(11, 46);
@@ -138,11 +138,11 @@ again:
             PlayerSetMotionXPreset(11, 51);
             TaskSetFrame(0x702);
             TaskYieldTrampoline(1);
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do {
                 gCurTask->frame++;
                 TaskYieldTrampoline(1);
-            } while ((s16)++gCurTask->unk6C <= 6);
+            } while ((s16)++gCurTask->playerLoopCount <= 6);
             TaskSetFrame(0x701);
             gCurTask->variant = 5;
             break;
@@ -161,11 +161,11 @@ again:
             while (1) {
                 TaskSetFrame(0x702);
                 TaskYieldTrampoline(1);
-                gCurTask->unk6C = 0;
+                gCurTask->playerLoopCount = 0;
                 do {
                     gCurTask->frame++;
                     TaskYieldTrampoline(1);
-                } while ((s16)++gCurTask->unk6C <= 6);
+                } while ((s16)++gCurTask->playerLoopCount <= 6);
             }
         }
     }

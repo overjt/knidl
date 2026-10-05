@@ -9,7 +9,7 @@
  * gUnk_08743AC8.  BugzzyUpdate is the busiest body in the module: besides the
  * usual Task.updateState dispatch it calls ClampTaskToRoom (the camera/room hook) on
  * entry, and when the row gUnk_08743A58[Task.unk34] is non-null it runs the
- * "hit the wall" transition - sub_0806914c, then Task.unk1C = Task.hitterSlot,
+ * "hit the wall" transition - ActorCheckPlayerHitsWithBox, then Task.unk1C = Task.hitterSlot,
  * a re-seat of the actor at gUnk_030023B4 - Task.facing * 16, and a hand-off to
  * HoldPlayer / TaskSetEntry.
  *
@@ -25,7 +25,7 @@
  * gUnk_08743AB8, mapped through the terrain-class table gUnk_087339F0 into a
  * two-bit result that picks the next Task.unk28 direction from gUnk_08743AC2.
  * sub_0809364c / sub_080936a0 / sub_08093780 are the shared step sequences,
- * sub_080937d0 the hit hook, sub_08093858 the four-instruction "stop moving"
+ * BugzzyHitWall the hit hook, BugzzyHitCeiling the four-instruction "stop moving"
  * leaf the census had missed, and BugzzyAfterimageUpdate the companion body.
  *
  * The fourth boss starts at Task_BonkersNut (table 0x087441A4, graphics
@@ -33,7 +33,7 @@
  * BonkersNutState0 is its one state, Task_PoppyBrosSrBomb / PoppyBrosSrBombInit are the second
  * entry pair (graphics gPoppyBrosSrBombFrames, Actor.sfxOverride = 0x20E), PoppyBrosSrBombHeld and
  * PoppyBrosSrBombFlight are the endless spawners that call CreateChildTaskAtOffsetFacing(181, -8, -8, 1)
- * every six frames, and PoppyBrosSrBombHeldUpdate / Task_PoppyBrosSrBombSpark / sub_08093f00 are the
+ * every six frames, and PoppyBrosSrBombHeldUpdate / Task_PoppyBrosSrBombSpark / PoppyBrosSrBombLand are the
  * companions that copy the boss's 16.16 position (±8 rows) and expire with it.
  */
 #include "gba/gba.h"
@@ -53,7 +53,7 @@ extern vu8 gTerrainResult;
 
 /* Externals */
 extern void ClampTaskToRoom(struct Task *t);
-extern u32 sub_0806914c(s32 a);
+extern u32 ActorCheckPlayerHitsWithBox(s32 a);
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void ActorCheckHits(void);
 /* Declared here, not through a header: the calls in this file pass other
@@ -70,11 +70,11 @@ extern void ActorSetAttackBox(u32 v);
 extern void sub_080639f0(u32 v);
 extern void sub_08063a00(u32 v);
 extern s32 CreateInhalableStar(s16 x, s16 y, u16 dir, u8 p8);
-extern void sub_08068f68(void);
+extern void ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u8 ActorCollideTerrain(void);
 extern s32 ActorReactToHit(void);
-extern u8 sub_0806acf8(void);
+extern u8 ActorHasExtraFrame(void);
 
 /* Defined below */
 void BugzzyInit(void)
@@ -84,9 +84,9 @@ void BugzzyInit(void)
 
     t = gCurTask;
     t->updateCallback = (u32)BugzzyUpdate;
-    sub_080666cc(gUnk_08743AC8);
+    ActorIntroPoseUntilMidBossFight(gUnk_08743AC8);
     u = gCurTask;
-    u->unk24 = u->u8C.actor->palette;
+    u->bugzzySavedPalette = u->u8C.actor->palette;
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 13, gBugzzyStates);
 }
@@ -108,12 +108,12 @@ void BugzzyUpdate(void)
 
     ClampTaskToRoom(gCurTask);
     t = gCurTask;
-    if (t->unk20 != 0)
+    if (t->bugzzyIgnoreTerrainTimer != 0)
     {
-        t->unk20--;
+        t->bugzzyIgnoreTerrainTimer--;
         CallTableEntry(t->updateState, 13, gBugzzyStateUpdates);
     }
-    else if (sub_0806acf8() == 0)
+    else if (ActorHasExtraFrame() == 0)
     {
         if (ActorCollideTerrain() == 0)
             CallTableEntry(gCurTask->updateState, 13, gBugzzyStateUpdates);
@@ -123,44 +123,44 @@ void BugzzyUpdate(void)
         CallTableEntry(gCurTask->updateState, 13, gBugzzyStateUpdates);
     }
     u = gCurTask;
-    if (u->unk30 == 1)
+    if (u->bugzzyFlashing == 1)
     {
         if (u->hitTimer != 0)
             ActorFlashPalette(&gUnk_082959A8, 16);
         else
         {
-            u->unk30 = 0;
+            u->bugzzyFlashing = 0;
             ActorClearPaletteOverride();
         }
     }
-    ActorSetAttackBox(gUnk_08743A10[gCurTask->unk34]);
-    sub_080639f0(gUnk_08743A28[gCurTask->unk34]);
-    sub_08063a00(gUnk_08743A40[gCurTask->unk34]);
-    sub_08068f68();
+    ActorSetAttackBox(gUnk_08743A10[gCurTask->bugzzyBoxSet]);
+    sub_080639f0(gUnk_08743A28[gCurTask->bugzzyBoxSet]);
+    sub_08063a00(gUnk_08743A40[gCurTask->bugzzyBoxSet]);
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
-    if (gUnk_08743A58[gCurTask->unk34] != 0)
+    if (gUnk_08743A58[gCurTask->bugzzyBoxSet] != 0)
     {
-        sub_0806914c(gUnk_08743A58[gCurTask->unk34]);
+        ActorCheckPlayerHitsWithBox(gUnk_08743A58[gCurTask->bugzzyBoxSet]);
         v = gCurTask;
         if (v->hitKind == 8)
         {
-            v->unk1C = v->hitterSlot;
-            TaskFaceToward(v->unk1C);
+            v->bugzzyHeldPlayerSlot = v->hitterSlot;
+            TaskFaceToward(v->bugzzyHeldPlayerSlot);
             w = gCurTask;
-            w->unk34 = 5;
-            w->unk18 = 0;
-            TaskGetPosSlot(w->unk1C);
+            w->bugzzyBoxSet = 5;
+            w->bugzzyRushing = 0;
+            TaskGetPosSlot(w->bugzzyHeldPlayerSlot);
             x = gCurTask;
             x->pixelX = gUnk_030023B4 - x->facing * 16;
             m = x->pixelX;
             x->posX = m << 16;
             ClampTaskToRoom(x);
             y = gCurTask;
-            y->u8C.actor->palette = y->unk24;
+            y->u8C.actor->palette = y->bugzzySavedPalette;
             TaskSetFrame(36);
-            if (gCurTask->unk1C == gLocalPlayer)
+            if (gCurTask->bugzzyHeldPlayerSlot == gLocalPlayer)
                 PlaySfx(0x23D);
-            HoldPlayer(gCurTask->unk1C, gCurTaskIdx, 3);
+            HoldPlayer(gCurTask->bugzzyHeldPlayerSlot, gCurTaskIdx, 3);
             ActorSetState(10);
             TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
         }
@@ -213,8 +213,8 @@ void BugzzyWalk(void)
     t = gCurTask;
     t->updateState = 1;
     u = gCurTask;
-    u->unk6C = 0;
-    while ((s16)gCurTask->unk6C < gUnk_08743A70[gCurTask->unk74])
+    u->bugzzyLoopCount = 0;
+    while ((s16)gCurTask->bugzzyLoopCount < gUnk_08743A70[gCurTask->actorSpawnArg])
     {
         gUnk_02007D00[4] = TaskFindNearestPlayer();
         TaskFaceToward(gUnk_02007D00[4]);
@@ -260,7 +260,7 @@ void BugzzyWalk(void)
             TaskYieldTrampoline(7);
             break;
         case 1:
-            TaskSetMotionXFacing(-gUnk_08743A74[gCurTask->unk74], 0x5A5A5A5A);
+            TaskSetMotionXFacing(-gUnk_08743A74[gCurTask->actorSpawnArg], 0x5A5A5A5A);
             TaskSetFrame(8);
             TaskYieldTrampoline(2);
             TaskSetFrame(16);
@@ -282,7 +282,7 @@ void BugzzyWalk(void)
             gCurTask->frame--;
             break;
         case 2:
-            TaskSetMotionXFacing(gUnk_08743A74[gCurTask->unk74], 0x5A5A5A5A);
+            TaskSetMotionXFacing(gUnk_08743A74[gCurTask->actorSpawnArg], 0x5A5A5A5A);
             TaskSetFrame(8);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
@@ -304,14 +304,14 @@ void BugzzyWalk(void)
             TaskSetFrame(8);
             break;
         }
-        gCurTask->unk6C++;
+        gCurTask->bugzzyLoopCount++;
     }
     v = gCurTask;
     zero = 0;
     v->velX = zero;
-    if (++v->unk2C > 2)
+    if (++v->bugzzyWalkCount > 2)
     {
-        v->unk2C = zero;
+        v->bugzzyWalkCount = zero;
         ActorSetState(2);
     }
     else
@@ -323,7 +323,7 @@ void BugzzyWalk(void)
             gUnk_02007D00[5] = 1;
         else
             gUnk_02007D00[5] = zero;
-        if (gCurTask->unk74 != 0)
+        if (gCurTask->actorSpawnArg != 0)
             gUnk_02007D00[5] += 3;
         r = RandomRange(8);
         gUnk_02007D00[6] = r;
@@ -363,29 +363,29 @@ void BugzzySummon(void)
     spawn.subtype = 30;
     spawn.taskType = 133;
     spawn.variant = 0;
-    spawn.spawnArg = gCurTask->unk74;
+    spawn.spawnArg = gCurTask->actorSpawnArg;
     spawn.x = 0xFFFE;
     spawn.y = 0;
-    spawn.tileWord = sub_0806660c(1);
+    spawn.tileWord = ActorGetGfxTileWordPalOffset(1);
     CreateActorFromDescAtOffsetFacing(&spawn, 1);
     gCurTask->frame++;
     TaskYieldTrampoline(24);
     spawn.subtype = 30;
     spawn.taskType = 133;
     spawn.variant = 1;
-    spawn.spawnArg = gCurTask->unk74;
+    spawn.spawnArg = gCurTask->actorSpawnArg;
     spawn.x = 0xFFFE;
     spawn.y = 0;
-    spawn.tileWord = sub_0806660c(1);
+    spawn.tileWord = ActorGetGfxTileWordPalOffset(1);
     spawn.checkTerrain = 0;
     CreateActorFromDescAtOffsetFacing(&spawn, 1);
     TaskYieldTrampoline(4);
-    gCurTask->unk6C = 0;
+    gCurTask->bugzzyLoopCount = 0;
     do
     {
         gCurTask->frame--;
         TaskYieldTrampoline(4);
-    } while ((s16)++gCurTask->unk6C <= 1);
+    } while ((s16)++gCurTask->bugzzyLoopCount <= 1);
     ActorSetState(1);
     TaskSleepForever();
 }
@@ -413,8 +413,8 @@ void BugzzyCharge(void)
     t->updateState = 3;
     TaskFaceNearestPlayer();
     PlaySfx(0x23F);
-    gCurTask->unk6C = 0;
-    while ((s16)gCurTask->unk6C < gUnk_08743A8E[gCurTask->unk74])
+    gCurTask->bugzzyLoopCount = 0;
+    while ((s16)gCurTask->bugzzyLoopCount < gUnk_08743A8E[gCurTask->actorSpawnArg])
     {
         TaskSetMotionXFacing(65536, 0x5A5A5A5A);
         TaskSetFrame(17);
@@ -423,15 +423,15 @@ void BugzzyCharge(void)
             CreateDustTrail(1, 1, -24, 24);
         TaskSetMotionXFacing(0xFFFE0000, 0x5A5A5A5A);
         u = gCurTask;
-        u->unk24 = u->u8C.actor->palette;
+        u->bugzzySavedPalette = u->u8C.actor->palette;
         u->u8C.actor->palette = 0;
         u->frame++;
         TaskYieldTrampoline(2);
         v = gCurTask;
-        v->u8C.actor->palette = v->unk24;
-        gCurTask->unk6C++;
+        v->u8C.actor->palette = v->bugzzySavedPalette;
+        gCurTask->bugzzyLoopCount++;
     }
-    gCurTask->unk6C = 0;
+    gCurTask->bugzzyLoopCount = 0;
     do
     {
         TaskSetMotionXFacing(65536, 0x5A5A5A5A);
@@ -441,15 +441,15 @@ void BugzzyCharge(void)
             CreateDustTrail(1, 1, -24, 24);
         TaskSetMotionXFacing(0xFFFE0000, 0x5A5A5A5A);
         u2 = gCurTask;
-        u2->unk24 = u2->u8C.actor->palette;
+        u2->bugzzySavedPalette = u2->u8C.actor->palette;
         u2->u8C.actor->palette = 0;
         u2->frame++;
         TaskYieldTrampoline(2);
         v2 = gCurTask;
-        v2->u8C.actor->palette = v2->unk24;
-    } while ((s16)++gCurTask->unk6C <= 0);
-    gCurTask->unk6C = 0;
-    while ((s16)gCurTask->unk6C < gUnk_08743A8E[gCurTask->unk74])
+        v2->u8C.actor->palette = v2->bugzzySavedPalette;
+    } while ((s16)++gCurTask->bugzzyLoopCount <= 0);
+    gCurTask->bugzzyLoopCount = 0;
+    while ((s16)gCurTask->bugzzyLoopCount < gUnk_08743A8E[gCurTask->actorSpawnArg])
     {
         TaskSetMotionXFacing(65536, 0x5A5A5A5A);
         TaskSetFrame(21);
@@ -458,13 +458,13 @@ void BugzzyCharge(void)
             CreateDustTrail(1, 1, -24, 24);
         TaskSetMotionXFacing(0xFFFE0000, 0x5A5A5A5A);
         u3 = gCurTask;
-        u3->unk24 = u3->u8C.actor->palette;
+        u3->bugzzySavedPalette = u3->u8C.actor->palette;
         u3->u8C.actor->palette = 0;
         u3->frame++;
         TaskYieldTrampoline(2);
         v3 = gCurTask;
-        v3->u8C.actor->palette = v3->unk24;
-        gCurTask->unk6C++;
+        v3->u8C.actor->palette = v3->bugzzySavedPalette;
+        gCurTask->bugzzyLoopCount++;
     }
     w = gCurTask;
     zero = 0;
@@ -473,19 +473,19 @@ void BugzzyCharge(void)
     TaskYieldTrampoline(12);
     PlaySfx(500);
     x = gCurTask;
-    x->unk34 = 3;
-    gTasks[CreateChildTask(200, x->pixelX, x->pixelY, sub_080665fc())].unk74 =
-        gCurTask->unk74;
-    gCurTask->unk18 = 1;
-    TaskSetMotionXFacing(gUnk_08743A94[gCurTask->unk74], 0x5A5A5A5A);
-    gCurTask->unk6C = zero;
+    x->bugzzyBoxSet = 3;
+    gTasks[CreateChildTask(200, x->pixelX, x->pixelY, ActorGetGfxTileWord())].unk74 =
+        gCurTask->actorSpawnArg;
+    gCurTask->bugzzyRushing = 1;
+    TaskSetMotionXFacing(gUnk_08743A94[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+    gCurTask->bugzzyLoopCount = zero;
     do
     {
         TaskSetFrame(24);
         TaskYieldTrampoline(2);
         TaskSetFrame(26);
         TaskYieldTrampoline(2);
-    } while ((s16)++gCurTask->unk6C <= 9);
+    } while ((s16)++gCurTask->bugzzyLoopCount <= 9);
     TaskSetMotionXFacing(0x5A5A5A5A, 0xFFFFC000);
     while (1)
     {
@@ -502,7 +502,7 @@ void BugzzyCharge(void)
         }
     }
     TaskStopX();
-    gCurTask->unk34 = 1;
+    gCurTask->bugzzyBoxSet = 1;
     ActorSetState(8);
     TaskSleepForever();
 }
@@ -528,7 +528,7 @@ void BugzzyState4(void)
     TaskYieldTrampoline(10);
     gCurTask->onGround = 0;
     u = gCurTask;
-    u->velY = gUnk_08743A9C[u->unk74];
+    u->velY = gUnk_08743A9C[u->actorSpawnArg];
     u->accelY = 9472;
     if (u->velY < 0)
     {
@@ -543,15 +543,15 @@ void BugzzyState4(void)
     }
     TaskStopY();
     w = gCurTask;
-    if (w->unk74 == 0)
+    if (w->actorSpawnArg == 0)
     {
         gUnk_02007D00[4] = 2;
-        w->unk6C = 0;
+        w->bugzzyLoopCount = 0;
         do
         {
             sub_080934b8();
             TaskYieldTrampoline(1);
-        } while ((s16)++gCurTask->unk6C <= 59);
+        } while ((s16)++gCurTask->bugzzyLoopCount <= 59);
     }
     if (abs(TaskGetNearestPlayerDx()) <= 31)
         ActorSetState(8);
@@ -574,16 +574,16 @@ void BugzzyState5(void)
 
     t = gCurTask;
     t->updateState = 5;
-    TaskSetMotionXFacing(gUnk_08743AA4[gCurTask->unk74], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gUnk_08743AA4[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     if (TaskGetYDirBitToNearestPlayer() == 1)
         gCurTask->velY = 49152;
     gUnk_02007D00[4] = 2;
-    gCurTask->unk6C = 0;
+    gCurTask->bugzzyLoopCount = 0;
     do
     {
         sub_080934b8();
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 119);
+    } while ((s16)++gCurTask->bugzzyLoopCount <= 119);
     ActorSetState(8);
     TaskSleepForever();
 }
@@ -609,11 +609,11 @@ void BugzzyState6(void)
     v->frame--;
     TaskYieldTrampoline(10);
     gCurTask->onGround = 0;
-    TaskSetMotionXFacing(gUnk_08743AAC[gCurTask->unk74], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gUnk_08743AAC[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     u = gCurTask;
     u->velY = 0xFFFC0000;
     u->accelY = 9472;
-    u->unk6C = 0;
+    u->bugzzyLoopCount = 0;
     do
     {
         if ((gFrameCount & 2) != 0)
@@ -621,7 +621,7 @@ void BugzzyState6(void)
         else
             TaskSetFrame(61);
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 13);
+    } while ((s16)++gCurTask->bugzzyLoopCount <= 13);
     ActorSetState(8);
     TaskSleepForever();
 }
@@ -646,15 +646,15 @@ void BugzzyHop(void)
     gCurTask->frame--;
     TaskYieldTrampoline(10);
     gUnk_02007D00[4] =
-        gUnk_08743AB4[RandomRange(2) + gCurTask->unk74 * 2];
-    gCurTask->unk6C = 0;
-    while ((s16)gCurTask->unk6C < gUnk_02007D00[4])
+        gUnk_08743AB4[RandomRange(2) + gCurTask->actorSpawnArg * 2];
+    gCurTask->bugzzyLoopCount = 0;
+    while ((s16)gCurTask->bugzzyLoopCount < gUnk_02007D00[4])
     {
         gCurTask->onGround = 0;
         v = gCurTask;
         v->velY = 0xFFFB0000;
         v->accelY = 20480;
-        v->unk6C = 0;
+        v->bugzzyLoopCount = 0;
         do
         {
             if ((gFrameCount & 2) != 0)
@@ -662,7 +662,7 @@ void BugzzyHop(void)
             else
                 TaskSetFrame(61);
             TaskYieldTrampoline(1);
-        } while ((s16)++gCurTask->unk6C <= 13);
+        } while ((s16)++gCurTask->bugzzyLoopCount <= 13);
         while (gCurTask->onGround == 0)
         {
             if ((gFrameCount & 2) != 0)
@@ -676,7 +676,7 @@ void BugzzyHop(void)
         PlaySfx(0x1F7);
         TaskSetFrame(59);
         TaskYieldTrampoline(5);
-        gCurTask->unk6C++;
+        gCurTask->bugzzyLoopCount++;
     }
     gCurTask->frame++;
     TaskYieldTrampoline(3);
@@ -788,7 +788,7 @@ void BugzzyState11(void)
     TaskSetFrame(43);
     TaskYieldTrampoline(16);
     u = gCurTask;
-    u->unk34 = 1;
+    u->bugzzyBoxSet = 1;
     ActorSetState(1);
     TaskSleepForever();
 }
@@ -831,7 +831,7 @@ void BugzzyBackdrop(void)
     TaskStop();
     BugzzyChooseBackdrop();
     s = gCurTask;
-    switch (s->unk28)
+    switch (s->bugzzyBackdropMove)
     {
     case 0:
         TaskSetMotionXFacing(81920, 0x5A5A5A5A);
@@ -884,7 +884,7 @@ void BugzzyBackdrop(void)
         ActorSetState(11);
         break;
     case 3:
-        s->unk6C = 0;
+        s->bugzzyLoopCount = 0;
         do
         {
             TaskSetFrame(38);
@@ -898,12 +898,12 @@ void BugzzyBackdrop(void)
             gCurTask->frame++;
             TaskYieldTrampoline(1);
             RequestScreenShake(2);
-            sub_08093a00(504);
-            TaskGetPosSlot(gCurTask->unk1C);
+            BugzzyPlaySfxForHeldPlayer(504);
+            TaskGetPosSlot(gCurTask->bugzzyHeldPlayerSlot);
             CreateChildTaskAt(154, *(s16 *)&gUnk_030023B4, *(s16 *)&gUnk_030023D4, 0);
             TaskYieldTrampoline(8);
-        } while ((s16)++gCurTask->unk6C <= 5);
-        SetHeldPlayerState(gCurTask->unk1C, 4);
+        } while ((s16)++gCurTask->bugzzyLoopCount <= 5);
+        SetHeldPlayerState(gCurTask->bugzzyHeldPlayerSlot, 4);
         sub_080936a0();
         break;
     }
@@ -917,7 +917,7 @@ void BugzzyBackdropUpdate(void)
     t = gCurTask;
     if (t->state != 10)
     {
-        t->unk1C = -1;
+        t->bugzzyHeldPlayerSlot = -1;
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
     }
 }
@@ -943,7 +943,7 @@ void BugzzyDefeat(void)
     u = gCurTask;
     u->frame--;
     TaskYieldTrampoline(15);
-    gCurTask->unk34 = 4;
+    gCurTask->bugzzyBoxSet = 4;
     while (gCurTask->onGround == 0)
         TaskYieldTrampoline(1);
     CreateStarFlash(0, 0, 10);
@@ -956,7 +956,7 @@ void BugzzyDefeat(void)
     TaskStopX();
     TaskYieldTrampoline(170);
     CreateStarFlash(1, 0, 0);
-    sub_0806ad18();
+    ActorShakeVertically();
     gUnk_02007D00[4] = 1;
     TaskSleepForever();
 }
@@ -1015,62 +1015,62 @@ void BugzzyChooseBackdrop(void)
         if ((s16)n <= 3)
         {
             u = gCurTask;
-            if (u->unk28 != 0)
-                u->unk28 = f;
+            if (u->bugzzyBackdropMove != 0)
+                u->bugzzyBackdropMove = f;
             else
-                u->unk28 = 2;
+                u->bugzzyBackdropMove = 2;
         }
         else if ((s16)n <= 6)
         {
             u = gCurTask;
-            if (u->unk28 != 2)
-                u->unk28 = 2;
+            if (u->bugzzyBackdropMove != 2)
+                u->bugzzyBackdropMove = 2;
             else
-                u->unk28 = 3;
+                u->bugzzyBackdropMove = 3;
         }
         else
         {
             u = gCurTask;
-            if (u->unk28 == 3)
-                u->unk28 = 1;
+            if (u->bugzzyBackdropMove == 3)
+                u->bugzzyBackdropMove = 1;
             else
-                u->unk28 = 3;
+                u->bugzzyBackdropMove = 3;
         }
     }
     else if (f == 1)
     {
         u = gCurTask;
-        u->unk28 = 2;
+        u->bugzzyBackdropMove = 2;
     }
     else if (f == 3)
     {
         u = gCurTask;
-        u->unk28 = 1;
+        u->bugzzyBackdropMove = 1;
     }
     else if ((s16)n <= 5)
     {
         w = gCurTask;
-        if (w->unk28 != gUnk_08743AC2[f - 1])
-            w->unk28 = gUnk_08743AC2[f - 1];
+        if (w->bugzzyBackdropMove != gUnk_08743AC2[f - 1])
+            w->bugzzyBackdropMove = gUnk_08743AC2[f - 1];
         else
-            w->unk28 = 3;
+            w->bugzzyBackdropMove = 3;
     }
     else
     {
         w = gCurTask;
-        if (w->unk28 != 3)
-            w->unk28 = 3;
+        if (w->bugzzyBackdropMove != 3)
+            w->bugzzyBackdropMove = 3;
         else
-            w->unk28 = gUnk_08743AC2[f - 1];
+            w->bugzzyBackdropMove = gUnk_08743AC2[f - 1];
     }
 }
 void sub_0809364c(void)
 {
-    SetHeldPlayerState(gCurTask->unk1C, 4);
+    SetHeldPlayerState(gCurTask->bugzzyHeldPlayerSlot, 4);
     RequestScreenShake(4);
-    TaskGetPosSlot(gCurTask->unk1C);
+    TaskGetPosSlot(gCurTask->bugzzyHeldPlayerSlot);
     CreateChildTaskAt(154, *(s16 *)&gUnk_030023B4, *(s16 *)&gUnk_030023D4, 0);
-    sub_08093a00(504);
+    BugzzyPlaySfxForHeldPlayer(504);
     sub_08093780();
     TaskStop();
 }
@@ -1085,35 +1085,35 @@ void sub_080936a0(void)
     t = gCurTask;
     t->velY = 0xFFFE0000;
     t->accelY = 12032;
-    t->unk6C = 0;
+    t->bugzzyLoopCount = 0;
     do
     {
         TaskSetFrame(56);
         TaskYieldTrampoline(2);
         gCurTask->frame--;
         TaskYieldTrampoline(2);
-    } while ((s16)++gCurTask->unk6C <= 2);
-    gCurTask->unk6C = 0;
+    } while ((s16)++gCurTask->bugzzyLoopCount <= 2);
+    gCurTask->bugzzyLoopCount = 0;
     do
     {
         TaskSetFrame(58);
         TaskYieldTrampoline(2);
         gCurTask->frame--;
         TaskYieldTrampoline(2);
-    } while ((s16)++gCurTask->unk6C <= 1);
+    } while ((s16)++gCurTask->bugzzyLoopCount <= 1);
     TaskSetFrame(59);
     while (gCurTask->onGround == 0)
         TaskYieldTrampoline(1);
     TaskStop();
     TaskYieldTrampoline(8);
     u = gCurTask;
-    u->unk34 = 1;
+    u->bugzzyBoxSet = 1;
     ActorSetState(1);
 }
 
 void sub_08093780(void)
 {
-    gCurTask->unk6C = 0;
+    gCurTask->bugzzyLoopCount = 0;
     do
     {
         gCurTask->onGround = 0;
@@ -1121,10 +1121,10 @@ void sub_08093780(void)
         TaskYieldTrampoline(2);
         gCurTask->velY = 65536;
         TaskYieldTrampoline(2);
-    } while ((s16)++gCurTask->unk6C <= 6);
+    } while ((s16)++gCurTask->bugzzyLoopCount <= 6);
 }
 
-s32 sub_080937d0(void)
+s32 BugzzyHitWall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1141,8 +1141,8 @@ s32 sub_080937d0(void)
          || (k == -1 && (gTerrainResult & 2) != 0))
         {
             u = gCurTask;
-            u->unk18 = 0;
-            u->unk34 = 2;
+            u->bugzzyRushing = 0;
+            u->bugzzyBoxSet = 2;
             ActorSetState(9);
             TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
             r = 1;
@@ -1156,14 +1156,14 @@ s32 sub_080937d0(void)
     return r;
 }
 
-void sub_08093858(void)
+void BugzzyHitCeiling(void)
 {
     gCurTask->velY = 0;
 }
 
 s32 BugzzyReactToDamage(void)
 {
-    gCurTask->unk30 = 1;
+    gCurTask->bugzzyFlashing = 1;
     CreateStarFlash(1, 0, 0);
     RequestScreenShake(2);
     return 0;
@@ -1175,15 +1175,15 @@ s32 BugzzyReactToDefeat(void)
     s32 n;
 
     t = gCurTask;
-    t->unk34 = 0;
-    t->unk18 = 0;
-    n = t->unk1C;
+    t->bugzzyBoxSet = 0;
+    t->bugzzyRushing = 0;
+    n = t->bugzzyHeldPlayerSlot;
     if (n != -1)
     {
         ReleaseHeldPlayer(n, -t->facing);
-        gCurTask->unk1C = -1;
+        gCurTask->bugzzyHeldPlayerSlot = -1;
     }
-    ActorSetHitReactions(gUnk_0874410C);
+    ActorSetHitReactions(gBugzzyDefeatedHitReactions);
     ActorSetState(12);
     TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
     return 1;
@@ -1205,12 +1205,12 @@ void Task_BugzzyAfterimage(void)
     u->updateCallback = (u32)BugzzyAfterimageUpdate;
     TaskFaceLikeParent();
     v = gCurTask;
-    v->unk28 = 4;
-    v->unk2C = gUnk_08743B48[v->unk74];
-    while (--gCurTask->unk2C >= 0)
+    v->bugzzyAfterimageMoveTimer = 4;
+    v->bugzzyAfterimageLifeTimer = gUnk_08743B48[v->bugzzyAfterimageSpawnArg];
+    while (--gCurTask->bugzzyAfterimageLifeTimer >= 0)
     {
         w = gCurTask;
-        if ((w->unk2C & 1) != 0)
+        if ((w->bugzzyAfterimageLifeTimer & 1) != 0)
         {
             w->frame = 0xFFFF;
             TaskYieldTrampoline(1);
@@ -1231,26 +1231,26 @@ void BugzzyAfterimageUpdate(void)
     s32 i;
 
     if ((s16)gTaskSlotTypes[i = (t = gCurTask)->parent] != -1
-     && (u = &gTasks[i])->u76.subtype == 5 && u->unk18 != 0)
+     && (u = &gTasks[i])->u76.subtype == 5 && u->bugzzyRushing != 0)
     {
-        if (--t->unk28 == 0)
+        if (--t->bugzzyAfterimageMoveTimer == 0)
         {
             t->posX = u->posX;
             t->posY = u->posY;
             t->pixelX = u->pixelX;
             t->pixelY = u->pixelY;
-            t->unk28 = 4;
+            t->bugzzyAfterimageMoveTimer = 4;
         }
     }
     else
     {
-        t->unk2C = 0;
+        t->bugzzyAfterimageLifeTimer = 0;
     }
 }
 
-void sub_08093a00(s32 a)
+void BugzzyPlaySfxForHeldPlayer(s32 a)
 {
-    if (gCurTask->unk1C == gLocalPlayer)
+    if (gCurTask->bugzzyHeldPlayerSlot == gLocalPlayer)
         PlaySfx(a);
 }
 
@@ -1292,7 +1292,7 @@ void BonkersNutState0(void)
     struct Task *t;
 
     gCurTask->updateState = 0;
-    gCurTask->unk28 = 0;
+    gCurTask->bonkersNutBounced = 0;
     TaskSetFrame(4);
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(98304, 0x5A5A5A5A);
@@ -1305,20 +1305,20 @@ void BonkersNutState0(void)
     while (gCurTask->onGround == 0)
         TaskYieldTrampoline(1);
     t = gCurTask;
-    t->unk28++;
+    t->bonkersNutBounced++;
     TaskSleepForever();
 }
 
 void BonkersNutState0Update(void)
 {
-    if (gCurTask->unk28 != 0)
+    if (gCurTask->bonkersNutBounced != 0)
     {
         ActorSetHitReactions(gUnk_0874430C);
         TaskSetEntry(ActorDie, gCurTaskIdx);
     }
 }
 
-s32 sub_08093bb0(void)
+s32 BonkersNutHitWall(void)
 {
     ActorSetHitReactions(gUnk_0874430C);
     TaskSetEntry(ActorDie, gCurTaskIdx);
@@ -1402,7 +1402,7 @@ void PoppyBrosSrBombHeldUpdate(void)
         u = &gTasks[i];
         t->facing = u->facing;
         TaskUpdateFlip();
-        if (u->unk1C != 0)
+        if (u->poppyBrosSrHandReleased != 0)
         {
             v = gCurTask;
             p = &u->pixelX;
@@ -1448,9 +1448,9 @@ void PoppyBrosSrBombFlight(void)
     u = gCurTask;
     u->layer = 9;
     v = gCurTask;
-    v->unk28 = 3;
-    TaskSetMotionXFacing(gUnk_0874417C[v->variant][v->unk74], 0x5A5A5A5A);
-    TaskSetMotionY(gUnk_0874418C[gCurTask->variant][gCurTask->unk74],
+    v->poppyBrosSrBombBouncesLeft = 3;
+    TaskSetMotionXFacing(gUnk_0874417C[v->variant][v->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionY(gUnk_0874418C[gCurTask->variant][gCurTask->actorSpawnArg],
                  8192, 458752);
     gCurTask->onGround = 0;
     while (1)
@@ -1486,21 +1486,21 @@ void Task_PoppyBrosSrBombSpark(void)
     TaskExitTrampoline();
 }
 
-s32 sub_08093edc(void)
+s32 PoppyBrosSrBombHitWall(void)
 {
     ActorSetHitReactions(gUnk_08744324);
     TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_08093f00(void)
+s32 PoppyBrosSrBombLand(void)
 {
     struct Task *t;
     s32 r;
 
     r = 0;
     t = gCurTask;
-    if (--t->unk28 == 0)
+    if (--t->poppyBrosSrBombBouncesLeft == 0)
     {
         ActorSetHitReactions(gUnk_08744324);
         TaskSetEntry(ActorDie, gCurTaskIdx);
@@ -1509,7 +1509,7 @@ s32 sub_08093f00(void)
     else
     {
         t->onGround = 0;
-        TaskSetMotionY(gUnk_0874419C[gCurTask->unk74], 8192, 458752);
+        TaskSetMotionY(gUnk_0874419C[gCurTask->actorSpawnArg], 8192, 458752);
     }
     return r;
 }

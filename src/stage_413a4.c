@@ -84,7 +84,7 @@ void MetaKnightActionStand(void)
 
         PlayerStopAxes(3);
         t = gCurTask;
-        t->unk28 = (u16)t->player->unk4E;
+        t->unk28 = (u16)t->player->clampedTopY;
         t->unk2C = t->player->slope;
         if (t->player->wallSide != 0)
             t->player->savedWallSide = t->player->wallSide;
@@ -209,13 +209,13 @@ void MetaKnightActionRun(void)
     {
         TaskSetFrame(0x11DD);
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 4);
+            gCurTask->playerLoopCount++;
+        } while ((s16)gCurTask->playerLoopCount <= 4);
     }
 }
 
@@ -354,13 +354,13 @@ void MetaKnightActionJump(void)
     gCurTask->unk28 = 0;
     TaskSetFrame(0x11E5);
     TaskYieldTrampoline(3);
-    gCurTask->unk6C = 0;
+    gCurTask->playerLoopCount = 0;
     do
     {
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 5);
+        gCurTask->playerLoopCount++;
+    } while ((s16)gCurTask->playerLoopCount <= 5);
     gCurTask->unk28 = 1;
     TaskSleepForever();
 }
@@ -602,7 +602,7 @@ void MetaKnightActionSlide(void)
     t = gCurTask;
     if (t->player->prevMode != 7)
     {
-        t->unk28 = 0;
+        t->playerActionDone28 = 0;
         t->variant = 0;
     }
     switch (gCurTask->variant)
@@ -635,7 +635,7 @@ void MetaKnightActionSlide(void)
         gCurTask->u80.attackAbility = 0;
         break;
     }
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
@@ -680,7 +680,7 @@ void MetaKnightActionSlideUpdate(void)
                 RegisterCollider((u8)gCurTaskIdx, t2->pixelX, t2->pixelY, gUnk_0873CA68);
             break;
         case 2:
-            if (t->unk28 != 0)
+            if (t->playerActionDone28 != 0)
             {
                 t->player->hitBoxSet = (void *)v;
                 t->player->requestedAction = 1;
@@ -757,7 +757,7 @@ void MetaKnightActionLadder(void)
         h3->posX = ((h3->pixelX & 0xFFF0) | 8) << 16;
     }
     d = gCurTask;
-    d->unk46 = 0x11F4;
+    d->playerBaseFrame = 0x11F4;
     k = d->variant;
     switch (k)
     {
@@ -1007,7 +1007,7 @@ void MetaKnightActionHurt(void)
             PlaySfx(0x107);
             PlayerStartOffsetScript(16);
             CreatePlayerEffect(gCurTask->player->playerIndex, 22, 0);
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do
             {
                 TaskSetFrame(0x1244);
@@ -1018,8 +1018,8 @@ void MetaKnightActionHurt(void)
                 TaskYieldTrampoline(2);
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk6C++;
-            } while ((s16)gCurTask->unk6C <= 3);
+                gCurTask->playerLoopCount++;
+            } while ((s16)gCurTask->playerLoopCount <= 3);
             TaskSetFrame(0x1244);
             TaskYieldTrampoline(1);
             tj = gCurTask;
@@ -1027,7 +1027,7 @@ void MetaKnightActionHurt(void)
         case 2:
             PlaySfx(0x107);
             CreatePlayerEffect(gCurTask->player->playerIndex, 23, 0);
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do
             {
                 PlayerStartOffsetScript(17);
@@ -1035,8 +1035,8 @@ void MetaKnightActionHurt(void)
                 TaskYieldTrampoline(2);
                 TaskSetFrame(0x1249);
                 TaskYieldTrampoline(2);
-                gCurTask->unk6C++;
-            } while ((s16)gCurTask->unk6C <= 7);
+                gCurTask->playerLoopCount++;
+            } while ((s16)gCurTask->playerLoopCount <= 7);
             TaskSetFrame(0x123B);
             TaskYieldTrampoline(1);
             tj = gCurTask;
@@ -1058,13 +1058,13 @@ void MetaKnightActionHurt(void)
             PlayerSetMotionYPreset(30);
             TaskSetFrame(0x123C);
             TaskYieldTrampoline(2);
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do
             {
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk6C++;
-            } while ((s16)gCurTask->unk6C <= 5);
+                gCurTask->playerLoopCount++;
+            } while ((s16)gCurTask->playerLoopCount <= 5);
             TaskSetFrame(0x11EC);
             TaskYieldTrampoline(2);
             goto again;
@@ -1076,13 +1076,13 @@ void MetaKnightActionHurt(void)
         PlayerStartOffsetScript(15);
         TaskSetFrame(0x123C);
         TaskYieldTrampoline(3);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 4);
+            gCurTask->playerLoopCount++;
+        } while ((s16)gCurTask->playerLoopCount <= 4);
         if ((s8)gCurTask->hitDirection == 0)
             PlayerSetMotionXPreset(10, 34);
         else
@@ -1192,7 +1192,7 @@ void MetaKnightActionDie(void)
     q[13] = 0;
     PlayerStopAxes(3);
     gCurTask->layer = 4;
-    sub_080276ac(gCurTask->player->playerIndex);
+    HoldPlayerCamera(gCurTask->player->playerIndex);
     StopAllSfx();
     StopAllSound();
     gPauseDisabled = 1;
@@ -1320,7 +1320,7 @@ void MetaKnightActionEnterDoor(void)
     }
     EnterDoor();
     if (gInHub != 0)
-        ((void (*)(void))sub_080264b0)();
+        ((void (*)(void))CreateEntryDoorOpening)();
     if (gInHub == 0)
         PlaySfx(181);
     if ((gCurTask->waterFlags & 1) == 0)
@@ -1354,18 +1354,18 @@ void MetaKnightActionExitDoor(void)
     gCurTask->updateState = 19;
     TaskInitWaterFlags();
     sub_08021c74((s32)gPlayerDefaultTerrainBox, gCurTaskIdx);
-    gCurTask->unk28 = 0;
+    gCurTask->playerActionDone28 = 0;
     gCurTask->frame = -1;
     if (gEntryDoorEvent == 1)
     {
-        ((void (*)(void))sub_08027a60)();
-        a = ((s32 (*)(void))sub_0802653c)();
+        ((void (*)(void))CameraResumeFollowFocus)();
+        a = ((s32 (*)(void))CreateEntryDoorStageClearFlag)();
         TaskYieldTrampoline(1);
         sub_08026704(a);
     }
     while (gFadeSteps != 0)
         TaskYieldTrampoline(1);
-    a = ((s32 (*)(void))sub_080264b0)();
+    a = ((s32 (*)(void))CreateEntryDoorOpening)();
     gCurTask->frame = -1;
     TaskYieldTrampoline(4);
     gCurTask->spriteFlags = 0x2000;
@@ -1374,7 +1374,7 @@ void MetaKnightActionExitDoor(void)
     TaskYieldTrampoline(3);
     gCurTask->frame--;
     TaskYieldTrampoline(3);
-    sub_0802651c(a);
+    CloseDoorOpening(a);
     gCurTask->frame--;
     TaskYieldTrampoline(4);
     gCurTask->frame--;
@@ -1392,12 +1392,12 @@ void MetaKnightActionExitDoor(void)
         CreateStageUnlockPan();
         while (gCameraPanDone == 0)
             TaskYieldTrampoline(1);
-        ((void (*)(void))sub_08027a60)();
+        ((void (*)(void))CameraResumeFollowFocus)();
         TaskSetSkipMask(0, gCurTaskIdx);
     }
     gCurTask->spriteFlags = 0x4000;
     ((void (*)(void))sub_08026584)();
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
@@ -1456,7 +1456,7 @@ void MetaKnightActionSwim(void)
                 gCurTask->frame++;
                 TaskYieldTrampoline(4);
                 gCurTask->frame++;
-                gCurTask->unk6C = 0;
+                gCurTask->playerLoopCount = 0;
                 do
                 {
                     if (gCurTask->unk28 != 0)
@@ -1465,28 +1465,28 @@ void MetaKnightActionSwim(void)
                     if (gCurTask->unk28 != 0)
                         goto lab1;
                     TaskYieldTrampoline(1);
-                } while ((s16)++gCurTask->unk6C <= 4);
+                } while ((s16)++gCurTask->playerLoopCount <= 4);
                 gCurTask->speedLimitY = 0x10000;
             }
             TaskSetFrame(0x1233);
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do
             {
                 if (gCurTask->unk28 != 0)
                     goto lab1;
                 TaskYieldTrampoline(1);
-            } while ((s16)++gCurTask->unk6C <= 14);
+            } while ((s16)++gCurTask->playerLoopCount <= 14);
             {
                 if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 0x41)
                     goto lab1;
             }
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do
             {
                 if (gCurTask->unk28 != 0)
                     goto lab1;
                 TaskYieldTrampoline(1);
-            } while ((s16)++gCurTask->unk6C <= 44);
+            } while ((s16)++gCurTask->playerLoopCount <= 44);
             gCurTask->unk28 = -1;
             TaskSleepForever();
         }
@@ -1519,12 +1519,12 @@ void MetaKnightActionSwim(void)
             PlaySfx(120);
             TaskSetFrame(0x1228);
             TaskYieldTrampoline(5);
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do
             {
                 gCurTask->frame++;
                 TaskYieldTrampoline(5);
-            } while ((s16)++gCurTask->unk6C <= 6);
+            } while ((s16)++gCurTask->playerLoopCount <= 6);
         }
     }
     TaskSleepForever();

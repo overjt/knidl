@@ -41,9 +41,9 @@ void GameOverPlayerWait(void)
         TaskYieldTrampoline(20);
         gCurTask->frame--;
         TaskYieldTrampoline(12);
-        if (gCurTask->unk18 != 0)
+        if (gCurTask->gameOverPlayerLooped != 0)
             PlaySfx(180);
-        gCurTask->unk18 = 1;
+        gCurTask->gameOverPlayerLooped = 1;
         gCurTask->frame--;
         TaskYieldTrampoline(12);
         TaskSetFrame(3);
@@ -54,12 +54,12 @@ void GameOverPlayerWait(void)
 /* Task type #264 variant 0, handler 0. */
 void GameOverPlayerWaitUpdate(void)
 {
-    if (gCurTask->unk24 != 0) {
-        if (gCurTask->unk20 <= 0) {
+    if (gCurTask->gameOverPlayerReentered != 0) {
+        if (gCurTask->gameOverPlayerEndTimer <= 0) {
             gGameOverDone = 1;
             gGameState = 1;
         }
-        gCurTask->unk20--;
+        gCurTask->gameOverPlayerEndTimer--;
     }
 }
 
@@ -228,19 +228,19 @@ void GameOverPlayerGiveUp(void)
     gCurTask->velY = 0x14000;
     gCurTask->accelY = -0x4000;
     TaskYieldTrampoline(6);
-    gCurTask->unk1C = PlaySfx(103);
+    gCurTask->gameOverPlayerSfxPlayer = PlaySfx(103);
     gCurTask->frame++;
     TaskYieldTrampoline(3);
     TaskStop();
-    gCurTask->unk6C = 0;
+    gCurTask->gameOverPlayerLoopCount = 0;
     do {
         gCurTask->frame = 9;
         TaskYieldTrampoline(4);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 12);
-    StopSfxOnPlayer(gCurTask->unk1C, 0x67);
+        gCurTask->gameOverPlayerLoopCount++;
+    } while ((s16)gCurTask->gameOverPlayerLoopCount <= 12);
+    StopSfxOnPlayer(gCurTask->gameOverPlayerSfxPlayer, 0x67);
     PlaySfx(104);
     CreateGameOverObject(3);
     gCurTask->frame++;
@@ -305,7 +305,7 @@ void GameOverPlayerGiveUp(void)
 void GameOverPlayerGiveUpUpdate(void)
 {
     if (gCurTask->state != 2) {
-        gCurTask->unk20 = 120;
+        gCurTask->gameOverPlayerEndTimer = 120;
         CreateGameOverObject(2);
         TaskSetEntry(GameOverPlayerEnterState, gCurTaskIdx);
     }

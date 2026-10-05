@@ -21,9 +21,9 @@
  * shares the palette of an earlier slot in the same palette group
  * gUnk_0873EF48[kind] or allocates one (AllocObjPalettes) and copies it into the
  * palette buffer gObjPalette; a non-zero high nibble of e->unk2 is passed
- * to sub_08065dbc with the slot's palette.  It returns 1.
+ * to LoadEnemyPaletteVariant with the slot's palette.  It returns 1.
  *
- * Matching notes (issue #97): sub_08065dbc takes three arguments; the VRAM
+ * Matching notes (issue #97): LoadEnemyPaletteVariant takes three arguments; the VRAM
  * base is a pointer local that global allocation drops (lesson 3.258), and the
  * byte the ROM keeps at [sp, #4] is the compiler's own copy of
  * gRoomObjectGfxSlotIds[i] (lesson 3.474). */
@@ -105,7 +105,7 @@ s32 LoadRoomEnemyGfx(struct Unk020055D8Entry *e, s32 idx, s32 n)
             RequestCopy(2, d->palette, (u32)gObjPalette + (gRoomObjectGfxSlots[n].paletteBank << 5), d->paletteBankCount << 5);
         }
         if (e->unk2 >> 4)
-            sub_08065dbc(gRoomObjectGfxSlots[n].paletteBank, e->unk1, e->unk2 >> 4);
+            LoadEnemyPaletteVariant(gRoomObjectGfxSlots[n].paletteBank, e->unk1, e->unk2 >> 4);
     }
     return 1;
 }

@@ -55,7 +55,7 @@ void PlayerProbeTerrain(u32 p)
             TerrainProbeWallLeftOnGround();
         }
         sub_0801c8dc();
-        sub_0801c930();
+        TerrainProbeFloorInCameraBounds();
     }
     else
     {
@@ -70,7 +70,7 @@ void PlayerProbeTerrain(u32 p)
             TerrainProbeWallLeftInAir();
         }
         TerrainProbeCeiling();
-        sub_0801e178();
+        TerrainProbeLandingInCameraBounds();
     }
     TerrainProbeWaterAndDrift();
     TerrainProbeDamage();

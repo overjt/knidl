@@ -50,7 +50,7 @@ void PlayerActionMike(void)
     }
     gCurTask->player->unk16 = 0;
     CreatePlayerEffect(gCurTask->player->playerIndex, 37, 0);
-    gCurTask->unk28 = 0;
+    gCurTask->playerActionDone28 = 0;
     SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
     gCurTask->player->unk42 |= 0x700;
     switch (gCurTask->variant) {
@@ -83,14 +83,14 @@ void PlayerActionMike(void)
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
         CreatePlayerEffect(gCurTask->player->playerIndex, 37, 1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x674);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 7);
+        } while ((s16)++gCurTask->playerLoopCount <= 7);
         while ((s8)gCurTask->player->unk16 != 0) {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x674);
@@ -104,11 +104,11 @@ void PlayerActionMike(void)
     case 1:
         TaskSetFrame(0x676);
         TaskYieldTrampoline(4);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             gCurTask->frame++;
             TaskYieldTrampoline(4);
-        } while ((s16)++gCurTask->unk6C <= 5);
+        } while ((s16)++gCurTask->playerLoopCount <= 5);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
         StopSfx(160);
@@ -118,14 +118,14 @@ void PlayerActionMike(void)
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
         CreatePlayerEffect(gCurTask->player->playerIndex, 37, 1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x67D);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 7);
+        } while ((s16)++gCurTask->playerLoopCount <= 7);
         while ((s8)gCurTask->player->unk16 != 0) {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x67D);
@@ -172,14 +172,14 @@ void PlayerActionMike(void)
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
         CreatePlayerEffect(gCurTask->player->playerIndex, 37, 1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x689);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 7);
+        } while ((s16)++gCurTask->playerLoopCount <= 7);
         while ((s8)gCurTask->player->unk16 != 0) {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x689);
@@ -200,7 +200,7 @@ void PlayerActionMike(void)
         else
             p->unk22 = 2;
     }
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     gPauseDisabled = 0;
     gCurTask->player->unk42 &= 0xF8FF;
     TaskSleepForever();
@@ -210,7 +210,7 @@ void PlayerActionMikeUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 != 0) {
+    if (t->playerActionDone28 != 0) {
         if (t->onGround & 1)
             t->player->requestedAction = 1;
         else

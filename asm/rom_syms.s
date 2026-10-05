@@ -47,8 +47,8 @@ gBlockCursorPlayer = 0x02004B40
 gPlayerCountCursor = 0x02004B44
 	.global	gBlockCursorShake
 gBlockCursorShake = 0x02004B48
-	.global	gUnk_02004B4C
-gUnk_02004B4C = 0x02004B4C
+	.global	gWarpStarFlightSfxPlayer
+gWarpStarFlightSfxPlayer = 0x02004B4C
 	.global	gPlayerAbilities
 gPlayerAbilities = 0x02004B50
 	.global	gHudHpBarIndex
@@ -73,8 +73,8 @@ gObjectSpawnViewRect = 0x02004B78
 gBigSwitchReturnBg3X = 0x02004B80
 	.global	gDoorStates
 gDoorStates = 0x02004B90
-	.global	gUnk_02004C90
-gUnk_02004C90 = 0x02004C90
+	.global	gBossHitStunFlashPalette
+gBossHitStunFlashPalette = 0x02004C90
 	.global	gEndingPlayerCount
 gEndingPlayerCount = 0x02004C94
 	.global	gUnk_02004C98
@@ -91,8 +91,8 @@ gContinueLevel = 0x02005578
 gGameOverTimer = 0x0200557C
 	.global	gMaxHealth
 gMaxHealth = 0x02005580
-	.global	gUnk_02005584
-gUnk_02005584 = 0x02005584
+	.global	gWarpStarFlightSfx
+gWarpStarFlightSfx = 0x02005584
 	.global	gPlayerHealth
 gPlayerHealth = 0x02005588
 	.global	gUnk_02005590
@@ -127,8 +127,8 @@ gSubGameTaskIdx = 0x020055EC
 gUnk_020055F0 = 0x020055F0
 	.global	gHudTilemap
 gHudTilemap = 0x02005600
-	.global	gUnk_02005E00
-gUnk_02005E00 = 0x02005E00
+	.global	gLifeRequests
+gLifeRequests = 0x02005E00
 	.global	gUnk_02005E10
 gUnk_02005E10 = 0x02005E10
 	.global	gUnk_02005F10
@@ -261,8 +261,8 @@ gPrevMenuScreen = 0x02007E88
 gPressedBigSwitchSlot = 0x02007E8C
 	.global	gUnk_02007E90
 gUnk_02007E90 = 0x02007E90
-	.global	gUnk_02007F50
-gUnk_02007F50 = 0x02007F50
+	.global	gBossSubtype
+gBossSubtype = 0x02007F50
 	.global	gUnk_02007F60
 gUnk_02007F60 = 0x02007F60
 	.global	gBrokenBlockX
@@ -309,8 +309,8 @@ gRoomObjectTried = 0x02008020
 gUnk_02008050 = 0x02008050
 	.global	gUnk_02008054
 gUnk_02008054 = 0x02008054
-	.global	gUnk_02008060
-gUnk_02008060 = 0x02008060
+	.global	gPauseSavedBgPalette
+gPauseSavedBgPalette = 0x02008060
 	.global	gBlockLayer
 gBlockLayer = 0x02008160
 	.global	gSoundTestSelection
@@ -319,8 +319,8 @@ gSoundTestSelection = 0x0200A6E0
 gBg1BreakingBlocks = 0x0200A6F0
 	.global	gRoomEntryY
 gRoomEntryY = 0x0200AEF0
-	.global	gUnk_0200AEF4
-gUnk_0200AEF4 = 0x0200AEF4
+	.global	gBossHitStunCallback
+gBossHitStunCallback = 0x0200AEF4
 	.global	gBlockCursorY
 gBlockCursorY = 0x0200AEFC
 	.global	gEntryDoorEvent
@@ -335,8 +335,8 @@ gUnk_0200AF0C = 0x0200AF0C
 gBombRallyOutMask = 0x0200AF10
 	.global	gPlayerAbilityUses
 gPlayerAbilityUses = 0x0200AF18
-	.global	gUnk_0200AF20
-gUnk_0200AF20 = 0x0200AF20
+	.global	gObjPaletteBlendBase
+gObjPaletteBlendBase = 0x0200AF20
 	.global	gHubUnlockBlocks
 gHubUnlockBlocks = 0x0200AFE0
 	.global	gPlayerBubbleTimers
@@ -353,8 +353,8 @@ gScreenAttackTasks = 0x0200B000
 gHudShowsHpBar = 0x0200B028
 	.global	gUnk_0200B02C
 gUnk_0200B02C = 0x0200B02C
-	.global	gUnk_0200B030
-gUnk_0200B030 = 0x0200B030
+	.global	gMidBossDropsIn
+gMidBossDropsIn = 0x0200B030
 	.global	gEntryDoorIndex
 gEntryDoorIndex = 0x0200B034
 	.global	gUnk_0200B038
@@ -383,8 +383,8 @@ gQuickDrawRanking = 0x0200B07C
 gMetatileTiles = 0x0200B080
 	.global	gActors
 gActors = 0x0200C320
-	.global	gUnk_0200D080
-gUnk_0200D080 = 0x0200D080
+	.global	gMidBossFightState
+gMidBossFightState = 0x0200D080
 	.global	gTaskSkipMaskStack
 gTaskSkipMaskStack = 0x0200D090
 	.global	gTaskSkipMaskDepth
@@ -677,56 +677,56 @@ gBldCntTarget1 = 0x0300118C
 gAffineSpriteBuffer = 0x03001190
 	.global	gBgPalette
 gBgPalette = 0x03001270
-	.global	gUnk_030012B0
-gUnk_030012B0 = 0x030012B0
-	.global	gUnk_030012F0
-gUnk_030012F0 = 0x030012F0
-	.global	gUnk_03001310
-gUnk_03001310 = 0x03001310
-	.global	gUnk_03001370
-gUnk_03001370 = 0x03001370
-	.global	gUnk_03001372
-gUnk_03001372 = 0x03001372
-	.global	gUnk_03001390
-gUnk_03001390 = 0x03001390
-	.global	gUnk_030013B0
-gUnk_030013B0 = 0x030013B0
-	.global	gUnk_03001430
-gUnk_03001430 = 0x03001430
+	.global	gBgPaletteBank2
+gBgPaletteBank2 = 0x030012B0
+	.global	gBgPaletteBank4
+gBgPaletteBank4 = 0x030012F0
+	.global	gBgPaletteBank5
+gBgPaletteBank5 = 0x03001310
+	.global	gBgPaletteBank8
+gBgPaletteBank8 = 0x03001370
+	.global	gBgPaletteBank8Color1
+gBgPaletteBank8Color1 = 0x03001372
+	.global	gBgPaletteBank9
+gBgPaletteBank9 = 0x03001390
+	.global	gBgPaletteBank10
+gBgPaletteBank10 = 0x030013B0
+	.global	gBgPaletteBank14
+gBgPaletteBank14 = 0x03001430
 	.global	gObjPalette
 gObjPalette = 0x03001470
-	.global	gUnk_03001490
-gUnk_03001490 = 0x03001490
-	.global	gUnk_030014F0
-gUnk_030014F0 = 0x030014F0
-	.global	gUnk_03001510
-gUnk_03001510 = 0x03001510
-	.global	gUnk_0300153C
-gUnk_0300153C = 0x0300153C
-	.global	gUnk_03001550
-gUnk_03001550 = 0x03001550
-	.global	gUnk_03001570
-gUnk_03001570 = 0x03001570
-	.global	gUnk_0300158E
-gUnk_0300158E = 0x0300158E
-	.global	gUnk_030015A0
-gUnk_030015A0 = 0x030015A0
-	.global	gUnk_030015CE
-gUnk_030015CE = 0x030015CE
-	.global	gUnk_030015D0
-gUnk_030015D0 = 0x030015D0
-	.global	gUnk_030015EC
-gUnk_030015EC = 0x030015EC
-	.global	gUnk_030015F0
-gUnk_030015F0 = 0x030015F0
-	.global	gUnk_030015F4
-gUnk_030015F4 = 0x030015F4
-	.global	gUnk_03001610
-gUnk_03001610 = 0x03001610
-	.global	gUnk_03001612
-gUnk_03001612 = 0x03001612
-	.global	gUnk_03001668
-gUnk_03001668 = 0x03001668
+	.global	gObjPaletteBank1
+gObjPaletteBank1 = 0x03001490
+	.global	gObjPaletteBank4
+gObjPaletteBank4 = 0x030014F0
+	.global	gObjPaletteBank5
+gObjPaletteBank5 = 0x03001510
+	.global	gObjPaletteBank6Color6
+gObjPaletteBank6Color6 = 0x0300153C
+	.global	gObjPaletteBank7
+gObjPaletteBank7 = 0x03001550
+	.global	gObjPaletteBank8
+gObjPaletteBank8 = 0x03001570
+	.global	gObjPaletteBank8Color15
+gObjPaletteBank8Color15 = 0x0300158E
+	.global	gObjPaletteBank9Color8
+gObjPaletteBank9Color8 = 0x030015A0
+	.global	gObjPaletteBank10Color15
+gObjPaletteBank10Color15 = 0x030015CE
+	.global	gObjPaletteBank11
+gObjPaletteBank11 = 0x030015D0
+	.global	gObjPaletteBank11Color14
+gObjPaletteBank11Color14 = 0x030015EC
+	.global	gObjPaletteBank12
+gObjPaletteBank12 = 0x030015F0
+	.global	gObjPaletteBank12Color2
+gObjPaletteBank12Color2 = 0x030015F4
+	.global	gObjPaletteBank13
+gObjPaletteBank13 = 0x03001610
+	.global	gObjPaletteBank13Color1
+gObjPaletteBank13Color1 = 0x03001612
+	.global	gObjPaletteBank15Color12
+gObjPaletteBank15Color12 = 0x03001668
 	.global	gKeyRepeatTimer
 gKeyRepeatTimer = 0x03001670
 	.global	gSfxSlotAges
@@ -761,8 +761,8 @@ gBg3Cnt = 0x03001EB4
 gPlayerPressedKeys = 0x03001EB8
 	.global	gWaitingForVBlank
 gWaitingForVBlank = 0x03001EC4
-	.global	gUnk_03001EC8
-gUnk_03001EC8 = 0x03001EC8
+	.global	gOamEntryCount
+gOamEntryCount = 0x03001EC8
 	.global	gKeyRepeatInterval
 gKeyRepeatInterval = 0x03001ECC
 	.global	gWinIn1
@@ -1063,8 +1063,8 @@ gColliderLeft = 0x030054EC
 gColliderPlayerState = 0x030054F0
 	.global	gColliderClass20Count
 gColliderClass20Count = 0x030054F4
-	.global	gUnk_03005504
-gUnk_03005504 = 0x03005504
+	.global	gTerrainSlopeIndexLeft
+gTerrainSlopeIndexLeft = 0x03005504
 	.global	gTerrainPixelIndex
 gTerrainPixelIndex = 0x03005508
 	.global	gTerrainPrevBoxLeft
@@ -1081,8 +1081,8 @@ gTerrainBoxLeft = 0x0300551C
 gTerrainPrevY = 0x03005520
 	.global	gTerrainProbeResult
 gTerrainProbeResult = 0x03005530
-	.global	gUnk_03005544
-gUnk_03005544 = 0x03005544
+	.global	gTerrainClampedTopY
+gTerrainClampedTopY = 0x03005544
 	.global	gTerrainResult
 gTerrainResult = 0x03005550
 	.global	gTerrainProbeX
@@ -1091,12 +1091,12 @@ gTerrainProbeX = 0x03005560
 gTerrainFacing = 0x03005564
 	.global	gTerrainBoundsClamp
 gTerrainBoundsClamp = 0x03005568
-	.global	gUnk_0300556C
-gUnk_0300556C = 0x0300556C
+	.global	gTerrainSlopeIndexRight
+gTerrainSlopeIndexRight = 0x0300556C
 	.global	gTerrainProbeY
 gTerrainProbeY = 0x03005570
-	.global	gUnk_03005574
-gUnk_03005574 = 0x03005574
+	.global	gTerrainSlopeIndex
+gTerrainSlopeIndex = 0x03005574
 	.global	gTerrainTile
 gTerrainTile = 0x03005578
 	.global	gTerrainBoxTop
@@ -1123,8 +1123,8 @@ gTerrainTileShape = 0x030055A0
 gTerrainPrevBoxTop = 0x030055A4
 	.global	gTerrainDriftX
 gTerrainDriftX = 0x030055A8
-	.global	gUnk_030055AC
-gUnk_030055AC = 0x030055AC
+	.global	gTerrainSlopeIndexBelow
+gTerrainSlopeIndexBelow = 0x030055AC
 	.global	gTerrainPrevBoxBottom
 gTerrainPrevBoxBottom = 0x030055B0
 	.global	gCameraMode

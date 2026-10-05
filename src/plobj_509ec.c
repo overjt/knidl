@@ -47,7 +47,7 @@ void PlayerObjectAirPuff(void)
     }
     gCurTask->frameTable = gUnk_0874C568;
     sub_0802205c(gUnk_0873CB44);
-    switch (gCurTask->unk18 & 15)
+    switch (gCurTask->playerObjectSpawnWord & 15)
     {
     case 0:
     {
@@ -64,7 +64,7 @@ void PlayerObjectAirPuff(void)
         PlaySfxIfLocalPlayer(114, t->parent);
     }
         TaskSetMotionXFacing(0x3C000, -0x2000);
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
+        for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 1; gCurTask->playerObjectLoopCount++)
         {
             TaskSetFrameByFacing(0);
             TaskYieldTrampoline(2);
@@ -119,7 +119,7 @@ void PlayerObjectAirPuff(void)
         }
         gCurTask->frame = 26;
         TaskYieldTrampoline(1);
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 10; gCurTask->unk6C++)
+        for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 10; gCurTask->playerObjectLoopCount++)
         {
             gCurTask->frame++;
             TaskYieldTrampoline(1);
@@ -139,7 +139,7 @@ void PlayerObjectAirPuffUpdate(void)
         || gCurTask->hitKind != 0)
     {
         struct Task *t = gCurTask;
-        t->unk18 = (t->unk18 & ~15) | 2;
+        t->playerObjectSpawnWord = (t->playerObjectSpawnWord & ~15) | 2;
         TaskSetEntry(PlayerObjectAirPuff, gCurTaskIdx);
     }
     RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873BD64);
@@ -192,7 +192,7 @@ void PlayerObjectSpitStar(void)
     }
     gCurTask->unk28 = 0;
     gCurTask->accelY = 0x400;
-    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+    for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 4; gCurTask->playerObjectLoopCount++)
     {
         gCurTask->frame = 4;
         TaskYieldTrampoline(3);

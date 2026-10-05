@@ -60,7 +60,7 @@ void Task_Player(void)
         if (gCreditsDemoSet == 0)
         {
             if (gGameState != 20)
-                sub_080b9610();
+                PlayerLifeRequestInit();
             else
                 sub_080b9118();
             TaskSleepForever();
@@ -77,7 +77,7 @@ void Task_Player(void)
     t->drawCallback = (u32)sub_0803ddc0;
     t->updateCallback = (u32)PlayerUpdate;
     t->lateUpdateCallback = (u32)sub_0803332c;
-    t->frameTable = gUnk_0874CFEC;
+    t->frameTable = gPlayerFrames;
     if (gPlayerCount > 1 && gLocalPlayer == t->player->playerIndex)
         t->layer = 6;
     else
@@ -102,7 +102,7 @@ void Task_Player(void)
         case 1:
         case 2:
             CreatePlayerEffect(gCurTask->player->playerIndex, 15, 0);
-            sub_08049a58();
+            PlayerLoadSparkTiles();
             break;
         case 10:
             {
@@ -275,8 +275,8 @@ void PlayerUpdate(void)
         goto post;
     if (gCurTask->player->ability == 10 && gCurTask->player->mode == 5)
     {
-        gCurTask->unk2C += gCurTask->unk28;
-        gCurTask->posX += gCurTask->unk2C;
+        gCurTask->playerParasolSwayVelX += gCurTask->playerParasolSwayAccelX;
+        gCurTask->posX += gCurTask->playerParasolSwayVelX;
         gCurTask->pixelX = gCurTask->posX >> 16;
     }
     if (gCurTask->player->hitBoxSet != 0)
@@ -290,13 +290,13 @@ void PlayerUpdate(void)
         gCurTask->player->blocksBroken = 0;
     }
     gCurTask->player->prevWaterFlags = gCurTask->waterFlags;
-    gCurTask->player->unk4E = 0xFFFF;
+    gCurTask->player->clampedTopY = 0xFFFF;
     if (gCurTask->player->terrainBox != 0)
     {
         PlayerProbeTerrain(gCurTask->player->terrainBox);
         gCurTask->player->boundsClamp = gTerrainBoundsClamp;
         if (gUnk_02005574[0] == 0 && (gTerrainBoundsClamp & 4) && gTerrainResult.unk0 != 0)
-            gCurTask->player->unk4E = gUnk_03005544;
+            gCurTask->player->clampedTopY = gTerrainClampedTopY;
         gCurTask->player->prevTerrainBox = (u32 *)gCurTask->player->terrainBox;
         if (gTerrainResult.damage != 0 && !(gCurTask->player->unk42 & 0x200)
          && gCurTask->player->invulnerability != 1 && gCurTask->player->invincible == 0)
@@ -405,10 +405,10 @@ check:
             if (x >= 0 && LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CF9C + x * 8)) != 0)
                 TaskBreakBlocks((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->player->playerIndex], gCurTask->player->playerIndex);
         }
-        if (gUnk_02005E00.unk04[gCurTaskIdx] & 1)
+        if (gLifeRequests.unk04[gCurTaskIdx] & 1)
         {
             if ((gPlayerHeldKeys[gCurTask->player->playerIndex] & 0x300) == 0x300)
-                gUnk_02005E00.unk04[gCurTaskIdx] = (gUnk_02005E00.unk04[gCurTaskIdx] & 0xF0) | 2;
+                gLifeRequests.unk04[gCurTaskIdx] = (gLifeRequests.unk04[gCurTaskIdx] & 0xF0) | 2;
         }
     }
     else if (gCurTask->player->unk10 != 0)
@@ -565,7 +565,7 @@ void sub_08033414(void)
             case 32:
             case 33:
                 CreatePlayerEffect(gCurTask->player->playerIndex, 15, 0);
-                sub_08049a58();
+                PlayerLoadSparkTiles();
                 break;
             }
             gCurTask->player->unk36 = 0;

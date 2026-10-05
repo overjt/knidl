@@ -56,18 +56,18 @@ void PlayerActionTornado(void)
         gCurTask->spriteFlags &= 0x7FFF;
         TaskSetFrame(0xDC5);
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             gCurTask->frame += 2;
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 10);
+        } while ((s16)++gCurTask->playerLoopCount <= 10);
         gCurTask->variant = 1;
         /* fallthrough */
     case 1:
         CreatePlayerEffect(gCurTask->player->playerIndex, 28, 0);
         gCurTask->player->unk16 = 0;
         PlayerSetMotionXPreset(11, 64);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             gCurTask->frame = 0xDDD;
             TaskYieldTrampoline(2);
@@ -76,7 +76,7 @@ void PlayerActionTornado(void)
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
             } while (++gCurTask->unk6E <= 6);
-        } while ((s16)++gCurTask->unk6C <= 5);
+        } while ((s16)++gCurTask->playerLoopCount <= 5);
         gCurTask->variant = 2;
         /* fallthrough */
     case 2:
@@ -96,11 +96,11 @@ void PlayerActionTornado(void)
             }
         }
         SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             gCurTask->frame -= 2;
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 10);
+        } while ((s16)++gCurTask->playerLoopCount <= 10);
         TaskSetFrame(0xDE5);
         TaskYieldTrampoline(1);
         gCurTask->variant = 3;
@@ -190,27 +190,27 @@ void PlayerActionCrash(void)
     }
     SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
     gCurTask->player->unk42 |= 0x700;
-    gCurTask->unk2C = gCurTask->posY;
+    gCurTask->playerCrashSavedPosY = gCurTask->posY;
     CreatePlayerEffect(gCurTask->player->playerIndex, 46, 0);
     gCurTask->player->terrainBox = 0;
     gCurTask->variant = 0;
     RequestScreenShake(5);
     SetRoomUpdateFlags(2);
     PlaySfx(248);
-    gCurTask->unk6C = 0;
+    gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xDE7);
         TaskYieldTrampoline(4);
         TaskSetFrame(0xDFA);
         TaskYieldTrampoline(4);
-    } while ((s16)++gCurTask->unk6C <= 1);
-    gCurTask->unk6C = 0;
+    } while ((s16)++gCurTask->playerLoopCount <= 1);
+    gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xDE7);
         TaskYieldTrampoline(2);
         TaskSetFrame(0xDFA);
         TaskYieldTrampoline(2);
-    } while ((s16)++gCurTask->unk6C <= 3);
+    } while ((s16)++gCurTask->playerLoopCount <= 3);
     TaskSetFrame(0xDE8);
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -218,16 +218,16 @@ void PlayerActionCrash(void)
     PlayerSetMotionYPreset(51);
     gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk28 = 0;
+    gCurTask->playerCrashBlendRatio = 0;
     gCurTask->player->unk42 |= 16;
-    gCurTask->unk6C = 0;
+    gCurTask->playerLoopCount = 0;
     do {
         BlendColors(gPlayerPalettes[gCurTask->player->playerIndex], gUnk_082030B8,
-                     (u16)gCurTask->unk28, 16,
+                     (u16)gCurTask->playerCrashBlendRatio, 16,
                      (u16 *)(gObjPalette + ((gCurTask->tileWord >> 12) << 5)));
-        gCurTask->unk28 += 85;
+        gCurTask->playerCrashBlendRatio += 85;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 2);
+    } while ((s16)++gCurTask->playerLoopCount <= 2);
     TaskYieldTrampoline(3);
     gCurTask->player->unk42 &= 0xFFEF;
     TaskYieldTrampoline(1);
@@ -237,16 +237,16 @@ void PlayerActionCrash(void)
     PlayerSetMotionYPreset(52);
     gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk28 = 0;
+    gCurTask->playerCrashBlendRatio = 0;
     gCurTask->player->unk42 |= 16;
-    gCurTask->unk6C = 0;
+    gCurTask->playerLoopCount = 0;
     do {
         BlendColors(gPlayerPalettes[gCurTask->player->playerIndex], gUnk_082030B8,
-                     (u16)gCurTask->unk28, 16,
+                     (u16)gCurTask->playerCrashBlendRatio, 16,
                      (u16 *)(gObjPalette + ((gCurTask->tileWord >> 12) << 5)));
-        gCurTask->unk28 += 85;
+        gCurTask->playerCrashBlendRatio += 85;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 2);
+    } while ((s16)++gCurTask->playerLoopCount <= 2);
     gCurTask->player->unk42 &= 0xFFEF;
     TaskYieldTrampoline(9);
     PlayerStopAxes(2);
@@ -260,13 +260,13 @@ void PlayerActionCrash(void)
     TaskYieldTrampoline(3);
     gCurTask->player->unk42 |= 16;
     gCurTask->variant = 1;
-    gCurTask->unk28 = 0;
+    gCurTask->playerCrashBlendRatio = 0;
     gCurTask->player->unk16 = 1;
     {
         /* a second pseudo for the task-pointer address (lesson 3.291) */
         struct Task **c = &gCurTask;
 
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             TaskSetFrame(0xDE7);
             TaskYieldTrampoline(2);
@@ -277,7 +277,7 @@ void PlayerActionCrash(void)
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
             } while (++gCurTask->unk6E <= 9);
-        } while ((s16)++gCurTask->unk6C <= 1);
+        } while ((s16)++gCurTask->playerLoopCount <= 1);
         if ((s8)(*c)->player->unk16 == 0) {
             TaskSetFrame(0xDE7);
             TaskYieldTrampoline(2);
@@ -316,7 +316,7 @@ void PlayerActionCrash(void)
     SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
     gCurTask->variant = 2;
     gCurTask->frame++;
-    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 31; gCurTask->unk6C++) {
+    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 31; gCurTask->playerLoopCount++) {
         if (gPauseDisabled == 0)
             gCurTask->player->unk42 &= 0xFBFF;
         TaskYieldTrampoline(1);
@@ -333,32 +333,32 @@ void PlayerActionCrashUpdate(void)
 
     switch (t->variant) {
     case 1:
-        BlendColors(gPlayerPalettes[t->player->playerIndex], gUnk_08203098, (u16)t->unk28, 16,
+        BlendColors(gPlayerPalettes[t->player->playerIndex], gUnk_08203098, (u16)t->playerCrashBlendRatio, 16,
                      (u16 *)(gObjPalette + ((t->tileWord >> 12) << 5)));
         {
             struct Task *u = gCurTask;
-            if (u->unk28 == 256) {
+            if (u->playerCrashBlendRatio == 256) {
                 u->variant = 0;
             } else {
-                u->unk28 += 10;
-                if (u->unk28 > 255)
-                    u->unk28 = 256;
+                u->playerCrashBlendRatio += 10;
+                if (u->playerCrashBlendRatio > 255)
+                    u->playerCrashBlendRatio = 256;
             }
         }
         break;
     case 2:
-        BlendColors(gPlayerPalettes[t->player->playerIndex], gUnk_08203098, (u16)t->unk28, 16,
+        BlendColors(gPlayerPalettes[t->player->playerIndex], gUnk_08203098, (u16)t->playerCrashBlendRatio, 16,
                      (u16 *)(gObjPalette + ((t->tileWord >> 12) << 5)));
         {
             struct Task *u = gCurTask;
-            if (u->unk28 == 0) {
+            if (u->playerCrashBlendRatio == 0) {
                 u->variant = 0;
                 RequestScreenShake(0);
                 gCurTask->player->unk42 &= 0xFFEF;
             } else {
-                u->unk28 -= 16;
-                if (u->unk28 <= 0)
-                    u->unk28 = 0;
+                u->playerCrashBlendRatio -= 16;
+                if (u->playerCrashBlendRatio <= 0)
+                    u->playerCrashBlendRatio = 0;
             }
         }
         break;
@@ -371,12 +371,12 @@ void PlayerActionCrashUpdate(void)
     }
     {
         struct Task *v = gCurTask;
-        if (v->velY > 0 && v->posY > v->unk2C) {
+        if (v->velY > 0 && v->posY > v->playerCrashSavedPosY) {
             PlayerStopAxes(2);
             {
                 struct Task *w = gCurTask;
-                w->posY = w->unk2C;
-                w->pixelY = w->unk2C >> 16;
+                w->posY = w->playerCrashSavedPosY;
+                w->pixelY = w->playerCrashSavedPosY >> 16;
             }
         }
     }

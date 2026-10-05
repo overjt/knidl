@@ -16,13 +16,13 @@
  * player's palettes gUnk_081BE6BC[player] into the OBJ palette buffer
  * (BlendColors, raising PlayerState.unk42 bit 4 while it does).
  * PlayerActionCutter (action 34, mode 13) is a linear yield script (animation
- * 0x3E9, effect 28 on the ground, M14's sub_08053a44, sound 144); its
+ * 0x3E9, effect 28 on the ground, M14's CreatePlayerObjectLowSlot, sound 144); its
  * handler PlayerActionCutterUpdate re-enters it on a newly-pressed B and requests
  * action 2 when left or right is held on the ground. */
 
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void TaskSetEntry(void *a, u32 i);
-void sub_08053a44(s32 a0, s32 a1, s32 a2);   /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
+void CreatePlayerObjectLowSlot(s32 a0, s32 a1, s32 a2);   /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
 
 void PlayerActionSparkUpdate(void)
 {
@@ -49,23 +49,23 @@ void PlayerActionSparkUpdate(void)
             {
                 struct Task *u = gCurTask;
                 u->player->unk42 &= 0xFFEF;
-                u->unk70 = 0;
-                u->unk6E = 0;
+                u->playerNextBankBlendRatio = 0;
+                u->playerBankBlendRatio = 0;
             }
             break;
         case 0x36E:
         case 0x372:
             {
                 struct Task *u = gCurTask;
-                u->unk6E += 128;
-                if (u->unk6E > 256)
-                    u->unk6E = 256;
+                u->playerBankBlendRatio += 128;
+                if (u->playerBankBlendRatio > 256)
+                    u->playerBankBlendRatio = 256;
             }
             {
                 struct Task *u = gCurTask;
                 BlendColors((u16 *)&gUnk_081BE6BC[u->player->playerIndex * 128],
                              (u16 *)&gUnk_081BE6BC[u->player->playerIndex * 128 + 32],
-                             (u16)u->unk6E, 16,
+                             (u16)u->playerBankBlendRatio, 16,
                              (u16 *)(gObjPalette + ((u->tileWord >> 12) << 5)));
             }
             /* fallthrough */
@@ -73,15 +73,15 @@ void PlayerActionSparkUpdate(void)
         case 0x371:
             {
                 struct Task *u = gCurTask;
-                u->unk70 += 64;
-                if ((s16)u->unk70 > 256)
-                    u->unk70 = 256;
+                u->playerNextBankBlendRatio += 64;
+                if ((s16)u->playerNextBankBlendRatio > 256)
+                    u->playerNextBankBlendRatio = 256;
             }
             {
                 struct Task *u = gCurTask;
                 BlendColors((u16 *)&gUnk_081BE6BC[u->player->playerIndex * 128 + 64],
                              (u16 *)&gUnk_081BE6BC[u->player->playerIndex * 128 + 96],
-                             u->unk70, 16,
+                             u->playerNextBankBlendRatio, 16,
                              (u16 *)(gObjPalette + (((u->tileWord >> 12) + 1) << 5)));
             }
             gCurTask->player->unk42 |= 16;
@@ -117,7 +117,7 @@ void PlayerActionCutter(void)
     TaskYieldTrampoline(2);
     if (gCurTask->onGround & 1)
         CreatePlayerEffect(gCurTask->player->playerIndex, 28, 3);
-    sub_08053a44(gCurTask->player->playerIndex, 5, 0);
+    CreatePlayerObjectLowSlot(gCurTask->player->playerIndex, 5, 0);
     gCurTask->unk28++;
     PlaySfxIfLocalPlayer(144, gCurTask->player->playerIndex);
     gCurTask->frame++;

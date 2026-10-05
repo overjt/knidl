@@ -49,7 +49,7 @@ void PlayerActionBackdrop(void)
     gCurTask->updateState = 27;
     if (gCurTask->player->prevMode != 10)
     {
-        gCurTask->unk28 = 0;
+        gCurTask->playerActionDone28 = 0;
         gCurTask->variant = 0;
         gCurTask->player->unk16 = 0;
         {
@@ -76,7 +76,7 @@ void PlayerActionBackdrop(void)
         PlaySfxIfLocalPlayer(200, gCurTask->player->playerIndex);
         CreatePlayerEffect(gCurTask->player->playerIndex, 6, 260);
         PlayerSetMotionXPreset(11, 6);
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
+        for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 3; gCurTask->playerLoopCount++)
         {
             TaskSetFrame(0xE7C);
             TaskYieldTrampoline(2);
@@ -138,7 +138,7 @@ void PlayerActionBackdrop(void)
             TaskSetFrame(0xE83);
             TaskYieldTrampoline(1);
         }
-        gCurTask->unk28++;
+        gCurTask->playerActionDone28++;
     }
     TaskSleepForever();
 }
@@ -183,7 +183,7 @@ void PlayerActionBackdropUpdate(void)
         }
         break;
     case 2:
-        if (t->unk28 != 0)
+        if (t->playerActionDone28 != 0)
         {
             p = t->player;
             if ((s8)p->heldCount != 0)
@@ -278,14 +278,14 @@ void PlayerActionThrow(void)
         while (1)
         {
             TaskSetFrame(0xF71);
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 2; gCurTask->playerLoopCount++)
             {
                 if ((s8)gCurTask->player->attachedCount != 0 && (s8)gCurTask->player->attachedCount == (s8)gCurTask->player->heldCount)
                     goto hit;
                 TaskYieldTrampoline(1);
             }
             gCurTask->frame++;
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 2; gCurTask->playerLoopCount++)
             {
                 if ((s8)gCurTask->player->attachedCount != 0 && (s8)gCurTask->player->attachedCount == (s8)gCurTask->player->heldCount)
                     goto hit;

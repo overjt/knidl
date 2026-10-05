@@ -41,7 +41,7 @@ void ResetBlockAnims(void)
     s32 i;
 
     for (i = 0; i < 64; i++)
-        gBreakingBlocks[i].unk6 = 0x7FFF;
+        gBreakingBlocks[i].scriptPos = 0x7FFF;
     gBlockAnimHook = 0;
     gBlockAnimHookId = 0;
 }

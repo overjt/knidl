@@ -13,19 +13,19 @@ void sub_08018b84(void)
     struct Task *t;
     s32 v;
 
-    v = gCurTask->unk20;
+    v = gCurTask->cutsceneActorSfxTimer;
     if (v < 0)
         return;
     if (v == 0)
         PlaySfx(0x111);
     t = gCurTask;
-    v = t->unk20 + 1;
-    t->unk20 = v;
+    v = t->cutsceneActorSfxTimer + 1;
+    t->cutsceneActorSfxTimer = v;
     if (v > 2)
-        t->unk20 = 0;
+        t->cutsceneActorSfxTimer = 0;
 }
 
-void sub_08018bb8(void)
+void CutsceneActorScript53(void)
 {
     struct Task *t;
     struct Task *u;
@@ -40,12 +40,12 @@ void sub_08018bb8(void)
     while (1)
     {
         gCurTask->frame = 0xFFFF;
-        if (gTasks[gCurTask->parent].unk28 == 0)
+        if (gTasks[gCurTask->parent].cutsceneActorChildGate == 0)
         {
             do
             {
                 TaskYieldTrampoline(1);
-            } while (gTasks[gCurTask->parent].unk28 == 0);
+            } while (gTasks[gCurTask->parent].cutsceneActorChildGate == 0);
         }
         u = gCurTask;
         u->posX = gTasks[u->parent].pixelX << 16;
@@ -83,7 +83,7 @@ void sub_08018bb8(void)
     }
 }
 
-void sub_08018d7c(void)
+void CutsceneActorScript54(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;

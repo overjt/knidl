@@ -29,7 +29,7 @@ extern u8 gUnk_0201C1B0; /* credits: current demo scene */
 extern s32 gCreditsTextPageScroll; /* credits: scroll since the last page copy, 1/16 pixel */
 
 /* IWRAM */
-extern u16 gUnk_030014F0[];
+extern u16 gObjPaletteBank4[];
 
 /* ROM */
 extern u32 gUnk_080DBEF8[];
@@ -101,9 +101,9 @@ extern u16 gCreditsDemoLengths[][7]; /* credits: per variant, the scenes' length
 /* src/mode_c6260.c */
 void EndingMain(void);
 void EndingEpilogueScene(void);
-void sub_080c6354(void);
+void CreateEndingEpilogue(void);
 void EndingStarRodReturnScene(void);
-void sub_080c63ec(void);
+void CreateEndingStarRodReturn(void);
 
 /* src/results_c6420.c */
 void FinalResultsScreen(void);

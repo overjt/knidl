@@ -33,9 +33,9 @@ void Task_StageDoorSign(void)
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
-    if (u->unk20 == 0)
+    if (u->doorObjectKind == 0)
         sub_0802f6f4();
-    else if (u->unk1C == 0)
+    else if (u->stageDoorSignAnimated == 0)
         sub_0802f6c0();
     else
         sub_0802f684();
@@ -49,15 +49,15 @@ void sub_0802f684(void)
     struct Task *v;
 
     t = gCurTask;
-    t->unk34 = (s32)gUnk_087558DC;
+    t->stageDoorSignDoorFrames = (s32)gUnk_087558DC;
     for (;;)
     {
         u = gCurTask;
-        u->unk28 = 0;
-        u->frame = u->unk18 << 1;
+        u->stageDoorSignDoorFrame = 0;
+        u->frame = u->stageDoorSignIndex << 1;
         TaskYieldTrampoline(2);
         v = gCurTask;
-        v->unk28 = 1;
+        v->stageDoorSignDoorFrame = 1;
         v->frame++;
         TaskYieldTrampoline(2);
     }
@@ -68,13 +68,13 @@ void sub_0802f6c0(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk34 = (s32)gUnk_087558DC;
-    t->frame = t->unk18 << 1;
+    t->stageDoorSignDoorFrames = (s32)gUnk_087558DC;
+    t->frame = t->stageDoorSignIndex << 1;
     for (;;)
     {
-        gCurTask->unk28 = 0;
+        gCurTask->stageDoorSignDoorFrame = 0;
         TaskYieldTrampoline(2);
-        gCurTask->unk28 = 1;
+        gCurTask->stageDoorSignDoorFrame = 1;
         TaskYieldTrampoline(2);
     }
 }
@@ -84,9 +84,9 @@ void sub_0802f6f4(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk34 = (s32)gUnk_087558C4;
-    t->unk28 = 0;
-    t->frame = t->unk18 << 1;
+    t->stageDoorSignDoorFrames = (s32)gUnk_087558C4;
+    t->stageDoorSignDoorFrame = 0;
+    t->frame = t->stageDoorSignIndex << 1;
     TaskSleepForever();
 }
 
@@ -126,7 +126,7 @@ s32 CreateWarpStarStationDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->velX = x;
         t->velY = y;
         t->unk18 = a;
-        t->unk20 = 1;
+        t->doorObjectKind = 1;
         t->u76.doorIndex = b;
     }
     return id;
@@ -149,16 +149,16 @@ void Task_WarpStarStationDoorSign(void)
     v = gCurTask;
     v->updateCallback = (u32)sub_0802f8c8;
     v->frame = 0;
-    v->unk34 = 0;
+    v->warpStarStationDoorSignTileFrame = 0;
     for (;;)
     {
-        gCurTask->unk34 = 0;
+        gCurTask->warpStarStationDoorSignTileFrame = 0;
         TaskYieldTrampoline(4);
-        gCurTask->unk34 = 1;
+        gCurTask->warpStarStationDoorSignTileFrame = 1;
         TaskYieldTrampoline(4);
-        gCurTask->unk34 = 2;
+        gCurTask->warpStarStationDoorSignTileFrame = 2;
         TaskYieldTrampoline(4);
-        gCurTask->unk34 = 3;
+        gCurTask->warpStarStationDoorSignTileFrame = 3;
         TaskYieldTrampoline(4);
     }
 }
@@ -167,13 +167,13 @@ void sub_0802f8c8(void)
 {
     u8 *src;
 
-    if (gCurTask->unk34 != -1)
+    if (gCurTask->warpStarStationDoorSignTileFrame != -1)
     {
-        RequestCopy(4, (u32)gUnk_085A2DF8[gCurTask->unk34 * 9], OBJ_VRAM0 + 0x3980, 96);
+        RequestCopy(4, (u32)gUnk_085A2DF8[gCurTask->warpStarStationDoorSignTileFrame * 9], OBJ_VRAM0 + 0x3980, 96);
         src = (u8 *)gUnk_085A2DF8;
-        RequestCopy(4, (u32)(src + (gCurTask->unk34 * 9 + 3) * 32), OBJ_VRAM0 + 0x3D80, 96);
-        RequestCopy(4, (u32)(src + (gCurTask->unk34 * 9 + 6) * 32), OBJ_VRAM0 + 0x4180, 96);
-        gCurTask->unk34 = -1;
+        RequestCopy(4, (u32)(src + (gCurTask->warpStarStationDoorSignTileFrame * 9 + 3) * 32), OBJ_VRAM0 + 0x3D80, 96);
+        RequestCopy(4, (u32)(src + (gCurTask->warpStarStationDoorSignTileFrame * 9 + 6) * 32), OBJ_VRAM0 + 0x4180, 96);
+        gCurTask->warpStarStationDoorSignTileFrame = -1;
     }
 }
 
@@ -212,7 +212,7 @@ s32 CreateWarpStarStationDoorSparkle(s32 x, s32 y, s32 a, s32 b)
         t->pixelY = y - 28;
         t->posY = t->pixelY << 16;
         t->unk24 = a;
-        t->unk20 = b;
+        t->warpStarStationDoorSparkleWaitReveal = b;
         gWarpStarStationDoorRevealed = 0;
     }
     return id;
@@ -234,7 +234,7 @@ void Task_WarpStarStationDoorSparkle(void)
     u->taskClass = 1;
     v = gCurTask;
     v->frame = -1;
-    if (v->unk20 != 0)
+    if (v->warpStarStationDoorSparkleWaitReveal != 0)
         while (gWarpStarStationDoorRevealed == 0)
             TaskYieldTrampoline(1);
     if (gCurTask->unk24 != 0)
@@ -385,8 +385,8 @@ s32 CreateLevelDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->posY = t->pixelY << 16;
         t->velX = x;
         t->velY = y;
-        t->unk18 = a;
-        t->unk20 = 1;
+        t->levelDoorSignFrame = a;
+        t->doorObjectKind = 1;
         t->u76.doorIndex = b;
     }
     return id;
@@ -404,7 +404,7 @@ void Task_LevelDoorSign(void)
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
-    u->frame = u->unk18;
+    u->frame = u->levelDoorSignFrame;
     TaskSleepForever();
 }
 
@@ -452,7 +452,7 @@ s32 CreateWarpStarStationNumber(s32 a, s32 x, s32 y)
         t->pixelY = y - 28;
         t->posX = x << 16;
         t->posY = (y - 28) << 16;
-        t->unk18 = a;
+        t->warpStarStationNumberFrame = a;
     }
     return id;
 }
@@ -469,7 +469,7 @@ void Task_WarpStarStationNumber(void)
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0xD800;
-    u->frame = u->unk18;
+    u->frame = u->warpStarStationNumberFrame;
     TaskSleepForever();
 }
 
@@ -486,7 +486,7 @@ s32 CreateWarpStarStationLevelSign(s32 a)
         t->pixelY = 420;
         t->posX = 128 << 16;
         t->posY = 420 << 16;
-        t->unk18 = a;
+        t->warpStarStationLevelSignFrame = a;
     }
     return id;
 }
@@ -503,7 +503,7 @@ void Task_WarpStarStationLevelSign(void)
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0xD800;
-    u->frame = u->unk18;
+    u->frame = u->warpStarStationLevelSignFrame;
     TaskSleepForever();
 }
 
@@ -535,7 +535,7 @@ s32 CreateMuseumAbilitySign(u8 a, s32 b)
         t->pixelY = 96;
         t->posX = t->pixelX << 16;
         t->posY = t->pixelY << 16;
-        t->unk18 = b;
+        t->museumAbilitySignFrame = b;
     }
     return id;
 }
@@ -552,7 +552,7 @@ void Task_MuseumAbilitySign(void)
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0xD3C0;
-    u->frame = u->unk18;
+    u->frame = u->museumAbilitySignFrame;
     TaskSleepForever();
 }
 

@@ -11,8 +11,8 @@ player_frame_lists:
 	.global	gUnk_08769250
 gUnk_08769250:
 	.word	gUnk_0824A9CC
-	.global	gUnk_08769254
-gUnk_08769254:
+	.global	gWaddleDeeGfxFrameList
+gWaddleDeeGfxFrameList:
 	.word	gUnk_0824BB70
 	.word	gUnk_0824BB90
 	.word	gUnk_0824BBB0
@@ -23,8 +23,8 @@ gUnk_08769254:
 	.word	gUnk_0824BC50
 	.word	gUnk_0824BC70
 	.word	gUnk_0824BC90
-	.global	gUnk_0876927C
-gUnk_0876927C:
+	.global	gNoddyGfxFrameList
+gNoddyGfxFrameList:
 	.word	gUnk_0824C390
 	.word	gUnk_0824C3A8
 	.word	gUnk_0824C3C0
@@ -38,8 +38,8 @@ gUnk_0876927C:
 	.word	gUnk_0824C478
 	.word	gUnk_0824C498
 	.word	gUnk_0824C4B8
-	.global	gUnk_087692B0
-gUnk_087692B0:
+	.global	gRockyGfxFrameList
+gRockyGfxFrameList:
 	.word	gUnk_0824CAFC
 	.word	gUnk_0824CB1C
 	.word	gUnk_0824CB3C
@@ -54,8 +54,8 @@ gUnk_087692B0:
 	.word	gUnk_0824CC2C
 	.word	gUnk_0824CC44
 	.word	gUnk_0824CC64
-	.global	gUnk_087692E8
-gUnk_087692E8:
+	.global	gBroomHatterGfxFrameList
+gBroomHatterGfxFrameList:
 	.word	gUnk_0824D078
 	.word	gUnk_0824D098
 	.word	gUnk_0824D0B8
@@ -65,8 +65,8 @@ gUnk_087692E8:
 	.word	gUnk_0824D138
 	.word	gUnk_0824D140
 	.word	gUnk_0824D148
-	.global	gUnk_0876930C
-gUnk_0876930C:
+	.global	gPengyGfxFrameList
+gPengyGfxFrameList:
 	.word	gUnk_0824D7E0
 	.word	gUnk_0824D800
 	.word	gUnk_0824D820
@@ -80,8 +80,8 @@ gUnk_0876930C:
 	.word	gUnk_0824D8E0
 	.word	gUnk_0824D900
 	.word	gUnk_0824D920
-	.global	gUnk_08769340
-gUnk_08769340:
+	.global	gSirKibbleGfxFrameList
+gSirKibbleGfxFrameList:
 	.word	gUnk_0824E1BC
 	.word	gUnk_0824E1D4
 	.word	gUnk_0824E1EC
@@ -96,8 +96,8 @@ gUnk_08769340:
 	.word	gUnk_0824E2C4
 	.word	gUnk_0824E2D4
 	.word	gUnk_0824E2F4
-	.global	gUnk_08769378
-gUnk_08769378:
+	.global	gChillyGfxFrameList
+gChillyGfxFrameList:
 	.word	gUnk_0824EAA8
 	.word	gUnk_0824EAC8
 	.word	gUnk_0824EAE8
@@ -128,8 +128,8 @@ gUnk_08769378:
 	.word	gUnk_0824EEB8
 	.word	gUnk_0824EF18
 	.word	gUnk_0824EF28
-	.global	gUnk_087693F0
-gUnk_087693F0:
+	.global	gLaserBallGfxFrameList
+gLaserBallGfxFrameList:
 	.word	gUnk_0824F2FC
 	.word	gUnk_0824F31C
 	.word	gUnk_0824F33C
@@ -140,8 +140,8 @@ gUnk_087693F0:
 	.word	gUnk_0824F3D4
 	.word	gUnk_0824F3DC
 	.incbin	"baserom.gba", 0x769414, 0x4
-	.global	gUnk_08769418
-gUnk_08769418:
+	.global	gCappyGfxFrameList
+gCappyGfxFrameList:
 	.word	gUnk_0824F8A4
 	.word	gUnk_0824F8BC
 	.word	gUnk_0824F8CC
@@ -153,8 +153,8 @@ gUnk_08769418:
 	.word	gUnk_0824F96C
 	.word	gUnk_0824F97C
 	.word	gUnk_0824F994
-	.global	gUnk_08769444
-gUnk_08769444:
+	.global	gWaddleDooGfxFrameList
+gWaddleDooGfxFrameList:
 	.word	gUnk_082501C8
 	.word	gUnk_082501E8
 	.word	gUnk_08250208
@@ -170,16 +170,16 @@ gUnk_08769444:
 	.word	gUnk_08250338
 	.word	gUnk_08250358
 	.word	gUnk_08250378
-	.global	gUnk_08769480
-gUnk_08769480:
+	.global	gCoolSpookGfxFrameList
+gCoolSpookGfxFrameList:
 	.word	gUnk_08250798
 	.word	gUnk_082507D0
 	.word	gUnk_082507F8
 	.word	gUnk_08250820
 	.word	gUnk_08250848
 	.word	gUnk_08250860
-	.global	gUnk_08769498
-gUnk_08769498:
+	.global	gKabuGfxFrameList
+gKabuGfxFrameList:
 	.word	gUnk_082510BC
 	.word	gUnk_082510DC
 	.word	gUnk_082510EC
@@ -191,8 +191,8 @@ gUnk_08769498:
 	.word	gUnk_0825118C
 	.word	gUnk_0825119C
 	.word	gUnk_082511B4
-	.global	gUnk_087694C4
-gUnk_087694C4:
+	.global	gBomberGfxFrameList
+gBomberGfxFrameList:
 	.word	gUnk_08251730
 	.word	gUnk_08251748
 	.word	gUnk_08251768
@@ -203,8 +203,8 @@ gUnk_087694C4:
 	.word	gUnk_082517E0
 	.word	gUnk_082517E8
 	.word	gUnk_08251808
-	.global	gUnk_087694EC
-gUnk_087694EC:
+	.global	gCoconutGfxFrameList
+gCoconutGfxFrameList:
 	.word	gUnk_08251BDC
 	.word	gUnk_08251BFC
 	.word	gUnk_08251C1C
@@ -220,8 +220,8 @@ gUnk_087694EC:
 	.word	gUnk_08251D5C
 	.word	gUnk_08251D7C
 	.incbin	"baserom.gba", 0x769524, 0x4
-	.global	gUnk_08769528
-gUnk_08769528:
+	.global	gShotzoGfxFrameList
+gShotzoGfxFrameList:
 	.word	gUnk_082520F8
 	.word	gUnk_08252108
 	.word	gUnk_08252120
@@ -233,15 +233,15 @@ gUnk_08769528:
 	.word	gUnk_08252170
 	.word	gUnk_08252178
 	.word	gUnk_08252180
-	.global	gUnk_08769554
-gUnk_08769554:
+	.global	gTwizzyGfxFrameList
+gTwizzyGfxFrameList:
 	.word	gUnk_082524F0
 	.word	gUnk_08252508
 	.word	gUnk_08252520
 	.word	gUnk_08252538
 	.word	gUnk_08252550
-	.global	gUnk_08769568
-gUnk_08769568:
+	.global	gSparkyGfxFrameList
+gSparkyGfxFrameList:
 	.word	gUnk_08252AEC
 	.word	gUnk_08252B14
 	.word	gUnk_08252B34
@@ -262,8 +262,8 @@ gUnk_08769568:
 	.word	gUnk_08253034
 	.word	gUnk_08253074
 	.word	gUnk_08253094
-	.global	gUnk_087695B8
-gUnk_087695B8:
+	.global	gTwisterGfxFrameList
+gTwisterGfxFrameList:
 	.word	gUnk_082535E0
 	.word	gUnk_082535F8
 	.word	gUnk_08253610
@@ -279,8 +279,8 @@ gUnk_087695B8:
 	.word	gUnk_082536E8
 	.word	gUnk_082536F8
 	.word	gUnk_08253710
-	.global	gUnk_087695F4
-gUnk_087695F4:
+	.global	gSquishyGfxFrameList
+gSquishyGfxFrameList:
 	.word	gUnk_08253C9C
 	.word	gUnk_08253CBC
 	.word	gUnk_08253CCC
@@ -289,8 +289,8 @@ gUnk_087695F4:
 	.word	gUnk_08253D2C
 	.word	gUnk_08253D4C
 	.word	gUnk_08253D6C
-	.global	gUnk_08769614
-gUnk_08769614:
+	.global	gStarmanGfxFrameList
+gStarmanGfxFrameList:
 	.word	gUnk_082546CC
 	.word	gUnk_082546E4
 	.word	gUnk_082546FC
@@ -309,8 +309,8 @@ gUnk_08769614:
 	.word	gUnk_082548C4
 	.word	gUnk_082548DC
 	.word	gUnk_08254904
-	.global	gUnk_0876965C
-gUnk_0876965C:
+	.global	gScarfyGfxFrameList
+gScarfyGfxFrameList:
 	.word	gUnk_08254EE4
 	.word	gUnk_08254F04
 	.word	gUnk_08254F24
@@ -322,8 +322,8 @@ gUnk_0876965C:
 	.word	gUnk_08254FE4
 	.word	gUnk_08255004
 	.word	gUnk_0825500C
-	.global	gUnk_08769688
-gUnk_08769688:
+	.global	gBubblesGfxFrameList
+gBubblesGfxFrameList:
 	.word	gUnk_082554E8
 	.word	gUnk_08255510
 	.word	gUnk_08255538
@@ -344,8 +344,8 @@ gUnk_08769688:
 	.word	gUnk_082556F0
 	.word	gUnk_08255700
 	.word	gUnk_08255728
-	.global	gUnk_087696D8
-gUnk_087696D8:
+	.global	gHotHeadGfxFrameList
+gHotHeadGfxFrameList:
 	.word	gUnk_08256084
 	.word	gUnk_0825609C
 	.word	gUnk_082560B4
@@ -370,8 +370,8 @@ gUnk_087696D8:
 	.word	gUnk_08256364
 	.word	gUnk_08256394
 	.word	gUnk_0825639C
-	.global	gUnk_08769738
-gUnk_08769738:
+	.global	gGlunkGfxFrameList
+gGlunkGfxFrameList:
 	.word	gUnk_08256664
 	.word	gUnk_08256684
 	.word	gUnk_082566A4
@@ -383,8 +383,8 @@ gUnk_08769738:
 	.word	gUnk_0825672C
 	.word	gUnk_08256734
 	.word	gUnk_0825673C
-	.global	gUnk_08769764
-gUnk_08769764:
+	.global	gSlippyGfxFrameList
+gSlippyGfxFrameList:
 	.word	gUnk_08256C2C
 	.word	gUnk_08256C4C
 	.word	gUnk_08256C6C
@@ -393,8 +393,8 @@ gUnk_08769764:
 	.word	gUnk_08256CCC
 	.word	gUnk_08256CEC
 	.word	gUnk_08256D0C
-	.global	gUnk_08769784
-gUnk_08769784:
+	.global	gBlipperGfxFrameList
+gBlipperGfxFrameList:
 	.word	gUnk_08257164
 	.word	gUnk_0825717C
 	.word	gUnk_08257194
@@ -421,8 +421,8 @@ gUnk_08769784:
 	.word	gUnk_082573EC
 	.word	gUnk_08257404
 	.word	gUnk_0825740C
-	.global	gUnk_087697EC
-gUnk_087697EC:
+	.global	gPoppyBrosJrGfxFrameList
+gPoppyBrosJrGfxFrameList:
 	.word	gUnk_08257C04
 	.word	gUnk_08257C24
 	.word	gUnk_08257C44
@@ -445,8 +445,8 @@ gUnk_087697EC:
 	.word	gUnk_08257E3C
 	.word	gUnk_08257E5C
 	.word	gUnk_08257E7C
-	.global	gUnk_08769844
-gUnk_08769844:
+	.global	gSwordKnightGfxFrameList
+gSwordKnightGfxFrameList:
 	.word	gUnk_0825856C
 	.word	gUnk_0825859C
 	.word	gUnk_082585CC
@@ -462,8 +462,8 @@ gUnk_08769844:
 	.word	gUnk_08258784
 	.word	gUnk_082587B4
 	.word	gUnk_082587DC
-	.global	gUnk_08769880
-gUnk_08769880:
+	.global	gBladeKnightGfxFrameList
+gBladeKnightGfxFrameList:
 	.word	gUnk_08258FCC
 	.word	gUnk_08258FFC
 	.word	gUnk_0825902C
@@ -479,14 +479,14 @@ gUnk_08769880:
 	.word	gUnk_082591E4
 	.word	gUnk_08259214
 	.word	gUnk_0825923C
-	.global	gUnk_087698BC
-gUnk_087698BC:
+	.global	gConerGfxFrameList
+gConerGfxFrameList:
 	.word	gUnk_082594CC
 	.word	gUnk_082594EC
 	.word	gUnk_08259504
 	.word	gUnk_0825950C
-	.global	gUnk_087698CC
-gUnk_087698CC:
+	.global	gWheelieGfxFrameList
+gWheelieGfxFrameList:
 	.word	gUnk_082597EC
 	.word	gUnk_0825980C
 	.word	gUnk_0825982C
@@ -494,8 +494,8 @@ gUnk_087698CC:
 	.word	gUnk_0825986C
 	.word	gUnk_0825987C
 	.word	gUnk_08259894
-	.global	gUnk_087698E8
-gUnk_087698E8:
+	.global	gFlamerGfxFrameList
+gFlamerGfxFrameList:
 	.word	gUnk_0825A1B0
 	.word	gUnk_0825A1D0
 	.word	gUnk_0825A1F0
@@ -513,8 +513,8 @@ gUnk_087698E8:
 	.word	gUnk_0825A410
 	.word	gUnk_0825A420
 	.word	gUnk_0825A430
-	.global	gUnk_0876992C
-gUnk_0876992C:
+	.global	gNeedlousGfxFrameList
+gNeedlousGfxFrameList:
 	.word	gUnk_0825AAAC
 	.word	gUnk_0825AAC4
 	.word	gUnk_0825AADC
@@ -528,8 +528,8 @@ gUnk_0876992C:
 	.word	gUnk_0825ABBC
 	.word	gUnk_0825ABEC
 	.word	gUnk_0825AC1C
-	.global	gUnk_08769960
-gUnk_08769960:
+	.global	gUFOGfxFrameList
+gUFOGfxFrameList:
 	.word	gUnk_0825B1B8
 	.word	gUnk_0825B1D8
 	.word	gUnk_0825B1F8
@@ -545,8 +545,8 @@ gUnk_08769960:
 	.word	gUnk_0825B308
 	.word	gUnk_0825B310
 	.word	gUnk_0825B330
-	.global	gUnk_0876999C
-gUnk_0876999C:
+	.global	gGipGfxFrameList
+gGipGfxFrameList:
 	.word	gUnk_0825BC44
 	.word	gUnk_0825BC6C
 	.word	gUnk_0825BC94
@@ -751,8 +751,8 @@ gUnk_08769C64:
 	.word	gUnk_0826A4E0
 	.word	gUnk_0826A4EC
 	.word	gUnk_0826A4F8
-	.global	gUnk_08769C74
-gUnk_08769C74:
+	.global	gBonkersGfxFrameList
+gBonkersGfxFrameList:
 	.word	gUnk_0826A614
 	.word	gUnk_0826A634
 	.global	gUnk_08769C7C
@@ -786,8 +786,8 @@ gUnk_08769C7C:
 	.word	gUnk_0826F144
 	.word	gUnk_0826F150
 	.word	gUnk_0826F15C
-	.global	gUnk_08769CF0
-gUnk_08769CF0:
+	.global	gGrandWheelieGfxFrameList
+gGrandWheelieGfxFrameList:
 	.word	gUnk_0826F538
 	.word	gUnk_0826F558
 	.word	gUnk_0826F578
@@ -826,8 +826,8 @@ gUnk_08769D1C:
 	.word	gUnk_08274814
 	.word	gUnk_08274820
 	.word	gUnk_0827482C
-	.global	gUnk_08769D80
-gUnk_08769D80:
+	.global	gPoppyBrosSrGfxFrameList
+gPoppyBrosSrGfxFrameList:
 	.word	gUnk_0827548C
 	.word	gUnk_08275494
 	.word	gUnk_0827549C
@@ -873,8 +873,8 @@ gUnk_08769DF0:
 	.word	gUnk_0827979C
 	.word	gUnk_082797A8
 	.word	gUnk_082797B4
-	.global	gUnk_08769E2C
-gUnk_08769E2C:
+	.global	gMrTickTockGfxFrameList
+gMrTickTockGfxFrameList:
 	.word	gUnk_08279BE0
 	.word	gUnk_08279C00
 	.word	gUnk_08279C40
@@ -889,8 +889,8 @@ gUnk_08769E2C:
 	.word	gUnk_08279E18
 	.word	gUnk_08279E20
 	.word	gUnk_08279E30
-	.global	gUnk_08769E64
-gUnk_08769E64:
+	.global	gAxeKnightGfxFrameList
+gAxeKnightGfxFrameList:
 	.word	gUnk_0827A61C
 	.word	gUnk_0827A65C
 	.word	gUnk_0827A69C
@@ -920,8 +920,8 @@ gUnk_08769E64:
 	.word	gUnk_0827ABFC
 	.word	gUnk_0827AC44
 	.word	gUnk_0827AC54
-	.global	gUnk_08769ED8
-gUnk_08769ED8:
+	.global	gJavelinKnightGfxFrameList
+gJavelinKnightGfxFrameList:
 	.word	gUnk_0827B288
 	.word	gUnk_0827B2B0
 	.word	gUnk_0827B2D8
@@ -972,8 +972,8 @@ gUnk_08769ED8:
 	.word	gUnk_0827B8B8
 	.word	gUnk_0827B8D0
 	.word	gUnk_0827B8E8
-	.global	gUnk_08769FA0
-gUnk_08769FA0:
+	.global	gMaceKnightGfxFrameList
+gMaceKnightGfxFrameList:
 	.word	gUnk_0827BE78
 	.word	gUnk_0827BEF0
 	.word	gUnk_0827BF68
@@ -1009,8 +1009,8 @@ gUnk_08769FA0:
 	.word	gUnk_0827C8D8
 	.word	gUnk_0827C958
 	.word	gUnk_0827C9D0
-	.global	gUnk_0876A02C
-gUnk_0876A02C:
+	.global	gTridentKnightGfxFrameList
+gTridentKnightGfxFrameList:
 	.word	gUnk_0827D050
 	.word	gUnk_0827D090
 	.word	gUnk_0827D0D0
@@ -1188,8 +1188,8 @@ gUnk_0876A28C:
 	.word	gUnk_08295428
 	.word	gUnk_08295434
 	.word	gUnk_08295440
-	.global	gUnk_0876A298
-gUnk_0876A298:
+	.global	gBugzzyGfxFrameList
+gBugzzyGfxFrameList:
 	.word	gUnk_08295954
 	.word	gUnk_0829595C
 	.word	gUnk_08295964
@@ -1264,8 +1264,8 @@ gUnk_0876A350:
 	.word	gUnk_082B0690
 	.word	gUnk_082B069C
 	.word	gUnk_082B06A8
-	.global	gUnk_0876A370
-gUnk_0876A370:
+	.global	gFireLionGfxFrameList
+gFireLionGfxFrameList:
 	.word	gUnk_082B091C
 	.word	gUnk_082B0924
 	.word	gUnk_082B092C
@@ -1327,8 +1327,8 @@ gUnk_0876A418:
 	.word	gUnk_082BFB18
 	.word	gUnk_082BFB24
 	.word	gUnk_082BFB30
-	.global	gUnk_0876A42C
-gUnk_0876A42C:
+	.global	gPhanPhanGfxFrameList
+gPhanPhanGfxFrameList:
 	.word	gUnk_082BFD8C
 	.word	gUnk_082BFDAC
 	.word	gUnk_082BFDCC
@@ -1392,8 +1392,8 @@ gUnk_0876A4DC:
 	.word	gUnk_082D8514
 	.word	gUnk_082D8520
 	.word	gUnk_082D852C
-	.global	gUnk_0876A4F0
-gUnk_0876A4F0:
+	.global	gKingDededeGfxFrameList
+gKingDededeGfxFrameList:
 	.word	gUnk_082D8604
 	.global	gUnk_0876A4F4
 gUnk_0876A4F4:
@@ -1455,8 +1455,8 @@ gUnk_0876A4F4:
 	.word	gUnk_082DEBA4
 	.word	gUnk_082DEBB0
 	.word	gUnk_082DEBBC
-	.global	gUnk_0876A5DC
-gUnk_0876A5DC:
+	.global	gPaintRollerGfxFrameList
+gPaintRollerGfxFrameList:
 	.word	gUnk_082DF964
 	.word	gUnk_082DF9A4
 	.word	gUnk_082DF9D4
@@ -1659,8 +1659,8 @@ gUnk_0876A89C:
 	.word	gUnk_082F3214
 	.word	gUnk_082F3220
 	.word	gUnk_082F322C
-	.global	gUnk_0876A8C4
-gUnk_0876A8C4:
+	.global	gMetaKnightGfxFrameList
+gMetaKnightGfxFrameList:
 	.word	gUnk_082F4098
 	.word	gUnk_082F40A8
 	.word	gUnk_082F40B8
@@ -1700,8 +1700,8 @@ gUnk_0876A8C4:
 	.word	gUnk_082F4250
 	.word	gUnk_082F4258
 	.word	gUnk_082F4260
-	.global	gUnk_0876A960
-gUnk_0876A960:
+	.global	gHeavyMoleGfxFrameList
+gHeavyMoleGfxFrameList:
 	.word	gUnk_082F58C8
 	.word	gUnk_082F58E8
 	.word	gUnk_082F5908
@@ -1889,8 +1889,8 @@ gUnk_0876A960:
 	.word	gUnk_082F6578
 	.word	gUnk_082F6590
 	.word	gUnk_082F65A8
-	.global	gUnk_0876AC4C
-gUnk_0876AC4C:
+	.global	gMrShineAndMrBrightGfxFrameList
+gMrShineAndMrBrightGfxFrameList:
 	.word	gUnk_082F751C
 	.word	gUnk_082F7594
 	.word	gUnk_082F760C
@@ -1966,8 +1966,8 @@ gUnk_0876AD10:
 	.word	gUnk_082FB164
 	.word	gUnk_082FB170
 	.word	gUnk_082FB17C
-	.global	gUnk_0876AD70
-gUnk_0876AD70:
+	.global	gWhispyWoodsGfxFrameList
+gWhispyWoodsGfxFrameList:
 	.word	gUnk_082FB724
 	.word	gUnk_082FB75C
 	.word	gUnk_082FB77C
@@ -2026,8 +2026,8 @@ gUnk_0876AD70:
 	.word	gUnk_082FBD94
 	.word	gUnk_082FBDBC
 	.word	gUnk_082FBDCC
-	.global	gUnk_0876AE58
-gUnk_0876AE58:
+	.global	gKrackoGfxFrameList
+gKrackoGfxFrameList:
 	.word	gUnk_082FCD8C
 	.word	gUnk_082FCDBC
 	.word	gUnk_082FCDEC
@@ -2074,8 +2074,8 @@ gUnk_0876AE58:
 	.word	gUnk_082FD3C4
 	.word	gUnk_082FD3E4
 	.word	gUnk_082FD404
-	.global	gUnk_0876AF10
-gUnk_0876AF10:
+	.global	gNightmarePowerOrbGfxFrameList
+gNightmarePowerOrbGfxFrameList:
 	.word	gUnk_082FDD80
 	.word	gUnk_082FDDA0
 	.word	gUnk_082FDDC0
@@ -2288,8 +2288,8 @@ gUnk_0876B160:
 	.word	gUnk_08333848
 	.word	gUnk_08333854
 	.word	gUnk_08333860
-	.global	gUnk_0876B170
-gUnk_0876B170:
+	.global	gNightmareWizardGfxFrameList
+gNightmareWizardGfxFrameList:
 	.word	gUnk_0833428C
 	.word	gUnk_08334294
 	.word	gUnk_0833429C

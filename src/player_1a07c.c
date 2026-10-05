@@ -14,7 +14,7 @@ void BlendColors(s32 a, s32 b, s32 c, s32 d, void *e);
 s32 PlaySfx(s32 id);
 s32 IsOnScreen(s16 x, s16 y);
 
-void sub_0801a07c(void)
+void CutsceneActorScript56(void)
 {
     struct Task *t = gCurTask;
 
@@ -27,7 +27,7 @@ void sub_0801a07c(void)
     gCurTask->posY = 0;
     TaskStop();
     PlaySfx(0x242);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->frame = 0;
@@ -74,8 +74,8 @@ void sub_0801a07c(void)
         TaskYieldTrampoline(1);
         gCurTask->frame = 15;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 5);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 5);
     TaskExitTrampoline();
 }
 
@@ -110,14 +110,14 @@ void sub_0801a1ec(void)
     v = gCurTask;
     if (v->frame > 49)
     {
-        n = v->unk34 + 1;
-        v->unk34 = n;
+        n = v->cutsceneActorFlashPhase + 1;
+        v->cutsceneActorFlashPhase = n;
         if (n < 0)
-            v->unk34 = 0;
+            v->cutsceneActorFlashPhase = 0;
         w = gCurTask;
-        if (w->unk34 > 10)
-            w->unk34 = 0;
-        BlendColors((u32)gUnk_0859A0B0, (u32)gUnk_0859A0D0, gUnk_08757368[gCurTask->unk34], 16,
+        if (w->cutsceneActorFlashPhase > 10)
+            w->cutsceneActorFlashPhase = 0;
+        BlendColors((u32)gUnk_0859A0B0, (u32)gUnk_0859A0D0, gUnk_08757368[gCurTask->cutsceneActorFlashPhase], 16,
                      (void *)((u32)gObjPalette
                               + (((gCurTask->tileWord >> 12) + 1) << 5)));
     }

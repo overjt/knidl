@@ -297,9 +297,9 @@ void SoundTestHighlightCursor(void)
 {
     u16 *src = gUnk_08564F34;
 
-    RequestCopy(2, (u32)src, (u32)gUnk_030015F0 + ((gMenuCursor * 16 + 1) * 2), 2);
+    RequestCopy(2, (u32)src, (u32)gObjPaletteBank12 + ((gMenuCursor * 16 + 1) * 2), 2);
     src++;
-    RequestCopy(2, (u32)src, (u32)gUnk_030015F0 + (((s8)(gMenuCursor ^ 1) * 16 + 1) * 2), 2);
+    RequestCopy(2, (u32)src, (u32)gObjPaletteBank12 + (((s8)(gMenuCursor ^ 1) * 16 + 1) * 2), 2);
 }
 
 void SoundTestDrawNumber(s32 a)

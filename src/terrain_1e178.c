@@ -9,18 +9,18 @@
  * The landing probe TerrainCollideBoxInCameraBounds runs for a box in the air
  * (gTerrainProbeResult.unk6 == 0), the twin of TerrainProbeLanding in src/terrain_1ecd0.c
  * with a wall step at the box's bottom corner in front (the head
- * src/terrain_1c930.c's sub_0801c930 has too).  Its shared epilogue at
+ * src/terrain_1c930.c's TerrainProbeFloorInCameraBounds has too).  Its shared epilogue at
  * 0x0801ECBA is reached by a long `bl` from 0x0801E470 as well as by `b.n`s
  * (a far branch inside the function, lesson 4.39). */
 
 /* Landing probe of a box in the air (TerrainCollideBoxInCameraBounds, on-ground flag
    gTerrainProbeResult.unk6 == 0), the twin of TerrainProbeLanding: first step the box
    out of a wall it moves into at its bottom corner (the same head as
-   sub_0801c930), then the flag gTerrainProbeResult.unkD, then snap the box to
+   TerrainProbeFloorInCameraBounds), then the flag gTerrainProbeResult.unkD, then snap the box to
    the floor under its centre; failing that, follow the cell's slope link
-   (gUnk_08735018[byte 2]) and test the floor under the box's left and
+   (gSlopeIndexTiles[byte 2]) and test the floor under the box's left and
    right corners, keeping the corner/slope flags in gTerrainProbeResult.unkB. */
-void sub_0801e178(void)
+void TerrainProbeLandingInCameraBounds(void)
 {
     s32 side;
     s32 a;
@@ -55,7 +55,7 @@ void sub_0801e178(void)
             gTerrainProbeResult.unk0 = 1;
             /* The ROM places this arm's `u = t` and its steps after the
                left arm (the gotos reproduce that layout, as in
-               sub_0801c930). */
+               TerrainProbeFloorInCameraBounds). */
             if (gCollisionTileOneWay[gTerrainTile] == 0)
                 goto rflat;
             u = gUnk_087338F0[gTerrainTile];
@@ -169,10 +169,10 @@ floor:
     {
         gTerrainProbeResult.unkB &= 0xFE;
     }
-    u = gUnk_08735018[gUnk_03005574];
+    u = gSlopeIndexTiles[gTerrainSlopeIndex];
     if (u != 0)
     {
-        odd = gUnk_03005574 & 1;
+        odd = gTerrainSlopeIndex & 1;
         side = 2;
         if (odd)
             side = 1;
@@ -201,8 +201,8 @@ floor:
 walls:
     u = gTerrainTile;
     below = gTerrainTileBelow;
-    cell = gUnk_03005574;
-    cellBelow = gUnk_030055AC;
+    cell = gTerrainSlopeIndex;
+    cellBelow = gTerrainSlopeIndexBelow;
 
     /* Left corner. */
     if (TerrainQueryPixelAndBelow(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxBottom) != 0)
@@ -245,10 +245,10 @@ slopeL:
             goto clr10;
         if ((gUnk_08732DF0[gTerrainTile] & 0xCF) == 0x83)
         {
-            if (gUnk_08735018[cell] == 0)
+            if (gSlopeIndexTiles[cell] == 0)
                 goto clr10;
         }
-        else if (gUnk_08735018[cellBelow] == 0)
+        else if (gSlopeIndexTiles[cellBelow] == 0)
             goto clr10;
         goto set10;
     }
@@ -317,10 +317,10 @@ slopeR:
             goto clr20;
         if ((gUnk_08732DF0[gTerrainTile] & 0xCF) == 0x83)
         {
-            if (gUnk_08735018[cell] == 0)
+            if (gSlopeIndexTiles[cell] == 0)
                 goto clr20;
         }
-        else if (gUnk_08735018[cellBelow] == 0)
+        else if (gSlopeIndexTiles[cellBelow] == 0)
             goto clr20;
         goto set20;
     }

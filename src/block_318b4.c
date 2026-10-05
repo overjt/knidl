@@ -27,7 +27,7 @@
 struct MapTile
 {
     /*0x00*/ u16 metatile;
-    /*0x02*/ u8 unk2;
+    /*0x02*/ u8 slopeIndex;
     /*0x03*/ u8 collisionTile;
 };
 
@@ -44,18 +44,18 @@ struct MapTile
    block kind, unk1C = the player that broke it (-1 = none). */
 struct Unk020061F0
 {
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ struct MapTile *unk8;
-    /*0x0C*/ u16 *unkC;
-    /*0x10*/ u16 *unk10;
-    /*0x14*/ u16 unk14;
-    /*0x16*/ u16 unk16;
-    /*0x18*/ u16 unk18;
-    /*0x1A*/ u16 unk1A;
-    /*0x1C*/ s8 unk1C;
+    /*0x00*/ u16 cellX;
+    /*0x02*/ u16 cellY;
+    /*0x04*/ u16 mapIndex;
+    /*0x06*/ u16 scriptPos;
+    /*0x08*/ struct MapTile *metatileCursor;
+    /*0x0C*/ u16 *bgMapEntry;
+    /*0x10*/ u16 *script;
+    /*0x14*/ u16 waitFrames;
+    /*0x16*/ u16 metatile;
+    /*0x18*/ u16 collisionTile;
+    /*0x1A*/ u16 chainAttack;
+    /*0x1C*/ s8 breakerPlayer;
     /*0x1D*/ u8 filler1D[3];
 };
 
@@ -89,9 +89,9 @@ extern s8 gRoomIndex;
 
 s32 PlaySfx(s32 id);
 void WrapLoopingRoom(void);
-void sub_0802b2f0(void);
-void sub_0802b368(void);
-void sub_0802b3e4(void);
+void SetBlockAnimClipRect(void);
+void SetBg1BlockAnimClipRect(void);
+void SetBlockAnimClipRectWithEdges(void);
 
 void UpdateBlockAnims(void)
 {
@@ -99,33 +99,33 @@ void UpdateBlockAnims(void)
     struct Unk020061F0 *b;
     u16 *p;
 
-    sub_0802b2f0();
+    SetBlockAnimClipRect();
     for (i = 0; i < 64; i++)
     {
         b = &gBreakingBlocks[i];
-        if (b->unk6 == 0x7FFF || (b->unk6 & 0x8000))
+        if (b->scriptPos == 0x7FFF || (b->scriptPos & 0x8000))
             continue;
     again:
-        if ((s16)--b->unk14 > 0)
+        if ((s16)--b->waitFrames > 0)
             continue;
-        p = &b->unk10[b->unk6 * 2];
+        p = &b->script[b->scriptPos * 2];
         switch (p[0])
         {
         case 1:
             BlockAnimDrawColumn(b, (s16)p[1]);
-            b->unk6++;
+            b->scriptPos++;
             goto again;
         case 2:
             BlockAnimWriteAndDrawColumn(b, (s16)p[1]);
-            b->unk6++;
+            b->scriptPos++;
             goto again;
         case 3:
             BlockAnimBreakNeighbors(b);
-            b->unk6++;
+            b->scriptPos++;
             goto again;
         case 4:
-            b->unk14 = p[1];
-            b->unk6++;
+            b->waitFrames = p[1];
+            b->scriptPos++;
             continue;
         case 0x8000:
         default:
@@ -137,21 +137,21 @@ void UpdateBlockAnims(void)
         }
     }
     for (i = 0; i < 64; i++)
-        gBreakingBlocks[i].unk6 &= 0x7FFF;
+        gBreakingBlocks[i].scriptPos &= 0x7FFF;
 }
 
 void FreeBlockAnimAndBlock(struct Unk020061F0 *b)
 {
-    b->unk6 = 0x7FFF;
-    b->unk14 = 0;
-    gBlockLayer[b->unk4] = 0;
+    b->scriptPos = 0x7FFF;
+    b->waitFrames = 0;
+    gBlockLayer[b->mapIndex] = 0;
 }
 
 void FreeBlockAnim(struct Unk020061F0 *b)
 {
-    b->unk6 = 0x7FFF;
-    b->unk14 = 0;
-    gBlockLayer[b->unk4] &= 0x7FFF;
+    b->scriptPos = 0x7FFF;
+    b->waitFrames = 0;
+    gBlockLayer[b->mapIndex] &= 0x7FFF;
 }
 
 void BlockAnimWriteAndDrawColumn(struct Unk020061F0 *b, s32 n)
@@ -168,24 +168,24 @@ void BlockAnimWriteAndDrawColumn(struct Unk020061F0 *b, s32 n)
         s = &gUnk_02007FD0;
         for (i = 1; i < n; i++)
         {
-            s->unk0 = b->unk0;
-            s->unk2 = b->unk2 + i;
-            if (s->unk2 >= gRoomHeight)
+            s->cellX = b->cellX;
+            s->cellY = b->cellY + i;
+            if (s->cellY >= gRoomHeight)
                 return;
-            s->unk4 = gRoomWidth * i + b->unk4;
-            if (gBlockLayer[s->unk4] != 0)
+            s->mapIndex = gRoomWidth * i + b->mapIndex;
+            if (gBlockLayer[s->mapIndex] != 0)
             {
-                s->unk8 = &gCurRoomDef->blockMetatiles[gBlockLayer[s->unk4] & 0xFF];
-                s->unkC = (u16 *)(BG_VRAM + 0x2000) + (((s->unk0 * 2) & 31) + ((((s->unk2 * 2) & 31) + (u16)(s->unk0 & 16) * 2) << 5));
-                s->unk16 = s->unk8->metatile;
-                s->unk18 = s->unk8->collisionTile;
+                s->metatileCursor = &gCurRoomDef->blockMetatiles[gBlockLayer[s->mapIndex] & 0xFF];
+                s->bgMapEntry = (u16 *)(BG_VRAM + 0x2000) + (((s->cellX * 2) & 31) + ((((s->cellY * 2) & 31) + (u16)(s->cellX & 16) * 2) << 5));
+                s->metatile = s->metatileCursor->metatile;
+                s->collisionTile = s->metatileCursor->collisionTile;
                 BlockAnimWriteMetatile(s);
                 BlockAnimDrawTiles(s);
-                gBlockLayer[s->unk4] = 0;
+                gBlockLayer[s->mapIndex] = 0;
             }
         }
     }
-    b->unk8++;
+    b->metatileCursor++;
 }
 
 void BlockAnimWriteColumn(struct Unk020061F0 *b, s32 n)
@@ -201,14 +201,14 @@ void BlockAnimWriteColumn(struct Unk020061F0 *b, s32 n)
     s = &gUnk_02007FD0;
     for (i = 1; i < n; i++)
     {
-        if (b->unk2 + i >= gRoomHeight)
+        if (b->cellY + i >= gRoomHeight)
             return;
-        s->unk4 = gRoomWidth * i + b->unk4;
-        if (gBlockLayer[s->unk4] != 0)
+        s->mapIndex = gRoomWidth * i + b->mapIndex;
+        if (gBlockLayer[s->mapIndex] != 0)
         {
-            s->unk8 = &gCurRoomDef->blockMetatiles[gBlockLayer[s->unk4] & 0xFF];
+            s->metatileCursor = &gCurRoomDef->blockMetatiles[gBlockLayer[s->mapIndex] & 0xFF];
             BlockAnimWriteMetatile(s);
-            gBlockLayer[s->unk4] |= 0x8000;
+            gBlockLayer[s->mapIndex] |= 0x8000;
         }
     }
 }
@@ -227,33 +227,33 @@ void BlockAnimDrawColumn(struct Unk020061F0 *b, s32 n)
         s = &gUnk_02007FD0;
         for (i = 1; i < n; i++)
         {
-            s->unk0 = b->unk0;
-            s->unk2 = b->unk2 + i;
-            if (s->unk2 >= gRoomHeight)
+            s->cellX = b->cellX;
+            s->cellY = b->cellY + i;
+            if (s->cellY >= gRoomHeight)
                 return;
-            s->unk4 = gRoomWidth * i + b->unk4;
-            if (gBlockLayer[s->unk4] != 0)
+            s->mapIndex = gRoomWidth * i + b->mapIndex;
+            if (gBlockLayer[s->mapIndex] != 0)
             {
-                s->unk8 = &gCurRoomDef->blockMetatiles[gBlockLayer[s->unk4] & 0xFF] - 1;
-                s->unkC = (u16 *)(BG_VRAM + 0x2000) + (((s->unk0 * 2) & 31) + ((((s->unk2 * 2) & 31) + (u16)(s->unk0 & 16) * 2) << 5));
-                s->unk16 = s->unk8->metatile;
-                s->unk18 = s->unk8->collisionTile;
+                s->metatileCursor = &gCurRoomDef->blockMetatiles[gBlockLayer[s->mapIndex] & 0xFF] - 1;
+                s->bgMapEntry = (u16 *)(BG_VRAM + 0x2000) + (((s->cellX * 2) & 31) + ((((s->cellY * 2) & 31) + (u16)(s->cellX & 16) * 2) << 5));
+                s->metatile = s->metatileCursor->metatile;
+                s->collisionTile = s->metatileCursor->collisionTile;
 
                 BlockAnimDrawTiles(s);
-                gBlockLayer[s->unk4] = 0;
+                gBlockLayer[s->mapIndex] = 0;
             }
         }
     }
-    b->unk8++;
+    b->metatileCursor++;
 }
 
 void BlockAnimWriteMetatile(struct Unk020061F0 *b)
 {
-    b->unk16 = b->unk8->metatile;
-    b->unk18 = b->unk8->collisionTile;
-    gRoomMap[b->unk4].metatile = b->unk16;
-    gRoomMap[b->unk4].collisionTile = b->unk18;
-    gBlockLayer[b->unk4] = ((u8)gBlockLayer[b->unk4] + 1) | 0x8000;
+    b->metatile = b->metatileCursor->metatile;
+    b->collisionTile = b->metatileCursor->collisionTile;
+    gRoomMap[b->mapIndex].metatile = b->metatile;
+    gRoomMap[b->mapIndex].collisionTile = b->collisionTile;
+    gBlockLayer[b->mapIndex] = ((u8)gBlockLayer[b->mapIndex] + 1) | 0x8000;
 }
 
 void BlockAnimDrawTiles(struct Unk020061F0 *b)
@@ -262,16 +262,16 @@ void BlockAnimDrawTiles(struct Unk020061F0 *b)
 
     for (i = 0; i <= 1; i++)
     {
-        s32 ty = b->unk2 * 2 + i;
+        s32 ty = b->cellY * 2 + i;
 
         if (ty >= gBlockAnimClipRect[2] && ty <= gBlockAnimClipRect[3])
         {
             for (j = 0; j <= 1; j++)
             {
-                s32 tx = b->unk0 * 2 + j;
+                s32 tx = b->cellX * 2 + j;
 
                 if (tx >= gBlockAnimClipRect[0] && tx <= gBlockAnimClipRect[1])
-                    (&b->unkC[j])[i * 32] = gMetatileTiles[b->unk16 * 4 + j + i * 2];
+                    (&b->bgMapEntry[j])[i * 32] = gMetatileTiles[b->metatile * 4 + j + i * 2];
             }
         }
     }
@@ -281,29 +281,29 @@ void BlockAnimBreakNeighbors(struct Unk020061F0 *b)
 {
     s32 slot;
 
-    if (CanBreakBlock(b->unk0, b->unk2 - 1, b->unk1A, b->unk1C) != 0)
+    if (CanBreakBlock(b->cellX, b->cellY - 1, b->chainAttack, b->breakerPlayer) != 0)
     {
         slot = BreakBlockAtCursor();
         if (slot != -1)
-            gBreakingBlocks[slot].unk6 |= 0x8000;
+            gBreakingBlocks[slot].scriptPos |= 0x8000;
     }
-    if (CanBreakBlock(b->unk0 - 1, b->unk2, b->unk1A, b->unk1C) != 0)
+    if (CanBreakBlock(b->cellX - 1, b->cellY, b->chainAttack, b->breakerPlayer) != 0)
     {
         slot = BreakBlockAtCursor();
         if (slot != -1)
-            gBreakingBlocks[slot].unk6 |= 0x8000;
+            gBreakingBlocks[slot].scriptPos |= 0x8000;
     }
-    if (CanBreakBlock(b->unk0 + 1, b->unk2, b->unk1A, b->unk1C) != 0)
+    if (CanBreakBlock(b->cellX + 1, b->cellY, b->chainAttack, b->breakerPlayer) != 0)
     {
         slot = BreakBlockAtCursor();
         if (slot != -1)
-            gBreakingBlocks[slot].unk6 |= 0x8000;
+            gBreakingBlocks[slot].scriptPos |= 0x8000;
     }
-    if (CanBreakBlock(b->unk0, b->unk2 + 1, b->unk1A, b->unk1C) != 0)
+    if (CanBreakBlock(b->cellX, b->cellY + 1, b->chainAttack, b->breakerPlayer) != 0)
     {
         slot = BreakBlockAtCursor();
         if (slot != -1)
-            gBreakingBlocks[slot].unk6 |= 0x8000;
+            gBreakingBlocks[slot].scriptPos |= 0x8000;
     }
 }
 
@@ -313,30 +313,30 @@ void UpdateBlockAnimsWithEdges(void)
     struct Unk020061F0 *b;
     u16 *p;
 
-    sub_0802b3e4();
+    SetBlockAnimClipRectWithEdges();
     for (i = 0; i < 64; i++)
     {
         b = &gBreakingBlocks[i];
-        if (b->unk6 == 0x7FFF || (b->unk6 & 0x8000))
+        if (b->scriptPos == 0x7FFF || (b->scriptPos & 0x8000))
             continue;
     again:
-        if ((s16)--b->unk14 > 0)
+        if ((s16)--b->waitFrames > 0)
             continue;
-        p = &b->unk10[b->unk6 * 2];
+        p = &b->script[b->scriptPos * 2];
         switch (p[0])
         {
         case 2:
             BlockAnimWriteMetatileWrapped(b);
         case 1:
             BlockAnimDrawWithEdges(b);
-            b->unk6++;
+            b->scriptPos++;
             goto again;
         case 3:
-            b->unk6++;
+            b->scriptPos++;
             goto again;
         case 4:
-            b->unk14 = p[1];
-            b->unk6++;
+            b->waitFrames = p[1];
+            b->scriptPos++;
             continue;
         case 0x8000:
         default:
@@ -348,7 +348,7 @@ void UpdateBlockAnimsWithEdges(void)
         }
     }
     for (i = 0; i < 64; i++)
-        gBreakingBlocks[i].unk6 &= 0x7FFF;
+        gBreakingBlocks[i].scriptPos &= 0x7FFF;
     WrapLoopingRoom();
 }
 
@@ -357,19 +357,19 @@ void BlockAnimWriteMetatileWrapped(struct Unk020061F0 *b)
     u32 x;
     u32 m;
 
-    b->unk16 = b->unk8->metatile;
-    b->unk18 = b->unk8->collisionTile;
-    gRoomMap[b->unk4].metatile = b->unk16;
-    gRoomMap[b->unk4].collisionTile = b->unk18;
-    x = b->unk0;
+    b->metatile = b->metatileCursor->metatile;
+    b->collisionTile = b->metatileCursor->collisionTile;
+    gRoomMap[b->mapIndex].metatile = b->metatile;
+    gRoomMap[b->mapIndex].collisionTile = b->collisionTile;
+    x = b->cellX;
     if (x > 39)
     {
         m = 31;
         m &= x;
-        (&gRoomMap[m])[b->unk2 * gRoomWidth].metatile = b->unk16;
-        (&gRoomMap[m])[b->unk2 * gRoomWidth].collisionTile = b->unk18;
+        (&gRoomMap[m])[b->cellY * gRoomWidth].metatile = b->metatile;
+        (&gRoomMap[m])[b->cellY * gRoomWidth].collisionTile = b->collisionTile;
     }
-    gBlockLayer[b->unk4] = ((u8)gBlockLayer[b->unk4] + 1) | 0x8000;
+    gBlockLayer[b->mapIndex] = ((u8)gBlockLayer[b->mapIndex] + 1) | 0x8000;
 }
 
 void BlockAnimDrawWithEdges(struct Unk020061F0 *b)
@@ -379,18 +379,18 @@ void BlockAnimDrawWithEdges(struct Unk020061F0 *b)
     u16 *p;
     s32 k;
 
-    if (b->unk18 != 0)
+    if (b->collisionTile != 0)
     {
         for (i = 0; i <= 1; i++)
         {
-            y = b->unk2 * 2 + i;
+            y = b->cellY * 2 + i;
             if (y >= gBlockAnimClipRect[2] && y <= gBlockAnimClipRect[3])
             {
                 for (j = 0; j <= 1; j++)
                 {
-                    x = b->unk0 * 2 + j;
+                    x = b->cellX * 2 + j;
                     if (x >= gBlockAnimClipRect[0] && x <= gBlockAnimClipRect[1])
-                        (&b->unkC[j])[i * 32] = gMetatileTiles[b->unk16 * 4 + j + i * 2];
+                        (&b->bgMapEntry[j])[i * 32] = gMetatileTiles[b->metatile * 4 + j + i * 2];
                 }
             }
         }
@@ -401,7 +401,7 @@ void BlockAnimDrawWithEdges(struct Unk020061F0 *b)
         {
             k = j * 2;
             y = j - 1;
-            y += b->unk2;
+            y += b->cellY;
             if (y < 0 || gRoomHeight <= y)
             {
                 for (i = 0; i <= 2; i++)
@@ -412,7 +412,7 @@ void BlockAnimDrawWithEdges(struct Unk020061F0 *b)
                 for (i = 0; i <= 2; i++)
                 {
                     x = i - 1;
-                    x += b->unk0;
+                    x += b->cellX;
                     if (x < 0 || gRoomWidth <= x)
                         gUnk_0200B060[j + (k + i)] = 0;
                     else if ((&gRoomMap[x])[y * gRoomWidth].collisionTile != 0)
@@ -427,8 +427,8 @@ void BlockAnimDrawWithEdges(struct Unk020061F0 *b)
         {
             for (j = 0; j <= 1; j++)
             {
-                x = b->unk0 * 2 + j;
-                y = b->unk2 * 2 + i;
+                x = b->cellX * 2 + j;
+                y = b->cellY * 2 + i;
                 if (y >= 0 && y < gRoomHeight * 2 && gBlockAnimClipRect[0] <= x && x <= gBlockAnimClipRect[1])
                 {
                     v = gUnk_0200B060[gUnk_0873A6D4[n][0]] + gUnk_0200B060[gUnk_0873A6D4[n][1]] * 2;
@@ -439,8 +439,8 @@ void BlockAnimDrawWithEdges(struct Unk020061F0 *b)
                 }
                 for (l = 0; l <= 2; l++)
                 {
-                    x = b->unk0 * 2 + j + gUnk_0873A734[gUnk_0873A6D4[n][l]][0];
-                    y = b->unk2 * 2 + i + gUnk_0873A734[gUnk_0873A6D4[n][l]][1];
+                    x = b->cellX * 2 + j + gUnk_0873A734[gUnk_0873A6D4[n][l]][0];
+                    y = b->cellY * 2 + i + gUnk_0873A734[gUnk_0873A6D4[n][l]][1];
 
                     if (y >= 0 && gRoomHeight * 2 > y && x >= gBlockAnimClipRect[0] && gBlockAnimClipRect[1] >= x)
                     {
@@ -458,7 +458,7 @@ void BlockAnimDrawWithEdges(struct Unk020061F0 *b)
             }
         }
     }
-    b->unk8++;
+    b->metatileCursor++;
 }
 
 s32 CanBreakBg1Block(s32 x, s32 y)
@@ -497,24 +497,24 @@ s16 BreakBg1BlockAtCursor(void)
     struct Unk020061F0 *b;
 
     i = 0;
-    while (gBg1BreakingBlocks[i].unk6 != 0x7FFF)
+    while (gBg1BreakingBlocks[i].scriptPos != 0x7FFF)
     {
         i++;
         if (i > 63)
             return -1;
     }
     b = &gBg1BreakingBlocks[i];
-    b->unk4 = gBlockCursorIndex;
-    b->unk8 = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->blockMetatiles + 1;
-    b->unk0 = gBlockCursorX;
-    b->unk2 = gBlockCursorY;
-    b->unkC = (u16 *)(BG_VRAM + 0x1800) + (((gBlockCursorX * 2) & 31) + (((gBlockCursorY * 2) & 31) << 5));
-    b->unk6 = 0;
-    b->unk14 = 0;
-    b->unk10 = gUnk_0873A458;
+    b->mapIndex = gBlockCursorIndex;
+    b->metatileCursor = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->blockMetatiles + 1;
+    b->cellX = gBlockCursorX;
+    b->cellY = gBlockCursorY;
+    b->bgMapEntry = (u16 *)(BG_VRAM + 0x1800) + (((gBlockCursorX * 2) & 31) + (((gBlockCursorY * 2) & 31) << 5));
+    b->scriptPos = 0;
+    b->waitFrames = 0;
+    b->script = gUnk_0873A458;
     gBg1MetatileMap[gBlockCursorIndex] |= 0x8000;
     PlaySfx(224);
-    if (b->unk10[0] == 1)
+    if (b->script[0] == 1)
         Bg1BlockAnimWriteMetatile(b);
     return i;
 }
@@ -525,34 +525,34 @@ void UpdateBg1BlockAnims(void)
     struct Unk020061F0 *b;
     u16 *p;
 
-    sub_0802b368();
+    SetBg1BlockAnimClipRect();
     for (i = 0; i < 64; i++)
     {
         b = &gBg1BreakingBlocks[i];
-        if (b->unk6 == 0x7FFF || (b->unk6 & 0x8000))
+        if (b->scriptPos == 0x7FFF || (b->scriptPos & 0x8000))
             continue;
     again:
-        if ((s16)--b->unk14 > 0)
+        if ((s16)--b->waitFrames > 0)
             continue;
-        p = &b->unk10[b->unk6 * 2];
+        p = &b->script[b->scriptPos * 2];
         switch (p[0])
         {
         case 1:
             Bg1BlockAnimDrawTiles(b);
-            b->unk6++;
+            b->scriptPos++;
             goto again;
         case 2:
             Bg1BlockAnimWriteMetatile(b);
             Bg1BlockAnimDrawTiles(b);
-            b->unk6++;
+            b->scriptPos++;
             goto again;
         case 3:
             Bg1BlockAnimBreakNeighbors(b);
-            b->unk6++;
+            b->scriptPos++;
             goto again;
         case 4:
-            b->unk14 = p[1];
-            b->unk6++;
+            b->waitFrames = p[1];
+            b->scriptPos++;
             continue;
         case 0x8000:
         default:
@@ -561,20 +561,20 @@ void UpdateBg1BlockAnims(void)
         }
     }
     for (i = 0; i < 64; i++)
-        gBg1BreakingBlocks[i].unk6 &= 0x7FFF;
+        gBg1BreakingBlocks[i].scriptPos &= 0x7FFF;
 }
 
 void FreeBg1BlockAnimAndBlock(struct Unk020061F0 *b)
 {
-    b->unk6 = 0x7FFF;
-    b->unk14 = 0;
-    gBg1MetatileMap[b->unk4] = 0;
+    b->scriptPos = 0x7FFF;
+    b->waitFrames = 0;
+    gBg1MetatileMap[b->mapIndex] = 0;
 }
 
 void Bg1BlockAnimWriteMetatile(struct Unk020061F0 *b)
 {
-    b->unk16 = b->unk8->metatile;
-    gBg1MetatileMap[b->unk4] = b->unk16 | 0x8000;
+    b->metatile = b->metatileCursor->metatile;
+    gBg1MetatileMap[b->mapIndex] = b->metatile | 0x8000;
 }
 
 void Bg1BlockAnimDrawTiles(struct Unk020061F0 *b)
@@ -583,48 +583,48 @@ void Bg1BlockAnimDrawTiles(struct Unk020061F0 *b)
 
     for (i = 0; i <= 1; i++)
     {
-        s32 ty = b->unk2 * 2 + i;
+        s32 ty = b->cellY * 2 + i;
 
         if (ty >= gBlockAnimClipRect[2] && ty <= gBlockAnimClipRect[3])
         {
             for (j = 0; j <= 1; j++)
             {
-                s32 tx = b->unk0 * 2 + j;
+                s32 tx = b->cellX * 2 + j;
 
                 if (tx >= gBlockAnimClipRect[0] && tx <= gBlockAnimClipRect[1])
-                    (&b->unkC[j])[i * 32] = gMetatileTiles[b->unk16 * 4 + j + i * 2];
+                    (&b->bgMapEntry[j])[i * 32] = gMetatileTiles[b->metatile * 4 + j + i * 2];
             }
         }
     }
-    b->unk8++;
+    b->metatileCursor++;
 }
 
 void Bg1BlockAnimBreakNeighbors(struct Unk020061F0 *b)
 {
     s16 slot;
 
-    if (CanBreakBg1Block(b->unk0, b->unk2 - 1) != 0)
+    if (CanBreakBg1Block(b->cellX, b->cellY - 1) != 0)
     {
         slot = BreakBg1BlockAtCursor();
         if (slot != -1)
-            gBg1BreakingBlocks[slot].unk6 |= 0x8000;
+            gBg1BreakingBlocks[slot].scriptPos |= 0x8000;
     }
-    if (CanBreakBg1Block(b->unk0 - 1, b->unk2) != 0)
+    if (CanBreakBg1Block(b->cellX - 1, b->cellY) != 0)
     {
         slot = BreakBg1BlockAtCursor();
         if (slot != -1)
-            gBg1BreakingBlocks[slot].unk6 |= 0x8000;
+            gBg1BreakingBlocks[slot].scriptPos |= 0x8000;
     }
-    if (CanBreakBg1Block(b->unk0 + 1, b->unk2) != 0)
+    if (CanBreakBg1Block(b->cellX + 1, b->cellY) != 0)
     {
         slot = BreakBg1BlockAtCursor();
         if (slot != -1)
-            gBg1BreakingBlocks[slot].unk6 |= 0x8000;
+            gBg1BreakingBlocks[slot].scriptPos |= 0x8000;
     }
-    if (CanBreakBg1Block(b->unk0, b->unk2 + 1) != 0)
+    if (CanBreakBg1Block(b->cellX, b->cellY + 1) != 0)
     {
         slot = BreakBg1BlockAtCursor();
         if (slot != -1)
-            gBg1BreakingBlocks[slot].unk6 |= 0x8000;
+            gBg1BreakingBlocks[slot].scriptPos |= 0x8000;
     }
 }

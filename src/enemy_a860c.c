@@ -47,10 +47,10 @@ extern s16 ActorComputeHealth(void);
 extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
-extern u32 sub_08068f68(void);
+extern u32 ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCollideTerrain(void);
-extern u32 sub_0806951c(void);
-extern u32 sub_08069888(void);
+extern u32 ActorCollideTerrainAlongVelocity(void);
+extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
 /* Module functions */
@@ -67,31 +67,31 @@ void KrackoJrTransformUpdate(void)
 {
     s32 n;
 
-    switch (gCurTask->unk28)
+    switch (gCurTask->krackoJrPhase)
     {
     case 0:
         if (gCurTask->pixelY < gViewRect[2] - 62)
         {
             TaskStopY();
             gUnk_02007D00[0] = 4;
-            gCurTask->unk28++;
+            gCurTask->krackoJrPhase++;
         }
-        sub_08066718();
+        BossCheckScrollLock();
         break;
     case 1:
         gCurTask->posY = (gViewRect[2] - 62) << 16;
-        if (sub_08066718() == 1)
-            gCurTask->unk28++;
+        if (BossCheckScrollLock() == 1)
+            gCurTask->krackoJrPhase++;
         break;
     case 2:
         if (gViewRect[3] <= 229)
         {
             n = 0;
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gPlayerCount; gCurTask->unk6C++)
+            for (gCurTask->krackoLoopCount = 0; (s16)gCurTask->krackoLoopCount < gPlayerCount; gCurTask->krackoLoopCount++)
             {
-                if ((gPlayerLives[(s16)gCurTask->unk6C] != 0 || gPlayerHealth[(s16)gCurTask->unk6C] != 0) && ((gActivePlayerMask >> (s16)gCurTask->unk6C) & 1))
+                if ((gPlayerLives[(s16)gCurTask->krackoLoopCount] != 0 || gPlayerHealth[(s16)gCurTask->krackoLoopCount] != 0) && ((gActivePlayerMask >> (s16)gCurTask->krackoLoopCount) & 1))
                 {
-                    TaskGetPosSlot((s16)gCurTask->unk6C);
+                    TaskGetPosSlot((s16)gCurTask->krackoLoopCount);
                     if (gUnk_030023D4 > 151)
                         continue;
                 }
@@ -106,7 +106,7 @@ void KrackoJrTransformUpdate(void)
                     gCurTask->posX = (gViewRect[0] + 168) << 16;
                 else
                     gCurTask->posX = (gViewRect[0] + 72) << 16;
-                gCurTask->unk28++;
+                gCurTask->krackoJrPhase++;
             }
         }
         gCurTask->posY = (gViewRect[2] - 62) << 16;

@@ -37,7 +37,7 @@ void Task_TridentKnightTrident(void)
     u->updateCallback = (u32)TridentKnightTridentUpdate;
     TaskFaceLikeParent();
     v = gCurTask;
-    v->unk28 = z;
+    v->tridentKnightTridentFrameCount = z;
     CallTableEntry(v->variant, 5, gTridentKnightTridentVariants);
     w = gCurTask;
     w->accelY = 148 << 6;
@@ -75,8 +75,8 @@ void TridentKnightTridentUpdate(void)
             TaskSetFrame(6);
     }
     u = gCurTask;
-    n = u->unk28 + 1;
-    u->unk28 = n;
+    n = u->tridentKnightTridentFrameCount + 1;
+    u->tridentKnightTridentFrameCount = n;
     if ((n & 2) != 0)
     {
         h = u->frame;
@@ -116,7 +116,7 @@ void TridentKnightTridentVariant4(void)
     gCurTask->velY = 0xFFFF0000;
 }
 
-u8 sub_0809f52c(void)
+u8 TridentKnightLand(void)
 {
     switch (gCurTask->variant)
     {
@@ -131,14 +131,14 @@ u8 sub_0809f52c(void)
         if (gCurTask->state == 0)
             goto zero;
         sub_0809f90c();
-        gCurTask->unk28 = 1;
+        gCurTask->metaKnightsKnightTridentWalkBack = 1;
         ActorSetState(0);
         TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
         return 1;
     }
 }
 
-u8 sub_0809f588(void)
+u8 TridentKnightHitWall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -175,18 +175,18 @@ u8 sub_0809f588(void)
     if (v->facing == -1 && v->velX < 0)
     {
     zero:
-        gCurTask->unk28 = 0;
+        gCurTask->metaKnightsKnightTridentWalkBack = 0;
     }
     else
     {
-        gCurTask->unk28 = 1;
+        gCurTask->metaKnightsKnightTridentWalkBack = 1;
     }
     return 0;
 end:
     ;
 }
 
-u8 sub_0809f618(void)
+u8 TridentKnightHitCeiling(void)
 {
     return 0;
 }
@@ -282,7 +282,7 @@ void sub_0809f7e4(void)
 
 void MetaKnightsKnightReactToDamage(void)
 {
-    gCurTask->unk24 = 18;
+    gCurTask->metaKnightsKnightFlashTimer = 18;
 }
 
 void MetaKnightsKnightTeardown(void)
@@ -293,7 +293,7 @@ void MetaKnightsKnightTeardown(void)
 
 void sub_0809f818(s32 v)
 {
-    switch (gCurTask->unk6E)
+    switch (gCurTask->metaKnightsKnightQueue)
     {
     case 0:
         gUnk_02007D00[0] = v;
@@ -315,7 +315,7 @@ void sub_0809f818(s32 v)
 
 void sub_0809f874(void)
 {
-    switch (gCurTask->unk6E)
+    switch (gCurTask->metaKnightsKnightQueue)
     {
     case 0:
         gUnk_02007D00[5] |= 1;

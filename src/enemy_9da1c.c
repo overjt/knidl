@@ -84,7 +84,7 @@ void JavelinKnightJavelinUpdate(void)
     ActorReactToHit();
 }
 
-u8 sub_0809db48(void)
+u8 JavelinKnightLand(void)
 {
     struct Task *t;
     struct Task *u;
@@ -99,7 +99,7 @@ u8 sub_0809db48(void)
         s = t->state;
         if (s == 1)
         {
-            if (--t->unk28 > 0)
+            if (--t->metaKnightsKnightJavelinHopsLeft > 0)
             {
                 n = 1;
             }
@@ -127,13 +127,13 @@ u8 sub_0809db48(void)
     case 1:
         TaskStopY();
         u = gCurTask;
-        if (u->unk2C == 1)
-            u->unk30 = 0;
+        if (u->metaKnightsKnightJavelinFallDir == 1)
+            u->metaKnightsKnightJavelinPushOn = 0;
         return 0;
     }
 }
 
-u8 sub_0809dbc4(void)
+u8 JavelinKnightHitWall(void)
 {
     struct Task *t;
 
@@ -150,17 +150,17 @@ u8 sub_0809dbc4(void)
         if ((t->onGround & 1) == 0 || (gTerrainResult[3] & 1) == 0)
         {
             t->velX = -t->velX;
-            if (--t->unk28 > 0)
+            if (--t->metaKnightsKnightJavelinBouncesLeft > 0)
                 break;
-            t->unk28 = 4;
-            t->unk2C = (t->unk2C + 1) & 1;
+            t->metaKnightsKnightJavelinBouncesLeft = 4;
+            t->metaKnightsKnightJavelinFallDir = (t->metaKnightsKnightJavelinFallDir + 1) & 1;
         }
-        gCurTask->unk30 = 0;
+        gCurTask->metaKnightsKnightJavelinPushOn = 0;
         return 0;
     }
 }
 
-u8 sub_0809dc3c(void)
+u8 JavelinKnightHitCeiling(void)
 {
     struct Task *t;
     struct Task *u;
@@ -175,8 +175,8 @@ u8 sub_0809dc3c(void)
     case 1:
         TaskStopY();
         u = gCurTask;
-        if (u->unk2C == 0)
-            u->unk30 = 0;
+        if (u->metaKnightsKnightJavelinFallDir == 0)
+            u->metaKnightsKnightJavelinPushOn = 0;
         return 0;
     }
 }
@@ -191,7 +191,7 @@ void sub_0809dc7c(void)
     t->frameTable = gMaceKnightFrames;
     ActorLoadDef((u32)gMaceKnightDef);
     u = gCurTask;
-    u->unk24 = 0;
+    u->metaKnightsKnightFlashTimer = 0;
     CallTableEntry(u->variant, 3, gMaceKnightVariants);
 }
 
@@ -223,9 +223,9 @@ void sub_0809dd08(void)
 
     ActorCollideTerrain();
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -237,7 +237,7 @@ void sub_0809dd08(void)
     v = gCurTask->hitKind;
     if (v == 1 || v == 3 || v == 4)
     {
-        p = &gCurTask->unk46;
+        p = &gCurTask->metaKnightsKnightWeaponSlot;
         if (*p != -1)
         {
             w = &gTasks[*p];
@@ -274,9 +274,9 @@ void MaceKnightUpdate(void)
         CallTableEntry(gCurTask->updateState, 2, gMaceKnightStateUpdates);
     }
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -288,7 +288,7 @@ void MaceKnightUpdate(void)
     v = gCurTask->hitKind;
     if (v == 1 || v == 3 || v == 4)
     {
-        p = &gCurTask->unk46;
+        p = &gCurTask->metaKnightsKnightWeaponSlot;
         if (*p != -1)
         {
             w = &gTasks[*p];
@@ -375,9 +375,9 @@ void sub_0809dfc8(void)
     if (ActorCollideTerrain() == 0 && sub_0809f994() != 0)
         sub_0809f930();
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -389,7 +389,7 @@ void sub_0809dfc8(void)
     v = gCurTask->hitKind;
     if (v == 1 || v == 3 || v == 4)
     {
-        p = &gCurTask->unk46;
+        p = &gCurTask->metaKnightsKnightWeaponSlot;
         if (*p != -1)
         {
             w = &gTasks[*p];
@@ -493,9 +493,9 @@ s32 CreateMaceKnightMace(void)
     sp.tileWord = gUnk_08745CEC[2];
     sp.checkTerrain = 0;
     r = CreateActorFromDesc(&sp, 1);
-    p = &gCurTask->unk46;
+    p = &gCurTask->metaKnightsKnightWeaponSlot;
     *p = r;
-    ((struct Task *)(*p * 144 + (s32)gTasks))->unk2C = z;
+    ((struct Task *)(*p * 144 + (s32)gTasks))->maceKnightMaceDismissed = z;
 }
 
 void Task_MaceKnightMace(void)
@@ -533,7 +533,7 @@ void sub_0809e320(void)
     t = gCurTask;
     t->updateCallback = (u32)sub_0809e630;
     t->layer = 10;
-    gCurTask->unk6C = 0;
+    gCurTask->maceKnightMaceLoopCount = 0;
     do
     {
         PlaySfx(213);
@@ -564,7 +564,7 @@ void sub_0809e320(void)
         TaskYieldTrampoline(2);
         TaskSetMotionXFacing(128 << 12, 0x5A5A5A5A);
         TaskYieldTrampoline(2);
-    } while ((s16)++gCurTask->unk6C <= 1);
+    } while ((s16)++gCurTask->maceKnightMaceLoopCount <= 1);
     PlaySfx(213);
     TaskSetFrame(1);
     TaskSetMotionXFacing(128 << 12, k = 0x5A5A5A5A);
@@ -626,7 +626,7 @@ void sub_0809e320(void)
     TaskYieldTrampoline(7);
     TaskStop();
     TaskYieldTrampoline(2);
-    gTasks[gCurTask->parent].unk46 = 0xFFFF;
+    gTasks[gCurTask->parent].metaKnightsKnightWeaponSlot = 0xFFFF;
     ActorDestroy();
 }
 
@@ -635,9 +635,9 @@ void sub_0809e630(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk2C != 0)
+    if (t->maceKnightMaceDismissed != 0)
     {
-        gTasks[t->parent].unk46 = 0xFFFF;
+        gTasks[t->parent].metaKnightsKnightWeaponSlot = 0xFFFF;
         ActorDestroy();
     }
     else
@@ -694,9 +694,9 @@ void sub_0809e780(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk2C != 0)
+    if (t->maceKnightMaceDismissed != 0)
     {
-        gTasks[t->parent].unk46 = 0xFFFF;
+        gTasks[t->parent].metaKnightsKnightWeaponSlot = 0xFFFF;
         ActorDestroy();
     }
     else
@@ -706,19 +706,19 @@ void sub_0809e780(void)
     }
 }
 
-u8 sub_0809e7c8(void)
+u8 MaceKnightLand(void)
 {
     TaskStopY();
     return 0;
 }
 
-u8 sub_0809e7d4(void)
+u8 MaceKnightStartFall(void)
 {
     gCurTask->accelY = 148 << 6;
     return 0;
 }
 
-u8 sub_0809e7e8(void)
+u8 MaceKnightHitWall(void)
 {
     struct Task *t;
 
@@ -738,7 +738,7 @@ u8 sub_0809e7e8(void)
     return 0;
 }
 
-u8 sub_0809e820(void)
+u8 MaceKnightHitCeiling(void)
 {
     return 0;
 }
@@ -753,7 +753,7 @@ void sub_0809e824(void)
     t->frameTable = gTridentKnightFrames;
     ActorLoadDef((u32)gTridentKnightDef);
     u = gCurTask;
-    u->unk24 = 0;
+    u->metaKnightsKnightFlashTimer = 0;
     CallTableEntry(u->variant, 4, gTridentKnightVariants);
 }
 
@@ -771,8 +771,8 @@ void TridentKnightVariant0(void)
     gCurTask->updateCallback = (u32)TridentKnightUpdate;
     TaskFaceScreenCenter();
     t = gCurTask;
-    t->unk2C = 60;
-    t->unk28 = 0;
+    t->metaKnightsKnightTridentTimer = 60;
+    t->metaKnightsKnightTridentWalkBack = 0;
     t->onGround = 0;
     u = gCurTask;
     u->accelY = 148 << 6;
@@ -792,9 +792,9 @@ void TridentKnightUpdate(void)
     if (ActorCollideTerrain() == 0)
         CallTableEntry(gCurTask->updateState, 5, gTridentKnightStateUpdates);
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -807,7 +807,7 @@ void TridentKnightUpdate(void)
 
 void TridentKnightWalk(void)
 {
-    if (gCurTask->unk28 == 0)
+    if (gCurTask->metaKnightsKnightTridentWalkBack == 0)
     {
         TaskSetMotionXFacing(128 << 9, 0x5A5A5A5A);
         while (1)
@@ -863,12 +863,12 @@ void sub_0809ea08(void)
     s32 n;
 
     t = gCurTask;
-    if (t->unk2C == 61)
+    if (t->metaKnightsKnightTridentTimer == 61)
     {
-        t->unk2C = 60;
-        if (t->unk28 != 1)
+        t->metaKnightsKnightTridentTimer = 60;
+        if (t->metaKnightsKnightTridentWalkBack != 1)
         {
-            t->unk28 = 1;
+            t->metaKnightsKnightTridentWalkBack = 1;
             ActorSetState(0);
             TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
         }
@@ -880,8 +880,8 @@ void sub_0809ea08(void)
         return;
     }
     u = gCurTask;
-    n = u->unk2C - 1;
-    u->unk2C = n;
+    n = u->metaKnightsKnightTridentTimer - 1;
+    u->metaKnightsKnightTridentTimer = n;
     if (n > 59)
         return;
     if (n <= 0)
@@ -891,12 +891,12 @@ void sub_0809ea08(void)
     }
     if ((n & 7) != 7)
         return;
-    if (u->unk28 != 0)
+    if (u->metaKnightsKnightTridentWalkBack != 0)
         return;
     if (abs(TaskGetNearestPlayerDx()) <= 63)
     {
         v = gCurTask;
-        v->unk28 = 1;
+        v->metaKnightsKnightTridentWalkBack = 1;
         ActorSetState(0);
         TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
     }
@@ -914,7 +914,7 @@ void TridentKnightJump(void)
     t->updateState = 1;
     sub_0809f90c();
     u = gCurTask;
-    u->unk2C = 120;
+    u->metaKnightsKnightTridentTimer = 120;
     u->onGround = z;
     TaskSetMotionXFacing(128 << 9, 0x5A5A5A5A);
     v = gCurTask;
@@ -939,14 +939,14 @@ void TridentKnightThrow(void)
     t = gCurTask;
     t->updateState = 2;
     u = gCurTask;
-    u->unk2C = 120;
+    u->metaKnightsKnightTridentTimer = 120;
     TaskStop();
     sub_0809ebc0();
     TaskYieldTrampoline(10);
     ActorSetState(0);
     sub_0809f90c();
     v = gCurTask;
-    v->unk28 = 1;
+    v->metaKnightsKnightTridentWalkBack = 1;
     TaskSleepForever();
 }
 
@@ -973,7 +973,7 @@ void TridentKnightJumpThrow(void)
     z = 0;
     t->updateState = 3;
     u = gCurTask;
-    u->unk2C = 120;
+    u->metaKnightsKnightTridentTimer = 120;
     TaskStop();
     gCurTask->onGround = z;
     v = gCurTask;
@@ -1031,7 +1031,7 @@ void sub_0809ec80(void)
 
 void sub_0809ec84(void)
 {
-    if (gCurTask->unk2C > 59
+    if (gCurTask->metaKnightsKnightTridentTimer > 59
         || abs(TaskGetNearestPlayerDx()) > 63)
     {
         sub_0809ed74();
@@ -1050,7 +1050,7 @@ void sub_0809ec84(void)
 
 void sub_0809ed08(void)
 {
-    gCurTask->unk2C = 60;
+    gCurTask->metaKnightsKnightTridentTimer = 60;
     if (RandomRange(2) == 0)
     {
         if (abs(TaskGetNearestPlayerDx()) > 63)
@@ -1078,9 +1078,9 @@ void sub_0809ed74(void)
     t->velX = vx;
     f = t->facing;
     if ((f == 1 && vx > 0) || (f == -1 && vx < 0))
-        gCurTask->unk28 = 0;
+        gCurTask->metaKnightsKnightTridentWalkBack = 0;
     else
-        gCurTask->unk28 = 1;
+        gCurTask->metaKnightsKnightTridentWalkBack = 1;
     ActorSetState(0);
     gCurTask->updateState = 0;
     TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
@@ -1104,7 +1104,7 @@ void TridentKnightVariant1(void)
     *p = 1;
     TaskFaceScreenCenter();
     u = gCurTask;
-    u->unk28 = u->facing;
+    u->metaKnightsKnightTridentSavedFacing = u->facing;
     TaskSetMotionXFacing(128 << 10, k = 0x5A5A5A5A);
     TaskSetFrame(7);
     TaskYieldTrampoline(2);
@@ -1132,9 +1132,9 @@ void TridentKnightVariant1(void)
     TaskYieldTrampoline(8);
     TaskStop();
     v = gCurTask;
-    v->facing = v->unk28;
+    v->facing = v->metaKnightsKnightTridentSavedFacing;
     TaskUpdateFlip();
-    gCurTask->unk2C = z;
+    gCurTask->metaKnightsKnightTridentThrowIndex = z;
     while (1)
     {
         TaskSetFrame(23);
@@ -1158,12 +1158,12 @@ void TridentKnightVariant1(void)
         TaskYieldTrampoline(4);
         TaskSetFrame(14);
         TaskYieldTrampoline(14);
-        CreateTridentKnightTrident(gUnk_08747C28[gCurTask->unk2C]);
+        CreateTridentKnightTrident(gUnk_08747C28[gCurTask->metaKnightsKnightTridentThrowIndex]);
         w = gCurTask;
-        n = w->unk2C + 1;
-        w->unk2C = n;
+        n = w->metaKnightsKnightTridentThrowIndex + 1;
+        w->metaKnightsKnightTridentThrowIndex = n;
         if (n > 6)
-            w->unk2C = 0;
+            w->metaKnightsKnightTridentThrowIndex = 0;
         TaskSetFrame(15);
         TaskYieldTrampoline(3);
         TaskSetFrame(27);
@@ -1181,9 +1181,9 @@ void sub_0809ef98(void)
 
     ActorCollideTerrain();
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -1209,7 +1209,7 @@ void TridentKnightVariant2(void)
     z = 0;
     *p = 1;
     TaskFaceScreenCenter();
-    gCurTask->unk28 = z;
+    gCurTask->metaKnightsKnightTridentWalkBack = z;
     TaskSetMotionXFacing(128 << 10, k = 0x5A5A5A5A);
     TaskSetFrame(5);
     TaskYieldTrampoline(2);
@@ -1249,7 +1249,7 @@ void TridentKnightVariant2(void)
     v->updateCallback = (u32)TridentKnightUpdate;
     v->updateState = z;
     w = gCurTask;
-    w->unk2C = 60;
+    w->metaKnightsKnightTridentTimer = 60;
     TridentKnightWalk();
 }
 
@@ -1259,9 +1259,9 @@ void sub_0809f0f0(void)
 
     ActorCollideTerrain();
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -1287,7 +1287,7 @@ void TridentKnightVariant3(void)
     z = 0;
     *p = 1;
     TaskFaceScreenCenter();
-    gCurTask->unk28 = z;
+    gCurTask->metaKnightsKnightTridentWalkBack = z;
     TaskSetMotionXFacing(128 << 10, k = 0x5A5A5A5A);
     TaskSetFrame(6);
     TaskYieldTrampoline(1);
@@ -1333,7 +1333,7 @@ void TridentKnightVariant3(void)
     v->updateCallback = (u32)TridentKnightUpdate;
     v->updateState = z;
     w = gCurTask;
-    w->unk2C = 60;
+    w->metaKnightsKnightTridentTimer = 60;
     TridentKnightWalk();
 }
 
@@ -1343,9 +1343,9 @@ void sub_0809f26c(void)
 
     ActorCollideTerrain();
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -1365,11 +1365,11 @@ s32 CreateTridentKnightTrident(s32 a)
     sp.subtype = 28;
     sp.taskType = 131;
     sp.variant = a;
-    sp.spawnArg = gCurTask->unk74;
+    sp.spawnArg = gCurTask->actorSpawnArg;
     sp.x = 12;
     sp.y = 0xFFEC;
     sp.tileWord = 0xF310;
     sp.checkTerrain = 0;
     r = CreateActorFromDescAtOffsetFacing(&sp, 1);
-    gCurTask->unk46 = r;
+    gCurTask->metaKnightsKnightWeaponSlot = r;
 }

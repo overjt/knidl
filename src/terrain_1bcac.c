@@ -105,7 +105,7 @@ void TerrainCollideBoxInCameraBounds(const s8 *p)
                 TerrainProbeWallRightOnGround();
         }
         sub_0801c8dc();
-        sub_0801c930();
+        TerrainProbeFloorInCameraBounds();
     }
     else
     {
@@ -118,7 +118,7 @@ void TerrainCollideBoxInCameraBounds(const s8 *p)
                 TerrainProbeWallRightInAir();
         }
         TerrainProbeCeiling();
-        sub_0801e178();
+        TerrainProbeLandingInCameraBounds();
     }
     TerrainProbeWater();
     TerrainProbeDamage();
@@ -171,7 +171,7 @@ void TerrainCollideBoxCeilingAndFloor(const s8 *p)
         gTerrainProbeResult.unkB = 1;
         gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
     }
-    sub_0801f800();
+    TerrainProbeCeilingNoSlopeLink();
     sub_0801f9b8();
     TerrainProbeWater();
     TerrainProbeEnd(p);
@@ -194,9 +194,9 @@ void TerrainCollideBoxFloor(const s8 *p)
         gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
     }
     if (gTerrainProbeResult.onGround != 0)
-        sub_0801fc48();
+        TerrainProbeFloorNoSlopeLink();
     else
-        sub_0801fe2c();
+        TerrainProbeLandingNoSlopeLink();
     TerrainProbeWater();
     TerrainProbeEnd(p);
 }

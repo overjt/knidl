@@ -15,7 +15,7 @@
  * own - lesson 2.13 dead exports hidden inside a neighbour's size):
  *   PlayBgm  start/continue a BGM by song id; bit 0x800 of the argument
  *                 means "forget the current song first".
- *   sub_08003184  m4aMPlayImmInit on the BGM player.
+ *   ResetBgmPlayer  m4aMPlayImmInit on the BGM player.
  *   GetCurrentBgm  current BGM song id, or -1 while the BGM player is paused.
  *   PlaySfx  the SE allocator: picks one of the three SE players for a
  *                 song, stealing/ageing slots by channel mask and priority.

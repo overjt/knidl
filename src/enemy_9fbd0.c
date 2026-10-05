@@ -27,7 +27,7 @@ extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
 extern s16 ActorComputeHealth(void);
 extern void ReleaseHeldPlayer(s32 i, s32 d);
-extern void sub_08068f68(void);
+extern void ActorCheckHitsWithExtraBox(void);
 extern u32 ActorReactToHit(void);
 
 void sub_0809fbd0(void)
@@ -58,13 +58,13 @@ void Task_KingDedede(void)
     s32 v;
 
     t = gCurTask;
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     v = ActorComputeHealth();
     v = (v * 85) >> 8;
     t = gCurTask;
-    t->unk70 = v;
+    t->kingDededeThirdHealth = v;
     t->moveCallback = (u32)TaskMove;
-    t->drawCallback = (u32)sub_08065438;
+    t->drawCallback = (u32)ActorDrawStreamedFrameNearView;
     t->layer = 11;
     gCurTask->frameTable = gKingDededeFrames;
     CallTableEntry(gCurTask->variant, 1, gKingDededeVariants);
@@ -72,7 +72,7 @@ void Task_KingDedede(void)
 
 void sub_0809fca4(void)
 {
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
 
@@ -299,9 +299,9 @@ void sub_080a0098(void)
         *p = z;
         p--;
     } while ((s32)p >= (s32)q);
-    (*tp)->unk20 = 1;
-    (*tp)->unk34 = 90;
+    (*tp)->kingDededeInhaling = 1;
+    (*tp)->kingDededeInhaleTimer = 90;
     r[0] = -1;
-    (*tp)->unk46 = CreateChildTaskAtOffsetFacing(183, 38, 10, 0);
+    (*tp)->kingDededeChildSlot = CreateChildTaskAtOffsetFacing(183, 38, 10, 0);
     r[9] = PlaySfx(0x21B);
 }

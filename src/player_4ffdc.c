@@ -13,7 +13,7 @@
  * (gPlayerStarRodFlightVariantUpdates), interleaved in the ROM as 18, 22, 19, 23, 20, 24, 21,
  * 25, and their two helpers.  PlayerStarRodFlightIntro is a long yield script driven by
  * the 8.8 velocity pairs gUnk_0873B6CC; PlayerStarRodFlightShoot spawns task type #6's
- * variant 12 through sub_08053a44; PlayerStarRodFlightHurt switches the player to mode
+ * variant 12 through CreatePlayerObjectLowSlot; PlayerStarRodFlightHurt switches the player to mode
  * 17 with camera presets PlayerSetMotionXPreset(10, 24-27).  PlayerStarRodFlightCheckShoot re-binds
  * sub-action 2 when a direction is pressed or held for ten frames, and
  * PlayerStarRodFlightSteer steers the player with the held direction (velocity pairs
@@ -22,7 +22,7 @@
 
 void TaskSetEntry(void *a, u32 i);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-s32 sub_08053a44(s8 player, u8 variant, s32 arg);
+s32 CreatePlayerObjectLowSlot(s8 player, u8 variant, s32 arg);
 
 void PlayerStarRodFlightIntro(void)
 {
@@ -30,7 +30,7 @@ void PlayerStarRodFlightIntro(void)
     {
         struct Task *t = gCurTask;
         t->updateCallback = (u32)PlayerStarRodFlightIntroUpdate;
-        t->unk70 = 0;
+        t->playerActionDone = 0;
         t->frame = 0xFFFF;
         if (gGameState != 20)
         {
@@ -164,7 +164,7 @@ void PlayerStarRodFlightIntro(void)
     TaskYieldTrampoline(14);
     {
         struct Task *t = gCurTask;
-        t->unk70++;
+        t->playerActionDone++;
         t->player->bodyBox = (u32)gPlayerDefaultBodyBox;
     }
     TaskSleepForever();
@@ -174,7 +174,7 @@ void PlayerStarRodFlightIntroUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if ((s16)t->unk70 != 0)
+    if ((s16)t->playerActionDone != 0)
     {
         t->variant = 1;
         gCurTask->updateCallback = (u32)PlayerUpdate;
@@ -188,7 +188,7 @@ void PlayerStarRodFlightFly(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk46 = 0;
+    t->playerStarRodFrameIndex = 0;
     t->unk28 = 0;
     TaskSleepForever();
 }
@@ -203,24 +203,24 @@ void PlayerStarRodFlightFlyUpdate(void)
 
         if (t->unk28 == 0)
         {
-            if (t->unk46 == 0)
+            if (t->playerStarRodFrameIndex == 0)
                 t->unk28 = k;
             else
-                t->unk46--;
+                t->playerStarRodFrameIndex--;
         }
         else if (t->unk28 == k)
         {
-            if (row[t->unk46 + 1] != 0xFFFF)
-                t->unk46++;
+            if (row[t->playerStarRodFrameIndex + 1] != 0xFFFF)
+                t->playerStarRodFrameIndex++;
         }
         else
         {
-            if (t->unk46 != 0)
-                t->unk46--;
+            if (t->playerStarRodFrameIndex != 0)
+                t->playerStarRodFrameIndex--;
             else
                 t->unk28 = k;
         }
-        gCurTask->frame = row[gCurTask->unk46];
+        gCurTask->frame = row[gCurTask->playerStarRodFrameIndex];
     }
 }
 
@@ -228,25 +228,25 @@ void PlayerStarRodFlightShoot(void)
 {
     {
         struct Task *t = gCurTask;
-        t->unk70 = 0;
+        t->playerActionDone = 0;
         PlaySfxIfLocalPlayer(155, (u16)t->player->playerIndex);
     }
     gCurTask->frame = 0x1040;
     TaskYieldTrampoline(4);
     gCurTask->frame = 0x1041;
     TaskYieldTrampoline(1);
-    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
     {
         gCurTask->frame++;
         TaskYieldTrampoline(1);
     }
-    sub_08053a44(gCurTask->player->playerIndex, 12, 0);
-    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 9; gCurTask->unk6C++)
+    CreatePlayerObjectLowSlot(gCurTask->player->playerIndex, 12, 0);
+    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 9; gCurTask->playerLoopCount++)
     {
         gCurTask->frame++;
         TaskYieldTrampoline(1);
     }
-    gCurTask->unk70++;
+    gCurTask->playerActionDone++;
     TaskSleepForever();
 }
 
@@ -254,7 +254,7 @@ void PlayerStarRodFlightShootUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if ((s16)t->unk70 != 0)
+    if ((s16)t->playerActionDone != 0)
     {
         t->variant = 1;
         TaskSetEntry(PlayerActionStarRodFlight, gCurTaskIdx);
@@ -267,7 +267,7 @@ void PlayerStarRodFlightHurt(void)
     gCurTask->player->mode = 17;
     {
         struct Task *t = gCurTask;
-        t->unk70 = 0;
+        t->playerActionDone = 0;
         t->player->invulnerability = 1;
     }
     {
@@ -296,7 +296,7 @@ void PlayerStarRodFlightHurt(void)
     TaskYieldTrampoline(2);
     PlayerStopAxes(1);
     SetPlayerInvulnerability(1, 96, gCurTask->player->playerIndex);
-    gCurTask->unk70++;
+    gCurTask->playerActionDone++;
     TaskSleepForever();
 }
 
@@ -304,7 +304,7 @@ void PlayerStarRodFlightHurtUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if ((s16)t->unk70 != 0)
+    if ((s16)t->playerActionDone != 0)
     {
         t->variant = 1;
         TaskSetEntry(PlayerActionStarRodFlightEnterVariant, gCurTaskIdx);

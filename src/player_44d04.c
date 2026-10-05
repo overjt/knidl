@@ -35,7 +35,7 @@ void PlayerActionSword(void)
     gCurTask->updateState = 32;
     {
         struct Task *t = gCurTask;
-        t->unk28 = 0;
+        t->playerActionDone28 = 0;
         t->unk2C = -1;
         if (t->waterFlags & 1)
             t->unk30 = 1;
@@ -164,7 +164,7 @@ void PlayerActionSword(void)
         gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct M11R8 *)gUnk_0873CCFC;
         gCurTask->player->hitBoxSet = 0;
         if (gCurTask->unk30 == 0) {
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++) {
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 1; gCurTask->playerLoopCount++) {
                 PlaySfxIfLocalPlayer(148, gCurTask->player->playerIndex);
                 {
                     struct Task *t = gCurTask;
@@ -187,7 +187,7 @@ void PlayerActionSword(void)
             TaskSetFrame(0x4E2);
             TaskYieldTrampoline(1);
         } else {
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++) {
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 1; gCurTask->playerLoopCount++) {
                 PlaySfxIfLocalPlayer(148, gCurTask->player->playerIndex);
                 {
                     struct Task *t = gCurTask;
@@ -212,7 +212,7 @@ void PlayerActionSword(void)
         }
         break;
     }
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
@@ -222,7 +222,7 @@ void PlayerActionSwordUpdate(void)
 
     switch (t->variant) {
     case 0:
-        if (t->unk28 != 0) {
+        if (t->playerActionDone28 != 0) {
             PlayerRequestLocomotion();
         } else {
             if (t->velY > 0 && PlayerHasCrossedWaterSurface(0) != 0)
@@ -239,7 +239,7 @@ void PlayerActionSwordUpdate(void)
         PlayerSetMotionXPreset(0, 72);
         break;
     case 1:
-        if ((t->onGround & 1) || t->unk28 != 0)
+        if ((t->onGround & 1) || t->playerActionDone28 != 0)
             PlayerRequestLocomotion();
         else if (t->velY > 0 && PlayerHasCrossedWaterSurface(0) != 0)
             gCurTask->player->requestedAction = 23;

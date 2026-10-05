@@ -11,16 +11,16 @@
 
 struct Unk02007D70
 {
-    /*0x00*/ u16 unk0;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ struct Unk02007D70Cmd *unk4;
-    /*0x08*/ u16 unk8;
+    /*0x00*/ u16 cmdIndex;
+    /*0x02*/ s16 waitFrames;
+    /*0x04*/ struct Unk02007D70Cmd *script;
+    /*0x08*/ u16 fadeFrame;
     /*0x0A*/ u16 unkA;
-    /*0x0C*/ u16 *unkC;
-    /*0x10*/ u16 *unk10;
-    /*0x14*/ u16 unk14;
-    /*0x16*/ u16 unk16;
-    /*0x18*/ u32 unk18;
+    /*0x0C*/ u16 *fadeSrc;
+    /*0x10*/ u16 *fadeDst;
+    /*0x14*/ u16 fadeColorIndex;
+    /*0x16*/ u16 fadeColorCount;
+    /*0x18*/ u32 fadeRate;
 };
 
 struct Unk02007D70Cmd
@@ -78,7 +78,7 @@ extern u16 *gScreenShakePatterns[];
 extern void (*gMapEventVariants[])(void);
 extern u8 gUnk_087328BC[];
 extern s16 gUnk_087328C0[][2];
-extern void (*gUnk_087328D8[])(void);
+extern void (*gStageEffectStates[])(void);
 extern u32 gUnk_0874CD54[];
 extern u32 gUnk_0874CD68[];
 extern u32 gUnk_0874CDE0[];
@@ -154,15 +154,15 @@ void SpawnRoomObjectsScrolledIn(void);
 /* src/camera_29c74.c */
 void UpdatePlayerGroupCenter(void);
 void SetCameraBoundsToGroup(void);
-void sub_08029ef4(void);
+void SetCameraBoundsToGroupInScrollLock(void);
 void UpdatePlayerCameras(void);
-void sub_0802a260(void);
-void sub_0802a340(void);
+void UpdatePlayerCamerasInScrollLock(void);
+void SetPlayerGroupCenterFromTasks(void);
 void SetPlayerBoundsFromCamera(void);
-void sub_0802a484(void);
+void SetPlayerBoundsFromCameraInScrollLock(void);
 void SetViewRectToPlayers(void);
-void sub_0802a568(void);
-void sub_0802a63c(void);
+void SetViewRectToPlayersInScrollLock(void);
+void LockPlayersPastScrollLine(void);
 void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1);
 
 /* src/bgmap_2a9cc.c */
@@ -190,9 +190,9 @@ void RestoreMapColumn(s32 x);
 void RestoreMapCell(s32 x, s32 y);
 
 /* src/bgmap_2b2f0.c */
-void sub_0802b2f0(void);
-void sub_0802b368(void);
-void sub_0802b3e4(void);
+void SetBlockAnimClipRect(void);
+void SetBg1BlockAnimClipRect(void);
+void SetBlockAnimClipRectWithEdges(void);
 void SetBg23ScreenSize(u16 a);
 void SetBg3ScreenSize(u16 a);
 
@@ -204,9 +204,9 @@ void CameraSlideFromScrollLock(void);
 
 /* src/camera_2c42c.c */
 void CameraHoldAnchor(void);
-void sub_0802c550(void);
-void sub_0802c680(void);
-void sub_0802c7f4(void);
+void HubCameraFollowFocus(void);
+void HubCameraFollowFocusPlayer(void);
+void HubCameraGlideToPlayers(void);
 void CameraSnapBoundsToAnchor(void);
 void CameraSnapPlayersToAnchor(void);
 void CameraSnapToFocus(void);

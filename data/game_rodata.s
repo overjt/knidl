@@ -1327,37 +1327,37 @@ gUnk_08732638:
 	.global	gUnk_0873264C
 gUnk_0873264C:
 	.incbin	"baserom.gba", 0x73264C, 0xC
-	.global	gUnk_08732658
-gUnk_08732658:
+	.global	gScreenShakePattern1
+gScreenShakePattern1:
 	.incbin	"baserom.gba", 0x732658, 0x3C
-	.global	gUnk_08732694
-gUnk_08732694:
+	.global	gScreenShakePattern2
+gScreenShakePattern2:
 	.incbin	"baserom.gba", 0x732694, 0x4C
-	.global	gUnk_087326E0
-gUnk_087326E0:
+	.global	gScreenShakePattern3
+gScreenShakePattern3:
 	.incbin	"baserom.gba", 0x7326E0, 0x64
-	.global	gUnk_08732744
-gUnk_08732744:
+	.global	gScreenShakePattern4
+gScreenShakePattern4:
 	.incbin	"baserom.gba", 0x732744, 0x64
-	.global	gUnk_087327A8
-gUnk_087327A8:
+	.global	gScreenShakePattern5
+gScreenShakePattern5:
 	.incbin	"baserom.gba", 0x7327A8, 0x48
-	.global	gUnk_087327F0
-gUnk_087327F0:
+	.global	gScreenShakePattern6
+gScreenShakePattern6:
 	.incbin	"baserom.gba", 0x7327F0, 0x34
-	.global	gUnk_08732824
-gUnk_08732824:
+	.global	gScreenShakePattern7
+gScreenShakePattern7:
 	.incbin	"baserom.gba", 0x732824, 0x5C
 	.global	gScreenShakePatterns
 gScreenShakePatterns:
 	.incbin	"baserom.gba", 0x732880, 0x4
-	.word	gUnk_08732658
-	.word	gUnk_08732694
-	.word	gUnk_087326E0
-	.word	gUnk_08732744
-	.word	gUnk_087327A8
-	.word	gUnk_087327F0
-	.word	gUnk_08732824
+	.word	gScreenShakePattern1
+	.word	gScreenShakePattern2
+	.word	gScreenShakePattern3
+	.word	gScreenShakePattern4
+	.word	gScreenShakePattern5
+	.word	gScreenShakePattern6
+	.word	gScreenShakePattern7
 
 @ 0x087328A0-0x087328BC: C, row game_tbl_087328a0 (src/data/game_tables.c section .game_tbl_087328a0)
 
@@ -3221,8 +3221,8 @@ gCollisionTileFloorSnap:
 	.word	gUnk_08739B18
 	.word	gUnk_08739B18
 	.incbin	"baserom.gba", 0x734FF0, 0x28
-	.global	gUnk_08735018
-gUnk_08735018:
+	.global	gSlopeIndexTiles
+gSlopeIndexTiles:
 	.incbin	"baserom.gba", 0x735018, 0x80
 	.global	gUnk_08735098
 gUnk_08735098:

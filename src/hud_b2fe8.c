@@ -27,7 +27,7 @@ extern s8 gUnk_02007D64;
 extern s16 gUnk_0200AF0C;
 extern u8 gWarpStarStationLevels;
 extern u8 gUnk_0200B078;
-extern u8 gUnk_0200D080;
+extern u8 gMidBossFightState;
 extern s16 gCameraAnchorY;
 extern s32 gUnk_03001F2C;
 extern u8 gMetaKnightmareMode;
@@ -68,9 +68,9 @@ extern void TaskInitWaterFlags(void);
 extern u8 ClampTaskToRoom(struct Task *t);
 extern u32 IsTaskBelowRoom();
 extern void ExitClearedStage();
-extern void sub_08025a30();
-extern void sub_08025acc();
-extern void sub_08025b5c();
+extern void ExitKingDededeStage();
+extern void ExitToNextRoom();
+extern void ExitToEnding();
 extern void RequestScreenShake(u32 a);
 extern void sub_080275cc();
 extern void StartScrollLock();
@@ -94,10 +94,10 @@ extern s16 ActorComputeHealth(void);
 extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
-extern u32 sub_08068f68(void);
+extern u32 ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCollideTerrain(void);
-extern u32 sub_0806951c(void);
-extern u32 sub_08069888(void);
+extern u32 ActorCollideTerrainAlongVelocity(void);
+extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
 /* Module functions */
@@ -116,9 +116,9 @@ void sub_080b2fe8(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk6C = 6;
-    t->unk30 = t->pixelX;
-    t->unk34 = t->pixelY;
+    t->whispyWoodsAirPuffEffectTimer = 6;
+    t->whispyWoodsAirPuffEffectX = t->pixelX;
+    t->whispyWoodsAirPuffEffectY = t->pixelY;
 }
 
 void sub_080b3010(u8 a)
@@ -130,12 +130,12 @@ void sub_080b3010(u8 a)
 
     c = &gCurTask;
     t = *c;
-    if (t->unk30 > 7)
-        t->unk30 = 0;
+    if (t->whispyWoodsAppleRollFrame > 7)
+        t->whispyWoodsAppleRollFrame = 0;
     tb = (u8 *)gUnk_0874C24C;
-    TaskSetFrame(tb[(*c)->unk30]);
+    TaskSetFrame(tb[(*c)->whispyWoodsAppleRollFrame]);
     u = *c;
-    u->unk30++;
+    u->whispyWoodsAppleRollFrame++;
     TaskYieldTrampoline(a);
 }
 
@@ -152,7 +152,7 @@ void Task_WhispyWoodsApple(void)
     t->layer = 9;
     u = *c;
     u->frameTable = gWhispyWoodsAppleFrames;
-    u->unk28 = 1;
+    u->whispyWoodsAppleFirstFall = 1;
     CallTableEntry(u->variant, 1, gWhispyWoodsAppleVariants);
 }
 
@@ -165,7 +165,7 @@ void WhispyWoodsAppleInit(void)
     c = &gCurTask;
     t = *c;
     t->updateCallback = (u32)WhispyWoodsAppleUpdate;
-    t->facing = t->unk74;
+    t->facing = t->actorSpawnArg;
     ActorSetState(0);
     u = *c;
     CallTableEntry(u->state, 4, gWhispyWoodsAppleStates);
@@ -179,7 +179,7 @@ void WhispyWoodsAppleUpdate(void)
 
     c = &gCurTask;
     t = *c;
-    if (t->unk28 != 0)
+    if (t->whispyWoodsAppleFirstFall != 0)
     {
         if ((u8)ActorCollideTerrain() == 0)
         {
@@ -218,7 +218,7 @@ void WhispyWoodsAppleFall(void)
     u = *c;
     u->onGround = z;
     u2 = *c;
-    u2->unk6C = z;
+    u2->whispyWoodsAppleLoopCount = z;
     do
     {
         q1 = *c;
@@ -228,8 +228,8 @@ void WhispyWoodsAppleFall(void)
         q2->frame = 0xFFFF;
         TaskYieldTrampoline(4);
         q3 = *c;
-        q3->unk6C++;
-    } while ((s16)q3->unk6C <= 5);
+        q3->whispyWoodsAppleLoopCount++;
+    } while ((s16)q3->whispyWoodsAppleLoopCount <= 5);
     u3 = gCurTask;
     u3->accelY = 148 << 6;
     u3->speedLimitY = 128 << 11;
@@ -273,7 +273,7 @@ void WhispyWoodsAppleState1Update(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->pixelY > t->unk2C)
+    if (t->pixelY > t->whispyWoodsAppleFloorY)
     {
         ActorSetState(2);
         TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
@@ -308,7 +308,7 @@ void WhispyWoodsAppleState2Update(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->pixelY > t->unk2C)
+    if (t->pixelY > t->whispyWoodsAppleFloorY)
     {
         ActorSetState(3);
         TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
@@ -346,7 +346,7 @@ void WhispyWoodsAppleState3Update(void)
 
     c = &gCurTask;
     t = *c;
-    if (t->pixelY > t->unk2C)
+    if (t->pixelY > t->whispyWoodsAppleFloorY)
     {
         t->onGround = 0;
         TaskSetMotionXFacing(0x1CD00, 0x5A5A5A5A);
@@ -617,18 +617,18 @@ void WhispyWoodsAirPuffState0Update(void)
         dv = t46[*a];
         d = (s8)dv;
         t6 = t;
-        w = t6->unk30 - d;
-        t6->unk30 = w;
+        w = t6->whispyWoodsAirPuffEffectX - d;
+        t6->whispyWoodsAirPuffEffectX = w;
         a0v = t->layer + 1;
         t68 = (u32 *)gUnk_0874C568;
         t40 = (u8 *)gUnk_0874C240;
         QueueSprite(a0v, t68[t40[*a]], t->spriteFlags, t->tileWord,
                      w - gSpriteCameraX,
-                     (s16)(t->unk34 - (u16)gSpriteCameraY));
+                     (s16)(t->whispyWoodsAirPuffEffectY - (u16)gSpriteCameraY));
     }
 }
 
-void sub_080b37ec(void)
+void WhispyWoodsLeavesShiftTrail(void)
 {
     gCurTask->health = gCurTask->u80.nearestPlayer;
     gCurTask->u80.nearestPlayer = gCurTask->unk46;
@@ -654,7 +654,7 @@ void sub_080b37ec(void)
     gCurTask->unk28 = (gCurTask->unk28 & 0xFFFF0000) + gCurTask->pixelY;
 }
 
-void sub_080b38f0(void)
+void WhispyWoodsLeavesFillTrail(void)
 {
     s32 x;
     u16 v;
@@ -669,7 +669,7 @@ void sub_080b38f0(void)
     gCurTask->unk2C = (gCurTask->unk2C & 0xFFFF) + (gCurTask->pixelX << 16);
     gCurTask->unk28 = (gCurTask->unk28 & 0xFFFF) + (gCurTask->pixelX << 16);
     x = gCurTask->pixelX;
-    gCurTask->unk18 = x;
+    gCurTask->whispyWoodsLeavesStartX = x;
     /* Zero-code lever: two loop levels weight the unk70 address's use x3
        (flow counts refs by loop depth), 1 + 3 = 4 refs, which ranks it
        above the &gCurTask pool value in local-alloc (r3, not r4). */
@@ -687,7 +687,7 @@ void sub_080b38f0(void)
     gCurTask->unk2C = (gCurTask->unk2C & 0xFFFF0000) + gCurTask->pixelY;
     gCurTask->unk28 = (gCurTask->unk28 & 0xFFFF0000) + gCurTask->pixelY;
     gCurTask->unk84 = gCurTask->hitterPlayer = gCurTask->parent
-        = gCurTask->facing = gCurTask->unk1C = gCurTask->pixelY;
+        = gCurTask->facing = gCurTask->whispyWoodsLeavesStartY = gCurTask->pixelY;
 }
 
 void sub_080b3a00(void)
@@ -737,30 +737,30 @@ void sub_080b3a00(void)
 
 void WhispyWoodsLeavesDraw(void)
 {
-    if (gUnk_0874C260[65 - (s16)gCurTask->unk6C] != -1)
+    if (gUnk_0874C260[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer] != -1)
         QueueSprite(gCurTask->layer,
-                     gUnk_0874CE68[gUnk_0874C260[65 - (s16)gCurTask->unk6C]],
+                     gUnk_0874CE68[gUnk_0874C260[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->pixelX - gSpriteCameraX + gCurTask->hitTimer,
                      gCurTask->pixelY - gSpriteCameraY + gCurTask->hitKind);
-    if (gUnk_0874C2A6[65 - (s16)gCurTask->unk6C] != -1)
+    if (gUnk_0874C2A6[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer] != -1)
         QueueSprite(gCurTask->layer,
-                     gUnk_0874CE68[gUnk_0874C2A6[65 - (s16)gCurTask->unk6C]],
+                     gUnk_0874CE68[gUnk_0874C2A6[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      ((u32)gCurTask->unk20 >> 16) - gSpriteCameraX + gCurTask->onGround,
                      gCurTask->unk20 - gSpriteCameraY + (s8)gCurTask->hitDirection);
-    if (gUnk_0874C2EC[65 - (s16)gCurTask->unk6C] != -1)
+    if (gUnk_0874C2EC[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer] != -1)
         QueueSprite(gCurTask->layer,
-                     gUnk_0874CE68[gUnk_0874C2EC[65 - (s16)gCurTask->unk6C]],
+                     gUnk_0874CE68[gUnk_0874C2EC[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->health - gSpriteCameraX + gCurTask->waterFlags,
                      gCurTask->unk84 - gSpriteCameraY + (s8)gCurTask->hitEffect);
-    if (gUnk_0874C332[65 - (s16)gCurTask->unk6C] != -1)
+    if (gUnk_0874C332[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer] != -1)
         QueueSprite(gCurTask->layer,
-                     gUnk_0874CE68[gUnk_0874C332[65 - (s16)gCurTask->unk6C]],
+                     gUnk_0874CE68[gUnk_0874C332[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
-                     gCurTask->unk18 - gSpriteCameraX,
-                     gCurTask->unk1C - gSpriteCameraY);
+                     gCurTask->whispyWoodsLeavesStartX - gSpriteCameraX,
+                     gCurTask->whispyWoodsLeavesStartY - gSpriteCameraY);
 }
 
 void Task_WhispyWoodsLeaves(void)
@@ -774,10 +774,10 @@ void Task_WhispyWoodsLeaves(void)
     gCurTask->layer = 8;
     gCurTask->frameTable = (u32 *)gUnk_0874CE68;
     gCurTask->updateCallback = (u32)WhispyWoodsLeavesUpdate;
-    sub_080b38f0();
+    WhispyWoodsLeavesFillTrail();
     sub_080b3a00();
-    gCurTask->unk6C = 66;
-    gCurTask->unk6E = 0;
+    gCurTask->whispyWoodsLeavesLifeTimer = 66;
+    gCurTask->whispyWoodsLeavesLoopCount = 0;
     /* the two constants the loop keeps in r5/r8 are variables (lesson 3.471) */
     m = 0x8000;
     z = 0;
@@ -812,7 +812,7 @@ void Task_WhispyWoodsLeaves(void)
         gCurTask->velX = -0x4000;
         gCurTask->velY = 0x2000;
         TaskYieldTrampoline(2);
-    } while (++gCurTask->unk6E <= 2);
+    } while (++gCurTask->whispyWoodsLeavesLoopCount <= 2);
     gCurTask->velX = 0;
     gCurTask->velY = 0x8000;
     TaskYieldTrampoline(1);
@@ -852,7 +852,7 @@ void WhispyWoodsLeavesUpdate(void)
     u8 *su;
     s32 w;
 
-    sub_080b37ec();
+    WhispyWoodsLeavesShiftTrail();
     c = &gCurTask;
     su = (u8 *)*c + 108;
     w = *(u16 *)su - 1;
@@ -870,7 +870,7 @@ void Task_OneUp(void)
     c = &gCurTask;
     ta = *c;
     ta->moveCallback = (u32)TaskMove;
-    ta->drawCallback = (u32)sub_08065640;
+    ta->drawCallback = (u32)ActorDrawWorldInViewOrDestroyWithExtra;
     *(u8 *)((u8 *)ta + 66) = 11;
     tb = *c;
     tb->frameTable = (u32 *)gOneUpFrames;
@@ -886,7 +886,7 @@ void Task_MaximTomato(void)
     c = &gCurTask;
     ta = *c;
     ta->moveCallback = (u32)TaskMove;
-    ta->drawCallback = (u32)sub_08065640;
+    ta->drawCallback = (u32)ActorDrawWorldInViewOrDestroyWithExtra;
     *(u8 *)((u8 *)ta + 66) = 11;
     tb = *c;
     tb->frameTable = (u32 *)gMaximTomatoFrames;
@@ -902,7 +902,7 @@ void Task_InvincibleCandy(void)
     c = &gCurTask;
     ta = *c;
     ta->moveCallback = (u32)TaskMove;
-    ta->drawCallback = (u32)sub_08065640;
+    ta->drawCallback = (u32)ActorDrawWorldInViewOrDestroyWithExtra;
     *(u8 *)((u8 *)ta + 66) = 11;
     tb = *c;
     tb->frameTable = (u32 *)gInvincibleCandyFrames;
@@ -918,7 +918,7 @@ void Task_EnergyDrink(void)
     c = &gCurTask;
     ta = *c;
     ta->moveCallback = (u32)TaskMove;
-    ta->drawCallback = (u32)sub_08065640;
+    ta->drawCallback = (u32)ActorDrawWorldInViewOrDestroyWithExtra;
     *(u8 *)((u8 *)ta + 66) = 11;
     tb = *c;
     tb->frameTable = (u32 *)gEnergyDrinkFrames;
@@ -1022,7 +1022,7 @@ void PickupUpdate(void)
 {
     s32 v;
 
-    if (gCurTask->variant == 0 && (u8)sub_08069888() == 0)
+    if (gCurTask->variant == 0 && (u8)ActorCollideTerrainFloor() == 0)
         CallTableEntry(gCurTask->updateState, 3, gPickupStateUpdates);
     v = gCurTask->unk34;
     gCurTask->unk34 = ActorTickAnim(v);
@@ -1032,7 +1032,7 @@ void PickupUpdate(void)
         sub_080b3ffc();
     }
     ActorCheckHits();
-    sub_08069bbc();
+    PickupReactToHit();
 }
 
 void PickupEnterState(void)
@@ -1295,9 +1295,9 @@ void sub_080b447c(void)
     TaskSetMotionXFacing(*(s32 *)((*(u8 *)((u8 *)*c + 116) << 2) + (u32)e), 0x5A5A5A5A);
     TaskSetMotionY(0, 168 << 5, 192 << 10);
     t2 = *c;
-    t2->unk28 = 130 << 1;
-    t2->unk2C = 2;
-    t2->unk30 = 48;
+    t2->abilityStarLifeTimer = 130 << 1;
+    t2->abilityStarFrameTimer = 2;
+    t2->abilityStarPickupDelay = 48;
     z = 0;
     t2->frame = 4;
     *(u8 *)((u8 *)t2 + 122) = z;
@@ -1314,7 +1314,7 @@ void sub_080b44f0(void)
 
     c = &gCurTask;
     t = *c;
-    w0 = t->unk2C;
+    w0 = t->abilityStarFrameTimer;
     c2 = c;
     if (w0 <= 0)
     {
@@ -1322,10 +1322,10 @@ void sub_080b44f0(void)
         *(u16 *)((u8 *)t + 60) = w;
         if ((s16)w > 19)
             t->frame = 4;
-        (*c2)->unk2C = 2;
+        (*c2)->abilityStarFrameTimer = 2;
     }
     t3 = *c2;
-    t3->unk2C = t3->unk2C - 1;
+    t3->abilityStarFrameTimer = t3->abilityStarFrameTimer - 1;
 }
 
 s32 AbilityStarCheckPlayerFar(void)
@@ -1398,10 +1398,10 @@ void AbilityStarCheckExpire(void)
     if (AbilityStarCheckPlayerFar() != 0)
         return;
     t = gCurTask;
-    wl = t->unk28;
+    wl = t->abilityStarLifeTimer;
     w = wl;
     wl = wl - 1;
-    t->unk28 = wl;
+    t->abilityStarLifeTimer = wl;
     if (w <= 0)
     {
         TaskSetEntry(ActorDie, gCurTaskIdx);
@@ -1454,15 +1454,15 @@ void AbilityStarUpdate(void)
     struct Task *t;
     s32 w;
 
-    if ((u8)sub_080696a0() == 0)
+    if ((u8)ActorCollideTerrainInCameraBounds() == 0)
         CallTableEntry(gCurTask->updateState, 2, gAbilityStarStateUpdates);
     t = gCurTask;
-    w = t->unk30;
+    w = t->abilityStarPickupDelay;
     if (w <= 0)
         ActorCheckHits();
     else
-        t->unk30 = w - 1;
-    sub_08069b84();
+        t->abilityStarPickupDelay = w - 1;
+    ActorReactToHitOrTerrainDamage();
 }
 
 void AbilityStarEnterState(void)
@@ -1570,14 +1570,14 @@ void StarRodPieceCollect(void)
     DisablePause();
 }
 
-void sub_080b48e0(void)
+void StarRodPieceInitDanceWalk(void)
 {
     struct Task *t;
 
     TaskStop();
     t = gCurTask;
-    t->unk1C = 0;
-    t->unk18 = 0;
+    t->starRodPieceWalkingCount = 0;
+    t->starRodPieceWalkingMask = 0;
 }
 
 void StarRodPieceStartDance(void)
@@ -1623,7 +1623,7 @@ void StarRodPieceStartDance(void)
     }
 }
 
-void sub_080b4968(void)
+void StarRodPieceGatherPlayers(void)
 {
     s32 i;
     s32 o;
@@ -1647,7 +1647,7 @@ void sub_080b4968(void)
         {
             b = one << i;
             c = &gCurTask;
-            if (!((*c)->unk18 & b))
+            if (!((*c)->starRodPieceWalkingMask & b))
             {
                 t3 = (struct Task *)((u8 *)gTasks + o);
                 w1 = i * 116;
@@ -1665,8 +1665,8 @@ void sub_080b4968(void)
                     {
                         PlayerWalkToDanceSpot(i);
                         t = *c;
-                        t->unk18 |= b;
-                        t->unk1C++;
+                        t->starRodPieceWalkingMask |= b;
+                        t->starRodPieceWalkingCount++;
                     }
                 }
                 else if (*(u32 *)(p1 + 104) == 0 && *(s16 *)((u8 *)t3 + 74) > 116)
@@ -1680,12 +1680,12 @@ void sub_080b4968(void)
     } while (i < gPlayerCount);
 }
 
-void sub_080b4a34(void)
+void StarRodPieceGatherUpdate(void)
 {
-    if (gCurTask->unk1C == gActivePlayerCount)
+    if (gCurTask->starRodPieceWalkingCount == gActivePlayerCount)
         StarRodPieceStartDance();
     else
-        sub_080b4968();
+        StarRodPieceGatherPlayers();
 }
 
 void StarRodPieceHoverInit(void)
@@ -1734,7 +1734,7 @@ void StarRodPieceHoverState0(void)
     TaskStop();
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_087560EC);
     t = *c;
-    t->unk34 = r;
+    t->actorAnimDelay34 = r;
     v6 = 0xFFFFC000;
     v5 = 128 << 7;
     for (;;)
@@ -1761,9 +1761,9 @@ void StarRodPieceHoverState0Update(void)
     s32 r;
 
     c = &gCurTask;
-    r = ActorTickAnim((*c)->unk34);
+    r = ActorTickAnim((*c)->actorAnimDelay34);
     t = *c;
-    t->unk34 = r;
+    t->actorAnimDelay34 = r;
 }
 
 void StarRodPieceHoverState1(void)
@@ -1772,14 +1772,14 @@ void StarRodPieceHoverState1(void)
 
     c = &gCurTask;
     (*c)->updateState = 1;
-    sub_080b48e0();
+    StarRodPieceInitDanceWalk();
     (*c)->frame = 0xFFFF;
     TaskSleepForever();
 }
 
 void StarRodPieceHoverState1Update(void)
 {
-    sub_080b4a34();
+    StarRodPieceGatherUpdate();
 }
 
 void StarRodPieceSlideOutInit(void)
@@ -1826,7 +1826,7 @@ void StarRodPieceSlideOutState0(void)
     TaskStop();
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_087560EC);
     t = *c;
-    t->unk34 = r;
+    t->actorAnimDelay34 = r;
     t->velX = 0xFFFC0000;
     TaskYieldTrampoline(8);
     (*c)->velX = 0xFFFE0000;
@@ -1847,9 +1847,9 @@ void StarRodPieceSlideOutState0Update(void)
     s32 r;
 
     c = &gCurTask;
-    r = ActorTickAnim((*c)->unk34);
+    r = ActorTickAnim((*c)->actorAnimDelay34);
     t = *c;
-    t->unk34 = r;
+    t->actorAnimDelay34 = r;
     if (t->state != 0)
         TaskSetEntry(StarRodPieceSlideOutEnterState, gCurTaskIdx);
 }
@@ -1891,9 +1891,9 @@ void StarRodPieceSlideOutState1Update(void)
     s32 r;
 
     c = &gCurTask;
-    r = ActorTickAnim((*c)->unk34);
+    r = ActorTickAnim((*c)->actorAnimDelay34);
     t = *c;
-    t->unk34 = r;
+    t->actorAnimDelay34 = r;
 }
 
 void StarRodPieceSlideOutState2(void)
@@ -1902,14 +1902,14 @@ void StarRodPieceSlideOutState2(void)
 
     c = &gCurTask;
     (*c)->updateState = 2;
-    sub_080b48e0();
+    StarRodPieceInitDanceWalk();
     (*c)->frame = 0xFFFF;
     TaskSleepForever();
 }
 
 void StarRodPieceSlideOutState2Update(void)
 {
-    sub_080b4a34();
+    StarRodPieceGatherUpdate();
 }
 
 void StarRodPieceVariant2(void)
@@ -1922,7 +1922,7 @@ void StarRodPieceVariant2(void)
     t->updateCallback = 0;
     if (*(u8 *)((u8 *)t + 116) != 2)
         TaskYieldTrampoline(60);
-    if (sub_08066394() != 0)
+    if (GetLivingActivePlayerHealth() != 0)
     {
         FreezeStage(15);
         ExitClearedStage();

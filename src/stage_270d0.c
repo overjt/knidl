@@ -14,10 +14,10 @@
  * the 0x800 flag), sub_08027128/sub_08027178/sub_08027198 tear the level
  * down before a state change (flags in gStageExitFlags), PauseRoom/
  * SetRoomUpdateFlags/ResumeRoom set the per-frame flags gRoomUpdateFlags, and
- * sub_08027228/sub_08027240 save and restore the OBJ palette and tiles
+ * PauseSaveBgPalette/PauseRestoreRoomGraphics save and restore the OBJ palette and tiles
  * around M02's pause screen.  sub_080272dc picks the hub door the player
  * returns to (gRoomEntryX/gRoomEntryY).  The file stops before
- * sub_080273a0 because that function only matches without these nine in
+ * ReturnToRestartPoint because that function only matches without these nine in
  * front of it in the translation unit (lesson 4.79). */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
@@ -96,17 +96,17 @@ void ResumeRoom(void)
     ResumeHBlankScroll();
 }
 
-void sub_08027228(void)
+void PauseSaveBgPalette(void)
 {
-    CpuSet(gUnk_03001370, gUnk_02008060, 128);
+    CpuSet(gBgPaletteBank8, gPauseSavedBgPalette, 128);
 }
 
-void sub_08027240(void)
+void PauseRestoreRoomGraphics(void)
 {
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1F00;
     RequestCopy(8, (u32)gCurRoomDef->bg3Tiles, BG_VRAM + 0x8000, 0);
-    CpuSet(gUnk_02008060, gUnk_03001370, 128);
+    CpuSet(gPauseSavedBgPalette, gBgPaletteBank8, 128);
     if (gBg3MapShape == 1)
         SetBg3ScreenSize(0x8000);
     if (gUnk_0200B078 == 6)

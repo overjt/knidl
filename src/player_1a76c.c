@@ -12,7 +12,7 @@ void sub_0801a76c(s32 i)
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)sub_0803ddc0;
     t->layer = 7;
-    gCurTask->frameTable = gUnk_0874CFEC;
+    gCurTask->frameTable = gPlayerFrames;
     gCurTask->tileWord = (i << 13) | (i << 7);
     gCurTask->player = &gPlayerStates[i];
 }

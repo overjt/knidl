@@ -215,7 +215,7 @@ void sub_08029b30(void)
         DrawBg23Column(x, y0, y1);
     gCameraStreamPos[0] = gCameraPos[0];
     gCameraStreamPos[1] = gCameraPos[1];
-    gUnk_03004B00.unk8 = (u32)sub_08023f18;
+    gUnk_03004B00.unk8 = (u32)RoomTaskHubLateUpdateBg23;
     gBg1ScrollX = gBg1ScrollY = 0;
 }
 

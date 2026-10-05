@@ -24,7 +24,7 @@ struct M19Frame
 
 /* The eight 4-byte records at 0x03000FE0 that M19's credits tasks animate:
    a frame table index (unk00), the frame within it (unk01), the timer
-   (unk02) and the countdown sub_080782b4 draws on (unk03). */
+   (unk02) and the countdown RoomParticleDrawScrolled draws on (unk03). */
 struct M19Particle
 {
     /*0x00*/ u8 unk00;
@@ -36,7 +36,7 @@ struct M19Particle
 /* The 0x087401E4 script records M19's ending-sequence tasks walk: a pointer
    table indexed by Task.unk20, each entry a header plus two `s16` step lists
    (the "forward" list at +6 and the "reverse" one at +18) that
-   sub_0807777c picks between on Task.unk18/unk24. */
+   CannonFuseGetPieceFrame picks between on Task.unk18/unk24. */
 struct M19Script
 {
     /*0x00*/ u8 unk00[4];
@@ -46,8 +46,8 @@ struct M19Script
 };
 
 /* EWRAM */
-extern u32 gUnk_02004B4C;
-extern u32 gUnk_02005584;
+extern u32 gWarpStarFlightSfxPlayer;
+extern u32 gWarpStarFlightSfx;
 
 /* IWRAM */
 extern struct M19Particle gRoomParticles[];
@@ -142,15 +142,15 @@ void CutsceneCheckSkip(void);
 void Task_CutsceneActor(void);
 void CutsceneDuelStart(void);
 void CutsceneDuelKirby(void);
-void sub_08010834(void);
+void CutsceneActorScript1(void);
 
 /* src/player_109c8.c */
 void sub_080109c8(void);
 
 /* src/player_10b38.c */
 void sub_08010b38(void);
-void sub_08010bac(void);
-void sub_08010cb4(void);
+void CutsceneActorScript2(void);
+void CutsceneActorScript3(void);
 void CutsceneDuelBladeKnight(void);
 void CutsceneBeachStart(void);
 void CutsceneBeachKirby(void);
@@ -158,7 +158,7 @@ void CutsceneBeachChair(void);
 void CutsceneBeachCandyDream(void);
 void CutsceneBeachDonutDream(void);
 void CutsceneBeachMeatDream(void);
-s32 sub_08011880(void);
+s32 CutsceneBeachActorScript10(void);
 void CutsceneBeachWaddleDoo(void);
 void CutsceneBeachSunglasses(void);
 void CutsceneBeachQuestionMarks(void);
@@ -167,24 +167,24 @@ void CutsceneBombKirby(void);
 void CutsceneBombPoppyBrosSr(void);
 void CutsceneBombHeldBomb(void);
 void CutsceneBombThrownBomb(void);
-void sub_08012df8(void);
-void sub_08012e6c(void);
+void CutsceneBombActorScript18(void);
+void CutsceneBombActorScript19(void);
 void sub_08012fe0(void);
-void sub_08013058(void);
-void sub_08013348(void);
+void CutsceneBombActorScript20(void);
+void CutsceneBombActorScript21(void);
 void CutsceneBalloonsStart(void);
 void CutsceneBalloonsKirby(void);
 void CutsceneBalloonsLooseBalloon(void);
 void CutsceneBalloonsYellowBalloon(void);
 void CutsceneBalloonsGreenBalloon(void);
 void CutsceneBalloonsLastBalloon(void);
-void sub_08014184(void);
-void sub_080142a0(void);
-void sub_080143b4(void);
+void CutsceneBalloonsActorScript27(void);
+void CutsceneBalloonsActorScript28(void);
+void CutsceneBalloonsActorScript29(void);
 void CutsceneTomatoStart(void);
 void CutsceneTomatoKirby(void);
 void CutsceneTomatoMaximTomato(void);
-void sub_08014c08(void);
+void CutsceneTomatoActorScript32(void);
 void CutsceneTomatoExclamation(void);
 void CutsceneShipStart(void);
 void CutsceneShipKirby(void);
@@ -194,16 +194,16 @@ void CutsceneShipShark(void);
 void CutsceneShipWaves(void);
 void CutsceneSingingStart(void);
 void CutsceneSingingKirby(void);
-void sub_08015f18(void);
+void CutsceneSingingActorScript40(void);
 void CutsceneSingingRainbowBar(void);
-void sub_080162a0(void);
-void sub_08016514(void);
-void sub_080167dc(void);
-void sub_08016ac4(void);
-void sub_08016dd4(void);
-void sub_080170e4(void);
-void sub_080173f4(void);
-void sub_0801757c(void);
+void CutsceneSingingActorScript42(void);
+void CutsceneSingingActorScript43(void);
+void CutsceneSingingActorScript44(void);
+void CutsceneSingingActorScript45(void);
+void CutsceneSingingActorScript46(void);
+void CutsceneSingingActorScript47(void);
+void CutsceneSingingActorScript48(void);
+void CutsceneSingingActorScript49(void);
 void sub_0801761c(void);
 
 /* src/actor_70ec0.c */
@@ -228,7 +228,7 @@ void WarpStarFlightEnterState(void);
 void WarpStarSetTrail(int a, int b, int c, int d);
 void WarpStarStopTrail(void);
 void WarpStarEmitTrailStars(void);
-void sub_080719a0(void);
+void WarpStarDrawFlight(void);
 void WarpStarSetRiderState(u16 a);
 void WarpStarSetMetaKnightRiderState(u16 a);
 void CreateFlyingWarpStar(int x, int y, int c);
@@ -237,67 +237,67 @@ void sub_08071d60(void);
 void sub_08071e74(void);
 void sub_08071e80(void);
 void sub_08071ebc(void);
-void sub_08071f54(void);
-void sub_080720dc(void);
-void sub_080720e8(void);
-void sub_0807237c(void);
-void sub_08072388(void);
-void sub_08072678(void);
-void sub_08072684(void);
-void sub_080728a4(void);
-void sub_080728b0(void);
-void sub_08072af4(void);
-void sub_08072b00(void);
-void sub_08072d80(void);
+void WarpStarFlight5(void);
+void WarpStarFlight5Update(void);
+void WarpStarFlight6(void);
+void WarpStarFlight6Update(void);
+void WarpStarFlight8(void);
+void WarpStarFlight8Update(void);
+void WarpStarFlight10(void);
+void WarpStarFlight10Update(void);
+void WarpStarFlight11(void);
+void WarpStarFlight11Update(void);
+void WarpStarFlight12(void);
+void WarpStarFlight12Update(void);
 
 /* src/actor_72d8c.c */
-void sub_08072d8c(void);
-void sub_080731c4(void);
-void sub_080731d0(void);
-void sub_0807328c(void);
-void sub_08073298(void);
-void sub_08073578(void);
-void sub_08073584(void);
-void sub_080737f8(void);
-void sub_08073804(void);
-void sub_0807395c(void);
-void sub_08073968(void);
-void sub_080739bc(void);
-void sub_08073a54(void);
-void sub_08073cd4(void);
-void sub_08073ce0(void);
-void sub_08073e00(void);
-void sub_08073e0c(void);
-void sub_08073e80(void);
-void sub_08073f18(void);
-void sub_0807409c(void);
-void sub_080740bc(void);
-void sub_080743c8(void);
+void WarpStarFlight13(void);
+void WarpStarFlight13Update(void);
+void WarpStarFlight14(void);
+void WarpStarFlight14Update(void);
+void WarpStarFlight15(void);
+void WarpStarFlight15Update(void);
+void WarpStarFlight17(void);
+void WarpStarFlight17Update(void);
+void WarpStarFlight18(void);
+void WarpStarFlight18Update(void);
+void WarpStarFlight19(void);
+void WarpStarFlight19Update(void);
+void WarpStarFlight20(void);
+void WarpStarFlight20Update(void);
+void WarpStarFlight21(void);
+void WarpStarFlight21Update(void);
+void WarpStarFlight22(void);
+void WarpStarFlight22Update(void);
+void WarpStarFlight23(void);
+void WarpStarFlight23Update(void);
+void WarpStarFlight24(void);
+void WarpStarFlight24Update(void);
 void sub_080743cc(void);
 void sub_080743f0(void);
 void sub_08074420(void);
-void sub_0807447c(void);
+void WarpStarFlight4Update(void);
 void Task_WarpStarCamera(void);
 void WarpStarCameraUpdate(void);
-void sub_08074588(void);
+void WarpStarCameraFollowPlayer(void);
 void sub_080745d0(void);
 void sub_080745dc(void);
 void sub_08074628(void);
-void sub_08074638(void);
-void sub_080746c0(void);
-void sub_0807470c(void);
-void sub_08074784(void);
-void sub_08074794(void);
-void sub_080747dc(void);
-void sub_080747ec(void);
-void sub_08074880(void);
-void sub_080748a8(void);
-void sub_08074904(void);
-void sub_08074974(void);
-void sub_08074988(void);
-void sub_08074ab8(void);
-void sub_08074ac8(void);
-void sub_08074b60(void);
+void WarpStarCameraPath5(void);
+void WarpStarCameraPath6(void);
+void WarpStarCameraPath8(void);
+void WarpStarCameraPath10(void);
+void WarpStarCameraPath11(void);
+void WarpStarCameraPath12(void);
+void WarpStarCameraPath13(void);
+void WarpStarCameraPath14(void);
+void WarpStarCameraPath15(void);
+void WarpStarCameraPath17(void);
+void WarpStarCameraPath18(void);
+void WarpStarCameraPath20(void);
+void WarpStarCameraPath21(void);
+void WarpStarCameraPath23(void);
+void WarpStarCameraPath24(void);
 void CreateWarpStarTrailStar(int a, int b, int c);
 
 /* src/actor_74c0c.c */
@@ -345,11 +345,11 @@ void PlayerCannonState5(void);
 void PlayerCannonState5Update(void);
 void PlayerEnterCannon(s32 id, s32 v);
 void PlayerLeaveCannon(s32 id);
-void sub_08076f04(s32 id);
-void sub_08076f50(s32 id);
+void PlayerEndCannonLaunch(s32 id);
+void PlayerJumpOutOfCannon(s32 id);
 void CannonLaunchPlayers(int a);
 void Task_Cannon(void);
-u16 sub_080770a0(void);
+u16 CannonPickLaunchState(void);
 void CannonLoadPlayer(s32 id);
 void sub_0807717c(void);
 void sub_080771b0(void);
@@ -367,9 +367,9 @@ void CannonState2Update(void);
 void CannonState3(void);
 void CannonState3Update(void);
 void Task_CannonFuse(void);
-void sub_0807775c(void);
-s32 sub_0807777c(struct M19Script *p);
-void sub_080777bc(s32 x, s32 y, s32 d);
+void CannonFuseInitBurn(void);
+s32 CannonFuseGetPieceFrame(struct M19Script *p);
+void CannonFuseEnterPiece(s32 x, s32 y, s32 d);
 void CannonFuseBurnStep(void);
 void CannonFuseStepCell(struct M19Script *p);
 void sub_08077980(void);
@@ -387,7 +387,7 @@ void CannonFuseBurnUpdate(void);
 void CannonFuseState2(void);
 void CannonFuseState2Update(void);
 void Task_BigSwitch(void);
-s32 sub_08077ca4(void);
+s32 BigSwitchHitterCanPress(void);
 void sub_08077cd4(void);
 void BigSwitchStartPress(void);
 void BigSwitchStartRefill(s32 id);
@@ -411,11 +411,11 @@ void RoomParticlesDrawBelowLine(void);
 void RoomParticlesDrawRepeated(void);
 void RoomParticleStepX(struct M19Particle *p);
 void RoomParticleInit(struct M19Particle *p, u8 a, u8 b);
-void sub_080781fc(struct M19Particle *p);
+void RoomParticleDrawFixed(struct M19Particle *p);
 void sub_08078258(struct M19Particle *p);
-void sub_080782b4(struct M19Particle *p);
-void sub_0807831c(struct M19Particle *p);
-u8 sub_080783e0(s16 x, s16 y);
+void RoomParticleDrawScrolled(struct M19Particle *p);
+void RoomParticleDrawRepeated(struct M19Particle *p);
+u8 RoomParticleIsOnScreen(s16 x, s16 y);
 void RoomParticleStepY(struct M19Particle *p, u8 a);
 void Task_RoomParticles(void);
 void RoomParticlesVariant0(void);
@@ -429,11 +429,11 @@ void sub_0807883c(void);
 void RoomParticlesVariant4(void);
 void sub_080788e0(void);
 void Task_WaddleDee(void);
-s32 sub_08078984(void);
-s32 sub_080789ac(void);
-s32 sub_08078a48(void);
-s32 sub_08078b08(void);
-s32 sub_08078b38(void);
-s32 sub_08078b64(void);
+s32 ParasolWaddleDeeReactToDefeat(void);
+s32 WaddleDeeStartFall(void);
+s32 WaddleDeeLand(void);
+s32 WaddleDeeEnterWater(void);
+s32 WaddleDeeHitWall(void);
+s32 WaddleDeeHitCeiling(void);
 
 #endif /* GUARD_CUTSCENE_H */

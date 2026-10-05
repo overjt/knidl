@@ -25,7 +25,7 @@
  * gUnk_0874C4E4, M14's shared callback sub_08050f80); their per-frame
  * callbacks PlayerObjectStarRodShotUpdate and PlayerObjectStarRodFlightShotUpdate register the collider and hand
  * over to sub_08050814 on contact (variant 11 bounces back once on
- * collision result 6).  CreatePlayerObject and sub_08053a44 are the spawners
+ * collision result 6).  CreatePlayerObject and CreatePlayerObjectLowSlot are the spawners
  * the player's actions call (M09-M14): they start a task of type 6 in
  * the slot band of player 0-3 (4-6, 7-9, 10-12, 13-15; CreatePlayerObject
  * then retries a wider band and, last, a type-7 task in slots 32-62) and
@@ -56,7 +56,7 @@ void sub_08052f6c(void)
     {
         struct Task *t = gCurTask;
         t->tileWord = (t->u8C.parentTask)->tileWord | 0xF008;
-        switch (t->unk18 & 15)
+        switch (t->playerObjectSpawnWord & 15)
         {
         case 0:
             PlaySfxIfLocalPlayer(207, gCurTask->parent);
@@ -96,7 +96,7 @@ void sub_08052f6c(void)
                 u->unk2C = 4;
                 u->u80.attackAbility = 16;
             }
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 7; gCurTask->unk6C++)
+            for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 7; gCurTask->playerObjectLoopCount++)
             {
                 u8 *e;
                 s32 v;
@@ -104,18 +104,18 @@ void sub_08052f6c(void)
                     struct Task *u = gCurTask;
                     u->posX = u->unk28 << 16;
                     u->posY = u->unk2C << 16;
-                    v = xs[(s16)u->unk6C] << 8;
-                    if (xs[(s16)u->unk6C] & 0x8000)
+                    v = xs[(s16)u->playerObjectLoopCount] << 8;
+                    if (xs[(s16)u->playerObjectLoopCount] & 0x8000)
                         v |= 0xFF000000;
                 }
                 TaskSetMotionXFacing(v, 0x5A5A5A5A);
                 {
                     struct Task *u = gCurTask;
-                    v = ys[(s16)u->unk6C] << 8;
-                    if (ys[(s16)u->unk6C] & 0x8000)
+                    v = ys[(s16)u->playerObjectLoopCount] << 8;
+                    if (ys[(s16)u->playerObjectLoopCount] & 0x8000)
                         v |= 0xFF000000;
                     u->velY = v;
-                    e = gUnk_0873B88A[steps[(s16)u->unk6C]];
+                    e = gUnk_0873B88A[steps[(s16)u->playerObjectLoopCount]];
                     u->unk6E = 0;
                 }
                 do
@@ -226,7 +226,7 @@ void sub_08052f6c(void)
             TaskSetMotionXFacing(0x60000, 0x5A5A5A5A);
             {
                 struct Task *u = gCurTask;
-                if ((u->unk18 & 15) == 4)
+                if ((u->playerObjectSpawnWord & 15) == 4)
                     u->frame = 18;
                 else
                     u->frame = 19;
@@ -246,7 +246,7 @@ void sub_08053380(void)
         TaskSetEntry(sub_08050814, gCurTaskIdx);
         return;
     }
-    switch (t->unk18 & 15)
+    switch (t->playerObjectSpawnWord & 15)
     {
     case 4:
     {
@@ -281,9 +281,9 @@ void sub_080534d0(void)
 {
     s32 k = -1;
 
-    if ((gCurTask->unk18 & 15) == 4)
+    if ((gCurTask->playerObjectSpawnWord & 15) == 4)
         k = 12;
-    else if ((gCurTask->unk18 & 15) == 5)
+    else if ((gCurTask->playerObjectSpawnWord & 15) == 5)
         k = 0;
     if (k != -1)
     {
@@ -494,7 +494,7 @@ s32 CreatePlayerObject(s8 player, u8 variant, s32 arg)
     return idx;
 }
 
-s32 sub_08053a44(s8 player, u8 variant, s32 arg)
+s32 CreatePlayerObjectLowSlot(s8 player, u8 variant, s32 arg)
 {
     s32 prio;
     s32 idx;
@@ -513,7 +513,7 @@ s32 sub_08053a44(s8 player, u8 variant, s32 arg)
     if (idx != -1)
     {
         struct Task *t = &gTasks[idx];
-        t->unk18 = (variant << 24) | (arg & 0xFFFFFF);
+        t->playerObjectSpawnWord = (variant << 24) | (arg & 0xFFFFFF);
         t->posX = gCurTask->posX;
         t->pixelX = gCurTask->pixelX;
         t->posY = gCurTask->posY;

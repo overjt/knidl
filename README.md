@@ -110,16 +110,20 @@ code only; naming and data readability are the figures below.
   headers, the actor records and seg 18's handler tables). Assets are never committed
   ([docs/data.md](docs/data.md)). The shift test proves the ROM movable and
   the boot test runs it moved (see "For modders").
-- **Names** (#155, open). 3,800 of the 5,348 functions and 263 of the 266
+- **Names** (#155, open). 4,366 of the 5,348 functions and 265 of the 266
   task bodies have real names, each with its evidence in
   `docs/analysis/renames.csv` (convention: [docs/naming.md](docs/naming.md)).
-  Of the 9,524 documented symbols, 6,553 have semantic names and 2,971 are
-  position names: 2,309 data records named after their slot in a
-  consumer-proven table and 662 state bodies named after their slot in
-  their family's state table. Most of the undocumented symbols are ROM data
+  Of the 13,102 documented symbols, about 6,950 have semantic names and
+  6,156 are position names: data records, palette-buffer cells and the
+  player's frame records named after their slot in a consumer-proven table,
+  and state bodies and scripts named after their slot in a state or
+  dispatch table. `struct Task`'s per-family registers read by name in
+  198 families through 965 alias macros (`include/task_vars.h`, as pret's
+  `#define tState data[0]`). Most of the undocumented symbols are ROM data
   labels, 17,074 of them asset labels that stay unnamed by policy; the long
-  tail (about 1,550 `sub_*` functions, mostly enemy and boss state bodies
-  no defined verb fits, and one-caller helpers) is #155's backlog. `make audit` keeps the census of what is left,
+  tail (about 980 `sub_*` functions, mostly enemy and boss state bodies
+  no defined verb fits, scripts that need identities, and helpers) is
+  #155's backlog. `make audit` keeps the census of what is left,
   and why, in [docs/naming.md](docs/naming.md) section 5.1.
 
 ## For modders

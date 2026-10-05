@@ -34,9 +34,9 @@ struct Door
 
 struct MapCell
 {
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
-    /*0x02*/ u8 unk2;
+    /*0x00*/ u8 metatileLo;
+    /*0x01*/ u8 metatileHi;
+    /*0x02*/ u8 slopeIndex;
     /*0x03*/ u8 collisionTile;
 };
 
@@ -44,7 +44,7 @@ struct MapCell
 struct MapTile
 {
     /*0x00*/ u16 metatile;
-    /*0x02*/ u8 unk2;
+    /*0x02*/ u8 slopeIndex;
     /*0x03*/ u8 collisionTile;
 };
 
@@ -108,18 +108,18 @@ struct Unk020055D8
 
 struct Unk020061F0
 {
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ struct MapTile *unk8;
-    /*0x0C*/ u16 *unkC;
-    /*0x10*/ u16 *unk10;
-    /*0x14*/ u16 unk14;
-    /*0x16*/ u16 unk16;
-    /*0x18*/ u16 unk18;
-    /*0x1A*/ u16 unk1A;
-    /*0x1C*/ s8 unk1C;
+    /*0x00*/ u16 cellX;
+    /*0x02*/ u16 cellY;
+    /*0x04*/ u16 mapIndex;
+    /*0x06*/ u16 scriptPos;
+    /*0x08*/ struct MapTile *metatileCursor;
+    /*0x0C*/ u16 *bgMapEntry;
+    /*0x10*/ u16 *script;
+    /*0x14*/ u16 waitFrames;
+    /*0x16*/ u16 metatile;
+    /*0x18*/ u16 collisionTile;
+    /*0x1A*/ u16 chainAttack;
+    /*0x1C*/ s8 breakerPlayer;
     /*0x1D*/ u8 filler1D[3];
 };
 
@@ -196,7 +196,7 @@ extern u8 gBigSwitchReturnLevel;
 extern u16 gSavedPlayerAbilities[];
 extern u16 gUnk_02008050;
 extern u16 gUnk_02008054;
-extern u16 gUnk_02008060[];
+extern u16 gPauseSavedBgPalette[];
 extern u16 gBlockLayer[]; /* per-cell block layer: low byte = replacement index, 0x8000 = being broken */
 extern s16 gRoomEntryY;
 extern u8 gEntryDoorEvent;
@@ -214,11 +214,11 @@ extern u8 gWarpStarStationLevels;
 extern u8 gRoomBgLayout;
 extern u8 gUnk_0200B078;
 extern u16 gMetatileTiles[];
-extern u8 gUnk_0200D080;
+extern u8 gMidBossFightState;
 
 /* IWRAM */
-extern u16 gUnk_030012B0[];
-extern u16 gUnk_03001370[];
+extern u16 gBgPaletteBank2[];
+extern u16 gBgPaletteBank8[];
 extern s16 gCameraAnchorY;
 extern u32 gUnk_03001F10;
 extern s8 gUnk_03001F20;
@@ -721,8 +721,8 @@ void RoomTaskHubInit(void);
 void RoomTaskBigSwitchViewInit(void);
 void RoomTaskHubUpdateCamera(void);
 void RoomTaskBigSwitchViewUpdateCamera(void);
-void sub_08023f18(void);
-void sub_08023f5c(void);
+void RoomTaskHubLateUpdateBg23(void);
+void RoomTaskHubLateUpdateBg123(void);
 void RoomTaskBigSwitchViewLateUpdate(void);
 void LoadGoalGameRoom(void);
 
@@ -731,8 +731,8 @@ void RoomTaskGoalGameInit(void);
 void LoadCutsceneRoom(void);
 void RoomTaskCutsceneInit(void);
 void RoomTaskSnapCameraToFocus(void);
-void sub_08024598(void);
-void sub_080245d0(void);
+void RoomTaskLateUpdateBg2NoObjects(void);
+void RoomTaskLateUpdateBg2Bg3NoObjects(void);
 void LoadEndingEpilogueRoom(s32 x, s32 y);
 void LoadEndingStarRodReturnRoom(s32 x, s32 y);
 void LoadEndingRoom(s32 a0);
@@ -742,10 +742,10 @@ void RoomTaskCreditsInit(void);
 s32 FindDoorAt(s32 x, s32 y);
 s32 EnterDoor(void);
 void ExitClearedStage(void);
-void sub_08025a30(void);
-void sub_08025acc(void);
-void sub_08025b0c(void);
-void sub_08025b5c(void);
+void ExitKingDededeStage(void);
+void ExitToNextRoom(void);
+void ExitToNextRoomOnWarpStar(void);
+void ExitToEnding(void);
 void PressBigSwitch(s32 id);
 void ReturnFromBigSwitchView(void);
 void sub_08025e00(void);
@@ -760,12 +760,12 @@ s32 CreateBlockBreakEffect(s32 x, s32 y);
 s32 TaskCreateHighSlot(s32 type);
 void SetCameraFocus(s32 x, s32 y);
 void SetCameraFocusOrAnchor(s32 x, s32 y);
-void sub_080262dc(void);
+void EndMidBossFight(void);
 void sub_080262e8(s32 a);
 void WrapLoopingRoom(void);
-s32 sub_080264b0(void);
-void sub_0802651c(s32 i);
-s32 sub_0802653c(void);
+s32 CreateEntryDoorOpening(void);
+void CloseDoorOpening(s32 i);
+s32 CreateEntryDoorStageClearFlag(void);
 s32 sub_08026584(void);
 void sub_08026704(s32 i);
 s32 CreateStageUnlockPan(void);
@@ -775,9 +775,9 @@ void sub_0802695c(void);
 void sub_08026994(void);
 void sub_08026998(void);
 void sub_080269e8(void);
-u32 sub_08026a0c(void);
-u32 sub_08026a80(void);
-u32 sub_08026aec(void);
+u32 WhispyWoodsCheckScrollLock(void);
+u32 KrackoCheckScrollLock(void);
+u32 KingDededeCheckScrollLock(void);
 
 /* src/door_26b60.c */
 void sub_08026b60(void);
@@ -792,24 +792,24 @@ void sub_08027198(void);
 void PauseRoom(void);
 void SetRoomUpdateFlags(u32 a);
 void ResumeRoom(void);
-void sub_08027228(void);
-void sub_08027240(void);
+void PauseSaveBgPalette(void);
+void PauseRestoreRoomGraphics(void);
 void sub_080272dc(void);
 
 /* src/stage_273a0.c */
-void sub_080273a0(void);
+void ReturnToRestartPoint(void);
 void sub_08027548(void);
 s32 sub_08027588(void);
 s32 sub_080275cc(s32 a);
-s32 sub_080276ac(s32 a);
-s32 sub_080276cc(s32 i);
-s32 sub_08027750(void);
+s32 HoldPlayerCamera(s32 a);
+s32 ReleaseDeadPlayerView(s32 i);
+s32 AreInactivePlayerCamerasParked(void);
 void CameraStartHoldAnchorAt(s32 x, s32 y);
-void sub_080277f0(s32 x, s32 y);
-void sub_08027850(s32 a);
-void sub_08027908(void);
-s32 sub_08027a30(void);
-void sub_08027a60(void);
+void CameraStartFollowFocusAt(s32 x, s32 y);
+void CameraStartFollowingPlayer(s32 a);
+void CameraStartPlayersAtAnchor(void);
+s32 ArePlayerCamerasDoneGliding(void);
+void CameraResumeFollowFocus(void);
 
 /* src/level_27a6c.c */
 void sub_08027a6c(void);
@@ -828,14 +828,14 @@ void CameraResetBoundsToGroup(void);
 void CameraResetBounds(void);
 
 /* src/camera_28b8c.c */
-void sub_08028b8c(void);
-void sub_08028e3c(void);
+void CameraResetRoomView(void);
+void CalcRoomAndCameraBounds(void);
 void SetRoomEntryPoint(void);
 void sub_08029034(void);
-void sub_080290ac(void);
+void CameraSetFocusToLocalPlayer(void);
 void CameraInitPos(void);
 void PlayRoomBgm(void);
-void sub_08029194(void);
+void PlayHubRoomBgm(void);
 void LoadBg2Gfx(void);
 void LoadBg3Gfx(void);
 void ClearBg2Bg3Maps(void);

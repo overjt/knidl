@@ -70,16 +70,16 @@ u32 gCutsceneStarts[8] GAME_TBL(08731fa8) = {
 /* include/cutscene.h; CallTableEntry(i, 63, ...) in Task_CutsceneActor */
 u32 gCutsceneActors[63] GAME_TBL(08731fa8) = {
     (u32)CutsceneDuelKirby,
-    (u32)sub_08010834,
-    (u32)sub_08010bac,
-    (u32)sub_08010cb4,
+    (u32)CutsceneActorScript1,
+    (u32)CutsceneActorScript2,
+    (u32)CutsceneActorScript3,
     (u32)CutsceneDuelBladeKnight,
     (u32)CutsceneBeachKirby,
     (u32)CutsceneBeachChair,
     (u32)CutsceneBeachCandyDream,
     (u32)CutsceneBeachDonutDream,
     (u32)CutsceneBeachMeatDream,
-    (u32)sub_08011880,
+    (u32)CutsceneBeachActorScript10,
     (u32)CutsceneBeachWaddleDoo,
     (u32)CutsceneBeachSunglasses,
     (u32)CutsceneBeachQuestionMarks,
@@ -87,21 +87,21 @@ u32 gCutsceneActors[63] GAME_TBL(08731fa8) = {
     (u32)CutsceneBombPoppyBrosSr,
     (u32)CutsceneBombHeldBomb,
     (u32)CutsceneBombThrownBomb,
-    (u32)sub_08012df8,
-    (u32)sub_08012e6c,
-    (u32)sub_08013058,
-    (u32)sub_08013348,
+    (u32)CutsceneBombActorScript18,
+    (u32)CutsceneBombActorScript19,
+    (u32)CutsceneBombActorScript20,
+    (u32)CutsceneBombActorScript21,
     (u32)CutsceneBalloonsKirby,
     (u32)CutsceneBalloonsLooseBalloon,
     (u32)CutsceneBalloonsYellowBalloon,
     (u32)CutsceneBalloonsGreenBalloon,
     (u32)CutsceneBalloonsLastBalloon,
-    (u32)sub_08014184,
-    (u32)sub_080142a0,
-    (u32)sub_080143b4,
+    (u32)CutsceneBalloonsActorScript27,
+    (u32)CutsceneBalloonsActorScript28,
+    (u32)CutsceneBalloonsActorScript29,
     (u32)CutsceneTomatoKirby,
     (u32)CutsceneTomatoMaximTomato,
-    (u32)sub_08014c08,
+    (u32)CutsceneTomatoActorScript32,
     (u32)CutsceneTomatoExclamation,
     (u32)CutsceneShipKirby,
     (u32)CutsceneShipSpyglass,
@@ -109,29 +109,29 @@ u32 gCutsceneActors[63] GAME_TBL(08731fa8) = {
     (u32)CutsceneShipShark,
     (u32)CutsceneShipWaves,
     (u32)CutsceneSingingKirby,
-    (u32)sub_08015f18,
+    (u32)CutsceneSingingActorScript40,
     (u32)CutsceneSingingRainbowBar,
-    (u32)sub_080162a0,
-    (u32)sub_08016514,
-    (u32)sub_080167dc,
-    (u32)sub_08016ac4,
-    (u32)sub_08016dd4,
-    (u32)sub_080170e4,
-    (u32)sub_080173f4,
-    (u32)sub_0801757c,
-    (u32)sub_08017668,
-    (u32)sub_08018498,
-    (u32)sub_08018e14,
-    (u32)sub_08018bb8,
-    (u32)sub_08018d7c,
-    (u32)sub_08019000,
-    (u32)sub_0801a07c,
-    (u32)sub_080195ec,
-    (u32)sub_08019b30,
-    (u32)sub_08019c44,
-    (u32)sub_08019d30,
-    (u32)sub_08019e48,
-    (u32)sub_08019eec,
+    (u32)CutsceneSingingActorScript42,
+    (u32)CutsceneSingingActorScript43,
+    (u32)CutsceneSingingActorScript44,
+    (u32)CutsceneSingingActorScript45,
+    (u32)CutsceneSingingActorScript46,
+    (u32)CutsceneSingingActorScript47,
+    (u32)CutsceneSingingActorScript48,
+    (u32)CutsceneSingingActorScript49,
+    (u32)CutsceneActorScript50,
+    (u32)CutsceneActorScript51,
+    (u32)CutsceneActorScript52,
+    (u32)CutsceneActorScript53,
+    (u32)CutsceneActorScript54,
+    (u32)CutsceneActorScript55,
+    (u32)CutsceneActorScript56,
+    (u32)CutsceneActorScript57,
+    (u32)CutsceneActorScript58,
+    (u32)CutsceneActorScript59,
+    (u32)CutsceneActorScript60,
+    (u32)CutsceneActorScript61,
+    (u32)CutsceneActorScript62,
 };
 
 /* ---- 0x08732614-0x08732630: 1 table(s), 7 function pointer(s), section .game_tbl_08732614 ---- */
@@ -160,7 +160,7 @@ void (*gMapEventVariants[7])(void) GAME_TBL(087328a0) = {
 
 /* ---- 0x087328D8-0x087328F0: 1 table(s), 6 function pointer(s), section .game_tbl_087328d8 ---- */
 /* include/camera.h; CallTableEntry(i, 6, ...) in Task_StageEffect */
-void (*gUnk_087328D8[6])(void) GAME_TBL(087328d8) = {
+void (*gStageEffectStates[6])(void) GAME_TBL(087328d8) = {
     sub_08030254,
     sub_080302cc,
     sub_08030404,
@@ -426,16 +426,16 @@ void (*gPlayerEffectVariants[49])(void) GAME_TBL(0873b928) = {
     sub_08053c48,
     sub_08053d08,
     PlayerEffectAbilityGetSparkle,
-    sub_08053e38,
+    PlayerEffectImpactStar,
     PlayerEffectDeathStar,
-    sub_080540d0,
-    sub_08054330,
-    sub_08054538,
+    PlayerEffectSkidDust,
+    PlayerEffectRunDust,
+    PlayerEffectSlideDust,
     PlayerEffectSplash,
     sub_080548f0,
     PlayerEffectBubble,
-    sub_08054a80,
-    sub_08054d94,
+    PlayerEffectDeathStarRing,
+    PlayerEffectMetaKnightDeathBlast,
     sub_08054de8,
     sub_08054fe4,
     sub_0805569c,
@@ -482,9 +482,9 @@ u32 gPlayerGoalGameStates[11] GAME_TBL(0873dbe4) = {
     (u32)sub_0805b670,
     (u32)PlayerGoalGameLaunch,
     (u32)sub_0805b8f8,
-    (u32)sub_0805b9a4,
+    (u32)PlayerGoalGameFall,
     (u32)PlayerGoalGameLand,
-    (u32)sub_0805bc1c,
+    (u32)PlayerGoalGameWait,
     (u32)PlayerGoalGameDance,
     (u32)PlayerGoalGameFinish,
 };
@@ -496,9 +496,9 @@ u32 gPlayerGoalGameStateUpdates[11] GAME_TBL(0873dbe4) = {
     (u32)PlayerGoalGameState3Update,
     (u32)PlayerGoalGameLaunchUpdate,
     (u32)PlayerGoalGameState5Update,
-    (u32)PlayerGoalGameState6Update,
+    (u32)PlayerGoalGameFallUpdate,
     (u32)PlayerGoalGameLandUpdate,
-    (u32)PlayerGoalGameState8Update,
+    (u32)PlayerGoalGameWaitUpdate,
     (u32)PlayerGoalGameDanceUpdate,
     (u32)PlayerGoalGameFinishUpdate,
 };
@@ -514,42 +514,42 @@ u32 gUnk_0873DEA0[2] GAME_TBL(0873dea0) = {
 /* include/effect.h; CallTableEntry(i, 14, ...) in PlayerDanceInGoalGame, PlayerDanceAfterStageClear */
 u32 gPlayerDances[14] GAME_TBL(0873dedc) = {
     (u32)sub_0805e2d4,
-    (u32)sub_0805e7b4,
-    (u32)sub_0805eb2c,
-    (u32)sub_0805ee90,
-    (u32)sub_0805f1bc,
-    (u32)sub_0805f778,
+    (u32)PlayerDance1,
+    (u32)PlayerDance2,
+    (u32)PlayerDance3,
+    (u32)PlayerDance4,
+    (u32)PlayerDance5,
     (u32)sub_0805e2d4,
-    (u32)sub_0805fb88,
-    (u32)sub_08060308,
-    (u32)sub_08060c2c,
-    (u32)sub_080613e4,
-    (u32)sub_08061cac,
-    (u32)sub_08062584,
-    (u32)sub_08062f88,
+    (u32)PlayerDance7,
+    (u32)PlayerDance8,
+    (u32)PlayerDance9,
+    (u32)PlayerDance10,
+    (u32)PlayerDance11,
+    (u32)PlayerDance12,
+    (u32)PlayerDance13,
 };
 
 /* ---- 0x0873DF24-0x0873DF38: 1 table(s), 5 function pointer(s), section .game_tbl_0873df24 ---- */
 /* include/actor.h; CallTableEntry(i, 5, ...) in Task_PaletteAnim */
 u32 gPaletteAnimVariants[5] GAME_TBL(0873df24) = {
     (u32)PaletteAnimVariant0,
-    (u32)PaletteAnimVariant1,
-    (u32)PaletteAnimVariant2,
+    (u32)PaletteAnimCycle,
+    (u32)PaletteAnimFlashColor,
     (u32)PaletteAnimVariant3,
     (u32)PaletteAnimBgBlend,
 };
 
 /* ---- 0x0873E280-0x0873E284: 1 table(s), 1 function pointer(s), section .game_tbl_0873e280 ---- */
 /* include/actor.h; CallTableEntry(i, 1, ...) in Task_InhalableStar */
-u32 gUnk_0873E280[1] GAME_TBL(0873e280) = {
-    (u32)sub_08067258,
+u32 gInhalableStarStates[1] GAME_TBL(0873e280) = {
+    (u32)InhalableStarState0,
 };
 
 /* ---- 0x0873E284-0x0873E288: 1 table(s), 1 function pointer(s), section .game_tbl_0873e284 ---- */
 /* include/actor.h; CallTableEntry(i, 1, ...) in InhalableStarUpdate: one entry; the 26 words
  * after it, up to the next label, are other data and stay structure-only */
-u32 gUnk_0873E284[1] GAME_TBL(0873e284) = {
-    (u32)sub_08067378,
+u32 gInhalableStarStateUpdates[1] GAME_TBL(0873e284) = {
+    (u32)InhalableStarState0Update,
 };
 
 /* ---- 0x0873E2F0-0x0873E348: 2 table(s), 22 function pointer(s), section .game_tbl_0873e2f0 ---- */
@@ -587,14 +587,14 @@ u32 gHeldPlayerStateUpdates[11] GAME_TBL(0873e2f0) = {
 u32 gActorDefeats[11] GAME_TBL(0873e5bc) = {
     (u32)ActorDefeatByEffect,
     (u32)ActorDefeatExplodeByEffect,
-    (u32)sub_0806ab34,
-    (u32)sub_0806abec,
-    (u32)sub_0806ac6c,
+    (u32)ActorDefeat2,
+    (u32)ActorDefeat3,
+    (u32)ActorDefeat4,
     (u32)ActorDefeatAbilityStar,
     (u32)ActorDefeatMidBoss,
     (u32)ActorDefeatBoss,
-    (u32)sub_0806b178,
-    (u32)sub_0806b230,
+    (u32)ActorDefeat8,
+    (u32)ActorDefeat9,
     (u32)ActorDefeatPickup,
 };
 /* include/actor.h; CallTableEntry(i, 4, ...) in ActorDefeatByEffect */
@@ -621,13 +621,13 @@ u32 gActorDefeatFrozenStateUpdates[3] GAME_TBL(0873e670) = {
 /* include/actor.h; CallTableEntry(i, 4, ...) in ActorDefeatExplodeByEffect */
 u32 gActorExplodeDefeatsByEffect[4] GAME_TBL(0873e670) = {
     (u32)ActorDefeatExplode,
-    (u32)sub_0806aa80,
-    (u32)sub_0806aa8c,
-    (u32)sub_0806aa98,
+    (u32)ActorExplodeDefeat1,
+    (u32)ActorExplodeDefeat2,
+    (u32)ActorExplodeDefeat3,
 };
 
 /* ---- 0x0873E734-0x0873E7A4: 5 table(s), 25 function pointer(s), section .game_tbl_0873e734 ---- */
-/* include/actor.h; read by sub_0806b070 */
+/* include/actor.h; read by BossRunDefeatHook */
 u32 gUnk_0873E734[9] GAME_TBL(0873e734) = {
     (u32)sub_080a1618,
     0,
@@ -651,7 +651,7 @@ u32 gUnk_0873E758[9] GAME_TBL(0873e734) = {
     (u32)sub_080af308,
     (u32)NightmareWizardDefeat,
 };
-/* include/actor.h; CallTableEntry(i, 4, ...) in sub_0806b178 */
+/* include/actor.h; CallTableEntry(i, 4, ...) in ActorDefeat8 */
 u32 gUnk_0873E77C[4] GAME_TBL(0873e734) = {
     (u32)sub_0806b1a8,
     (u32)sub_0806b1c4,

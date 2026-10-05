@@ -8,20 +8,20 @@
 
 /* stage_273a0.c (0x080273A0-0x08027A6B, issue #93).
  *
- * Stage helpers, part 3.  sub_080273a0 picks the arrival door after a
+ * Stage helpers, part 3.  ReturnToRestartPoint picks the arrival door after a
  * level change (the stage door kind in gUnk_02008054), sub_08027548 and
  * sub_08027588/sub_080275cc keep the two-player race record
  * gUnk_02006098 (flags|0x80, lo, hi, previous, direction),
- * sub_080276ac/sub_080276cc/sub_08027750/sub_08027a30 the per-player
- * camera modes gPlayerCameraMode, and CameraStartHoldAnchorAt, sub_080277f0,
- * sub_08027850 and sub_08027908 set the camera mode and target
+ * HoldPlayerCamera/ReleaseDeadPlayerView/AreInactivePlayerCamerasParked/ArePlayerCamerasDoneGliding the per-player
+ * camera modes gPlayerCameraMode, and CameraStartHoldAnchorAt, CameraStartFollowFocusAt,
+ * CameraStartFollowingPlayer and CameraStartPlayersAtAnchor set the camera mode and target
  * (gCameraAnchorX/gCameraAnchorY) for one or all players. */
 
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 void sub_08009e2c(s32 a);
 
-void sub_080273a0(void)
+void ReturnToRestartPoint(void)
 {
     struct RoomDef *r;
     struct Door *d;
@@ -185,13 +185,13 @@ s32 sub_080275cc(s32 a)
     return 0;
 }
 
-s32 sub_080276ac(s32 a)
+s32 HoldPlayerCamera(s32 a)
 {
     gPlayerCameraMode[gCurTask->player->playerIndex] = 1;
     return a;
 }
 
-s32 sub_080276cc(s32 i)
+s32 ReleaseDeadPlayerView(s32 i)
 {
     if (gPlayerCount > 1 && gActivePlayerMask != 0)
     {
@@ -209,7 +209,7 @@ s32 sub_080276cc(s32 i)
     }
 }
 
-s32 sub_08027750(void)
+s32 AreInactivePlayerCamerasParked(void)
 {
     s32 i;
 
@@ -233,7 +233,7 @@ void CameraStartHoldAnchorAt(s32 x, s32 y)
         gCameraMode = 5;
 }
 
-void sub_080277f0(s32 x, s32 y)
+void CameraStartFollowFocusAt(s32 x, s32 y)
 {
     gCameraFocusX = x;
     gCameraFocusY = y;
@@ -244,13 +244,13 @@ void sub_080277f0(s32 x, s32 y)
     if (gUnk_02007D64 != 2)
     {
         if (gInHub != 0)
-            sub_08028e3c();
+            CalcRoomAndCameraBounds();
         else
-            sub_08028b8c();
+            CameraResetRoomView();
     }
 }
 
-void sub_08027850(s32 a)
+void CameraStartFollowingPlayer(s32 a)
 {
     s32 i;
     s32 x;
@@ -283,7 +283,7 @@ void sub_08027850(s32 a)
     }
 }
 
-void sub_08027908(void)
+void CameraStartPlayersAtAnchor(void)
 {
     s32 i;
     s32 x;
@@ -333,7 +333,7 @@ void sub_08027908(void)
     }
 }
 
-s32 sub_08027a30(void)
+s32 ArePlayerCamerasDoneGliding(void)
 {
     s32 i;
 
@@ -345,7 +345,7 @@ s32 sub_08027a30(void)
     return 1;
 }
 
-void sub_08027a60(void)
+void CameraResumeFollowFocus(void)
 {
     gCameraMode = 0;
 }

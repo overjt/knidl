@@ -7,13 +7,13 @@
  *
  * The landing probe TerrainCollideBox runs for a box in the air
  * (gTerrainProbeResult.unk6 == 0): land on the floor under the box's centre, else
- * follow the cell's slope link gUnk_08735018[byte 2] and test the floor
+ * follow the cell's slope link gSlopeIndexTiles[byte 2] and test the floor
  * under the box's left and right bottom corners, keeping the corner/slope
  * flags in gTerrainProbeResult.unkB. */
 
 /* Landing probe TerrainCollideBox runs for a box in the air
    (gTerrainProbeResult.unk6 == 0): snap to the floor under the box's centre;
-   failing that, follow the cell's slope link (gUnk_08735018[byte 2]) and
+   failing that, follow the cell's slope link (gSlopeIndexTiles[byte 2]) and
    test the floor under the box's left and right corners, keeping the
    corner/slope flags in gTerrainProbeResult.unkB.  The corner results share their flag updates through
    the labels at the end of each half. */
@@ -81,10 +81,10 @@ floor:
     {
         gTerrainProbeResult.unkB &= 0xFE;
     }
-    u = gUnk_08735018[gUnk_03005574];
+    u = gSlopeIndexTiles[gTerrainSlopeIndex];
     if (u != 0)
     {
-        odd = gUnk_03005574 & 1;
+        odd = gTerrainSlopeIndex & 1;
         side = 2;
         if (odd)
             side = 1;
@@ -113,8 +113,8 @@ floor:
 walls:
     u = gTerrainTile;
     below = gTerrainTileBelow;
-    cell = gUnk_03005574;
-    cellBelow = gUnk_030055AC;
+    cell = gTerrainSlopeIndex;
+    cellBelow = gTerrainSlopeIndexBelow;
 
     /* Left corner. */
     if (TerrainQueryPixelAndBelow(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxBottom) != 0)
@@ -157,10 +157,10 @@ slopeL:
             goto clr10;
         if ((gUnk_08732DF0[gTerrainTile] & 0xCF) == 0x83)
         {
-            if (gUnk_08735018[cell] == 0)
+            if (gSlopeIndexTiles[cell] == 0)
                 goto clr10;
         }
-        else if (gUnk_08735018[cellBelow] == 0)
+        else if (gSlopeIndexTiles[cellBelow] == 0)
             goto clr10;
         goto set10;
     }
@@ -229,10 +229,10 @@ slopeR:
             goto clr20;
         if ((gUnk_08732DF0[gTerrainTile] & 0xCF) == 0x83)
         {
-            if (gUnk_08735018[cell] == 0)
+            if (gSlopeIndexTiles[cell] == 0)
                 goto clr20;
         }
-        else if (gUnk_08735018[cellBelow] == 0)
+        else if (gSlopeIndexTiles[cellBelow] == 0)
             goto clr20;
         goto set20;
     }

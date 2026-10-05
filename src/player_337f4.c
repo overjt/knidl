@@ -60,8 +60,8 @@ void PlayerActionStand(void)
 
         PlayerStopAxes(3);
         t = gCurTask;
-        t->unk28 = (u16)t->player->unk4E;
-        t->unk2C = t->player->slope;
+        t->unk28 = (u16)t->player->clampedTopY;
+        t->playerPoseSlope = t->player->slope;
         if (t->player->wallSide != 0)
             t->player->savedWallSide = t->player->wallSide;
         gCurTask->player->running = 0;
@@ -75,9 +75,9 @@ void PlayerActionStand(void)
     p->unk35 = 0;
     p->unk34 = 0;
     if (gCurTask->player->mouthState == 1)
-        gCurTask->unk46 = gUnk_0873D0F8[26][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
+        gCurTask->playerBaseFrame = gUnk_0873D0F8[26][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
     else
-        gCurTask->unk46 = gUnk_0873D0F8[gCurTask->player->ability][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
+        gCurTask->playerBaseFrame = gUnk_0873D0F8[gCurTask->player->ability][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
     switch (gCurTask->player->ability)
     {
     case 1:
@@ -86,7 +86,7 @@ void PlayerActionStand(void)
     case 19:
         while (1)
         {
-            TaskSetFrame(gCurTask->unk46);
+            TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
@@ -98,7 +98,7 @@ void PlayerActionStand(void)
     case 15:
         while (1)
         {
-            TaskSetFrame(gCurTask->unk46);
+            TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(6);
             gCurTask->frame++;
             TaskYieldTrampoline(6);
@@ -109,7 +109,7 @@ void PlayerActionStand(void)
         }
     case 0:
     default:
-        TaskSetFrame(gCurTask->unk46);
+        TaskSetFrame(gCurTask->playerBaseFrame);
         TaskSleepForever();
     }
 }
@@ -182,22 +182,22 @@ void PlayerActionStandUpdate(void)
             if (gMetaKnightmareMode == 0)
             {
                 if (gCurTask->player->mouthState == 1)
-                    gCurTask->unk46 = gUnk_0873D0F8[26][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
+                    gCurTask->playerBaseFrame = gUnk_0873D0F8[26][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
                 else
-                    gCurTask->unk46 = gUnk_0873D0F8[gCurTask->player->ability][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
+                    gCurTask->playerBaseFrame = gUnk_0873D0F8[gCurTask->player->ability][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
             }
             else
             {
-                gCurTask->unk46 = gUnk_0873D206[PlayerGetFacingSlope(gCurTask->player->playerIndex)];
+                gCurTask->playerBaseFrame = gUnk_0873D206[PlayerGetFacingSlope(gCurTask->player->playerIndex)];
             }
-            TaskSetFrame(gCurTask->unk46);
+            TaskSetFrame(gCurTask->playerBaseFrame);
             gCurTask->player->savedWallSide = 0;
             break;
         }
         {
             struct Task *w = gCurTask;
 
-            if (w->player->slope != w->unk2C || dir != w->facing)
+            if (w->player->slope != w->playerPoseSlope || dir != w->facing)
             {
                 if (gMetaKnightmareMode == 0)
                     TaskSetEntry(PlayerActionStand, gCurTaskIdx);
@@ -208,7 +208,7 @@ void PlayerActionStandUpdate(void)
         break;
     }
 end:
-    gCurTask->unk2C = gCurTask->player->slope;
+    gCurTask->playerPoseSlope = gCurTask->player->slope;
 }
 
 void PlayerActionWalk(void)
@@ -227,7 +227,7 @@ void PlayerActionWalk(void)
         p->running = 0;
         gCurTask->player->unk0F = 0;
         gCurTask->player->savedWallSide = 0;
-        gCurTask->unk28 = 0;
+        gCurTask->playerWalkStepDelay = 0;
         PlayerPlayBump();
         if (PlayerGetFacingSlope(gCurTask->player->playerIndex) == 4)
             gCurTask->variant = 1;
@@ -241,44 +241,44 @@ void PlayerActionWalk(void)
             while (1)
             {
                 TaskSetFrame(0x153);
-                TaskYieldTrampoline(gCurTask->unk28 + 2);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 3);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 2);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 2);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 3);
+                TaskYieldTrampoline(gCurTask->playerWalkStepDelay + 2);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 3);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 3);
                 TaskSetFrame(0x148);
-                TaskYieldTrampoline(gCurTask->unk28 + 5);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 3);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 2);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 2);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 3);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 2);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 2);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 3);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 5);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 3);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 2);
+                TaskYieldTrampoline(gCurTask->playerWalkStepDelay + 5);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 3);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 3);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 3);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 5);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 3);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
             }
         }
-        gCurTask->unk46 = gUnk_0873D2E8[gCurTask->player->ability];
+        gCurTask->playerBaseFrame = gUnk_0873D2E8[gCurTask->player->ability];
         switch (gCurTask->player->ability)
         {
         case 0:
         default:
             while (1)
             {
-                TaskSetFrame(gCurTask->unk46);
-                TaskYieldTrampoline(gCurTask->unk28 + 4);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 8);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 4);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 2);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 2);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 4);
-                TaskSetFrame((s16)(gCurTask->unk46 - 4));
-                TaskYieldTrampoline(gCurTask->unk28 + 8);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 4);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 2);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 2);
+                TaskSetFrame(gCurTask->playerBaseFrame);
+                TaskYieldTrampoline(gCurTask->playerWalkStepDelay + 4);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 8);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 4);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 4);
+                TaskSetFrame((s16)(gCurTask->playerBaseFrame - 4));
+                TaskYieldTrampoline(gCurTask->playerWalkStepDelay + 8);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 4);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
             }
         case 1:
         case 2:
@@ -286,26 +286,26 @@ void PlayerActionWalk(void)
         case 19:
             while (1)
             {
-                TaskSetFrame(gCurTask->unk46);
-                TaskYieldTrampoline(gCurTask->unk28 + 2);
-                gCurTask->unk6C = 0;
+                TaskSetFrame(gCurTask->playerBaseFrame);
+                TaskYieldTrampoline(gCurTask->playerWalkStepDelay + 2);
+                gCurTask->playerLoopCount = 0;
                 do
                 {
                     t = gCurTask;
                     t->frame++;
-                    TaskYieldTrampoline(t->unk28 + 2);
-                    gCurTask->unk6C++;
-                } while ((s16)gCurTask->unk6C <= 10);
-                TaskSetFrame((s16)(gCurTask->unk46 - 8));
-                TaskYieldTrampoline(gCurTask->unk28 + 2);
-                gCurTask->unk6C = 0;
+                    TaskYieldTrampoline(t->playerWalkStepDelay + 2);
+                    gCurTask->playerLoopCount++;
+                } while ((s16)gCurTask->playerLoopCount <= 10);
+                TaskSetFrame((s16)(gCurTask->playerBaseFrame - 8));
+                TaskYieldTrampoline(gCurTask->playerWalkStepDelay + 2);
+                gCurTask->playerLoopCount = 0;
                 do
                 {
                     t = gCurTask;
                     t->frame++;
-                    TaskYieldTrampoline(t->unk28 + 2);
-                    gCurTask->unk6C++;
-                } while ((s16)gCurTask->unk6C <= 6);
+                    TaskYieldTrampoline(t->playerWalkStepDelay + 2);
+                    gCurTask->playerLoopCount++;
+                } while ((s16)gCurTask->playerLoopCount <= 6);
             }
         case 4:
         case 15:
@@ -315,28 +315,28 @@ void PlayerActionWalk(void)
         case 23:
             while (1)
             {
-                TaskSetFrame(gCurTask->unk46);
-                TaskYieldTrampoline(gCurTask->unk28 + 4);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 4);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 4);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 4);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 2);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 2);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 4);
-                TaskSetFrame((s16)(gCurTask->unk46 - 5));
-                TaskYieldTrampoline(gCurTask->unk28 + 4);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 4);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 4);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 2);
-                t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 2);
+                TaskSetFrame(gCurTask->playerBaseFrame);
+                TaskYieldTrampoline(gCurTask->playerWalkStepDelay + 4);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 4);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 4);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 4);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 4);
+                TaskSetFrame((s16)(gCurTask->playerBaseFrame - 5));
+                TaskYieldTrampoline(gCurTask->playerWalkStepDelay + 4);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 4);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 4);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
+                t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
             }
         }
     }
     CreatePlayerEffect(gCurTask->player->playerIndex, 6, 0x200);
     if (gCurTask->player->mouthState == 1)
-        gCurTask->unk46 = 0x15D;
+        gCurTask->playerBaseFrame = 0x15D;
     else
-        gCurTask->unk46 = gUnk_0873D350[gCurTask->player->ability];
+        gCurTask->playerBaseFrame = gUnk_0873D350[gCurTask->player->ability];
     switch (gCurTask->player->ability)
     {
     case 1:
@@ -345,14 +345,14 @@ void PlayerActionWalk(void)
     case 19:
         while (1)
         {
-            TaskSetFrame(gCurTask->unk46);
+            TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
         }
     case 0:
     default:
-        TaskSetFrame(gCurTask->unk46);
+        TaskSetFrame(gCurTask->playerBaseFrame);
         TaskSleepForever();
     }
 }
@@ -396,11 +396,11 @@ void PlayerActionWalkUpdate(void)
                     s32 d = abs(t2->velX);
 
                     if ((u32)d <= 0xFFFF)
-                        t2->unk28 = 2;
+                        t2->playerWalkStepDelay = 2;
                 }
                 else
                 {
-                    t2->unk28 = v;
+                    t2->playerWalkStepDelay = v;
                 }
                 if (gCurTask->variant == 0)
                 {

@@ -31,41 +31,41 @@ void PlayerActionLight(void)
     PlayerStopAxes(3);
     {
         struct Task *t = gCurTask;
-        t->unk28 = 0;
+        t->playerActionDone28 = 0;
         t->unk2C = 0;
         t->player->unk42 |= 0x700;
         t->player->terrainBox = 0;
     }
     FreezeOtherTasks(15);
     CreatePlayerObject(gCurTask->player->playerIndex, 9, 0);
-    gCurTask->unk6C = 0;
+    gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xDFD);
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 3);
-    gCurTask->unk6C = 0;
+    } while ((s16)++gCurTask->playerLoopCount <= 3);
+    gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xDFF);
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 1);
+    } while ((s16)++gCurTask->playerLoopCount <= 1);
     TaskSetFrame(0xE01);
     TaskYieldTrampoline(1);
     PlayerSetMotionYPreset(54);
     gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk6C = 0;
+    gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xE03);
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 3);
+    } while ((s16)++gCurTask->playerLoopCount <= 3);
     PlayerStopAxes(2);
-    gCurTask->unk6C = 0;
+    gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xE03);
         TaskYieldTrampoline(1);
@@ -75,15 +75,15 @@ void PlayerActionLight(void)
         TaskYieldTrampoline(1);
         TaskSetFrame(0xE05);
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 4);
+    } while ((s16)++gCurTask->playerLoopCount <= 4);
     PlayerSetMotionYPreset(55);
-    gCurTask->unk6C = 0;
+    gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xE03);
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 15);
+    } while ((s16)++gCurTask->playerLoopCount <= 15);
     {
         struct Task *t = gCurTask;
         t->player->terrainBox = (u32)gPlayerDefaultTerrainBox;
@@ -100,7 +100,7 @@ void PlayerActionLight(void)
     }
     {
         struct Task *t = gCurTask;
-        t->unk28++;
+        t->playerActionDone28++;
         gPauseDisabled = 0;
         t->player->unk42 &= 0xF8FF;
     }
@@ -111,7 +111,7 @@ void PlayerActionLightUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 != 0) {
+    if (t->playerActionDone28 != 0) {
         if (t->onGround & 1) {
             /* Both arms store 1: jump2 cross-jumps them after reload and
                deletes the branch, but the `ldr [t, #84]` that fed the test

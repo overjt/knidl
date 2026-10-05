@@ -100,7 +100,7 @@ extern vu8 gBgMosaic; /* MOSAIC lo shadow */
 extern vu16 gBg3Cnt; /* BG3CNT shadow */
 extern vu16 gPlayerPressedKeys[]; /* keys pressed per player */
 extern vu16 gWaitingForVBlank; /* VBlank wait flag */
-extern vu16 gUnk_03001EC8; /* number of OAM entries used */
+extern vu16 gOamEntryCount; /* number of OAM entries used */
 extern vu16 gKeyRepeatInterval; /* auto-repeat interval (4) */
 extern vu8 gWinIn1; /* WININ hi shadow */
 extern u16 *gFadeKeepMask;
@@ -158,8 +158,8 @@ void ClearVCountIntr(void);
 
 /* src/early_1518.c */
 void IntrDummy(void);
-void sub_0800151c(void);
-void sub_08001560(void);
+void EnableForcedBlank(void);
+void DisableForcedBlank(void);
 void RequestCopyList(struct TransferNode *node);
 void ResetOamShadow(void);
 void ResetSpriteQueue(void);
@@ -196,19 +196,19 @@ void TaskDrawWorldLoadTiles(void);
 void TaskDrawWorldTilesLoaded(void);
 void sub_080060c0(void);
 void TaskSleepForever(void);
-void TaskSetFrameByFacing(s16 a);
+void TaskSetFrameByFacing(s16 frame);
 void TaskSetMotionX(s32 a, s32 b, s32 c);
-void TaskSetMotionXFacing(s32 a, s32 b);
+void TaskSetMotionXFacing(s32 velX, s32 accelX);
 void TaskStopX(void);
-void TaskSetMotionY(s32 a, s32 b, s32 c);
+void TaskSetMotionY(s32 velY, s32 accelY, s32 speedLimitY);
 void TaskStopY(void);
-void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
+void TaskSetMotion(s32 velX, s32 accelX, s32 speedLimitX, s32 velY, s32 accelY, s32 speedLimitY);
 void TaskStop(void);
 void TaskStopSlot(u32 i);
 void TaskUpdateFlip(void);
-void TaskSetFrame(s32 a);
-void TaskSetFrameNoFlip(s32 a);
-void TaskSetFrameFlip(s32 a);
+void TaskSetFrame(s32 frame);
+void TaskSetFrameNoFlip(s32 frame);
+void TaskSetFrameFlip(s32 frame);
 void TaskStepForward(s16 a);
 
 /* src/main.c */

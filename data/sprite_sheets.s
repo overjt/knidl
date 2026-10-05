@@ -35527,7 +35527,7 @@ gWaddleDeeGfx:
 	.incbin	"baserom.gba", 0x24BCB0, 0x8
 	.word	gWaddleDeeGfxPalette
 	.word	gWaddleDeeGfxTiles
-	.word	gUnk_08769254
+	.word	gWaddleDeeGfxFrameList
 	.global	gUnk_0824BCC4
 gUnk_0824BCC4:
 	.incbin	"baserom.gba", 0x24BCC4, 0x20
@@ -35590,7 +35590,7 @@ gNoddyGfx:
 	.incbin	"baserom.gba", 0x24C4C0, 0x8
 	.word	gNoddyGfxPalette
 	.word	gNoddyGfxTiles
-	.word	gUnk_0876927C
+	.word	gNoddyGfxFrameList
 	.global	gUnk_0824C4D4
 gUnk_0824C4D4:
 	.incbin	"baserom.gba", 0x24C4D4, 0x20
@@ -35653,7 +35653,7 @@ gRockyGfx:
 	.incbin	"baserom.gba", 0x24CC84, 0x8
 	.word	gRockyGfxPalette
 	.word	gRockyGfxTiles
-	.word	gUnk_087692B0
+	.word	gRockyGfxFrameList
 	.global	gUnk_0824CC98
 gUnk_0824CC98:
 	.incbin	"baserom.gba", 0x24CC98, 0x20
@@ -35701,7 +35701,7 @@ gBroomHatterGfx:
 	.incbin	"baserom.gba", 0x24D150, 0x8
 	.word	gBroomHatterGfxPalette
 	.word	gBroomHatterGfxTiles
-	.word	gUnk_087692E8
+	.word	gBroomHatterGfxFrameList
 	.global	gUnk_0824D164
 gUnk_0824D164:
 	.incbin	"baserom.gba", 0x24D164, 0x20
@@ -35761,7 +35761,7 @@ gPengyGfx:
 	.incbin	"baserom.gba", 0x24D980, 0x8
 	.word	gPengyGfxPalette
 	.word	gPengyGfxTiles
-	.word	gUnk_0876930C
+	.word	gPengyGfxFrameList
 	.global	gUnk_0824D994
 gUnk_0824D994:
 	.incbin	"baserom.gba", 0x24D994, 0x20
@@ -35824,7 +35824,7 @@ gSirKibbleGfx:
 	.incbin	"baserom.gba", 0x24E314, 0x8
 	.word	gSirKibbleGfxPalette
 	.word	gSirKibbleGfxTiles
-	.word	gUnk_08769340
+	.word	gSirKibbleGfxFrameList
 	.global	gUnk_0824E328
 gUnk_0824E328:
 	.incbin	"baserom.gba", 0x24E328, 0x20
@@ -35938,7 +35938,7 @@ gChillyGfx:
 	.incbin	"baserom.gba", 0x24EF38, 0x8
 	.word	gChillyGfxPalette
 	.word	gChillyGfxTiles
-	.word	gUnk_08769378
+	.word	gChillyGfxFrameList
 	.global	gUnk_0824EF4C
 gUnk_0824EF4C:
 	.incbin	"baserom.gba", 0x24EF4C, 0x20
@@ -35986,7 +35986,7 @@ gLaserBallGfx:
 	.incbin	"baserom.gba", 0x24F3FC, 0x8
 	.word	gLaserBallGfxPalette
 	.word	gLaserBallGfxTiles
-	.word	gUnk_087693F0
+	.word	gLaserBallGfxFrameList
 	.global	gUnk_0824F410
 gUnk_0824F410:
 	.incbin	"baserom.gba", 0x24F410, 0x20
@@ -36067,7 +36067,7 @@ gCappyGfx:
 	.incbin	"baserom.gba", 0x24F9AC, 0x8
 	.word	gCappyGfxPalette
 	.word	gCappyGfxTiles
-	.word	gUnk_08769418
+	.word	gCappyGfxFrameList
 	.global	gUnk_0824F9C0
 gUnk_0824F9C0:
 	.incbin	"baserom.gba", 0x24F9C0, 0x20
@@ -36133,7 +36133,7 @@ gWaddleDooGfx:
 	.incbin	"baserom.gba", 0x250398, 0x8
 	.word	gWaddleDooGfxPalette
 	.word	gWaddleDooGfxTiles
-	.word	gUnk_08769444
+	.word	gWaddleDooGfxFrameList
 	.global	gUnk_082503AC
 gUnk_082503AC:
 	.incbin	"baserom.gba", 0x2503AC, 0x20
@@ -36175,7 +36175,7 @@ gCoolSpookGfx:
 	.incbin	"baserom.gba", 0x250878, 0x8
 	.word	gCoolSpookGfxPalette
 	.word	gCoolSpookGfxTiles
-	.word	gUnk_08769480
+	.word	gCoolSpookGfxFrameList
 	.global	gUnk_0825088C
 gUnk_0825088C:
 	.incbin	"baserom.gba", 0x25088C, 0x80
@@ -36268,7 +36268,7 @@ gKabuGfx:
 	.incbin	"baserom.gba", 0x2511CC, 0x8
 	.word	gKabuGfxPalette
 	.word	gKabuGfxTiles
-	.word	gUnk_08769498
+	.word	gKabuGfxFrameList
 	.global	gUnk_082511E0
 gUnk_082511E0:
 	.incbin	"baserom.gba", 0x2511E0, 0x20
@@ -36319,7 +36319,7 @@ gBomberGfx:
 	.incbin	"baserom.gba", 0x251828, 0x8
 	.word	gBomberGfxPalette
 	.word	gBomberGfxTiles
-	.word	gUnk_087694C4
+	.word	gBomberGfxFrameList
 	.global	gUnk_0825183C
 gUnk_0825183C:
 	.incbin	"baserom.gba", 0x25183C, 0x20
@@ -36382,7 +36382,7 @@ gCoconutGfx:
 	.incbin	"baserom.gba", 0x251D9C, 0x8
 	.word	gCoconutGfxPalette
 	.word	gCoconutGfxTiles
-	.word	gUnk_087694EC
+	.word	gCoconutGfxFrameList
 	.global	gUnk_08251DB0
 gUnk_08251DB0:
 	.incbin	"baserom.gba", 0x251DB0, 0x20
@@ -36436,7 +36436,7 @@ gShotzoGfx:
 	.incbin	"baserom.gba", 0x252190, 0x8
 	.word	gShotzoGfxPalette
 	.word	gShotzoGfxTiles
-	.word	gUnk_08769528
+	.word	gShotzoGfxFrameList
 	.global	gUnk_082521A4
 gUnk_082521A4:
 	.incbin	"baserom.gba", 0x2521A4, 0x8
@@ -36490,7 +36490,7 @@ gTwizzyGfx:
 	.incbin	"baserom.gba", 0x252568, 0x8
 	.word	gTwizzyGfxPalette
 	.word	gTwizzyGfxTiles
-	.word	gUnk_08769554
+	.word	gTwizzyGfxFrameList
 	.global	gUnk_0825257C
 gUnk_0825257C:
 	.incbin	"baserom.gba", 0x25257C, 0x20
@@ -36571,7 +36571,7 @@ gSparkyGfx:
 	.incbin	"baserom.gba", 0x2530B4, 0x8
 	.word	gSparkyGfxPalette
 	.word	gSparkyGfxTiles
-	.word	gUnk_08769568
+	.word	gSparkyGfxFrameList
 	.global	gUnk_082530C8
 gUnk_082530C8:
 	.incbin	"baserom.gba", 0x2530C8, 0x4
@@ -36640,7 +36640,7 @@ gTwisterGfx:
 	.incbin	"baserom.gba", 0x253728, 0x8
 	.word	gTwisterGfxPalette
 	.word	gTwisterGfxTiles
-	.word	gUnk_087695B8
+	.word	gTwisterGfxFrameList
 	.global	gUnk_0825373C
 gUnk_0825373C:
 	.incbin	"baserom.gba", 0x25373C, 0x20
@@ -36685,7 +36685,7 @@ gSquishyGfx:
 	.incbin	"baserom.gba", 0x253D8C, 0x8
 	.word	gSquishyGfxPalette
 	.word	gSquishyGfxTiles
-	.word	gUnk_087695F4
+	.word	gSquishyGfxFrameList
 	.global	gUnk_08253DA0
 gUnk_08253DA0:
 	.incbin	"baserom.gba", 0x253DA0, 0x20
@@ -36760,7 +36760,7 @@ gStarmanGfx:
 	.incbin	"baserom.gba", 0x25491C, 0x8
 	.word	gStarmanGfxPalette
 	.word	gStarmanGfxTiles
-	.word	gUnk_08769614
+	.word	gStarmanGfxFrameList
 	.global	gUnk_08254930
 gUnk_08254930:
 	.incbin	"baserom.gba", 0x254930, 0x20
@@ -36814,7 +36814,7 @@ gScarfyGfx:
 	.incbin	"baserom.gba", 0x25502C, 0x8
 	.word	gScarfyGfxPalette
 	.word	gScarfyGfxTiles
-	.word	gUnk_0876965C
+	.word	gScarfyGfxFrameList
 	.global	gUnk_08255040
 gUnk_08255040:
 	.incbin	"baserom.gba", 0x255040, 0x20
@@ -36895,7 +36895,7 @@ gBubblesGfx:
 	.incbin	"baserom.gba", 0x255750, 0x8
 	.word	gBubblesGfxPalette
 	.word	gBubblesGfxTiles
-	.word	gUnk_08769688
+	.word	gBubblesGfxFrameList
 	.global	gUnk_08255764
 gUnk_08255764:
 	.incbin	"baserom.gba", 0x255764, 0x20
@@ -36985,7 +36985,7 @@ gHotHeadGfx:
 	.incbin	"baserom.gba", 0x2563A4, 0x8
 	.word	gHotHeadGfxPalette
 	.word	gHotHeadGfxTiles
-	.word	gUnk_087696D8
+	.word	gHotHeadGfxFrameList
 	.global	gUnk_082563B8
 gUnk_082563B8:
 	.incbin	"baserom.gba", 0x2563B8, 0x20
@@ -37039,7 +37039,7 @@ gGlunkGfx:
 	.incbin	"baserom.gba", 0x256744, 0x8
 	.word	gGlunkGfxPalette
 	.word	gGlunkGfxTiles
-	.word	gUnk_08769738
+	.word	gGlunkGfxFrameList
 	.global	gUnk_08256758
 gUnk_08256758:
 	.incbin	"baserom.gba", 0x256758, 0x20
@@ -37084,7 +37084,7 @@ gSlippyGfx:
 	.incbin	"baserom.gba", 0x256D2C, 0x8
 	.word	gSlippyGfxPalette
 	.word	gSlippyGfxTiles
-	.word	gUnk_08769764
+	.word	gSlippyGfxFrameList
 	.global	gUnk_08256D40
 gUnk_08256D40:
 	.incbin	"baserom.gba", 0x256D40, 0x20
@@ -37183,7 +37183,7 @@ gBlipperGfx:
 	.incbin	"baserom.gba", 0x257414, 0x8
 	.word	gBlipperGfxPalette
 	.word	gBlipperGfxTiles
-	.word	gUnk_08769784
+	.word	gBlipperGfxFrameList
 	.global	gUnk_08257428
 gUnk_08257428:
 	.incbin	"baserom.gba", 0x257428, 0x20
@@ -37270,7 +37270,7 @@ gPoppyBrosJrGfx:
 	.incbin	"baserom.gba", 0x257E9C, 0x8
 	.word	gPoppyBrosJrGfxPalette
 	.word	gPoppyBrosJrGfxTiles
-	.word	gUnk_087697EC
+	.word	gPoppyBrosJrGfxFrameList
 	.global	gUnk_08257EB0
 gUnk_08257EB0:
 	.incbin	"baserom.gba", 0x257EB0, 0x20
@@ -37336,7 +37336,7 @@ gSwordKnightGfx:
 	.incbin	"baserom.gba", 0x258804, 0x8
 	.word	gSwordKnightGfxPalette
 	.word	gSwordKnightGfxTiles
-	.word	gUnk_08769844
+	.word	gSwordKnightGfxFrameList
 	.global	gUnk_08258818
 gUnk_08258818:
 	.incbin	"baserom.gba", 0x258818, 0x20
@@ -37405,7 +37405,7 @@ gBladeKnightGfx:
 	.incbin	"baserom.gba", 0x259264, 0x8
 	.word	gBladeKnightGfxPalette
 	.word	gBladeKnightGfxTiles
-	.word	gUnk_08769880
+	.word	gBladeKnightGfxFrameList
 	.global	gUnk_08259278
 gUnk_08259278:
 	.incbin	"baserom.gba", 0x259278, 0x20
@@ -37438,7 +37438,7 @@ gConerGfx:
 	.incbin	"baserom.gba", 0x259514, 0x8
 	.word	gConerGfxPalette
 	.word	gConerGfxTiles
-	.word	gUnk_087698BC
+	.word	gConerGfxFrameList
 	.global	gUnk_08259528
 gUnk_08259528:
 	.incbin	"baserom.gba", 0x259528, 0x20
@@ -37480,7 +37480,7 @@ gWheelieGfx:
 	.incbin	"baserom.gba", 0x2598B4, 0x8
 	.word	gWheelieGfxPalette
 	.word	gWheelieGfxTiles
-	.word	gUnk_087698CC
+	.word	gWheelieGfxFrameList
 	.global	gUnk_082598C8
 gUnk_082598C8:
 	.incbin	"baserom.gba", 0x2598C8, 0x20
@@ -37552,7 +37552,7 @@ gFlamerGfx:
 	.incbin	"baserom.gba", 0x25A438, 0x8
 	.word	gFlamerGfxPalette
 	.word	gFlamerGfxTiles
-	.word	gUnk_087698E8
+	.word	gFlamerGfxFrameList
 	.global	gUnk_0825A44C
 gUnk_0825A44C:
 	.incbin	"baserom.gba", 0x25A44C, 0x20
@@ -37612,7 +37612,7 @@ gNeedlousGfx:
 	.incbin	"baserom.gba", 0x25AC4C, 0x8
 	.word	gNeedlousGfxPalette
 	.word	gNeedlousGfxTiles
-	.word	gUnk_0876992C
+	.word	gNeedlousGfxFrameList
 	.global	gUnk_0825AC60
 gUnk_0825AC60:
 	.incbin	"baserom.gba", 0x25AC60, 0x20
@@ -37678,7 +37678,7 @@ gUFOGfx:
 	.incbin	"baserom.gba", 0x25B350, 0x8
 	.word	gUFOGfxPalette
 	.word	gUFOGfxTiles
-	.word	gUnk_08769960
+	.word	gUFOGfxFrameList
 	.global	gUnk_0825B364
 gUnk_0825B364:
 	.incbin	"baserom.gba", 0x25B364, 0x20
@@ -37801,7 +37801,7 @@ gGipGfx:
 	.incbin	"baserom.gba", 0x25BEB4, 0x8
 	.word	gGipGfxPalette
 	.word	gGipGfxTiles
-	.word	gUnk_0876999C
+	.word	gGipGfxFrameList
 	.global	gUnk_0825BEC8
 gUnk_0825BEC8:
 	.incbin	"baserom.gba", 0x25BEC8, 0x20
@@ -38851,7 +38851,7 @@ gBonkersGfx:
 	.incbin	"baserom.gba", 0x26A654, 0x8
 	.word	gBonkersGfxPalette
 	.word	gBonkersGfxTiles
-	.word	gUnk_08769C74
+	.word	gBonkersGfxFrameList
 	.global	gUnk_0826A668
 gUnk_0826A668:
 	.incbin	"baserom.gba", 0x26A668, 0x20
@@ -39223,7 +39223,7 @@ gGrandWheelieGfx:
 	.incbin	"baserom.gba", 0x26F630, 0x8
 	.word	gGrandWheelieGfxPalette
 	.word	gGrandWheelieGfxTiles
-	.word	gUnk_08769CF0
+	.word	gGrandWheelieGfxFrameList
 	.global	gUnk_0826F644
 gUnk_0826F644:
 	.incbin	"baserom.gba", 0x26F644, 0x22
@@ -39602,7 +39602,7 @@ gPoppyBrosSrGfx:
 	.incbin	"baserom.gba", 0x27565C, 0x8
 	.word	gPoppyBrosSrGfxPalette
 	.word	gPoppyBrosSrGfxTiles
-	.word	gUnk_08769D80
+	.word	gPoppyBrosSrGfxFrameList
 	.global	gUnk_08275670
 gUnk_08275670:
 	.incbin	"baserom.gba", 0x275670, 0x20
@@ -39841,7 +39841,7 @@ gMrTickTockGfx:
 	.incbin	"baserom.gba", 0x279E40, 0x8
 	.word	gMrTickTockGfxPalette
 	.word	gMrTickTockGfxTiles
-	.word	gUnk_08769E2C
+	.word	gMrTickTockGfxFrameList
 	.global	gAxeKnightGfxPalette
 gAxeKnightGfxPalette:
 	.incbin	"baserom.gba", 0x279E54, 0x20
@@ -39940,7 +39940,7 @@ gAxeKnightGfx:
 	.incbin	"baserom.gba", 0x27AC64, 0x8
 	.word	gAxeKnightGfxPalette
 	.word	gAxeKnightGfxTiles
-	.word	gUnk_08769E64
+	.word	gAxeKnightGfxFrameList
 	.global	gUnk_0827AC78
 gUnk_0827AC78:
 	.incbin	"baserom.gba", 0x27AC78, 0x4
@@ -40108,7 +40108,7 @@ gJavelinKnightGfx:
 	.incbin	"baserom.gba", 0x27B8F8, 0x8
 	.word	gJavelinKnightGfxPalette
 	.word	gJavelinKnightGfxTiles
-	.word	gUnk_08769ED8
+	.word	gJavelinKnightGfxFrameList
 	.global	gUnk_0827B90C
 gUnk_0827B90C:
 	.incbin	"baserom.gba", 0x27B90C, 0x8
@@ -40231,7 +40231,7 @@ gMaceKnightGfx:
 	.incbin	"baserom.gba", 0x27CA48, 0x8
 	.word	gMaceKnightGfxPalette
 	.word	gMaceKnightGfxTiles
-	.word	gUnk_08769FA0
+	.word	gMaceKnightGfxFrameList
 	.global	gUnk_0827CA5C
 gUnk_0827CA5C:
 	.incbin	"baserom.gba", 0x27CA5C, 0x4
@@ -40414,7 +40414,7 @@ gTridentKnightGfx:
 	.incbin	"baserom.gba", 0x27D808, 0x8
 	.word	gTridentKnightGfxPalette
 	.word	gTridentKnightGfxTiles
-	.word	gUnk_0876A02C
+	.word	gTridentKnightGfxFrameList
 	.global	gUnk_0827D81C
 gUnk_0827D81C:
 	.incbin	"baserom.gba", 0x27D81C, 0x4
@@ -41282,7 +41282,7 @@ gBugzzyGfx:
 	.incbin	"baserom.gba", 0x295994, 0x8
 	.word	gBugzzyGfxPalette
 	.word	gBugzzyGfxTiles
-	.word	gUnk_0876A298
+	.word	gBugzzyGfxFrameList
 	.global	gUnk_082959A8
 gUnk_082959A8:
 	.incbin	"baserom.gba", 0x2959A8, 0x20
@@ -41945,7 +41945,7 @@ gFireLionGfx:
 	.incbin	"baserom.gba", 0x2B0954, 0x8
 	.word	gFireLionGfxPalette
 	.word	gFireLionGfxTiles
-	.word	gUnk_0876A370
+	.word	gFireLionGfxFrameList
 	.global	gUnk_082B0968
 gUnk_082B0968:
 	.incbin	"baserom.gba", 0x2B0968, 0x22
@@ -42484,7 +42484,7 @@ gPhanPhanGfx:
 	.incbin	"baserom.gba", 0x2BFE8C, 0x8
 	.word	gPhanPhanGfxPalette
 	.word	gPhanPhanGfxTiles
-	.word	gUnk_0876A42C
+	.word	gPhanPhanGfxFrameList
 	.global	gUnk_082BFEA0
 gUnk_082BFEA0:
 	.incbin	"baserom.gba", 0x2BFEA0, 0x42
@@ -42982,7 +42982,7 @@ gKingDededeGfx:
 	.incbin	"baserom.gba", 0x2D8624, 0x8
 	.word	gKingDededeGfxPalette
 	.word	gKingDededeGfxTiles
-	.word	gUnk_0876A4F0
+	.word	gKingDededeGfxFrameList
 	.global	gUnk_082D8638
 gUnk_082D8638:
 	.incbin	"baserom.gba", 0x2D8638, 0x20
@@ -43712,7 +43712,7 @@ gPaintRollerGfx:
 	.incbin	"baserom.gba", 0x2DFF94, 0x8
 	.word	gPaintRollerGfxPalette
 	.word	gPaintRollerGfxTiles
-	.word	gUnk_0876A5DC
+	.word	gPaintRollerGfxFrameList
 	.global	gUnk_082DFFA8
 gUnk_082DFFA8:
 	.incbin	"baserom.gba", 0x2DFFA8, 0x40
@@ -45283,7 +45283,7 @@ gMetaKnightGfx:
 	.incbin	"baserom.gba", 0x2F4268, 0x8
 	.word	gMetaKnightGfxPalette
 	.word	gMetaKnightGfxTiles
-	.word	gUnk_0876A8C4
+	.word	gMetaKnightGfxFrameList
 	.global	gUnk_082F427C
 gUnk_082F427C:
 	.incbin	"baserom.gba", 0x2F427C, 0x20
@@ -45859,7 +45859,7 @@ gHeavyMoleGfx:
 	.incbin	"baserom.gba", 0x2F65C0, 0x8
 	.word	gHeavyMoleGfxPalette
 	.word	gHeavyMoleGfxTiles
-	.word	gUnk_0876A960
+	.word	gHeavyMoleGfxFrameList
 	.global	gUnk_082F65D4
 gUnk_082F65D4:
 	.incbin	"baserom.gba", 0x2F65D4, 0x40
@@ -46021,7 +46021,7 @@ gMrShineAndMrBrightGfx:
 	.incbin	"baserom.gba", 0x2F8214, 0x8
 	.word	gMrShineAndMrBrightGfxPalette
 	.word	gMrShineAndMrBrightGfxTiles
-	.word	gUnk_0876AC4C
+	.word	gMrShineAndMrBrightGfxFrameList
 	.global	gUnk_082F8228
 gUnk_082F8228:
 	.incbin	"baserom.gba", 0x2F8228, 0x22
@@ -46440,7 +46440,7 @@ gWhispyWoodsGfx:
 	.incbin	"baserom.gba", 0x2FBDE4, 0x8
 	.word	gWhispyWoodsGfxPalette
 	.word	gWhispyWoodsGfxTiles
-	.word	gUnk_0876AD70
+	.word	gWhispyWoodsGfxFrameList
 	.global	gKrackoGfxPalette
 gKrackoGfxPalette:
 	.incbin	"baserom.gba", 0x2FBDF8, 0x80
@@ -46590,7 +46590,7 @@ gKrackoGfx:
 	.incbin	"baserom.gba", 0x2FD424, 0x8
 	.word	gKrackoGfxPalette
 	.word	gKrackoGfxTiles
-	.word	gUnk_0876AE58
+	.word	gKrackoGfxFrameList
 	.global	gUnk_082FD438
 gUnk_082FD438:
 	.incbin	"baserom.gba", 0x2FD438, 0x60
@@ -46653,7 +46653,7 @@ gNightmarePowerOrbGfx:
 	.incbin	"baserom.gba", 0x2FE0D0, 0x8
 	.word	gNightmarePowerOrbGfxPalette
 	.word	gNightmarePowerOrbGfxTiles
-	.word	gUnk_0876AF10
+	.word	gNightmarePowerOrbGfxFrameList
 	.global	gUnk_082FE0E4
 gUnk_082FE0E4:
 	.incbin	"baserom.gba", 0x2FE0E4, 0x20
@@ -48176,7 +48176,7 @@ gNightmareWizardGfx:
 	.incbin	"baserom.gba", 0x33446C, 0x8
 	.word	gNightmareWizardGfxPalette
 	.word	gNightmareWizardGfxTiles
-	.word	gUnk_0876B170
+	.word	gNightmareWizardGfxFrameList
 	.global	gUnk_08334480
 gUnk_08334480:
 	.incbin	"baserom.gba", 0x334480, 0x40

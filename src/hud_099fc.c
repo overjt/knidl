@@ -32,12 +32,12 @@ void Task_IntroStoryPicture(void)
     gCurTask->tileWord = 0x800;
     gCurTask->posX = 0x300000;
     gCurTask->posY = 0x780000;
-    h = gUnk_087555FC[gCurTask->unk18];
+    h = gUnk_087555FC[gCurTask->introStoryPictureIndex];
     RequestCopy(2, (u32)h->palette, (u32)gObjPalette, h->paletteBankCount << 5);
     LZ77UnCompVram(h->tiles, gUnk_02020000);
     RequestCopy(3, (u32)gUnk_02020000, (u32)gObjVram, h->tileCount << 5);
-    gCurTask->frame = gCurTask->unk18;
-    TaskYieldTrampoline(gUnk_08731CE6[gCurTask->unk18] + 67);
+    gCurTask->frame = gCurTask->introStoryPictureIndex;
+    TaskYieldTrampoline(gUnk_08731CE6[gCurTask->introStoryPictureIndex] + 67);
     TaskExitTrampoline();
 }
 
@@ -159,7 +159,7 @@ void HudRedraw(s32 i)
     }
     if (gUnk_020055F0[0] != 0) {
         if (gUnk_020055F0[0] == 2)
-            sub_0800b230(gUnk_02005E00.unk04[i] >> 4, gUnk_020055F0[0]);
+            sub_0800b230(gLifeRequests.unk04[i] >> 4, gUnk_020055F0[0]);
         else
             sub_0800b230(i, gUnk_020055F0[0]);
     }

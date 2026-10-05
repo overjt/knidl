@@ -98,12 +98,12 @@ void ResetPlayerRecords(void)
          * constant twice instead of re-reading the inner cell (3.361). */
         gSavedPlayerAbilityUses[i] = gPlayerAbilityUses[i] = 0xFFFF;
         InitPlayerState(i);
-        gUnk_02005E00.unk04[i] = 0;
-        gUnk_02005E00.unk08[i] = 0;
+        gLifeRequests.unk04[i] = 0;
+        gLifeRequests.unk08[i] = 0;
     }
     gActivePlayerMask = 0;
     gActivePlayerCount = 0;
-    gUnk_02005E00.unk00 = 0;
+    gLifeRequests.unk00 = 0;
     gScreenAttackActive = 0;
     gExtraModeTitleSeen = 0;
     gPauseDisabled = 0;
@@ -116,7 +116,7 @@ void sub_0800b5dc(void)
     sub_08022f98();
     gRoomExitKind = 0;
     for (i = 0; i < gPlayerCount; i++) {
-        gUnk_02005E00.unk08[i] = 0;
+        gLifeRequests.unk08[i] = 0;
         InitPlayerState(i);
     }
     gUnk_020055C4 = 0;
@@ -152,7 +152,7 @@ void StageInit(void)
     ClearColliderLists();
     LoadGfxSet(0);
     sub_08008c7c();
-    gUnk_02007F50 = -1;
+    gBossSubtype = -1;
     if (gBigSwitchPressActive == 0)
         LoadRoom();
     else
@@ -222,7 +222,7 @@ void HubInit(void)
         p--;
     } while ((s32)p >= (s32)b);
     gUnk_020061E0 = 0;
-    gUnk_02007F50 = -1;
+    gBossSubtype = -1;
     sub_08066144();
     for (i = 0; i < 4; i++)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
@@ -253,7 +253,7 @@ void BigSwitchViewInit(void)
         p--;
     } while ((s32)p >= (s32)b);
     gUnk_020061E0 = 0;
-    gUnk_02007F50 = -1;
+    gBossSubtype = -1;
     sub_08066144();
     for (i = 0; i < 4; i++)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
