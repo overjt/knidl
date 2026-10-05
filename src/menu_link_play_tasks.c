@@ -395,8 +395,8 @@ void Task_MenuBgPaletteCycle(void)
     t->menuBgPaletteCycleFading = 0;
     t->menuBgPaletteCycleFadeRatio = 0;
     for (;;) {
-        p = gUnk_08731D28[gMenuScreen];
-        if (p != NULL && gUnk_08731D28[gCurTask->menuBgPaletteCycleScreen] != p) {
+        p = gMenuBgPaletteCyclePalettes[gMenuScreen];
+        if (p != NULL && gMenuBgPaletteCyclePalettes[gCurTask->menuBgPaletteCycleScreen] != p) {
             gCurTask->menuBgPaletteCyclePrevScreen = gCurTask->menuBgPaletteCycleScreen;
             gCurTask->menuBgPaletteCycleScreen = gMenuScreen;
             gCurTask->menuBgPaletteCycleFadeRatio = 0;
@@ -417,12 +417,12 @@ void Task_MenuBgPaletteCycle(void)
         x = gCurTask;
         switch (x->menuBgPaletteCycleFading) {
         case 0:
-            BlendColors(gUnk_08731D28[x->menuBgPaletteCycleScreen] + x->menuBgPaletteCycleBlendFrom * 16, gUnk_08731D28[x->menuBgPaletteCycleScreen] + x->menuBgPaletteCycleBlendTo * 16, (u16)x->menuBgPaletteCycleBlendRatio, 16, gBgPaletteBank14 - 176);
+            BlendColors(gMenuBgPaletteCyclePalettes[x->menuBgPaletteCycleScreen] + x->menuBgPaletteCycleBlendFrom * 16, gMenuBgPaletteCyclePalettes[x->menuBgPaletteCycleScreen] + x->menuBgPaletteCycleBlendTo * 16, (u16)x->menuBgPaletteCycleBlendRatio, 16, gBgPaletteBank14 - 176);
             break;
         case 1:
-            BlendColors(gUnk_08731D28[x->menuBgPaletteCyclePrevScreen] + x->menuBgPaletteCycleBlendFrom * 16, gUnk_08731D28[x->menuBgPaletteCyclePrevScreen] + x->menuBgPaletteCycleBlendTo * 16, (u16)x->menuBgPaletteCycleBlendRatio, 16, gBgPaletteBank14);
+            BlendColors(gMenuBgPaletteCyclePalettes[x->menuBgPaletteCyclePrevScreen] + x->menuBgPaletteCycleBlendFrom * 16, gMenuBgPaletteCyclePalettes[x->menuBgPaletteCyclePrevScreen] + x->menuBgPaletteCycleBlendTo * 16, (u16)x->menuBgPaletteCycleBlendRatio, 16, gBgPaletteBank14);
             y = gCurTask;
-            BlendColors(gUnk_08731D28[y->menuBgPaletteCycleScreen] + y->menuBgPaletteCycleBlendFrom * 16, gUnk_08731D28[y->menuBgPaletteCycleScreen] + y->menuBgPaletteCycleBlendTo * 16, (u16)y->menuBgPaletteCycleBlendRatio, 16, gBgPaletteBank14 + 16);
+            BlendColors(gMenuBgPaletteCyclePalettes[y->menuBgPaletteCycleScreen] + y->menuBgPaletteCycleBlendFrom * 16, gMenuBgPaletteCyclePalettes[y->menuBgPaletteCycleScreen] + y->menuBgPaletteCycleBlendTo * 16, (u16)y->menuBgPaletteCycleBlendRatio, 16, gBgPaletteBank14 + 16);
             z = gCurTask;
             z->menuBgPaletteCycleFadeRatio += 16;
             BlendColors(gBgPaletteBank14, gBgPaletteBank14 + 16, (u16)z->menuBgPaletteCycleFadeRatio, 16, gBgPaletteBank14 - 176);
@@ -464,7 +464,7 @@ void Task_MenuBackground(void)
             u->menuBackgroundFadeRatio += 32;
             switch (u->menuBackgroundFadePhase) {
             case 1:
-                BlendColors(gUnk_08731CF8[u->menuBackgroundPrevScreen], gUnk_085563C8, (u16)u->menuBackgroundFadeRatio, 16, gBgPaletteBank2);
+                BlendColors(gUnk_08731CF8[u->menuBackgroundPrevScreen], gMenuBackgroundPalette, (u16)u->menuBackgroundFadeRatio, 16, gBgPaletteBank2);
                 w = gCurTask;
                 if (w->menuBackgroundFadeRatio == 256) {
                     w->menuBackgroundFadeRatio = 0;
@@ -473,7 +473,7 @@ void Task_MenuBackground(void)
                 }
                 break;
             case 2:
-                BlendColors(gUnk_085563C8, gUnk_08731CF8[u->menuBackgroundScreen], (u16)u->menuBackgroundFadeRatio, 16, gBgPaletteBank2);
+                BlendColors(gMenuBackgroundPalette, gUnk_08731CF8[u->menuBackgroundScreen], (u16)u->menuBackgroundFadeRatio, 16, gBgPaletteBank2);
                 w = gCurTask;
                 if (w->menuBackgroundFadeRatio == 256) {
                     w->menuBackgroundFadeRatio = 0;

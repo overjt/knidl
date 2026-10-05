@@ -54,10 +54,19 @@ assets/
   misc/*.bin             Huffman streams (undecoded) and raw-copy blocks
 ```
 
-Files are named after their `split_config.json` label (`gUnk_...` until the
-naming runs reach them), with `_2`-style suffixes on collisions and
-`unk_<address>` when no label exists.  Re-running `make assets` only
-rewrites files whose content changed.
+Files are named after their `split_config.json` label, with `_2`-style
+suffixes on collisions and `unk_<address>` when no label exists.  Since #183
+most labels are named after the record that owns them (docs/naming.md 2.5):
+`oam/gBonkersFrame3OamTemplate.json`, `palettes/gBonkersFrame0Palette.pal`,
+`tiles/gPlayerFrame189Tiles.chunks.4bpp`; 10,253 of the 15,621 files
+changed name with #183 (OAM 7,353, tiles 2,423, palettes 396, LZ77 62,
+maps 19), and a label without one owner keeps its `gUnk_...` name.
+Re-running `make assets` only rewrites files whose content changed and
+never deletes one, so after a naming run a tree extracted before it holds
+the old names too and `make assets-check` reports them as "not derived from
+the ROM": extract into a fresh tree (`rm -rf assets && make assets`) and
+carry edits over by the manifest's ROM range (`manifest.json`, the `vma`
+of each file), which no rename changes.
 
 ## The check
 

@@ -20,7 +20,7 @@ extern u16 gObjPaletteBank8[]; /* palette buffer */
 
 /* ROM */
 extern u8 gUnk_081FD870[];
-extern u8 gUnk_082030D8[];
+extern u8 gPlayerEffectCrashBlastTiles[];
 extern u32 gUnk_085B9B2C[];
 extern u32 gUnk_085B9B6C[];
 extern void (*gPlayerEffectVariants[])(void); /* task type #7's 49 variants, indexed by Task.unk18 >> 24 */

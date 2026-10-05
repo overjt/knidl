@@ -10,8 +10,8 @@
 	.section .room_metatiles, "a"
 	.global	room_metatiles
 room_metatiles:
-	.global	gUnk_083A862C
-gUnk_083A862C:
+	.global	gLevel7Stage2MetatileTiles
+gLevel7Stage2MetatileTiles:
 	.incbin	"baserom.gba", 0x3A862C, 0x524
 	.global	gUnk_083A8B50
 gUnk_083A8B50:
@@ -31,26 +31,26 @@ gLevel8Stage7Room0MetatileTiles:
 	.global	gUnk_083ACDCC
 gUnk_083ACDCC:
 	.incbin	"baserom.gba", 0x3ACDCC, 0x95C
-	.global	gUnk_083AD728
-gUnk_083AD728:
+	.global	gLevel8Stage0Room0MetatileTiles
+gLevel8Stage0Room0MetatileTiles:
 	.incbin	"baserom.gba", 0x3AD728, 0x4F8
-	.global	gUnk_083ADC20
-gUnk_083ADC20:
+	.global	gLevel8Stage1Room0MetatileTiles
+gLevel8Stage1Room0MetatileTiles:
 	.incbin	"baserom.gba", 0x3ADC20, 0x984
-	.global	gUnk_083AE5A4
-gUnk_083AE5A4:
+	.global	gLevel8Stage2Room0MetatileTiles
+gLevel8Stage2Room0MetatileTiles:
 	.incbin	"baserom.gba", 0x3AE5A4, 0x610
-	.global	gUnk_083AEBB4
-gUnk_083AEBB4:
+	.global	gLevel8Stage3Room0MetatileTiles
+gLevel8Stage3Room0MetatileTiles:
 	.incbin	"baserom.gba", 0x3AEBB4, 0x648
-	.global	gUnk_083AF1FC
-gUnk_083AF1FC:
+	.global	gLevel8Stage4Room0MetatileTiles
+gLevel8Stage4Room0MetatileTiles:
 	.incbin	"baserom.gba", 0x3AF1FC, 0x5E4
-	.global	gUnk_083AF7E0
-gUnk_083AF7E0:
+	.global	gLevel8Stage5Room0MetatileTiles
+gLevel8Stage5Room0MetatileTiles:
 	.incbin	"baserom.gba", 0x3AF7E0, 0x804
-	.global	gUnk_083AFFE4
-gUnk_083AFFE4:
+	.global	gLevel8Stage6Room0MetatileTiles
+gLevel8Stage6Room0MetatileTiles:
 	.incbin	"baserom.gba", 0x3AFFE4, 0x71C
 	.global	gUnk_083B0700
 gUnk_083B0700:
@@ -76,6 +76,6 @@ gUnk_083B39C4:
 	.global	gUnk_083B4738
 gUnk_083B4738:
 	.incbin	"baserom.gba", 0x3B4738, 0x640
-	.global	gUnk_083B4D78
-gUnk_083B4D78:
+	.global	gLevel6Stage5MetatileTiles
+gLevel6Stage5MetatileTiles:
 	.incbin	"baserom.gba", 0x3B4D78, 0x7C0

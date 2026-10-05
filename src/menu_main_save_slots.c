@@ -225,9 +225,9 @@ void MenuLoadSaveSlotPicture(s32 slot, u32 pal)
     if (pal > 6)
         pal = 7;
     i = pal * 15;
-    RequestCopy(3, (u32)&gUnk_08553810[i * 32], (u32)gObjVram + (gUnk_08731E18[slot] << 5), 160);
-    RequestCopy(3, (u32)&gUnk_08553810[(i + 5) * 32], (u32)gObjVram + ((gUnk_08731E18[slot] + 32) << 5), 160);
-    RequestCopy(3, (u32)&gUnk_08553810[(i + 10) * 32], (u32)gObjVram + ((gUnk_08731E18[slot] + 64) << 5), 160);
+    RequestCopy(3, (u32)&gMenuLoadSaveSlotPictureTiles[i * 32], (u32)gObjVram + (gUnk_08731E18[slot] << 5), 160);
+    RequestCopy(3, (u32)&gMenuLoadSaveSlotPictureTiles[(i + 5) * 32], (u32)gObjVram + ((gUnk_08731E18[slot] + 32) << 5), 160);
+    RequestCopy(3, (u32)&gMenuLoadSaveSlotPictureTiles[(i + 10) * 32], (u32)gObjVram + ((gUnk_08731E18[slot] + 64) << 5), 160);
     MenuLoadSaveSlotPalette(slot, pal);
 }
 
@@ -236,9 +236,9 @@ s32 MenuLoadSaveSlotPalette(s32 slot, u32 pal)
     if (pal > 6)
         pal = 7;
     if (slot == gMenuCursor)
-        RequestCopy(2, (u32)&gUnk_08554B78[pal * 16], (u32)&gObjPaletteBank1[slot * 16], 32);
+        RequestCopy(2, (u32)&gMenuLoadSaveSlotPalettePalette[pal * 16], (u32)&gObjPaletteBank1[slot * 16], 32);
     else
-        RequestCopy(2, (u32)&gUnk_08554B78[(pal + 8) * 16], (u32)&gObjPaletteBank1[slot * 16], 32);
+        RequestCopy(2, (u32)&gMenuLoadSaveSlotPalettePalette[(pal + 8) * 16], (u32)&gObjPaletteBank1[slot * 16], 32);
 }
 
 void MenuLoadSaveSlotPercent(s32 slot, s32 value, s32 mode)

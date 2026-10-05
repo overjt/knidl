@@ -12023,6 +12023,68 @@ one struct's constants on another's bits.
   tail names nothing), and the files holding only such a part (the family
   plus the part's role: `enemy_fire_lion_flame`).
 
+### 4.178 Asset labels have owners: name them through the chain, with offsets, after a fixpoint
+
+#183 named 12,292 asset labels from the pointer chain alone, and three
+things made it mechanical:
+
+* **Referrers need offsets, not just names.**  `tools/audit.py`'s
+  `rom_referrers()` says *who* points at a label; naming needs *which word*:
+  the byte offset of every `.word` inside its `data/*.s` label (tracked
+  from the `.incbin` offsets, which are file offsets), the path of every C
+  initializer leaf (`[k]`, `[k][j]`, `.field`), and the referrer's type to
+  turn either into a slot or a field.  The types come from the tree: a
+  definition or extern declaration, else the pointee of the typed table
+  element that points at the record (`u32 *gEnemyPaletteVariants[]` types
+  its records as `u32[]`), else a word array for a pointer list of
+  `split_config.json`; the struct layouts from the headers' `/*0xNN*/`
+  comments.  A word the struct does not declare (the player's 20-byte
+  frame records' +0xC/+0x10 behind a 12-byte `struct TaskGfx`) is a
+  finding, not a field to invent.
+* **Decide a label only when its referrers are settled.**  A label is
+  decided once every referrer is named, decided, or not an asset
+  placeholder at all, so a frame table names its TaskGfx records first
+  and their OAM templates, palettes and tiles in the same run (4,592 A1
+  names fed 6,519 A2 names).  Run on the applied tree the tool proposes
+  nothing; `make audit` checks that fixpoint, so a rule nobody applied
+  shows up as a failure, not as a silent placeholder.
+* **Measure the alternatives before asking.**  The coordinator's open
+  questions came with counts from switches in the tool: counting the
+  format-only frame lists as owners left ~3,800 more labels "shared";
+  "the owner's stem" collided across a family's several palettes in 781
+  cases.  A one-line flag that reruns the whole proposal is cheaper than
+  arguing a rule in prose, and the answer (Q1-Q7) went into
+  docs/naming.md 2.5 before the first batch.
+
+### 4.179 Harness notes from #183 (asset labels by owner)
+
+* `tools/rename.py` compiled one alternation of every old name, and
+  `--verify-diff` composed rename chains with a scan of the whole map per
+  row: built for batches of hundreds, while #183's batches reached 6,694
+  names over 48k-line `data/*.s` files.  A placeholder name is now one
+  generic word (`(?:sub|gUnk)_` + 8 hex digits) looked up in a set, and the
+  chain composition keeps an index from each final name to its keys; a
+  5,036-name batch applies in under a second and the 12,298-rename branch
+  verifies in seconds.
+* One batch script ran rename -> `make symbols/split/modmap` -> `make clean
+  && make compare` -> `audit.py --write` -> `--verify-diff HEAD` -> commit,
+  stopping at the first failure, so every batch commit carries its proof;
+  work in progress on the audit was copied aside before each batch so
+  that the batch commits held names only.
+* Review agents proposed the names that need reading a consumer (the
+  code-only labels' kinds, the loader tables and 2D picture columns); the
+  coordinator kept only those whose proof is a source line: a copy into
+  palette RAM or OBJ VRAM, `QueueSprite`'s template, the HUD tilemap
+  helper.  A VRAM offset that is a character or screen base only by the
+  BG layout presets (`.incbin` BGxCNT values) stayed a placeholder, and a
+  family-wide name for a palette several functions use was dropped
+  (Q6 asks for exactly one consumer).
+* `make assets` never deletes a file, so a tree extracted before the
+  renames kept 10,253 old-named files beside the new ones and
+  `assets-check` failed on them as "not derived from the ROM"; the proof
+  is a fresh tree (`rm -rf assets && make assets`), and docs/assets.md
+  says how to carry edits over (by the manifest's `vma`).
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →

@@ -92,7 +92,7 @@ extern u32 gBombRallyBombStateUpdates[];
 extern u32 *gBombRallyBubblesFrames[];
 extern u32 gUnk_0875674C[];
 extern u32 gUnk_0875675C[];
-extern u32 gUnk_08756528[];
+extern u32 gBombRallySeatPlayersPalettes[];
 extern u8 gBombRallyBeatFrames[];
 extern u8 gBombRallyStartSpeeds[];
 extern u8 gBombRallySpeedUpBeats[];

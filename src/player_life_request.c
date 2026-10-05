@@ -96,7 +96,7 @@ void PlayerLifeRequestLoadGfx(s32 a)
 {
     if (gLocalPlayer == gCurTask->player->playerIndex)
     {
-        RequestCopy(2, (u32)gUnk_085ADD1C, (u32)gBgPalette, 64);
+        RequestCopy(2, (u32)gPlayerLifeRequestLoadGfxPalette, (u32)gBgPalette, 64);
         if (a <= 2)
             RequestCopy(1, gUnk_0875625C[a], 192 << 19, gUnk_08756268[a] << 5);
     }
@@ -560,7 +560,7 @@ void PlayerLifeRequestDrawListTitle(void)
 
     if (gLocalPlayer == gCurTask->player->playerIndex)
     {
-        p = gUnk_085B0A64;
+        p = gPlayerLifeRequestDrawListTitleMap;
         HudDrawTiles(p, 1, 2, 19);
         p += 38;
         HudDrawTiles(p, 1, 3, 19);
@@ -624,10 +624,10 @@ void PlayerLifeRequestDrawLives(s32 a, s32 b, s32 c)
     if (gLocalPlayer == gCurTask->player->playerIndex)
     {
         IntToDigits(c);
-        HudDrawTiles(&gUnk_085B0AD4[gDigits[1] * 2], 6, b * 2 + 4, 1);
-        HudDrawTiles(&gUnk_085B0AD4[20 + gDigits[1] * 2], 6, b * 2 + 5, 1);
-        HudDrawTiles(&gUnk_085B0AD4[gDigits[0] * 2], 7, b * 2 + 4, 1);
-        HudDrawTiles(&gUnk_085B0AD4[20 + gDigits[0] * 2], 7, b * 2 + 5, 1);
+        HudDrawTiles(&gPlayerLifeRequestDrawLivesMap[gDigits[1] * 2], 6, b * 2 + 4, 1);
+        HudDrawTiles(&gPlayerLifeRequestDrawLivesMap[20 + gDigits[1] * 2], 6, b * 2 + 5, 1);
+        HudDrawTiles(&gPlayerLifeRequestDrawLivesMap[gDigits[0] * 2], 7, b * 2 + 4, 1);
+        HudDrawTiles(&gPlayerLifeRequestDrawLivesMap[20 + gDigits[0] * 2], 7, b * 2 + 5, 1);
     }
 }
 void PlayerLifeRequestDrawListCursor(s32 a)
@@ -642,7 +642,7 @@ void PlayerLifeRequestDrawListCursor(s32 a)
             HudClearTiles(2, i * 2 + 4, 1);
             HudClearTiles(2, i * 2 + 5, 1);
         }
-        p = gUnk_085B0AFC;
+        p = gPlayerLifeRequestDrawListCursorMap;
         HudDrawTiles(p, 2, a * 2 + 4, 1);
         p += 2;
         HudDrawTiles(p, 2, a * 2 + 5, 1);
@@ -703,7 +703,7 @@ void PlayerLifeRequestDrawCannotBorrow(void)
     if (gLocalPlayer == gCurTask->player->playerIndex)
     {
         HudClearTilemap();
-        p = gUnk_085B0B5C;
+        p = gPlayerLifeRequestDrawCannotBorrowMap;
         HudDrawTiles(p, 4, 8, 22);
         p += 44;
         HudDrawTiles(p, 4, 9, 22);
@@ -716,7 +716,7 @@ void PlayerLifeRequestDrawGotNothing(void)
     if (gLocalPlayer == gCurTask->player->playerIndex)
     {
         HudClearTilemap();
-        p = gUnk_085B0BD4;
+        p = gPlayerLifeRequestDrawGotNothingMap;
         HudDrawTiles(p, 4, 8, 22);
         p += 44;
         HudDrawTiles(p, 4, 9, 22);
@@ -729,7 +729,7 @@ void PlayerLifeRequestDrawGameOver(void)
     if (gLocalPlayer == gCurTask->player->playerIndex)
     {
         HudClearTilemap();
-        p = gUnk_085B0C2C;
+        p = gPlayerLifeRequestDrawGameOverMap;
         HudDrawTiles(p, 8, 8, 14);
         p += 28;
         HudDrawTiles(p, 8, 9, 14);

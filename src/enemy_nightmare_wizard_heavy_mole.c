@@ -2212,7 +2212,7 @@ void CreatePaintRollerPainting(void)
 
 void PaintRollerStartHitStun(void)
 {
-    BossStartHitStun(13, (u32)PaintRollerHitStunUpdate, (u32)gUnk_082DFFA8, 32, 1);
+    BossStartHitStun(13, (u32)PaintRollerHitStunUpdate, (u32)gPaintRollerStartHitStunPalette, 32, 1);
 }
 
 void PaintRollerHitStunUpdate(void)
@@ -2530,7 +2530,7 @@ s32 HeavyMoleGetNearEdgesY(s32 arg)
 void HeavyMoleReactToDamage(void)
 {
     CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
-    BossStartHitStun(23, (u32)HeavyMoleHitStunUpdate, (u32)gUnk_082F65D4, 32, 0);
+    BossStartHitStun(23, (u32)HeavyMoleHitStunUpdate, (u32)gHeavyMoleReactToDamagePalette, 32, 0);
     TaskSetSkipMask(TASK_SKIP_UPDATE, gCurTaskIdx);
 }
 

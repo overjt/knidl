@@ -20,8 +20,8 @@
  * (src/player_object_ufo_shot.c) installs too; both end in a `pop {r1}` epilogue
  * without setting r0, so they are declared s32 with no return.  Variant 9
  * (PlayerObjectLightOrb, gPlayerObjectLightOrbFrames) is a copy of the spawner's sprite:
- * sub-state 0 queues the tiles gUnk_08204B98 (four 320-byte rows) and the
- * palette gUnk_08204B78 into the spawner's OBJ slots through the VRAM
+ * sub-state 0 queues the tiles gPlayerObjectLightOrbTiles (four 320-byte rows) and the
+ * palette gPlayerObjectLightOrbPalette into the spawner's OBJ slots through the VRAM
  * transfer queue RequestCopy, blinks, flies to the top centre of the
  * screen over 30 frames (Div) leaving sub-state-1 sparkles of itself,
  * plays sounds 175 and 176 and calls M07's race-record hook sub_08027588;
@@ -378,12 +378,12 @@ void PlayerObjectLightOrb(void)
         {
             u32 off = ((gCurTask->u8C.parentTask)->tileWord & 0xFFF) << 5;
 
-            RequestCopy(1, gUnk_08204B98, (void *)(off + (OBJ_VRAM0 + 0x80)), 320);
-            RequestCopy(1, gUnk_08204B98 + 320, (void *)(off + (OBJ_VRAM0 + 0x480)), 320);
-            RequestCopy(1, gUnk_08204B98 + 640, (void *)(off + (OBJ_VRAM0 + 0x880)), 320);
-            RequestCopy(1, gUnk_08204B98 + 960, (void *)(off + (OBJ_VRAM0 + 0xC80)), 320);
+            RequestCopy(1, gPlayerObjectLightOrbTiles, (void *)(off + (OBJ_VRAM0 + 0x80)), 320);
+            RequestCopy(1, gPlayerObjectLightOrbTiles + 320, (void *)(off + (OBJ_VRAM0 + 0x480)), 320);
+            RequestCopy(1, gPlayerObjectLightOrbTiles + 640, (void *)(off + (OBJ_VRAM0 + 0x880)), 320);
+            RequestCopy(1, gPlayerObjectLightOrbTiles + 960, (void *)(off + (OBJ_VRAM0 + 0xC80)), 320);
         }
-        RequestCopy(2, gUnk_08204B78,
+        RequestCopy(2, gPlayerObjectLightOrbPalette,
                      gObjPalette + ((((gCurTask->u8C.parentTask)->tileWord >> 12) + 1) << 5), 32);
         {
             struct Task *u = gCurTask;

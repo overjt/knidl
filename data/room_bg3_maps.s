@@ -31,8 +31,8 @@ gUnk_083B82B0:
 	.global	gLevel6Stage1Room2Bg3Map
 gLevel6Stage1Room2Bg3Map:
 	.incbin	"baserom.gba", 0x3B8C30, 0x91C
-	.global	gUnk_083B954C
-gUnk_083B954C:
+	.global	gLevel6Stage1Room6Bg3Map
+gLevel6Stage1Room6Bg3Map:
 	.incbin	"baserom.gba", 0x3B954C, 0x6CC
 	.global	gUnk_083B9C18
 gUnk_083B9C18:
@@ -43,47 +43,47 @@ gUnk_083BA534:
 	.global	gUnk_083BADEC
 gUnk_083BADEC:
 	.incbin	"baserom.gba", 0x3BADEC, 0x920
-	.global	gUnk_083BB70C
-gUnk_083BB70C:
+	.global	gLevel6Stage1Room0Bg3Map
+gLevel6Stage1Room0Bg3Map:
 	.incbin	"baserom.gba", 0x3BB70C, 0x924
-	.global	gUnk_083BC030
-gUnk_083BC030:
+	.global	gLevel8Stage0Room0Bg3Map
+gLevel8Stage0Room0Bg3Map:
 	.incbin	"baserom.gba", 0x3BC030, 0x1608
-	.global	gUnk_083BD638
-gUnk_083BD638:
+	.global	gLevel8Stage1Room0Bg3Map
+gLevel8Stage1Room0Bg3Map:
 	.incbin	"baserom.gba", 0x3BD638, 0x2288
-	.global	gUnk_083BF8C0
-gUnk_083BF8C0:
+	.global	gLevel8Stage2Room0Bg3Map
+gLevel8Stage2Room0Bg3Map:
 	.incbin	"baserom.gba", 0x3BF8C0, 0x1588
-	.global	gUnk_083C0E48
-gUnk_083C0E48:
+	.global	gLevel8Stage3Room0Bg3Map
+gLevel8Stage3Room0Bg3Map:
 	.incbin	"baserom.gba", 0x3C0E48, 0x1F88
-	.global	gUnk_083C2DD0
-gUnk_083C2DD0:
+	.global	gLevel8Stage4Room0Bg3Map
+gLevel8Stage4Room0Bg3Map:
 	.incbin	"baserom.gba", 0x3C2DD0, 0x2288
-	.global	gUnk_083C5058
-gUnk_083C5058:
+	.global	gLevel8Stage5Room0Bg3Map
+gLevel8Stage5Room0Bg3Map:
 	.incbin	"baserom.gba", 0x3C5058, 0x2288
-	.global	gUnk_083C72E0
-gUnk_083C72E0:
+	.global	gLevel8Stage6Room0Bg3Map
+gLevel8Stage6Room0Bg3Map:
 	.incbin	"baserom.gba", 0x3C72E0, 0x1708
 	.global	gUnk_083C89E8
 gUnk_083C89E8:
 	.incbin	"baserom.gba", 0x3C89E8, 0x9F0
-	.global	gUnk_083C93D8
-gUnk_083C93D8:
+	.global	gLevel3Stage5Room0Bg3Map
+gLevel3Stage5Room0Bg3Map:
 	.incbin	"baserom.gba", 0x3C93D8, 0x924
-	.global	gUnk_083C9CFC
-gUnk_083C9CFC:
+	.global	gLevel3Stage5Room1Bg3Map
+gLevel3Stage5Room1Bg3Map:
 	.incbin	"baserom.gba", 0x3C9CFC, 0x924
-	.global	gUnk_083CA620
-gUnk_083CA620:
+	.global	gLevel3Stage1Room1Bg3Map
+gLevel3Stage1Room1Bg3Map:
 	.incbin	"baserom.gba", 0x3CA620, 0x920
 	.global	gUnk_083CAF40
 gUnk_083CAF40:
 	.incbin	"baserom.gba", 0x3CAF40, 0x91C
-	.global	gUnk_083CB85C
-gUnk_083CB85C:
+	.global	gLevel1Stage1Room3Bg3Map
+gLevel1Stage1Room3Bg3Map:
 	.incbin	"baserom.gba", 0x3CB85C, 0x920
 	.global	gUnk_083CC17C
 gUnk_083CC17C:

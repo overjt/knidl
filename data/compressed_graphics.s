@@ -16,8 +16,8 @@ gUnk_083D0148:
 	.global	gUnk_083D0A64
 gUnk_083D0A64:
 	.incbin	"baserom.gba", 0x3D0A64, 0x91C
-	.global	gUnk_083D1380
-gUnk_083D1380:
+	.global	gLevel7Stage2Bg2Tiles
+gLevel7Stage2Bg2Tiles:
 	.incbin	"baserom.gba", 0x3D1380, 0xC58
 	.global	gUnk_083D1FD8
 gUnk_083D1FD8:
@@ -46,8 +46,8 @@ gUnk_083EE8B4:
 	.global	gLevel6Stage1Room2Bg3Tiles
 gLevel6Stage1Room2Bg3Tiles:
 	.incbin	"baserom.gba", 0x3F2144, 0x532C
-	.global	gUnk_083F7470
-gUnk_083F7470:
+	.global	gLevel6Stage1Room6Bg3Tiles
+gLevel6Stage1Room6Bg3Tiles:
 	.incbin	"baserom.gba", 0x3F7470, 0x2B58
 	.global	gUnk_083F9FC8
 gUnk_083F9FC8:
@@ -58,8 +58,8 @@ gUnk_083FE694:
 	.global	gUnk_08401D3C
 gUnk_08401D3C:
 	.incbin	"baserom.gba", 0x401D3C, 0x553C
-	.global	gUnk_08407278
-gUnk_08407278:
+	.global	gLevel6Stage1Room0Bg3Tiles
+gLevel6Stage1Room0Bg3Tiles:
 	.incbin	"baserom.gba", 0x407278, 0x5834
 	.global	gUnk_0840CAAC
 gUnk_0840CAAC:
@@ -67,17 +67,17 @@ gUnk_0840CAAC:
 	.global	gUnk_0840F3A8
 gUnk_0840F3A8:
 	.incbin	"baserom.gba", 0x40F3A8, 0x1C4
-	.global	gUnk_0840F56C
-gUnk_0840F56C:
+	.global	gLevel8Stage3Room0Bg3Tiles
+gLevel8Stage3Room0Bg3Tiles:
 	.incbin	"baserom.gba", 0x40F56C, 0x1E8
-	.global	gUnk_0840F754
-gUnk_0840F754:
+	.global	gLevel8Stage4Room0Bg3Tiles
+gLevel8Stage4Room0Bg3Tiles:
 	.incbin	"baserom.gba", 0x40F754, 0x248
-	.global	gUnk_0840F99C
-gUnk_0840F99C:
+	.global	gLevel8Stage5Room0Bg3Tiles
+gLevel8Stage5Room0Bg3Tiles:
 	.incbin	"baserom.gba", 0x40F99C, 0x1B8
-	.global	gUnk_0840FB54
-gUnk_0840FB54:
+	.global	gLevel8Stage6Room0Bg3Tiles
+gLevel8Stage6Room0Bg3Tiles:
 	.incbin	"baserom.gba", 0x40FB54, 0x184
 	.global	gUnk_0840FCD8
 gUnk_0840FCD8:
@@ -88,38 +88,38 @@ gUnk_08412BD8:
 	.global	gLevel8Stage7Room0Bg2Tiles
 gLevel8Stage7Room0Bg2Tiles:
 	.incbin	"baserom.gba", 0x419038, 0x1D60
-	.global	gUnk_0841AD98
-gUnk_0841AD98:
+	.global	gLevel3Stage5Room0Bg3Tiles
+gLevel3Stage5Room0Bg3Tiles:
 	.incbin	"baserom.gba", 0x41AD98, 0x65A0
-	.global	gUnk_08421338
-gUnk_08421338:
+	.global	gLevel3Stage5Room1Bg3Tiles
+gLevel3Stage5Room1Bg3Tiles:
 	.incbin	"baserom.gba", 0x421338, 0x65A0
-	.global	gUnk_084278D8
-gUnk_084278D8:
+	.global	gLevel3Stage1Room1Bg3Tiles
+gLevel3Stage1Room1Bg3Tiles:
 	.incbin	"baserom.gba", 0x4278D8, 0x68E8
 	.global	gUnk_0842E1C0
 gUnk_0842E1C0:
 	.incbin	"baserom.gba", 0x42E1C0, 0x2874
-	.global	gUnk_08430A34
-gUnk_08430A34:
+	.global	gLevel8Stage0Room0Bg2Tiles
+gLevel8Stage0Room0Bg2Tiles:
 	.incbin	"baserom.gba", 0x430A34, 0xD0C
-	.global	gUnk_08431740
-gUnk_08431740:
+	.global	gLevel8Stage1Room0Bg2Tiles
+gLevel8Stage1Room0Bg2Tiles:
 	.incbin	"baserom.gba", 0x431740, 0x188C
-	.global	gUnk_08432FCC
-gUnk_08432FCC:
+	.global	gLevel8Stage2Room0Bg2Tiles
+gLevel8Stage2Room0Bg2Tiles:
 	.incbin	"baserom.gba", 0x432FCC, 0x1F30
-	.global	gUnk_08434EFC
-gUnk_08434EFC:
+	.global	gLevel8Stage3Room0Bg2Tiles
+gLevel8Stage3Room0Bg2Tiles:
 	.incbin	"baserom.gba", 0x434EFC, 0x141C
-	.global	gUnk_08436318
-gUnk_08436318:
+	.global	gLevel8Stage4Room0Bg2Tiles
+gLevel8Stage4Room0Bg2Tiles:
 	.incbin	"baserom.gba", 0x436318, 0x160C
-	.global	gUnk_08437924
-gUnk_08437924:
+	.global	gLevel8Stage5Room0Bg2Tiles
+gLevel8Stage5Room0Bg2Tiles:
 	.incbin	"baserom.gba", 0x437924, 0x1944
-	.global	gUnk_08439268
-gUnk_08439268:
+	.global	gLevel8Stage6Room0Bg2Tiles
+gLevel8Stage6Room0Bg2Tiles:
 	.incbin	"baserom.gba", 0x439268, 0x15BC
 	.global	gUnk_0843A824
 gUnk_0843A824:
@@ -139,8 +139,8 @@ gUnk_08442F18:
 	.global	gUnk_0844619C
 gUnk_0844619C:
 	.incbin	"baserom.gba", 0x44619C, 0x5160
-	.global	gUnk_0844B2FC
-gUnk_0844B2FC:
+	.global	gLevel1Stage1Room3Bg3Tiles
+gLevel1Stage1Room3Bg3Tiles:
 	.incbin	"baserom.gba", 0x44B2FC, 0x46D4
 	.global	gUnk_0844F9D0
 gUnk_0844F9D0:
@@ -178,26 +178,26 @@ gUnk_084809DC:
 	.global	gUnk_08487704
 gUnk_08487704:
 	.incbin	"baserom.gba", 0x487704, 0x2654
-	.global	gUnk_08489D58
-gUnk_08489D58:
+	.global	gLevel6Stage5Bg2Tiles
+gLevel6Stage5Bg2Tiles:
 	.incbin	"baserom.gba", 0x489D58, 0x1048
-	.global	gUnk_0848ADA0
-gUnk_0848ADA0:
+	.global	gLevel6Stage3Bg3Palette
+gLevel6Stage3Bg3Palette:
 	.incbin	"baserom.gba", 0x48ADA0, 0x104
-	.global	gUnk_0848AEA4
-gUnk_0848AEA4:
+	.global	gLevel6Stage3Bg3Map
+gLevel6Stage3Bg3Map:
 	.incbin	"baserom.gba", 0x48AEA4, 0x91C
-	.global	gUnk_0848B7C0
-gUnk_0848B7C0:
+	.global	gLevel6Stage3Bg3Tiles
+gLevel6Stage3Bg3Tiles:
 	.incbin	"baserom.gba", 0x48B7C0, 0x51AC
-	.global	gUnk_0849096C
-gUnk_0849096C:
+	.global	gLevel4Stage4Bg3Palette
+gLevel4Stage4Bg3Palette:
 	.incbin	"baserom.gba", 0x49096C, 0x104
-	.global	gUnk_08490A70
-gUnk_08490A70:
+	.global	gLevel4Stage4Bg3Map
+gLevel4Stage4Bg3Map:
 	.incbin	"baserom.gba", 0x490A70, 0x91C
-	.global	gUnk_0849138C
-gUnk_0849138C:
+	.global	gLevel4Stage4Bg3Tiles
+gLevel4Stage4Bg3Tiles:
 	.incbin	"baserom.gba", 0x49138C, 0x68E8
 	.global	gUnk_08497C74
 gUnk_08497C74:
@@ -217,8 +217,8 @@ gUnk_0849A5F0:
 	.global	gUnk_0849A6B4
 gUnk_0849A6B4:
 	.incbin	"baserom.gba", 0x49A6B4, 0xC4
-	.global	gUnk_0849A778
-gUnk_0849A778:
+	.global	gLevel3Stage5Room1Bg2Palette
+gLevel3Stage5Room1Bg2Palette:
 	.incbin	"baserom.gba", 0x49A778, 0xC4
 	.global	gUnk_0849A83C
 gUnk_0849A83C:
@@ -292,14 +292,14 @@ gLevel4Stage6Room0Bg2Palette:
 	.global	gLevel4Stage2Room4Bg3Palette
 gLevel4Stage2Room4Bg3Palette:
 	.incbin	"baserom.gba", 0x4BABD4, 0x104
-	.global	gUnk_084BACD8
-gUnk_084BACD8:
+	.global	gLevel3Stage5Room1Bg3Palette
+gLevel3Stage5Room1Bg3Palette:
 	.incbin	"baserom.gba", 0x4BACD8, 0x104
 	.global	gLevel2Stage5Room5Bg3Palette
 gLevel2Stage5Room5Bg3Palette:
 	.incbin	"baserom.gba", 0x4BADDC, 0x104
-	.global	gUnk_084BAEE0
-gUnk_084BAEE0:
+	.global	gLevel3Stage5Room0Bg2Palette
+gLevel3Stage5Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x4BAEE0, 0xC4
 	.global	gUnk_084BAFA4
 gUnk_084BAFA4:
@@ -307,20 +307,20 @@ gUnk_084BAFA4:
 	.global	gUnk_084BB068
 gUnk_084BB068:
 	.incbin	"baserom.gba", 0x4BB068, 0x104
-	.global	gUnk_084BB16C
-gUnk_084BB16C:
+	.global	gLevel4Stage3Room1Bg2Palette
+gLevel4Stage3Room1Bg2Palette:
 	.incbin	"baserom.gba", 0x4BB16C, 0x104
-	.global	gUnk_084BB270
-gUnk_084BB270:
+	.global	gLevel3Stage3Room0Bg2Palette
+gLevel3Stage3Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x4BB270, 0x104
 	.global	gLevel5Stage6Room0Bg2Palette
 gLevel5Stage6Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x4BB374, 0xC4
-	.global	gUnk_084BB438
-gUnk_084BB438:
+	.global	gLevel6Stage1Room1Bg2Palette
+gLevel6Stage1Room1Bg2Palette:
 	.incbin	"baserom.gba", 0x4BB438, 0xC4
-	.global	gUnk_084BB4FC
-gUnk_084BB4FC:
+	.global	gLevel6Stage1Room0Bg2Palette
+gLevel6Stage1Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x4BB4FC, 0xC4
 	.global	gUnk_084BB5C0
 gUnk_084BB5C0:
@@ -331,17 +331,17 @@ gUnk_084BB5E4:
 	.global	gUnk_084BB5F4
 gUnk_084BB5F4:
 	.incbin	"baserom.gba", 0x4BB5F4, 0xC
-	.global	gUnk_084BB600
-gUnk_084BB600:
+	.global	gLevel7Stage0Room0Bg3Palette
+gLevel7Stage0Room0Bg3Palette:
 	.incbin	"baserom.gba", 0x4BB600, 0x104
 	.global	gLevel7Stage0Room1Bg3Palette
 gLevel7Stage0Room1Bg3Palette:
 	.incbin	"baserom.gba", 0x4BB704, 0x104
-	.global	gUnk_084BB808
-gUnk_084BB808:
+	.global	gLevel7Stage0Room0Bg2Palette
+gLevel7Stage0Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x4BB808, 0xC4
-	.global	gUnk_084BB8CC
-gUnk_084BB8CC:
+	.global	gLevel7Stage0Room0MetatileTiles
+gLevel7Stage0Room0MetatileTiles:
 	.incbin	"baserom.gba", 0x4BB8CC, 0x5F0
 	.global	gLevel7Stage0Room0Bg3Map
 gLevel7Stage0Room0Bg3Map:
@@ -349,14 +349,14 @@ gLevel7Stage0Room0Bg3Map:
 	.global	gLevel7Stage0Room1Bg3Map
 gLevel7Stage0Room1Bg3Map:
 	.incbin	"baserom.gba", 0x4BE6C4, 0x1808
-	.global	gUnk_084BFECC
-gUnk_084BFECC:
+	.global	gLevel7Stage0Room0Bg3Tiles
+gLevel7Stage0Room0Bg3Tiles:
 	.incbin	"baserom.gba", 0x4BFECC, 0x576C
 	.global	gLevel7Stage0Room1Bg3Tiles
 gLevel7Stage0Room1Bg3Tiles:
 	.incbin	"baserom.gba", 0x4C5638, 0x5D28
-	.global	gUnk_084CB360
-gUnk_084CB360:
+	.global	gLevel7Stage0Room0Bg2Tiles
+gLevel7Stage0Room0Bg2Tiles:
 	.incbin	"baserom.gba", 0x4CB360, 0x311C
 	.global	gLevel2Stage6Room2Bg3Palette
 gLevel2Stage6Room2Bg3Palette:
@@ -364,14 +364,14 @@ gLevel2Stage6Room2Bg3Palette:
 	.global	gLevel2Stage6Room0Bg3Palette
 gLevel2Stage6Room0Bg3Palette:
 	.incbin	"baserom.gba", 0x4CE580, 0x104
-	.global	gUnk_084CE684
-gUnk_084CE684:
+	.global	gLevel3Stage3Room0Bg3Palette
+gLevel3Stage3Room0Bg3Palette:
 	.incbin	"baserom.gba", 0x4CE684, 0x104
-	.global	gUnk_084CE788
-gUnk_084CE788:
+	.global	gLevel3Stage3Room0Bg3Map
+gLevel3Stage3Room0Bg3Map:
 	.incbin	"baserom.gba", 0x4CE788, 0x920
-	.global	gUnk_084CF0A8
-gUnk_084CF0A8:
+	.global	gLevel3Stage3Room0Bg3Tiles
+gLevel3Stage3Room0Bg3Tiles:
 	.incbin	"baserom.gba", 0x4CF0A8, 0x6044
 	.global	gUnk_084D50EC
 gUnk_084D50EC:
@@ -379,14 +379,14 @@ gUnk_084D50EC:
 	.global	gLevel6Stage1Room4Bg3Palette
 gLevel6Stage1Room4Bg3Palette:
 	.incbin	"baserom.gba", 0x4D51B0, 0x104
-	.global	gUnk_084D52B4
-gUnk_084D52B4:
+	.global	gLevel6Stage1Room3Bg3Palette
+gLevel6Stage1Room3Bg3Palette:
 	.incbin	"baserom.gba", 0x4D52B4, 0x104
 	.global	gLevel6Stage1Room5Bg3Palette
 gLevel6Stage1Room5Bg3Palette:
 	.incbin	"baserom.gba", 0x4D53B8, 0x104
-	.global	gUnk_084D54BC
-gUnk_084D54BC:
+	.global	gLevel5Stage1Room1Bg3Palette
+gLevel5Stage1Room1Bg3Palette:
 	.incbin	"baserom.gba", 0x4D54BC, 0x104
 	.global	gLevel8Stage0Room2Bg3Palette
 gLevel8Stage0Room2Bg3Palette:
@@ -481,14 +481,14 @@ gLevel8Stage7Room0Bg3Map:
 	.global	gLevel8Stage7Room0Bg3Tiles
 gLevel8Stage7Room0Bg3Tiles:
 	.incbin	"baserom.gba", 0x4FABA4, 0x4260
-	.global	gUnk_084FEE04
-gUnk_084FEE04:
+	.global	gLevel4Stage3Room1Bg3Palette
+gLevel4Stage3Room1Bg3Palette:
 	.incbin	"baserom.gba", 0x4FEE04, 0x104
-	.global	gUnk_084FEF08
-gUnk_084FEF08:
+	.global	gLevel4Stage3Room1Bg3Map
+gLevel4Stage3Room1Bg3Map:
 	.incbin	"baserom.gba", 0x4FEF08, 0x91C
-	.global	gUnk_084FF824
-gUnk_084FF824:
+	.global	gLevel4Stage3Room1Bg3Tiles
+gLevel4Stage3Room1Bg3Tiles:
 	.incbin	"baserom.gba", 0x4FF824, 0x61F8
 	.global	gUnk_08505A1C
 gUnk_08505A1C:
@@ -520,26 +520,26 @@ gUnk_0850B598:
 	.global	gUnk_08510B9C
 gUnk_08510B9C:
 	.incbin	"baserom.gba", 0x510B9C, 0x104
-	.global	gUnk_08510CA0
-gUnk_08510CA0:
+	.global	gLevel5Stage2Room0Bg3Palette
+gLevel5Stage2Room0Bg3Palette:
 	.incbin	"baserom.gba", 0x510CA0, 0x104
-	.global	gUnk_08510DA4
-gUnk_08510DA4:
+	.global	gLevel4Stage2Room1Bg2Palette
+gLevel4Stage2Room1Bg2Palette:
 	.incbin	"baserom.gba", 0x510DA4, 0x104
 	.global	gLevel5Stage1Room0Bg2Palette
 gLevel5Stage1Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x510EA8, 0x104
-	.global	gUnk_08510FAC
-gUnk_08510FAC:
+	.global	gLevel2Stage5Room0Bg2Palette
+gLevel2Stage5Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x510FAC, 0xC4
-	.global	gUnk_08511070
-gUnk_08511070:
+	.global	gLevel2Stage4Room0Bg2Palette
+gLevel2Stage4Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x511070, 0xC4
 	.global	gUnk_08511134
 gUnk_08511134:
 	.incbin	"baserom.gba", 0x511134, 0xC4
-	.global	gUnk_085111F8
-gUnk_085111F8:
+	.global	gLevel2Stage1Room0Bg2Palette
+gLevel2Stage1Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x5111F8, 0xC4
 	.global	gUnk_085112BC
 gUnk_085112BC:
@@ -553,26 +553,26 @@ gUnk_08511CDC:
 	.global	gLevel3Stage3Room2Bg3Palette
 gLevel3Stage3Room2Bg3Palette:
 	.incbin	"baserom.gba", 0x5174E0, 0x104
-	.global	gUnk_085175E4
-gUnk_085175E4:
+	.global	gLevel4Stage2Room2Bg3Map
+gLevel4Stage2Room2Bg3Map:
 	.incbin	"baserom.gba", 0x5175E4, 0x91C
 	.global	gUnk_08517F00
 gUnk_08517F00:
 	.incbin	"baserom.gba", 0x517F00, 0x980
-	.global	gUnk_08518880
-gUnk_08518880:
+	.global	gLevel4Stage2Room2Bg3Tiles
+gLevel4Stage2Room2Bg3Tiles:
 	.incbin	"baserom.gba", 0x518880, 0x66F4
 	.global	gUnk_0851EF74
 gUnk_0851EF74:
 	.incbin	"baserom.gba", 0x51EF74, 0x6078
-	.global	gUnk_08524FEC
-gUnk_08524FEC:
+	.global	gLevel4Stage6Bg3Palette
+gLevel4Stage6Bg3Palette:
 	.incbin	"baserom.gba", 0x524FEC, 0x104
-	.global	gUnk_085250F0
-gUnk_085250F0:
+	.global	gLevel4Stage6Bg3Map
+gLevel4Stage6Bg3Map:
 	.incbin	"baserom.gba", 0x5250F0, 0x91C
-	.global	gUnk_08525A0C
-gUnk_08525A0C:
+	.global	gLevel4Stage6Bg3Tiles
+gLevel4Stage6Bg3Tiles:
 	.incbin	"baserom.gba", 0x525A0C, 0x616C
 	.global	gUnk_0852BB78
 gUnk_0852BB78:
@@ -586,14 +586,14 @@ gUnk_0852BD00:
 	.global	gUnk_0852BDC4
 gUnk_0852BDC4:
 	.incbin	"baserom.gba", 0x52BDC4, 0x104
-	.global	gUnk_0852BEC8
-gUnk_0852BEC8:
+	.global	gLevel5Stage1Room0Bg3Palette
+gLevel5Stage1Room0Bg3Palette:
 	.incbin	"baserom.gba", 0x52BEC8, 0x104
-	.global	gUnk_0852BFCC
-gUnk_0852BFCC:
+	.global	gLevel4Stage2Room2Bg3Palette
+gLevel4Stage2Room2Bg3Palette:
 	.incbin	"baserom.gba", 0x52BFCC, 0x104
-	.global	gUnk_0852C0D0
-gUnk_0852C0D0:
+	.global	gLevel4Stage2Room0Bg3Palette
+gLevel4Stage2Room0Bg3Palette:
 	.incbin	"baserom.gba", 0x52C0D0, 0x104
 	.global	gUnk_0852C1D4
 gUnk_0852C1D4:
@@ -601,17 +601,17 @@ gUnk_0852C1D4:
 	.global	gUnk_0852C930
 gUnk_0852C930:
 	.incbin	"baserom.gba", 0x52C930, 0x758
-	.global	gUnk_0852D088
-gUnk_0852D088:
+	.global	gLevel4Stage4Room0Bg2Palette
+gLevel4Stage4Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x52D088, 0x104
-	.global	gUnk_0852D18C
-gUnk_0852D18C:
+	.global	gLevel4Stage5Room1Bg2Palette
+gLevel4Stage5Room1Bg2Palette:
 	.incbin	"baserom.gba", 0x52D18C, 0xC4
-	.global	gUnk_0852D250
-gUnk_0852D250:
+	.global	gLevel4Stage4Room3Bg2Palette
+gLevel4Stage4Room3Bg2Palette:
 	.incbin	"baserom.gba", 0x52D250, 0xC4
-	.global	gUnk_0852D314
-gUnk_0852D314:
+	.global	gLevel3Stage4Bg2Palette
+gLevel3Stage4Bg2Palette:
 	.incbin	"baserom.gba", 0x52D314, 0xC4
 	.global	gUnk_0852D3D8
 gUnk_0852D3D8:
@@ -622,38 +622,38 @@ gUnk_0852D49C:
 	.global	gUnk_0852D560
 gUnk_0852D560:
 	.incbin	"baserom.gba", 0x52D560, 0xC4
-	.global	gUnk_0852D624
-gUnk_0852D624:
+	.global	gLevel3Stage2Room2Bg2Palette
+gLevel3Stage2Room2Bg2Palette:
 	.incbin	"baserom.gba", 0x52D624, 0xC4
 	.global	gUnk_0852D6E8
 gUnk_0852D6E8:
 	.incbin	"baserom.gba", 0x52D6E8, 0xC4
-	.global	gUnk_0852D7AC
-gUnk_0852D7AC:
+	.global	gLevel3Stage2Room1Bg2Palette
+gLevel3Stage2Room1Bg2Palette:
 	.incbin	"baserom.gba", 0x52D7AC, 0xC4
 	.global	gUnk_0852D870
 gUnk_0852D870:
 	.incbin	"baserom.gba", 0x52D870, 0x7FC
-	.global	gUnk_0852E06C
-gUnk_0852E06C:
+	.global	gLevel3Stage2Room2MetatileTiles
+gLevel3Stage2Room2MetatileTiles:
 	.incbin	"baserom.gba", 0x52E06C, 0x760
 	.global	gUnk_0852E7CC
 gUnk_0852E7CC:
 	.incbin	"baserom.gba", 0x52E7CC, 0x870
-	.global	gUnk_0852F03C
-gUnk_0852F03C:
+	.global	gLevel3Stage2Room1MetatileTiles
+gLevel3Stage2Room1MetatileTiles:
 	.incbin	"baserom.gba", 0x52F03C, 0x90C
 	.global	gUnk_0852F948
 gUnk_0852F948:
 	.incbin	"baserom.gba", 0x52F948, 0x22F0
-	.global	gUnk_08531C38
-gUnk_08531C38:
+	.global	gLevel3Stage2Room2Bg2Tiles
+gLevel3Stage2Room2Bg2Tiles:
 	.incbin	"baserom.gba", 0x531C38, 0x2528
 	.global	gUnk_08534160
 gUnk_08534160:
 	.incbin	"baserom.gba", 0x534160, 0x23E8
-	.global	gUnk_08536548
-gUnk_08536548:
+	.global	gLevel3Stage2Room1Bg2Tiles
+gLevel3Stage2Room1Bg2Tiles:
 	.incbin	"baserom.gba", 0x536548, 0x26DC
 	.global	gLevel8Stage7Room1Bg3Map
 gLevel8Stage7Room1Bg3Map:
@@ -661,17 +661,17 @@ gLevel8Stage7Room1Bg3Map:
 	.global	gUnk_08539BA4
 gUnk_08539BA4:
 	.incbin	"baserom.gba", 0x539BA4, 0xE4
-	.global	gUnk_08539C88
-gUnk_08539C88:
+	.global	gLevel8Stage2Room0Bg2Palette
+gLevel8Stage2Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x539C88, 0x104
-	.global	gUnk_08539D8C
-gUnk_08539D8C:
+	.global	gLevel8Stage3Room0Bg2Palette
+gLevel8Stage3Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x539D8C, 0x104
 	.global	gLevel7Stage0Room2Bg3Map
 gLevel7Stage0Room2Bg3Map:
 	.incbin	"baserom.gba", 0x539E90, 0x2808
-	.global	gUnk_0853C698
-gUnk_0853C698:
+	.global	gLevel7Stage2Bg2Palette
+gLevel7Stage2Bg2Palette:
 	.incbin	"baserom.gba", 0x53C698, 0x24
 	.global	gUnk_0853C6BC
 gUnk_0853C6BC:
@@ -694,50 +694,50 @@ gLevel4Stage0Room1Bg3Palette:
 	.global	gLevel6Stage1Room2Bg3Palette
 gLevel6Stage1Room2Bg3Palette:
 	.incbin	"baserom.gba", 0x53CCD4, 0x104
-	.global	gUnk_0853CDD8
-gUnk_0853CDD8:
+	.global	gLevel6Stage1Room6Bg3Palette
+gLevel6Stage1Room6Bg3Palette:
 	.incbin	"baserom.gba", 0x53CDD8, 0x104
 	.global	gUnk_0853CEDC
 gUnk_0853CEDC:
 	.incbin	"baserom.gba", 0x53CEDC, 0x104
-	.global	gUnk_0853CFE0
-gUnk_0853CFE0:
+	.global	gLevel6Stage1Room0Bg3Palette
+gLevel6Stage1Room0Bg3Palette:
 	.incbin	"baserom.gba", 0x53CFE0, 0x104
 	.global	gUnk_0853D0E4
 gUnk_0853D0E4:
 	.incbin	"baserom.gba", 0x53D0E4, 0x24
-	.global	gUnk_0853D108
-gUnk_0853D108:
+	.global	gLevel8Stage5Room0Bg3Palette
+gLevel8Stage5Room0Bg3Palette:
 	.incbin	"baserom.gba", 0x53D108, 0x24
 	.global	gUnk_0853D12C
 gUnk_0853D12C:
 	.incbin	"baserom.gba", 0x53D12C, 0x104
-	.global	gUnk_0853D230
-gUnk_0853D230:
+	.global	gLevel3Stage5Room0Bg3Palette
+gLevel3Stage5Room0Bg3Palette:
 	.incbin	"baserom.gba", 0x53D230, 0x104
-	.global	gUnk_0853D334
-gUnk_0853D334:
+	.global	gLevel3Stage5Room2Bg3Palette
+gLevel3Stage5Room2Bg3Palette:
 	.incbin	"baserom.gba", 0x53D334, 0x104
-	.global	gUnk_0853D438
-gUnk_0853D438:
+	.global	gLevel3Stage1Room1Bg3Palette
+gLevel3Stage1Room1Bg3Palette:
 	.incbin	"baserom.gba", 0x53D438, 0x104
 	.global	gUnk_0853D53C
 gUnk_0853D53C:
 	.incbin	"baserom.gba", 0x53D53C, 0xC4
-	.global	gUnk_0853D600
-gUnk_0853D600:
+	.global	gLevel8Stage0Room0Bg2Palette
+gLevel8Stage0Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x53D600, 0xC4
-	.global	gUnk_0853D6C4
-gUnk_0853D6C4:
+	.global	gLevel8Stage1Room0Bg2Palette
+gLevel8Stage1Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x53D6C4, 0x104
-	.global	gUnk_0853D7C8
-gUnk_0853D7C8:
+	.global	gLevel8Stage4Room0Bg2Palette
+gLevel8Stage4Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x53D7C8, 0x104
-	.global	gUnk_0853D8CC
-gUnk_0853D8CC:
+	.global	gLevel8Stage5Room0Bg2Palette
+gLevel8Stage5Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x53D8CC, 0x104
-	.global	gUnk_0853D9D0
-gUnk_0853D9D0:
+	.global	gLevel8Stage6Room0Bg2Palette
+gLevel8Stage6Room0Bg2Palette:
 	.incbin	"baserom.gba", 0x53D9D0, 0xE4
 	.global	gUnk_0853DAB4
 gUnk_0853DAB4:
@@ -751,8 +751,8 @@ gLevel1Stage5Room0Bg2Palette:
 	.global	gUnk_0853DD00
 gUnk_0853DD00:
 	.incbin	"baserom.gba", 0x53DD00, 0x104
-	.global	gUnk_0853DE04
-gUnk_0853DE04:
+	.global	gLevel1Stage1Room3Bg3Palette
+gLevel1Stage1Room3Bg3Palette:
 	.incbin	"baserom.gba", 0x53DE04, 0x104
 	.global	gUnk_0853DF08
 gUnk_0853DF08:
@@ -760,11 +760,11 @@ gUnk_0853DF08:
 	.global	gUnk_0853E00C
 gUnk_0853E00C:
 	.incbin	"baserom.gba", 0x53E00C, 0x104
-	.global	gUnk_0853E110
-gUnk_0853E110:
+	.global	gLevel1Stage2Room0Bg3Palette
+gLevel1Stage2Room0Bg3Palette:
 	.incbin	"baserom.gba", 0x53E110, 0x104
-	.global	gUnk_0853E214
-gUnk_0853E214:
+	.global	gLevel1Stage3Bg3Palette
+gLevel1Stage3Bg3Palette:
 	.incbin	"baserom.gba", 0x53E214, 0x104
 	.global	gUnk_0853E318
 gUnk_0853E318:
@@ -781,8 +781,8 @@ gUnk_0853E624:
 	.global	gUnk_0853E728
 gUnk_0853E728:
 	.incbin	"baserom.gba", 0x53E728, 0xC4
-	.global	gUnk_0853E7EC
-gUnk_0853E7EC:
+	.global	gLevel6Stage5Bg2Palette
+gLevel6Stage5Bg2Palette:
 	.incbin	"baserom.gba", 0x53E7EC, 0x24
 	.global	gUnk_0853E810
 gUnk_0853E810:
@@ -802,194 +802,194 @@ gUnk_0853F564:
 	.global	gUnk_08540AD0
 gUnk_08540AD0:
 	.incbin	"baserom.gba", 0x540AD0, 0xFD0
-	.global	gUnk_08541AA0
-gUnk_08541AA0:
+	.global	gBootLogoSprite0
+gBootLogoSprite0:
 	.incbin	"baserom.gba", 0x541AA0, 0x8
-	.global	gUnk_08541AA8
-gUnk_08541AA8:
+	.global	gBootLogoSprite1
+gBootLogoSprite1:
 	.incbin	"baserom.gba", 0x541AA8, 0x8
-	.global	gUnk_08541AB0
-gUnk_08541AB0:
+	.global	gBootLogoSprite2
+gBootLogoSprite2:
 	.incbin	"baserom.gba", 0x541AB0, 0x8
-	.global	gUnk_08541AB8
-gUnk_08541AB8:
+	.global	gBootLogoSprite3
+gBootLogoSprite3:
 	.incbin	"baserom.gba", 0x541AB8, 0x8
-	.global	gUnk_08541AC0
-gUnk_08541AC0:
+	.global	gBootLogoSprite4
+gBootLogoSprite4:
 	.incbin	"baserom.gba", 0x541AC0, 0x8
-	.global	gUnk_08541AC8
-gUnk_08541AC8:
+	.global	gBootLogoSprite5
+gBootLogoSprite5:
 	.incbin	"baserom.gba", 0x541AC8, 0x8
-	.global	gUnk_08541AD0
-gUnk_08541AD0:
+	.global	gBootLogoSprite6
+gBootLogoSprite6:
 	.incbin	"baserom.gba", 0x541AD0, 0x8
-	.global	gUnk_08541AD8
-gUnk_08541AD8:
+	.global	gBootLogoSprite7
+gBootLogoSprite7:
 	.incbin	"baserom.gba", 0x541AD8, 0x8
-	.global	gUnk_08541AE0
-gUnk_08541AE0:
+	.global	gBootLogoSprite8
+gBootLogoSprite8:
 	.incbin	"baserom.gba", 0x541AE0, 0x8
-	.global	gUnk_08541AE8
-gUnk_08541AE8:
+	.global	gBootLogoSprite9
+gBootLogoSprite9:
 	.incbin	"baserom.gba", 0x541AE8, 0x8
-	.global	gUnk_08541AF0
-gUnk_08541AF0:
+	.global	gBootLogoSprite10
+gBootLogoSprite10:
 	.incbin	"baserom.gba", 0x541AF0, 0x8
-	.global	gUnk_08541AF8
-gUnk_08541AF8:
+	.global	gBootLogoSprite11
+gBootLogoSprite11:
 	.incbin	"baserom.gba", 0x541AF8, 0x8
-	.global	gUnk_08541B00
-gUnk_08541B00:
+	.global	gBootLogoSprite12
+gBootLogoSprite12:
 	.incbin	"baserom.gba", 0x541B00, 0x8
-	.global	gUnk_08541B08
-gUnk_08541B08:
+	.global	gBootLogoSprite13
+gBootLogoSprite13:
 	.incbin	"baserom.gba", 0x541B08, 0x8
-	.global	gUnk_08541B10
-gUnk_08541B10:
+	.global	gBootLogoSprite14
+gBootLogoSprite14:
 	.incbin	"baserom.gba", 0x541B10, 0x8
-	.global	gUnk_08541B18
-gUnk_08541B18:
+	.global	gBootLogoSprite15
+gBootLogoSprite15:
 	.incbin	"baserom.gba", 0x541B18, 0x8
-	.global	gUnk_08541B20
-gUnk_08541B20:
+	.global	gBootLogoSprite16
+gBootLogoSprite16:
 	.incbin	"baserom.gba", 0x541B20, 0x8
-	.global	gUnk_08541B28
-gUnk_08541B28:
+	.global	gBootLogoSprite17
+gBootLogoSprite17:
 	.incbin	"baserom.gba", 0x541B28, 0x8
-	.global	gUnk_08541B30
-gUnk_08541B30:
+	.global	gBootLogoSprite18
+gBootLogoSprite18:
 	.incbin	"baserom.gba", 0x541B30, 0x8
-	.global	gUnk_08541B38
-gUnk_08541B38:
+	.global	gBootLogoSprite19
+gBootLogoSprite19:
 	.incbin	"baserom.gba", 0x541B38, 0x8
-	.global	gUnk_08541B40
-gUnk_08541B40:
+	.global	gBootLogoSprite20
+gBootLogoSprite20:
 	.incbin	"baserom.gba", 0x541B40, 0x8
-	.global	gUnk_08541B48
-gUnk_08541B48:
+	.global	gBootLogoSprite21
+gBootLogoSprite21:
 	.incbin	"baserom.gba", 0x541B48, 0x8
-	.global	gUnk_08541B50
-gUnk_08541B50:
+	.global	gBootLogoSprite22
+gBootLogoSprite22:
 	.incbin	"baserom.gba", 0x541B50, 0x8
-	.global	gUnk_08541B58
-gUnk_08541B58:
+	.global	gBootLogoSprite23
+gBootLogoSprite23:
 	.incbin	"baserom.gba", 0x541B58, 0x8
-	.global	gUnk_08541B60
-gUnk_08541B60:
+	.global	gBootLogoSprite24
+gBootLogoSprite24:
 	.incbin	"baserom.gba", 0x541B60, 0x8
-	.global	gUnk_08541B68
-gUnk_08541B68:
+	.global	gBootLogoSprite25
+gBootLogoSprite25:
 	.incbin	"baserom.gba", 0x541B68, 0x8
-	.global	gUnk_08541B70
-gUnk_08541B70:
+	.global	gBootLogoSprite26
+gBootLogoSprite26:
 	.incbin	"baserom.gba", 0x541B70, 0x8
-	.global	gUnk_08541B78
-gUnk_08541B78:
+	.global	gBootLogoSprite27
+gBootLogoSprite27:
 	.incbin	"baserom.gba", 0x541B78, 0x8
-	.global	gUnk_08541B80
-gUnk_08541B80:
+	.global	gBootLogoSprite28
+gBootLogoSprite28:
 	.incbin	"baserom.gba", 0x541B80, 0x8
-	.global	gUnk_08541B88
-gUnk_08541B88:
+	.global	gBootLogoSprite29
+gBootLogoSprite29:
 	.incbin	"baserom.gba", 0x541B88, 0x8
-	.global	gUnk_08541B90
-gUnk_08541B90:
+	.global	gBootLogoSprite30
+gBootLogoSprite30:
 	.incbin	"baserom.gba", 0x541B90, 0x8
-	.global	gUnk_08541B98
-gUnk_08541B98:
+	.global	gBootLogoSprite31
+gBootLogoSprite31:
 	.incbin	"baserom.gba", 0x541B98, 0x8
-	.global	gUnk_08541BA0
-gUnk_08541BA0:
+	.global	gBootLogoSprite32
+gBootLogoSprite32:
 	.incbin	"baserom.gba", 0x541BA0, 0x8
-	.global	gUnk_08541BA8
-gUnk_08541BA8:
+	.global	gBootLogoSprite33
+gBootLogoSprite33:
 	.incbin	"baserom.gba", 0x541BA8, 0x8
-	.global	gUnk_08541BB0
-gUnk_08541BB0:
+	.global	gBootLogoSprite34
+gBootLogoSprite34:
 	.incbin	"baserom.gba", 0x541BB0, 0x8
-	.global	gUnk_08541BB8
-gUnk_08541BB8:
+	.global	gBootLogoSprite35
+gBootLogoSprite35:
 	.incbin	"baserom.gba", 0x541BB8, 0x8
-	.global	gUnk_08541BC0
-gUnk_08541BC0:
+	.global	gBootLogoSprite36
+gBootLogoSprite36:
 	.incbin	"baserom.gba", 0x541BC0, 0x8
-	.global	gUnk_08541BC8
-gUnk_08541BC8:
+	.global	gBootLogoSprite37
+gBootLogoSprite37:
 	.incbin	"baserom.gba", 0x541BC8, 0x8
-	.global	gUnk_08541BD0
-gUnk_08541BD0:
+	.global	gBootLogoSprite38
+gBootLogoSprite38:
 	.incbin	"baserom.gba", 0x541BD0, 0x8
-	.global	gUnk_08541BD8
-gUnk_08541BD8:
+	.global	gBootLogoSprite39
+gBootLogoSprite39:
 	.incbin	"baserom.gba", 0x541BD8, 0x8
-	.global	gUnk_08541BE0
-gUnk_08541BE0:
+	.global	gBootLogoSprite40
+gBootLogoSprite40:
 	.incbin	"baserom.gba", 0x541BE0, 0x8
-	.global	gUnk_08541BE8
-gUnk_08541BE8:
+	.global	gBootLogoSprite41
+gBootLogoSprite41:
 	.incbin	"baserom.gba", 0x541BE8, 0x8
-	.global	gUnk_08541BF0
-gUnk_08541BF0:
+	.global	gBootLogoSprite42
+gBootLogoSprite42:
 	.incbin	"baserom.gba", 0x541BF0, 0x8
-	.global	gUnk_08541BF8
-gUnk_08541BF8:
+	.global	gBootLogoSprite43
+gBootLogoSprite43:
 	.incbin	"baserom.gba", 0x541BF8, 0x8
-	.global	gUnk_08541C00
-gUnk_08541C00:
+	.global	gBootLogoSprite44
+gBootLogoSprite44:
 	.incbin	"baserom.gba", 0x541C00, 0x8
-	.global	gUnk_08541C08
-gUnk_08541C08:
+	.global	gBootLogoSprite45
+gBootLogoSprite45:
 	.incbin	"baserom.gba", 0x541C08, 0x8
-	.global	gUnk_08541C10
-gUnk_08541C10:
+	.global	gBootLogoSprite46
+gBootLogoSprite46:
 	.incbin	"baserom.gba", 0x541C10, 0x8
-	.global	gUnk_08541C18
-gUnk_08541C18:
+	.global	gBootLogoSprite47
+gBootLogoSprite47:
 	.incbin	"baserom.gba", 0x541C18, 0x8
-	.global	gUnk_08541C20
-gUnk_08541C20:
+	.global	gBootLogoSprite48
+gBootLogoSprite48:
 	.incbin	"baserom.gba", 0x541C20, 0x8
-	.global	gUnk_08541C28
-gUnk_08541C28:
+	.global	gBootLogoSprite49
+gBootLogoSprite49:
 	.incbin	"baserom.gba", 0x541C28, 0x8
-	.global	gUnk_08541C30
-gUnk_08541C30:
+	.global	gBootLogoSprite50
+gBootLogoSprite50:
 	.incbin	"baserom.gba", 0x541C30, 0x8
-	.global	gUnk_08541C38
-gUnk_08541C38:
+	.global	gBootLogoSprite51
+gBootLogoSprite51:
 	.incbin	"baserom.gba", 0x541C38, 0x8
-	.global	gUnk_08541C40
-gUnk_08541C40:
+	.global	gBootLogoSprite52
+gBootLogoSprite52:
 	.incbin	"baserom.gba", 0x541C40, 0x8
-	.global	gUnk_08541C48
-gUnk_08541C48:
+	.global	gBootLogoSprite53
+gBootLogoSprite53:
 	.incbin	"baserom.gba", 0x541C48, 0x8
-	.global	gUnk_08541C50
-gUnk_08541C50:
+	.global	gBootLogoSprite54
+gBootLogoSprite54:
 	.incbin	"baserom.gba", 0x541C50, 0x8
-	.global	gUnk_08541C58
-gUnk_08541C58:
+	.global	gBootLogoSprite55
+gBootLogoSprite55:
 	.incbin	"baserom.gba", 0x541C58, 0x8
-	.global	gUnk_08541C60
-gUnk_08541C60:
+	.global	gBootLogoSprite56
+gBootLogoSprite56:
 	.incbin	"baserom.gba", 0x541C60, 0x8
-	.global	gUnk_08541C68
-gUnk_08541C68:
+	.global	gBootLogoSprite57
+gBootLogoSprite57:
 	.incbin	"baserom.gba", 0x541C68, 0x8
-	.global	gUnk_08541C70
-gUnk_08541C70:
+	.global	gBootLogoSprite58
+gBootLogoSprite58:
 	.incbin	"baserom.gba", 0x541C70, 0x8
-	.global	gUnk_08541C78
-gUnk_08541C78:
+	.global	gBootLogoSprite59
+gBootLogoSprite59:
 	.incbin	"baserom.gba", 0x541C78, 0x8
-	.global	gUnk_08541C80
-gUnk_08541C80:
+	.global	gBootLogoSprite60
+gBootLogoSprite60:
 	.incbin	"baserom.gba", 0x541C80, 0x8
-	.global	gUnk_08541C88
-gUnk_08541C88:
+	.global	gBootLogoSprite61
+gBootLogoSprite61:
 	.incbin	"baserom.gba", 0x541C88, 0x8
-	.global	gUnk_08541C90
-gUnk_08541C90:
+	.global	gBootLogoSprite62
+gBootLogoSprite62:
 	.incbin	"baserom.gba", 0x541C90, 0x8
 	.global	gUnk_08541C98
 gUnk_08541C98:
@@ -1096,14 +1096,14 @@ gUnk_0854A66C:
 	.global	gUnk_0854A6EC
 gUnk_0854A6EC:
 	.incbin	"baserom.gba", 0x54A6EC, 0x1294
-	.global	gUnk_0854B980
-gUnk_0854B980:
+	.global	gIntroStoryPictureFrame0
+gIntroStoryPictureFrame0:
 	.incbin	"baserom.gba", 0x54B980, 0xA0
-	.global	gUnk_0854BA20
-gUnk_0854BA20:
+	.global	gIntroStoryPictureFrame1
+gIntroStoryPictureFrame1:
 	.incbin	"baserom.gba", 0x54BA20, 0xA0
-	.global	gUnk_0854BAC0
-gUnk_0854BAC0:
+	.global	gIntroStoryPictureFrame2
+gIntroStoryPictureFrame2:
 	.incbin	"baserom.gba", 0x54BAC0, 0xA0
 	.global	gUnk_0854BB60
 gUnk_0854BB60:
@@ -1117,14 +1117,14 @@ gUnk_0854BB74:
 	.global	gUnk_0854BBD4
 gUnk_0854BBD4:
 	.incbin	"baserom.gba", 0x54BBD4, 0x1518
-	.global	gUnk_0854D0EC
-gUnk_0854D0EC:
+	.global	gIntroStoryPictureFrame3
+gIntroStoryPictureFrame3:
 	.incbin	"baserom.gba", 0x54D0EC, 0xC0
-	.global	gUnk_0854D1AC
-gUnk_0854D1AC:
+	.global	gIntroStoryPictureFrame4
+gIntroStoryPictureFrame4:
 	.incbin	"baserom.gba", 0x54D1AC, 0x60
-	.global	gUnk_0854D20C
-gUnk_0854D20C:
+	.global	gIntroStoryPictureFrame5
+gIntroStoryPictureFrame5:
 	.incbin	"baserom.gba", 0x54D20C, 0x88
 	.global	gUnk_0854D294
 gUnk_0854D294:
@@ -1138,14 +1138,14 @@ gUnk_0854D2A8:
 	.global	gUnk_0854D328
 gUnk_0854D328:
 	.incbin	"baserom.gba", 0x54D328, 0x12F0
-	.global	gUnk_0854E618
-gUnk_0854E618:
+	.global	gIntroStoryPictureFrame6
+gIntroStoryPictureFrame6:
 	.incbin	"baserom.gba", 0x54E618, 0x88
-	.global	gUnk_0854E6A0
-gUnk_0854E6A0:
+	.global	gIntroStoryPictureFrame7
+gIntroStoryPictureFrame7:
 	.incbin	"baserom.gba", 0x54E6A0, 0xC0
-	.global	gUnk_0854E760
-gUnk_0854E760:
+	.global	gIntroStoryPictureFrame8
+gIntroStoryPictureFrame8:
 	.incbin	"baserom.gba", 0x54E760, 0xD8
 	.global	gUnk_0854E838
 gUnk_0854E838:
@@ -1180,8 +1180,8 @@ gUnk_0855025C:
 	.global	gUnk_085509FC
 gUnk_085509FC:
 	.incbin	"baserom.gba", 0x5509FC, 0x1A0
-	.global	gUnk_08550B9C
-gUnk_08550B9C:
+	.global	gFileSelectCursorUpdateTiles
+gFileSelectCursorUpdateTiles:
 	.incbin	"baserom.gba", 0x550B9C, 0x260
 	.global	gUnk_08550DFC
 gUnk_08550DFC:
@@ -1195,8 +1195,8 @@ gUnk_08553210:
 	.global	gUnk_08553510
 gUnk_08553510:
 	.incbin	"baserom.gba", 0x553510, 0x300
-	.global	gUnk_08553810
-gUnk_08553810:
+	.global	gMenuLoadSaveSlotPictureTiles
+gMenuLoadSaveSlotPictureTiles:
 	.incbin	"baserom.gba", 0x553810, 0xF00
 	.global	gUnk_08554710
 gUnk_08554710:
@@ -1234,14 +1234,14 @@ gUnk_08554AC0:
 	.global	gUnk_08554AE0
 gUnk_08554AE0:
 	.incbin	"baserom.gba", 0x554AE0, 0x80
-	.global	gUnk_08554B60
-gUnk_08554B60:
+	.global	gFileSelectCursorUpdatePalette
+gFileSelectCursorUpdatePalette:
 	.incbin	"baserom.gba", 0x554B60, 0x10
 	.global	gUnk_08554B70
 gUnk_08554B70:
 	.incbin	"baserom.gba", 0x554B70, 0x8
-	.global	gUnk_08554B78
-gUnk_08554B78:
+	.global	gMenuLoadSaveSlotPalettePalette
+gMenuLoadSaveSlotPalettePalette:
 	.incbin	"baserom.gba", 0x554B78, 0x200
 	.global	gUnk_08554D78
 gUnk_08554D78:
@@ -1285,8 +1285,8 @@ gUnk_08555E04:
 	.global	gUnk_085560EC
 gUnk_085560EC:
 	.incbin	"baserom.gba", 0x5560EC, 0x2DC
-	.global	gUnk_085563C8
-gUnk_085563C8:
+	.global	gMenuBackgroundPalette
+gMenuBackgroundPalette:
 	.incbin	"baserom.gba", 0x5563C8, 0x20
 	.global	gUnk_085563E8
 gUnk_085563E8:
@@ -1297,8 +1297,8 @@ gUnk_08556408:
 	.global	gUnk_08557564
 gUnk_08557564:
 	.incbin	"baserom.gba", 0x557564, 0x36C
-	.global	gUnk_085578D0
-gUnk_085578D0:
+	.global	gMenuBgPaletteCyclePalette1
+gMenuBgPaletteCyclePalette1:
 	.incbin	"baserom.gba", 0x5578D0, 0xC0
 	.global	gUnk_08557990
 gUnk_08557990:
@@ -1360,8 +1360,8 @@ gUnk_08559B68:
 	.global	gUnk_08559B90
 gUnk_08559B90:
 	.incbin	"baserom.gba", 0x559B90, 0x14
-	.global	gUnk_08559BA4
-gUnk_08559BA4:
+	.global	gEraseConfirmDialogUpdatePalette
+gEraseConfirmDialogUpdatePalette:
 	.incbin	"baserom.gba", 0x559BA4, 0x80
 	.global	gUnk_08559C24
 gUnk_08559C24:
@@ -1411,8 +1411,8 @@ gUnk_0855BF2C:
 	.global	gUnk_0855CECC
 gUnk_0855CECC:
 	.incbin	"baserom.gba", 0x55CECC, 0x36C
-	.global	gUnk_0855D238
-gUnk_0855D238:
+	.global	gMenuBgPaletteCyclePalette4
+gMenuBgPaletteCyclePalette4:
 	.incbin	"baserom.gba", 0x55D238, 0xC0
 	.global	gUnk_0855D2F8
 gUnk_0855D2F8:
@@ -1420,8 +1420,8 @@ gUnk_0855D2F8:
 	.global	gUnk_0855D320
 gUnk_0855D320:
 	.incbin	"baserom.gba", 0x55D320, 0x14
-	.global	gUnk_0855D334
-gUnk_0855D334:
+	.global	gModePlayerCountPanelUpdatePalette
+gModePlayerCountPanelUpdatePalette:
 	.incbin	"baserom.gba", 0x55D334, 0xC0
 	.global	gUnk_0855D3F4
 gUnk_0855D3F4:
@@ -1498,62 +1498,62 @@ gUnk_08562FE4:
 	.global	gUnk_08563024
 gUnk_08563024:
 	.incbin	"baserom.gba", 0x563024, 0x68
-	.global	gUnk_0856308C
-gUnk_0856308C:
+	.global	gLinkPlayFrame0
+gLinkPlayFrame0:
 	.incbin	"baserom.gba", 0x56308C, 0x30
-	.global	gUnk_085630BC
-gUnk_085630BC:
+	.global	gLinkPlayFrame1
+gLinkPlayFrame1:
 	.incbin	"baserom.gba", 0x5630BC, 0x40
-	.global	gUnk_085630FC
-gUnk_085630FC:
+	.global	gLinkPlayFrame2
+gLinkPlayFrame2:
 	.incbin	"baserom.gba", 0x5630FC, 0x10
-	.global	gUnk_0856310C
-gUnk_0856310C:
+	.global	gLinkPlayFrame3
+gLinkPlayFrame3:
 	.incbin	"baserom.gba", 0x56310C, 0x8
-	.global	gUnk_08563114
-gUnk_08563114:
+	.global	gLinkPlayFrame4
+gLinkPlayFrame4:
 	.incbin	"baserom.gba", 0x563114, 0x8
-	.global	gUnk_0856311C
-gUnk_0856311C:
+	.global	gLinkPlayFrame5
+gLinkPlayFrame5:
 	.incbin	"baserom.gba", 0x56311C, 0x8
-	.global	gUnk_08563124
-gUnk_08563124:
+	.global	gLinkPlayFrame6
+gLinkPlayFrame6:
 	.incbin	"baserom.gba", 0x563124, 0x20
-	.global	gUnk_08563144
-gUnk_08563144:
+	.global	gLinkPlayFrame7
+gLinkPlayFrame7:
 	.incbin	"baserom.gba", 0x563144, 0x48
-	.global	gUnk_0856318C
-gUnk_0856318C:
+	.global	gLinkPlayFrame8
+gLinkPlayFrame8:
 	.incbin	"baserom.gba", 0x56318C, 0x70
-	.global	gUnk_085631FC
-gUnk_085631FC:
+	.global	gLinkPlayFrame9
+gLinkPlayFrame9:
 	.incbin	"baserom.gba", 0x5631FC, 0x48
-	.global	gUnk_08563244
-gUnk_08563244:
+	.global	gLinkPlayFrame10
+gLinkPlayFrame10:
 	.incbin	"baserom.gba", 0x563244, 0x40
-	.global	gUnk_08563284
-gUnk_08563284:
+	.global	gLinkPlayFrame11
+gLinkPlayFrame11:
 	.incbin	"baserom.gba", 0x563284, 0x60
-	.global	gUnk_085632E4
-gUnk_085632E4:
+	.global	gLinkPlayFrame12
+gLinkPlayFrame12:
 	.incbin	"baserom.gba", 0x5632E4, 0x78
-	.global	gUnk_0856335C
-gUnk_0856335C:
+	.global	gLinkPlayFrame13
+gLinkPlayFrame13:
 	.incbin	"baserom.gba", 0x56335C, 0x8
-	.global	gUnk_08563364
-gUnk_08563364:
+	.global	gLinkPlayFrame14
+gLinkPlayFrame14:
 	.incbin	"baserom.gba", 0x563364, 0x20
-	.global	gUnk_08563384
-gUnk_08563384:
+	.global	gLinkPlayFrame15
+gLinkPlayFrame15:
 	.incbin	"baserom.gba", 0x563384, 0x20
-	.global	gUnk_085633A4
-gUnk_085633A4:
+	.global	gLinkPlayFrame16
+gLinkPlayFrame16:
 	.incbin	"baserom.gba", 0x5633A4, 0x20
-	.global	gUnk_085633C4
-gUnk_085633C4:
+	.global	gLinkPlayFrame17
+gLinkPlayFrame17:
 	.incbin	"baserom.gba", 0x5633C4, 0x10
-	.global	gUnk_085633D4
-gUnk_085633D4:
+	.global	gLinkPlayFrame18
+gLinkPlayFrame18:
 	.incbin	"baserom.gba", 0x5633D4, 0x18
 	.global	gUnk_085633EC
 gUnk_085633EC:
@@ -1567,8 +1567,8 @@ gUnk_0856342C:
 	.global	gUnk_085634B8
 gUnk_085634B8:
 	.incbin	"baserom.gba", 0x5634B8, 0x20
-	.global	gUnk_085634D8
-gUnk_085634D8:
+	.global	gSoundTestPulsePalette
+gSoundTestPulsePalette:
 	.incbin	"baserom.gba", 0x5634D8, 0x100
 	.global	gUnk_085635D8
 gUnk_085635D8:
@@ -1594,11 +1594,11 @@ gUnk_08564D4C:
 	.global	gUnk_08564EF4
 gUnk_08564EF4:
 	.incbin	"baserom.gba", 0x564EF4, 0x40
-	.global	gUnk_08564F34
-gUnk_08564F34:
+	.global	gSoundTestHighlightCursorPalette
+gSoundTestHighlightCursorPalette:
 	.incbin	"baserom.gba", 0x564F34, 0x4
-	.global	gUnk_08564F38
-gUnk_08564F38:
+	.global	gSoundTestCursorsUpdatePalette
+gSoundTestCursorsUpdatePalette:
 	.incbin	"baserom.gba", 0x564F38, 0x14
 	.global	gUnk_08564F4C
 gUnk_08564F4C:
@@ -1609,8 +1609,8 @@ gUnk_08565090:
 	.global	gUnk_085653BC
 gUnk_085653BC:
 	.incbin	"baserom.gba", 0x5653BC, 0x8
-	.global	gUnk_085653C4
-gUnk_085653C4:
+	.global	gSoundTestDrawNumberTiles
+gSoundTestDrawNumberTiles:
 	.incbin	"baserom.gba", 0x5653C4, 0x580
 	.global	gUnk_08565944
 gUnk_08565944:
@@ -1624,8 +1624,8 @@ gUnk_085659AC:
 	.global	gUnk_085659C4
 gUnk_085659C4:
 	.incbin	"baserom.gba", 0x5659C4, 0x18
-	.global	gUnk_085659DC
-gUnk_085659DC:
+	.global	gExtraModeTitlePicture6Palette
+gExtraModeTitlePicture6Palette:
 	.incbin	"baserom.gba", 0x5659DC, 0x80
 	.global	gUnk_08565A5C
 gUnk_08565A5C:
@@ -1633,8 +1633,8 @@ gUnk_08565A5C:
 	.global	gUnk_085679D0
 gUnk_085679D0:
 	.incbin	"baserom.gba", 0x5679D0, 0x5C8
-	.global	gUnk_08567F98
-gUnk_08567F98:
+	.global	gExtraModeTitlePicture7Palette
+gExtraModeTitlePicture7Palette:
 	.incbin	"baserom.gba", 0x567F98, 0x80
 	.global	gUnk_08568018
 gUnk_08568018:
@@ -1642,8 +1642,8 @@ gUnk_08568018:
 	.global	gUnk_0856981C
 gUnk_0856981C:
 	.incbin	"baserom.gba", 0x56981C, 0x5C0
-	.global	gUnk_08569DDC
-gUnk_08569DDC:
+	.global	gExtraModeTitlePicture5Palette
+gExtraModeTitlePicture5Palette:
 	.incbin	"baserom.gba", 0x569DDC, 0x60
 	.global	gUnk_08569E3C
 gUnk_08569E3C:
@@ -1651,8 +1651,8 @@ gUnk_08569E3C:
 	.global	gUnk_0856B434
 gUnk_0856B434:
 	.incbin	"baserom.gba", 0x56B434, 0x5C0
-	.global	gUnk_0856B9F4
-gUnk_0856B9F4:
+	.global	gExtraModeTitlePicture4Palette
+gExtraModeTitlePicture4Palette:
 	.incbin	"baserom.gba", 0x56B9F4, 0x60
 	.global	gUnk_0856BA54
 gUnk_0856BA54:
@@ -1660,8 +1660,8 @@ gUnk_0856BA54:
 	.global	gUnk_0856D07C
 gUnk_0856D07C:
 	.incbin	"baserom.gba", 0x56D07C, 0x5C0
-	.global	gUnk_0856D63C
-gUnk_0856D63C:
+	.global	gExtraModeTitlePicture3Palette
+gExtraModeTitlePicture3Palette:
 	.incbin	"baserom.gba", 0x56D63C, 0x60
 	.global	gUnk_0856D69C
 gUnk_0856D69C:
@@ -1891,8 +1891,8 @@ gUnk_08583F98:
 	.global	gUnk_085848A4
 gUnk_085848A4:
 	.incbin	"baserom.gba", 0x5848A4, 0x30C
-	.global	gUnk_08584BB0
-gUnk_08584BB0:
+	.global	gGameOverPalettePalette
+gGameOverPalettePalette:
 	.incbin	"baserom.gba", 0x584BB0, 0x10
 	.global	gUnk_08584BC0
 gUnk_08584BC0:
@@ -1912,32 +1912,32 @@ gUnk_08586004:
 	.global	gUnk_08586064
 gUnk_08586064:
 	.incbin	"baserom.gba", 0x586064, 0x49C
-	.global	gUnk_08586500
-gUnk_08586500:
+	.global	gGameOverScreenFrame0
+gGameOverScreenFrame0:
 	.incbin	"baserom.gba", 0x586500, 0x10
-	.global	gUnk_08586510
-gUnk_08586510:
+	.global	gGameOverScreenFrame1
+gGameOverScreenFrame1:
 	.incbin	"baserom.gba", 0x586510, 0x10
-	.global	gUnk_08586520
-gUnk_08586520:
+	.global	gGameOverScreenFrame2
+gGameOverScreenFrame2:
 	.incbin	"baserom.gba", 0x586520, 0x10
-	.global	gUnk_08586530
-gUnk_08586530:
+	.global	gGameOverScreenFrame3
+gGameOverScreenFrame3:
 	.incbin	"baserom.gba", 0x586530, 0x8
-	.global	gUnk_08586538
-gUnk_08586538:
+	.global	gGameOverScreenFrame4
+gGameOverScreenFrame4:
 	.incbin	"baserom.gba", 0x586538, 0x10
-	.global	gUnk_08586548
-gUnk_08586548:
+	.global	gGameOverScreenFrame5
+gGameOverScreenFrame5:
 	.incbin	"baserom.gba", 0x586548, 0x10
-	.global	gUnk_08586558
-gUnk_08586558:
+	.global	gGameOverScreenFrame7
+gGameOverScreenFrame7:
 	.incbin	"baserom.gba", 0x586558, 0x10
-	.global	gUnk_08586568
-gUnk_08586568:
+	.global	gGameOverScreenFrame8
+gGameOverScreenFrame8:
 	.incbin	"baserom.gba", 0x586568, 0x40
-	.global	gUnk_085865A8
-gUnk_085865A8:
+	.global	gGameOverScreenFrame9
+gGameOverScreenFrame9:
 	.incbin	"baserom.gba", 0x5865A8, 0x40
 	.global	gUnk_085865E8
 gUnk_085865E8:
@@ -2023,212 +2023,212 @@ gUnk_08596D00:
 	.global	gUnk_08596DA0
 gUnk_08596DA0:
 	.incbin	"baserom.gba", 0x596DA0, 0x1F2C
-	.global	gUnk_08598CCC
-gUnk_08598CCC:
+	.global	gEndingEpilogueFrame64
+gEndingEpilogueFrame64:
 	.incbin	"baserom.gba", 0x598CCC, 0x20
-	.global	gUnk_08598CEC
-gUnk_08598CEC:
+	.global	gEndingEpilogueFrame65
+gEndingEpilogueFrame65:
 	.incbin	"baserom.gba", 0x598CEC, 0x20
-	.global	gUnk_08598D0C
-gUnk_08598D0C:
+	.global	gEndingEpilogueFrame0
+gEndingEpilogueFrame0:
 	.incbin	"baserom.gba", 0x598D0C, 0x10
-	.global	gUnk_08598D1C
-gUnk_08598D1C:
+	.global	gEndingEpilogueFrame1
+gEndingEpilogueFrame1:
 	.incbin	"baserom.gba", 0x598D1C, 0x18
-	.global	gUnk_08598D34
-gUnk_08598D34:
+	.global	gEndingEpilogueFrame2
+gEndingEpilogueFrame2:
 	.incbin	"baserom.gba", 0x598D34, 0x10
-	.global	gUnk_08598D44
-gUnk_08598D44:
+	.global	gEndingEpilogueFrame3
+gEndingEpilogueFrame3:
 	.incbin	"baserom.gba", 0x598D44, 0x18
-	.global	gUnk_08598D5C
-gUnk_08598D5C:
+	.global	gEndingEpilogueFrame4
+gEndingEpilogueFrame4:
 	.incbin	"baserom.gba", 0x598D5C, 0x10
-	.global	gUnk_08598D6C
-gUnk_08598D6C:
+	.global	gEndingEpilogueFrame5
+gEndingEpilogueFrame5:
 	.incbin	"baserom.gba", 0x598D6C, 0x18
-	.global	gUnk_08598D84
-gUnk_08598D84:
+	.global	gEndingEpilogueFrame6
+gEndingEpilogueFrame6:
 	.incbin	"baserom.gba", 0x598D84, 0x20
-	.global	gUnk_08598DA4
-gUnk_08598DA4:
+	.global	gEndingEpilogueFrame7
+gEndingEpilogueFrame7:
 	.incbin	"baserom.gba", 0x598DA4, 0x28
-	.global	gUnk_08598DCC
-gUnk_08598DCC:
+	.global	gEndingEpilogueFrame8
+gEndingEpilogueFrame8:
 	.incbin	"baserom.gba", 0x598DCC, 0x18
-	.global	gUnk_08598DE4
-gUnk_08598DE4:
+	.global	gEndingEpilogueFrame9
+gEndingEpilogueFrame9:
 	.incbin	"baserom.gba", 0x598DE4, 0x20
-	.global	gUnk_08598E04
-gUnk_08598E04:
+	.global	gEndingEpilogueFrame10
+gEndingEpilogueFrame10:
 	.incbin	"baserom.gba", 0x598E04, 0x20
-	.global	gUnk_08598E24
-gUnk_08598E24:
+	.global	gEndingEpilogueFrame11
+gEndingEpilogueFrame11:
 	.incbin	"baserom.gba", 0x598E24, 0x28
-	.global	gUnk_08598E4C
-gUnk_08598E4C:
+	.global	gEndingEpilogueFrame12
+gEndingEpilogueFrame12:
 	.incbin	"baserom.gba", 0x598E4C, 0x20
-	.global	gUnk_08598E6C
-gUnk_08598E6C:
+	.global	gEndingEpilogueFrame13
+gEndingEpilogueFrame13:
 	.incbin	"baserom.gba", 0x598E6C, 0x28
-	.global	gUnk_08598E94
-gUnk_08598E94:
+	.global	gEndingEpilogueFrame14
+gEndingEpilogueFrame14:
 	.incbin	"baserom.gba", 0x598E94, 0x20
-	.global	gUnk_08598EB4
-gUnk_08598EB4:
+	.global	gEndingEpilogueFrame15
+gEndingEpilogueFrame15:
 	.incbin	"baserom.gba", 0x598EB4, 0x28
-	.global	gUnk_08598EDC
-gUnk_08598EDC:
+	.global	gEndingEpilogueFrame16
+gEndingEpilogueFrame16:
 	.incbin	"baserom.gba", 0x598EDC, 0x18
-	.global	gUnk_08598EF4
-gUnk_08598EF4:
+	.global	gEndingEpilogueFrame17
+gEndingEpilogueFrame17:
 	.incbin	"baserom.gba", 0x598EF4, 0x20
-	.global	gUnk_08598F14
-gUnk_08598F14:
+	.global	gEndingEpilogueFrame18
+gEndingEpilogueFrame18:
 	.incbin	"baserom.gba", 0x598F14, 0x20
-	.global	gUnk_08598F34
-gUnk_08598F34:
+	.global	gEndingEpilogueFrame19
+gEndingEpilogueFrame19:
 	.incbin	"baserom.gba", 0x598F34, 0x28
-	.global	gUnk_08598F5C
-gUnk_08598F5C:
+	.global	gEndingEpilogueFrame20
+gEndingEpilogueFrame20:
 	.incbin	"baserom.gba", 0x598F5C, 0x20
-	.global	gUnk_08598F7C
-gUnk_08598F7C:
+	.global	gEndingEpilogueFrame21
+gEndingEpilogueFrame21:
 	.incbin	"baserom.gba", 0x598F7C, 0x28
-	.global	gUnk_08598FA4
-gUnk_08598FA4:
+	.global	gEndingEpilogueFrame22
+gEndingEpilogueFrame22:
 	.incbin	"baserom.gba", 0x598FA4, 0x20
-	.global	gUnk_08598FC4
-gUnk_08598FC4:
+	.global	gEndingEpilogueFrame23
+gEndingEpilogueFrame23:
 	.incbin	"baserom.gba", 0x598FC4, 0x28
-	.global	gUnk_08598FEC
-gUnk_08598FEC:
+	.global	gEndingEpilogueFrame24
+gEndingEpilogueFrame24:
 	.incbin	"baserom.gba", 0x598FEC, 0x30
-	.global	gUnk_0859901C
-gUnk_0859901C:
+	.global	gEndingEpilogueFrame25
+gEndingEpilogueFrame25:
 	.incbin	"baserom.gba", 0x59901C, 0x38
-	.global	gUnk_08599054
-gUnk_08599054:
+	.global	gEndingEpilogueFrame26
+gEndingEpilogueFrame26:
 	.incbin	"baserom.gba", 0x599054, 0x30
-	.global	gUnk_08599084
-gUnk_08599084:
+	.global	gEndingEpilogueFrame27
+gEndingEpilogueFrame27:
 	.incbin	"baserom.gba", 0x599084, 0x38
-	.global	gUnk_085990BC
-gUnk_085990BC:
+	.global	gEndingEpilogueFrame28
+gEndingEpilogueFrame28:
 	.incbin	"baserom.gba", 0x5990BC, 0x30
-	.global	gUnk_085990EC
-gUnk_085990EC:
+	.global	gEndingEpilogueFrame29
+gEndingEpilogueFrame29:
 	.incbin	"baserom.gba", 0x5990EC, 0x38
-	.global	gUnk_08599124
-gUnk_08599124:
+	.global	gEndingEpilogueFrame30
+gEndingEpilogueFrame30:
 	.incbin	"baserom.gba", 0x599124, 0x30
-	.global	gUnk_08599154
-gUnk_08599154:
+	.global	gEndingEpilogueFrame31
+gEndingEpilogueFrame31:
 	.incbin	"baserom.gba", 0x599154, 0x38
-	.global	gUnk_0859918C
-gUnk_0859918C:
+	.global	gEndingEpilogueFrame32
+gEndingEpilogueFrame32:
 	.incbin	"baserom.gba", 0x59918C, 0x18
-	.global	gUnk_085991A4
-gUnk_085991A4:
+	.global	gEndingEpilogueFrame33
+gEndingEpilogueFrame33:
 	.incbin	"baserom.gba", 0x5991A4, 0x20
-	.global	gUnk_085991C4
-gUnk_085991C4:
+	.global	gEndingEpilogueFrame34
+gEndingEpilogueFrame34:
 	.incbin	"baserom.gba", 0x5991C4, 0x30
-	.global	gUnk_085991F4
-gUnk_085991F4:
+	.global	gEndingEpilogueFrame35
+gEndingEpilogueFrame35:
 	.incbin	"baserom.gba", 0x5991F4, 0x38
-	.global	gUnk_0859922C
-gUnk_0859922C:
+	.global	gEndingEpilogueFrame36
+gEndingEpilogueFrame36:
 	.incbin	"baserom.gba", 0x59922C, 0x28
-	.global	gUnk_08599254
-gUnk_08599254:
+	.global	gEndingEpilogueFrame37
+gEndingEpilogueFrame37:
 	.incbin	"baserom.gba", 0x599254, 0x30
-	.global	gUnk_08599284
-gUnk_08599284:
+	.global	gEndingEpilogueFrame38
+gEndingEpilogueFrame38:
 	.incbin	"baserom.gba", 0x599284, 0x28
-	.global	gUnk_085992AC
-gUnk_085992AC:
+	.global	gEndingEpilogueFrame39
+gEndingEpilogueFrame39:
 	.incbin	"baserom.gba", 0x5992AC, 0x30
-	.global	gUnk_085992DC
-gUnk_085992DC:
+	.global	gEndingEpilogueFrame40
+gEndingEpilogueFrame40:
 	.incbin	"baserom.gba", 0x5992DC, 0x30
-	.global	gUnk_0859930C
-gUnk_0859930C:
+	.global	gEndingEpilogueFrame41
+gEndingEpilogueFrame41:
 	.incbin	"baserom.gba", 0x59930C, 0x38
-	.global	gUnk_08599344
-gUnk_08599344:
+	.global	gEndingEpilogueFrame42
+gEndingEpilogueFrame42:
 	.incbin	"baserom.gba", 0x599344, 0x28
-	.global	gUnk_0859936C
-gUnk_0859936C:
+	.global	gEndingEpilogueFrame43
+gEndingEpilogueFrame43:
 	.incbin	"baserom.gba", 0x59936C, 0x30
-	.global	gUnk_0859939C
-gUnk_0859939C:
+	.global	gEndingEpilogueFrame44
+gEndingEpilogueFrame44:
 	.incbin	"baserom.gba", 0x59939C, 0x28
-	.global	gUnk_085993C4
-gUnk_085993C4:
+	.global	gEndingEpilogueFrame45
+gEndingEpilogueFrame45:
 	.incbin	"baserom.gba", 0x5993C4, 0x30
-	.global	gUnk_085993F4
-gUnk_085993F4:
+	.global	gEndingEpilogueFrame46
+gEndingEpilogueFrame46:
 	.incbin	"baserom.gba", 0x5993F4, 0x20
-	.global	gUnk_08599414
-gUnk_08599414:
+	.global	gEndingEpilogueFrame47
+gEndingEpilogueFrame47:
 	.incbin	"baserom.gba", 0x599414, 0x20
-	.global	gUnk_08599434
-gUnk_08599434:
+	.global	gEndingEpilogueFrame48
+gEndingEpilogueFrame48:
 	.incbin	"baserom.gba", 0x599434, 0x20
-	.global	gUnk_08599454
-gUnk_08599454:
+	.global	gEndingEpilogueFrame49
+gEndingEpilogueFrame49:
 	.incbin	"baserom.gba", 0x599454, 0x20
-	.global	gUnk_08599474
-gUnk_08599474:
+	.global	gEndingEpilogueFrame50
+gEndingEpilogueFrame50:
 	.incbin	"baserom.gba", 0x599474, 0x20
-	.global	gUnk_08599494
-gUnk_08599494:
+	.global	gEndingEpilogueFrame51
+gEndingEpilogueFrame51:
 	.incbin	"baserom.gba", 0x599494, 0x20
-	.global	gUnk_085994B4
-gUnk_085994B4:
+	.global	gEndingEpilogueFrame52
+gEndingEpilogueFrame52:
 	.incbin	"baserom.gba", 0x5994B4, 0x20
-	.global	gUnk_085994D4
-gUnk_085994D4:
+	.global	gEndingEpilogueFrame53
+gEndingEpilogueFrame53:
 	.incbin	"baserom.gba", 0x5994D4, 0x20
-	.global	gUnk_085994F4
-gUnk_085994F4:
+	.global	gEndingEpilogueFrame54
+gEndingEpilogueFrame54:
 	.incbin	"baserom.gba", 0x5994F4, 0x20
-	.global	gUnk_08599514
-gUnk_08599514:
+	.global	gEndingEpilogueFrame55
+gEndingEpilogueFrame55:
 	.incbin	"baserom.gba", 0x599514, 0x8
-	.global	gUnk_0859951C
-gUnk_0859951C:
+	.global	gEndingEpilogueFrame56
+gEndingEpilogueFrame56:
 	.incbin	"baserom.gba", 0x59951C, 0x10
-	.global	gUnk_0859952C
-gUnk_0859952C:
+	.global	gEndingEpilogueFrame57
+gEndingEpilogueFrame57:
 	.incbin	"baserom.gba", 0x59952C, 0x10
-	.global	gUnk_0859953C
-gUnk_0859953C:
+	.global	gEndingEpilogueFrame58
+gEndingEpilogueFrame58:
 	.incbin	"baserom.gba", 0x59953C, 0x10
-	.global	gUnk_0859954C
-gUnk_0859954C:
+	.global	gEndingEpilogueFrame59
+gEndingEpilogueFrame59:
 	.incbin	"baserom.gba", 0x59954C, 0x10
-	.global	gUnk_0859955C
-gUnk_0859955C:
+	.global	gEndingEpilogueFrame66
+gEndingEpilogueFrame66:
 	.incbin	"baserom.gba", 0x59955C, 0x8
-	.global	gUnk_08599564
-gUnk_08599564:
+	.global	gEndingEpilogueFrame67
+gEndingEpilogueFrame67:
 	.incbin	"baserom.gba", 0x599564, 0x8
-	.global	gUnk_0859956C
-gUnk_0859956C:
+	.global	gEndingEpilogueFrame68
+gEndingEpilogueFrame68:
 	.incbin	"baserom.gba", 0x59956C, 0x8
-	.global	gUnk_08599574
-gUnk_08599574:
+	.global	gEndingEpilogueFrame60
+gEndingEpilogueFrame60:
 	.incbin	"baserom.gba", 0x599574, 0x10
-	.global	gUnk_08599584
-gUnk_08599584:
+	.global	gEndingEpilogueFrame62
+gEndingEpilogueFrame62:
 	.incbin	"baserom.gba", 0x599584, 0x8
-	.global	gUnk_0859958C
-gUnk_0859958C:
+	.global	gEndingEpilogueFrame63
+gEndingEpilogueFrame63:
 	.incbin	"baserom.gba", 0x59958C, 0x8
-	.global	gUnk_08599594
-gUnk_08599594:
+	.global	gEndingEpilogueFrame61
+gEndingEpilogueFrame61:
 	.incbin	"baserom.gba", 0x599594, 0x18
 	.global	gUnk_085995AC
 gUnk_085995AC:
@@ -2242,53 +2242,53 @@ gUnk_085995C0:
 	.global	gUnk_085995E0
 gUnk_085995E0:
 	.incbin	"baserom.gba", 0x5995E0, 0x21C
-	.global	gUnk_085997FC
-gUnk_085997FC:
+	.global	gEndingEpilogueStarRodFrame3
+gEndingEpilogueStarRodFrame3:
 	.incbin	"baserom.gba", 0x5997FC, 0x10
-	.global	gUnk_0859980C
-gUnk_0859980C:
+	.global	gEndingEpilogueStarRodFrame4
+gEndingEpilogueStarRodFrame4:
 	.incbin	"baserom.gba", 0x59980C, 0x10
-	.global	gUnk_0859981C
-gUnk_0859981C:
+	.global	gEndingEpilogueStarRodFrame5
+gEndingEpilogueStarRodFrame5:
 	.incbin	"baserom.gba", 0x59981C, 0x10
-	.global	gUnk_0859982C
-gUnk_0859982C:
+	.global	gEndingEpilogueStarRodFrame6
+gEndingEpilogueStarRodFrame6:
 	.incbin	"baserom.gba", 0x59982C, 0x10
-	.global	gUnk_0859983C
-gUnk_0859983C:
+	.global	gEndingEpilogueStarRodFrame7
+gEndingEpilogueStarRodFrame7:
 	.incbin	"baserom.gba", 0x59983C, 0x10
-	.global	gUnk_0859984C
-gUnk_0859984C:
+	.global	gEndingEpilogueStarRodFrame8
+gEndingEpilogueStarRodFrame8:
 	.incbin	"baserom.gba", 0x59984C, 0x10
-	.global	gUnk_0859985C
-gUnk_0859985C:
+	.global	gEndingEpilogueStarRodFrame9
+gEndingEpilogueStarRodFrame9:
 	.incbin	"baserom.gba", 0x59985C, 0x10
-	.global	gUnk_0859986C
-gUnk_0859986C:
+	.global	gEndingEpilogueStarRodFrame10
+gEndingEpilogueStarRodFrame10:
 	.incbin	"baserom.gba", 0x59986C, 0x10
-	.global	gUnk_0859987C
-gUnk_0859987C:
+	.global	gEndingEpilogueStarRodFrame11
+gEndingEpilogueStarRodFrame11:
 	.incbin	"baserom.gba", 0x59987C, 0x10
-	.global	gUnk_0859988C
-gUnk_0859988C:
+	.global	gEndingEpilogueStarRodFrame12
+gEndingEpilogueStarRodFrame12:
 	.incbin	"baserom.gba", 0x59988C, 0x10
-	.global	gUnk_0859989C
-gUnk_0859989C:
+	.global	gEndingEpilogueStarRodFrame13
+gEndingEpilogueStarRodFrame13:
 	.incbin	"baserom.gba", 0x59989C, 0x10
-	.global	gUnk_085998AC
-gUnk_085998AC:
+	.global	gEndingEpilogueStarRodFrame14
+gEndingEpilogueStarRodFrame14:
 	.incbin	"baserom.gba", 0x5998AC, 0x10
-	.global	gUnk_085998BC
-gUnk_085998BC:
+	.global	gEndingEpilogueStarRodFrame15
+gEndingEpilogueStarRodFrame15:
 	.incbin	"baserom.gba", 0x5998BC, 0x10
-	.global	gUnk_085998CC
-gUnk_085998CC:
+	.global	gEndingEpilogueStarRodFrame0
+gEndingEpilogueStarRodFrame0:
 	.incbin	"baserom.gba", 0x5998CC, 0x10
-	.global	gUnk_085998DC
-gUnk_085998DC:
+	.global	gEndingEpilogueStarRodFrame1
+gEndingEpilogueStarRodFrame1:
 	.incbin	"baserom.gba", 0x5998DC, 0x10
-	.global	gUnk_085998EC
-gUnk_085998EC:
+	.global	gEndingEpilogueStarRodFrame2
+gEndingEpilogueStarRodFrame2:
 	.incbin	"baserom.gba", 0x5998EC, 0x10
 	.global	gUnk_085998FC
 gUnk_085998FC:
@@ -2305,80 +2305,80 @@ gUnk_08599920:
 	.global	gUnk_08599980
 gUnk_08599980:
 	.incbin	"baserom.gba", 0x599980, 0x5AC
-	.global	gUnk_08599F2C
-gUnk_08599F2C:
+	.global	gEndingStarRodReturnFrame10
+gEndingStarRodReturnFrame10:
 	.incbin	"baserom.gba", 0x599F2C, 0x10
-	.global	gUnk_08599F3C
-gUnk_08599F3C:
+	.global	gEndingStarRodReturnFrame11
+gEndingStarRodReturnFrame11:
 	.incbin	"baserom.gba", 0x599F3C, 0x10
-	.global	gUnk_08599F4C
-gUnk_08599F4C:
+	.global	gEndingStarRodReturnFrame12
+gEndingStarRodReturnFrame12:
 	.incbin	"baserom.gba", 0x599F4C, 0x10
-	.global	gUnk_08599F5C
-gUnk_08599F5C:
+	.global	gEndingStarRodReturnFrame13
+gEndingStarRodReturnFrame13:
 	.incbin	"baserom.gba", 0x599F5C, 0x10
-	.global	gUnk_08599F6C
-gUnk_08599F6C:
+	.global	gEndingStarRodReturnFrame14
+gEndingStarRodReturnFrame14:
 	.incbin	"baserom.gba", 0x599F6C, 0x10
-	.global	gUnk_08599F7C
-gUnk_08599F7C:
+	.global	gEndingStarRodReturnFrame15
+gEndingStarRodReturnFrame15:
 	.incbin	"baserom.gba", 0x599F7C, 0x10
-	.global	gUnk_08599F8C
-gUnk_08599F8C:
+	.global	gEndingStarRodReturnFrame16
+gEndingStarRodReturnFrame16:
 	.incbin	"baserom.gba", 0x599F8C, 0x10
-	.global	gUnk_08599F9C
-gUnk_08599F9C:
+	.global	gEndingStarRodReturnFrame17
+gEndingStarRodReturnFrame17:
 	.incbin	"baserom.gba", 0x599F9C, 0x10
-	.global	gUnk_08599FAC
-gUnk_08599FAC:
+	.global	gEndingStarRodReturnFrame18
+gEndingStarRodReturnFrame18:
 	.incbin	"baserom.gba", 0x599FAC, 0x10
-	.global	gUnk_08599FBC
-gUnk_08599FBC:
+	.global	gEndingStarRodReturnFrame19
+gEndingStarRodReturnFrame19:
 	.incbin	"baserom.gba", 0x599FBC, 0x10
-	.global	gUnk_08599FCC
-gUnk_08599FCC:
+	.global	gEndingStarRodReturnFrame20
+gEndingStarRodReturnFrame20:
 	.incbin	"baserom.gba", 0x599FCC, 0x10
-	.global	gUnk_08599FDC
-gUnk_08599FDC:
+	.global	gEndingStarRodReturnFrame21
+gEndingStarRodReturnFrame21:
 	.incbin	"baserom.gba", 0x599FDC, 0x10
-	.global	gUnk_08599FEC
-gUnk_08599FEC:
+	.global	gEndingStarRodReturnFrame22
+gEndingStarRodReturnFrame22:
 	.incbin	"baserom.gba", 0x599FEC, 0x10
-	.global	gUnk_08599FFC
-gUnk_08599FFC:
+	.global	gEndingStarRodReturnFrame7
+gEndingStarRodReturnFrame7:
 	.incbin	"baserom.gba", 0x599FFC, 0x10
-	.global	gUnk_0859A00C
-gUnk_0859A00C:
+	.global	gEndingStarRodReturnFrame8
+gEndingStarRodReturnFrame8:
 	.incbin	"baserom.gba", 0x59A00C, 0x10
-	.global	gUnk_0859A01C
-gUnk_0859A01C:
+	.global	gEndingStarRodReturnFrame9
+gEndingStarRodReturnFrame9:
 	.incbin	"baserom.gba", 0x59A01C, 0x10
-	.global	gUnk_0859A02C
-gUnk_0859A02C:
+	.global	gEndingStarRodReturnFrame23
+gEndingStarRodReturnFrame23:
 	.incbin	"baserom.gba", 0x59A02C, 0x10
-	.global	gUnk_0859A03C
-gUnk_0859A03C:
+	.global	gEndingStarRodReturnFrame1
+gEndingStarRodReturnFrame1:
 	.incbin	"baserom.gba", 0x59A03C, 0x10
-	.global	gUnk_0859A04C
-gUnk_0859A04C:
+	.global	gEndingStarRodReturnFrame2
+gEndingStarRodReturnFrame2:
 	.incbin	"baserom.gba", 0x59A04C, 0x10
-	.global	gUnk_0859A05C
-gUnk_0859A05C:
+	.global	gEndingStarRodReturnFrame3
+gEndingStarRodReturnFrame3:
 	.incbin	"baserom.gba", 0x59A05C, 0x10
-	.global	gUnk_0859A06C
-gUnk_0859A06C:
+	.global	gEndingStarRodReturnFrame4
+gEndingStarRodReturnFrame4:
 	.incbin	"baserom.gba", 0x59A06C, 0x10
-	.global	gUnk_0859A07C
-gUnk_0859A07C:
+	.global	gEndingStarRodReturnFrame5
+gEndingStarRodReturnFrame5:
 	.incbin	"baserom.gba", 0x59A07C, 0x8
-	.global	gUnk_0859A084
-gUnk_0859A084:
+	.global	gEndingStarRodReturnFrame6
+gEndingStarRodReturnFrame6:
 	.incbin	"baserom.gba", 0x59A084, 0x8
 	.global	gUnk_0859A08C
 gUnk_0859A08C:
 	.incbin	"baserom.gba", 0x59A08C, 0x8
-	.global	gUnk_0859A094
-gUnk_0859A094:
+	.global	gEndingStarRodReturnFrame0
+gEndingStarRodReturnFrame0:
 	.incbin	"baserom.gba", 0x59A094, 0x8
 	.global	gUnk_0859A09C
 gUnk_0859A09C:
@@ -2416,47 +2416,47 @@ gUnk_0859CEB8:
 	.global	gUnk_0859D24C
 gUnk_0859D24C:
 	.incbin	"baserom.gba", 0x59D24C, 0x160
-	.global	gUnk_0859D3AC
-gUnk_0859D3AC:
+	.global	gCreditsTextPage0
+gCreditsTextPage0:
 	.incbin	"baserom.gba", 0x59D3AC, 0x168
-	.global	gUnk_0859D514
-gUnk_0859D514:
+	.global	gCreditsTextPage1
+gCreditsTextPage1:
 	.incbin	"baserom.gba", 0x59D514, 0x1BC
-	.global	gUnk_0859D6D0
-gUnk_0859D6D0:
+	.global	gCreditsTextPage2
+gCreditsTextPage2:
 	.incbin	"baserom.gba", 0x59D6D0, 0x1BC
-	.global	gUnk_0859D88C
-gUnk_0859D88C:
+	.global	gCreditsTextPage3
+gCreditsTextPage3:
 	.incbin	"baserom.gba", 0x59D88C, 0x1B0
-	.global	gUnk_0859DA3C
-gUnk_0859DA3C:
+	.global	gCreditsTextPage4
+gCreditsTextPage4:
 	.incbin	"baserom.gba", 0x59DA3C, 0x1B4
-	.global	gUnk_0859DBF0
-gUnk_0859DBF0:
+	.global	gCreditsTextPage5
+gCreditsTextPage5:
 	.incbin	"baserom.gba", 0x59DBF0, 0x1DC
-	.global	gUnk_0859DDCC
-gUnk_0859DDCC:
+	.global	gCreditsDemoRecording0
+gCreditsDemoRecording0:
 	.incbin	"baserom.gba", 0x59DDCC, 0x1F0
-	.global	gUnk_0859DFBC
-gUnk_0859DFBC:
+	.global	gCreditsDemoRecording1
+gCreditsDemoRecording1:
 	.incbin	"baserom.gba", 0x59DFBC, 0x1D0
-	.global	gUnk_0859E18C
-gUnk_0859E18C:
+	.global	gCreditsDemoRecording2
+gCreditsDemoRecording2:
 	.incbin	"baserom.gba", 0x59E18C, 0x1D8
-	.global	gUnk_0859E364
-gUnk_0859E364:
+	.global	gCreditsDemoRecording3
+gCreditsDemoRecording3:
 	.incbin	"baserom.gba", 0x59E364, 0x1C8
-	.global	gUnk_0859E52C
-gUnk_0859E52C:
+	.global	gCreditsDemoRecording4
+gCreditsDemoRecording4:
 	.incbin	"baserom.gba", 0x59E52C, 0x1C0
-	.global	gUnk_0859E6EC
-gUnk_0859E6EC:
+	.global	gCreditsDemoRecording5
+gCreditsDemoRecording5:
 	.incbin	"baserom.gba", 0x59E6EC, 0x17C
-	.global	gUnk_0859E868
-gUnk_0859E868:
+	.global	gCreditsDemoRecording6
+gCreditsDemoRecording6:
 	.incbin	"baserom.gba", 0x59E868, 0x1AC
-	.global	gUnk_0859EA14
-gUnk_0859EA14:
+	.global	gCreditsDemoRecording7
+gCreditsDemoRecording7:
 	.incbin	"baserom.gba", 0x59EA14, 0x180
 	.global	gUnk_0859EB94
 gUnk_0859EB94:
@@ -2464,11 +2464,11 @@ gUnk_0859EB94:
 	.global	gUnk_0859EC54
 gUnk_0859EC54:
 	.incbin	"baserom.gba", 0x59EC54, 0x19E4
-	.global	gUnk_085A0638
-gUnk_085A0638:
+	.global	gArenaDoorSignUpdateTiles
+gArenaDoorSignUpdateTiles:
 	.incbin	"baserom.gba", 0x5A0638, 0x600
-	.global	gUnk_085A0C38
-gUnk_085A0C38:
+	.global	gBossDoorSignUpdateTiles
+gBossDoorSignUpdateTiles:
 	.incbin	"baserom.gba", 0x5A0C38, 0x6C0
 	.global	gUnk_085A12F8
 gUnk_085A12F8:
@@ -2479,14 +2479,14 @@ gUnk_085A1BF8:
 	.global	gUnk_085A24F8
 gUnk_085A24F8:
 	.incbin	"baserom.gba", 0x5A24F8, 0x900
-	.global	gUnk_085A2DF8
-gUnk_085A2DF8:
+	.global	gWarpStarStationDoorSignUpdateTiles
+gWarpStarStationDoorSignUpdateTiles:
 	.incbin	"baserom.gba", 0x5A2DF8, 0x480
-	.global	gUnk_085A3278
-gUnk_085A3278:
+	.global	gArenaDoorSignFrame0
+gArenaDoorSignFrame0:
 	.incbin	"baserom.gba", 0x5A3278, 0x8
-	.global	gUnk_085A3280
-gUnk_085A3280:
+	.global	gBossDoorSignFrame0
+gBossDoorSignFrame0:
 	.incbin	"baserom.gba", 0x5A3280, 0x8
 	.global	gUnk_085A3288
 gUnk_085A3288:
@@ -2497,164 +2497,164 @@ gUnk_085A3290:
 	.global	gUnk_085A3298
 gUnk_085A3298:
 	.incbin	"baserom.gba", 0x5A3298, 0x8
-	.global	gUnk_085A32A0
-gUnk_085A32A0:
+	.global	gDoorMarkerFrame0
+gDoorMarkerFrame0:
 	.incbin	"baserom.gba", 0x5A32A0, 0x8
-	.global	gUnk_085A32A8
-gUnk_085A32A8:
+	.global	gDoorMarkerFrame1
+gDoorMarkerFrame1:
 	.incbin	"baserom.gba", 0x5A32A8, 0x18
-	.global	gUnk_085A32C0
-gUnk_085A32C0:
+	.global	gDoorMarkerFrame2
+gDoorMarkerFrame2:
 	.incbin	"baserom.gba", 0x5A32C0, 0x8
-	.global	gUnk_085A32C8
-gUnk_085A32C8:
+	.global	gDoorSignDoorFrame0
+gDoorSignDoorFrame0:
 	.incbin	"baserom.gba", 0x5A32C8, 0x8
-	.global	gUnk_085A32D0
-gUnk_085A32D0:
+	.global	gDoorSignDoorFrame1
+gDoorSignDoorFrame1:
 	.incbin	"baserom.gba", 0x5A32D0, 0x8
-	.global	gUnk_085A32D8
-gUnk_085A32D8:
+	.global	gDoorSignDoorFrame2
+gDoorSignDoorFrame2:
 	.incbin	"baserom.gba", 0x5A32D8, 0x8
-	.global	gUnk_085A32E0
-gUnk_085A32E0:
+	.global	gDoorOpeningFrame0
+gDoorOpeningFrame0:
 	.incbin	"baserom.gba", 0x5A32E0, 0x10
-	.global	gUnk_085A32F0
-gUnk_085A32F0:
+	.global	gStageClearFlagFrame0
+gStageClearFlagFrame0:
 	.incbin	"baserom.gba", 0x5A32F0, 0x8
-	.global	gUnk_085A32F8
-gUnk_085A32F8:
+	.global	gStageClearFlagFrame1
+gStageClearFlagFrame1:
 	.incbin	"baserom.gba", 0x5A32F8, 0x8
-	.global	gUnk_085A3300
-gUnk_085A3300:
+	.global	gStageClearFlagFrame2
+gStageClearFlagFrame2:
 	.incbin	"baserom.gba", 0x5A3300, 0x8
-	.global	gUnk_085A3308
-gUnk_085A3308:
+	.global	gStageClearFlagFrame3
+gStageClearFlagFrame3:
 	.incbin	"baserom.gba", 0x5A3308, 0x8
-	.global	gUnk_085A3310
-gUnk_085A3310:
+	.global	gQuickDrawDoorSignFrame0
+gQuickDrawDoorSignFrame0:
 	.incbin	"baserom.gba", 0x5A3310, 0x10
-	.global	gUnk_085A3320
-gUnk_085A3320:
+	.global	gQuickDrawDoorSignFrame1
+gQuickDrawDoorSignFrame1:
 	.incbin	"baserom.gba", 0x5A3320, 0x18
-	.global	gUnk_085A3338
-gUnk_085A3338:
+	.global	gQuickDrawDoorSignFrame2
+gQuickDrawDoorSignFrame2:
 	.incbin	"baserom.gba", 0x5A3338, 0x18
-	.global	gUnk_085A3350
-gUnk_085A3350:
+	.global	gQuickDrawDoorSignFrame3
+gQuickDrawDoorSignFrame3:
 	.incbin	"baserom.gba", 0x5A3350, 0x18
-	.global	gUnk_085A3368
-gUnk_085A3368:
+	.global	gQuickDrawDoorSignFrame4
+gQuickDrawDoorSignFrame4:
 	.incbin	"baserom.gba", 0x5A3368, 0x18
-	.global	gUnk_085A3380
-gUnk_085A3380:
+	.global	gQuickDrawDoorSignFrame5
+gQuickDrawDoorSignFrame5:
 	.incbin	"baserom.gba", 0x5A3380, 0x18
-	.global	gUnk_085A3398
-gUnk_085A3398:
+	.global	gQuickDrawDoorSignFrame6
+gQuickDrawDoorSignFrame6:
 	.incbin	"baserom.gba", 0x5A3398, 0x18
-	.global	gUnk_085A33B0
-gUnk_085A33B0:
+	.global	gQuickDrawDoorSignFrame7
+gQuickDrawDoorSignFrame7:
 	.incbin	"baserom.gba", 0x5A33B0, 0x18
-	.global	gUnk_085A33C8
-gUnk_085A33C8:
+	.global	gQuickDrawDoorSignFrame8
+gQuickDrawDoorSignFrame8:
 	.incbin	"baserom.gba", 0x5A33C8, 0x18
-	.global	gUnk_085A33E0
-gUnk_085A33E0:
+	.global	gQuickDrawDoorSignFrame9
+gQuickDrawDoorSignFrame9:
 	.incbin	"baserom.gba", 0x5A33E0, 0x18
-	.global	gUnk_085A33F8
-gUnk_085A33F8:
+	.global	gQuickDrawDoorSignFrame10
+gQuickDrawDoorSignFrame10:
 	.incbin	"baserom.gba", 0x5A33F8, 0x10
-	.global	gUnk_085A3408
-gUnk_085A3408:
+	.global	gQuickDrawDoorSignFrame11
+gQuickDrawDoorSignFrame11:
 	.incbin	"baserom.gba", 0x5A3408, 0x18
-	.global	gUnk_085A3420
-gUnk_085A3420:
+	.global	gQuickDrawDoorSignFrame12
+gQuickDrawDoorSignFrame12:
 	.incbin	"baserom.gba", 0x5A3420, 0x18
-	.global	gUnk_085A3438
-gUnk_085A3438:
+	.global	gBombRallyDoorSignFrame0
+gBombRallyDoorSignFrame0:
 	.incbin	"baserom.gba", 0x5A3438, 0x10
-	.global	gUnk_085A3448
-gUnk_085A3448:
+	.global	gBombRallyDoorSignFrame1
+gBombRallyDoorSignFrame1:
 	.incbin	"baserom.gba", 0x5A3448, 0x18
-	.global	gUnk_085A3460
-gUnk_085A3460:
+	.global	gBombRallyDoorSignFrame2
+gBombRallyDoorSignFrame2:
 	.incbin	"baserom.gba", 0x5A3460, 0x18
-	.global	gUnk_085A3478
-gUnk_085A3478:
+	.global	gAirGrindDoorSignFrame0
+gAirGrindDoorSignFrame0:
 	.incbin	"baserom.gba", 0x5A3478, 0x18
-	.global	gUnk_085A3490
-gUnk_085A3490:
+	.global	gAirGrindDoorSignFrame1
+gAirGrindDoorSignFrame1:
 	.incbin	"baserom.gba", 0x5A3490, 0x18
-	.global	gUnk_085A34A8
-gUnk_085A34A8:
+	.global	gMuseumDoorSignFrame0
+gMuseumDoorSignFrame0:
 	.incbin	"baserom.gba", 0x5A34A8, 0x8
-	.global	gUnk_085A34B0
-gUnk_085A34B0:
+	.global	gStageDoorSignFrame0
+gStageDoorSignFrame0:
 	.incbin	"baserom.gba", 0x5A34B0, 0x10
-	.global	gUnk_085A34C0
-gUnk_085A34C0:
+	.global	gStageDoorSignFrame1
+gStageDoorSignFrame1:
 	.incbin	"baserom.gba", 0x5A34C0, 0x10
-	.global	gUnk_085A34D0
-gUnk_085A34D0:
+	.global	gStageDoorSignFrame2
+gStageDoorSignFrame2:
 	.incbin	"baserom.gba", 0x5A34D0, 0x10
-	.global	gUnk_085A34E0
-gUnk_085A34E0:
+	.global	gStageDoorSignFrame3
+gStageDoorSignFrame3:
 	.incbin	"baserom.gba", 0x5A34E0, 0x10
-	.global	gUnk_085A34F0
-gUnk_085A34F0:
+	.global	gStageDoorSignFrame4
+gStageDoorSignFrame4:
 	.incbin	"baserom.gba", 0x5A34F0, 0x10
-	.global	gUnk_085A3500
-gUnk_085A3500:
+	.global	gStageDoorSignFrame5
+gStageDoorSignFrame5:
 	.incbin	"baserom.gba", 0x5A3500, 0x10
-	.global	gUnk_085A3510
-gUnk_085A3510:
+	.global	gStageDoorSignFrame6
+gStageDoorSignFrame6:
 	.incbin	"baserom.gba", 0x5A3510, 0x10
-	.global	gUnk_085A3520
-gUnk_085A3520:
+	.global	gStageDoorSignFrame7
+gStageDoorSignFrame7:
 	.incbin	"baserom.gba", 0x5A3520, 0x10
-	.global	gUnk_085A3530
-gUnk_085A3530:
+	.global	gStageDoorSignFrame8
+gStageDoorSignFrame8:
 	.incbin	"baserom.gba", 0x5A3530, 0x10
-	.global	gUnk_085A3540
-gUnk_085A3540:
+	.global	gStageDoorSignFrame9
+gStageDoorSignFrame9:
 	.incbin	"baserom.gba", 0x5A3540, 0x10
-	.global	gUnk_085A3550
-gUnk_085A3550:
+	.global	gStageDoorSignFrame10
+gStageDoorSignFrame10:
 	.incbin	"baserom.gba", 0x5A3550, 0x10
-	.global	gUnk_085A3560
-gUnk_085A3560:
+	.global	gStageDoorSignFrame11
+gStageDoorSignFrame11:
 	.incbin	"baserom.gba", 0x5A3560, 0x10
-	.global	gUnk_085A3570
-gUnk_085A3570:
+	.global	gWarpStarStationDoorSignFrame0
+gWarpStarStationDoorSignFrame0:
 	.incbin	"baserom.gba", 0x5A3570, 0x8
-	.global	gUnk_085A3578
-gUnk_085A3578:
+	.global	gWarpStarStationDoorSparkleFrame0
+gWarpStarStationDoorSparkleFrame0:
 	.incbin	"baserom.gba", 0x5A3578, 0x8
-	.global	gUnk_085A3580
-gUnk_085A3580:
+	.global	gWarpStarStationDoorSparkleFrame1
+gWarpStarStationDoorSparkleFrame1:
 	.incbin	"baserom.gba", 0x5A3580, 0x8
-	.global	gUnk_085A3588
-gUnk_085A3588:
+	.global	gWarpStarStationDoorSparkleFrame2
+gWarpStarStationDoorSparkleFrame2:
 	.incbin	"baserom.gba", 0x5A3588, 0x8
-	.global	gUnk_085A3590
-gUnk_085A3590:
+	.global	gWarpStarStationDoorSparkleFrame3
+gWarpStarStationDoorSparkleFrame3:
 	.incbin	"baserom.gba", 0x5A3590, 0x8
-	.global	gUnk_085A3598
-gUnk_085A3598:
+	.global	gWarpStarStationDoorSparkleFrame4
+gWarpStarStationDoorSparkleFrame4:
 	.incbin	"baserom.gba", 0x5A3598, 0x8
-	.global	gUnk_085A35A0
-gUnk_085A35A0:
+	.global	gWarpStarStationDoorSparkleFrame5
+gWarpStarStationDoorSparkleFrame5:
 	.incbin	"baserom.gba", 0x5A35A0, 0x8
-	.global	gUnk_085A35A8
-gUnk_085A35A8:
+	.global	gWarpStarStationDoorSparkleFrame6
+gWarpStarStationDoorSparkleFrame6:
 	.incbin	"baserom.gba", 0x5A35A8, 0x8
-	.global	gUnk_085A35B0
-gUnk_085A35B0:
+	.global	gWarpStarStationDoorSparkleFrame7
+gWarpStarStationDoorSparkleFrame7:
 	.incbin	"baserom.gba", 0x5A35B0, 0x8
-	.global	gUnk_085A35B8
-gUnk_085A35B8:
+	.global	gLevelDoorSignFrame0
+gLevelDoorSignFrame0:
 	.incbin	"baserom.gba", 0x5A35B8, 0x20
-	.global	gUnk_085A35D8
-gUnk_085A35D8:
+	.global	gLevelDoorSignFrame1
+gLevelDoorSignFrame1:
 	.incbin	"baserom.gba", 0x5A35D8, 0x18
 	.global	gUnk_085A35F0
 gUnk_085A35F0:
@@ -2662,83 +2662,83 @@ gUnk_085A35F0:
 	.global	gUnk_085A3610
 gUnk_085A3610:
 	.incbin	"baserom.gba", 0x5A3610, 0x4D0
-	.global	gUnk_085A3AE0
-gUnk_085A3AE0:
+	.global	gWarpStarStationNumberFrame0
+gWarpStarStationNumberFrame0:
 	.incbin	"baserom.gba", 0x5A3AE0, 0x8
-	.global	gUnk_085A3AE8
-gUnk_085A3AE8:
+	.global	gWarpStarStationNumberFrame1
+gWarpStarStationNumberFrame1:
 	.incbin	"baserom.gba", 0x5A3AE8, 0x8
-	.global	gUnk_085A3AF0
-gUnk_085A3AF0:
+	.global	gWarpStarStationNumberFrame2
+gWarpStarStationNumberFrame2:
 	.incbin	"baserom.gba", 0x5A3AF0, 0x8
-	.global	gUnk_085A3AF8
-gUnk_085A3AF8:
+	.global	gWarpStarStationNumberFrame3
+gWarpStarStationNumberFrame3:
 	.incbin	"baserom.gba", 0x5A3AF8, 0x8
-	.global	gUnk_085A3B00
-gUnk_085A3B00:
+	.global	gWarpStarStationNumberFrame4
+gWarpStarStationNumberFrame4:
 	.incbin	"baserom.gba", 0x5A3B00, 0x8
-	.global	gUnk_085A3B08
-gUnk_085A3B08:
+	.global	gWarpStarStationNumberFrame5
+gWarpStarStationNumberFrame5:
 	.incbin	"baserom.gba", 0x5A3B08, 0x8
-	.global	gUnk_085A3B10
-gUnk_085A3B10:
+	.global	gWarpStarStationNumberFrame6
+gWarpStarStationNumberFrame6:
 	.incbin	"baserom.gba", 0x5A3B10, 0x8
-	.global	gUnk_085A3B18
-gUnk_085A3B18:
+	.global	gWarpStarStationLevelSignFrame0
+gWarpStarStationLevelSignFrame0:
 	.incbin	"baserom.gba", 0x5A3B18, 0x20
-	.global	gUnk_085A3B38
-gUnk_085A3B38:
+	.global	gWarpStarStationLevelSignFrame1
+gWarpStarStationLevelSignFrame1:
 	.incbin	"baserom.gba", 0x5A3B38, 0x20
-	.global	gUnk_085A3B58
-gUnk_085A3B58:
+	.global	gWarpStarStationLevelSignFrame2
+gWarpStarStationLevelSignFrame2:
 	.incbin	"baserom.gba", 0x5A3B58, 0x20
-	.global	gUnk_085A3B78
-gUnk_085A3B78:
+	.global	gWarpStarStationLevelSignFrame3
+gWarpStarStationLevelSignFrame3:
 	.incbin	"baserom.gba", 0x5A3B78, 0x20
-	.global	gUnk_085A3B98
-gUnk_085A3B98:
+	.global	gWarpStarStationLevelSignFrame4
+gWarpStarStationLevelSignFrame4:
 	.incbin	"baserom.gba", 0x5A3B98, 0x20
-	.global	gUnk_085A3BB8
-gUnk_085A3BB8:
+	.global	gWarpStarStationLevelSignFrame5
+gWarpStarStationLevelSignFrame5:
 	.incbin	"baserom.gba", 0x5A3BB8, 0x20
-	.global	gUnk_085A3BD8
-gUnk_085A3BD8:
+	.global	gWarpStarStationLevelSignFrame6
+gWarpStarStationLevelSignFrame6:
 	.incbin	"baserom.gba", 0x5A3BD8, 0x20
-	.global	gUnk_085A3BF8
-gUnk_085A3BF8:
+	.global	gLoadMuseumAbilitySignGfxPalette0
+gLoadMuseumAbilitySignGfxPalette0:
 	.incbin	"baserom.gba", 0x5A3BF8, 0x20
-	.global	gUnk_085A3C18
-gUnk_085A3C18:
+	.global	gLoadMuseumAbilitySignGfxPalette1
+gLoadMuseumAbilitySignGfxPalette1:
 	.incbin	"baserom.gba", 0x5A3C18, 0x20
-	.global	gUnk_085A3C38
-gUnk_085A3C38:
+	.global	gLoadMuseumAbilitySignGfxPalette2
+gLoadMuseumAbilitySignGfxPalette2:
 	.incbin	"baserom.gba", 0x5A3C38, 0x20
-	.global	gUnk_085A3C58
-gUnk_085A3C58:
+	.global	gLoadMuseumAbilitySignGfxPalette3
+gLoadMuseumAbilitySignGfxPalette3:
 	.incbin	"baserom.gba", 0x5A3C58, 0x20
-	.global	gUnk_085A3C78
-gUnk_085A3C78:
+	.global	gLoadMuseumAbilitySignGfxPalette4
+gLoadMuseumAbilitySignGfxPalette4:
 	.incbin	"baserom.gba", 0x5A3C78, 0x20
-	.global	gUnk_085A3C98
-gUnk_085A3C98:
+	.global	gLoadMuseumAbilitySignGfxPalette5
+gLoadMuseumAbilitySignGfxPalette5:
 	.incbin	"baserom.gba", 0x5A3C98, 0x20
 	.global	gUnk_085A3CB8
 gUnk_085A3CB8:
 	.incbin	"baserom.gba", 0x5A3CB8, 0xC0C
-	.global	gUnk_085A48C4
-gUnk_085A48C4:
+	.global	gMuseumAbilitySignFrame0
+gMuseumAbilitySignFrame0:
 	.incbin	"baserom.gba", 0x5A48C4, 0x20
-	.global	gUnk_085A48E4
-gUnk_085A48E4:
+	.global	gMuseumAbilitySignFrame1
+gMuseumAbilitySignFrame1:
 	.incbin	"baserom.gba", 0x5A48E4, 0x20
-	.global	gUnk_085A4904
-gUnk_085A4904:
+	.global	gHudLoadLevelNamePalette
+gHudLoadLevelNamePalette:
 	.incbin	"baserom.gba", 0x5A4904, 0xE4
 	.global	gUnk_085A49E8
 gUnk_085A49E8:
 	.incbin	"baserom.gba", 0x5A49E8, 0xC6C
-	.global	gUnk_085A5654
-gUnk_085A5654:
+	.global	gHudDrawLevelNameMap
+gHudDrawLevelNameMap:
 	.incbin	"baserom.gba", 0x5A5654, 0x80
 	.global	gUnk_085A56D4
 gUnk_085A56D4:
@@ -2761,8 +2761,8 @@ gUnk_085A6F60:
 	.global	gUnk_085A6F64
 gUnk_085A6F64:
 	.incbin	"baserom.gba", 0x5A6F64, 0x4
-	.global	gUnk_085A6F68
-gUnk_085A6F68:
+	.global	gHudDrawAbilityPanelMap
+gHudDrawAbilityPanelMap:
 	.incbin	"baserom.gba", 0x5A6F68, 0x3C
 	.global	gHudPlayerIconTiles
 gHudPlayerIconTiles:
@@ -2770,8 +2770,8 @@ gHudPlayerIconTiles:
 	.global	gUnk_085A6FC4
 gUnk_085A6FC4:
 	.incbin	"baserom.gba", 0x5A6FC4, 0x4
-	.global	gUnk_085A6FC8
-gUnk_085A6FC8:
+	.global	gHudDrawHpBarFrameMap
+gHudDrawHpBarFrameMap:
 	.incbin	"baserom.gba", 0x5A6FC8, 0x28
 	.global	gUnk_085A6FF0
 gUnk_085A6FF0:
@@ -2797,170 +2797,170 @@ gUnk_085A70BC:
 	.global	gUnk_085A70FC
 gUnk_085A70FC:
 	.incbin	"baserom.gba", 0x5A70FC, 0x20
-	.global	gUnk_085A711C
-gUnk_085A711C:
+	.global	gAbilityPicture0Palette
+gAbilityPicture0Palette:
 	.incbin	"baserom.gba", 0x5A711C, 0x20
 	.global	gUnk_085A713C
 gUnk_085A713C:
 	.incbin	"baserom.gba", 0x5A713C, 0x3E0
-	.global	gUnk_085A751C
-gUnk_085A751C:
+	.global	gAbilityPicture1Palette
+gAbilityPicture1Palette:
 	.incbin	"baserom.gba", 0x5A751C, 0x20
 	.global	gUnk_085A753C
 gUnk_085A753C:
 	.incbin	"baserom.gba", 0x5A753C, 0x3E0
-	.global	gUnk_085A791C
-gUnk_085A791C:
+	.global	gAbilityPicture2Palette
+gAbilityPicture2Palette:
 	.incbin	"baserom.gba", 0x5A791C, 0x20
 	.global	gUnk_085A793C
 gUnk_085A793C:
 	.incbin	"baserom.gba", 0x5A793C, 0x3E0
-	.global	gUnk_085A7D1C
-gUnk_085A7D1C:
+	.global	gAbilityPicture3Palette
+gAbilityPicture3Palette:
 	.incbin	"baserom.gba", 0x5A7D1C, 0x20
 	.global	gUnk_085A7D3C
 gUnk_085A7D3C:
 	.incbin	"baserom.gba", 0x5A7D3C, 0x3E0
-	.global	gUnk_085A811C
-gUnk_085A811C:
+	.global	gAbilityPicture4Palette
+gAbilityPicture4Palette:
 	.incbin	"baserom.gba", 0x5A811C, 0x20
 	.global	gUnk_085A813C
 gUnk_085A813C:
 	.incbin	"baserom.gba", 0x5A813C, 0x3E0
-	.global	gUnk_085A851C
-gUnk_085A851C:
+	.global	gAbilityPicture5Palette
+gAbilityPicture5Palette:
 	.incbin	"baserom.gba", 0x5A851C, 0x20
 	.global	gUnk_085A853C
 gUnk_085A853C:
 	.incbin	"baserom.gba", 0x5A853C, 0x3E0
-	.global	gUnk_085A891C
-gUnk_085A891C:
+	.global	gAbilityPicture6Palette
+gAbilityPicture6Palette:
 	.incbin	"baserom.gba", 0x5A891C, 0x20
 	.global	gUnk_085A893C
 gUnk_085A893C:
 	.incbin	"baserom.gba", 0x5A893C, 0x3E0
-	.global	gUnk_085A8D1C
-gUnk_085A8D1C:
+	.global	gAbilityPicture7Palette
+gAbilityPicture7Palette:
 	.incbin	"baserom.gba", 0x5A8D1C, 0x20
 	.global	gUnk_085A8D3C
 gUnk_085A8D3C:
 	.incbin	"baserom.gba", 0x5A8D3C, 0x3E0
-	.global	gUnk_085A911C
-gUnk_085A911C:
+	.global	gAbilityPicture8Palette
+gAbilityPicture8Palette:
 	.incbin	"baserom.gba", 0x5A911C, 0x20
 	.global	gUnk_085A913C
 gUnk_085A913C:
 	.incbin	"baserom.gba", 0x5A913C, 0x3E0
-	.global	gUnk_085A951C
-gUnk_085A951C:
+	.global	gAbilityPicture9Palette
+gAbilityPicture9Palette:
 	.incbin	"baserom.gba", 0x5A951C, 0x20
 	.global	gUnk_085A953C
 gUnk_085A953C:
 	.incbin	"baserom.gba", 0x5A953C, 0x3E0
-	.global	gUnk_085A991C
-gUnk_085A991C:
+	.global	gAbilityPicture10Palette
+gAbilityPicture10Palette:
 	.incbin	"baserom.gba", 0x5A991C, 0x20
 	.global	gUnk_085A993C
 gUnk_085A993C:
 	.incbin	"baserom.gba", 0x5A993C, 0x3E0
-	.global	gUnk_085A9D1C
-gUnk_085A9D1C:
+	.global	gAbilityPicture11Palette
+gAbilityPicture11Palette:
 	.incbin	"baserom.gba", 0x5A9D1C, 0x20
 	.global	gUnk_085A9D3C
 gUnk_085A9D3C:
 	.incbin	"baserom.gba", 0x5A9D3C, 0x3E0
-	.global	gUnk_085AA11C
-gUnk_085AA11C:
+	.global	gAbilityPicture12Palette
+gAbilityPicture12Palette:
 	.incbin	"baserom.gba", 0x5AA11C, 0x20
 	.global	gUnk_085AA13C
 gUnk_085AA13C:
 	.incbin	"baserom.gba", 0x5AA13C, 0x3E0
-	.global	gUnk_085AA51C
-gUnk_085AA51C:
+	.global	gAbilityPicture13Palette
+gAbilityPicture13Palette:
 	.incbin	"baserom.gba", 0x5AA51C, 0x20
 	.global	gUnk_085AA53C
 gUnk_085AA53C:
 	.incbin	"baserom.gba", 0x5AA53C, 0x3E0
-	.global	gUnk_085AA91C
-gUnk_085AA91C:
+	.global	gAbilityPicture14Palette
+gAbilityPicture14Palette:
 	.incbin	"baserom.gba", 0x5AA91C, 0x20
 	.global	gUnk_085AA93C
 gUnk_085AA93C:
 	.incbin	"baserom.gba", 0x5AA93C, 0x3E0
-	.global	gUnk_085AAD1C
-gUnk_085AAD1C:
+	.global	gAbilityPicture15Palette
+gAbilityPicture15Palette:
 	.incbin	"baserom.gba", 0x5AAD1C, 0x20
 	.global	gUnk_085AAD3C
 gUnk_085AAD3C:
 	.incbin	"baserom.gba", 0x5AAD3C, 0x3E0
-	.global	gUnk_085AB11C
-gUnk_085AB11C:
+	.global	gAbilityPicture16Palette
+gAbilityPicture16Palette:
 	.incbin	"baserom.gba", 0x5AB11C, 0x20
 	.global	gUnk_085AB13C
 gUnk_085AB13C:
 	.incbin	"baserom.gba", 0x5AB13C, 0x3E0
-	.global	gUnk_085AB51C
-gUnk_085AB51C:
+	.global	gAbilityPicture17Palette
+gAbilityPicture17Palette:
 	.incbin	"baserom.gba", 0x5AB51C, 0x20
 	.global	gUnk_085AB53C
 gUnk_085AB53C:
 	.incbin	"baserom.gba", 0x5AB53C, 0x3E0
-	.global	gUnk_085AB91C
-gUnk_085AB91C:
+	.global	gAbilityPicture18Palette
+gAbilityPicture18Palette:
 	.incbin	"baserom.gba", 0x5AB91C, 0x20
 	.global	gUnk_085AB93C
 gUnk_085AB93C:
 	.incbin	"baserom.gba", 0x5AB93C, 0x3E0
-	.global	gUnk_085ABD1C
-gUnk_085ABD1C:
+	.global	gAbilityPicture19Palette
+gAbilityPicture19Palette:
 	.incbin	"baserom.gba", 0x5ABD1C, 0x20
 	.global	gUnk_085ABD3C
 gUnk_085ABD3C:
 	.incbin	"baserom.gba", 0x5ABD3C, 0x3E0
-	.global	gUnk_085AC11C
-gUnk_085AC11C:
+	.global	gAbilityPicture20Palette
+gAbilityPicture20Palette:
 	.incbin	"baserom.gba", 0x5AC11C, 0x20
 	.global	gUnk_085AC13C
 gUnk_085AC13C:
 	.incbin	"baserom.gba", 0x5AC13C, 0x3E0
-	.global	gUnk_085AC51C
-gUnk_085AC51C:
+	.global	gAbilityPicture21Palette
+gAbilityPicture21Palette:
 	.incbin	"baserom.gba", 0x5AC51C, 0x20
 	.global	gUnk_085AC53C
 gUnk_085AC53C:
 	.incbin	"baserom.gba", 0x5AC53C, 0x3E0
-	.global	gUnk_085AC91C
-gUnk_085AC91C:
+	.global	gAbilityPicture22Palette
+gAbilityPicture22Palette:
 	.incbin	"baserom.gba", 0x5AC91C, 0x20
 	.global	gUnk_085AC93C
 gUnk_085AC93C:
 	.incbin	"baserom.gba", 0x5AC93C, 0x3E0
-	.global	gUnk_085ACD1C
-gUnk_085ACD1C:
+	.global	gAbilityPicture23Palette
+gAbilityPicture23Palette:
 	.incbin	"baserom.gba", 0x5ACD1C, 0x20
 	.global	gUnk_085ACD3C
 gUnk_085ACD3C:
 	.incbin	"baserom.gba", 0x5ACD3C, 0x3E0
-	.global	gUnk_085AD11C
-gUnk_085AD11C:
+	.global	gAbilityPicture24Palette
+gAbilityPicture24Palette:
 	.incbin	"baserom.gba", 0x5AD11C, 0x20
 	.global	gUnk_085AD13C
 gUnk_085AD13C:
 	.incbin	"baserom.gba", 0x5AD13C, 0x3E0
-	.global	gUnk_085AD51C
-gUnk_085AD51C:
+	.global	gAbilityPicture25Palette
+gAbilityPicture25Palette:
 	.incbin	"baserom.gba", 0x5AD51C, 0x20
 	.global	gUnk_085AD53C
 gUnk_085AD53C:
 	.incbin	"baserom.gba", 0x5AD53C, 0x3E0
-	.global	gUnk_085AD91C
-gUnk_085AD91C:
+	.global	gAbilityPicture26Palette
+gAbilityPicture26Palette:
 	.incbin	"baserom.gba", 0x5AD91C, 0x20
 	.global	gUnk_085AD93C
 gUnk_085AD93C:
 	.incbin	"baserom.gba", 0x5AD93C, 0x3E0
-	.global	gUnk_085ADD1C
-gUnk_085ADD1C:
+	.global	gPlayerLifeRequestLoadGfxPalette
+gPlayerLifeRequestLoadGfxPalette:
 	.incbin	"baserom.gba", 0x5ADD1C, 0x40
 	.global	gUnk_085ADD5C
 gUnk_085ADD5C:
@@ -2983,8 +2983,8 @@ gUnk_085B0A10:
 	.global	gUnk_085B0A30
 gUnk_085B0A30:
 	.incbin	"baserom.gba", 0x5B0A30, 0x34
-	.global	gUnk_085B0A64
-gUnk_085B0A64:
+	.global	gPlayerLifeRequestDrawListTitleMap
+gPlayerLifeRequestDrawListTitleMap:
 	.incbin	"baserom.gba", 0x5B0A64, 0x4C
 	.global	gUnk_085B0AB0
 gUnk_085B0AB0:
@@ -2992,11 +2992,11 @@ gUnk_085B0AB0:
 	.global	gUnk_085B0AD0
 gUnk_085B0AD0:
 	.incbin	"baserom.gba", 0x5B0AD0, 0x4
-	.global	gUnk_085B0AD4
-gUnk_085B0AD4:
+	.global	gPlayerLifeRequestDrawLivesMap
+gPlayerLifeRequestDrawLivesMap:
 	.incbin	"baserom.gba", 0x5B0AD4, 0x28
-	.global	gUnk_085B0AFC
-gUnk_085B0AFC:
+	.global	gPlayerLifeRequestDrawListCursorMap
+gPlayerLifeRequestDrawListCursorMap:
 	.incbin	"baserom.gba", 0x5B0AFC, 0x4
 	.global	gUnk_085B0B00
 gUnk_085B0B00:
@@ -3010,17 +3010,17 @@ gUnk_085B0B10:
 	.global	gUnk_085B0B28
 gUnk_085B0B28:
 	.incbin	"baserom.gba", 0x5B0B28, 0x34
-	.global	gUnk_085B0B5C
-gUnk_085B0B5C:
+	.global	gPlayerLifeRequestDrawCannotBorrowMap
+gPlayerLifeRequestDrawCannotBorrowMap:
 	.incbin	"baserom.gba", 0x5B0B5C, 0x58
 	.global	gUnk_085B0BB4
 gUnk_085B0BB4:
 	.incbin	"baserom.gba", 0x5B0BB4, 0x20
-	.global	gUnk_085B0BD4
-gUnk_085B0BD4:
+	.global	gPlayerLifeRequestDrawGotNothingMap
+gPlayerLifeRequestDrawGotNothingMap:
 	.incbin	"baserom.gba", 0x5B0BD4, 0x58
-	.global	gUnk_085B0C2C
-gUnk_085B0C2C:
+	.global	gPlayerLifeRequestDrawGameOverMap
+gPlayerLifeRequestDrawGameOverMap:
 	.incbin	"baserom.gba", 0x5B0C2C, 0x38
 	.global	gUnk_085B0C64
 gUnk_085B0C64:
@@ -3088,8 +3088,8 @@ gUnk_085B6E20:
 	.global	gUnk_085B6E48
 gUnk_085B6E48:
 	.incbin	"baserom.gba", 0x5B6E48, 0x30
-	.global	gUnk_085B6E78
-gUnk_085B6E78:
+	.global	gExtraModeTitleLevelBarUpdatePalette
+gExtraModeTitleLevelBarUpdatePalette:
 	.incbin	"baserom.gba", 0x5B6E78, 0x120
 	.global	gUnk_085B6F98
 gUnk_085B6F98:
@@ -3229,8 +3229,8 @@ gUnk_085B988C:
 	.global	gUnk_085B98B4
 gUnk_085B98B4:
 	.incbin	"baserom.gba", 0x5B98B4, 0x30
-	.global	gUnk_085B98E4
-gUnk_085B98E4:
+	.global	gGoalGameSpringFrame0
+gGoalGameSpringFrame0:
 	.incbin	"baserom.gba", 0x5B98E4, 0x18
 	.global	gUnk_085B98FC
 gUnk_085B98FC:
@@ -3244,8 +3244,8 @@ gUnk_085B993C:
 	.global	gUnk_085B995C
 gUnk_085B995C:
 	.incbin	"baserom.gba", 0x5B995C, 0x20
-	.global	gUnk_085B997C
-gUnk_085B997C:
+	.global	gGoalGameSpringFrame1
+gGoalGameSpringFrame1:
 	.incbin	"baserom.gba", 0x5B997C, 0x28
 	.global	gUnk_085B99A4
 gUnk_085B99A4:
@@ -3259,8 +3259,8 @@ gUnk_085B99E4:
 	.global	gUnk_085B9A04
 gUnk_085B9A04:
 	.incbin	"baserom.gba", 0x5B9A04, 0x20
-	.global	gUnk_085B9A24
-gUnk_085B9A24:
+	.global	gGoalGameSpringFrame2
+gGoalGameSpringFrame2:
 	.incbin	"baserom.gba", 0x5B9A24, 0x18
 	.global	gUnk_085B9A3C
 gUnk_085B9A3C:
@@ -3274,20 +3274,20 @@ gUnk_085B9A7C:
 	.global	gUnk_085B9A9C
 gUnk_085B9A9C:
 	.incbin	"baserom.gba", 0x5B9A9C, 0x20
-	.global	gUnk_085B9ABC
-gUnk_085B9ABC:
+	.global	gGoalGamePlayerMarkerFrame0
+gGoalGamePlayerMarkerFrame0:
 	.incbin	"baserom.gba", 0x5B9ABC, 0x10
-	.global	gUnk_085B9ACC
-gUnk_085B9ACC:
+	.global	gGoalGamePlayerMarkerFrame1
+gGoalGamePlayerMarkerFrame1:
 	.incbin	"baserom.gba", 0x5B9ACC, 0x10
-	.global	gUnk_085B9ADC
-gUnk_085B9ADC:
+	.global	gGoalGamePlayerMarkerFrame2
+gGoalGamePlayerMarkerFrame2:
 	.incbin	"baserom.gba", 0x5B9ADC, 0x10
-	.global	gUnk_085B9AEC
-gUnk_085B9AEC:
+	.global	gGoalGamePlayerMarkerFrame3
+gGoalGamePlayerMarkerFrame3:
 	.incbin	"baserom.gba", 0x5B9AEC, 0x10
-	.global	gUnk_085B9AFC
-gUnk_085B9AFC:
+	.global	gGoalGamePlayerMarkerFrame4
+gGoalGamePlayerMarkerFrame4:
 	.incbin	"baserom.gba", 0x5B9AFC, 0x10
 	.global	gUnk_085B9B0C
 gUnk_085B9B0C:
@@ -3301,8 +3301,8 @@ gUnk_085B9B6C:
 	.word	gUnk_085B8520
 	.word	gUnk_085B85A0
 	.word	gUnk_087E2750
-	.global	gUnk_085B9B80
-gUnk_085B9B80:
+	.global	gCutsceneLoadBgGraphicsPicture0Palette
+gCutsceneLoadBgGraphicsPicture0Palette:
 	.incbin	"baserom.gba", 0x5B9B80, 0x40
 	.global	gUnk_085B9BC0
 gUnk_085B9BC0:
@@ -3310,146 +3310,146 @@ gUnk_085B9BC0:
 	.global	gUnk_085BA25C
 gUnk_085BA25C:
 	.incbin	"baserom.gba", 0x5BA25C, 0x210
-	.global	gUnk_085BA46C
-gUnk_085BA46C:
+	.global	gCutsceneSheet0Palette
+gCutsceneSheet0Palette:
 	.incbin	"baserom.gba", 0x5BA46C, 0x60
-	.global	gUnk_085BA4CC
-gUnk_085BA4CC:
+	.global	gCutsceneSheet0Tiles
+gCutsceneSheet0Tiles:
 	.incbin	"baserom.gba", 0x5BA4CC, 0x1CCC
-	.global	gUnk_085BC198
-gUnk_085BC198:
+	.global	gCutsceneDuelFrame0
+gCutsceneDuelFrame0:
 	.incbin	"baserom.gba", 0x5BC198, 0x30
-	.global	gUnk_085BC1C8
-gUnk_085BC1C8:
+	.global	gCutsceneDuelFrame1
+gCutsceneDuelFrame1:
 	.incbin	"baserom.gba", 0x5BC1C8, 0x30
-	.global	gUnk_085BC1F8
-gUnk_085BC1F8:
+	.global	gCutsceneDuelFrame2
+gCutsceneDuelFrame2:
 	.incbin	"baserom.gba", 0x5BC1F8, 0x30
-	.global	gUnk_085BC228
-gUnk_085BC228:
+	.global	gCutsceneDuelFrame3
+gCutsceneDuelFrame3:
 	.incbin	"baserom.gba", 0x5BC228, 0x30
-	.global	gUnk_085BC258
-gUnk_085BC258:
+	.global	gCutsceneDuelFrame4
+gCutsceneDuelFrame4:
 	.incbin	"baserom.gba", 0x5BC258, 0x30
-	.global	gUnk_085BC288
-gUnk_085BC288:
+	.global	gCutsceneDuelFrame5
+gCutsceneDuelFrame5:
 	.incbin	"baserom.gba", 0x5BC288, 0x28
-	.global	gUnk_085BC2B0
-gUnk_085BC2B0:
+	.global	gCutsceneDuelFrame6
+gCutsceneDuelFrame6:
 	.incbin	"baserom.gba", 0x5BC2B0, 0x28
-	.global	gUnk_085BC2D8
-gUnk_085BC2D8:
+	.global	gCutsceneDuelFrame7
+gCutsceneDuelFrame7:
 	.incbin	"baserom.gba", 0x5BC2D8, 0x30
-	.global	gUnk_085BC308
-gUnk_085BC308:
+	.global	gCutsceneDuelFrame8
+gCutsceneDuelFrame8:
 	.incbin	"baserom.gba", 0x5BC308, 0x30
-	.global	gUnk_085BC338
-gUnk_085BC338:
+	.global	gCutsceneDuelFrame9
+gCutsceneDuelFrame9:
 	.incbin	"baserom.gba", 0x5BC338, 0x30
-	.global	gUnk_085BC368
-gUnk_085BC368:
+	.global	gCutsceneDuelFrame10
+gCutsceneDuelFrame10:
 	.incbin	"baserom.gba", 0x5BC368, 0x30
-	.global	gUnk_085BC398
-gUnk_085BC398:
+	.global	gCutsceneDuelFrame11
+gCutsceneDuelFrame11:
 	.incbin	"baserom.gba", 0x5BC398, 0x30
-	.global	gUnk_085BC3C8
-gUnk_085BC3C8:
+	.global	gCutsceneDuelFrame12
+gCutsceneDuelFrame12:
 	.incbin	"baserom.gba", 0x5BC3C8, 0x30
-	.global	gUnk_085BC3F8
-gUnk_085BC3F8:
+	.global	gCutsceneDuelFrame13
+gCutsceneDuelFrame13:
 	.incbin	"baserom.gba", 0x5BC3F8, 0x28
-	.global	gUnk_085BC420
-gUnk_085BC420:
+	.global	gCutsceneDuelFrame14
+gCutsceneDuelFrame14:
 	.incbin	"baserom.gba", 0x5BC420, 0x20
-	.global	gUnk_085BC440
-gUnk_085BC440:
+	.global	gCutsceneDuelFrame15
+gCutsceneDuelFrame15:
 	.incbin	"baserom.gba", 0x5BC440, 0x20
-	.global	gUnk_085BC460
-gUnk_085BC460:
+	.global	gCutsceneDuelFrame16
+gCutsceneDuelFrame16:
 	.incbin	"baserom.gba", 0x5BC460, 0x20
-	.global	gUnk_085BC480
-gUnk_085BC480:
+	.global	gCutsceneDuelFrame17
+gCutsceneDuelFrame17:
 	.incbin	"baserom.gba", 0x5BC480, 0x10
-	.global	gUnk_085BC490
-gUnk_085BC490:
+	.global	gCutsceneDuelFrame18
+gCutsceneDuelFrame18:
 	.incbin	"baserom.gba", 0x5BC490, 0x20
-	.global	gUnk_085BC4B0
-gUnk_085BC4B0:
+	.global	gCutsceneDuelFrame19
+gCutsceneDuelFrame19:
 	.incbin	"baserom.gba", 0x5BC4B0, 0x20
-	.global	gUnk_085BC4D0
-gUnk_085BC4D0:
+	.global	gCutsceneDuelFrame20
+gCutsceneDuelFrame20:
 	.incbin	"baserom.gba", 0x5BC4D0, 0x20
-	.global	gUnk_085BC4F0
-gUnk_085BC4F0:
+	.global	gCutsceneDuelFrame21
+gCutsceneDuelFrame21:
 	.incbin	"baserom.gba", 0x5BC4F0, 0x20
-	.global	gUnk_085BC510
-gUnk_085BC510:
+	.global	gCutsceneDuelFrame22
+gCutsceneDuelFrame22:
 	.incbin	"baserom.gba", 0x5BC510, 0x20
-	.global	gUnk_085BC530
-gUnk_085BC530:
+	.global	gCutsceneDuelFrame23
+gCutsceneDuelFrame23:
 	.incbin	"baserom.gba", 0x5BC530, 0x20
-	.global	gUnk_085BC550
-gUnk_085BC550:
+	.global	gCutsceneDuelFrame24
+gCutsceneDuelFrame24:
 	.incbin	"baserom.gba", 0x5BC550, 0x28
-	.global	gUnk_085BC578
-gUnk_085BC578:
+	.global	gCutsceneDuelFrame25
+gCutsceneDuelFrame25:
 	.incbin	"baserom.gba", 0x5BC578, 0x28
-	.global	gUnk_085BC5A0
-gUnk_085BC5A0:
+	.global	gCutsceneDuelFrame26
+gCutsceneDuelFrame26:
 	.incbin	"baserom.gba", 0x5BC5A0, 0x28
-	.global	gUnk_085BC5C8
-gUnk_085BC5C8:
+	.global	gCutsceneDuelFrame27
+gCutsceneDuelFrame27:
 	.incbin	"baserom.gba", 0x5BC5C8, 0x28
-	.global	gUnk_085BC5F0
-gUnk_085BC5F0:
+	.global	gCutsceneDuelFrame28
+gCutsceneDuelFrame28:
 	.incbin	"baserom.gba", 0x5BC5F0, 0x8
-	.global	gUnk_085BC5F8
-gUnk_085BC5F8:
+	.global	gCutsceneDuelFrame29
+gCutsceneDuelFrame29:
 	.incbin	"baserom.gba", 0x5BC5F8, 0x8
-	.global	gUnk_085BC600
-gUnk_085BC600:
+	.global	gCutsceneDuelFrame30
+gCutsceneDuelFrame30:
 	.incbin	"baserom.gba", 0x5BC600, 0x8
-	.global	gUnk_085BC608
-gUnk_085BC608:
+	.global	gCutsceneDuelFrame31
+gCutsceneDuelFrame31:
 	.incbin	"baserom.gba", 0x5BC608, 0x20
-	.global	gUnk_085BC628
-gUnk_085BC628:
+	.global	gCutsceneDuelFrame32
+gCutsceneDuelFrame32:
 	.incbin	"baserom.gba", 0x5BC628, 0x50
-	.global	gUnk_085BC678
-gUnk_085BC678:
+	.global	gCutsceneDuelFrame33
+gCutsceneDuelFrame33:
 	.incbin	"baserom.gba", 0x5BC678, 0x40
-	.global	gUnk_085BC6B8
-gUnk_085BC6B8:
+	.global	gCutsceneDuelFrame34
+gCutsceneDuelFrame34:
 	.incbin	"baserom.gba", 0x5BC6B8, 0x48
-	.global	gUnk_085BC700
-gUnk_085BC700:
+	.global	gCutsceneDuelFrame35
+gCutsceneDuelFrame35:
 	.incbin	"baserom.gba", 0x5BC700, 0x40
-	.global	gUnk_085BC740
-gUnk_085BC740:
+	.global	gCutsceneDuelFrame36
+gCutsceneDuelFrame36:
 	.incbin	"baserom.gba", 0x5BC740, 0x38
-	.global	gUnk_085BC778
-gUnk_085BC778:
+	.global	gCutsceneDuelFrame37
+gCutsceneDuelFrame37:
 	.incbin	"baserom.gba", 0x5BC778, 0x10
-	.global	gUnk_085BC788
-gUnk_085BC788:
+	.global	gCutsceneDuelFrame38
+gCutsceneDuelFrame38:
 	.incbin	"baserom.gba", 0x5BC788, 0x18
-	.global	gUnk_085BC7A0
-gUnk_085BC7A0:
+	.global	gCutsceneDuelFrame39
+gCutsceneDuelFrame39:
 	.incbin	"baserom.gba", 0x5BC7A0, 0x20
-	.global	gUnk_085BC7C0
-gUnk_085BC7C0:
+	.global	gCutsceneDuelFrame40
+gCutsceneDuelFrame40:
 	.incbin	"baserom.gba", 0x5BC7C0, 0x20
-	.global	gUnk_085BC7E0
-gUnk_085BC7E0:
+	.global	gCutsceneDuelFrame41
+gCutsceneDuelFrame41:
 	.incbin	"baserom.gba", 0x5BC7E0, 0x20
-	.global	gUnk_085BC800
-gUnk_085BC800:
+	.global	gCutsceneSheet0
+gCutsceneSheet0:
 	.incbin	"baserom.gba", 0x5BC800, 0x8
-	.word	gUnk_085BA46C
-	.word	gUnk_085BA4CC
+	.word	gCutsceneSheet0Palette
+	.word	gCutsceneSheet0Tiles
 	.word	gUnk_087E2834
-	.global	gUnk_085BC814
-gUnk_085BC814:
+	.global	gCutsceneLoadBgGraphicsPicture1Palette
+gCutsceneLoadBgGraphicsPicture1Palette:
 	.incbin	"baserom.gba", 0x5BC814, 0x40
 	.global	gUnk_085BC854
 gUnk_085BC854:
@@ -3457,167 +3457,167 @@ gUnk_085BC854:
 	.global	gUnk_085BCE88
 gUnk_085BCE88:
 	.incbin	"baserom.gba", 0x5BCE88, 0x210
-	.global	gUnk_085BD098
-gUnk_085BD098:
+	.global	gCutsceneSheet1Palette
+gCutsceneSheet1Palette:
 	.incbin	"baserom.gba", 0x5BD098, 0xA0
-	.global	gUnk_085BD138
-gUnk_085BD138:
+	.global	gCutsceneSheet1Tiles
+gCutsceneSheet1Tiles:
 	.incbin	"baserom.gba", 0x5BD138, 0x1510
-	.global	gUnk_085BE648
-gUnk_085BE648:
+	.global	gCutsceneBeachFrame0
+gCutsceneBeachFrame0:
 	.incbin	"baserom.gba", 0x5BE648, 0x30
-	.global	gUnk_085BE678
-gUnk_085BE678:
+	.global	gCutsceneBeachFrame1
+gCutsceneBeachFrame1:
 	.incbin	"baserom.gba", 0x5BE678, 0x8
-	.global	gUnk_085BE680
-gUnk_085BE680:
+	.global	gCutsceneBeachFrame2
+gCutsceneBeachFrame2:
 	.incbin	"baserom.gba", 0x5BE680, 0x8
-	.global	gUnk_085BE688
-gUnk_085BE688:
+	.global	gCutsceneBeachFrame3
+gCutsceneBeachFrame3:
 	.incbin	"baserom.gba", 0x5BE688, 0x8
-	.global	gUnk_085BE690
-gUnk_085BE690:
+	.global	gCutsceneBeachFrame4
+gCutsceneBeachFrame4:
 	.incbin	"baserom.gba", 0x5BE690, 0x8
-	.global	gUnk_085BE698
-gUnk_085BE698:
+	.global	gCutsceneBeachFrame5
+gCutsceneBeachFrame5:
 	.incbin	"baserom.gba", 0x5BE698, 0x8
-	.global	gUnk_085BE6A0
-gUnk_085BE6A0:
+	.global	gCutsceneBeachFrame6
+gCutsceneBeachFrame6:
 	.incbin	"baserom.gba", 0x5BE6A0, 0x20
-	.global	gUnk_085BE6C0
-gUnk_085BE6C0:
+	.global	gCutsceneBeachFrame7
+gCutsceneBeachFrame7:
 	.incbin	"baserom.gba", 0x5BE6C0, 0x20
-	.global	gUnk_085BE6E0
-gUnk_085BE6E0:
+	.global	gCutsceneBeachFrame8
+gCutsceneBeachFrame8:
 	.incbin	"baserom.gba", 0x5BE6E0, 0x20
-	.global	gUnk_085BE700
-gUnk_085BE700:
+	.global	gCutsceneBeachFrame9
+gCutsceneBeachFrame9:
 	.incbin	"baserom.gba", 0x5BE700, 0x18
-	.global	gUnk_085BE718
-gUnk_085BE718:
+	.global	gCutsceneBeachFrame10
+gCutsceneBeachFrame10:
 	.incbin	"baserom.gba", 0x5BE718, 0x18
-	.global	gUnk_085BE730
-gUnk_085BE730:
+	.global	gCutsceneBeachFrame11
+gCutsceneBeachFrame11:
 	.incbin	"baserom.gba", 0x5BE730, 0x18
-	.global	gUnk_085BE748
-gUnk_085BE748:
+	.global	gCutsceneBeachFrame12
+gCutsceneBeachFrame12:
 	.incbin	"baserom.gba", 0x5BE748, 0x28
-	.global	gUnk_085BE770
-gUnk_085BE770:
+	.global	gCutsceneBeachFrame13
+gCutsceneBeachFrame13:
 	.incbin	"baserom.gba", 0x5BE770, 0x28
-	.global	gUnk_085BE798
-gUnk_085BE798:
+	.global	gCutsceneBeachFrame14
+gCutsceneBeachFrame14:
 	.incbin	"baserom.gba", 0x5BE798, 0x28
-	.global	gUnk_085BE7C0
-gUnk_085BE7C0:
+	.global	gCutsceneBeachFrame15
+gCutsceneBeachFrame15:
 	.incbin	"baserom.gba", 0x5BE7C0, 0x8
-	.global	gUnk_085BE7C8
-gUnk_085BE7C8:
+	.global	gCutsceneBeachFrame16
+gCutsceneBeachFrame16:
 	.incbin	"baserom.gba", 0x5BE7C8, 0x8
-	.global	gUnk_085BE7D0
-gUnk_085BE7D0:
+	.global	gCutsceneBeachFrame17
+gCutsceneBeachFrame17:
 	.incbin	"baserom.gba", 0x5BE7D0, 0x8
-	.global	gUnk_085BE7D8
-gUnk_085BE7D8:
+	.global	gCutsceneBeachFrame18
+gCutsceneBeachFrame18:
 	.incbin	"baserom.gba", 0x5BE7D8, 0x20
-	.global	gUnk_085BE7F8
-gUnk_085BE7F8:
+	.global	gCutsceneBeachFrame19
+gCutsceneBeachFrame19:
 	.incbin	"baserom.gba", 0x5BE7F8, 0x20
-	.global	gUnk_085BE818
-gUnk_085BE818:
+	.global	gCutsceneBeachFrame20
+gCutsceneBeachFrame20:
 	.incbin	"baserom.gba", 0x5BE818, 0x20
-	.global	gUnk_085BE838
-gUnk_085BE838:
+	.global	gCutsceneBeachFrame21
+gCutsceneBeachFrame21:
 	.incbin	"baserom.gba", 0x5BE838, 0x20
-	.global	gUnk_085BE858
-gUnk_085BE858:
+	.global	gCutsceneBeachFrame22
+gCutsceneBeachFrame22:
 	.incbin	"baserom.gba", 0x5BE858, 0x20
-	.global	gUnk_085BE878
-gUnk_085BE878:
+	.global	gCutsceneBeachFrame23
+gCutsceneBeachFrame23:
 	.incbin	"baserom.gba", 0x5BE878, 0x38
-	.global	gUnk_085BE8B0
-gUnk_085BE8B0:
+	.global	gCutsceneBeachFrame24
+gCutsceneBeachFrame24:
 	.incbin	"baserom.gba", 0x5BE8B0, 0x30
-	.global	gUnk_085BE8E0
-gUnk_085BE8E0:
+	.global	gCutsceneBeachFrame25
+gCutsceneBeachFrame25:
 	.incbin	"baserom.gba", 0x5BE8E0, 0x38
-	.global	gUnk_085BE918
-gUnk_085BE918:
+	.global	gCutsceneBeachFrame26
+gCutsceneBeachFrame26:
 	.incbin	"baserom.gba", 0x5BE918, 0x38
-	.global	gUnk_085BE950
-gUnk_085BE950:
+	.global	gCutsceneBeachFrame27
+gCutsceneBeachFrame27:
 	.incbin	"baserom.gba", 0x5BE950, 0x20
-	.global	gUnk_085BE970
-gUnk_085BE970:
+	.global	gCutsceneBeachFrame28
+gCutsceneBeachFrame28:
 	.incbin	"baserom.gba", 0x5BE970, 0x20
-	.global	gUnk_085BE990
-gUnk_085BE990:
+	.global	gCutsceneBeachFrame29
+gCutsceneBeachFrame29:
 	.incbin	"baserom.gba", 0x5BE990, 0x10
-	.global	gUnk_085BE9A0
-gUnk_085BE9A0:
+	.global	gCutsceneBeachFrame30
+gCutsceneBeachFrame30:
 	.incbin	"baserom.gba", 0x5BE9A0, 0x20
-	.global	gUnk_085BE9C0
-gUnk_085BE9C0:
+	.global	gCutsceneBeachFrame31
+gCutsceneBeachFrame31:
 	.incbin	"baserom.gba", 0x5BE9C0, 0x18
-	.global	gUnk_085BE9D8
-gUnk_085BE9D8:
+	.global	gCutsceneBeachFrame32
+gCutsceneBeachFrame32:
 	.incbin	"baserom.gba", 0x5BE9D8, 0x20
-	.global	gUnk_085BE9F8
-gUnk_085BE9F8:
+	.global	gCutsceneBeachFrame33
+gCutsceneBeachFrame33:
 	.incbin	"baserom.gba", 0x5BE9F8, 0x20
-	.global	gUnk_085BEA18
-gUnk_085BEA18:
+	.global	gCutsceneBeachFrame34
+gCutsceneBeachFrame34:
 	.incbin	"baserom.gba", 0x5BEA18, 0x20
-	.global	gUnk_085BEA38
-gUnk_085BEA38:
+	.global	gCutsceneBeachFrame35
+gCutsceneBeachFrame35:
 	.incbin	"baserom.gba", 0x5BEA38, 0x20
-	.global	gUnk_085BEA58
-gUnk_085BEA58:
+	.global	gCutsceneBeachFrame36
+gCutsceneBeachFrame36:
 	.incbin	"baserom.gba", 0x5BEA58, 0x8
-	.global	gUnk_085BEA60
-gUnk_085BEA60:
+	.global	gCutsceneBeachFrame37
+gCutsceneBeachFrame37:
 	.incbin	"baserom.gba", 0x5BEA60, 0x8
-	.global	gUnk_085BEA68
-gUnk_085BEA68:
+	.global	gCutsceneBeachFrame38
+gCutsceneBeachFrame38:
 	.incbin	"baserom.gba", 0x5BEA68, 0x8
-	.global	gUnk_085BEA70
-gUnk_085BEA70:
+	.global	gCutsceneBeachFrame39
+gCutsceneBeachFrame39:
 	.incbin	"baserom.gba", 0x5BEA70, 0x8
-	.global	gUnk_085BEA78
-gUnk_085BEA78:
+	.global	gCutsceneBeachFrame40
+gCutsceneBeachFrame40:
 	.incbin	"baserom.gba", 0x5BEA78, 0x30
-	.global	gUnk_085BEAA8
-gUnk_085BEAA8:
+	.global	gCutsceneBeachFrame41
+gCutsceneBeachFrame41:
 	.incbin	"baserom.gba", 0x5BEAA8, 0x30
-	.global	gUnk_085BEAD8
-gUnk_085BEAD8:
+	.global	gCutsceneBeachFrame42
+gCutsceneBeachFrame42:
 	.incbin	"baserom.gba", 0x5BEAD8, 0x30
-	.global	gUnk_085BEB08
-gUnk_085BEB08:
+	.global	gCutsceneBeachFrame43
+gCutsceneBeachFrame43:
 	.incbin	"baserom.gba", 0x5BEB08, 0x8
-	.global	gUnk_085BEB10
-gUnk_085BEB10:
+	.global	gCutsceneBeachFrame44
+gCutsceneBeachFrame44:
 	.incbin	"baserom.gba", 0x5BEB10, 0x10
-	.global	gUnk_085BEB20
-gUnk_085BEB20:
+	.global	gCutsceneBeachFrame45
+gCutsceneBeachFrame45:
 	.incbin	"baserom.gba", 0x5BEB20, 0x20
-	.global	gUnk_085BEB40
-gUnk_085BEB40:
+	.global	gCutsceneBeachFrame46
+gCutsceneBeachFrame46:
 	.incbin	"baserom.gba", 0x5BEB40, 0x10
-	.global	gUnk_085BEB50
-gUnk_085BEB50:
+	.global	gCutsceneBeachFrame47
+gCutsceneBeachFrame47:
 	.incbin	"baserom.gba", 0x5BEB50, 0x10
-	.global	gUnk_085BEB60
-gUnk_085BEB60:
+	.global	gCutsceneBeachFrame48
+gCutsceneBeachFrame48:
 	.incbin	"baserom.gba", 0x5BEB60, 0x10
-	.global	gUnk_085BEB70
-gUnk_085BEB70:
+	.global	gCutsceneSheet1
+gCutsceneSheet1:
 	.incbin	"baserom.gba", 0x5BEB70, 0x8
-	.word	gUnk_085BD098
-	.word	gUnk_085BD138
+	.word	gCutsceneSheet1Palette
+	.word	gCutsceneSheet1Tiles
 	.word	gUnk_087E28DC
-	.global	gUnk_085BEB84
-gUnk_085BEB84:
+	.global	gCutsceneLoadBgGraphicsPicture2Palette
+gCutsceneLoadBgGraphicsPicture2Palette:
 	.incbin	"baserom.gba", 0x5BEB84, 0x40
 	.global	gUnk_085BEBC4
 gUnk_085BEBC4:
@@ -3625,9 +3625,9 @@ gUnk_085BEBC4:
 	.global	gUnk_085BF214
 gUnk_085BF214:
 	.incbin	"baserom.gba", 0x5BF214, 0x210
-	.global	gUnk_085BF424
-gUnk_085BF424:
+	.global	gCutsceneSheet2Palette
+gCutsceneSheet2Palette:
 	.incbin	"baserom.gba", 0x5BF424, 0x60
-	.global	gUnk_085BF484
-gUnk_085BF484:
+	.global	gCutsceneSheet2Tiles
+gCutsceneSheet2Tiles:
 	.incbin	"baserom.gba", 0x5BF484, 0xB7C

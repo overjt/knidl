@@ -92,7 +92,7 @@ void PhanPhanUpdate(void)
 
     t = gCurTask;
     if ((t->hitTimer != 0 && t->u8C.actor->hitState != 0) || t->state == 8)
-        ActorFlashPalette(gUnk_082BFBA4, 16);
+        ActorFlashPalette(gPhanPhanUpdatePalette, 16);
     else
         ActorClearPaletteOverride();
     if (ActorHasExtraFrame() == 0) {

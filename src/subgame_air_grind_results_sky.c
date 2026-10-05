@@ -27,7 +27,7 @@
  *       retry/quit choice and a three-way level choice passed to M35's
  *       SubGameReplay.
  *   AirGrindResultsUpdate / AirGrindResultsDrawCursor / AirGrindResultsSetCursorBlend   the per-frame callback, the
- *       two palette cycles through gUnk_08609F40 with the cursor sprite, and
+ *       two palette cycles through gAirGrindResultsDrawCursorPalette with the cursor sprite, and
  *       the cycle's start row for a menu choice.
  *   AirGrindBuildSky   the per-frame hook AirGrindSetupRace installs: builds the
  *       160-line sky gradient AirGrindState.skyLineColors[] from eleven RGB key colours,
@@ -339,12 +339,12 @@ void AirGrindResultsDrawCursor(void)
     from = gCurTask->airGrindCursorBlendFrom;
     to = from + 1;
     step = 8 - (s16)gCurTask->airGrindCursorBlendTimer;
-    BlendColors(gUnk_08609F40[from], gUnk_08609F40[to], (u16)(step * 32), 16, gObjPaletteBank5);
+    BlendColors(gAirGrindResultsDrawCursorPalette[from], gAirGrindResultsDrawCursorPalette[to], (u16)(step * 32), 16, gObjPaletteBank5);
     gCurTask->airGrindGlowBlendTimer--;
     if ((s16)gCurTask->airGrindGlowBlendTimer < 0)
         gCurTask->airGrindGlowBlendTimer = 8;
     step2 = 8 - (s16)gCurTask->airGrindGlowBlendTimer;
-    BlendColors(gUnk_08609F40[6], gUnk_08609F40[7], (u16)(step2 * 32), 16, &gObjPaletteBank5[16]);
+    BlendColors(gAirGrindResultsDrawCursorPalette[6], gAirGrindResultsDrawCursorPalette[7], (u16)(step2 * 32), 16, &gObjPaletteBank5[16]);
     if (gAirGrindPtr->localPlayer == 0) {
         t = gCurTask;
         tbl = t->frameTable;

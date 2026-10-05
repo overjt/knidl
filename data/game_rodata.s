@@ -874,30 +874,30 @@ gUnk_08731980:
 	.global	gUnk_087319B0
 gUnk_087319B0:
 	.incbin	"baserom.gba", 0x7319B0, 0x18
-	.global	gUnk_087319C8
-gUnk_087319C8:
-	.word	gUnk_085B9B80
+	.global	gCutsceneLoadBgGraphicsPictures
+gCutsceneLoadBgGraphicsPictures:
+	.word	gCutsceneLoadBgGraphicsPicture0Palette
 	.word	gUnk_085B9BC0
 	.word	gUnk_085BA25C
-	.word	gUnk_085BC814
+	.word	gCutsceneLoadBgGraphicsPicture1Palette
 	.word	gUnk_085BC854
 	.word	gUnk_085BCE88
-	.word	gUnk_085BEB84
+	.word	gCutsceneLoadBgGraphicsPicture2Palette
 	.word	gUnk_085BEBC4
 	.word	gUnk_085BF214
-	.word	gUnk_085C1988
+	.word	gCutsceneLoadBgGraphicsPicture3Palette
 	.word	gUnk_085C19C8
 	.word	gUnk_085C2000
-	.word	gUnk_085C422C
+	.word	gCutsceneLoadBgGraphicsPicture4Palette
 	.word	gUnk_085C426C
 	.word	gUnk_085C48A4
-	.word	gUnk_085C6BAC
+	.word	gCutsceneLoadBgGraphicsPicture5Palette
 	.word	gUnk_085C6BEC
 	.word	gUnk_085C7244
-	.word	gUnk_085C9264
+	.word	gCutsceneLoadBgGraphicsPicture6Palette
 	.word	gUnk_085C92A4
 	.word	gUnk_085C9914
-	.word	gUnk_085CC33C
+	.word	gCutsceneLoadBgGraphicsPicture7Palette
 	.word	gUnk_085CC37C
 	.word	gUnk_085CCA5C
 	.global	gExtraModeTitlePictures
@@ -911,19 +911,19 @@ gExtraModeTitlePictures:
 	.word	gUnk_085B2D0C
 	.word	gUnk_085B2D8C
 	.word	gUnk_085B450C
-	.word	gUnk_0856D63C
+	.word	gExtraModeTitlePicture3Palette
 	.word	gUnk_0856D69C
 	.word	gUnk_0856ECE8
-	.word	gUnk_0856B9F4
+	.word	gExtraModeTitlePicture4Palette
 	.word	gUnk_0856BA54
 	.word	gUnk_0856D07C
-	.word	gUnk_08569DDC
+	.word	gExtraModeTitlePicture5Palette
 	.word	gUnk_08569E3C
 	.word	gUnk_0856B434
-	.word	gUnk_085659DC
+	.word	gExtraModeTitlePicture6Palette
 	.word	gUnk_08565A5C
 	.word	gUnk_085679D0
-	.word	gUnk_08567F98
+	.word	gExtraModeTitlePicture7Palette
 	.word	gUnk_08568018
 	.word	gUnk_0856981C
 	.global	gExtraModeTitlePaletteSizes
@@ -931,70 +931,70 @@ gExtraModeTitlePaletteSizes:
 	.incbin	"baserom.gba", 0x731A88, 0x8
 	.global	gAbilityPictures
 gAbilityPictures:
-	.word	gUnk_085A711C
+	.word	gAbilityPicture0Palette
 	.word	gUnk_085A713C
-	.word	gUnk_085A751C
+	.word	gAbilityPicture1Palette
 	.word	gUnk_085A753C
-	.word	gUnk_085A791C
+	.word	gAbilityPicture2Palette
 	.word	gUnk_085A793C
-	.word	gUnk_085A7D1C
+	.word	gAbilityPicture3Palette
 	.word	gUnk_085A7D3C
-	.word	gUnk_085A811C
+	.word	gAbilityPicture4Palette
 	.word	gUnk_085A813C
-	.word	gUnk_085A851C
+	.word	gAbilityPicture5Palette
 	.word	gUnk_085A853C
-	.word	gUnk_085A891C
+	.word	gAbilityPicture6Palette
 	.word	gUnk_085A893C
-	.word	gUnk_085A8D1C
+	.word	gAbilityPicture7Palette
 	.word	gUnk_085A8D3C
-	.word	gUnk_085A911C
+	.word	gAbilityPicture8Palette
 	.word	gUnk_085A913C
-	.word	gUnk_085A951C
+	.word	gAbilityPicture9Palette
 	.word	gUnk_085A953C
-	.word	gUnk_085A991C
+	.word	gAbilityPicture10Palette
 	.word	gUnk_085A993C
-	.word	gUnk_085A9D1C
+	.word	gAbilityPicture11Palette
 	.word	gUnk_085A9D3C
-	.word	gUnk_085AA11C
+	.word	gAbilityPicture12Palette
 	.word	gUnk_085AA13C
-	.word	gUnk_085AA51C
+	.word	gAbilityPicture13Palette
 	.word	gUnk_085AA53C
-	.word	gUnk_085AA91C
+	.word	gAbilityPicture14Palette
 	.word	gUnk_085AA93C
-	.word	gUnk_085AAD1C
+	.word	gAbilityPicture15Palette
 	.word	gUnk_085AAD3C
-	.word	gUnk_085AB11C
+	.word	gAbilityPicture16Palette
 	.word	gUnk_085AB13C
-	.word	gUnk_085AB51C
+	.word	gAbilityPicture17Palette
 	.word	gUnk_085AB53C
-	.word	gUnk_085AB91C
+	.word	gAbilityPicture18Palette
 	.word	gUnk_085AB93C
-	.word	gUnk_085ABD1C
+	.word	gAbilityPicture19Palette
 	.word	gUnk_085ABD3C
-	.word	gUnk_085AC11C
+	.word	gAbilityPicture20Palette
 	.word	gUnk_085AC13C
-	.word	gUnk_085AC51C
+	.word	gAbilityPicture21Palette
 	.word	gUnk_085AC53C
-	.word	gUnk_085AC91C
+	.word	gAbilityPicture22Palette
 	.word	gUnk_085AC93C
-	.word	gUnk_085ACD1C
+	.word	gAbilityPicture23Palette
 	.word	gUnk_085ACD3C
-	.word	gUnk_085AD11C
+	.word	gAbilityPicture24Palette
 	.word	gUnk_085AD13C
-	.word	gUnk_085AD51C
+	.word	gAbilityPicture25Palette
 	.word	gUnk_085AD53C
-	.word	gUnk_085AD91C
+	.word	gAbilityPicture26Palette
 	.word	gUnk_085AD93C
-	.word	gUnk_085A711C
+	.word	gAbilityPicture0Palette
 	.word	gUnk_085A713C
-	.global	gUnk_08731B70
-gUnk_08731B70:
-	.word	gUnk_085A3BF8
-	.word	gUnk_085A3C18
-	.word	gUnk_085A3C38
-	.word	gUnk_085A3C58
-	.word	gUnk_085A3C78
-	.word	gUnk_085A3C98
+	.global	gLoadMuseumAbilitySignGfxPalettes
+gLoadMuseumAbilitySignGfxPalettes:
+	.word	gLoadMuseumAbilitySignGfxPalette0
+	.word	gLoadMuseumAbilitySignGfxPalette1
+	.word	gLoadMuseumAbilitySignGfxPalette2
+	.word	gLoadMuseumAbilitySignGfxPalette3
+	.word	gLoadMuseumAbilitySignGfxPalette4
+	.word	gLoadMuseumAbilitySignGfxPalette5
 	.global	gUnk_08731B88
 gUnk_08731B88:
 	.incbin	"baserom.gba", 0x731B88, 0x18
@@ -1078,15 +1078,15 @@ gUnk_08731CF8:
 	.word	gUnk_085563E8
 	.incbin	"baserom.gba", 0x731D14, 0x10
 	.word	gUnk_0854E84C
-	.global	gUnk_08731D28
-gUnk_08731D28:
+	.global	gMenuBgPaletteCyclePalettes
+gMenuBgPaletteCyclePalettes:
 	.word	gUnk_0854FBC0
-	.word	gUnk_085578D0
-	.word	gUnk_085578D0
-	.word	gUnk_085578D0
-	.word	gUnk_0855D238
-	.word	gUnk_0855D238
-	.word	gUnk_085578D0
+	.word	gMenuBgPaletteCyclePalette1
+	.word	gMenuBgPaletteCyclePalette1
+	.word	gMenuBgPaletteCyclePalette1
+	.word	gMenuBgPaletteCyclePalette4
+	.word	gMenuBgPaletteCyclePalette4
+	.word	gMenuBgPaletteCyclePalette1
 	.incbin	"baserom.gba", 0x731D44, 0x10
 	.word	gUnk_0854FBC0
 	.global	gUnk_08731D58
@@ -1163,13 +1163,13 @@ gUnk_08731F48:
 	.incbin	"baserom.gba", 0x731F48, 0x30
 	.global	gCutsceneSheets
 gCutsceneSheets:
-	.word	gUnk_085BC800
-	.word	gUnk_085BEB70
-	.word	gUnk_085C1974
-	.word	gUnk_085C4218
-	.word	gUnk_085C6B98
-	.word	gUnk_085C9250
-	.word	gUnk_085CC328
+	.word	gCutsceneSheet0
+	.word	gCutsceneSheet1
+	.word	gCutsceneSheet2
+	.word	gCutsceneSheet3
+	.word	gCutsceneSheet4
+	.word	gCutsceneSheet5
+	.word	gCutsceneSheet6
 	.incbin	"baserom.gba", 0x731F94, 0x4
 	.global	gCutsceneDurations
 gCutsceneDurations:
@@ -3669,8 +3669,8 @@ gPlayerMotionYPresets:
 	.section .game_rodata_0873b510, "a"
 	.global	game_rodata_0873b510
 game_rodata_0873b510:
-	.global	gUnk_0873B510
-gUnk_0873B510:
+	.global	gPlayerActionBurningUpdatePaletteFades
+gPlayerActionBurningUpdatePaletteFades:
 	.word	gUnk_081CC2C8
 	.word	gUnk_081CC2E8
 	.incbin	"baserom.gba", 0x73B518, 0x4
@@ -3678,7 +3678,7 @@ gUnk_0873B510:
 	.word	gUnk_081CC2C8
 	.incbin	"baserom.gba", 0x73B524, 0x4
 	.word	gUnk_081CC2C8
-	.word	gUnk_081CC308
+	.word	gPlayerActionBurningUpdatePaletteFade2Dst
 	.incbin	"baserom.gba", 0x73B530, 0x4
 	.global	gUnk_0873B534
 gUnk_0873B534:
@@ -4526,13 +4526,13 @@ gUnk_0873E220:
 	.incbin	"baserom.gba", 0x73E220, 0x44
 	.global	gStarRodPiecePalettes
 gStarRodPiecePalettes:
-	.word	gUnk_08334DD4
-	.word	gUnk_08334DF4
-	.word	gUnk_08334E14
-	.word	gUnk_08334E34
-	.word	gUnk_08334E54
-	.word	gUnk_08334E74
-	.word	gUnk_08334E94
+	.word	gStarRodPiecePalette0
+	.word	gStarRodPiecePalette1
+	.word	gStarRodPiecePalette2
+	.word	gStarRodPiecePalette3
+	.word	gStarRodPiecePalette4
+	.word	gStarRodPiecePalette5
+	.word	gStarRodPiecePalette6
 
 @ 0x0873E280-0x0873E284: C, row game_tbl_0873e280 (src/data/game_tables.c section .game_tbl_0873e280)
 

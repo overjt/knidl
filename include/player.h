@@ -44,7 +44,7 @@ struct PlayerBodyBox { u32 w[5]; };
 /* M11's per-player records */
 struct PlayerHitBoxSet { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
 
-/* gUnk_0873B510[]: a palette fade, src/dst palettes and the blend step */
+/* gPlayerActionBurningUpdatePaletteFades[]: a palette fade, src/dst palettes and the blend step */
 struct BurningPaletteFade
 {
     /*0x00*/ u16 *src;
@@ -110,7 +110,7 @@ extern u32 gUnk_081AC358[];
 extern u8 gUnk_081AC378[];
 extern u8 gUnk_081BBD70[];
 extern u8 gUnk_081BC050[];
-extern u8 gUnk_081BE45C[];
+extern u8 gPlayerLoadSparkTilesTiles[];
 extern u8 gUnk_081BE6BC[]; /* per-player palettes, 128 bytes each */
 extern u8 gUnk_081BFE38[];
 extern u8 gUnk_081CC328[];
@@ -121,14 +121,14 @@ extern u8 gUnk_081E1D0C[];
 extern u8 gUnk_081E43B4[];
 extern u8 gUnk_081EFD60[];
 extern u8 gUnk_081F1AE0[];
-extern u16 gUnk_081F59F0[];
+extern u16 gPlayerActionHiJumpUpdatePalette[];
 extern u8 gUnk_081F6CEC[];
 extern u8 gUnk_08200D08[];
-extern u16 gUnk_08203098[];
-extern u16 gUnk_082030B8[];
+extern u16 gPlayerActionCrashUpdatePalette[];
+extern u16 gPlayerActionCrashPalette[];
 extern u8 gUnk_082036D8[];
-extern u8 gUnk_08204B78[];
-extern u8 gUnk_08204B98[];
+extern u8 gPlayerObjectLightOrbPalette[];
+extern u8 gPlayerObjectLightOrbTiles[];
 extern u8 gUnk_082181F0[];
 extern u16 gUnk_08226254[];
 extern u32 gNightmarePowerOrbGfx[];
@@ -167,7 +167,7 @@ extern u32 gPlayerMotionXPresets[];
 extern u32 gPlayerMotionYPresets[];
 extern void (*gMetaKnightActions[])(void);
 extern void (*gMetaKnightActionHandlers[])(void);
-extern struct BurningPaletteFade gUnk_0873B510[];
+extern struct BurningPaletteFade gPlayerActionBurningUpdatePaletteFades[];
 extern u16 gUnk_0873B534[][32];
 extern u8 gUnk_0873B634[];
 extern s16 gUnk_0873B654[];

@@ -55,7 +55,7 @@ void EraseConfirmDialogUpdate(void)
         v->eraseConfirmDialogBlendRatio = 256;
     k = gMenuChoiceCursor * 2;
     x = gCurTask;
-    BlendColors(gUnk_08559BA4[k + x->eraseConfirmDialogBlendFrom], gUnk_08559BA4[k + x->eraseConfirmDialogBlendTo], (u16)x->eraseConfirmDialogBlendRatio, 16, gObjPaletteBank11);
+    BlendColors(gEraseConfirmDialogUpdatePalette[k + x->eraseConfirmDialogBlendFrom], gEraseConfirmDialogUpdatePalette[k + x->eraseConfirmDialogBlendTo], (u16)x->eraseConfirmDialogBlendRatio, 16, gObjPaletteBank11);
 }
 
 void Task_EraseFileWipe(void)
@@ -146,7 +146,7 @@ void SoundTestCursorsUpdate(void)
     if (v > 256)
         u->soundTestCursorsBlendRatio = 256;
     w = gCurTask;
-    BlendColors(gUnk_08564F38[w->soundTestCursorsBlendFrom], gUnk_08564F38[w->soundTestCursorsBlendTo], (u16)w->soundTestCursorsBlendRatio, 5, gObjPaletteBank12Color2);
+    BlendColors(gSoundTestCursorsUpdatePalette[w->soundTestCursorsBlendFrom], gSoundTestCursorsUpdatePalette[w->soundTestCursorsBlendTo], (u16)w->soundTestCursorsBlendRatio, 5, gObjPaletteBank12Color2);
 }
 
 void Task_SoundTestPulse(void)
@@ -188,9 +188,9 @@ void Task_SoundTestPulse(void)
         if (gMenuCursor == 0) {
             if ((s32)gMPlayTable[gSongTable[gSoundTestSelection[gMenuCursor]].ms].info->status >= 0) {
                 w = gCurTask;
-                BlendColors(gUnk_085634D8[w->soundTestPulseBlendFrom], gUnk_085634D8[w->soundTestPulseBlendTo], (u16)w->soundTestPulseBlendRatio, 16, gBgPaletteBank5[gMenuCursor]);
+                BlendColors(gSoundTestPulsePalette[w->soundTestPulseBlendFrom], gSoundTestPulsePalette[w->soundTestPulseBlendTo], (u16)w->soundTestPulseBlendRatio, 16, gBgPaletteBank5[gMenuCursor]);
             } else {
-                BlendColors(gUnk_085634D8[5], gUnk_085634D8[5], (u16)gCurTask->soundTestPulseBlendRatio, 16, gBgPaletteBank5[gMenuCursor]);
+                BlendColors(gSoundTestPulsePalette[5], gSoundTestPulsePalette[5], (u16)gCurTask->soundTestPulseBlendRatio, 16, gBgPaletteBank5[gMenuCursor]);
             }
         } else {
             if (gPressedKeys & 1) {
@@ -204,11 +204,11 @@ void Task_SoundTestPulse(void)
             }
             w = gCurTask;
             if (w->soundTestPulseActive != 0)
-                BlendColors(gUnk_085634D8[w->soundTestPulseBlendFrom], gUnk_085634D8[w->soundTestPulseBlendTo], (u16)w->soundTestPulseBlendRatio, 16, gBgPaletteBank5[gMenuCursor]);
+                BlendColors(gSoundTestPulsePalette[w->soundTestPulseBlendFrom], gSoundTestPulsePalette[w->soundTestPulseBlendTo], (u16)w->soundTestPulseBlendRatio, 16, gBgPaletteBank5[gMenuCursor]);
             else
-                BlendColors(gUnk_085634D8[5], gUnk_085634D8[5], (u16)w->soundTestPulseBlendRatio, 16, gBgPaletteBank5[gMenuCursor]);
+                BlendColors(gSoundTestPulsePalette[5], gSoundTestPulsePalette[5], (u16)w->soundTestPulseBlendRatio, 16, gBgPaletteBank5[gMenuCursor]);
         }
-        RequestCopy(2, (u32)&gUnk_085634D8[0][(gMenuCursor + 6) * 16], (u32)gBgPaletteBank5[(s8)(gMenuCursor ^ 1)], 32);
+        RequestCopy(2, (u32)&gSoundTestPulsePalette[0][(gMenuCursor + 6) * 16], (u32)gBgPaletteBank5[(s8)(gMenuCursor ^ 1)], 32);
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();

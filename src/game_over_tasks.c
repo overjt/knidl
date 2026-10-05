@@ -14,7 +14,7 @@
  *   Task_GameOverSprite   #260, a still sprite picked by Task.unk18.
  *   Task_GameOverCursor   #261, the cursor, its frame following gGameOverCursor.
  *   Task_GameOverPalette   #262, a palette effect: fade the blend in, then cycle four
- *       colours between two rows of gUnk_08584BB0.
+ *       colours between two rows of gGameOverPalettePalette.
  *   Task_HalveScore   #263, halve this player's score (rounded down to a
  *       multiple of ten) and count the displayed score down to it.
  *   Task_GameOverObject   #264: six variants gGameOverObjectVariants[Task.variant]; variant 0
@@ -62,7 +62,7 @@ void Task_GameOverCursor(void)
 }
 
 /* Task type #262 (class 4): fade the blend in over 32 frames, then cycle
-   four colours between two palettes of gUnk_08584BB0. */
+   four colours between two palettes of gGameOverPalettePalette. */
 void Task_GameOverPalette(void)
 {
     gCurTask->gameOverPaletteFadeTimer = 0;
@@ -91,7 +91,7 @@ void Task_GameOverPalette(void)
         gCurTask->gameOverPaletteBlend += 4;
         if (gCurTask->gameOverPaletteBlend > 256)
             gCurTask->gameOverPaletteBlend = 256;
-        BlendColors(gUnk_08584BB0[gCurTask->gameOverPaletteFrom], gUnk_08584BB0[gCurTask->gameOverPaletteTo],
+        BlendColors(gGameOverPalettePalette[gCurTask->gameOverPaletteFrom], gGameOverPalettePalette[gCurTask->gameOverPaletteTo],
             (u16)gCurTask->gameOverPaletteBlend, 4, gBgPaletteBank9);
         TaskYieldTrampoline(1);
     }

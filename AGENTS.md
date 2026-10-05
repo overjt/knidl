@@ -77,8 +77,8 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
 ## Status
 
 The state after #37 (the final audit, PR #171), its follow-ups
-#164-#170 and #182 (file names).  What each issue did, module by
-module, is [`docs/history.md`](docs/history.md).
+#164-#170, #182 (file names) and #183 (asset labels).  What each issue
+did, module by module, is [`docs/history.md`](docs/history.md).
 
 - **Code: complete.**  `make compare` passes (byte-identical to the USA
   ROM).  Everything from `AgbInit` (`0x08000310`) to `0x080CD89B` (the m4a
@@ -142,8 +142,9 @@ module, is [`docs/history.md`](docs/history.md).
   5,348 functions named (run 7: 4,597 by role, 340 by their state- or
   dispatch-table slot, docs/naming.md 2.4; a verb that fits two states
   now names both, with the qualifier the code proves, R1); `make
-  progress`: 14,208 of 34,017 symbols documented (41.77%; since #167 the
-  segment-name labels split.py writes are not counted); `struct Task`'s
+  progress`: 26,506 of 34,017 symbols documented (77.92%; 14,208 after
+  #155, 12,298 more by #183's asset labels; since #167 the segment-name
+  labels split.py writes are not counted); `struct Task`'s
   per-family registers and `PlayerState`'s per-action scratch are named
   by 1,186 alias macros in 205 families (`include/task_vars.h`,
   `tools/task_alias.py`, docs/header-conventions.md), 10,018 of the
@@ -158,8 +159,9 @@ module, is [`docs/history.md`](docs/history.md).
   and 92 header / 141 local `unk*` fields by their row in
   `docs/analysis/unnamed.csv`, the 2,263 functional ROM labels by their
   referrers (shared, reached through an unnamed record, read by one
-  function only), the asset labels by policy; `make audit` fails on a
-  placeholder without a reason (docs/naming.md section 5.1).  Three `Task`
+  function only), the 4,781 asset labels without one owner by their
+  chains (#183); `make audit` fails on a placeholder without a reason
+  (docs/naming.md section 5.1).  Three `Task`
   views (`u76`, `u80`, `u8C`).  Evidence per rename, alias and constant:
   `docs/analysis/renames.csv`, `docs/analysis/constants.csv`.
 - **File names: #182.**  The 300 `src/*.c` that were named
@@ -174,6 +176,25 @@ module, is [`docs/history.md`](docs/history.md).
   `docs/analysis/file-renames.csv`, which `make audit` checks
   (`tools/rename_tu.py`, audit check 7).  `main.c`, `agb_init.c`,
   `agb_sram.c` and `m4a_*.c` keep their names.
+- **Asset labels: #183.**  12,292 of the 17,073 asset labels (the
+  `gUnk_08*` of the asset segments: sprite sheets, compressed graphics,
+  room maps and metatiles, BG animation frames) are named after the record
+  that owns them, by the pointer chain alone (docs/naming.md 2.5, rules
+  A1-A5 with the coordinator's Q1-Q7; `tools/name_assets.py` builds the
+  chains from the committed tree): a frame table's slot is its frame
+  (`gBonkersFrame3`), a record's field its target (`gBonkersFrame3Tiles`),
+  a target shared within one owner the lowest slot or the owner's stem
+  (`gLevel6Stage5Bg2Tiles`), 46 code-only labels their one consumer and
+  the kind its call proves (`gGameOverLoadGraphicsPalette`), six loader
+  tables first named by their consumer.  5,024 under a semantic owner,
+  7,213 under a position owner, 9 by a format-only list.  The 4,781 left
+  have a computed reason (397 shared, 2,245 via an unnamed record, 1,877
+  via a word with no field name, 165 in a positional table, 10 no owner)
+  or, for 87 code-only labels, a row of `docs/analysis/unnamed.csv`
+  (`consumer-ambiguous`, `no-kind`); `make audit` fails on one the rules
+  would still name.  The data policy is unchanged: names only, the bytes
+  stay `.incbin` slices; `make assets` names its files after the labels
+  (10,253 of 15,621 changed name).
 - **Verification.**  CI ("Build and verify") always builds the image,
   compiles crt0 and `src/`, and runs `make check-headers`, `check-data` and
   `audit`; with a `baserom.gba` it also runs `make compare` (fails closed),
@@ -186,8 +207,13 @@ module, is [`docs/history.md`](docs/history.md).
   (docs/naming.md 5.1), so a later rename starts from a row of
   `docs/analysis/unnamed.csv` and removes it (an identity that gains a
   third source, a cell that gains a name, a state whose twin gains a
-  qualifier); the asset labels are #183's, next: named after the record
-  that owns them (#182, the file names, is done).  A natural form for
+  qualifier); #183 named the asset labels that one record owns, and the
+  rest follow their owners: the 2,245 behind the frame tables and player
+  frame records #155 left unnamed, the 1,877 behind a word no struct names
+  (a struct for the player's 20-byte frame record would name its second
+  palette and tiles; the 2D picture tables' tiles and map columns wait for
+  the BG layout presets as C, whose BGxCNT values prove the character and
+  screen bases).  A natural form for
   `BootLogoUpdateObjects` would still be welcome but is not tracked
   (lesson 3.527 says what it must do).
 - **Docs:** `docs/decomp-loop.md`, `docs/lessons-learned.md` (its "Start

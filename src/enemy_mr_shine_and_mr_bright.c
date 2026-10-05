@@ -1107,7 +1107,7 @@ void MrShineUpdatePalette(void)
         {
             if (t->mrShineAndMrBrightPaletteTimer <= 0)
             {
-                RequestCopy(2, gUnk_0874850C[t->mrShineAndMrBrightPaletteIndex],
+                RequestCopy(2, gMrShineUpdatePalettePalettes[t->mrShineAndMrBrightPaletteIndex],
                              (u32)(gObjPalette + ((t->tileWord >> 12) << 5)), 32);
                 t = gCurTask;
                 t->mrShineAndMrBrightPaletteTimer = 12;

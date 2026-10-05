@@ -139,12 +139,12 @@ void FileSelectCursorUpdate(void)
     if ((v->fileSelectCursorBlendRatio += 32) > 256)
         v->fileSelectCursorBlendRatio = 256;
     w = gCurTask;
-    BlendColors(gUnk_08554B60[w->fileSelectCursorBlendFrom], gUnk_08554B60[w->fileSelectCursorBlendTo], (u16)w->fileSelectCursorBlendRatio, 4, gObjPaletteBank15Color12);
+    BlendColors(gFileSelectCursorUpdatePalette[w->fileSelectCursorBlendFrom], gFileSelectCursorUpdatePalette[w->fileSelectCursorBlendTo], (u16)w->fileSelectCursorBlendRatio, 4, gObjPaletteBank15Color12);
     cur = gMenuCursor;
     if (cur != gCurTask->fileSelectCursorSavedCursor) {
         u8 *p;
-        RequestCopy(3, (u32)&gUnk_08550B9C[cur * 192], OBJ_VRAM0 + 0x3580, 96);
-        p = gUnk_08550B9C;
+        RequestCopy(3, (u32)&gFileSelectCursorUpdateTiles[cur * 192], OBJ_VRAM0 + 0x3580, 96);
+        p = gFileSelectCursorUpdateTiles;
         RequestCopy(3, (u32)&p[gMenuCursor * 192 + 96], OBJ_VRAM0 + 0x3980, 96);
         gCurTask->fileSelectCursorSavedCursor = gMenuCursor;
     }

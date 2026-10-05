@@ -54,9 +54,9 @@ extern struct RoomParticle gRoomParticles[];
 
 /* ROM */
 extern u32 gUnk_080D21C8[];
-extern u32 gUnk_0824A9CC[];
+extern u32 gMetaKnightWarpStarRideDrawOamTemplate[];
 extern u32 gUnk_0825D2C8[];
-extern u32 gUnk_085E6FA4[];
+extern u32 gNightmarePowerOrbEscapePalette[];
 extern u32 gUnk_085E6FE4[];
 extern u32 gUnk_085E72D4[];
 extern struct GfxHeader *const gCutsceneSheets[];

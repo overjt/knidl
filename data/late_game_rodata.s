@@ -194,12 +194,12 @@ gQuickDrawRankBonuses:
 	.global	gQuickDrawDefeatBonuses
 gQuickDrawDefeatBonuses:
 	.incbin	"baserom.gba", 0x75651C, 0xC
-	.global	gUnk_08756528
-gUnk_08756528:
-	.word	gUnk_085FE468
-	.word	gUnk_085FE488
-	.word	gUnk_085FE4A8
-	.word	gUnk_085FE4C8
+	.global	gBombRallySeatPlayersPalettes
+gBombRallySeatPlayersPalettes:
+	.word	gBombRallySeatPlayersPalette0
+	.word	gBombRallySeatPlayersPalette1
+	.word	gBombRallySeatPlayersPalette2
+	.word	gBombRallySeatPlayersPalette3
 	.global	gUnk_08756538
 gUnk_08756538:
 	.incbin	"baserom.gba", 0x756538, 0x8
@@ -691,22 +691,22 @@ gUnk_08758374:
 	.incbin	"baserom.gba", 0x758374, 0x40
 	.global	gCreditsTextPages
 gCreditsTextPages:
-	.word	gUnk_0859D3AC
-	.word	gUnk_0859D514
-	.word	gUnk_0859D6D0
-	.word	gUnk_0859D88C
-	.word	gUnk_0859DA3C
-	.word	gUnk_0859DBF0
+	.word	gCreditsTextPage0
+	.word	gCreditsTextPage1
+	.word	gCreditsTextPage2
+	.word	gCreditsTextPage3
+	.word	gCreditsTextPage4
+	.word	gCreditsTextPage5
 	.global	gCreditsDemoRecordings
 gCreditsDemoRecordings:
-	.word	gUnk_0859DDCC
-	.word	gUnk_0859DFBC
-	.word	gUnk_0859E18C
-	.word	gUnk_0859E364
-	.word	gUnk_0859E52C
-	.word	gUnk_0859E6EC
-	.word	gUnk_0859E868
-	.word	gUnk_0859EA14
+	.word	gCreditsDemoRecording0
+	.word	gCreditsDemoRecording1
+	.word	gCreditsDemoRecording2
+	.word	gCreditsDemoRecording3
+	.word	gCreditsDemoRecording4
+	.word	gCreditsDemoRecording5
+	.word	gCreditsDemoRecording6
+	.word	gCreditsDemoRecording7
 	.word	gCreditsDemoRecording8
 	.word	gCreditsDemoRecording9
 	.word	gCreditsDemoRecording10

@@ -408,7 +408,8 @@ records and frame lists (seg 19, `player_frame_records`,
 table in `src/data/` reaches by slot are named after that slot, by a
 script, in their own commits.  A format-only chain (no code reads it;
 #161's `"proof": "format"`) may be named the same way; the census counts
-it apart.  Asset labels stay unnamed (section 5).
+it apart.  Asset labels are named after the record that owns them
+(section 2.5).
 
 **Records by consumer** (run 7).  A ROM record whose every use is one
 engine API's argument - stored in `Task.frameTable`, passed to
@@ -446,6 +447,122 @@ https://wikirby.com/wiki/Kirby:_Nightmare_in_Dream_Land).  Level 7's
 stage 0 holds the Nightmare Power Orb and Nightmare Wizard rooms and its
 stage 1 three rooms with Kracko, Whispy Woods and King Dedede; level 8
 spawns no boss.  What levels 7 and 8 are in the game is not proven here.
+
+### 2.5 Asset labels named after their owner (#183)
+
+The labels of the asset segments (`"asset": true` in
+`tools/split_config.json`, docs/data.md 4: sprite sheets, compressed
+graphics, room maps and metatiles, BG animation frames) name graphics,
+palettes, OAM template streams, tilemaps and tile frames.  #155 left them as
+placeholders because no code reads an asset: the code passes the pointer
+of a record that owns it (a frame table's `struct TaskGfx`, a RoomDef, a BG
+animation command) to a loader.  The data policy forbids committing asset
+**bytes**, not naming their **labels** (section 5): a name is an identifier
+for an address of the user's own `baserom.gba` slice, and `make assets`
+names its files after it (docs/assets.md).  #183 names every asset label
+that has one owner after that owner, by the pointer chain alone, with
+`tools/name_assets.py` (section 6).
+
+The **owner** is the named record whose consumer-proven word points at the
+label, directly or through records these rules name first (a frame table
+-> its `TaskGfx` record -> the record's OAM template, palette and tiles).
+The rules (the owner's coordinator approved them for #183 with the
+decisions Q1-Q7 folded in):
+
+- **A1, a slot of a named table** takes the table's name, singular, plus
+  the slot's 0-based index in decimal, as the code indexes it:
+  `gBonkersFrames[3]` -> `gBonkersFrame3` (the `gPlayerFrames` ->
+  `gPlayerFrame1537` precedent of 2.4).  A list's entry drops `List`
+  (`gMrTickTockGfxFrameList[13]` -> `gMrTickTockGfxFrame13`).  A table
+  whose own name is a position (it ends in its index: `gEnemyPaletteVariant0`,
+  `gBombRallyPlayerFrame0`, the seat-0 frames) has no singular, and its
+  targets keep the placeholder with the reason `positional-table` (Q4):
+  never `gBombRallyPlayerFrame0Frame3`.
+- **A2, a field of a named record** is `<Record><Field>`, the field in
+  PascalCase from the C struct (the RoomDef rule of 2.4):
+  `gBonkersFrame3OamTemplate`, `gBonkersFrame3Palette`,
+  `gBonkersFrame3Tiles`; a field of slot k of a struct array is
+  `<Table singular><k><Field>` (`gCutsceneSheets[1].palette` ->
+  `gCutsceneSheet1Palette`).  A field still named `unkNN` / `fillerNN`, or
+  a word the struct does not declare, keeps the placeholder with the reason
+  `via-unnamed-field`: the fields census names fields, not this rule.  The
+  player's 20-byte frame records hold a second palette and tiles at +0xC
+  and +0x10 that `struct TaskGfx` (three fields) does not declare
+  (PlayerLoadFrameTilesAndPalette reads them by pointer arithmetic,
+  `src/player_helpers.c`), so their targets stay (Q7; a struct for the
+  player's frame record is a candidate for later).  Two forms follow from
+  the consumer, with its line in the evidence:
+  - **BG animation commands** (Q2): op 0's `ptr` is the `struct
+    BgAnimTileFrame` that `BgAnimCopyTiles(cmd->ptr)` copies
+    (`src/camera_bg_anims.c`), named
+    `gRoomBgAnimSet<N>Script<I>Cmd<K>TileFrame`, the pattern #155 gave op
+    1's `...Cmd<K>PaletteFade`; K is the command's index (`cmdIndex`).
+  - **Columns of a 2D table** (Q3): `u32 gExtraModeTitlePictures[][3]` has
+    no field, so a column's kind (`Palette`, `Tiles`, `Map`, `OamTemplate`)
+    is named only when the API the consumer passes that column to proves
+    it (a copy to palette RAM, an LZ77 decompression to a character base or
+    to a screen base the code sets, `QueueSprite`'s template argument):
+    `<row A1><Kind>`, `gExtraModeTitlePicture6Palette`.  A column whose use
+    proves no kind keeps its placeholder (the tiles and map columns of
+    these tables: which VRAM offset is a character or a screen base comes
+    from the BG layout presets, `.incbin` data no source line spells).  No struct and no type change:
+    names only.
+- **A3, shared within one owner.**  When every referrer belongs to ONE
+  named owner, the target is named after it: slots of one table take the
+  lowest slot (`gBonkersFrame0` for slots 0, 1, 2, 31, 32 and 33), every
+  slot listed in the evidence; a field target that several records of one
+  family share (the records one table's slots hold) takes
+  `<OwnerStem><Field>`, the stem being the table's name without its kind
+  word (`gPlayerObjectWaterShotFrames` -> `gPlayerObjectWaterShotPalette`),
+  only when the family has that one target of the field (Q5).  When the
+  family has several, each takes the A2 name of its lowest-slot record
+  (`gBonkersFrame0Palette`, `gBonkersFrame12Palette`), every record in the
+  evidence.  Referrers that span owners keep the placeholder (`shared`),
+  except when the owners' names share a whole identity stem (a `Task_<X>`
+  family, 2.3: `gMetaKnight...`) and that identity has one target of the
+  field: `g<Identity><Field>`.  Never a partial word, never a stem the
+  identities do not prove.
+- **A4, position owners give position names**, counted apart: an owner that
+  is a position name (`gPlayerFrame189`, the RoomDef slots,
+  `gRoomBgAnimSet<N>Script<I>`) or a table whose slots are position names
+  (`gPlayerFrames`, `gEnemyGfx`, `gRoomTable`, Q7) names its targets by
+  A1-A3 (`gPlayerFrame189Tiles`; the BG2 tiles every room of a stage
+  shares, `gLevel6Stage5Bg2Tiles`).
+- **A5, loader tables.**  A label reached only through a generic loader's
+  table takes A1 (and Q3) names when the table is a named functional
+  record.  An unnamed table whose one consumer is a named function that
+  proves its role may be named first by 2.4's records by consumer
+  (`g<Consumer><Kind>`, its own commit and evidence row); otherwise the
+  target keeps the placeholder (`via-unnamed`).
+- **Code only** (Q6, 2.4's records by consumer applied to assets): a label
+  that no record points at and exactly one named function references is
+  `g<Consumer><Kind>` when the call it is passed to proves the kind
+  (`Palette`, `Tiles`, `Map`, `OamTemplate`), the consumer without `Task_`
+  and a trailing `Init` (run 7).  Several of one kind in that function are
+  told apart only by a destination the code proves (`BgPalette` /
+  `ObjPalette`, `BgTiles` / `ObjTiles`, `Bg<N>Tiles`); if they cannot be,
+  they keep the placeholder (`consumer-ambiguous`), and a call that proves
+  no kind keeps it too (`no-kind`).  A `sub_*` consumer leaves it
+  `no-owner`, and two consuming functions make it `shared`.
+- **Format-only words** (Q1): a word of a format-only structure (the frame
+  lists and the GfxHeader trailers, docs/data.md 5.3: no code reads them) is
+  not an owner when a consumer-proven word points at the same label; the
+  evidence cites it (`also format-only gWaddleDeeGfxFrameList[5]`).  Only a
+  label that format-only words alone point at is named by them, and the
+  census counts it as format-only.
+- **The chain only.**  Names come from the pointer chain the census proves,
+  never from what a picture shows (that would need 2.3's three agreeing
+  sources).  Renders are not needed; one made to sanity-check a chain stays
+  in `pending/`.
+
+The evidence (`renames.csv` rows of kind `asset`) is the chain from the
+named owner, its file and the rule: `slot: gBonkersFrames[3] ->
+TaskGfx.tiles (src/data/frame_tables.c); docs/naming.md 2.5 A2`.  What
+stays a placeholder has its reason in the audit's census (5.1), computed by
+`tools/name_assets.py` from the same chains: `shared`, `via-unnamed`,
+`via-unnamed-field`, `positional-table`, `no-owner`, and for the code-only
+labels a row of `docs/analysis/unnamed.csv` (`consumer-ambiguous`,
+`no-kind`).
 
 ## 3. Words with a fixed meaning
 
@@ -499,7 +616,7 @@ Several tags can be combined (`public: ...; role: ...`).  "The name is
 obvious", "the model inferred it", a visual resemblance or a matching build
 are not evidence.
 
-## 5. When to keep `sub_` / `gUnk_`, and what stays unnamed by design
+## 5. When to keep `sub_` / `gUnk_`, and what stays unnamed
 
 **Shared scratch** (run 5, the owner's decision D3).  A cell proven to be
 shared scratch - several unrelated users, and no value survives from one
@@ -526,10 +643,15 @@ Unnamed by design, for #37's audit:
   named per family by the aliases) and the fields whose role no reader
   proves; each one's reason is its row in `docs/analysis/unnamed.csv`
   (section 5.1);
-- **assets** (graphics, palettes, tilemaps, samples, songs, level maps):
-  their labels in `data/*.s` keep address names until a consumer's role
-  gives them one (`docs/data.md`), and the data policy (AGENTS.md) still
-  holds - naming a label never commits its bytes;
+- **asset labels without one owner** (graphics, palettes, tilemaps, OAM
+  templates, level maps): #183 named every asset label that one record
+  owns after that record (section 2.5); the data policy (AGENTS.md) still
+  holds - naming a label never commits its bytes, only the label's
+  identifier changes.  The labels left keep their address names for a
+  reason the census computes from the same chains (section 5.1): their
+  referrers span owners, they are reached only through an unnamed record,
+  the owner's word has no field name, the owning table's name is a
+  position, or no named record owns them;
 - **census placeholders that are not symbols in C**: `loc_XXXXXXXX` branch
   labels, split-only labels in `asm/rom_syms.s`, and the dead SDK exports
   that nothing references and no reference names;
@@ -566,9 +688,17 @@ says which twin, which unnamed input or which callers; the census groups by
 the code.  The functional ROM labels are classed by their referrers
 instead, mechanically (shared; reached only through an unnamed referrer;
 read by one function only; one slot of a named record; unreferenced), and
-only those that several named functions read need a row.  The audit fails
-on a placeholder with no row ("not examined" is not a reason), on a row
-whose symbol was renamed, and on an unknown code.  The codes:
+only those that several named functions read need a row.  The asset labels
+(#183) are classed by `tools/name_assets.py` from their owner chains,
+mechanically too: a named one by its owner (semantic, position,
+format-only, or by its one consumer: renames.csv rows of kind `asset`), a
+placeholder by its reason (`shared`, `via-unnamed`, `via-unnamed-field`,
+`positional-table`, `no-owner`); only a label that one named function's
+code alone mentions needs a row (`consumer-ambiguous`, `no-kind`), and the
+audit fails on an asset placeholder that the section 2.5 rules would still
+name.  The audit fails on a placeholder with no row ("not examined" is not
+a reason), on a row whose symbol was renamed, and on an unknown code.  The
+codes:
 
 | code | the placeholder stays because |
 |---|---|
@@ -585,7 +715,8 @@ whose symbol was renamed, and on an unknown code.  The codes:
 | `write-only` | written but never read, or only cleared |
 | `never-accessed` | no code reads or writes it |
 | `unproven-bits` | a flag word whose bits are not all proven (R3) |
-| `asset` | a graphic, palette, tilemap or text picture: out of #155 by the data policy |
+| `consumer-ambiguous` | an asset label only one named function's code mentions, which loads several of its kind that no destination the code proves tells apart (2.5) |
+| `no-kind` | an asset label only one named function's code mentions, passed to a call that proves no kind (2.5) |
 
 <!-- audit:placeholders:begin (generated by tools/audit.py --write; do not edit) -->
 
@@ -608,14 +739,25 @@ whose symbol was renamed, and on an unknown code.  The codes:
 | RAM cell | `gUnk_02*`, `gUnk_03*` | 3 | the name needs an identity (enemy, object, picture, scene) with fewer than three agreeing sources (docs/naming.md 2.3) |
 | I/O register | `gUnk_04*` | 0 | none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and link_block_main.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_* |
 | ROM label | `gUnk_08*` | 717 | shared: two or more slots, records or consumers point at it, so no single slot or role is its identity (docs/naming.md section 2.4) |
-| ROM label | `gUnk_08*` | 683 | reached only through a record or consumer that is itself unnamed (a `gUnk_` record, a `sub_*`): it is named with that referrer |
-| ROM label | `gUnk_08*` | 793 | read by one function only: its meaning is local to that function's algorithm, as for RAM cells (docs/naming.md section 5) |
+| ROM label | `gUnk_08*` | 609 | reached only through a record or consumer that is itself unnamed (a `gUnk_` record, a `sub_*`): it is named with that referrer |
+| ROM label | `gUnk_08*` | 74 | one slot of a named record holds it and nothing else names it; its position name waits for the slot's word (docs/naming.md section 2.4) |
+| ROM label | `gUnk_08*` | 787 | read by one function only: its meaning is local to that function's algorithm, as for RAM cells (docs/naming.md section 5) |
 | ROM label | `gUnk_08*` | 1 | no code or record names it: a record boundary the data census cut, reached by an offset from a named neighbour |
-| ROM label | `gUnk_08*` | 17073 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
+| ROM label | `gUnk_08*` | 397 | asset label whose referrers span owners: records of several tables or stages, or records and code, or several functions (docs/naming.md 2.5 A3) |
+| ROM label | `gUnk_08*` | 2245 | asset label reached only through an unnamed record or a `sub_*` (a functional `gUnk_` table, a frame table or player frame record #155 left unnamed): it is named with that referrer |
+| ROM label | `gUnk_08*` | 1877 | asset label its owner points at through a word with no field name: a struct field still `unkNN`, a word the struct does not declare (the player's 20-byte frame records' +0xC/+0x10), or a 2D table column whose kind no consumer proves (docs/naming.md 2.5 A2) |
+| ROM label | `gUnk_08*` | 165 | asset label in a slot of a table whose own name is a position (it ends in its index, gEnemyPaletteVariant0), so A1 has no singular (docs/naming.md 2.5 Q4) |
+| ROM label | `gUnk_08*` | 10 | asset label no record points at: unreferenced, or only a `sub_*` function's code names it (docs/naming.md 2.5) |
+| ROM label | `gUnk_08*` | 71 | an asset label only its one named consumer's code mentions, which loads several of its kind that no destination the code proves tells apart (docs/naming.md 2.5) |
+| ROM label | `gUnk_08*` | 15 | an asset label only its one named consumer's code mentions, and the call it is passed to proves no kind (Palette, Tiles, Map, OamTemplate) (docs/naming.md 2.5) |
+| ROM label | (named) | 5024 | asset label named after a semantic owner: the named record whose consumer-proven word points at it, by the pointer chain (docs/naming.md 2.5 A1-A3) |
+| ROM label | (named) | 7213 | asset label named after a position owner: a position record or a table whose slots are position names, such as gPlayerFrame189, a RoomDef or a BG animation script (docs/naming.md 2.5 A4) |
+| ROM label | (named) | 9 | asset label named by a format-only frame list alone: no code reads the list (docs/naming.md 2.5 Q1, docs/data.md 5.3) |
+| ROM label | (named) | 46 | asset label no record points at, named by its one consuming function and the kind its call proves (docs/naming.md 2.5, code only) |
 | ROM label | (named) | 5336 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
 | ROM label | (named) | 60 | documented by position in a format-only chain: a slot no code reads, such as the frame list a graphics descriptor's trailer word points at (docs/naming.md section 2.4, docs/data.md 5.3) |
 | ROM label | `gUnk_08*` | 30 | no defined verb or noun fits the whole of it; only an ordinal or a vague word would (docs/naming.md 1) |
-| ROM label | `gUnk_08*` | 14 | its role rests on a cell, field or value that stays unnamed (the row names it) |
+| ROM label | `gUnk_08*` | 15 | its role rests on a cell, field or value that stays unnamed (the row names it) |
 | ROM label | `gUnk_08*` | 12 | the name needs an identity (enemy, object, picture, scene) with fewer than three agreeing sources (docs/naming.md 2.3) |
 | ROM label | `gUnk_08*` | 7 | two encodings or meanings that no single noun covers (docs/naming.md 5) |
 | ROM label | `gUnk_08*` | 5 | several unrelated jobs chosen by a parameter or a sub-state; no one role |
@@ -633,7 +775,7 @@ whose symbol was renamed, and on an unknown code.  The codes:
 | struct field | `unk*` | 1 | a flag word whose bits are not all proven (docs/naming.md 7.0, R3) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 518 RAM cells by role and 24 by position, 3317 ROM labels by role and 5396 by position.
+Named for comparison: 518 RAM cells by role and 24 by position, 3323 ROM labels by role and 5396 by position; 12292 asset labels by their owner (#183, docs/naming.md 2.5): 5024 semantic, 7213 position, 9 format-only, 46 by consumer.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 
@@ -704,8 +846,9 @@ tools/rename.py --verify-diff master       # the branch is a pure rename
 ```
 
 A batch CSV has the header `old,new,kind,evidence` (optional `issue`);
-`kind` is `function`, `ram`, `io`, `rom`, `const` or `tag` (a struct or
-union tag, run 6) and is checked against the address.  `--locals CSV`
+`kind` is `function`, `ram`, `io`, `rom`, `asset` (a ROM label inside an
+asset segment, named after its owner: section 2.5, #183), `const` or `tag`
+(a struct or union tag, run 6) and is checked against the address.  `--locals CSV`
 (`file,function,old,new,evidence`) renames locals inside their function
 (section 7.1).  The tool refuses a name that is not a C identifier, is a
 keyword, uses a placeholder prefix, breaks the style of section 2 (unless
@@ -809,6 +952,32 @@ constant's.  A mechanical family (`FAMILIES` in the tool: the call
 arguments, struct members, variables and arrays whose values belong to one
 enumeration) gives its sites with `--scan`, which also counts the literals
 left at those positions for the audit.  Section 7 has the rules.
+
+### 6.4 Asset labels by owner: `tools/name_assets.py` (#183)
+
+```sh
+tools/name_assets.py                        # dry run: proposals per rule, owner and batch, reasons left
+tools/name_assets.py --list                 # every proposal with its evidence, every reason
+tools/name_assets.py --root gBonkersFrames --list   # one owner's chain
+tools/name_assets.py --batch frames --csv b.csv     # frames, pictures, rooms, bganims, player
+tools/rename.py --csv b.csv --issue 183 --write     # kind `asset`
+make symbols && make split && make modmap && make clean && make compare
+python3 tools/audit.py --write              # the census follows
+```
+
+The tool reads the committed tree only.  It builds the reference graph
+with offsets (every symbolic `.word` of `data/*.s` at its offset inside its
+label, every leaf of the C initializers, every function that mentions a
+label), types each referrer (its definition or extern declaration, the
+pointee of the typed table that points at it, or a word array for a pointer
+list), takes the struct layouts from the `/*0xNN*/` comments, and decides
+each asset placeholder once all its referrers are settled, so a chain is
+named from its owner down in one run (section 2.5).  The proposals are a
+batch for `tools/rename.py`; run on a tree where they are applied, it
+proposes nothing, and `make audit` fails if it would (the census is
+`Model.census()`).  The names a reviewer chose by a consumer's call (the
+code-only labels, the columns of a 2D table, a loader table named first)
+are applied as their own `rename.py` batches, with the line as evidence.
 
 ## 7. Named constants (run 6 of #155)
 

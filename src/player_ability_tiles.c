@@ -17,7 +17,7 @@
  * VRAM transfer queue RequestCopy; ability 0 also queues its palette
  * gUnk_081AC358 into OBJ palette slot (Task.tileWord >> 12) + 1.  Cases
  * with the same row layout share one body in the ROM (cross-jumping).
- * PlayerLoadSparkTiles uploads ability 2's tiles gUnk_081BE45C at +0x100, and
+ * PlayerLoadSparkTiles uploads ability 2's tiles gPlayerLoadSparkTilesTiles at +0x100, and
  * again at +0x180 when gInHub is set. */
 
 void RequestCopy(u32 mode, void *src, void *dst, u32 size);   /* main_copy_queue; effect_goal_game_dance's pointer spelling */
@@ -126,7 +126,7 @@ void PlayerLoadSparkTiles(void)
     u32 off = (t->tileWord & 0x7FF) << 5;
 
     if (t->player->ability == ABILITY_SPARK) {
-        u8 *src = gUnk_081BE45C;
+        u8 *src = gPlayerLoadSparkTilesTiles;
         RequestCopy(1, src, (void *)(off + (OBJ_VRAM0 + 0x100)), 128);
         RequestCopy(1, src + 128, (void *)(off + (OBJ_VRAM0 + 0x500)), 128);
         RequestCopy(1, src + 256, (void *)(off + (OBJ_VRAM0 + 0x900)), 128);

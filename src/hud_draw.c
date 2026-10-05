@@ -40,7 +40,7 @@ void HudRedrawClock(void)
 void HudDrawLevelName(void)
 {
     HudLoadLevelName(gCurLevel);
-    HudDrawTiles(gUnk_085A5654, 0, 0, 64);
+    HudDrawTiles(gHudDrawLevelNameMap, 0, 0, 64);
 }
 
 void HudDrawPlayerIcon(s32 a)
@@ -236,7 +236,7 @@ void HudDrawAbilityPanel(s32 n)
     if (gHudMode == 1) {
         for (i = 0; i < n; i = j) {
             j = i + 1;
-            HudDrawTiles(gUnk_085A6F68[n - j], 0, 19 - i, 5);
+            HudDrawTiles(gHudDrawAbilityPanelMap[n - j], 0, 19 - i, 5);
         }
         for (i = n; i <= 5; i++)
             HudClearTiles(0, 19 - i, 5);
@@ -246,8 +246,8 @@ void HudDrawAbilityPanel(s32 n)
 void HudDrawHpBarFrame(void)
 {
     if (gHudMode == 1) {
-        HudDrawTiles(gUnk_085A6FC8, 20, 18, 10);
-        HudDrawTiles(gUnk_085A6FC8 + 10, 20, 19, 10);
+        HudDrawTiles(gHudDrawHpBarFrameMap, 20, 18, 10);
+        HudDrawTiles(gHudDrawHpBarFrameMap + 10, 20, 19, 10);
     }
 }
 

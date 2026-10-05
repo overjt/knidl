@@ -227,10 +227,10 @@ void ModePlayerCountPanelUpdate(void)
     if (gMenuScreen == 5) {
         k = gMenuChoiceCursor * 2;
         w = gCurTask;
-        BlendColors(gUnk_0855D334[k + w->modePlayerCountPanelBlendFrom], gUnk_0855D334[k + w->modePlayerCountPanelBlendTo], (u16)w->modePlayerCountPanelBlendRatio, 16, gObjPaletteBank7);
+        BlendColors(gModePlayerCountPanelUpdatePalette[k + w->modePlayerCountPanelBlendFrom], gModePlayerCountPanelUpdatePalette[k + w->modePlayerCountPanelBlendTo], (u16)w->modePlayerCountPanelBlendRatio, 16, gObjPaletteBank7);
         MenuLoadPicture(4, gMenuCursor * 2 + gMenuChoiceCursor);
     } else {
-        BlendColors((u16 *)gUnk_0855D334 + (gMenuChoiceCursor + 4) * 16, (u16 *)gUnk_0855D334 + (gMenuChoiceCursor + 4) * 16, (u16)gCurTask->modePlayerCountPanelBlendRatio, 16, gObjPaletteBank7);
+        BlendColors((u16 *)gModePlayerCountPanelUpdatePalette + (gMenuChoiceCursor + 4) * 16, (u16 *)gModePlayerCountPanelUpdatePalette + (gMenuChoiceCursor + 4) * 16, (u16)gCurTask->modePlayerCountPanelBlendRatio, 16, gObjPaletteBank7);
     }
 }
 
