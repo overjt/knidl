@@ -502,8 +502,10 @@ decisions Q1-Q7 folded in):
     is named only when the API the consumer passes that column to proves
     it (a copy to palette RAM, an LZ77 decompression to a character base or
     to a screen base the code sets, `QueueSprite`'s template argument):
-    `<row A1><Kind>`, `gExtraModeTitlePicture6Tiles`.  A column whose use
-    proves no kind keeps its placeholder.  No struct and no type change:
+    `<row A1><Kind>`, `gExtraModeTitlePicture6Palette`.  A column whose use
+    proves no kind keeps its placeholder (the tiles and map columns of
+    these tables: which VRAM offset is a character or a screen base comes
+    from the BG layout presets, `.incbin` data no source line spells).  No struct and no type change:
     names only.
 - **A3, shared within one owner.**  When every referrer belongs to ONE
   named owner, the target is named after it: slots of one table take the
@@ -541,7 +543,7 @@ decisions Q1-Q7 folded in):
   `ObjPalette`, `BgTiles` / `ObjTiles`, `Bg<N>Tiles`); if they cannot be,
   they keep the placeholder (`consumer-ambiguous`), and a call that proves
   no kind keeps it too (`no-kind`).  A `sub_*` consumer leaves it
-  `no-owner`.
+  `no-owner`, and two consuming functions make it `shared`.
 - **Format-only words** (Q1): a word of a format-only structure (the frame
   lists and the GfxHeader trailers, docs/data.md 5.3: no code reads them) is
   not an owner when a consumer-proven word points at the same label; the
@@ -950,6 +952,32 @@ constant's.  A mechanical family (`FAMILIES` in the tool: the call
 arguments, struct members, variables and arrays whose values belong to one
 enumeration) gives its sites with `--scan`, which also counts the literals
 left at those positions for the audit.  Section 7 has the rules.
+
+### 6.4 Asset labels by owner: `tools/name_assets.py` (#183)
+
+```sh
+tools/name_assets.py                        # dry run: proposals per rule, owner and batch, reasons left
+tools/name_assets.py --list                 # every proposal with its evidence, every reason
+tools/name_assets.py --root gBonkersFrames --list   # one owner's chain
+tools/name_assets.py --batch frames --csv b.csv     # frames, pictures, rooms, bganims, player
+tools/rename.py --csv b.csv --issue 183 --write     # kind `asset`
+make symbols && make split && make modmap && make clean && make compare
+python3 tools/audit.py --write              # the census follows
+```
+
+The tool reads the committed tree only.  It builds the reference graph
+with offsets (every symbolic `.word` of `data/*.s` at its offset inside its
+label, every leaf of the C initializers, every function that mentions a
+label), types each referrer (its definition or extern declaration, the
+pointee of the typed table that points at it, or a word array for a pointer
+list), takes the struct layouts from the `/*0xNN*/` comments, and decides
+each asset placeholder once all its referrers are settled, so a chain is
+named from its owner down in one run (section 2.5).  The proposals are a
+batch for `tools/rename.py`; run on a tree where they are applied, it
+proposes nothing, and `make audit` fails if it would (the census is
+`Model.census()`).  The names a reviewer chose by a consumer's call (the
+code-only labels, the columns of a 2D table, a loader table named first)
+are applied as their own `rename.py` batches, with the line as evidence.
 
 ## 7. Named constants (run 6 of #155)
 

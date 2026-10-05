@@ -1212,3 +1212,45 @@ moved the record here; `AGENTS.md`'s `## Status` stays the current state.
   `make split` and `make modmap` unchanged (`module-map.csv`'s two rows
   named after the symbol-named files regenerated), `make shifttest`
   unchanged.  New lessons 3.531 and 4.177.
+- Asset labels (issue #183): **every asset label that one record owns is
+  named after that record**, by the pointer chain alone.  The 17,073
+  `gUnk_08*` labels of the asset segments had been left as placeholders by
+  #155 (no code reads an asset) and listed as "unnamed by policy", which
+  the data policy never said: it forbids committing asset bytes, not
+  naming their labels.  `tools/name_assets.py` builds the reference graph
+  with offsets from the committed tree (every symbolic `.word` of
+  `data/*.s` at its offset, every C initializer leaf, every code mention,
+  the referrers' declared types and struct layouts) and decides each label
+  once its referrers are settled; docs/naming.md 2.5 has the rules
+  (A1-A5 with the coordinator's decisions Q1-Q7): a slot of a named table
+  is the table's singular plus the index (`gBonkersFrames[3]` ->
+  `gBonkersFrame3`), a field of a named record its name plus the field
+  (`gBonkersFrame3OamTemplate`, `...Palette`, `...Tiles`), a target shared
+  within one owner the lowest slot, or the owner's stem when it is the
+  owner's only target of that field (`gLevel6Stage5Bg2Tiles`), a BG
+  animation command's tile frame `...Cmd<K>TileFrame` after #155's
+  `...Cmd<K>PaletteFade`, a 2D picture table's palette column by the
+  consumer's copy to palette RAM, and a code-only label by its one
+  consumer and the kind its call proves (`gGameOverLoadGraphicsPalette`);
+  a format-only frame list is no owner beside a consumer-proven word.
+  12,292 named (5,024 under a semantic owner, 7,213 under a position
+  owner: the player's frame records, the RoomDefs, the BG animation
+  scripts; 9 by a format-only list; 46 by their consumer), in seven
+  batches by owner kind, plus six loader tables named first by their
+  consumer (`gCutsceneLoadBgGraphicsPictures`...).  Two review agents
+  proposed the code-only kinds and one the loader tables; the coordinator
+  kept the names whose proof is a source line (not the BG layout presets'
+  `.incbin` BGxCNT values).  `tools/audit.py`'s census classes every asset
+  label the same way: named by its owner, or kept with a computed reason
+  (397 shared, 2,245 via an unnamed record, 1,877 via a word with no
+  field name, 165 in a positional table, 10 no owner) or, for 87 code-only
+  labels, a `docs/analysis/unnamed.csv` row (`consumer-ambiguous`,
+  `no-kind`); it fails on an asset placeholder the rules would still name.
+  `tools/rename.py` gained the kind `asset` and a matcher that scales to
+  thousands of names.  `make progress`: 14,208 -> 26,506 of 34,017
+  symbols documented (41.77% -> 77.92%).  No byte moved: `make compare`
+  after every batch, `tools/rename.py --verify-diff` over the branch,
+  `make shifttest` and `make datastats` unchanged; `make assets` names
+  10,253 of its 15,621 files differently, and a fresh tree passes
+  `assets-check`, `assets-mod-check` and `assets-selftest`.  New lessons
+  4.178-4.179.

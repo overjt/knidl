@@ -65,7 +65,7 @@ for the game and labeled assembly for the runtime zones kept as asm by
 design (each its own `[asm]` unit there, docs/decomp-dev.md). It measures
 code only; naming and data readability are the figures below.
 
-<!-- Figures from `make progress` after #180; refresh after any asm, naming or data change. -->
+<!-- Figures from `make progress` after #183; refresh after any asm, naming or data change. -->
 
 ```
 851196 total bytes of code
@@ -76,8 +76,8 @@ code only; naming and data readability are the figures below.
         4168 bytes excluded from decompilation tracking
 
 34017 total symbols
-    14208 symbols documented (41.7674%)
-    19809 symbols undocumented (58.2326%)
+    26506 symbols documented (77.9199%)
+    7511 symbols undocumented (22.0801%)
 
 7537432 total bytes of data
     95640 bytes of data in src (1.2689%)
@@ -110,24 +110,32 @@ code only; naming and data readability are the figures below.
   headers, the actor records and seg 18's handler tables). Assets are never committed
   ([docs/data.md](docs/data.md)). The shift test proves the ROM movable and
   the boot test runs it moved (see "For modders").
-- **Names** (#155, closed). 4,937 of the 5,348 functions and 265 of the 266
-  task bodies have real names, each with its evidence in
+- **Names** (#155, closed; #183). 4,937 of the 5,348 functions and 265 of
+  the 266 task bodies have real names, each with its evidence in
   `docs/analysis/renames.csv` (convention: [docs/naming.md](docs/naming.md)).
-  14,208 symbols are documented: semantic names and position names (data
+  26,506 symbols are documented: semantic names and position names (data
   records, palette-buffer cells, the player's frame records, and state
-  bodies and scripts named after their slot in a state or dispatch table).
+  bodies and scripts named after their slot in a state or dispatch table),
+  and since #183 12,292 asset labels named after the record that owns
+  them, by the pointer chain alone: `gBonkersFrames[3]` is the `TaskGfx`
+  record `gBonkersFrame3`, whose OAM template, palette and tiles are
+  `gBonkersFrame3OamTemplate`, `...Palette` and `...Tiles` (5,024 under a
+  semantic owner, 7,213 under a position owner such as `gPlayerFrame189`,
+  a RoomDef or a BG animation script, 55 by a frame list or their one
+  consumer). `make assets` names its files after them.
   `struct Task`'s per-family registers and the player's per-action scratch
   read by name through 1,186 alias macros (`include/task_vars.h`, as
   pret's `#define tState data[0]`), and the code spells its magic numbers
   and flag bits as 1,571 named constants (`include/constants/`, as in pret
   and katam: `CreateChildTaskHere(TASK_FIRE_LION_FLAME, 0)`,
   `ActorSetState(FIRE_LION_STATE_POUNCE)`, `t->spriteFlags &=
-  ~SPRITE_FLAG_FLIP_X`). Most of the undocumented symbols are ROM data
-  labels, 17,073 of them asset labels that stay unnamed by policy; every
-  other placeholder left (411 `sub_*` functions, 62 RAM cells, the
-  `unk*` fields and the functional ROM labels) has its reason in
-  `docs/analysis/unnamed.csv` or in its referrers, and `make audit` keeps
-  that census in [docs/naming.md](docs/naming.md) section 5.1.
+  ~SPRITE_FLAG_FLIP_X`). Every placeholder left has its reason: the 411
+  `sub_*` functions, 62 RAM cells and the `unk*` fields in
+  `docs/analysis/unnamed.csv`, the functional ROM labels in their
+  referrers, and the 4,781 asset labels without one owner in their chains
+  (shared by several owners, reached through an unnamed record, or pointed
+  at by a word with no field name); `make audit` keeps that census in
+  [docs/naming.md](docs/naming.md) section 5.1.
 - **File names** (#182). The source files are named after what they hold,
   `<subsystem>_<content>.c` in a flat `src/` (`src/enemy_fire_lion.c`,
   `src/actor_defeat.c`, `src/player_ladder_inhale.c`, `src/task.c`;
