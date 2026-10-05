@@ -1266,7 +1266,7 @@ s32 CreateChildActor(struct ActorSpawn *p)
         t->actorKind = ACTOR_KIND_CHILD;
         t->u76.subtype = p->subtype;
         t->variant = p->variant;
-        t->unk74 = p->spawnArg;
+        t->actorSpawnArg = p->spawnArg;
         t->pixelX = p->x;
         t->pixelY = p->y;
         t->posX = p->x << 16;
@@ -1454,7 +1454,7 @@ s32 CreateItemOrObject(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
             t->actorKind = ACTOR_KIND_OBJECT;
         t->u76.subtype = sub;
         t->variant = 0;
-        t->unk74 = p2;
+        t->actorSpawnArg = p2;
         t->pixelX = x;
         t->pixelY = y;
         t->posX = x << 16;
@@ -1519,7 +1519,7 @@ s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
         t->actorKind = cls;
         t->u76.subtype = sub;
         t->variant = p3;
-        t->unk74 = p4;
+        t->actorSpawnArg = p4;
         t->pixelX = x;
         t->pixelY = y;
         t->posX = x << 16;

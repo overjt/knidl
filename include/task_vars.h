@@ -461,16 +461,39 @@
    Task_GoalGameBigTrailStar) */
 #define goalGameBigTrailStarLoopCount unk6C /* s16: the task's loop counter (frame runs), counted from 0 */
 
+/* GoalGameCamera - the goal game's camera (task type #90,
+   Task_GoalGameCamera) */
+#define goalGameCameraPlayerSlot unk28 /* s32: the player slot the camera follows (-1 for the local player's own path) */
+#define goalGameCameraOffsetY unk2C /* s32: y offset added to the camera focus after a switch of player, eased to 0 by 4 px a frame */
+
 /* GoalGameHelperKirby - the goal game's helper Kirby (task type #86,
    Task_GoalGameHelperKirby; created by Task_GoalGameSign) */
+#define goalGameHelperKirbyTimer unk24 /* s32: frames since the helper started (counted every update); the 1-ups sync to it */
+#define goalGameHelperKirbyIndex unk28 /* s32: the helper's index among the goal game's helpers; picks its OBJ tiles */
+#define goalGameHelperKirbyPlayerMask unk2C /* s32: bit per player on the top layer whose lane the helper still has to pass */
+#define goalGameHelperKirbyLaneCount unk30 /* s32: number of players on the top layer: the row of gGoalGameLaneX the lanes are read from */
+#define goalGameHelperKirbyLaneIndex unk34 /* s32: the next lane to pass: laneCount - 1 counted down per lane passed */
+#define goalGameHelperKirbyOneUpSlot unk46 /* s16: task slot of the last 1-up (TASK_GOAL_GAME_ONE_UP) the helper created */
 #define goalGameHelperKirbyLoopCount unk6C /* s16: the task's loop counter (frame runs, the player slots), counted from 0 */
+#define goalGameHelperKirbyLoopCount6E unk6E /* s16: inner loop over the players in the 1-up shower (LoopCount's role in unk6E) */
+#define goalGameHelperKirbyLayer unk74 /* u8: the layer the helper belongs to: 0 the top layer's run, else its sign's layer */
 
 /* GoalGameLaunchStars - the goal game's launch stars (task type #81,
    Task_GoalGameLaunchStars) */
 #define goalGameLaunchStarsLoopCount unk6C /* s16: the task's loop counter (frame runs), counted from 0 */
 
+/* GoalGameOneUp - the goal game's 1-up (task type #89, Task_GoalGameOneUp;
+   created by the helper Kirby) */
+#define goalGameOneUpDelay unk24 /* s32: frames the 1-up waits (half before rising, half after): 44 - the helper's timer */
+#define goalGameOneUpPlayer unk2C /* s32: the player slot that gets the life (AddPlayerLives(1, it)) */
+#define goalGameOneUpLaneCount unk30 /* s32: the helper's lane count, the row of gGoalGameLaneX the 1-up starts at */
+#define goalGameOneUpLaneIndex unk34 /* s32: the helper's lane index, the column of gGoalGameLaneX the 1-up starts at */
+
 /* GoalGameSign - the goal game's score sign (task type #85,
    Task_GoalGameSign) */
+#define goalGameSignWaiting unk28 /* s32: 1 while the sign waits for another task to clear it (a player, the helper Kirby) */
+#define goalGameSignIncomingMask unk2C /* s32: bit per player bound for the sign's layer that has not landed yet; the sign waits for 0 */
+#define goalGameSignHelperKirbySlot unk46 /* s16: task slot of the helper Kirby the sign creates; the sign follows it */
 #define goalGameSignLoopCount unk6C /* s16: the task's loop counter (frame runs), counted from 0 */
 
 /* GoalGameSmallTrailStar - the goal game's small trail star (task type #83,
@@ -787,9 +810,12 @@
 #define metaKnightFollowTimer unk1C /* s32: frames left in state 1 (follow) before MetaKnightPickNextState picks the next state */
 #define metaKnightWalkAnimFlags unk20 /* s32: for the walk-frame loop MetaKnightAnimateWalk: bit 1 fast step delays, bit 0 hold the frame */
 #define metaKnightFollowPhase unk24 /* s32: state 1's step: 0 walk to the spot by the player, 1 move with the player, 2 stand */
+#define metaKnightDefeatTargetX unk28 /* s32: Meta Knight's defeat hop: the screen x he hops to (128, or 64 / 176) */
 #define metaKnightGuardFlags unk28 /* s32: guard rolls: bit 7 set by each state change, bits 0-1 rolls left after damage */
+#define metaKnightDefeatHopDistance unk2C /* s32: Meta Knight's defeat hop: half the distance to the target x; sets the hop's upward speed */
 #define metaKnightTargetPlayerSlot unk2C /* s32: task slot of the player state 1 last followed (TaskFindNearestPlayer); -1 at init */
 #define metaKnightAttackBoxIndex unk30 /* s32: index into gUnk_08748D38, the attack box set each frame; -1 = none (intro, defeat) */
+#define metaKnightDefeatScreenX unk30 /* s32: Meta Knight's defeat hop: his screen x when he landed */
 #define metaKnightFollowFlags unk34 /* s32: state-1 flags: bit 0 stopped at a room edge, bits 1-2 keep the side (no near-player pick) */
 #define metaKnightLoopCount unk6C /* s16: iterations of the running state's loop: frame steps, spins (SwordSpin), speed steps */
 #define metaKnightSpinFrameCount unk6E /* s16: frame steps done in one spin of MetaKnightSwordSpin (0-6) */
@@ -1127,6 +1153,7 @@
 #define playerHeldNextCaptor unk18 /* s32: slot of the task that called SetHeldPlayerState; the spit flight makes it the parent */
 #define playerLifeRequestCursor unk18 /* s32: Life request: the cursor row (state 0: the two choices; state 1: the giver list) */
 #define playerShareReceiver unk18 /* s32: Share item: the player index that receives the shared item, in both partners' tasks */
+#define playerWarpStarScale unk18 /* s32: Warp Star rider: its copy of the star's warpStarScale (scale; -1 or <= -2 other draws) */
 #define playerCannonFocusX unk1C /* s32: Cannon: pixelX as of this frame's state update, the camera focus while it follows */
 #define playerLifeGiver unk1C /* s32: Life request: the player index asked for a life (its gLifeRequests entry targets this one) */
 #define playerBallBumpVelY unk20 /* s32: Ball: velY when it bumped a ceiling (bumpKind 1); the bump pose sends it back down at -it */
@@ -1153,6 +1180,7 @@
 #define playerCannonPoseTimer unk28 /* s32: Cannon, loaded: frames to the next pose step (1) */
 #define playerCatchBlockDelay unk28 /* s32: Inhale / Throw: frames (1) before the catch box may break a block (TaskBreakFirstBlock) */
 #define playerCrashBlendRatio unk28 /* s32: Crash: BlendColors ratio of the palette flash (0-256; +85 in the body, +10 in the update) */
+#define playerCrossingGap unk28 /* s32: Run: 1 from a one-cell gap (overGap) until it lands; the fall check is skipped meanwhile */
 #define playerDuckDropTimer unk28 /* s32: Duck: frames (8) of ducking on a floor gTerrainResult.unk5 marks before it drops through */
 #define playerGoalGameSpringSlot unk28 /* s32: Goal game: the task index of the player's spring (TASK_GOAL_GAME_SPRING) */
 #define playerHeldBaseFrame unk28 /* s32: frame the captor-pose states start from (0x11C1 or 0x133, by PlayerState.mouthState) */
@@ -1213,6 +1241,7 @@
 #define playerThrowCaught unk30 /* s32: Throw: 1 once something is attached and the catch offset script has started */
 #define playerTumbleFrame unk30 /* s32: tumble: the frame 0-15 of gPlayerTumbleFrames[ability] shown (starts at 13, wraps) */
 #define playerUfoChargeSfxTimer unk30 /* s32: UFO charge: low half frames to the next charge sound, high half sounds played (203-206) */
+#define playerWheelCrossingGap unk30 /* s32: Wheel: the same gap flag as playerCrossingGap, in unk30 */
 #define playerAttackEndFacing unk34 /* s32: Sword / Hammer: facing the air swing ends with (start facing; Hammer: last held side) */
 #define playerBallSkidDustSlot unk34 /* s32: Ball skid: task slot of its skid dust effect, stopped when the skid ends */
 #define playerCannonRiderCount unk34 /* s32: Cannon launch: how many players the cannon launched together (cannonRiderCount) */
@@ -1240,6 +1269,7 @@
 #define playerLoopCount6E unk6E /* s16: a second loop counter (the inner one when unk6C counts the outer), counted from 0 */
 #define playerActionDone unk70 /* s16: Ball / Star Rod: 1 once the action's body has finished; its update then hands over */
 #define playerCannonSmokeTimer unk70 /* s16: Cannon flight: frames (8) to the next cannon smoke puff */
+#define playerGoalGameFlightFrames unk70 /* u16: Goal game: -1 before the launch, 0 at the press, then frames of the launch flight */
 #define playerNextBankBlendRatio unk70 /* s16: Spark: ratio 0-256 (+64 a step) blending the next palette bank to its charged colours */
 #define playerUfoCutIn unk70 /* s16: UFO: an attack's end: 0 playing, 1 A / B or a direction may cut in, 2 done (state 1: 1) */
 #define playerBallEnterDoor unk74 /* u8: Ball: 1 when a door was found; the revert shakes the screen, then requests the door entry */
@@ -1260,6 +1290,9 @@
 /* PlayerObject - the player's objects (task type #6, Task_PlayerObject;
    gPlayerObjectVariants: air puff, spit stars, breath, beams ...) */
 #define playerObjectSpawnWord unk18 /* s32: variant << 24 | the spawner's 24-bit argument; the low bits pick the object's form */
+#define playerObjectBreathStopped unk28 /* s32: Fire / Ice breath: 1 once the player left the breath (mode 13) or turned; the puffs stop */
+#define playerObjectLaserDir unk28 /* s32: Laser beam: its direction 0-3 (1 right, 3 left), the row of gUnk_0873B7B0; slopes turn it */
+#define playerObjectLaserBounces unk2C /* s32: Laser beam: slope bounces left (3); at 0 the next slope ends the beam */
 #define playerObjectLoopCount unk6C /* s16: the object's loop counter (frame steps), counted from 0; the step reads its tables by it */
 
 /* PlayerState - PlayerState - the player's struct PlayerState (Task.player);

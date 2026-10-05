@@ -102,8 +102,8 @@ void PlayerWarpStarRideDraw(void)
         return;
     dx = t->pixelX - gSpriteCameraX;
     dy = t->pixelY - gSpriteCameraY;
-    v = gTasks[t->parent].unk18;
-    t->unk18 = v;
+    v = gTasks[t->parent].warpStarScale;
+    t->playerWarpStarScale = v;
     if (v <= -2)
         return;
     if (v == -1)
@@ -111,7 +111,7 @@ void PlayerWarpStarRideDraw(void)
     else
         t->tileWord &= 0xF3FF;
     u = gCurTask;
-    if (u->unk18 > 0)
+    if (u->playerWarpStarScale > 0)
     {
         sign = (u->spriteFlags & SPRITE_FLAG_FLIP_X) ? -1 : 1;
         u->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
@@ -386,7 +386,7 @@ void PlayerBoardWarpStar(u32 a, s32 b)
             e->frame = tbl[k];
             p->unk37 = 0;
             t = gCurTask;
-            if (t->unk74 == 0)
+            if (t->actorSpawnArg == 0)
             {
                 if ((s8)gWarpStarFlightFacings[WarpStarPickFlightSlot(gCurTaskIdx)] == 1)
                     e->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
@@ -395,7 +395,7 @@ void PlayerBoardWarpStar(u32 a, s32 b)
             }
             else
             {
-                if ((s8)gWarpStarFlightFacings[t->unk74] == 1)
+                if ((s8)gWarpStarFlightFacings[t->actorSpawnArg] == 1)
                     e->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
                 else
                     e->spriteFlags |= SPRITE_FLAG_FLIP_X;
@@ -450,10 +450,10 @@ void MetaKnightWarpStarRideInit(void)
                  gUnk_0824A9E4.tileCount << 5);
     v = gCurTask;
     v->parent = gWarpStarRideSlot;
-    if (gTasks[i = v->parent].unk74 == 0)
+    if (gTasks[i = v->parent].actorSpawnArg == 0)
         gCurTask->facing = gWarpStarFlightFacings[WarpStarPickFlightSlot(i)];
     else
-        v->facing = gWarpStarFlightFacings[gTasks[i].unk74];
+        v->facing = gWarpStarFlightFacings[gTasks[i].actorSpawnArg];
     w = gCurTask;
     w->state = META_KNIGHT_WARP_STAR_RIDE_STATE_2;
     CallTableEntry(gCurTask->state, 7, gMetaKnightWarpStarRideStates);

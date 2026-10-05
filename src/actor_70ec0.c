@@ -54,8 +54,8 @@ void MetaKnightWarpStarRideDraw(void)
     t = gCurTask;
     dx = t->pixelX - gSpriteCameraX;
     dy = t->pixelY - gSpriteCameraY;
-    v = gTasks[t->parent].unk18;
-    t->unk18 = v;
+    v = gTasks[t->parent].warpStarScale;
+    t->playerWarpStarScale = v;
     if (v <= -2)
         return;
     if (v == -1)
@@ -63,13 +63,13 @@ void MetaKnightWarpStarRideDraw(void)
     else
         t->tileWord &= 0xF3FF;
     u = gCurTask;
-    if (u->unk18 > 0)
+    if (u->playerWarpStarScale > 0)
     {
         sign = (u->spriteFlags & SPRITE_FLAG_FLIP_X) ? -1 : 1;
         u->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         gfx = DrawAffineSprite((s32)gUnk_0824A9CC,
-                           (u16)gSpriteScaleSteps[u->unk18 >> 16] * sign,
-                           gSpriteScaleSteps[u->unk18 >> 16], 0);
+                           (u16)gSpriteScaleSteps[u->playerWarpStarScale >> 16] * sign,
+                           gSpriteScaleSteps[u->playerWarpStarScale >> 16], 0);
         if (sign < 0)
             gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     }

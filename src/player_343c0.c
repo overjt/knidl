@@ -37,7 +37,7 @@ void PlayerActionRun(void)
     gCurTask->player->mode = 2;
     gCurTask->updateState = PLAYER_ACTION_HANDLER_RUN;
     t = gCurTask;
-    t->unk28 = 0;
+    t->playerCrossingGap = 0;
     t->unk2C = -1;
     PlayerSetMotionXPreset(3, 72);
     if (gCurTask->player->prevMode != 2)
@@ -145,13 +145,13 @@ void PlayerActionRunUpdate(void)
     s32 m3;
 
     t = gCurTask;
-    if (t->unk28 == 0)
+    if (t->playerCrossingGap == 0)
     {
         m2 = gTerrainResult.overGap;
         if (m2 != 0)
         {
             t->player->playerOverGapTimer = 5;
-            t->unk28 = 1;
+            t->playerCrossingGap = 1;
         }
         else
         {
@@ -175,12 +175,12 @@ void PlayerActionRunUpdate(void)
     t = gCurTask;
     if ((t->onGround & 1) != 0 || (t->player->boundsClamp & 3) != 0)
     {
-        t->unk28 = 0;
+        t->playerCrossingGap = 0;
         t->player->playerOverGapTimer = 0;
     }
     while (PlayerCheckSkid() == 0 && PlayerCheckJump() == 0)
     {
-        if (gCurTask->unk28 == 0 && PlayerCheckFallOrWater() != 0)
+        if (gCurTask->playerCrossingGap == 0 && PlayerCheckFallOrWater() != 0)
             break;
         if (PlayerCheckEnterDoor() != 0)
             break;

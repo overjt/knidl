@@ -47,7 +47,7 @@ void PlayerObjectIceBreath(void)
         struct Task *t = gCurTask;
         t->moveCallback = (u32)TaskMove;
         t->updateCallback = (u32)PlayerObjectIceBreathUpdate;
-        t->unk28 = 0;
+        t->playerObjectBreathStopped = 0;
         t->u80.attackAbility = ABILITY_ICE;
     }
     {
@@ -64,7 +64,7 @@ void PlayerObjectIceBreath(void)
                 u->frame = 0xFFFF;
             }
             TaskYieldTrampoline(8);
-            while (gCurTask->unk28 == 0)
+            while (gCurTask->playerObjectBreathStopped == 0)
             {
                 {
                     s16 d = RandomSpreadFacing(24, 1, 8);
@@ -84,7 +84,7 @@ void PlayerObjectIceBreath(void)
                 }
                 gCurTask->frame += 2;
                 TaskYieldTrampoline(1);
-                if (gCurTask->unk28 != 0)
+                if (gCurTask->playerObjectBreathStopped != 0)
                     break;
                 {
                     s16 d = RandomSpreadFacing(24, 1, 8);
@@ -147,7 +147,7 @@ void PlayerObjectIceBreath(void)
                 TaskYieldTrampoline(2);
                 gCurTask->frame++;
                 TaskYieldTrampoline(1);
-            } while (gCurTask->unk28 == 0);
+            } while (gCurTask->playerObjectBreathStopped == 0);
             break;
         }
     }
@@ -189,10 +189,10 @@ void PlayerObjectIceBreathUpdate(void)
     }
     {
         struct Task *u = gCurTask;
-        if (u->unk28 == 0)
+        if (u->playerObjectBreathStopped == 0)
         {
             if (u->player->mode != 13 || u->facing != (u->u8C.parentTask)->facing)
-                u->unk28 = 1;
+                u->playerObjectBreathStopped = 1;
         }
     }
 }

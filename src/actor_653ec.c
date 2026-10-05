@@ -1516,7 +1516,7 @@ void ActorDropParasolOnLanding(u32 def)
 
     t = gCurTask;
     a = t->u8C.actor;
-    if (a->extraFrame != -1 && t->unk74 != 2)
+    if (a->extraFrame != -1 && t->actorSpawnArg != 2)
         ActorDropParasol(def, 1);
 }
 
@@ -1629,7 +1629,7 @@ void CreateDroppedParasol(u8 a)
     s16 x;
     s16 y;
 
-    if (gCurTask->unk74 == 1)
+    if (gCurTask->actorSpawnArg == 1)
         kind = 1;
     else
         kind = 0;

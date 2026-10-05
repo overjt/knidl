@@ -182,7 +182,7 @@ void PlayerObjectFireBreath(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskMove;
     t->updateCallback = (u32)PlayerObjectFireBreathUpdate;
-    t->unk28 = 0;
+    t->playerObjectBreathStopped = 0;
     t->u80.attackAbility = ABILITY_FIRE;
     t = gCurTask;
     switch (t->playerObjectSpawnWord & 15)
@@ -197,7 +197,7 @@ void PlayerObjectFireBreath(void)
             u->frame = 0xFFFF;
         }
         TaskYieldTrampoline(18);
-        while (gCurTask->unk28 == 0)
+        while (gCurTask->playerObjectBreathStopped == 0)
         {
             gCurTask->posX = (RandomSpreadFacing(24, 1, 8) + (gCurTask->u8C.parentTask)->pixelX) << 16;
             gCurTask->posY = (RandomSpread(0, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
@@ -213,7 +213,7 @@ void PlayerObjectFireBreath(void)
             }
             gCurTask->frame += 2;
             TaskYieldTrampoline(1);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerObjectBreathStopped != 0)
                 break;
             gCurTask->posX = (RandomSpreadFacing(24, 1, 8) + (gCurTask->u8C.parentTask)->pixelX) << 16;
             gCurTask->posY = (RandomSpread(0, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
@@ -273,7 +273,7 @@ void PlayerObjectFireBreath(void)
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-        } while (gCurTask->unk28 == 0);
+        } while (gCurTask->playerObjectBreathStopped == 0);
         break;
     }
     TaskExitTrampoline();
@@ -311,10 +311,10 @@ void PlayerObjectFireBreathUpdate(void)
     }
     {
         struct Task *t = gCurTask;
-        if (t->unk28 == 0)
+        if (t->playerObjectBreathStopped == 0)
         {
             if (t->player->mode != 13 || t->facing != (t->u8C.parentTask)->facing)
-                t->unk28 = 1;
+                t->playerObjectBreathStopped = 1;
         }
     }
 }
@@ -490,18 +490,18 @@ void PlayerObjectLaserBeam(void)
             if (t->facing == 1)
             {
                 t->posX = ((t->u8C.parentTask)->pixelX + 6) << 16;
-                t->unk28 = 1;
+                t->playerObjectLaserDir = 1;
             }
             else
             {
                 t->posX = ((t->u8C.parentTask)->pixelX - 6) << 16;
-                t->unk28 = 3;
+                t->playerObjectLaserDir = 3;
             }
         }
         {
             struct Task *t = gCurTask;
             t->posY = ((t->u8C.parentTask)->pixelY + 2) << 16;
-            t->unk2C = 3;
+            t->playerObjectLaserBounces = 3;
         }
         TaskInitWaterFlags();
         sub_0802233c(gPlayerObjectLaserTerrainBox);
@@ -524,8 +524,8 @@ void PlayerObjectLaserBeam(void)
     {
         struct Task *t = gCurTask;
         s32 v;
-        e = gUnk_0873B7B0[t->unk28];
-        if (t->unk28 == 1 || t->unk28 == 3)
+        e = gUnk_0873B7B0[t->playerObjectLaserDir];
+        if (t->playerObjectLaserDir == 1 || t->playerObjectLaserDir == 3)
         {
             v = e[1] << 8;
             if (e[1] & 0x8000)
@@ -562,7 +562,7 @@ void PlayerObjectLaserBeamUpdate(void)
         goto rebind;
     hit = 0;
     gTerrainResult.unk2 = 0;
-    switch (gCurTask->unk28)
+    switch (gCurTask->playerObjectLaserDir)
     {
     case 1:
     case 3:
@@ -588,7 +588,7 @@ void PlayerObjectLaserBeamUpdate(void)
     if (gTerrainResult.slope != 0)
     {
         struct Task *t = gCurTask;
-        if (t->unk2C-- == 0)
+        if (t->playerObjectLaserBounces-- == 0)
             t->hitKind = 1;
         else if (t->player->ability == ABILITY_LASER)
             TaskSetEntry(PlayerObjectLaserBeam, gCurTaskIdx);
@@ -616,7 +616,7 @@ void PlayerObjectLaserBeamUpdate(void)
                     PlaySfxIfLocalPlayer(211, t->parent);
             }
         }
-        switch (gCurTask->unk28)
+        switch (gCurTask->playerObjectLaserDir)
         {
         case 1:
         case 3:
@@ -637,7 +637,7 @@ void PlayerObjectLaserBeamUpdate(void)
     switch (gTerrainResult.slope)
     {
     case 0:
-        switch (gCurTask->unk28)
+        switch (gCurTask->playerObjectLaserDir)
         {
         case 1:
         case 3:
@@ -651,31 +651,31 @@ void PlayerObjectLaserBeamUpdate(void)
         break;
     case 1:
     case 3:
-        if (gCurTask->unk28 == 1)
-            gCurTask->unk28 = 0;
-        else if (gCurTask->unk28 == 2)
-            gCurTask->unk28 = 3;
+        if (gCurTask->playerObjectLaserDir == 1)
+            gCurTask->playerObjectLaserDir = 0;
+        else if (gCurTask->playerObjectLaserDir == 2)
+            gCurTask->playerObjectLaserDir = 3;
         break;
     case 2:
     case 4:
-        if (gCurTask->unk28 == 3)
-            gCurTask->unk28 = 0;
-        else if (gCurTask->unk28 == 2)
-            gCurTask->unk28 = 1;
+        if (gCurTask->playerObjectLaserDir == 3)
+            gCurTask->playerObjectLaserDir = 0;
+        else if (gCurTask->playerObjectLaserDir == 2)
+            gCurTask->playerObjectLaserDir = 1;
         break;
     case 6:
     case 8:
-        if (gCurTask->unk28 == 3)
-            gCurTask->unk28 = 2;
-        else if (gCurTask->unk28 == 0)
-            gCurTask->unk28 = 1;
+        if (gCurTask->playerObjectLaserDir == 3)
+            gCurTask->playerObjectLaserDir = 2;
+        else if (gCurTask->playerObjectLaserDir == 0)
+            gCurTask->playerObjectLaserDir = 1;
         break;
     case 5:
     case 7:
-        if (gCurTask->unk28 == 1)
-            gCurTask->unk28 = 2;
-        else if (gCurTask->unk28 == 0)
-            gCurTask->unk28 = 3;
+        if (gCurTask->playerObjectLaserDir == 1)
+            gCurTask->playerObjectLaserDir = 2;
+        else if (gCurTask->playerObjectLaserDir == 0)
+            gCurTask->playerObjectLaserDir = 3;
         break;
     }
 }

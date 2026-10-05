@@ -1394,22 +1394,22 @@ void sub_080a7438(void)
     sp.checkTerrain = 0;
     CreateActorFromDescHere(&sp, 1);
     TaskGetScreenPosSlot(gCurTaskIdx);
-    gCurTask->unk30 = gUnk_030023B4;
+    gCurTask->metaKnightDefeatScreenX = gUnk_030023B4;
     TaskGetNearestPlayerScreenPos();
     if ((u32)(gUnk_030023B4 - 88) > 64)
-        gCurTask->unk28 = 128;
-    else if (gCurTask->unk30 <= 127)
-        gCurTask->unk28 = 64;
+        gCurTask->metaKnightDefeatTargetX = 128;
+    else if (gCurTask->metaKnightDefeatScreenX <= 127)
+        gCurTask->metaKnightDefeatTargetX = 64;
     else
-        gCurTask->unk28 = 176;
-    if (gCurTask->unk30 < gCurTask->unk28)
+        gCurTask->metaKnightDefeatTargetX = 176;
+    if (gCurTask->metaKnightDefeatScreenX < gCurTask->metaKnightDefeatTargetX)
         gCurTask->facing = 1;
     else
         gCurTask->facing = -1;
     TaskSetMotionXFacing(128 << 10, 0x5A5A5A5A);
     TaskSetFrame(21);
-    gCurTask->unk2C = abs(gCurTask->unk30 - gCurTask->unk28) >> 1;
-    TaskSetMotionY(-((gCurTask->unk2C >> 1) << 13), 128 << 6, 192 << 10);
+    gCurTask->metaKnightDefeatHopDistance = abs(gCurTask->metaKnightDefeatScreenX - gCurTask->metaKnightDefeatTargetX) >> 1;
+    TaskSetMotionY(-((gCurTask->metaKnightDefeatHopDistance >> 1) << 13), 128 << 6, 192 << 10);
     if (gCurTask->velY == 0)
         gCurTask->velY = -0x10000;
     gCurTask->onGround = 0;
@@ -1431,15 +1431,15 @@ void sub_080a75c8(void)
     struct Task *t;
 
     gCurTask->updateState = META_KNIGHT_DEFEATED_STATE_1;
-    gCurTask->unk6C = 0;
+    gCurTask->metaKnightLoopCount = 0;
     do
     {
         TaskSetFrame(23);
         TaskYieldTrampoline(2);
         TaskSetFrame(21);
         TaskYieldTrampoline(14);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->metaKnightLoopCount++;
+    } while ((s16)gCurTask->metaKnightLoopCount <= 1);
     t = gCurTask;
     CreateChildTask(TASK_META_KNIGHT_MASK, (s16)(t->pixelX - t->facing * 2), (s16)(t->pixelY - 1), t->u8C.actor->savedTileWord);
     TaskSetFrame(24);
@@ -1466,13 +1466,13 @@ void sub_080a75c8(void)
     gCurTask->accelY = 128 << 7;
     gCurTask->frame++;
     TaskYieldTrampoline(10);
-    gCurTask->unk6C = 0;
+    gCurTask->metaKnightLoopCount = 0;
     do
     {
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 6);
+        gCurTask->metaKnightLoopCount++;
+    } while ((s16)gCurTask->metaKnightLoopCount <= 6);
     gCurTask->frame++;
     TaskYieldTrampoline(9);
     TaskStop();
@@ -1492,22 +1492,22 @@ void sub_080a75c8(void)
     TaskYieldTrampoline(1);
     TaskSetFrame(45);
     TaskYieldTrampoline(1);
-    gCurTask->unk6C = 0;
+    gCurTask->metaKnightLoopCount = 0;
     do
     {
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->metaKnightLoopCount++;
+    } while ((s16)gCurTask->metaKnightLoopCount <= 1);
     gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk6C = 0;
+    gCurTask->metaKnightLoopCount = 0;
     do
     {
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 7);
+        gCurTask->metaKnightLoopCount++;
+    } while ((s16)gCurTask->metaKnightLoopCount <= 7);
     gCurTask->frame--;
     TaskYieldTrampoline(2);
     TaskSetFrame(57);

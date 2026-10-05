@@ -673,10 +673,10 @@ void PlayerWarpStarRideInit(void)
     u->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     u->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     u->parent = gWarpStarRideSlot;
-    if (gTasks[u->parent].unk74 == 0)
+    if (gTasks[u->parent].actorSpawnArg == 0)
         gCurTask->facing = gWarpStarFlightFacings[WarpStarPickFlightSlot(u->parent)];
     else
-        u->facing = gWarpStarFlightFacings[gTasks[u->parent].unk74];
+        u->facing = gWarpStarFlightFacings[gTasks[u->parent].actorSpawnArg];
     v = gCurTask;
     v->state = 2;
     CallTableEntry(gCurTask->state, 8, gPlayerWarpStarRideStates);
