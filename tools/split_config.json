@@ -34791,7 +34791,7 @@
             "0x10"
           ]
         },
-        "why": "the player's struct TaskGfx: PlayerLoadFrameTilesAndPalette (src/player_helpers.c:479-541) reads {oamTemplate, palette, tiles}; bit 0 of .oamTemplate tags the 20-byte variant with a second {palette, tiles} pair at +0xC/+0x10 (either may be NULL, as may .palette) and it queues oamTemplate & ~1"
+        "why": "the player's struct TaskGfx: PlayerLoadFrameTilesAndPalette (src/player_helpers.c:483-547) reads {oamTemplate, palette, tiles}; bit 0 of .oamTemplate tags the 20-byte struct TaskGfxExtended (include/task.h), whose nextBankPalette and upperTiles at +0xC/+0x10 (either may be NULL, as may .palette) it copies to the next OBJ palette bank and 0x800 bytes after the frame's tiles, and it queues oamTemplate & ~1"
       }
     },
     {
@@ -36057,7 +36057,7 @@
             "0x10"
           ]
         },
-        "why": "the player's struct TaskGfx: PlayerLoadFrameTilesAndPalette (src/player_helpers.c:479-541) reads {oamTemplate, palette, tiles}; bit 0 of .oamTemplate tags the 20-byte variant with a second {palette, tiles} pair at +0xC/+0x10 (either may be NULL, as may .palette) and it queues oamTemplate & ~1"
+        "why": "the player's struct TaskGfx: PlayerLoadFrameTilesAndPalette (src/player_helpers.c:483-547) reads {oamTemplate, palette, tiles}; bit 0 of .oamTemplate tags the 20-byte struct TaskGfxExtended (include/task.h), whose nextBankPalette and upperTiles at +0xC/+0x10 (either may be NULL, as may .palette) it copies to the next OBJ palette bank and 0x800 bytes after the frame's tiles, and it queues oamTemplate & ~1"
       }
     },
     {

@@ -1665,12 +1665,17 @@ void GoalGameHelperKirbyInitSprite(s32 a0, s32 a1)
     gCurTask->frameTable = gPlayerFrames;
 }
 
+/* Draw a player frame (gPlayerFrames) with its palette and tiles, the lower
+   half of an extended record only (struct TaskGfxExtended: nextBankPalette
+   and upperTiles are not uploaded).  pal[1] reads g->tiles: the ROM keeps
+   pal = &g->palette (add r4, r7, #4) and loads [r4, #4], where g->tiles
+   would load [r7, #8] (lesson 3.532). */
 void GoalGameHelperKirbyDraw(void)
 {
     struct Task *t;
     struct Task *s;
     struct Task *u;
-    struct TaskGfx *g;
+    struct TaskGfxExtended *g;
     u32 *tbl;
     u16 *p;
     u8 *dst;
@@ -1687,13 +1692,13 @@ void GoalGameHelperKirbyDraw(void)
     s = gCurTask;
     a = s->tileWord;
     tbl = s->frameTable;
-    g = (struct TaskGfx *)tbl[s->frame];
+    g = (struct TaskGfxExtended *)tbl[s->frame];
     if ((g->oamTemplate & 1) != 0)
     {
         pal = &g->palette;
         if (g->palette != NULL)
             RequestCopy(2, g->palette + 1, gObjPalette + ((a >> 12) << 5), *g->palette);
-        p = pal[1];
+        p = pal[1]; /* g->tiles */
         dst = (u8 *)(((a & 0x7FF) << 5) + (BG_VRAM + 0xFE00));
         while (*p != 0xFFFF)
         {

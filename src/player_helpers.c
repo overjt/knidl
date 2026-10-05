@@ -475,11 +475,15 @@ void PlayerMove(void)
 }
 
 /* Upload the frame's graphics for gfx script entry unk3C+a0 and return its
-   OAM/anim word (bit 0 is the "extended record" tag). */
+   OAM/anim word (bit 0 is the "extended record" tag).  An extended record
+   (struct TaskGfxExtended) is read through the pointer p that walks its words
+   from &g->palette: the ROM keeps p in r7 and steps it with add r7, #4, which
+   the field reads g->tiles, g->nextBankPalette and g->upperTiles do not
+   produce (they load at fixed offsets from g; lesson 3.532). */
 s32 PlayerLoadFrameTilesAndPalette(s32 a0)
 {
     struct Task *t;
-    struct TaskGfx *g;
+    struct TaskGfxExtended *g;
     u16 **p;
     u16 *s;
     u16 *q;
@@ -490,13 +494,13 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
     t = gCurTask;
     prio = t->tileWord;
     tbl = t->frameTable;
-    g = (struct TaskGfx *)tbl[t->frame + a0];
+    g = (struct TaskGfxExtended *)tbl[t->frame + a0];
     if ((g->oamTemplate & 1) != 0) {
         p = &g->palette;
         if ((t->player->statusFlags & PLAYER_STATUS_PALETTE_LOCKED) == 0 && g->palette != NULL)
             RequestCopy(2, (u32)(g->palette + 1),
                          (u32)gObjPalette + ((prio >> 12) << 5), *g->palette);
-        p++;
+        p++; /* &g->tiles */
         s = *p;
         dst = ((prio & 0x7FF) << 5) + OBJ_VRAM0;
         if (*s != 0xFFFF) {
@@ -507,11 +511,11 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
                 dst += 0x400;
             } while (*s != 0xFFFF);
         }
-        p++;
+        p++; /* &g->nextBankPalette */
         if ((gCurTask->player->statusFlags & PLAYER_STATUS_PALETTE_LOCKED) == 0 && *p != NULL)
             RequestCopy(2, (u32)(*p + 1),
                          (u32)gObjPaletteBank1 + ((prio >> 12) << 5), **p);
-        q = p[1];
+        q = p[1]; /* g->upperTiles */
         if (q != NULL) {
             s = q;
             dst = ((prio & 0x7FF) << 5) + (OBJ_VRAM0 + 0x800);
@@ -542,10 +546,14 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
     return g->oamTemplate & ~1;
 }
 
+/* Upload the frame's palette (and, in the first branch, its extended record's
+   nextBankPalette) only.  p walks the record's words from &g->palette, as in
+   PlayerLoadFrameTilesAndPalette: the ROM keeps both the record and p = record
+   + 4, which g->palette and g->nextBankPalette do not produce (lesson 3.532). */
 void PlayerLoadFramePalette(void)
 {
     struct Task *t;
-    struct TaskGfx *g;
+    struct TaskGfxExtended *g;
     u32 *tbl;
     u16 **p;
     u16 *w;
@@ -553,13 +561,17 @@ void PlayerLoadFramePalette(void)
     t = gCurTask;
     tbl = t->frameTable;
     p = (u16 **)tbl[t->frame];
-    g = (struct TaskGfx *)p;
-    p++;
+    g = (struct TaskGfxExtended *)p;
+    p++; /* &g->palette */
     w = g->palette;
+    /* Bit 0 of the palette word, not of oamTemplate (the extended record's
+       tag): no record in the ROM data sets it (0 of the 4,259 records
+       gPlayerFrames points at), so the branch that copies nextBankPalette
+       never runs. */
     if (((u32)w & 1) != 0) {
         RequestCopy(2, (u32)(p[0] + 1),
                      (u32)gObjPalette + ((t->tileWord & 0xF000) >> 7), *p[0]);
-        if (p[2] != NULL)
+        if (p[2] != NULL) /* g->nextBankPalette */
             RequestCopy(2, (u32)(p[2] + 1),
                          (u32)gObjPalette + 32
                              + ((gCurTask->tileWord & 0xF000) >> 7), *p[2]);
