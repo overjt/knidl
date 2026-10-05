@@ -542,8 +542,9 @@ Unnamed by design, for #37's audit:
   oracle); positional parameters are left only where the role is not
   proven; locals (run 6, D8) are named only where one role is proven on
   every use (section 7.1), and keep their positional form otherwise;
-- segment names (`docs/analysis/segments.txt`) and source file names, which
-  are not symbols; renaming them is not part of #155.
+- segment names (`docs/analysis/segments.txt`) and source file names are
+  not symbols and were not part of #155; #182 named the source files (and
+  so their segments) after their content, section 8.
 
 ### 5.1 What stays unnamed: the audit's census
 
@@ -925,3 +926,99 @@ the bit (`0x40`).
   `tools/rename.py --locals CSV` applies them (`renames.csv` rows of kind
   `local`, `Func.old` -> `Func.new`); the proof is the per-file assembly
   oracle and `make compare`.
+
+## 8. Source file names (#182)
+
+Every decompiled translation unit is named after what it holds: flat
+`src/`, snake_case, `<prefix>_<content>.c`, and no address or ordinal
+anywhere in the name (`src/actor_defeat.c`, `src/enemy_fire_lion.c`,
+`src/task.c`).  `src/` stays flat because the tools glob `src/*.c`
+(`constants.py`, `task_alias.py`, `rename.py`, `audit.py`), as the pret
+projects (pokeemerald, katam) do.  The SDK and runtime files that already
+had real names keep them: `main.c`, `agb_init.c`, `agb_sram.c` and
+`m4a_*.c`.
+
+**The prefix is the subsystem**: by default the name of the `include/*.h`
+header that declares most of the file's public functions (each header
+groups its prototypes under a `/* src/<file>.c */` line,
+docs/header-conventions.md).  A file takes another prefix only where the
+header's name misdescribes it; each such file is a row of
+`docs/analysis/file-renames.csv` with a `deviation` that names the header,
+its share and the functions that prove the content (the HBlank-scroll
+driver in `save.h` is `main_hblank_*`, the fountain cutscene's scripts in
+`player.h` are `cutscene_fountain_*`).  A file whose functions no header
+declares (they keep per-file prototypes, lessons 3.428 and 3.517) takes the
+prefix of its neighbours, with the same note.  Those prototypes are
+candidates to move to the header their file is named after; #182 renames
+files only and moves none.  The vocabulary is closed - the game headers'
+names plus two extras the owner approved:
+
+| prefix | files | prefix | files |
+|---|---|---|---|
+| `actor_` | the actor core (`actor.c`), defeats, attached actors, effects | `main_` | fades, frame, interrupts, copy and sprite queues, HBlank scroll |
+| `camera_` | camera, BG streaming, map events, stage objects | `menu_` | the main menu and its tasks |
+| `collision_` | terrain probes, hit tests | `mode_` | game-state bodies, boot/title sequence, screen loaders |
+| `cutscene_` | the cutscene director and its scripts, the warp star | `player_` | the player's actions, objects and helpers |
+| `effect_` | the player effects | `room_` | room loaders, doors, room objects |
+| `ending_` | the ending, credits, final results | `save_` | save slots, the input recorder, link save exchange |
+| `enemy_` | enemies, mid-bosses, bosses | `sound_` | the BGM/SE front end |
+| `hud_` | the HUD | `subgame_` | the sub-game framework (`subgame.c`) and the three sub-games |
+| `link_` | the SIO link driver, link setup, MultiBoot | `task_` | the task engine (`task.c`) |
+| `boot_` | the boot logo's objects (declared in `ending.h`) | `game_over_` | the game-over screen (declared in `ending.h`) |
+
+The file that is a header's core may be just `<header>.c` when exactly one
+file qualifies: `task.c` (`TaskCreate`, `TaskFree`), `actor.c`
+(`CreateActor`, `ActorInitFromDefSlot`, the actor API), `subgame.c` (the
+sub-game framework, `SubGameMain`).
+
+**The content part** comes from the functions and task bodies the file
+defines (their names in `docs/analysis/renames.csv`):
+
+- A *family* is the code that shares a name stem: an enemy or object with
+  its companion tasks (`FireLion*` and `Task_FireLionFlame`), a player
+  action with its update (`PlayerActionFloat`, `PlayerActionFloatUpdate`),
+  an effect, a scene.  A family is named in the file that holds most of its
+  code bytes, and also in one that holds at least 40% of them (a near-even
+  split: `enemy_shotzo` and `enemy_shotzo_coner`); the part of it that
+  spills into a neighbour does not name the neighbour, unless it is all
+  the neighbour holds (then the family plus that part's role:
+  `enemy_fire_lion_flame`, `player_throw_update`).
+- The families with at least a tenth of the file's code bytes name it: one
+  family gives its name (`enemy_fire_lion`, `actor_defeat`); two give both,
+  in ROM order (`enemy_blipper_gip`, `player_ice_freeze`); more give their
+  shared theme (`camera_map_events`, `actor_dust`, `cutscene_scenes`), else
+  the dominant family, the one with the most code bytes (`enemy_sparky`);
+  the evidence lists the others.
+- A file whose functions are still `sub_*` is named after the role its
+  callers or its code prove, else after its neighbour's theme plus a role
+  word (`_helpers`), with the reason in the evidence.
+- The words are the ones the function names use (`MetaKnight` ->
+  `meta_knight`, `HiJump` -> `hi_jump`), and a name aims at 40 characters
+  at most.  Collisions are broken by content (`enemy_kracko` /
+  `enemy_kracko_jr`), never by a number.
+
+**Everything follows the stem.**  A stem is also the file's segment name
+(`docs/analysis/segments.txt`), its output section and object path in
+`linker.ld` (the asserted address stays), a `Makefile` rule, and a word in
+the tools, the generated analysis files, the comments and every doc,
+history and lessons included.  `tools/rename_tu.py` applies the table:
+`git mv src/old.c src/new.c` (so `git log --follow` sees a rename) and
+the old stem rewritten wherever it stands as a token in a tracked file.
+The old names survive in one place only, `docs/analysis/file-renames.csv`
+(`old,new,prefix_header,deviation,evidence`), which resolves the names
+quoted in closed issues and PRs.
+
+```sh
+python3 tools/rename_tu.py            # dry run: validate, print the plan
+python3 tools/rename_tu.py --write    # git mv + rewrite every reference
+python3 tools/rename_tu.py --check    # the tree is consistent (make audit)
+```
+
+A rename moves no byte: agbcc reads `cpp -P` output from stdin, so the
+assembly of a renamed file is identical to the old one's (it emits no
+`.file` line), and `make compare`, `make symbols`, `make split` and
+`make modmap` come out unchanged.  `make audit` runs the table's check:
+every new file exists and no old one does, no old stem is left outside the
+table, every prefix is in the vocabulary, every row whose prefix is not its
+header's carries a deviation, and every other `src/*.c` is one of the
+sanctioned SDK/runtime names.
