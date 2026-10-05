@@ -115,7 +115,13 @@ role is not proven on every path; the offset comments (`/*0x14*/`) stay.
 - **The same word for the same thing** across structs: `ActorDef.score` is
   copied into `Actor.score`, `ActorDef.ability` into `Actor.ability`,
   `GfxHeader`, `TaskGfx` and the room objects' graphics descriptor all say
-  `palette` / `tiles` / `tileCount` / `paletteBankCount`.
+  `palette` / `tiles` / `tileCount` / `paletteBankCount`.  An extended
+  form keeps the base's names for the base's fields: `struct
+  TaskGfxExtended` (#186) is `TaskGfx`'s `oamTemplate`, `palette` and
+  `tiles`, then `nextBankPalette` (the OBJ palette bank after the frame's,
+  the "next bank" of `Task.playerNextBankBlendRatio`) and `upperTiles`
+  (the 64 tiles after the frame's in the player's 128-tile slot): named by
+  where the copy sends them, not `palette2` / `tiles2` (section 1).
 - **Per-type scratch stays unnamed.**  `Task.unk18`-`unk34`,
   `unk6C`-`unk70`, `unk46`, `unk73`/`unk74`/`unk76` and `unk82`/`unk84`
   mean different things in different task families (a variant, a timer, a
@@ -487,10 +493,15 @@ decisions Q1-Q7 folded in):
   a word the struct does not declare, keeps the placeholder with the reason
   `via-unnamed-field`: the fields census names fields, not this rule.  The
   player's 20-byte frame records hold a second palette and tiles at +0xC
-  and +0x10 that `struct TaskGfx` (three fields) does not declare
-  (PlayerLoadFrameTilesAndPalette reads them by pointer arithmetic,
-  `src/player_helpers.c`), so their targets stay (Q7; a struct for the
-  player's frame record is a candidate for later).  Two forms follow from
+  and +0x10 that `struct TaskGfx` (three fields) does not declare; #183
+  left their targets (Q7), and #186 declared the records as `struct
+  TaskGfxExtended` (`include/task.h`: TaskGfx's fields, then
+  `nextBankPalette` and `upperTiles`, the upper half of the player's
+  sprite slot, which PlayerLoadFrameTilesAndPalette copies to the next OBJ
+  palette bank and 0x800 bytes after the frame's tiles), so they take A2
+  names like any field: `gPlayerFrame883NextBankPalette`,
+  `gPlayerFrame888UpperTiles` (1,806 labels; a target several records
+  share takes the lowest slot's, A3).  Two forms follow from
   the consumer, with its line in the evidence:
   - **BG animation commands** (Q2): op 0's `ptr` is the `struct
     BgAnimTileFrame` that `BgAnimCopyTiles(cmd->ptr)` copies
@@ -960,6 +971,7 @@ tools/name_assets.py                        # dry run: proposals per rule, owner
 tools/name_assets.py --list                 # every proposal with its evidence, every reason
 tools/name_assets.py --root gBonkersFrames --list   # one owner's chain
 tools/name_assets.py --batch frames --csv b.csv     # frames, pictures, rooms, bganims, player
+tools/name_assets.py --batch player --csv b.csv --issue 186   # the batch's issue column (183 by default)
 tools/rename.py --csv b.csv --issue 183 --write     # kind `asset`
 make symbols && make split && make modmap && make clean && make compare
 python3 tools/audit.py --write              # the census follows
@@ -970,7 +982,9 @@ with offsets (every symbolic `.word` of `data/*.s` at its offset inside its
 label, every leaf of the C initializers, every function that mentions a
 label), types each referrer (its definition or extern declaration, the
 pointee of the typed table that points at it, or a word array for a pointer
-list), takes the struct layouts from the `/*0xNN*/` comments, and decides
+list), takes the struct layouts from the `/*0xNN*/` comments (a record
+declared with a wider struct, as the player's frame records are `struct
+TaskGfxExtended` since #186, has that struct's fields), and decides
 each asset placeholder once all its referrers are settled, so a chain is
 named from its owner down in one run (section 2.5).  The proposals are a
 batch for `tools/rename.py`; run on a tree where they are applied, it

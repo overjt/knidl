@@ -1254,3 +1254,44 @@ moved the record here; `AGENTS.md`'s `## Status` stays the current state.
   10,253 of its 15,621 files differently, and a fresh tree passes
   `assets-check`, `assets-mod-check` and `assets-selftest`.  New lessons
   4.178-4.179.
+- The player's extended frame record (issue #186): **a struct for the
+  20-byte player frame records, and names for what they point at.**  The
+  3,116 records of `data/player_frame_records.s` (reached through
+  `gPlayerFrames` and `gCutsceneFountainKirbyFrames`) are a `struct
+  TaskGfx` plus two words, tagged by bit 0 of `oamTemplate`; #183 had
+  left the 2,029 labels behind those words unnamed, 1,806 of them as
+  `via-unnamed-field` (the others are reached only through records #155
+  left unnamed, or shared).
+  `include/task.h` now declares `struct TaskGfxExtended`: TaskGfx's
+  `oamTemplate`, `palette` and `tiles`, then `nextBankPalette` (a counted
+  palette `PlayerLoadFrameTilesAndPalette` copies to the OBJ palette bank
+  after the frame's, skipped while the palette is locked or when NULL)
+  and `upperTiles` (a tile chunk stream it copies 0x800 bytes, 64 tiles,
+  after the frame's): the upper half of the player's sprite slot,
+  `tileWord = (i << 13) | (i << 7)`, two banks and 128 tiles.  The names
+  are roles; an identity (the ability hat) fails on some records (a local
+  OAM decode, not committed: in 527 records some of those objects are
+  drawn behind the body, and 87 ordinary frames use the upper tiles with
+  the shared banks 14/15 and no palette of their own).  The tag is
+  `TASK_GFX_EXTENDED` (`include/constants/sprites.h`, four sites: two
+  tests and two `& ~TASK_GFX_EXTENDED` clears).  The three readers
+  (`PlayerLoadFrameTilesAndPalette`, `PlayerLoadFramePalette`,
+  `GoalGameHelperKirbyDraw`) are typed with the struct but keep the
+  ROM's pointer walk from `&g->palette`, each step commented with the
+  field it reaches: every field form tried changes the assembly (lesson
+  3.532).  `PlayerLoadFramePalette` tests bit 0 of the palette word, not
+  the tag; no record sets it, so its `nextBankPalette` branch never runs.
+  Declaring the records with the struct (`src/data/frame_tables.c`) is
+  what `tools/name_assets.py` reads, so 1,806 targets took A2 names
+  (`gPlayerFrame883NextBankPalette`, `gPlayerFrame888UpperTiles`; 203
+  palettes and 1,603 tile streams, 590 shared by several records under
+  the lowest slot's name); `via-unnamed-field` 1,877 -> 71, asset labels
+  named after their owner 12,292 -> 14,098, `make progress` 26,506 ->
+  28,312 of 34,017 symbols documented (77.92% -> 83.23%).  The records
+  stay structure-only; moving them to C is a possible follow-up
+  (docs/data.md §7).  No byte moved: every TU's assembly identical to
+  master (319/319) after each code commit, `make compare` after every
+  commit, `constants.py --verify-cpp` and `rename.py --verify-diff` for
+  the constant and the names, `make shifttest` and `make datastats`
+  unchanged; `make assets` names 1,806 of its 15,621 files differently.
+  New lessons 3.532 and 4.180.

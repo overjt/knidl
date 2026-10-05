@@ -155,7 +155,8 @@ Add an entry to `pointer_tables`:
   `0x0` carries a flag in bit 0 (it is emitted as `label+1` when set),
   and a record whose flag is set has the listed extra pointer fields (the
   20-byte player frame records, `PlayerLoadFrameTilesAndPalette`,
-  `src/player_helpers.c`).
+  `src/player_helpers.c`: since #186 the C type `struct TaskGfxExtended`,
+  whose flag is `TASK_GFX_EXTENDED`).
 - `"proof": "format"` marks a table that only a format parse proves and
   no code reads (§5.3); `make datastats` counts its words on a line of
   their own.  The default is `"consumer"`.
@@ -284,7 +285,7 @@ header comment.
 | `frame_tables` (**C**, `src/data/frame_tables.c`) | `0x0874C44C-0x0875607C` | every sprite frame table (`struct TaskGfx *[]` or OAM stream pointers) the code installs | 343 arrays, 9,981 pointers in C |
 | `late_game_rodata` | `0x0875607C-0x08758448` | the rodata of M33-M38: pickups, HUD, save, sub-games, ending, credits | 143 labels, 118 data pointers in 22 pieces; 54 handler tables are C (`src/data/late_game_tables.c`, 23 runs) |
 | `credits_demos` | `0x08758448-0x08759DC8` | the 14 recorded input demos the staff credits play (`gUnk_087583CC` rows 1-2) | 14 labels |
-| `player_frame_records` | `0x08759DC8-0x08769250` | the 20-byte tagged player frame records | 3,116 labels, 14,663 pointers |
+| `player_frame_records` | `0x08759DC8-0x08769250` | the 20-byte tagged player frame records (`struct TaskGfxExtended`, `include/task.h`, #186) | 3,116 labels, 14,663 pointers |
 | `player_frame_lists` | `0x08769250-0x0876B1FC` | the player sheets' frame lists (format-only, §5.3) | 146 labels, 2,025 pointers |
 | `multiboot_program`, `quick_draw_program`, `bomb_rally_program`, `air_grind_program` | `0x0876B1FC-0x087E1D58` | four separately linked GBA programs: the single-pak link client and the three sub-games sent to the other players (`src/menu_sound_test_link_play.c`, `src/mode_extra_mode_title.c`; **asset**) | 1 label each |
 | `room_table` (**C**, `src/data/room_table.c`) | `0x087E1D58-0x087E1E78` | `gRoomTable[9][8]` | 57 pointers in C |
@@ -724,6 +725,13 @@ What is left:
   records (`gUnk_08745CC8`, `gUnk_0874B510`) that nothing addresses.
   They can follow with the same tools once someone wants them as C; none
   is a pointer table whose element type the C declares.
+- **The player's frame records** (#186): their layout is C, `struct
+  TaskGfxExtended` (`include/task.h`), which `src/data/frame_tables.c`
+  declares the 3,116 records with, but the records themselves stay
+  structure-only in `data/player_frame_records.s`.  They are functional
+  data a consumer proves, so they could move to C as the frame tables did
+  (#167), with `+ TASK_GFX_EXTENDED` on each OAM template word; that is a
+  possible follow-up, not done.
 - **Extents a consumer does not settle**: `gUnk_087402FC` is read with
   `CallTableEntry(i, 5, ...)` but its span is 9 words; entries 5-8 have
   no reference, so no label is invented (the C keeps the span, with the

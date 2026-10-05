@@ -77,7 +77,8 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
 ## Status
 
 The state after #37 (the final audit, PR #171), its follow-ups
-#164-#170, #182 (file names) and #183 (asset labels).  What each issue
+#164-#170, #182 (file names), #183 (asset labels) and #186 (the player's
+extended frame records).  What each issue
 did, module by module, is [`docs/history.md`](docs/history.md).
 
 - **Code: complete.**  `make compare` passes (byte-identical to the USA
@@ -142,25 +143,26 @@ did, module by module, is [`docs/history.md`](docs/history.md).
   5,348 functions named (run 7: 4,597 by role, 340 by their state- or
   dispatch-table slot, docs/naming.md 2.4; a verb that fits two states
   now names both, with the qualifier the code proves, R1); `make
-  progress`: 26,506 of 34,017 symbols documented (77.92%; 14,208 after
-  #155, 12,298 more by #183's asset labels; since #167 the segment-name
+  progress`: 28,312 of 34,017 symbols documented (83.23%; 14,208 after
+  #155, 12,298 more by #183's asset labels, 1,806 by #186's; since #167 the segment-name
   labels split.py writes are not counted); `struct Task`'s
   per-family registers and `PlayerState`'s per-action scratch are named
   by 1,186 alias macros in 205 families (`include/task_vars.h`,
   `tools/task_alias.py`, docs/header-conventions.md), 10,018 of the
-  10,455 register accesses; the game's magic numbers are 1,571 named
+  10,455 register accesses; the game's magic numbers are 1,572 named
   constants in 13 headers `include/constants/*.h` (task types, abilities,
   player actions, per-family states and variants, game states and stage
   requests, hit kinds, actor kinds, camera modes, room entries and door
-  kinds, sound ids, and 38 flag bits of the hit boxes, `PlayerState`,
-  the sprite and skip flags: 4,637 literal sites, `tools/constants.py`,
+  kinds, sound ids, and 39 flag bits of the hit boxes, `PlayerState`,
+  the sprite and skip flags and the TaskGfx tag `TASK_GFX_EXTENDED`
+  (#186): 4,641 literal sites, `tools/constants.py`,
   docs/naming.md section 7); 36 struct tags and 147 locals named by role.
   What stays unnamed has a reason each: 411 `sub_*`, 62 `gUnk_` RAM cells
   and 92 header / 141 local `unk*` fields by their row in
   `docs/analysis/unnamed.csv`, the 2,263 functional ROM labels by their
   referrers (shared, reached through an unnamed record, read by one
-  function only), the 4,781 asset labels without one owner by their
-  chains (#183); `make audit` fails on a placeholder without a reason
+  function only), the 2,975 asset labels without one owner by their
+  chains (#183, #186); `make audit` fails on a placeholder without a reason
   (docs/naming.md section 5.1).  Three `Task`
   views (`u76`, `u80`, `u8C`).  Evidence per rename, alias and constant:
   `docs/analysis/renames.csv`, `docs/analysis/constants.csv`.
@@ -176,7 +178,7 @@ did, module by module, is [`docs/history.md`](docs/history.md).
   `docs/analysis/file-renames.csv`, which `make audit` checks
   (`tools/rename_tu.py`, audit check 7).  `main.c`, `agb_init.c`,
   `agb_sram.c` and `m4a_*.c` keep their names.
-- **Asset labels: #183.**  12,292 of the 17,073 asset labels (the
+- **Asset labels: #183, #186.**  14,098 of the 17,073 asset labels (the
   `gUnk_08*` of the asset segments: sprite sheets, compressed graphics,
   room maps and metatiles, BG animation frames) are named after the record
   that owns them, by the pointer chain alone (docs/naming.md 2.5, rules
@@ -186,15 +188,22 @@ did, module by module, is [`docs/history.md`](docs/history.md).
   a target shared within one owner the lowest slot or the owner's stem
   (`gLevel6Stage5Bg2Tiles`), 46 code-only labels their one consumer and
   the kind its call proves (`gGameOverLoadGraphicsPalette`), six loader
-  tables first named by their consumer.  5,024 under a semantic owner,
-  7,213 under a position owner, 9 by a format-only list.  The 4,781 left
-  have a computed reason (397 shared, 2,245 via an unnamed record, 1,877
+  tables first named by their consumer.  #186 declared the player's
+  20-byte frame records as `struct TaskGfxExtended` (`include/task.h`:
+  TaskGfx's fields, then `nextBankPalette` and `upperTiles`, the upper
+  half of the player's sprite slot; tagged by `TASK_GFX_EXTENDED`), so
+  their second palettes and tiles take A2 names too
+  (`gPlayerFrame883NextBankPalette`, `gPlayerFrame888UpperTiles`: 1,806);
+  its three readers keep the ROM's pointer walk, typed with the struct
+  (lesson 3.532).  5,024 under a semantic owner,
+  9,019 under a position owner, 9 by a format-only list.  The 2,975 left
+  have a computed reason (397 shared, 2,245 via an unnamed record, 71
   via a word with no field name, 165 in a positional table, 10 no owner)
   or, for 87 code-only labels, a row of `docs/analysis/unnamed.csv`
   (`consumer-ambiguous`, `no-kind`); `make audit` fails on one the rules
   would still name.  The data policy is unchanged: names only, the bytes
   stay `.incbin` slices; `make assets` names its files after the labels
-  (10,253 of 15,621 changed name).
+  (10,253 of 15,621 changed name with #183, 1,806 with #186).
 - **Verification.**  CI ("Build and verify") always builds the image,
   compiles crt0 and `src/`, and runs `make check-headers`, `check-data` and
   `audit`; with a `baserom.gba` it also runs `make compare` (fails closed),
@@ -202,18 +211,19 @@ did, module by module, is [`docs/history.md`](docs/history.md).
   --exit-code`), `datastats`, `shifttest` and `boottest`, and otherwise
   skips them visibly.
 - **Next.**  (1) data: seg 18's value tables as C if wanted (docs/data.md
-  §7; #167 moved every handler table and record family); (2) names: #155
+  §7; #167 moved every handler table and record family), and the player's
+  3,116 frame records, whose type `struct TaskGfxExtended` the consumer
+  proves since #186 (they stay structure-only `.s`); (2) names: #155
   is closed; what stays unnamed is a census with a reason per symbol
   (docs/naming.md 5.1), so a later rename starts from a row of
   `docs/analysis/unnamed.csv` and removes it (an identity that gains a
   third source, a cell that gains a name, a state whose twin gains a
   qualifier); #183 named the asset labels that one record owns, and the
   rest follow their owners: the 2,245 behind the frame tables and player
-  frame records #155 left unnamed, the 1,877 behind a word no struct names
-  (a struct for the player's 20-byte frame record would name its second
-  palette and tiles; the 2D picture tables' tiles and map columns wait for
-  the BG layout presets as C, whose BGxCNT values prove the character and
-  screen bases).  A natural form for
+  frame records #155 left unnamed, the 71 behind a word no struct names
+  (18 behind unlabeled TaskGfx records after a labeled one; the 2D
+  picture tables' tiles and map columns wait for the BG layout presets as
+  C, whose BGxCNT values prove the character and screen bases).  A natural form for
   `BootLogoUpdateObjects` would still be welcome but is not tracked
   (lesson 3.527 says what it must do).
 - **Docs:** `docs/decomp-loop.md`, `docs/lessons-learned.md` (its "Start

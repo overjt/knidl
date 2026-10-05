@@ -158,6 +158,7 @@ listed.
 | [4.105](#4105-the-stack-slots-of-pres-copies-follow-gcses-hash-table-order-which-the-functions-size-sets) | [3.493](#3493-sub_080c5b84-pres-slot-order-is-arithmetic---solve-the-bucket-inequalities-for-declaration-order-s-and-the-files-label-count-together) | Corrected: the insn count S is one of three variables of the bucket arithmetic. |
 | [4.121](#4121-a-zones-census-name-is-a-guess-follow-the-consumers-pointers) | [4.130](#4130-toolsresegmentpy-and-why-seg-13-had-to-be-re-partitioned-not-renamed), [4.137](#4137-seg-19s-head-is-the-players-frame-records-and-one-format-needs-a-flag-bit) | Amended: the segments were re-partitioned and renamed in phase 2, and seg 19's census name was wrong too. |
 | [4.134](#4134-a-false-thumb-branch-inside-arm-code-would-have-corrupted-a-shifted-rom) | [4.151](#4151-arm-islands-are-a-range-not-a-function-isa_ranges) | Superseded (#37): the mixer is decoded as ARM (`isa_ranges`); `raw_ranges` is gone. |
+| [4.178](#4178-asset-labels-have-owners-name-them-through-the-chain-with-offsets-after-a-fixpoint) | [4.180](#4180-a-records-declared-type-is-what-names-its-targets-retype-it-then-rename-then-refresh-the-census) | Amended (#186): the player's 20-byte records' +0xC/+0x10 are fields now (`struct TaskGfxExtended`); a word the struct does not declare is still a finding, and declaring the struct is the fix. |
 
 ## 1. Build system
 
@@ -5017,6 +5018,49 @@ and the shift test came out unchanged as well.  A comment that quotes a
 file name is stripped by cpp before agbcc runs, so rewriting the comments
 of 291 files cannot move a byte either; `make compare` stays the final
 proof, and the oracle is the per-file one.
+
+### 3.532 The ROM walks a pointer through the player's frame record: no field form of its three readers matches
+
+#186 declared the player's 20-byte frame records as `struct
+TaskGfxExtended` (`include/task.h`: TaskGfx's `oamTemplate`, `palette`,
+`tiles`, then `nextBankPalette` at +0xC and `upperTiles` at +0x10) and
+tried to make the three readers read fields.  None matched; each kept the
+pointer walk the decompilation had, typed with the struct and commented
+with the field each step reaches.  What each form changes, so that a later
+attempt starts here:
+
+* **`PlayerLoadFrameTilesAndPalette`, pure field form** (`s = g->tiles`,
+  `g->nextBankPalette`, `q = g->upperTiles`): the ROM sets `mov r7, sl;
+  add r7, r7, #4` (p = &g->palette) right after the tag test, steps it
+  with `add r7, r7, #4` before the tiles load (`ldr r5, [r7]`) and again
+  before the second palette test (`ldr r3, [r7]`), and loads
+  `upperTiles` as `ldr r4, [r7, #4]`.  The field form loads `[g, #8]`,
+  `[g, #0xc]` and `[g, #0x10]` straight from g; with no p the function
+  saves two high registers instead of three (r8 and r9, not r8, r9 and
+  sl), so `prio` moves from r8 to r7 and g from sl to r8: 346 lines of
+  difference.
+* **Field addresses assigned to the walking pointer** (`p = &g->tiles; s
+  = *p; ... p = &g->nextBankPalette; ... q = p[1]`): cse folds every
+  `&g->field` into g plus a constant, so the loads go back to fixed
+  offsets of g (355 lines).  The `add r7, r7, #4` needs one pseudo that
+  is incremented in place, which only `p++` gives.
+* **`PlayerLoadFramePalette`**: the ROM keeps the record and p = record +
+  4 both live (`add r0, r4, #0; add r4, r4, #4; ldr r3, [r0, #4]`), reads
+  `p[0]` as `ldr r3, [r4]` and `p[2]` as `ldr r3, [r4, #8]`.  The field
+  form loads `[r4, #4]` and `[r4, #0xc]`.  `p = &g->palette` with `p[0]`
+  and `p[2]` comes closest, but cse then reuses `w = g->palette` for
+  `p[0]` and the `ldr r3, [r4]` disappears; the ROM's order (`p =
+  record; g = p; p++; w = g->palette`) keeps two pseudos.
+* **`GoalGameHelperKirbyDraw`**, `g->tiles` for `pal[1]`: the ROM keeps
+  `pal = &g->palette` (`add r4, r7, #4`) and loads `[r4, #4]`; the field
+  load is `[r7, #8]`, and without pal the `tileWord` halfword swaps r4 and
+  r6 (19 lines).
+
+So the original source walked a `u16 **` over the record's words, as the
+decompilation does; the struct documents the layout and the comments
+name the fields, which is plain C with no lever (docs/audit.md does not
+list it).  The sibling `TaskLoadFrameTiles` (`src/task_frame_tiles.c`)
+reads plain `g->tiles` and matches; it never touches a fourth word.
 
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
@@ -12084,6 +12128,48 @@ things made it mechanical:
   `assets-check` failed on them as "not derived from the ROM"; the proof
   is a fresh tree (`rm -rf assets && make assets`), and docs/assets.md
   says how to carry edits over (by the manifest's `vma`).
+
+### 4.180 A record's declared type is what names its targets: retype it, then rename, then refresh the census
+
+#186 taught `tools/name_assets.py` the player's extended frame record
+without changing its code:
+
+* **The declaration is the tool's input.**  The tool types a record by
+  its extern declaration and takes the struct's layout from the
+  `/*0xNN*/` comments (4.178), so changing the 3,116 records' `extern
+  const struct TaskGfx` to `struct TaskGfxExtended` in
+  `src/data/frame_tables.c` turned 1,806 `via-unnamed-field` labels into
+  A2 and A3 proposals at once (`gPlayerFrame883NextBankPalette`), and
+  `make audit` failed on them as unapplied until the batch landed.  The
+  struct itself in `include/task.h` changed nothing: no record used it
+  yet.  Grep the tool's census for the reason before adding code to it.
+* **One proof per kind of commit.**  A type change is not a rename, so
+  `tools/rename.py --verify-diff` cannot cover the struct, its readers
+  or the retyped declaration: those commits are proven by the per-file
+  `.s` oracle (all 319 units identical to master) and `make compare`.
+  The retype went into a commit of its own, so the names commit verifies
+  from it (`--verify-diff HEAD~`, 1,806 renames).  The constant spelled
+  `1` keeps every unit's `cpp -P` output identical, so
+  `constants.py --verify-cpp` counts no respelled literal at all.
+* **Measure an identity before proposing it.**  A local decode of the
+  OAM templates (kept in `pending/`) settled the field names: the upper
+  tiles are drawn with the next bank or the shared banks 14/15, behind
+  the body in 527 records and in 87 frames without a palette of their
+  own, so "hat" is not true on every path and the names are the copy's
+  destination: the next OBJ palette bank (the vocabulary of
+  `Task.playerNextBankBlendRatio`) and the upper 64 of the player's 128
+  tiles (`tileWord = (i << 13) | (i << 7)`).
+* **Check the premise in the data.**  `PlayerLoadFramePalette` tests bit
+  0 of the palette word, not the tag; counting the 4,259 records
+  `gPlayerFrames` points at (none has it set) showed the branch that
+  reads `nextBankPalette` there never runs, so the test keeps its `1`
+  with a comment instead of the tag's name.
+* **A one-off pipe failure.**  One `cpp | agbcc` run in Docker, right
+  after a host-side write of the file, failed with "syntax error at end
+  of input" and passed unchanged on the next two runs (cause not found);
+  the oracle script, which compiles from a saved `cpp -P` output file,
+  never failed.  Rerun before believing a compile error the diff cannot
+  explain.
 
 ## 5. Workflow that worked
 

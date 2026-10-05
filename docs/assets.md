@@ -60,7 +60,10 @@ most labels are named after the record that owns them (docs/naming.md 2.5):
 `oam/gBonkersFrame3OamTemplate.json`, `palettes/gBonkersFrame0Palette.pal`,
 `tiles/gPlayerFrame189Tiles.chunks.4bpp`; 10,253 of the 15,621 files
 changed name with #183 (OAM 7,353, tiles 2,423, palettes 396, LZ77 62,
-maps 19), and a label without one owner keeps its `gUnk_...` name.
+maps 19), and 1,806 more with #186 (the player's extended frame records'
+second palettes and tiles, `palettes/gPlayerFrame883NextBankPalette.pal`,
+`tiles/gPlayerFrame888UpperTiles.chunks.4bpp`: palettes 203, tiles 1,603);
+a label without one owner keeps its `gUnk_...` name.
 Re-running `make assets` only rewrites files whose content changed and
 never deletes one, so after a naming run a tree extracted before it holds
 the old names too and `make assets-check` reports them as "not derived from
