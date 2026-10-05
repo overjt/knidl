@@ -196,10 +196,10 @@ gQuickDrawDefeatBonuses:
 	.incbin	"baserom.gba", 0x75651C, 0xC
 	.global	gBombRallySeatPlayersPalettes
 gBombRallySeatPlayersPalettes:
-	.word	gUnk_085FE468
-	.word	gUnk_085FE488
-	.word	gUnk_085FE4A8
-	.word	gUnk_085FE4C8
+	.word	gBombRallySeatPlayersPalette0
+	.word	gBombRallySeatPlayersPalette1
+	.word	gBombRallySeatPlayersPalette2
+	.word	gBombRallySeatPlayersPalette3
 	.global	gUnk_08756538
 gUnk_08756538:
 	.incbin	"baserom.gba", 0x756538, 0x8
@@ -699,14 +699,14 @@ gCreditsTextPages:
 	.word	gCreditsTextPage5
 	.global	gCreditsDemoRecordings
 gCreditsDemoRecordings:
-	.word	gUnk_0859DDCC
-	.word	gUnk_0859DFBC
-	.word	gUnk_0859E18C
-	.word	gUnk_0859E364
-	.word	gUnk_0859E52C
-	.word	gUnk_0859E6EC
-	.word	gUnk_0859E868
-	.word	gUnk_0859EA14
+	.word	gCreditsDemoRecording0
+	.word	gCreditsDemoRecording1
+	.word	gCreditsDemoRecording2
+	.word	gCreditsDemoRecording3
+	.word	gCreditsDemoRecording4
+	.word	gCreditsDemoRecording5
+	.word	gCreditsDemoRecording6
+	.word	gCreditsDemoRecording7
 	.word	gCreditsDemoRecording8
 	.word	gCreditsDemoRecording9
 	.word	gCreditsDemoRecording10

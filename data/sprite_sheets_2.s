@@ -221,8 +221,8 @@ gCutsceneSheet2:
 	.word	gCutsceneSheet2Palette
 	.word	gCutsceneSheet2Tiles
 	.word	gUnk_087E29A0
-	.global	gUnk_085C1988
-gUnk_085C1988:
+	.global	gCutsceneLoadBgGraphicsPicture3Palette
+gCutsceneLoadBgGraphicsPicture3Palette:
 	.incbin	"baserom.gba", 0x5C1988, 0x40
 	.global	gUnk_085C19C8
 gUnk_085C19C8:
@@ -398,8 +398,8 @@ gCutsceneSheet3:
 	.word	gCutsceneSheet3Palette
 	.word	gCutsceneSheet3Tiles
 	.word	gUnk_087E2AB0
-	.global	gUnk_085C422C
-gUnk_085C422C:
+	.global	gCutsceneLoadBgGraphicsPicture4Palette
+gCutsceneLoadBgGraphicsPicture4Palette:
 	.incbin	"baserom.gba", 0x5C422C, 0x40
 	.global	gUnk_085C426C
 gUnk_085C426C:
@@ -632,8 +632,8 @@ gCutsceneSheet4:
 	.word	gCutsceneSheet4Palette
 	.word	gCutsceneSheet4Tiles
 	.word	gUnk_087E2B80
-	.global	gUnk_085C6BAC
-gUnk_085C6BAC:
+	.global	gCutsceneLoadBgGraphicsPicture5Palette
+gCutsceneLoadBgGraphicsPicture5Palette:
 	.incbin	"baserom.gba", 0x5C6BAC, 0x40
 	.global	gUnk_085C6BEC
 gUnk_085C6BEC:
@@ -830,8 +830,8 @@ gCutsceneSheet5:
 	.word	gCutsceneSheet5Palette
 	.word	gCutsceneSheet5Tiles
 	.word	gUnk_087E2C9C
-	.global	gUnk_085C9264
-gUnk_085C9264:
+	.global	gCutsceneLoadBgGraphicsPicture6Palette
+gCutsceneLoadBgGraphicsPicture6Palette:
 	.incbin	"baserom.gba", 0x5C9264, 0x40
 	.global	gUnk_085C92A4
 gUnk_085C92A4:
@@ -1043,8 +1043,8 @@ gCutsceneSheet6:
 	.word	gCutsceneSheet6Palette
 	.word	gCutsceneSheet6Tiles
 	.word	gUnk_087E2D88
-	.global	gUnk_085CC33C
-gUnk_085CC33C:
+	.global	gCutsceneLoadBgGraphicsPicture7Palette
+gCutsceneLoadBgGraphicsPicture7Palette:
 	.incbin	"baserom.gba", 0x5CC33C, 0x40
 	.global	gUnk_085CC37C
 gUnk_085CC37C:
@@ -3034,17 +3034,17 @@ gUnk_085FBADC:
 	.global	gUnk_085FDAA0
 gUnk_085FDAA0:
 	.incbin	"baserom.gba", 0x5FDAA0, 0x9C8
-	.global	gUnk_085FE468
-gUnk_085FE468:
+	.global	gBombRallySeatPlayersPalette0
+gBombRallySeatPlayersPalette0:
 	.incbin	"baserom.gba", 0x5FE468, 0x20
-	.global	gUnk_085FE488
-gUnk_085FE488:
+	.global	gBombRallySeatPlayersPalette1
+gBombRallySeatPlayersPalette1:
 	.incbin	"baserom.gba", 0x5FE488, 0x20
-	.global	gUnk_085FE4A8
-gUnk_085FE4A8:
+	.global	gBombRallySeatPlayersPalette2
+gBombRallySeatPlayersPalette2:
 	.incbin	"baserom.gba", 0x5FE4A8, 0x20
-	.global	gUnk_085FE4C8
-gUnk_085FE4C8:
+	.global	gBombRallySeatPlayersPalette3
+gBombRallySeatPlayersPalette3:
 	.incbin	"baserom.gba", 0x5FE4C8, 0x20
 	.global	gBombRallyBombFrame0
 gBombRallyBombFrame0:

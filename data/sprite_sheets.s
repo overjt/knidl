@@ -23617,8 +23617,8 @@ gUnk_081CC2C8:
 	.global	gUnk_081CC2E8
 gUnk_081CC2E8:
 	.incbin	"baserom.gba", 0x1CC2E8, 0x20
-	.global	gUnk_081CC308
-gUnk_081CC308:
+	.global	gPlayerActionBurningUpdatePaletteFade2Dst
+gPlayerActionBurningUpdatePaletteFade2Dst:
 	.incbin	"baserom.gba", 0x1CC308, 0x20
 	.global	gUnk_081CC328
 gUnk_081CC328:
@@ -46240,14 +46240,14 @@ gUnk_082FB17C:
 	.global	gUnk_082FB190
 gUnk_082FB190:
 	.incbin	"baserom.gba", 0x2FB190, 0x20
-	.global	gUnk_082FB1B0
-gUnk_082FB1B0:
+	.global	gMrShineUpdatePalettePalette1
+gMrShineUpdatePalettePalette1:
 	.incbin	"baserom.gba", 0x2FB1B0, 0x20
-	.global	gUnk_082FB1D0
-gUnk_082FB1D0:
+	.global	gMrShineUpdatePalettePalette2
+gMrShineUpdatePalettePalette2:
 	.incbin	"baserom.gba", 0x2FB1D0, 0x20
-	.global	gUnk_082FB1F0
-gUnk_082FB1F0:
+	.global	gMrShineUpdatePalettePalette3
+gMrShineUpdatePalettePalette3:
 	.incbin	"baserom.gba", 0x2FB1F0, 0x20
 	.global	gUnk_082FB210
 gUnk_082FB210:

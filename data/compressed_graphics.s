@@ -1297,8 +1297,8 @@ gUnk_08556408:
 	.global	gUnk_08557564
 gUnk_08557564:
 	.incbin	"baserom.gba", 0x557564, 0x36C
-	.global	gUnk_085578D0
-gUnk_085578D0:
+	.global	gMenuBgPaletteCyclePalette1
+gMenuBgPaletteCyclePalette1:
 	.incbin	"baserom.gba", 0x5578D0, 0xC0
 	.global	gUnk_08557990
 gUnk_08557990:
@@ -1411,8 +1411,8 @@ gUnk_0855BF2C:
 	.global	gUnk_0855CECC
 gUnk_0855CECC:
 	.incbin	"baserom.gba", 0x55CECC, 0x36C
-	.global	gUnk_0855D238
-gUnk_0855D238:
+	.global	gMenuBgPaletteCyclePalette4
+gMenuBgPaletteCyclePalette4:
 	.incbin	"baserom.gba", 0x55D238, 0xC0
 	.global	gUnk_0855D2F8
 gUnk_0855D2F8:
@@ -1624,8 +1624,8 @@ gUnk_085659AC:
 	.global	gUnk_085659C4
 gUnk_085659C4:
 	.incbin	"baserom.gba", 0x5659C4, 0x18
-	.global	gUnk_085659DC
-gUnk_085659DC:
+	.global	gExtraModeTitlePicture6Palette
+gExtraModeTitlePicture6Palette:
 	.incbin	"baserom.gba", 0x5659DC, 0x80
 	.global	gUnk_08565A5C
 gUnk_08565A5C:
@@ -1633,8 +1633,8 @@ gUnk_08565A5C:
 	.global	gUnk_085679D0
 gUnk_085679D0:
 	.incbin	"baserom.gba", 0x5679D0, 0x5C8
-	.global	gUnk_08567F98
-gUnk_08567F98:
+	.global	gExtraModeTitlePicture7Palette
+gExtraModeTitlePicture7Palette:
 	.incbin	"baserom.gba", 0x567F98, 0x80
 	.global	gUnk_08568018
 gUnk_08568018:
@@ -1642,8 +1642,8 @@ gUnk_08568018:
 	.global	gUnk_0856981C
 gUnk_0856981C:
 	.incbin	"baserom.gba", 0x56981C, 0x5C0
-	.global	gUnk_08569DDC
-gUnk_08569DDC:
+	.global	gExtraModeTitlePicture5Palette
+gExtraModeTitlePicture5Palette:
 	.incbin	"baserom.gba", 0x569DDC, 0x60
 	.global	gUnk_08569E3C
 gUnk_08569E3C:
@@ -1651,8 +1651,8 @@ gUnk_08569E3C:
 	.global	gUnk_0856B434
 gUnk_0856B434:
 	.incbin	"baserom.gba", 0x56B434, 0x5C0
-	.global	gUnk_0856B9F4
-gUnk_0856B9F4:
+	.global	gExtraModeTitlePicture4Palette
+gExtraModeTitlePicture4Palette:
 	.incbin	"baserom.gba", 0x56B9F4, 0x60
 	.global	gUnk_0856BA54
 gUnk_0856BA54:
@@ -1660,8 +1660,8 @@ gUnk_0856BA54:
 	.global	gUnk_0856D07C
 gUnk_0856D07C:
 	.incbin	"baserom.gba", 0x56D07C, 0x5C0
-	.global	gUnk_0856D63C
-gUnk_0856D63C:
+	.global	gExtraModeTitlePicture3Palette
+gExtraModeTitlePicture3Palette:
 	.incbin	"baserom.gba", 0x56D63C, 0x60
 	.global	gUnk_0856D69C
 gUnk_0856D69C:
@@ -2434,29 +2434,29 @@ gCreditsTextPage4:
 	.global	gCreditsTextPage5
 gCreditsTextPage5:
 	.incbin	"baserom.gba", 0x59DBF0, 0x1DC
-	.global	gUnk_0859DDCC
-gUnk_0859DDCC:
+	.global	gCreditsDemoRecording0
+gCreditsDemoRecording0:
 	.incbin	"baserom.gba", 0x59DDCC, 0x1F0
-	.global	gUnk_0859DFBC
-gUnk_0859DFBC:
+	.global	gCreditsDemoRecording1
+gCreditsDemoRecording1:
 	.incbin	"baserom.gba", 0x59DFBC, 0x1D0
-	.global	gUnk_0859E18C
-gUnk_0859E18C:
+	.global	gCreditsDemoRecording2
+gCreditsDemoRecording2:
 	.incbin	"baserom.gba", 0x59E18C, 0x1D8
-	.global	gUnk_0859E364
-gUnk_0859E364:
+	.global	gCreditsDemoRecording3
+gCreditsDemoRecording3:
 	.incbin	"baserom.gba", 0x59E364, 0x1C8
-	.global	gUnk_0859E52C
-gUnk_0859E52C:
+	.global	gCreditsDemoRecording4
+gCreditsDemoRecording4:
 	.incbin	"baserom.gba", 0x59E52C, 0x1C0
-	.global	gUnk_0859E6EC
-gUnk_0859E6EC:
+	.global	gCreditsDemoRecording5
+gCreditsDemoRecording5:
 	.incbin	"baserom.gba", 0x59E6EC, 0x17C
-	.global	gUnk_0859E868
-gUnk_0859E868:
+	.global	gCreditsDemoRecording6
+gCreditsDemoRecording6:
 	.incbin	"baserom.gba", 0x59E868, 0x1AC
-	.global	gUnk_0859EA14
-gUnk_0859EA14:
+	.global	gCreditsDemoRecording7
+gCreditsDemoRecording7:
 	.incbin	"baserom.gba", 0x59EA14, 0x180
 	.global	gUnk_0859EB94
 gUnk_0859EB94:
@@ -2704,23 +2704,23 @@ gWarpStarStationLevelSignFrame5:
 	.global	gWarpStarStationLevelSignFrame6
 gWarpStarStationLevelSignFrame6:
 	.incbin	"baserom.gba", 0x5A3BD8, 0x20
-	.global	gUnk_085A3BF8
-gUnk_085A3BF8:
+	.global	gLoadMuseumAbilitySignGfxPalette0
+gLoadMuseumAbilitySignGfxPalette0:
 	.incbin	"baserom.gba", 0x5A3BF8, 0x20
-	.global	gUnk_085A3C18
-gUnk_085A3C18:
+	.global	gLoadMuseumAbilitySignGfxPalette1
+gLoadMuseumAbilitySignGfxPalette1:
 	.incbin	"baserom.gba", 0x5A3C18, 0x20
-	.global	gUnk_085A3C38
-gUnk_085A3C38:
+	.global	gLoadMuseumAbilitySignGfxPalette2
+gLoadMuseumAbilitySignGfxPalette2:
 	.incbin	"baserom.gba", 0x5A3C38, 0x20
-	.global	gUnk_085A3C58
-gUnk_085A3C58:
+	.global	gLoadMuseumAbilitySignGfxPalette3
+gLoadMuseumAbilitySignGfxPalette3:
 	.incbin	"baserom.gba", 0x5A3C58, 0x20
-	.global	gUnk_085A3C78
-gUnk_085A3C78:
+	.global	gLoadMuseumAbilitySignGfxPalette4
+gLoadMuseumAbilitySignGfxPalette4:
 	.incbin	"baserom.gba", 0x5A3C78, 0x20
-	.global	gUnk_085A3C98
-gUnk_085A3C98:
+	.global	gLoadMuseumAbilitySignGfxPalette5
+gLoadMuseumAbilitySignGfxPalette5:
 	.incbin	"baserom.gba", 0x5A3C98, 0x20
 	.global	gUnk_085A3CB8
 gUnk_085A3CB8:
@@ -2797,164 +2797,164 @@ gUnk_085A70BC:
 	.global	gUnk_085A70FC
 gUnk_085A70FC:
 	.incbin	"baserom.gba", 0x5A70FC, 0x20
-	.global	gUnk_085A711C
-gUnk_085A711C:
+	.global	gAbilityPicture0Palette
+gAbilityPicture0Palette:
 	.incbin	"baserom.gba", 0x5A711C, 0x20
 	.global	gUnk_085A713C
 gUnk_085A713C:
 	.incbin	"baserom.gba", 0x5A713C, 0x3E0
-	.global	gUnk_085A751C
-gUnk_085A751C:
+	.global	gAbilityPicture1Palette
+gAbilityPicture1Palette:
 	.incbin	"baserom.gba", 0x5A751C, 0x20
 	.global	gUnk_085A753C
 gUnk_085A753C:
 	.incbin	"baserom.gba", 0x5A753C, 0x3E0
-	.global	gUnk_085A791C
-gUnk_085A791C:
+	.global	gAbilityPicture2Palette
+gAbilityPicture2Palette:
 	.incbin	"baserom.gba", 0x5A791C, 0x20
 	.global	gUnk_085A793C
 gUnk_085A793C:
 	.incbin	"baserom.gba", 0x5A793C, 0x3E0
-	.global	gUnk_085A7D1C
-gUnk_085A7D1C:
+	.global	gAbilityPicture3Palette
+gAbilityPicture3Palette:
 	.incbin	"baserom.gba", 0x5A7D1C, 0x20
 	.global	gUnk_085A7D3C
 gUnk_085A7D3C:
 	.incbin	"baserom.gba", 0x5A7D3C, 0x3E0
-	.global	gUnk_085A811C
-gUnk_085A811C:
+	.global	gAbilityPicture4Palette
+gAbilityPicture4Palette:
 	.incbin	"baserom.gba", 0x5A811C, 0x20
 	.global	gUnk_085A813C
 gUnk_085A813C:
 	.incbin	"baserom.gba", 0x5A813C, 0x3E0
-	.global	gUnk_085A851C
-gUnk_085A851C:
+	.global	gAbilityPicture5Palette
+gAbilityPicture5Palette:
 	.incbin	"baserom.gba", 0x5A851C, 0x20
 	.global	gUnk_085A853C
 gUnk_085A853C:
 	.incbin	"baserom.gba", 0x5A853C, 0x3E0
-	.global	gUnk_085A891C
-gUnk_085A891C:
+	.global	gAbilityPicture6Palette
+gAbilityPicture6Palette:
 	.incbin	"baserom.gba", 0x5A891C, 0x20
 	.global	gUnk_085A893C
 gUnk_085A893C:
 	.incbin	"baserom.gba", 0x5A893C, 0x3E0
-	.global	gUnk_085A8D1C
-gUnk_085A8D1C:
+	.global	gAbilityPicture7Palette
+gAbilityPicture7Palette:
 	.incbin	"baserom.gba", 0x5A8D1C, 0x20
 	.global	gUnk_085A8D3C
 gUnk_085A8D3C:
 	.incbin	"baserom.gba", 0x5A8D3C, 0x3E0
-	.global	gUnk_085A911C
-gUnk_085A911C:
+	.global	gAbilityPicture8Palette
+gAbilityPicture8Palette:
 	.incbin	"baserom.gba", 0x5A911C, 0x20
 	.global	gUnk_085A913C
 gUnk_085A913C:
 	.incbin	"baserom.gba", 0x5A913C, 0x3E0
-	.global	gUnk_085A951C
-gUnk_085A951C:
+	.global	gAbilityPicture9Palette
+gAbilityPicture9Palette:
 	.incbin	"baserom.gba", 0x5A951C, 0x20
 	.global	gUnk_085A953C
 gUnk_085A953C:
 	.incbin	"baserom.gba", 0x5A953C, 0x3E0
-	.global	gUnk_085A991C
-gUnk_085A991C:
+	.global	gAbilityPicture10Palette
+gAbilityPicture10Palette:
 	.incbin	"baserom.gba", 0x5A991C, 0x20
 	.global	gUnk_085A993C
 gUnk_085A993C:
 	.incbin	"baserom.gba", 0x5A993C, 0x3E0
-	.global	gUnk_085A9D1C
-gUnk_085A9D1C:
+	.global	gAbilityPicture11Palette
+gAbilityPicture11Palette:
 	.incbin	"baserom.gba", 0x5A9D1C, 0x20
 	.global	gUnk_085A9D3C
 gUnk_085A9D3C:
 	.incbin	"baserom.gba", 0x5A9D3C, 0x3E0
-	.global	gUnk_085AA11C
-gUnk_085AA11C:
+	.global	gAbilityPicture12Palette
+gAbilityPicture12Palette:
 	.incbin	"baserom.gba", 0x5AA11C, 0x20
 	.global	gUnk_085AA13C
 gUnk_085AA13C:
 	.incbin	"baserom.gba", 0x5AA13C, 0x3E0
-	.global	gUnk_085AA51C
-gUnk_085AA51C:
+	.global	gAbilityPicture13Palette
+gAbilityPicture13Palette:
 	.incbin	"baserom.gba", 0x5AA51C, 0x20
 	.global	gUnk_085AA53C
 gUnk_085AA53C:
 	.incbin	"baserom.gba", 0x5AA53C, 0x3E0
-	.global	gUnk_085AA91C
-gUnk_085AA91C:
+	.global	gAbilityPicture14Palette
+gAbilityPicture14Palette:
 	.incbin	"baserom.gba", 0x5AA91C, 0x20
 	.global	gUnk_085AA93C
 gUnk_085AA93C:
 	.incbin	"baserom.gba", 0x5AA93C, 0x3E0
-	.global	gUnk_085AAD1C
-gUnk_085AAD1C:
+	.global	gAbilityPicture15Palette
+gAbilityPicture15Palette:
 	.incbin	"baserom.gba", 0x5AAD1C, 0x20
 	.global	gUnk_085AAD3C
 gUnk_085AAD3C:
 	.incbin	"baserom.gba", 0x5AAD3C, 0x3E0
-	.global	gUnk_085AB11C
-gUnk_085AB11C:
+	.global	gAbilityPicture16Palette
+gAbilityPicture16Palette:
 	.incbin	"baserom.gba", 0x5AB11C, 0x20
 	.global	gUnk_085AB13C
 gUnk_085AB13C:
 	.incbin	"baserom.gba", 0x5AB13C, 0x3E0
-	.global	gUnk_085AB51C
-gUnk_085AB51C:
+	.global	gAbilityPicture17Palette
+gAbilityPicture17Palette:
 	.incbin	"baserom.gba", 0x5AB51C, 0x20
 	.global	gUnk_085AB53C
 gUnk_085AB53C:
 	.incbin	"baserom.gba", 0x5AB53C, 0x3E0
-	.global	gUnk_085AB91C
-gUnk_085AB91C:
+	.global	gAbilityPicture18Palette
+gAbilityPicture18Palette:
 	.incbin	"baserom.gba", 0x5AB91C, 0x20
 	.global	gUnk_085AB93C
 gUnk_085AB93C:
 	.incbin	"baserom.gba", 0x5AB93C, 0x3E0
-	.global	gUnk_085ABD1C
-gUnk_085ABD1C:
+	.global	gAbilityPicture19Palette
+gAbilityPicture19Palette:
 	.incbin	"baserom.gba", 0x5ABD1C, 0x20
 	.global	gUnk_085ABD3C
 gUnk_085ABD3C:
 	.incbin	"baserom.gba", 0x5ABD3C, 0x3E0
-	.global	gUnk_085AC11C
-gUnk_085AC11C:
+	.global	gAbilityPicture20Palette
+gAbilityPicture20Palette:
 	.incbin	"baserom.gba", 0x5AC11C, 0x20
 	.global	gUnk_085AC13C
 gUnk_085AC13C:
 	.incbin	"baserom.gba", 0x5AC13C, 0x3E0
-	.global	gUnk_085AC51C
-gUnk_085AC51C:
+	.global	gAbilityPicture21Palette
+gAbilityPicture21Palette:
 	.incbin	"baserom.gba", 0x5AC51C, 0x20
 	.global	gUnk_085AC53C
 gUnk_085AC53C:
 	.incbin	"baserom.gba", 0x5AC53C, 0x3E0
-	.global	gUnk_085AC91C
-gUnk_085AC91C:
+	.global	gAbilityPicture22Palette
+gAbilityPicture22Palette:
 	.incbin	"baserom.gba", 0x5AC91C, 0x20
 	.global	gUnk_085AC93C
 gUnk_085AC93C:
 	.incbin	"baserom.gba", 0x5AC93C, 0x3E0
-	.global	gUnk_085ACD1C
-gUnk_085ACD1C:
+	.global	gAbilityPicture23Palette
+gAbilityPicture23Palette:
 	.incbin	"baserom.gba", 0x5ACD1C, 0x20
 	.global	gUnk_085ACD3C
 gUnk_085ACD3C:
 	.incbin	"baserom.gba", 0x5ACD3C, 0x3E0
-	.global	gUnk_085AD11C
-gUnk_085AD11C:
+	.global	gAbilityPicture24Palette
+gAbilityPicture24Palette:
 	.incbin	"baserom.gba", 0x5AD11C, 0x20
 	.global	gUnk_085AD13C
 gUnk_085AD13C:
 	.incbin	"baserom.gba", 0x5AD13C, 0x3E0
-	.global	gUnk_085AD51C
-gUnk_085AD51C:
+	.global	gAbilityPicture25Palette
+gAbilityPicture25Palette:
 	.incbin	"baserom.gba", 0x5AD51C, 0x20
 	.global	gUnk_085AD53C
 gUnk_085AD53C:
 	.incbin	"baserom.gba", 0x5AD53C, 0x3E0
-	.global	gUnk_085AD91C
-gUnk_085AD91C:
+	.global	gAbilityPicture26Palette
+gAbilityPicture26Palette:
 	.incbin	"baserom.gba", 0x5AD91C, 0x20
 	.global	gUnk_085AD93C
 gUnk_085AD93C:
@@ -3301,8 +3301,8 @@ gUnk_085B9B6C:
 	.word	gUnk_085B8520
 	.word	gUnk_085B85A0
 	.word	gUnk_087E2750
-	.global	gUnk_085B9B80
-gUnk_085B9B80:
+	.global	gCutsceneLoadBgGraphicsPicture0Palette
+gCutsceneLoadBgGraphicsPicture0Palette:
 	.incbin	"baserom.gba", 0x5B9B80, 0x40
 	.global	gUnk_085B9BC0
 gUnk_085B9BC0:
@@ -3448,8 +3448,8 @@ gCutsceneSheet0:
 	.word	gCutsceneSheet0Palette
 	.word	gCutsceneSheet0Tiles
 	.word	gUnk_087E2834
-	.global	gUnk_085BC814
-gUnk_085BC814:
+	.global	gCutsceneLoadBgGraphicsPicture1Palette
+gCutsceneLoadBgGraphicsPicture1Palette:
 	.incbin	"baserom.gba", 0x5BC814, 0x40
 	.global	gUnk_085BC854
 gUnk_085BC854:
@@ -3616,8 +3616,8 @@ gCutsceneSheet1:
 	.word	gCutsceneSheet1Palette
 	.word	gCutsceneSheet1Tiles
 	.word	gUnk_087E28DC
-	.global	gUnk_085BEB84
-gUnk_085BEB84:
+	.global	gCutsceneLoadBgGraphicsPicture2Palette
+gCutsceneLoadBgGraphicsPicture2Palette:
 	.incbin	"baserom.gba", 0x5BEB84, 0x40
 	.global	gUnk_085BEBC4
 gUnk_085BEBC4:
