@@ -535,6 +535,13 @@ def verify_diff(ref):
     if now[:len(before)] != before:
         raise RenameError("%s: rows before %s were edited, not appended" % (renames_rel, ref))
     added = now[len(before):]
+    # A `tag` or `field` row whose old side is no identifier (`TaskGfx(tagged)`,
+    # `TaskGfx+0x0C`) documents a new struct or member (#186): it renames
+    # nothing, and the commit that adds the type is proven by the per-file
+    # assembly oracle, not by this check.
+    documented = [r for r in added if r["kind"] in ("tag", "field")
+                  and not IDENT_RE.match(r["old"].replace(".", "_", 1) if r["kind"] == "field" else r["old"])]
+    added = [r for r in added if r not in documented]
     scoped = [r for r in added if r["kind"] in ("local", "param")]
     fields = [r for r in added if r["kind"] == "field"]
     aliases = [r for r in added if r["kind"] == "alias"]
@@ -762,6 +769,8 @@ def verify_diff(ref):
           "(%d sites), %d parameters and locals, %d files checked"
           % (ref, len(added), len(fields), len(aliases), added_consts, const_uses[0],
              len(scoped), checked))
+    for r in documented:
+        print("  new %s, documented, not a rename: %s" % (r["kind"], r["new"]))
     for (tag, o), n in sorted(field_pairs.items()):
         if not field_uses.get((o, n)):
             problems.append("field %s.%s -> %s: no use renamed" % (tag, o, n))
