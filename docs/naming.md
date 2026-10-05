@@ -727,9 +727,9 @@ whose symbol was renamed, and on an unknown code.  The codes:
 | ROM label | `gUnk_08*` | 67 | one slot of a named record holds it and nothing else names it; its position name waits for the slot's word (docs/naming.md section 2.4) |
 | ROM label | `gUnk_08*` | 793 | read by one function only: its meaning is local to that function's algorithm, as for RAM cells (docs/naming.md section 5) |
 | ROM label | `gUnk_08*` | 1 | no code or record names it: a record boundary the data census cut, reached by an offset from a named neighbour |
-| ROM label | `gUnk_08*` | 11946 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
-| ROM label | (named) | 8092 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
-| ROM label | (named) | 2431 | documented by position in a format-only chain: a slot no code reads, such as the frame list a graphics descriptor's trailer word points at (docs/naming.md section 2.4, docs/data.md 5.3) |
+| ROM label | `gUnk_08*` | 5252 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
+| ROM label | (named) | 14780 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
+| ROM label | (named) | 2437 | documented by position in a format-only chain: a slot no code reads, such as the frame list a graphics descriptor's trailer word points at (docs/naming.md section 2.4, docs/data.md 5.3) |
 | ROM label | `gUnk_08*` | 30 | no defined verb or noun fits the whole of it; only an ordinal or a vague word would (docs/naming.md 1) |
 | ROM label | `gUnk_08*` | 14 | its role rests on a cell, field or value that stays unnamed (the row names it) |
 | ROM label | `gUnk_08*` | 12 | the name needs an identity (enemy, object, picture, scene) with fewer than three agreeing sources (docs/naming.md 2.3) |
@@ -749,7 +749,7 @@ whose symbol was renamed, and on an unknown code.  The codes:
 | struct field | `unk*` | 1 | a flag word whose bits are not all proven (docs/naming.md 7.0, R3) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 518 RAM cells by role and 24 by position, 3317 ROM labels by role and 10523 by position.
+Named for comparison: 518 RAM cells by role and 24 by position, 3317 ROM labels by role and 17217 by position.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 
