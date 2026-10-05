@@ -38,7 +38,7 @@ void KrackoStarmanTeardown(void);
 /* Record targets no header declares: labels of the data files. */
 extern const u8 gAbilityStarAttackBox[];
 extern const u8 gUnk_0873F4E4[];
-extern const u8 gUnk_0873F51C[];
+extern const u8 gItemDef5AttackBox[];
 extern const u8 gWarpStarAttackBox[];
 extern const u8 gCannonAttackBox[];
 extern const u8 gCannonFuseAttackBox[];
@@ -125,14 +125,14 @@ extern const u8 gGrandWheelieAltAttackBoxFrames36To47[];
 extern const u8 gGrandWheelieAltAttackBoxOtherFrames[];
 extern const u8 gUnk_08744CDC[];
 extern const u8 gUnk_08744D14[];
-extern const u8 gUnk_08744D68[];
+extern const u8 gFireLionAux9AltAttackBox[];
 extern const u8 gUnk_08744DBC[];
-extern const u8 gUnk_08744E10[];
+extern const u8 gFireLionAux11AltAttackBox[];
 extern const u8 gUnk_08744E64[];
 extern const u8 gUnk_08744EB8[];
 extern const u8 gFireLionDefeatAttackBox[];
-extern const u8 gUnk_08744F60[];
-extern const u8 gUnk_08744FB4[];
+extern const u8 gFireLionAux23AltAttackBox[];
+extern const u8 gFireLionAux24AltAttackBox[];
 extern const u8 gUnk_08745008[];
 extern const u8 gUnk_0874505C[];
 extern const u8 gUnk_087450B0[];
@@ -165,7 +165,7 @@ extern const u8 gMaceKnightTerrainBox[];
 extern const u8 gTridentKnightTerrainBox[];
 extern const u8 gJavelinKnightTerrainBox[];
 extern const u8 gKingDededeAttackBox[];
-extern const u8 gUnk_08748804[];
+extern const u8 gKingDededeAuxAltAttackBox[];
 extern const u8 gMrShineAttackBox[];
 extern const u8 gMrShineStartAscendAttackBox[];
 extern const u8 gMrBrightAttackBox[];
@@ -175,19 +175,19 @@ extern const u8 gMrShineAndMrBrightTerrainBox[];
 extern const u8 gUnk_08748910[];
 extern const u8 gKingDededeStarAttackBox[];
 extern const u8 gKingDededeAirPuffAttackBox[];
-extern const u8 gUnk_08748C60[];
+extern const u8 gChildActorDef24AttackBox[];
 extern const u8 gUnk_08748C7C[];
 extern const u8 gUnk_08748C98[];
 extern const u8 gUnk_08748CB4[];
 extern const u8 gKingDededeStarTerrainBox[];
 extern const u8 gKingDededeAirPuffTerrainBox[];
-extern const u8 gUnk_08748CE0[];
+extern const u8 gChildActorDef24TerrainBox[];
 extern const u8 gUnk_08748CE8[];
 extern const u8 gUnk_08748CF0[];
 extern const u8 gUnk_08749598[];
-extern const u8 gUnk_08749608[];
+extern const u8 gMetaKnightAuxAltAttackBox[];
 extern const u8 gKrackoAttackBox[];
-extern const u8 gUnk_0874973C[];
+extern const u8 gKrackoAuxAltAttackBox[];
 extern const u8 gUnk_08749790[];
 extern const u8 gNightmareWizardUpdateAttackBox[];
 extern const u8 gUnk_0874988C[];
@@ -199,9 +199,9 @@ extern const u8 gNightmareWizardStarAttackBox[];
 extern const u8 gMetaKnightSwordTerrainBox[];
 extern const u8 gNightmareWizardStarTerrainBox[];
 extern const u8 gPaintRollerAttackBox[];
-extern const u8 gUnk_0874B3C4[];
+extern const u8 gPaintRollerAuxAltAttackBox[];
 extern const u8 gHeavyMoleAttackBox[];
-extern const u8 gUnk_0874B418[];
+extern const u8 gHeavyMoleAuxAltAttackBox[];
 extern const u8 gNightmarePowerOrbAttackBox[];
 extern const u8 gPaintRollerTerrainBox[];
 extern const u8 gUnk_0874BB7C[];
@@ -209,7 +209,7 @@ extern const u8 gPaintRollerLightningAttackBox[];
 extern const u8 gUnk_0874BF34[];
 extern const u8 gUnk_0874BF50[];
 extern const u8 gWhispyWoodsAttackBox[];
-extern const u8 gUnk_0874C1BC[];
+extern const u8 gWhispyWoodsAuxAltAttackBox[];
 extern const u8 gWhispyWoodsTerrainBox[];
 extern const u8 gWhispyWoodsAppleAttackBox[];
 extern const u8 gWhispyWoodsAirPuffAttackBox[];
@@ -279,7 +279,7 @@ extern struct ActorHandlers gPaintRollerPaintingTerrainHandlers;
 extern struct ActorHandlers gWhispyWoodsAppleTerrainHandlers;
 extern struct ActorVt gAbilityStarHitReactions;
 extern struct ActorVt gUnk_0873F640;
-extern struct ActorVt gUnk_0873F64C;
+extern struct ActorVt gItemDef5HitReactions;
 extern struct ActorVt gBigSwitchHitReactions;
 extern struct ActorVt gUnk_0873F944;
 extern struct ActorVt gWaddleDeeHitReactions;
@@ -500,10 +500,10 @@ struct ActorDef gItemDef5 ACTOR_REC(0873f2b8) = {
     .isItem = 0x0,
     .unk0E = 0x0,
     .aux = &gUnk_0873F8EC,
-    .attackBox = (u32)gUnk_0873F51C,
+    .attackBox = (u32)gItemDef5AttackBox,
     .terrainBox = 0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)&gUnk_0873F64C,
+    .hitReactions = (u32)&gItemDef5HitReactions,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1910,7 +1910,7 @@ struct ActorAux gUnk_08745354 ACTOR_REC(0874531c) = {
 struct ActorAux gFireLionAux9 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_08744D68,
+    .altAttackBox = (u32)gFireLionAux9AltAttackBox,
 };
 struct ActorAux gUnk_08745364 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
@@ -1920,7 +1920,7 @@ struct ActorAux gUnk_08745364 ACTOR_REC(0874531c) = {
 struct ActorAux gFireLionAux11 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_08744E10,
+    .altAttackBox = (u32)gFireLionAux11AltAttackBox,
 };
 struct ActorAux gUnk_08745374 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
@@ -1940,12 +1940,12 @@ struct ActorAux gFireLionAux21 ACTOR_REC(0874531c) = {
 struct ActorAux gFireLionAux23 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_08744F60,
+    .altAttackBox = (u32)gFireLionAux23AltAttackBox,
 };
 struct ActorAux gFireLionAux24 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_08744FB4,
+    .altAttackBox = (u32)gFireLionAux24AltAttackBox,
 };
 struct ActorAux gUnk_0874539C ACTOR_REC(0874531c) = {
     .hitDuration = 32,
@@ -2387,7 +2387,7 @@ struct ActorDef gUnk_087487BC ACTOR_REC(08748764) = {
 struct ActorAux gKingDededeAux ACTOR_REC(08748918) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_08748804,
+    .altAttackBox = (u32)gKingDededeAuxAltAttackBox,
 };
 struct ActorAux gMrShineAndMrBrightAux ACTOR_REC(08748918) = {
     .hitDuration = 32,
@@ -2445,8 +2445,8 @@ struct ActorDef gChildActorDef24 ACTOR_REC(08748ab0) = {
     .isItem = 0x0,
     .unk0E = 0x0,
     .aux = NULL,
-    .attackBox = (u32)gUnk_08748C60,
-    .terrainBox = (s32)gUnk_08748CE0,
+    .attackBox = (u32)gChildActorDef24AttackBox,
+    .terrainBox = (s32)gChildActorDef24TerrainBox,
     .terrainHandlers = 0,
     .hitReactions = (u32)&gUnk_08748D10,
     .initCallback = NULL,
@@ -2561,12 +2561,12 @@ struct ActorDef gNightmareWizardDef ACTOR_REC(08749514) = {
 struct ActorAux gMetaKnightAux ACTOR_REC(08749ae8) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_08749608,
+    .altAttackBox = (u32)gMetaKnightAuxAltAttackBox,
 };
 struct ActorAux gKrackoAux ACTOR_REC(08749ae8) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_0874973C,
+    .altAttackBox = (u32)gKrackoAuxAltAttackBox,
 };
 struct ActorAux gUnk_08749AF8 ACTOR_REC(08749ae8) = {
     .hitDuration = 32,
@@ -2706,12 +2706,12 @@ struct ActorDef gNightmarePowerOrbStarDef ACTOR_REC(0874b2dc) = {
 struct ActorAux gPaintRollerAux ACTOR_REC(0874b4c8) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_0874B3C4,
+    .altAttackBox = (u32)gPaintRollerAuxAltAttackBox,
 };
 struct ActorAux gHeavyMoleAux ACTOR_REC(0874b4c8) = {
     .hitDuration = 54,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_0874B418,
+    .altAttackBox = (u32)gHeavyMoleAuxAltAttackBox,
 };
 
 /* ---- 0x0874B940-0x0874BB7C: 13 record(s), section .actor_rec_0874b940 ---- */
@@ -2960,7 +2960,7 @@ struct ActorDef gWhispyWoodsDef ACTOR_REC(0874c158) = {
 struct ActorAux gWhispyWoodsAux ACTOR_REC(0874c1fc) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_0874C1BC,
+    .altAttackBox = (u32)gWhispyWoodsAuxAltAttackBox,
 };
 
 /* ---- 0x0874C378-0x0874C3D0: 2 record(s), section .actor_rec_0874c378 ---- */

@@ -212,8 +212,8 @@ gUnk_0873F4E4:
 	.global	gIdleAttackBox
 gIdleAttackBox:
 	.incbin	"baserom.gba", 0x73F500, 0x1C
-	.global	gUnk_0873F51C
-gUnk_0873F51C:
+	.global	gItemDef5AttackBox
+gItemDef5AttackBox:
 	.incbin	"baserom.gba", 0x73F51C, 0x1C
 	.global	gWarpStarAttackBox
 gWarpStarAttackBox:
@@ -2984,8 +2984,8 @@ gUnk_08744D30:
 	.global	gFireLionExtraAttackBox9
 gFireLionExtraAttackBox9:
 	.incbin	"baserom.gba", 0x744D4C, 0x1C
-	.global	gUnk_08744D68
-gUnk_08744D68:
+	.global	gFireLionAux9AltAttackBox
+gFireLionAux9AltAttackBox:
 	.incbin	"baserom.gba", 0x744D68, 0x1C
 	.global	gUnk_08744D84
 gUnk_08744D84:
@@ -3002,8 +3002,8 @@ gUnk_08744DD8:
 	.global	gFireLionExtraAttackBox11
 gFireLionExtraAttackBox11:
 	.incbin	"baserom.gba", 0x744DF4, 0x1C
-	.global	gUnk_08744E10
-gUnk_08744E10:
+	.global	gFireLionAux11AltAttackBox
+gFireLionAux11AltAttackBox:
 	.incbin	"baserom.gba", 0x744E10, 0x1C
 	.global	gUnk_08744E2C
 gUnk_08744E2C:
@@ -3038,8 +3038,8 @@ gUnk_08744F28:
 	.global	gFireLionExtraAttackBox23
 gFireLionExtraAttackBox23:
 	.incbin	"baserom.gba", 0x744F44, 0x1C
-	.global	gUnk_08744F60
-gUnk_08744F60:
+	.global	gFireLionAux23AltAttackBox
+gFireLionAux23AltAttackBox:
 	.incbin	"baserom.gba", 0x744F60, 0x1C
 	.global	gUnk_08744F7C
 gUnk_08744F7C:
@@ -3047,8 +3047,8 @@ gUnk_08744F7C:
 	.global	gFireLionExtraAttackBox24
 gFireLionExtraAttackBox24:
 	.incbin	"baserom.gba", 0x744F98, 0x1C
-	.global	gUnk_08744FB4
-gUnk_08744FB4:
+	.global	gFireLionAux24AltAttackBox
+gFireLionAux24AltAttackBox:
 	.incbin	"baserom.gba", 0x744FB4, 0x1C
 	.global	gUnk_08744FD0
 gUnk_08744FD0:
@@ -3991,14 +3991,14 @@ gUnk_08747B24:
 	.word	gUnk_0874815C
 	.global	gJavelinKnightSpinAttackBoxes
 gJavelinKnightSpinAttackBoxes:
-	.word	gUnk_0874800C
-	.word	gUnk_08748028
-	.word	gUnk_08748044
-	.word	gUnk_08748060
-	.word	gUnk_0874807C
-	.word	gUnk_08748098
-	.word	gUnk_087480B4
-	.word	gUnk_087480D0
+	.word	gJavelinKnightSpinAttackBox0
+	.word	gJavelinKnightSpinAttackBox1
+	.word	gJavelinKnightSpinAttackBox2
+	.word	gJavelinKnightSpinAttackBox3
+	.word	gJavelinKnightSpinAttackBox4
+	.word	gJavelinKnightSpinAttackBox5
+	.word	gJavelinKnightSpinAttackBox6
+	.word	gJavelinKnightSpinAttackBox7
 	.global	gUnk_08747B58
 gUnk_08747B58:
 	.incbin	"baserom.gba", 0x747B58, 0x10
@@ -4068,29 +4068,29 @@ gUnk_08747FD4:
 	.global	gUnk_08747FF0
 gUnk_08747FF0:
 	.incbin	"baserom.gba", 0x747FF0, 0x1C
-	.global	gUnk_0874800C
-gUnk_0874800C:
+	.global	gJavelinKnightSpinAttackBox0
+gJavelinKnightSpinAttackBox0:
 	.incbin	"baserom.gba", 0x74800C, 0x1C
-	.global	gUnk_08748028
-gUnk_08748028:
+	.global	gJavelinKnightSpinAttackBox1
+gJavelinKnightSpinAttackBox1:
 	.incbin	"baserom.gba", 0x748028, 0x1C
-	.global	gUnk_08748044
-gUnk_08748044:
+	.global	gJavelinKnightSpinAttackBox2
+gJavelinKnightSpinAttackBox2:
 	.incbin	"baserom.gba", 0x748044, 0x1C
-	.global	gUnk_08748060
-gUnk_08748060:
+	.global	gJavelinKnightSpinAttackBox3
+gJavelinKnightSpinAttackBox3:
 	.incbin	"baserom.gba", 0x748060, 0x1C
-	.global	gUnk_0874807C
-gUnk_0874807C:
+	.global	gJavelinKnightSpinAttackBox4
+gJavelinKnightSpinAttackBox4:
 	.incbin	"baserom.gba", 0x74807C, 0x1C
-	.global	gUnk_08748098
-gUnk_08748098:
+	.global	gJavelinKnightSpinAttackBox5
+gJavelinKnightSpinAttackBox5:
 	.incbin	"baserom.gba", 0x748098, 0x1C
-	.global	gUnk_087480B4
-gUnk_087480B4:
+	.global	gJavelinKnightSpinAttackBox6
+gJavelinKnightSpinAttackBox6:
 	.incbin	"baserom.gba", 0x7480B4, 0x1C
-	.global	gUnk_087480D0
-gUnk_087480D0:
+	.global	gJavelinKnightSpinAttackBox7
+gJavelinKnightSpinAttackBox7:
 	.incbin	"baserom.gba", 0x7480D0, 0x1C
 	.global	gUnk_087480EC
 gUnk_087480EC:
@@ -4277,8 +4277,8 @@ actor_rodata_087487e8:
 	.global	gKingDededeAttackBox
 gKingDededeAttackBox:
 	.incbin	"baserom.gba", 0x7487E8, 0x1C
-	.global	gUnk_08748804
-gUnk_08748804:
+	.global	gKingDededeAuxAltAttackBox
+gKingDededeAuxAltAttackBox:
 	.incbin	"baserom.gba", 0x748804, 0x1C
 	.global	gKingDededeIntroExtraAttackBox
 gKingDededeIntroExtraAttackBox:
@@ -4408,8 +4408,8 @@ gUnk_08748C28:
 	.global	gUnk_08748C44
 gUnk_08748C44:
 	.incbin	"baserom.gba", 0x748C44, 0x1C
-	.global	gUnk_08748C60
-gUnk_08748C60:
+	.global	gChildActorDef24AttackBox
+gChildActorDef24AttackBox:
 	.incbin	"baserom.gba", 0x748C60, 0x1C
 	.global	gUnk_08748C7C
 gUnk_08748C7C:
@@ -4426,8 +4426,8 @@ gKingDededeStarTerrainBox:
 	.global	gKingDededeAirPuffTerrainBox
 gKingDededeAirPuffTerrainBox:
 	.incbin	"baserom.gba", 0x748CD8, 0x8
-	.global	gUnk_08748CE0
-gUnk_08748CE0:
+	.global	gChildActorDef24TerrainBox
+gChildActorDef24TerrainBox:
 	.incbin	"baserom.gba", 0x748CE0, 0x8
 	.global	gUnk_08748CE8
 gUnk_08748CE8:
@@ -4751,8 +4751,8 @@ gUnk_087495D0:
 	.global	gMetaKnightExtraAttackBox
 gMetaKnightExtraAttackBox:
 	.incbin	"baserom.gba", 0x7495EC, 0x1C
-	.global	gUnk_08749608
-gUnk_08749608:
+	.global	gMetaKnightAuxAltAttackBox
+gMetaKnightAuxAltAttackBox:
 	.incbin	"baserom.gba", 0x749608, 0x1C
 	.global	gUnk_08749624
 gUnk_08749624:
@@ -4784,8 +4784,8 @@ gKrackoJrAttackBox:
 	.global	gKrackoIntroAttackBox
 gKrackoIntroAttackBox:
 	.incbin	"baserom.gba", 0x749720, 0x1C
-	.global	gUnk_0874973C
-gUnk_0874973C:
+	.global	gKrackoAuxAltAttackBox
+gKrackoAuxAltAttackBox:
 	.incbin	"baserom.gba", 0x74973C, 0x1C
 	.global	gKrackoIntroExtraAttackBox
 gKrackoIntroExtraAttackBox:
@@ -5289,8 +5289,8 @@ gPaintRollerAttackBox:
 	.global	gPaintRollerExtraAttackBox
 gPaintRollerExtraAttackBox:
 	.incbin	"baserom.gba", 0x74B3A8, 0x1C
-	.global	gUnk_0874B3C4
-gUnk_0874B3C4:
+	.global	gPaintRollerAuxAltAttackBox
+gPaintRollerAuxAltAttackBox:
 	.incbin	"baserom.gba", 0x74B3C4, 0x1C
 	.global	gHeavyMoleAttackBox
 gHeavyMoleAttackBox:
@@ -5298,8 +5298,8 @@ gHeavyMoleAttackBox:
 	.global	gHeavyMoleExtraAttackBox
 gHeavyMoleExtraAttackBox:
 	.incbin	"baserom.gba", 0x74B3FC, 0x1C
-	.global	gUnk_0874B418
-gUnk_0874B418:
+	.global	gHeavyMoleAuxAltAttackBox
+gHeavyMoleAuxAltAttackBox:
 	.incbin	"baserom.gba", 0x74B418, 0x1C
 	.global	gNightmarePowerOrbAttackBox
 gNightmarePowerOrbAttackBox:
@@ -5792,8 +5792,8 @@ actor_rodata_0874c184:
 	.global	gWhispyWoodsAttackBox
 gWhispyWoodsAttackBox:
 	.incbin	"baserom.gba", 0x74C184, 0x38
-	.global	gUnk_0874C1BC
-gUnk_0874C1BC:
+	.global	gWhispyWoodsAuxAltAttackBox
+gWhispyWoodsAuxAltAttackBox:
 	.incbin	"baserom.gba", 0x74C1BC, 0x38
 	.global	gWhispyWoodsTerrainBox
 gWhispyWoodsTerrainBox:

@@ -567,12 +567,11 @@ copies and module-local records).
 | I/O register | `gUnk_04*` | 0 | none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and early_4734.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_* |
 | ROM label | `gUnk_08*` | 717 | shared: two or more slots, records or consumers point at it, so no single slot or role is its identity (docs/naming.md section 2.4) |
 | ROM label | `gUnk_08*` | 683 | reached only through a record or consumer that is itself unnamed (a `gUnk_` record, a `sub_*`): it is named with that referrer |
-| ROM label | `gUnk_08*` | 22 | one slot of a named record holds it and nothing else names it; its position name waits for the slot's word (docs/naming.md section 2.4) |
 | ROM label | `gUnk_08*` | 793 | read by one function only: its meaning is local to that function's algorithm, as for RAM cells (docs/naming.md section 5) |
 | ROM label | `gUnk_08*` | 69 | read by several named functions; the row in docs/analysis/unnamed.csv gives its reason |
 | ROM label | `gUnk_08*` | 1 | no code or record names it: a record boundary the data census cut, reached by an offset from a named neighbour |
 | ROM label | `gUnk_08*` | 17073 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
-| ROM label | (named) | 5314 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
+| ROM label | (named) | 5336 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
 | ROM label | (named) | 60 | documented by position in a format-only chain: a slot no code reads, such as the frame list a graphics descriptor's trailer word points at (docs/naming.md section 2.4, docs/data.md 5.3) |
 | struct field | `unk*` | 14 | per-family registers, named per family by the aliases in include/task_vars.h (docs/header-conventions.md; the member keeps its unk name, lessons and history cite it); `unk76` is u76's member for the player's bits |
 | struct field | `unk*` | 2 | struct PlayerState's per-action scratch: each player action keeps its own value there, named per action by the aliases in include/task_vars.h (#155 run 7; the member keeps its unk name) |
@@ -580,7 +579,7 @@ copies and module-local records).
 | struct field | `unk*` | 141 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 518 RAM cells by role and 24 by position, 3317 ROM labels by role and 5374 by position.
+Named for comparison: 518 RAM cells by role and 24 by position, 3317 ROM labels by role and 5396 by position.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 

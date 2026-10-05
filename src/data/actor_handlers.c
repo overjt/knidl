@@ -309,7 +309,7 @@ struct ActorVt gUnk_0873F640 ACTOR_TBL(0873f5fc) = {
     .defeatCallback = 0,
 };
 /* gItemDef5 */
-struct ActorVt gUnk_0873F64C ACTOR_TBL(0873f5fc) = {
+struct ActorVt gItemDef5HitReactions ACTOR_TBL(0873f5fc) = {
     .damageKind = 0,
     .defeatKind = 4,
     .filler02 = { 0x00, 0x00 },

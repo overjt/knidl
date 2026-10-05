@@ -14378,3 +14378,25 @@ gUnk_087E3048,gQuickDrawWheelieGfxFrameList,rom,"slot: gQuickDrawWheelieGfx's tr
 gUnk_087E3058,gQuickDrawChefKawasakiGfxFrameList,rom,"slot: gQuickDrawChefKawasakiGfx's trailer word (+0x10, data/sprite_sheets_2.s), the frame list that descriptor alone references (4 words, the same OAM streams as the opponent's frame table); format-only: no code reads the trailer (docs/data.md 5.3, docs/naming.md 2.4; as gWaddleDeeGfxFrameList)",155
 gUnk_087E3068,gQuickDrawMetaKnightGfxFrameList,rom,"slot: gQuickDrawMetaKnightGfx's trailer word (+0x10, data/sprite_sheets_2.s), the frame list that descriptor alone references (4 words, the same OAM streams as the opponent's frame table); format-only: no code reads the trailer (docs/data.md 5.3, docs/naming.md 2.4; as gWaddleDeeGfxFrameList)",155
 gUnk_087E3078,gQuickDrawKingDededeGfxFrameList,rom,"slot: gQuickDrawKingDededeGfx's trailer word (+0x10, data/sprite_sheets_2.s), the frame list that descriptor alone references (4 words, the same OAM streams as the opponent's frame table); format-only: no code reads the trailer (docs/data.md 5.3, docs/naming.md 2.4; as gWaddleDeeGfxFrameList)",155
+gUnk_0873F51C,gItemDef5AttackBox,rom,"slot: gItemDef5.attackBox (src/data/actor_records.c), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_0873F64C,gItemDef5HitReactions,rom,"slot: gItemDef5.hitReactions (src/data/actor_records.c), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_08744D68,gFireLionAux9AltAttackBox,rom,"slot: gFireLionAux9.altAttackBox (src/data/actor_records.c), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_08744E10,gFireLionAux11AltAttackBox,rom,"slot: gFireLionAux11.altAttackBox (src/data/actor_records.c), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_08744F60,gFireLionAux23AltAttackBox,rom,"slot: gFireLionAux23.altAttackBox (src/data/actor_records.c), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_08744FB4,gFireLionAux24AltAttackBox,rom,"slot: gFireLionAux24.altAttackBox (src/data/actor_records.c), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_08748804,gKingDededeAuxAltAttackBox,rom,"slot: gKingDededeAux.altAttackBox (src/data/actor_records.c), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_08748C60,gChildActorDef24AttackBox,rom,"slot: gChildActorDef24.attackBox (src/data/actor_records.c), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_08748CE0,gChildActorDef24TerrainBox,rom,"slot: gChildActorDef24.terrainBox (src/data/actor_records.c), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_08749608,gMetaKnightAuxAltAttackBox,rom,"slot: gMetaKnightAux.altAttackBox (src/data/actor_records.c), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_0874973C,gKrackoAuxAltAttackBox,rom,"slot: gKrackoAux.altAttackBox (src/data/actor_records.c), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_0874B3C4,gPaintRollerAuxAltAttackBox,rom,"slot: gPaintRollerAux.altAttackBox (src/data/actor_records.c), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_0874B418,gHeavyMoleAuxAltAttackBox,rom,"slot: gHeavyMoleAux.altAttackBox (src/data/actor_records.c), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_0874C1BC,gWhispyWoodsAuxAltAttackBox,rom,"slot: gWhispyWoodsAux.altAttackBox (src/data/actor_records.c), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_0874800C,gJavelinKnightSpinAttackBox0,rom,"slot: gJavelinKnightSpinAttackBoxes[0] (data/actor_rodata.s), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_08748028,gJavelinKnightSpinAttackBox1,rom,"slot: gJavelinKnightSpinAttackBoxes[1] (data/actor_rodata.s), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_08748044,gJavelinKnightSpinAttackBox2,rom,"slot: gJavelinKnightSpinAttackBoxes[2] (data/actor_rodata.s), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_08748060,gJavelinKnightSpinAttackBox3,rom,"slot: gJavelinKnightSpinAttackBoxes[3] (data/actor_rodata.s), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_0874807C,gJavelinKnightSpinAttackBox4,rom,"slot: gJavelinKnightSpinAttackBoxes[4] (data/actor_rodata.s), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_08748098,gJavelinKnightSpinAttackBox5,rom,"slot: gJavelinKnightSpinAttackBoxes[5] (data/actor_rodata.s), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_087480B4,gJavelinKnightSpinAttackBox6,rom,"slot: gJavelinKnightSpinAttackBoxes[6] (data/actor_rodata.s), the only referrer of this record (docs/naming.md 2.4)",155
+gUnk_087480D0,gJavelinKnightSpinAttackBox7,rom,"slot: gJavelinKnightSpinAttackBoxes[7] (data/actor_rodata.s), the only referrer of this record (docs/naming.md 2.4)",155
