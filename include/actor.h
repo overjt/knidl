@@ -22,7 +22,7 @@ struct GfxSrc
     /*0x0C*/ void *tiles;
 };
 
-struct Unk0873EAC0
+struct ThrowVelocity
 {
     /*0x00*/ s32 velX;
     /*0x04*/ s32 velY;
@@ -140,7 +140,7 @@ extern s16 gUnk_0873E7A4[];
 extern s16 gUnk_0873E7C4[];
 extern s16 gUnk_0873E864[];
 extern u32 gActorAttachedStates[];
-extern struct Unk0873EAC0 gUnk_0873EAC0[];
+extern struct ThrowVelocity gUnk_0873EAC0[];
 extern u16 gUnk_0873EAD8[][4];
 extern s16 gUnk_0873EAF0[];
 extern s8 gUnk_0873EB30[];
@@ -325,7 +325,7 @@ extern u32 gCannonSmokeFrames[];
 
 /* Functions (defined in the files named above each group). */
 
-struct InputState;
+struct TerrainCollisionBox;
 
 /* src/actor_62584.c */
 void PlayerDance12(void);
@@ -553,7 +553,7 @@ u32 sub_080694e0(void);
 u32 ActorCollideTerrainCeilingAndFloor(void);
 u32 ActorCollideTerrainWalls(void);
 u32 ActorCollideTerrainInCameraBounds(void);
-void ActorGetTerrainBox(struct InputState *out);
+void ActorGetTerrainBox(struct TerrainCollisionBox *out);
 u32 ActorReactToHitKind(s8 a);
 u32 ActorReactToHitOrTerrainDamage(void);
 u32 PickupReactToHit(void);

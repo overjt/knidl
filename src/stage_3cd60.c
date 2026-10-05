@@ -10,7 +10,7 @@
 #include "actor.h"
 
 struct PlayerHitBoxSet { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
-struct M11Buf { u8 box[4]; u8 terminator[4]; };
+struct PlayerHitBoxList { u8 box[4]; u8 terminator[4]; };
 struct PlayerBodyBox { u32 w[5]; };
 
 /* Not from collision.h or player.h: this file's view of gTerrainResult and
@@ -19,7 +19,7 @@ extern u16 gEndingLocalPlayer;
 extern struct PlayerHitBoxSet gPlayerHitBoxSets[];
 extern u8 gPlayerOrderShuffleCount[];
 extern struct PlayerBodyBox gPlayerBodyBoxes[];
-extern struct M11Buf gPlayerHitBoxLists[];
+extern struct PlayerHitBoxList gPlayerHitBoxLists[];
 extern u16 gUnk_02007F60[];
 extern u16 gPlayerBubbleTimers[];
 extern u16 gObjPaletteBank1[];
@@ -1204,8 +1204,8 @@ s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6)
 
 /* NEEDS a byte-level view of the module's 8-byte rows in hdr.c (see report):
        struct PlayerHitBoxSet  { u8 unk00; u8 unk01; u8 unk02; u8 unk03; u8 *unk04; };
-       struct M11Buf { u8 unk00[4]; u8 unk04[4]; };
-       extern struct M11Buf gPlayerHitBoxLists[];
+       struct PlayerHitBoxList { u8 unk00[4]; u8 unk04[4]; };
+       extern struct PlayerHitBoxList gPlayerHitBoxLists[];
    gPlayerHitBoxSets keeps its `struct PlayerHitBoxSet[]` spelling - only PlayerHitBoxSet's members
    change, and an 8-byte struct still copies with ldmia/stmia whatever its
    members are.  Only an ARRAY-typed extern with a SCALAR member at +4 puts the

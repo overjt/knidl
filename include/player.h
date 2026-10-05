@@ -37,7 +37,7 @@ struct M04Spark
     /*0x0E*/ u16 unk0E;
 };
 
-struct M11Buf { u8 box[4]; u8 terminator[4]; };
+struct PlayerHitBoxList { u8 box[4]; u8 terminator[4]; };
 
 struct PlayerBodyBox { u32 w[5]; };
 
@@ -83,7 +83,7 @@ extern struct PlayerBodyBox gPlayerBodyBoxes[];
 extern u16 gBlockCursorAttack; /*   the block kind (hit-box id low byte) */
 extern s16 gBlockCursorTile; /*   the metatile's collision byte */
 extern u8 gUnk_020061E0;
-extern struct M11Buf gPlayerHitBoxLists[];
+extern struct PlayerHitBoxList gPlayerHitBoxLists[];
 extern u16 gBlockCursorX; /* the block CanBreakBlock accepted: x */
 extern struct M04Spark gUnk_02007E90[][3];
 extern u16 gUnk_02007F60[];
