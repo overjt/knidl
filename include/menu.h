@@ -69,7 +69,7 @@ extern u16 gSoundTestHighlightCursorPalette[];
 extern u16 gSoundTestCursorsUpdatePalette[][5];
 extern const u8 gSoundTestDrawNumberTiles[];
 extern u16 *gUnk_08731CF8[];
-extern u16 *gUnk_08731D28[];
+extern u16 *gMenuBgPaletteCyclePalettes[];
 extern u16 gUnk_08731D58[];
 extern u32 gMenuScreenTitleGfx[];
 extern vs32 *const gBgScrollYPtrs[4];

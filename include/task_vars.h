@@ -849,7 +849,7 @@
 
 /* MenuBgPaletteCycle - MenuBgPaletteCycle (task type #259,
    Task_MenuBgPaletteCycle) */
-#define menuBgPaletteCycleScreen unk18 /* s32: the menu screen whose palette set (gUnk_08731D28) is cycled */
+#define menuBgPaletteCycleScreen unk18 /* s32: the menu screen whose palette set (gMenuBgPaletteCyclePalettes) is cycled */
 #define menuBgPaletteCyclePrevScreen unk1C /* s32: the screen whose palette set it cross-fades from */
 #define menuBgPaletteCycleFading unk20 /* s32: 1 while the cross-fade between the two screens' palettes runs */
 #define menuBgPaletteCycleFadeRatio unk24 /* s32: the cross-fade's ratio (0-256, +16 per frame) */
@@ -978,7 +978,7 @@
 #define mrShineAndMrBrightArrivedAxes unk24 /* s32: axes (X, Y) on which the flight to the pair task has arrived; 2 = there (states 16-17) */
 #define mrShineAndMrBrightLastMove unk24 /* s32: index (0-3) of the last ground move picked from gUnk_087484E4; not picked twice */
 #define mrShineAndMrBrightBobFrame unk28 /* s32: frame of Mr. Bright's 48-frame bob in his wait (47 down to 0); picks velY */
-#define mrShineAndMrBrightPaletteIndex unk28 /* s32: Mr. Shine's palette cycle step (0-3), index of gUnk_0874850C */
+#define mrShineAndMrBrightPaletteIndex unk28 /* s32: Mr. Shine's palette cycle step (0-3), index of gMrShineUpdatePalettePalettes */
 #define mrShineAndMrBrightPaletteTimer unk2C /* s32: frames until Mr. Shine's palette cycle steps again (every 12) */
 #define mrShineAndMrBrightJumpDir unk30 /* s32: X direction of the jump (+-1: toward the player, 1 in 4 away); negated at a wall */
 #define mrShineAndMrBrightSkyTimer unk30 /* s32: frames the twin stays in its sky state (3, 6, 7) before the next sky move (300) */
@@ -1273,7 +1273,7 @@
 #define playerBallBounceSavedRollFrame unk2C /* s32: Ball bounce: the roll frame kept while the squat frames show */
 #define playerBallRollSlope unk2C /* s32: Ball roll: the slope (PlayerState.slope) the roll began on; a change re-enters it */
 #define playerBallStandRollDir unk2C /* s32: Ball stand: step (-1 / +1) turning the roll frame back to 0 the short way */
-#define playerBurningFadeStep unk2C /* s32: Burning: the row of gUnk_0873B510 (the palette fade of the dash), -1 when off */
+#define playerBurningFadeStep unk2C /* s32: Burning: the row of gPlayerActionBurningUpdatePaletteFades (the palette fade of the dash), -1 when off */
 #define playerCannonEndTimer unk2C /* s32: Cannon launch state 3: frames (10) before PlayerEndCannonLaunch */
 #define playerCannonPoseRow unk2C /* s32: Cannon, loaded: the pose row 0-4 (gUnk_0874009C / 087400A6), up while Down is held */
 #define playerCrashSavedPosY unk2C /* s32: Crash: posY at the blast; the update keeps the player from falling below it */

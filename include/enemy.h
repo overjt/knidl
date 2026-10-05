@@ -851,7 +851,7 @@ extern u32 gKingDededeDefeatedStateUpdates[];
 extern u32 gMrShineAndMrBrightVariants[];
 extern u16 gUnk_087484E4[];
 extern s32 gUnk_087484EC[];
-extern u32 gUnk_0874850C[];
+extern u32 gMrShineUpdatePalettePalettes[];
 extern s32 gUnk_0874851C[];
 extern s32 gUnk_0874852C[];
 extern struct AnimCmd gUnk_0874853C[];

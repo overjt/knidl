@@ -194,8 +194,8 @@ gQuickDrawRankBonuses:
 	.global	gQuickDrawDefeatBonuses
 gQuickDrawDefeatBonuses:
 	.incbin	"baserom.gba", 0x75651C, 0xC
-	.global	gUnk_08756528
-gUnk_08756528:
+	.global	gBombRallySeatPlayersPalettes
+gBombRallySeatPlayersPalettes:
 	.word	gUnk_085FE468
 	.word	gUnk_085FE488
 	.word	gUnk_085FE4A8

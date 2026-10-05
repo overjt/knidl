@@ -25381,11 +25381,11 @@
     "0x0873185C": "gUnk_0873185C",
     "0x08731980": "gUnk_08731980",
     "0x087319B0": "gUnk_087319B0",
-    "0x087319C8": "gUnk_087319C8",
+    "0x087319C8": "gCutsceneLoadBgGraphicsPictures",
     "0x08731A28": "gExtraModeTitlePictures",
     "0x08731A88": "gExtraModeTitlePaletteSizes",
     "0x08731A90": "gAbilityPictures",
-    "0x08731B70": "gUnk_08731B70",
+    "0x08731B70": "gLoadMuseumAbilitySignGfxPalettes",
     "0x08731B88": "gUnk_08731B88",
     "0x08731BA0": "gUnk_08731BA0",
     "0x08731C88": "gUnk_08731C88",
@@ -25393,7 +25393,7 @@
     "0x08731CDC": "gUnk_08731CDC",
     "0x08731CE6": "gIntroStorySceneDurations",
     "0x08731CF8": "gUnk_08731CF8",
-    "0x08731D28": "gUnk_08731D28",
+    "0x08731D28": "gMenuBgPaletteCyclePalettes",
     "0x08731D58": "gUnk_08731D58",
     "0x08731D70": "gMenuScreenTitleGfx",
     "0x08731DA0": "gBgScrollYPtrs",
@@ -25616,7 +25616,7 @@
     "0x0873B204": "gPlayerMotionYPresets",
     "0x0873B42C": "gMetaKnightActions",
     "0x0873B4A4": "gMetaKnightActionHandlers",
-    "0x0873B510": "gUnk_0873B510",
+    "0x0873B510": "gPlayerActionBurningUpdatePaletteFades",
     "0x0873B534": "gUnk_0873B534",
     "0x0873B634": "gUnk_0873B634",
     "0x0873B654": "gUnk_0873B654",
@@ -27412,7 +27412,7 @@
     "0x087484D4": "gMrShineAndMrBrightVariants",
     "0x087484E4": "gUnk_087484E4",
     "0x087484EC": "gUnk_087484EC",
-    "0x0874850C": "gUnk_0874850C",
+    "0x0874850C": "gMrShineUpdatePalettePalettes",
     "0x0874851C": "gUnk_0874851C",
     "0x0874852C": "gUnk_0874852C",
     "0x0874853C": "gUnk_0874853C",
@@ -28351,7 +28351,7 @@
     "0x087564FC": "gQuickDrawOpponentStateUpdates",
     "0x08756514": "gQuickDrawRankBonuses",
     "0x0875651C": "gQuickDrawDefeatBonuses",
-    "0x08756528": "gUnk_08756528",
+    "0x08756528": "gBombRallySeatPlayersPalettes",
     "0x08756538": "gUnk_08756538",
     "0x08756540": "gBombRallySeatScrollX",
     "0x08756550": "gBombRallySeatScrollY",
@@ -31971,7 +31971,7 @@
     {
       "start": "0x08731D28",
       "extent": "next-label",
-      "why": "src/menu_link_play_tasks.c:30 `extern u16 *gUnk_08731D28[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)"
+      "why": "src/menu_link_play_tasks.c:30 `extern u16 *gMenuBgPaletteCyclePalettes[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)"
     },
     {
       "start": "0x08731DA0",
@@ -33237,7 +33237,7 @@
     {
       "start": "0x08731B70",
       "extent": "next-label",
-      "why": "u32 []: RequestCopy(2, gUnk_08731B70[a0], ...) source (src/mode_gfx_loaders.c:146); RequestCopy(mode, src, dst, size) copies from src (modes 1-5 CpuSet/DMA from the address, src/main_copy_queue.c:211); extent: the span to the next consumer-referenced label, all NULL or pointer"
+      "why": "u32 []: RequestCopy(2, gLoadMuseumAbilitySignGfxPalettes[a0], ...) source (src/mode_gfx_loaders.c:146); RequestCopy(mode, src, dst, size) copies from src (modes 1-5 CpuSet/DMA from the address, src/main_copy_queue.c:211); extent: the span to the next consumer-referenced label, all NULL or pointer"
     },
     {
       "start": "0x08731BA0",

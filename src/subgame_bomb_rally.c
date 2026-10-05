@@ -330,7 +330,7 @@ void BombRallySeatPlayers(void)
         gBombRallySeats[i] = arr[(slot + i) & 3];
         if (gBombRallySeats[i] == r)
             gCurTask->bombRallyTurnSeat = i;
-        RequestCopy(2, gUnk_08756528[gBombRallySeats[i]],
+        RequestCopy(2, gBombRallySeatPlayersPalettes[gBombRallySeats[i]],
                      (u32)(gObjPalette + (i << 5)), 32);
     }
     CreateBombRallyBomb(0);

@@ -106,9 +106,9 @@ void CutsceneLoadBgGraphics(s32 a0)
 {
     RequestCopy(6, 0, BG_VRAM + 0x1000, 0x800);
     RequestCopy(6, 0, BG_VRAM + 0x1800, 0x800);
-    RequestCopy(2, gUnk_087319C8[a0][0], (u32)gBgPalette, 64);
-    LZ77UnCompVram((void *)gUnk_087319C8[a0][1], (void *)BG_VRAM);
-    LZ77UnCompVram((void *)gUnk_087319C8[a0][2], (void *)(BG_VRAM + 0x1000));
+    RequestCopy(2, gCutsceneLoadBgGraphicsPictures[a0][0], (u32)gBgPalette, 64);
+    LZ77UnCompVram((void *)gCutsceneLoadBgGraphicsPictures[a0][1], (void *)BG_VRAM);
+    LZ77UnCompVram((void *)gCutsceneLoadBgGraphicsPictures[a0][2], (void *)(BG_VRAM + 0x1000));
     if (a0 == 7)
         LZ77UnCompVram(gUnk_085CCB58, (void *)(BG_VRAM + 0x1800));
 }
@@ -143,7 +143,7 @@ void HudLoadAbilityPicture(s32 a0)
    the calls and the if-block (-8 bytes, r7/r8 permutation). */
 void LoadMuseumAbilitySignGfx(s32 a0)
 {
-    RequestCopy(2, gUnk_08731B70[a0], (u32)gObjPaletteBank13, 32);
+    RequestCopy(2, gLoadMuseumAbilitySignGfxPalettes[a0], (u32)gObjPaletteBank13, 32);
     RequestCopy(8, (u32)gUnk_085A3CB8, EWRAM_START + 0x20000, 0);
     RequestCopy(4, gUnk_08731B88[a0][0] + (EWRAM_START + 0x20000), OBJ_VRAM0 + 0x7800, 0x100);
     RequestCopy(4, gUnk_08731B88[a0][0] + (EWRAM_START + 0x20100), OBJ_VRAM0 + 0x7C00, 0x100);

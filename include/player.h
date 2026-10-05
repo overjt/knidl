@@ -44,7 +44,7 @@ struct PlayerBodyBox { u32 w[5]; };
 /* M11's per-player records */
 struct PlayerHitBoxSet { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
 
-/* gUnk_0873B510[]: a palette fade, src/dst palettes and the blend step */
+/* gPlayerActionBurningUpdatePaletteFades[]: a palette fade, src/dst palettes and the blend step */
 struct BurningPaletteFade
 {
     /*0x00*/ u16 *src;
@@ -167,7 +167,7 @@ extern u32 gPlayerMotionXPresets[];
 extern u32 gPlayerMotionYPresets[];
 extern void (*gMetaKnightActions[])(void);
 extern void (*gMetaKnightActionHandlers[])(void);
-extern struct BurningPaletteFade gUnk_0873B510[];
+extern struct BurningPaletteFade gPlayerActionBurningUpdatePaletteFades[];
 extern u16 gUnk_0873B534[][32];
 extern u8 gUnk_0873B634[];
 extern s16 gUnk_0873B654[];

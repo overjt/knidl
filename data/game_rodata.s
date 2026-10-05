@@ -874,8 +874,8 @@ gUnk_08731980:
 	.global	gUnk_087319B0
 gUnk_087319B0:
 	.incbin	"baserom.gba", 0x7319B0, 0x18
-	.global	gUnk_087319C8
-gUnk_087319C8:
+	.global	gCutsceneLoadBgGraphicsPictures
+gCutsceneLoadBgGraphicsPictures:
 	.word	gUnk_085B9B80
 	.word	gUnk_085B9BC0
 	.word	gUnk_085BA25C
@@ -987,8 +987,8 @@ gAbilityPictures:
 	.word	gUnk_085AD93C
 	.word	gUnk_085A711C
 	.word	gUnk_085A713C
-	.global	gUnk_08731B70
-gUnk_08731B70:
+	.global	gLoadMuseumAbilitySignGfxPalettes
+gLoadMuseumAbilitySignGfxPalettes:
 	.word	gUnk_085A3BF8
 	.word	gUnk_085A3C18
 	.word	gUnk_085A3C38
@@ -1078,8 +1078,8 @@ gUnk_08731CF8:
 	.word	gUnk_085563E8
 	.incbin	"baserom.gba", 0x731D14, 0x10
 	.word	gUnk_0854E84C
-	.global	gUnk_08731D28
-gUnk_08731D28:
+	.global	gMenuBgPaletteCyclePalettes
+gMenuBgPaletteCyclePalettes:
 	.word	gUnk_0854FBC0
 	.word	gUnk_085578D0
 	.word	gUnk_085578D0
@@ -3669,8 +3669,8 @@ gPlayerMotionYPresets:
 	.section .game_rodata_0873b510, "a"
 	.global	game_rodata_0873b510
 game_rodata_0873b510:
-	.global	gUnk_0873B510
-gUnk_0873B510:
+	.global	gPlayerActionBurningUpdatePaletteFades
+gPlayerActionBurningUpdatePaletteFades:
 	.word	gUnk_081CC2C8
 	.word	gUnk_081CC2E8
 	.incbin	"baserom.gba", 0x73B518, 0x4

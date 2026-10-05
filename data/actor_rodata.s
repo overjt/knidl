@@ -4210,8 +4210,8 @@ gUnk_087484E4:
 	.global	gUnk_087484EC
 gUnk_087484EC:
 	.incbin	"baserom.gba", 0x7484EC, 0x20
-	.global	gUnk_0874850C
-gUnk_0874850C:
+	.global	gMrShineUpdatePalettePalettes
+gMrShineUpdatePalettePalettes:
 	.word	gUnk_082FB190
 	.word	gUnk_082FB1B0
 	.word	gUnk_082FB1D0

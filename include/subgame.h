@@ -302,7 +302,7 @@ extern u32 gQuickDrawOpponentStates[];
 extern u32 gQuickDrawOpponentStateUpdates[];
 extern u16 gQuickDrawRankBonuses[];
 extern u16 gQuickDrawDefeatBonuses[];
-extern u32 gUnk_08756528[];
+extern u32 gBombRallySeatPlayersPalettes[];
 extern u16 gUnk_08756538[];
 extern s32 gBombRallySeatScrollX[];
 extern s32 gBombRallySeatScrollY[];

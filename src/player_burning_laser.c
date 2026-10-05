@@ -18,7 +18,7 @@
  * gPlayerDefaultTerrainBox / gPlayerDefaultBodyBox and lands (preset 2), and state 3 is the
  * bounce-off (sound 153, RequestScreenShake(4), preset 23).  Its handler
  * PlayerActionBurningUpdate drives it from the collision block gTerrainResult -
- * re-binding state 3 on a hit, fading the palette of gUnk_0873B510[]
+ * re-binding state 3 on a hit, fading the palette of gPlayerActionBurningUpdatePaletteFades[]
  * row Task.unk2C and registering the box gUnk_0873BF00.
  * PlayerActionLaser (action 37) is a linear script (animations
  * 0x658/0x65A, M14's CreatePlayerObject, sound 172); its handler PlayerActionLaserUpdate
@@ -214,7 +214,7 @@ void PlayerActionBurningUpdate(void)
         {
             struct Task *t = gCurTask;
             if (t->playerBurningFadeStep != -1) {
-                struct BurningPaletteFade *f = &gUnk_0873B510[t->playerBurningFadeStep];
+                struct BurningPaletteFade *f = &gPlayerActionBurningUpdatePaletteFades[t->playerBurningFadeStep];
                 t->playerBurningFadeRatio += f->rate;
                 if (t->playerBurningFadeRatio > 255)
                     t->playerBurningFadeRatio = 256;
