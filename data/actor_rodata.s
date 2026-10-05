@@ -2796,9 +2796,9 @@ gFireLionAuxes:
 	.word	gUnk_08745354
 	.word	gUnk_08745354
 	.word	gUnk_08745354
-	.word	gUnk_0874535C
+	.word	gFireLionAux9
 	.word	gUnk_08745364
-	.word	gUnk_0874536C
+	.word	gFireLionAux11
 	.word	gUnk_08745354
 	.word	gUnk_08745374
 	.word	gUnk_08745364
@@ -2808,10 +2808,10 @@ gFireLionAuxes:
 	.word	gUnk_08745354
 	.word	gUnk_08745354
 	.word	gUnk_08745354
-	.word	gUnk_08745384
+	.word	gFireLionAux21
 	.word	gUnk_08745354
-	.word	gUnk_0874538C
-	.word	gUnk_08745394
+	.word	gFireLionAux23
+	.word	gFireLionAux24
 	.word	gUnk_0874537C
 	.word	gUnk_08745354
 	.word	gUnk_08745354
@@ -5337,13 +5337,13 @@ actor_rodata_0874b51c:
 	.global	gUnk_0874B528
 gUnk_0874B528:
 	.incbin	"baserom.gba", 0x74B528, 0x8
-	.global	gUnk_0874B530
-gUnk_0874B530:
+	.global	gHeavyMoleBlockBreakBoxBoxes
+gHeavyMoleBlockBreakBoxBoxes:
 	.incbin	"baserom.gba", 0x74B530, 0x8
 	.global	gHeavyMoleBlockBreakBox
 gHeavyMoleBlockBreakBox:
 	.incbin	"baserom.gba", 0x74B538, 0x4
-	.word	gUnk_0874B530
+	.word	gHeavyMoleBlockBreakBoxBoxes
 
 @ 0x0874B540-0x0874B560: C, row actor_tbl_0874b540 (src/data/actor_tables.c section .actor_tbl_0874b540)
 

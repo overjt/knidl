@@ -391,18 +391,18 @@ extern struct ActorAux gUnk_08744054;
 extern struct ActorAux gUnk_0874406C;
 extern struct ActorAux gGrandWheelieAuxFrames4To9;
 extern struct ActorAux gUnk_08745354;
-extern struct ActorAux gUnk_087453B4;
+extern struct ActorAux gPhanPhanAux;
 extern struct ActorAux gUnk_08745A2C;
 extern struct ActorAux gUnk_08748198;
-extern struct ActorAux gUnk_08748918;
-extern struct ActorAux gUnk_08748920;
+extern struct ActorAux gKingDededeAux;
+extern struct ActorAux gMrShineAndMrBrightAux;
 extern struct ActorAux gUnk_08748928;
-extern struct ActorAux gUnk_08749AE8;
-extern struct ActorAux gUnk_08749AF0;
+extern struct ActorAux gMetaKnightAux;
+extern struct ActorAux gKrackoAux;
 extern struct ActorAux gUnk_08749AF8;
-extern struct ActorAux gUnk_0874B4C8;
-extern struct ActorAux gUnk_0874B4D0;
-extern struct ActorAux gUnk_0874C1FC;
+extern struct ActorAux gPaintRollerAux;
+extern struct ActorAux gHeavyMoleAux;
+extern struct ActorAux gWhispyWoodsAux;
 
 /* ---- 0x0873F2B8-0x0873F4C8: 12 record(s), section .actor_rec_0873f2b8 ---- */
 struct ActorDef gAbilityStarDef ACTOR_REC(0873f2b8) = {
@@ -490,7 +490,7 @@ struct ActorDef gEnergyDrinkDef ACTOR_REC(0873f2b8) = {
     .initCallback = NULL,
     .teardown = NULL,
 };
-struct ActorDef gUnk_0873F394 ACTOR_REC(0873f2b8) = {
+struct ActorDef gItemDef5 ACTOR_REC(0873f2b8) = {
     .health1Player = 2,
     .health2Players = 2,
     .health3Players = 2,
@@ -592,7 +592,7 @@ struct ActorDef gStakeDef ACTOR_REC(0873f2b8) = {
     .initCallback = NULL,
     .teardown = NULL,
 };
-struct ActorDef gUnk_0873F49C ACTOR_REC(0873f2b8) = {
+struct ActorDef gObjectDef5 ACTOR_REC(0873f2b8) = {
     .health1Player = 2,
     .health2Players = 2,
     .health3Players = 2,
@@ -1857,7 +1857,7 @@ struct ActorDef gPhanPhanDef ACTOR_REC(08744964) = {
     .ability = ABILITY_THROW,
     .isItem = 0x0,
     .unk0E = 0x0,
-    .aux = &gUnk_087453B4,
+    .aux = &gPhanPhanAux,
     .attackBox = (u32)gPhanPhanAttackBox,
     .terrainBox = (s32)gPhanPhanTerrainBox,
     .terrainHandlers = (u32)&gPhanPhanTerrainHandlers,
@@ -1907,7 +1907,7 @@ struct ActorAux gUnk_08745354 ACTOR_REC(0874531c) = {
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gUnk_08744D14,
 };
-struct ActorAux gUnk_0874535C ACTOR_REC(0874531c) = {
+struct ActorAux gFireLionAux9 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gUnk_08744D68,
@@ -1917,7 +1917,7 @@ struct ActorAux gUnk_08745364 ACTOR_REC(0874531c) = {
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gUnk_08744DBC,
 };
-struct ActorAux gUnk_0874536C ACTOR_REC(0874531c) = {
+struct ActorAux gFireLionAux11 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gUnk_08744E10,
@@ -1932,17 +1932,17 @@ struct ActorAux gUnk_0874537C ACTOR_REC(0874531c) = {
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gUnk_08744EB8,
 };
-struct ActorAux gUnk_08745384 ACTOR_REC(0874531c) = {
+struct ActorAux gFireLionAux21 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gFireLionDefeatAttackBox,
 };
-struct ActorAux gUnk_0874538C ACTOR_REC(0874531c) = {
+struct ActorAux gFireLionAux23 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gUnk_08744F60,
 };
-struct ActorAux gUnk_08745394 ACTOR_REC(0874531c) = {
+struct ActorAux gFireLionAux24 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gUnk_08744FB4,
@@ -1962,7 +1962,7 @@ struct ActorAux gUnk_087453AC ACTOR_REC(0874531c) = {
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gUnk_087450B0,
 };
-struct ActorAux gUnk_087453B4 ACTOR_REC(0874531c) = {
+struct ActorAux gPhanPhanAux ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gPhanPhanDefeatAttackBox,
@@ -2340,7 +2340,7 @@ struct ActorDef gKingDededeDef ACTOR_REC(08748764) = {
     .ability = ABILITY_NORMAL,
     .isItem = 0x0,
     .unk0E = 0x0,
-    .aux = &gUnk_08748918,
+    .aux = &gKingDededeAux,
     .attackBox = (u32)gKingDededeAttackBox,
     .terrainBox = (s32)gKingDededeTerrainBox,
     .terrainHandlers = (u32)&gKingDededeTerrainHandlers,
@@ -2357,7 +2357,7 @@ struct ActorDef gMrShineAndMrBrightDef ACTOR_REC(08748764) = {
     .ability = ABILITY_NORMAL,
     .isItem = 0x0,
     .unk0E = 0x0,
-    .aux = &gUnk_08748920,
+    .aux = &gMrShineAndMrBrightAux,
     .attackBox = (u32)gMrShineAttackBox,
     .terrainBox = (s32)gMrShineAndMrBrightTerrainBox,
     .terrainHandlers = (u32)&gUnk_0874894C,
@@ -2384,12 +2384,12 @@ struct ActorDef gUnk_087487BC ACTOR_REC(08748764) = {
 };
 
 /* ---- 0x08748918-0x08748930: 3 record(s), section .actor_rec_08748918 ---- */
-struct ActorAux gUnk_08748918 ACTOR_REC(08748918) = {
+struct ActorAux gKingDededeAux ACTOR_REC(08748918) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gUnk_08748804,
 };
-struct ActorAux gUnk_08748920 ACTOR_REC(08748918) = {
+struct ActorAux gMrShineAndMrBrightAux ACTOR_REC(08748918) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gMrShineStartAscendAttackBox,
@@ -2435,7 +2435,7 @@ struct ActorDef gKingDededeAirPuffDef ACTOR_REC(08748ab0) = {
     .initCallback = NULL,
     .teardown = NULL,
 };
-struct ActorDef gUnk_08748B08 ACTOR_REC(08748ab0) = {
+struct ActorDef gChildActorDef24 ACTOR_REC(08748ab0) = {
     .health1Player = 2,
     .health2Players = 2,
     .health3Players = 2,
@@ -2514,7 +2514,7 @@ struct ActorDef gMetaKnightDef ACTOR_REC(08749514) = {
     .ability = ABILITY_NORMAL,
     .isItem = 0x0,
     .unk0E = 0x0,
-    .aux = &gUnk_08749AE8,
+    .aux = &gMetaKnightAux,
     .attackBox = (u32)gUnk_08749598,
     .terrainBox = (s32)gMetaKnightTerrainBox,
     .terrainHandlers = (u32)&gMetaKnightTerrainHandlers,
@@ -2531,7 +2531,7 @@ struct ActorDef gKrackoDef ACTOR_REC(08749514) = {
     .ability = ABILITY_NORMAL,
     .isItem = 0x0,
     .unk0E = 0x0,
-    .aux = &gUnk_08749AF0,
+    .aux = &gKrackoAux,
     .attackBox = (u32)gKrackoAttackBox,
     .terrainBox = (s32)gKrackoTerrainBox,
     .terrainHandlers = (u32)gNullTerrainHandlers,
@@ -2558,12 +2558,12 @@ struct ActorDef gNightmareWizardDef ACTOR_REC(08749514) = {
 };
 
 /* ---- 0x08749AE8-0x08749B08: 4 record(s), section .actor_rec_08749ae8 ---- */
-struct ActorAux gUnk_08749AE8 ACTOR_REC(08749ae8) = {
+struct ActorAux gMetaKnightAux ACTOR_REC(08749ae8) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gUnk_08749608,
 };
-struct ActorAux gUnk_08749AF0 ACTOR_REC(08749ae8) = {
+struct ActorAux gKrackoAux ACTOR_REC(08749ae8) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gUnk_0874973C,
@@ -2642,7 +2642,7 @@ struct ActorDef gPaintRollerDef ACTOR_REC(0874b2dc) = {
     .ability = ABILITY_NORMAL,
     .isItem = 0x0,
     .unk0E = 0x0,
-    .aux = &gUnk_0874B4C8,
+    .aux = &gPaintRollerAux,
     .attackBox = (u32)gPaintRollerAttackBox,
     .terrainBox = (s32)gPaintRollerTerrainBox,
     .terrainHandlers = 0,
@@ -2659,7 +2659,7 @@ struct ActorDef gHeavyMoleDef ACTOR_REC(0874b2dc) = {
     .ability = ABILITY_NORMAL,
     .isItem = 0x0,
     .unk0E = 0x0,
-    .aux = &gUnk_0874B4D0,
+    .aux = &gHeavyMoleAux,
     .attackBox = (u32)gHeavyMoleAttackBox,
     .terrainBox = 0,
     .terrainHandlers = 0,
@@ -2703,12 +2703,12 @@ struct ActorDef gNightmarePowerOrbStarDef ACTOR_REC(0874b2dc) = {
 };
 
 /* ---- 0x0874B4C8-0x0874B4D8: 2 record(s), section .actor_rec_0874b4c8 ---- */
-struct ActorAux gUnk_0874B4C8 ACTOR_REC(0874b4c8) = {
+struct ActorAux gPaintRollerAux ACTOR_REC(0874b4c8) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gUnk_0874B3C4,
 };
-struct ActorAux gUnk_0874B4D0 ACTOR_REC(0874b4c8) = {
+struct ActorAux gHeavyMoleAux ACTOR_REC(0874b4c8) = {
     .hitDuration = 54,
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gUnk_0874B418,
@@ -2947,7 +2947,7 @@ struct ActorDef gWhispyWoodsDef ACTOR_REC(0874c158) = {
     .ability = ABILITY_NORMAL,
     .isItem = 0x0,
     .unk0E = 0x0,
-    .aux = &gUnk_0874C1FC,
+    .aux = &gWhispyWoodsAux,
     .attackBox = (u32)gWhispyWoodsAttackBox,
     .terrainBox = (s32)gWhispyWoodsTerrainBox,
     .terrainHandlers = (u32)gNullTerrainHandlers,
@@ -2957,7 +2957,7 @@ struct ActorDef gWhispyWoodsDef ACTOR_REC(0874c158) = {
 };
 
 /* ---- 0x0874C1FC-0x0874C204: 1 record(s), section .actor_rec_0874c1fc ---- */
-struct ActorAux gUnk_0874C1FC ACTOR_REC(0874c1fc) = {
+struct ActorAux gWhispyWoodsAux ACTOR_REC(0874c1fc) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
     .altAttackBox = (u32)gUnk_0874C1BC,

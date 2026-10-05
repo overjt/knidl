@@ -308,7 +308,7 @@ struct ActorVt gUnk_0873F640 ACTOR_TBL(0873f5fc) = {
     .damageCallback = 0,
     .defeatCallback = 0,
 };
-/* gUnk_0873F394 */
+/* gItemDef5 */
 struct ActorVt gUnk_0873F64C ACTOR_TBL(0873f5fc) = {
     .damageKind = 0,
     .defeatKind = 4,
@@ -1752,7 +1752,7 @@ struct ActorVt gUnk_08748D04 ACTOR_TBL(08748cf8) = {
     .damageCallback = 0,
     .defeatCallback = 0,
 };
-/* gUnk_08748B08, gUnk_08748B34 */
+/* gChildActorDef24, gUnk_08748B34 */
 struct ActorVt gUnk_08748D10 ACTOR_TBL(08748cf8) = {
     .damageKind = 0,
     .defeatKind = 8,

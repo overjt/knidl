@@ -4090,13 +4090,13 @@ gUnk_0873CC3C:
 gUnk_0873CC44:
 	.incbin	"baserom.gba", 0x73CC44, 0x4
 	.word	gUnk_0873CC34
-	.global	gUnk_0873CC4C
-gUnk_0873CC4C:
+	.global	gPlayerInhaleBlockBreakBoxBoxes
+gPlayerInhaleBlockBreakBoxBoxes:
 	.incbin	"baserom.gba", 0x73CC4C, 0x8
 	.global	gPlayerInhaleBlockBreakBox
 gPlayerInhaleBlockBreakBox:
 	.incbin	"baserom.gba", 0x73CC54, 0x4
-	.word	gUnk_0873CC4C
+	.word	gPlayerInhaleBlockBreakBoxBoxes
 	.global	gUnk_0873CC5C
 gUnk_0873CC5C:
 	.incbin	"baserom.gba", 0x73CC5C, 0x8
@@ -4125,13 +4125,13 @@ gUnk_0873CC8C:
 gUnk_0873CC94:
 	.incbin	"baserom.gba", 0x73CC94, 0x4
 	.word	gUnk_0873CC8C
-	.global	gUnk_0873CC9C
-gUnk_0873CC9C:
+	.global	gPlayerBurningHitBoxSetBoxes
+gPlayerBurningHitBoxSetBoxes:
 	.incbin	"baserom.gba", 0x73CC9C, 0x8
 	.global	gPlayerBurningHitBoxSet
 gPlayerBurningHitBoxSet:
 	.incbin	"baserom.gba", 0x73CCA4, 0x4
-	.word	gUnk_0873CC9C
+	.word	gPlayerBurningHitBoxSetBoxes
 	.global	gUnk_0873CCAC
 gUnk_0873CCAC:
 	.incbin	"baserom.gba", 0x73CCAC, 0x8
@@ -4178,13 +4178,13 @@ gPlayerNeedleHitBoxRects:
 	.global	gUnk_0873CF1C
 gUnk_0873CF1C:
 	.incbin	"baserom.gba", 0x73CF1C, 0x28
-	.global	gUnk_0873CF44
-gUnk_0873CF44:
+	.global	gPlayerFreezeBlockBreakBoxBoxes
+gPlayerFreezeBlockBreakBoxBoxes:
 	.incbin	"baserom.gba", 0x73CF44, 0x8
 	.global	gPlayerFreezeBlockBreakBox
 gPlayerFreezeBlockBreakBox:
 	.incbin	"baserom.gba", 0x73CF4C, 0x4
-	.word	gUnk_0873CF44
+	.word	gPlayerFreezeBlockBreakBoxBoxes
 	.global	gUnk_0873CF54
 gUnk_0873CF54:
 	.incbin	"baserom.gba", 0x73CF54, 0x8

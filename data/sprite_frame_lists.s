@@ -734,32 +734,32 @@ gUnk_087E2FF0:
 	.word	gUnk_085E0044
 	.word	gUnk_085E0050
 	.word	gUnk_085E005C
-	.global	gUnk_087E3038
-gUnk_087E3038:
+	.global	gQuickDrawWaddleDooGfxFrameList
+gQuickDrawWaddleDooGfxFrameList:
 	.word	gUnk_085EED98
 	.word	gUnk_085EEDB0
 	.word	gUnk_085EEDE8
 	.word	gUnk_085EEE08
-	.global	gUnk_087E3048
-gUnk_087E3048:
+	.global	gQuickDrawWheelieGfxFrameList
+gQuickDrawWheelieGfxFrameList:
 	.word	gUnk_085EF7C4
 	.word	gUnk_085EF7EC
 	.word	gUnk_085EF83C
 	.word	gUnk_085EF85C
-	.global	gUnk_087E3058
-gUnk_087E3058:
+	.global	gQuickDrawChefKawasakiGfxFrameList
+gQuickDrawChefKawasakiGfxFrameList:
 	.word	gUnk_085F072C
 	.word	gUnk_085F075C
 	.word	gUnk_085F07BC
 	.word	gUnk_085F07DC
-	.global	gUnk_087E3068
-gUnk_087E3068:
+	.global	gQuickDrawMetaKnightGfxFrameList
+gQuickDrawMetaKnightGfxFrameList:
 	.word	gUnk_085F1460
 	.word	gUnk_085F1488
 	.word	gUnk_085F14E0
 	.word	gUnk_085F1500
-	.global	gUnk_087E3078
-gUnk_087E3078:
+	.global	gQuickDrawKingDededeGfxFrameList
+gQuickDrawKingDededeGfxFrameList:
 	.word	gUnk_085F29F8
 	.word	gUnk_085F2A38
 	.word	gUnk_085F2AA0
