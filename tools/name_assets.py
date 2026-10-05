@@ -6,6 +6,7 @@ Usage:
     tools/name_assets.py                       # dry run: counts per rule, owner, batch
     tools/name_assets.py --list                # every proposal and every reason left
     tools/name_assets.py --batch frames --csv b.csv   # a tools/rename.py batch
+    tools/name_assets.py --batch player --csv b.csv --issue 186
     tools/name_assets.py --root gBonkersFrames --list # one owner's chain
 
 The labels of the asset segments (`"asset": true` in tools/split_config.json)
@@ -22,6 +23,9 @@ reference graph with offsets:
     pointee of the typed table element that points at it, else a word array
     for a pointer list of split_config.json; the struct layouts come from the
     `/*0xNN*/` offset comments of include/ and src/ (else natural alignment).
+    The player's frame records are declared struct TaskGfxExtended
+    (src/data/frame_tables.c, #186), so their words at +0xC and +0x10 are
+    the fields nextBankPalette and upperTiles.
 
 A word of a `"proof": "format"` pointer table (docs/data.md 5.3) is format
 only.  Every asset placeholder is then decided once all its referrers are
@@ -975,6 +979,7 @@ def main():
     ap.add_argument("--batch", choices=BATCHES, help="only the proposals of one owner kind")
     ap.add_argument("--root", help="only the proposals whose chain starts at this record")
     ap.add_argument("--csv", help="write the proposals as a tools/rename.py batch")
+    ap.add_argument("--issue", default="183", help="the issue column of the --csv batch")
     args = ap.parse_args()
     m = Model()
     props, reasons = m.run(args.fmt)
@@ -998,7 +1003,7 @@ def main():
             w = csv.writer(f, lineterminator="\n")
             w.writerow(["old", "new", "kind", "evidence", "issue"])
             for t, p in sorted(sel.items(), key=lambda x: m.labels[x[0]][0]):
-                w.writerow([t, p["new"], "asset", evidence(m, p), "183"])
+                w.writerow([t, p["new"], "asset", evidence(m, p), args.issue])
         print("wrote %d rows to %s" % (len(sel), args.csv))
 
 

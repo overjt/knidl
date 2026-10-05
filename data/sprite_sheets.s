@@ -2320,53 +2320,53 @@ gPlayerFrame883Palette:
 	.global	gUnk_080DD104
 gUnk_080DD104:
 	.incbin	"baserom.gba", 0xDD104, 0x22
-	.global	gUnk_080DD126
-gUnk_080DD126:
+	.global	gPlayerFrame883NextBankPalette
+gPlayerFrame883NextBankPalette:
 	.incbin	"baserom.gba", 0xDD126, 0x22
-	.global	gUnk_080DD148
-gUnk_080DD148:
+	.global	gPlayerFrame1264NextBankPalette
+gPlayerFrame1264NextBankPalette:
 	.incbin	"baserom.gba", 0xDD148, 0x22
-	.global	gUnk_080DD16A
-gUnk_080DD16A:
+	.global	gPlayerFrame1506NextBankPalette
+gPlayerFrame1506NextBankPalette:
 	.incbin	"baserom.gba", 0xDD16A, 0x22
-	.global	gUnk_080DD18C
-gUnk_080DD18C:
+	.global	gPlayerFrame1675NextBankPalette
+gPlayerFrame1675NextBankPalette:
 	.incbin	"baserom.gba", 0xDD18C, 0x22
 	.global	gPlayerFrame2296Palette
 gPlayerFrame2296Palette:
 	.incbin	"baserom.gba", 0xDD1AE, 0x22
-	.global	gUnk_080DD1D0
-gUnk_080DD1D0:
+	.global	gPlayerFrame2296NextBankPalette
+gPlayerFrame2296NextBankPalette:
 	.incbin	"baserom.gba", 0xDD1D0, 0x22
 	.global	gPlayerFrame2436Palette
 gPlayerFrame2436Palette:
 	.incbin	"baserom.gba", 0xDD1F2, 0x22
-	.global	gUnk_080DD214
-gUnk_080DD214:
+	.global	gPlayerFrame2436NextBankPalette
+gPlayerFrame2436NextBankPalette:
 	.incbin	"baserom.gba", 0xDD214, 0x22
 	.global	gPlayerFrame2576Palette
 gPlayerFrame2576Palette:
 	.incbin	"baserom.gba", 0xDD236, 0x22
-	.global	gUnk_080DD258
-gUnk_080DD258:
+	.global	gPlayerFrame2576NextBankPalette
+gPlayerFrame2576NextBankPalette:
 	.incbin	"baserom.gba", 0xDD258, 0x22
-	.global	gUnk_080DD27A
-gUnk_080DD27A:
+	.global	gPlayerFrame2703NextBankPalette
+gPlayerFrame2703NextBankPalette:
 	.incbin	"baserom.gba", 0xDD27A, 0x22
-	.global	gUnk_080DD29C
-gUnk_080DD29C:
+	.global	gPlayerFrame2882NextBankPalette
+gPlayerFrame2882NextBankPalette:
 	.incbin	"baserom.gba", 0xDD29C, 0x22
 	.global	gPlayerFrame3013Palette
 gPlayerFrame3013Palette:
 	.incbin	"baserom.gba", 0xDD2BE, 0x22
-	.global	gUnk_080DD2E0
-gUnk_080DD2E0:
+	.global	gPlayerFrame3013NextBankPalette
+gPlayerFrame3013NextBankPalette:
 	.incbin	"baserom.gba", 0xDD2E0, 0x22
 	.global	gPlayerFrame3156Palette
 gPlayerFrame3156Palette:
 	.incbin	"baserom.gba", 0xDD302, 0x22
-	.global	gUnk_080DD324
-gUnk_080DD324:
+	.global	gPlayerFrame3308NextBankPalette
+gPlayerFrame3308NextBankPalette:
 	.incbin	"baserom.gba", 0xDD324, 0x22
 	.global	gUnk_080DD346
 gUnk_080DD346:
@@ -2431,59 +2431,59 @@ gUnk_080DE554:
 	.global	gUnk_080DE67A
 gUnk_080DE67A:
 	.incbin	"baserom.gba", 0xDE67A, 0x106
-	.global	gUnk_080DE780
-gUnk_080DE780:
+	.global	gPlayerFrame883UpperTiles
+gPlayerFrame883UpperTiles:
 	.incbin	"baserom.gba", 0xDE780, 0x106
-	.global	gUnk_080DE886
-gUnk_080DE886:
+	.global	gPlayerFrame888UpperTiles
+gPlayerFrame888UpperTiles:
 	.incbin	"baserom.gba", 0xDE886, 0xC6
-	.global	gUnk_080DE94C
-gUnk_080DE94C:
+	.global	gPlayerFrame893UpperTiles
+gPlayerFrame893UpperTiles:
 	.incbin	"baserom.gba", 0xDE94C, 0xC6
-	.global	gUnk_080DEA12
-gUnk_080DEA12:
+	.global	gPlayerFrame1264UpperTiles
+gPlayerFrame1264UpperTiles:
 	.incbin	"baserom.gba", 0xDEA12, 0x186
-	.global	gUnk_080DEB98
-gUnk_080DEB98:
+	.global	gPlayerFrame1265UpperTiles
+gPlayerFrame1265UpperTiles:
 	.incbin	"baserom.gba", 0xDEB98, 0x186
-	.global	gUnk_080DED1E
-gUnk_080DED1E:
+	.global	gPlayerFrame1266UpperTiles
+gPlayerFrame1266UpperTiles:
 	.incbin	"baserom.gba", 0xDED1E, 0x186
-	.global	gUnk_080DEEA4
-gUnk_080DEEA4:
+	.global	gPlayerFrame1267UpperTiles
+gPlayerFrame1267UpperTiles:
 	.incbin	"baserom.gba", 0xDEEA4, 0x186
-	.global	gUnk_080DF02A
-gUnk_080DF02A:
+	.global	gPlayerFrame1506UpperTiles
+gPlayerFrame1506UpperTiles:
 	.incbin	"baserom.gba", 0xDF02A, 0xA6
-	.global	gUnk_080DF0D0
-gUnk_080DF0D0:
+	.global	gPlayerFrame1511UpperTiles
+gPlayerFrame1511UpperTiles:
 	.incbin	"baserom.gba", 0xDF0D0, 0xA6
-	.global	gUnk_080DF176
-gUnk_080DF176:
+	.global	gPlayerFrame1675UpperTiles
+gPlayerFrame1675UpperTiles:
 	.incbin	"baserom.gba", 0xDF176, 0xC6
-	.global	gUnk_080DF23C
-gUnk_080DF23C:
+	.global	gPlayerFrame1680UpperTiles
+gPlayerFrame1680UpperTiles:
 	.incbin	"baserom.gba", 0xDF23C, 0xC6
-	.global	gUnk_080DF302
-gUnk_080DF302:
+	.global	gPlayerFrame2296UpperTiles
+gPlayerFrame2296UpperTiles:
 	.incbin	"baserom.gba", 0xDF302, 0xE6
-	.global	gUnk_080DF3E8
-gUnk_080DF3E8:
+	.global	gPlayerFrame2301UpperTiles
+gPlayerFrame2301UpperTiles:
 	.incbin	"baserom.gba", 0xDF3E8, 0x106
 	.global	gPlayerFrame2306Tiles
 gPlayerFrame2306Tiles:
 	.incbin	"baserom.gba", 0xDF4EE, 0xC6
-	.global	gUnk_080DF5B4
-gUnk_080DF5B4:
+	.global	gPlayerFrame2436UpperTiles
+gPlayerFrame2436UpperTiles:
 	.incbin	"baserom.gba", 0xDF5B4, 0xC6
-	.global	gUnk_080DF67A
-gUnk_080DF67A:
+	.global	gPlayerFrame2576UpperTiles
+gPlayerFrame2576UpperTiles:
 	.incbin	"baserom.gba", 0xDF67A, 0x126
-	.global	gUnk_080DF7A0
-gUnk_080DF7A0:
+	.global	gPlayerFrame2581UpperTiles
+gPlayerFrame2581UpperTiles:
 	.incbin	"baserom.gba", 0xDF7A0, 0x106
-	.global	gUnk_080DF8A6
-gUnk_080DF8A6:
+	.global	gPlayerFrame2578UpperTiles
+gPlayerFrame2578UpperTiles:
 	.incbin	"baserom.gba", 0xDF8A6, 0x126
 	.global	gPlayerFrame2583Tiles
 gPlayerFrame2583Tiles:
@@ -2491,140 +2491,140 @@ gPlayerFrame2583Tiles:
 	.global	gPlayerFrame2584Tiles
 gPlayerFrame2584Tiles:
 	.incbin	"baserom.gba", 0xDFA92, 0xC6
-	.global	gUnk_080DFB58
-gUnk_080DFB58:
+	.global	gPlayerFrame2580UpperTiles
+gPlayerFrame2580UpperTiles:
 	.incbin	"baserom.gba", 0xDFB58, 0x126
 	.global	gPlayerFrame2585Tiles
 gPlayerFrame2585Tiles:
 	.incbin	"baserom.gba", 0xDFC7E, 0xC6
-	.global	gUnk_080DFD44
-gUnk_080DFD44:
+	.global	gPlayerFrame2586UpperTiles
+gPlayerFrame2586UpperTiles:
 	.incbin	"baserom.gba", 0xDFD44, 0x126
-	.global	gUnk_080DFE6A
-gUnk_080DFE6A:
+	.global	gPlayerFrame2703UpperTiles
+gPlayerFrame2703UpperTiles:
 	.incbin	"baserom.gba", 0xDFE6A, 0x126
-	.global	gUnk_080DFF90
-gUnk_080DFF90:
+	.global	gPlayerFrame2704UpperTiles
+gPlayerFrame2704UpperTiles:
 	.incbin	"baserom.gba", 0xDFF90, 0x106
-	.global	gUnk_080E0096
-gUnk_080E0096:
+	.global	gPlayerFrame2705UpperTiles
+gPlayerFrame2705UpperTiles:
 	.incbin	"baserom.gba", 0xE0096, 0x126
-	.global	gUnk_080E01BC
-gUnk_080E01BC:
+	.global	gPlayerFrame2706UpperTiles
+gPlayerFrame2706UpperTiles:
 	.incbin	"baserom.gba", 0xE01BC, 0x126
-	.global	gUnk_080E02E2
-gUnk_080E02E2:
+	.global	gPlayerFrame2723UpperTiles
+gPlayerFrame2723UpperTiles:
 	.incbin	"baserom.gba", 0xE02E2, 0xC6
-	.global	gUnk_080E03A8
-gUnk_080E03A8:
+	.global	gPlayerFrame2724UpperTiles
+gPlayerFrame2724UpperTiles:
 	.incbin	"baserom.gba", 0xE03A8, 0xC6
-	.global	gUnk_080E046E
-gUnk_080E046E:
+	.global	gPlayerFrame2725UpperTiles
+gPlayerFrame2725UpperTiles:
 	.incbin	"baserom.gba", 0xE046E, 0xC6
-	.global	gUnk_080E0534
-gUnk_080E0534:
+	.global	gPlayerFrame2726UpperTiles
+gPlayerFrame2726UpperTiles:
 	.incbin	"baserom.gba", 0xE0534, 0xC6
-	.global	gUnk_080E05FA
-gUnk_080E05FA:
+	.global	gPlayerFrame2707UpperTiles
+gPlayerFrame2707UpperTiles:
 	.incbin	"baserom.gba", 0xE05FA, 0x106
-	.global	gUnk_080E0700
-gUnk_080E0700:
+	.global	gPlayerFrame2708UpperTiles
+gPlayerFrame2708UpperTiles:
 	.incbin	"baserom.gba", 0xE0700, 0xC6
-	.global	gUnk_080E07C6
-gUnk_080E07C6:
+	.global	gPlayerFrame2709UpperTiles
+gPlayerFrame2709UpperTiles:
 	.incbin	"baserom.gba", 0xE07C6, 0xE6
-	.global	gUnk_080E08AC
-gUnk_080E08AC:
+	.global	gPlayerFrame2710UpperTiles
+gPlayerFrame2710UpperTiles:
 	.incbin	"baserom.gba", 0xE08AC, 0x106
-	.global	gUnk_080E09B2
-gUnk_080E09B2:
+	.global	gPlayerFrame2727UpperTiles
+gPlayerFrame2727UpperTiles:
 	.incbin	"baserom.gba", 0xE09B2, 0xA6
-	.global	gUnk_080E0A58
-gUnk_080E0A58:
+	.global	gPlayerFrame2728UpperTiles
+gPlayerFrame2728UpperTiles:
 	.incbin	"baserom.gba", 0xE0A58, 0xA6
-	.global	gUnk_080E0AFE
-gUnk_080E0AFE:
+	.global	gPlayerFrame2729UpperTiles
+gPlayerFrame2729UpperTiles:
 	.incbin	"baserom.gba", 0xE0AFE, 0xA6
-	.global	gUnk_080E0BA4
-gUnk_080E0BA4:
+	.global	gPlayerFrame2730UpperTiles
+gPlayerFrame2730UpperTiles:
 	.incbin	"baserom.gba", 0xE0BA4, 0xA6
-	.global	gUnk_080E0C4A
-gUnk_080E0C4A:
+	.global	gPlayerFrame2711UpperTiles
+gPlayerFrame2711UpperTiles:
 	.incbin	"baserom.gba", 0xE0C4A, 0x106
-	.global	gUnk_080E0D50
-gUnk_080E0D50:
+	.global	gPlayerFrame2712UpperTiles
+gPlayerFrame2712UpperTiles:
 	.incbin	"baserom.gba", 0xE0D50, 0xE6
-	.global	gUnk_080E0E36
-gUnk_080E0E36:
+	.global	gPlayerFrame2713UpperTiles
+gPlayerFrame2713UpperTiles:
 	.incbin	"baserom.gba", 0xE0E36, 0xE6
-	.global	gUnk_080E0F1C
-gUnk_080E0F1C:
+	.global	gPlayerFrame2714UpperTiles
+gPlayerFrame2714UpperTiles:
 	.incbin	"baserom.gba", 0xE0F1C, 0x106
-	.global	gUnk_080E1022
-gUnk_080E1022:
+	.global	gPlayerFrame2733UpperTiles
+gPlayerFrame2733UpperTiles:
 	.incbin	"baserom.gba", 0xE1022, 0xA6
-	.global	gUnk_080E10C8
-gUnk_080E10C8:
+	.global	gPlayerFrame2734UpperTiles
+gPlayerFrame2734UpperTiles:
 	.incbin	"baserom.gba", 0xE10C8, 0xA6
-	.global	gUnk_080E116E
-gUnk_080E116E:
+	.global	gPlayerFrame2719UpperTiles
+gPlayerFrame2719UpperTiles:
 	.incbin	"baserom.gba", 0xE116E, 0x106
-	.global	gUnk_080E1274
-gUnk_080E1274:
+	.global	gPlayerFrame2716UpperTiles
+gPlayerFrame2716UpperTiles:
 	.incbin	"baserom.gba", 0xE1274, 0xC6
-	.global	gUnk_080E133A
-gUnk_080E133A:
+	.global	gPlayerFrame2717UpperTiles
+gPlayerFrame2717UpperTiles:
 	.incbin	"baserom.gba", 0xE133A, 0xE6
-	.global	gUnk_080E1420
-gUnk_080E1420:
+	.global	gPlayerFrame2722UpperTiles
+gPlayerFrame2722UpperTiles:
 	.incbin	"baserom.gba", 0xE1420, 0x106
-	.global	gUnk_080E1526
-gUnk_080E1526:
+	.global	gPlayerFrame2735UpperTiles
+gPlayerFrame2735UpperTiles:
 	.incbin	"baserom.gba", 0xE1526, 0xA6
-	.global	gUnk_080E15CC
-gUnk_080E15CC:
+	.global	gPlayerFrame2736UpperTiles
+gPlayerFrame2736UpperTiles:
 	.incbin	"baserom.gba", 0xE15CC, 0xA6
-	.global	gUnk_080E1672
-gUnk_080E1672:
+	.global	gPlayerFrame2737UpperTiles
+gPlayerFrame2737UpperTiles:
 	.incbin	"baserom.gba", 0xE1672, 0xA6
-	.global	gUnk_080E1718
-gUnk_080E1718:
+	.global	gPlayerFrame2738UpperTiles
+gPlayerFrame2738UpperTiles:
 	.incbin	"baserom.gba", 0xE1718, 0xA6
-	.global	gUnk_080E17BE
-gUnk_080E17BE:
+	.global	gPlayerFrame2715UpperTiles
+gPlayerFrame2715UpperTiles:
 	.incbin	"baserom.gba", 0xE17BE, 0x106
-	.global	gUnk_080E18C4
-gUnk_080E18C4:
+	.global	gPlayerFrame2718UpperTiles
+gPlayerFrame2718UpperTiles:
 	.incbin	"baserom.gba", 0xE18C4, 0x106
 	.global	gPlayerFrame2743Tiles
 gPlayerFrame2743Tiles:
 	.incbin	"baserom.gba", 0xE19CA, 0x126
-	.global	gUnk_080E1AF0
-gUnk_080E1AF0:
+	.global	gPlayerFrame2743UpperTiles
+gPlayerFrame2743UpperTiles:
 	.incbin	"baserom.gba", 0xE1AF0, 0xC6
-	.global	gUnk_080E1BB6
-gUnk_080E1BB6:
+	.global	gPlayerFrame2744UpperTiles
+gPlayerFrame2744UpperTiles:
 	.incbin	"baserom.gba", 0xE1BB6, 0xC6
-	.global	gUnk_080E1C7C
-gUnk_080E1C7C:
+	.global	gPlayerFrame2745UpperTiles
+gPlayerFrame2745UpperTiles:
 	.incbin	"baserom.gba", 0xE1C7C, 0xC6
-	.global	gUnk_080E1D42
-gUnk_080E1D42:
+	.global	gPlayerFrame2746UpperTiles
+gPlayerFrame2746UpperTiles:
 	.incbin	"baserom.gba", 0xE1D42, 0xC6
-	.global	gUnk_080E1E08
-gUnk_080E1E08:
+	.global	gPlayerFrame2882UpperTiles
+gPlayerFrame2882UpperTiles:
 	.incbin	"baserom.gba", 0xE1E08, 0xC6
-	.global	gUnk_080E1ECE
-gUnk_080E1ECE:
+	.global	gPlayerFrame2887UpperTiles
+gPlayerFrame2887UpperTiles:
 	.incbin	"baserom.gba", 0xE1ECE, 0xC6
-	.global	gUnk_080E1F94
-gUnk_080E1F94:
+	.global	gPlayerFrame3013UpperTiles
+gPlayerFrame3013UpperTiles:
 	.incbin	"baserom.gba", 0xE1F94, 0xE6
-	.global	gUnk_080E207A
-gUnk_080E207A:
+	.global	gPlayerFrame3018UpperTiles
+gPlayerFrame3018UpperTiles:
 	.incbin	"baserom.gba", 0xE207A, 0xE6
-	.global	gUnk_080E2160
-gUnk_080E2160:
+	.global	gPlayerFrame3019UpperTiles
+gPlayerFrame3019UpperTiles:
 	.incbin	"baserom.gba", 0xE2160, 0xE6
 	.global	gPlayerFrame3156Tiles
 gPlayerFrame3156Tiles:
@@ -2659,29 +2659,29 @@ gPlayerFrame3165Tiles:
 	.global	gPlayerFrame3166Tiles
 gPlayerFrame3166Tiles:
 	.incbin	"baserom.gba", 0xE2C22, 0x126
-	.global	gUnk_080E2D48
-gUnk_080E2D48:
+	.global	gPlayerFrame3308UpperTiles
+gPlayerFrame3308UpperTiles:
 	.incbin	"baserom.gba", 0xE2D48, 0x126
-	.global	gUnk_080E2E6E
-gUnk_080E2E6E:
+	.global	gPlayerFrame3309UpperTiles
+gPlayerFrame3309UpperTiles:
 	.incbin	"baserom.gba", 0xE2E6E, 0x106
-	.global	gUnk_080E2F74
-gUnk_080E2F74:
+	.global	gPlayerFrame3310UpperTiles
+gPlayerFrame3310UpperTiles:
 	.incbin	"baserom.gba", 0xE2F74, 0x106
-	.global	gUnk_080E307A
-gUnk_080E307A:
+	.global	gPlayerFrame3311UpperTiles
+gPlayerFrame3311UpperTiles:
 	.incbin	"baserom.gba", 0xE307A, 0x126
-	.global	gUnk_080E31A0
-gUnk_080E31A0:
+	.global	gPlayerFrame3313UpperTiles
+gPlayerFrame3313UpperTiles:
 	.incbin	"baserom.gba", 0xE31A0, 0x106
-	.global	gUnk_080E32A6
-gUnk_080E32A6:
+	.global	gPlayerFrame3318UpperTiles
+gPlayerFrame3318UpperTiles:
 	.incbin	"baserom.gba", 0xE32A6, 0x106
-	.global	gUnk_080E33AC
-gUnk_080E33AC:
+	.global	gPlayerFrame3349UpperTiles
+gPlayerFrame3349UpperTiles:
 	.incbin	"baserom.gba", 0xE33AC, 0x106
-	.global	gUnk_080E34B2
-gUnk_080E34B2:
+	.global	gPlayerFrame3351UpperTiles
+gPlayerFrame3351UpperTiles:
 	.incbin	"baserom.gba", 0xE34B2, 0x126
 	.global	gUnk_080E35D8
 gUnk_080E35D8:
@@ -3610,20 +3610,20 @@ gUnk_080E73F2:
 	.global	gPlayerFrame1007Palette
 gPlayerFrame1007Palette:
 	.incbin	"baserom.gba", 0xE7414, 0x22
-	.global	gUnk_080E7436
-gUnk_080E7436:
+	.global	gPlayerFrame1007NextBankPalette
+gPlayerFrame1007NextBankPalette:
 	.incbin	"baserom.gba", 0xE7436, 0x22
 	.global	gPlayerFrame1811Palette
 gPlayerFrame1811Palette:
 	.incbin	"baserom.gba", 0xE7458, 0x22
-	.global	gUnk_080E747A
-gUnk_080E747A:
+	.global	gPlayerFrame1811NextBankPalette
+gPlayerFrame1811NextBankPalette:
 	.incbin	"baserom.gba", 0xE747A, 0x22
 	.global	gUnk_080E749C
 gUnk_080E749C:
 	.incbin	"baserom.gba", 0xE749C, 0x22
-	.global	gUnk_080E74BE
-gUnk_080E74BE:
+	.global	gPlayerFrame2056NextBankPalette
+gPlayerFrame2056NextBankPalette:
 	.incbin	"baserom.gba", 0xE74BE, 0x22
 	.global	gUnk_080E74E0
 gUnk_080E74E0:
@@ -3631,14 +3631,14 @@ gUnk_080E74E0:
 	.global	gPlayerFrame1007Tiles
 gPlayerFrame1007Tiles:
 	.incbin	"baserom.gba", 0xE7502, 0x126
-	.global	gUnk_080E7628
-gUnk_080E7628:
+	.global	gPlayerFrame1007UpperTiles
+gPlayerFrame1007UpperTiles:
 	.incbin	"baserom.gba", 0xE7628, 0x186
 	.global	gUnk_080E77AE
 gUnk_080E77AE:
 	.incbin	"baserom.gba", 0xE77AE, 0x106
-	.global	gUnk_080E78B4
-gUnk_080E78B4:
+	.global	gPlayerFrame1012UpperTiles
+gPlayerFrame1012UpperTiles:
 	.incbin	"baserom.gba", 0xE78B4, 0x1A6
 	.global	gPlayerFrame1008Tiles
 gPlayerFrame1008Tiles:
@@ -3646,8 +3646,8 @@ gPlayerFrame1008Tiles:
 	.global	gPlayerFrame1013Tiles
 gPlayerFrame1013Tiles:
 	.incbin	"baserom.gba", 0xE7B80, 0xC6
-	.global	gUnk_080E7C46
-gUnk_080E7C46:
+	.global	gPlayerFrame1013UpperTiles
+gPlayerFrame1013UpperTiles:
 	.incbin	"baserom.gba", 0xE7C46, 0x186
 	.global	gPlayerFrame1009Tiles
 gPlayerFrame1009Tiles:
@@ -3673,8 +3673,8 @@ gPlayerFrame1017Tiles:
 	.global	gPlayerFrame1811Tiles
 gPlayerFrame1811Tiles:
 	.incbin	"baserom.gba", 0xE84B6, 0x126
-	.global	gUnk_080E85DC
-gUnk_080E85DC:
+	.global	gPlayerFrame1811UpperTiles
+gPlayerFrame1811UpperTiles:
 	.incbin	"baserom.gba", 0xE85DC, 0x106
 	.global	gPlayerFrame1816Tiles
 gPlayerFrame1816Tiles:
@@ -3706,8 +3706,8 @@ gPlayerFrame1820Tiles:
 	.global	gPlayerFrame1821Tiles
 gPlayerFrame1821Tiles:
 	.incbin	"baserom.gba", 0xE9018, 0x126
-	.global	gUnk_080E913E
-gUnk_080E913E:
+	.global	gPlayerFrame2056UpperTiles
+gPlayerFrame2056UpperTiles:
 	.incbin	"baserom.gba", 0xE913E, 0x126
 	.global	gUnk_080E9264
 gUnk_080E9264:
@@ -3838,53 +3838,53 @@ gPlayerFrame894Palette:
 	.global	gUnk_080E9D9C
 gUnk_080E9D9C:
 	.incbin	"baserom.gba", 0xE9D9C, 0x22
-	.global	gUnk_080E9DBE
-gUnk_080E9DBE:
+	.global	gPlayerFrame894NextBankPalette
+gPlayerFrame894NextBankPalette:
 	.incbin	"baserom.gba", 0xE9DBE, 0x22
-	.global	gUnk_080E9DE0
-gUnk_080E9DE0:
+	.global	gPlayerFrame1308NextBankPalette
+gPlayerFrame1308NextBankPalette:
 	.incbin	"baserom.gba", 0xE9DE0, 0x22
-	.global	gUnk_080E9E02
-gUnk_080E9E02:
+	.global	gPlayerFrame1517NextBankPalette
+gPlayerFrame1517NextBankPalette:
 	.incbin	"baserom.gba", 0xE9E02, 0x22
-	.global	gUnk_080E9E24
-gUnk_080E9E24:
+	.global	gPlayerFrame1686NextBankPalette
+gPlayerFrame1686NextBankPalette:
 	.incbin	"baserom.gba", 0xE9E24, 0x22
 	.global	gPlayerFrame2307Palette
 gPlayerFrame2307Palette:
 	.incbin	"baserom.gba", 0xE9E46, 0x22
-	.global	gUnk_080E9E68
-gUnk_080E9E68:
+	.global	gPlayerFrame2307NextBankPalette
+gPlayerFrame2307NextBankPalette:
 	.incbin	"baserom.gba", 0xE9E68, 0x22
 	.global	gPlayerFrame2447Palette
 gPlayerFrame2447Palette:
 	.incbin	"baserom.gba", 0xE9E8A, 0x22
-	.global	gUnk_080E9EAC
-gUnk_080E9EAC:
+	.global	gPlayerFrame2447NextBankPalette
+gPlayerFrame2447NextBankPalette:
 	.incbin	"baserom.gba", 0xE9EAC, 0x22
 	.global	gPlayerFrame2587Palette
 gPlayerFrame2587Palette:
 	.incbin	"baserom.gba", 0xE9ECE, 0x22
-	.global	gUnk_080E9EF0
-gUnk_080E9EF0:
+	.global	gPlayerFrame2587NextBankPalette
+gPlayerFrame2587NextBankPalette:
 	.incbin	"baserom.gba", 0xE9EF0, 0x22
-	.global	gUnk_080E9F12
-gUnk_080E9F12:
+	.global	gPlayerFrame2747NextBankPalette
+gPlayerFrame2747NextBankPalette:
 	.incbin	"baserom.gba", 0xE9F12, 0x22
-	.global	gUnk_080E9F34
-gUnk_080E9F34:
+	.global	gPlayerFrame2893NextBankPalette
+gPlayerFrame2893NextBankPalette:
 	.incbin	"baserom.gba", 0xE9F34, 0x22
 	.global	gPlayerFrame3024Palette
 gPlayerFrame3024Palette:
 	.incbin	"baserom.gba", 0xE9F56, 0x22
-	.global	gUnk_080E9F78
-gUnk_080E9F78:
+	.global	gPlayerFrame3024NextBankPalette
+gPlayerFrame3024NextBankPalette:
 	.incbin	"baserom.gba", 0xE9F78, 0x22
 	.global	gPlayerFrame3167Palette
 gPlayerFrame3167Palette:
 	.incbin	"baserom.gba", 0xE9F9A, 0x22
-	.global	gUnk_080E9FBC
-gUnk_080E9FBC:
+	.global	gPlayerFrame3352NextBankPalette
+gPlayerFrame3352NextBankPalette:
 	.incbin	"baserom.gba", 0xE9FBC, 0x22
 	.global	gUnk_080E9FDE
 gUnk_080E9FDE:
@@ -4009,176 +4009,176 @@ gUnk_080EC524:
 	.global	gUnk_080EC5EA
 gUnk_080EC5EA:
 	.incbin	"baserom.gba", 0xEC5EA, 0x126
-	.global	gUnk_080EC710
-gUnk_080EC710:
+	.global	gPlayerFrame894UpperTiles
+gPlayerFrame894UpperTiles:
 	.incbin	"baserom.gba", 0xEC710, 0x126
-	.global	gUnk_080EC836
-gUnk_080EC836:
+	.global	gPlayerFrame895UpperTiles
+gPlayerFrame895UpperTiles:
 	.incbin	"baserom.gba", 0xEC836, 0x106
 	.global	gPlayerFrame896Tiles
 gPlayerFrame896Tiles:
 	.incbin	"baserom.gba", 0xEC93C, 0x106
-	.global	gUnk_080ECA42
-gUnk_080ECA42:
+	.global	gPlayerFrame896UpperTiles
+gPlayerFrame896UpperTiles:
 	.incbin	"baserom.gba", 0xECA42, 0x106
-	.global	gUnk_080ECB48
-gUnk_080ECB48:
+	.global	gPlayerFrame897UpperTiles
+gPlayerFrame897UpperTiles:
 	.incbin	"baserom.gba", 0xECB48, 0xE6
-	.global	gUnk_080ECC2E
-gUnk_080ECC2E:
+	.global	gPlayerFrame898UpperTiles
+gPlayerFrame898UpperTiles:
 	.incbin	"baserom.gba", 0xECC2E, 0xC6
-	.global	gUnk_080ECCF4
-gUnk_080ECCF4:
+	.global	gPlayerFrame899UpperTiles
+gPlayerFrame899UpperTiles:
 	.incbin	"baserom.gba", 0xECCF4, 0xC6
 	.global	gPlayerFrame901Tiles
 gPlayerFrame901Tiles:
 	.incbin	"baserom.gba", 0xECDBA, 0x106
-	.global	gUnk_080ECEC0
-gUnk_080ECEC0:
+	.global	gPlayerFrame901UpperTiles
+gPlayerFrame901UpperTiles:
 	.incbin	"baserom.gba", 0xECEC0, 0xE6
-	.global	gUnk_080ECFA6
-gUnk_080ECFA6:
+	.global	gPlayerFrame912UpperTiles
+gPlayerFrame912UpperTiles:
 	.incbin	"baserom.gba", 0xECFA6, 0xC6
 	.global	gPlayerFrame1308Tiles
 gPlayerFrame1308Tiles:
 	.incbin	"baserom.gba", 0xED06C, 0x126
-	.global	gUnk_080ED192
-gUnk_080ED192:
+	.global	gPlayerFrame1308UpperTiles
+gPlayerFrame1308UpperTiles:
 	.incbin	"baserom.gba", 0xED192, 0x126
-	.global	gUnk_080ED2B8
-gUnk_080ED2B8:
+	.global	gPlayerFrame1309UpperTiles
+gPlayerFrame1309UpperTiles:
 	.incbin	"baserom.gba", 0xED2B8, 0x126
-	.global	gUnk_080ED3DE
-gUnk_080ED3DE:
+	.global	gPlayerFrame1310UpperTiles
+gPlayerFrame1310UpperTiles:
 	.incbin	"baserom.gba", 0xED3DE, 0x126
-	.global	gUnk_080ED504
-gUnk_080ED504:
+	.global	gPlayerFrame1312UpperTiles
+gPlayerFrame1312UpperTiles:
 	.incbin	"baserom.gba", 0xED504, 0x146
-	.global	gUnk_080ED64A
-gUnk_080ED64A:
+	.global	gPlayerFrame1313UpperTiles
+gPlayerFrame1313UpperTiles:
 	.incbin	"baserom.gba", 0xED64A, 0x146
-	.global	gUnk_080ED790
-gUnk_080ED790:
+	.global	gPlayerFrame1314UpperTiles
+gPlayerFrame1314UpperTiles:
 	.incbin	"baserom.gba", 0xED790, 0x1C6
-	.global	gUnk_080ED956
-gUnk_080ED956:
+	.global	gPlayerFrame1315UpperTiles
+gPlayerFrame1315UpperTiles:
 	.incbin	"baserom.gba", 0xED956, 0x1C6
 	.global	gPlayerFrame1316Tiles
 gPlayerFrame1316Tiles:
 	.incbin	"baserom.gba", 0xEDB1C, 0x126
-	.global	gUnk_080EDC42
-gUnk_080EDC42:
+	.global	gPlayerFrame1316UpperTiles
+gPlayerFrame1316UpperTiles:
 	.incbin	"baserom.gba", 0xEDC42, 0x1A6
-	.global	gUnk_080EDDE8
-gUnk_080EDDE8:
+	.global	gPlayerFrame1317UpperTiles
+gPlayerFrame1317UpperTiles:
 	.incbin	"baserom.gba", 0xEDDE8, 0x1A6
 	.global	gPlayerFrame1318Tiles
 gPlayerFrame1318Tiles:
 	.incbin	"baserom.gba", 0xEDF8E, 0x126
-	.global	gUnk_080EE0B4
-gUnk_080EE0B4:
+	.global	gPlayerFrame1318UpperTiles
+gPlayerFrame1318UpperTiles:
 	.incbin	"baserom.gba", 0xEE0B4, 0x186
-	.global	gUnk_080EE23A
-gUnk_080EE23A:
+	.global	gPlayerFrame1319UpperTiles
+gPlayerFrame1319UpperTiles:
 	.incbin	"baserom.gba", 0xEE23A, 0x186
-	.global	gUnk_080EE3C0
-gUnk_080EE3C0:
+	.global	gPlayerFrame1320UpperTiles
+gPlayerFrame1320UpperTiles:
 	.incbin	"baserom.gba", 0xEE3C0, 0x186
-	.global	gUnk_080EE546
-gUnk_080EE546:
+	.global	gPlayerFrame1321UpperTiles
+gPlayerFrame1321UpperTiles:
 	.incbin	"baserom.gba", 0xEE546, 0x186
-	.global	gUnk_080EE6CC
-gUnk_080EE6CC:
+	.global	gPlayerFrame1322UpperTiles
+gPlayerFrame1322UpperTiles:
 	.incbin	"baserom.gba", 0xEE6CC, 0x1A6
-	.global	gUnk_080EE872
-gUnk_080EE872:
+	.global	gPlayerFrame1323UpperTiles
+gPlayerFrame1323UpperTiles:
 	.incbin	"baserom.gba", 0xEE872, 0x1A6
-	.global	gUnk_080EEA18
-gUnk_080EEA18:
+	.global	gPlayerFrame1324UpperTiles
+gPlayerFrame1324UpperTiles:
 	.incbin	"baserom.gba", 0xEEA18, 0x1C6
-	.global	gUnk_080EEBDE
-gUnk_080EEBDE:
+	.global	gPlayerFrame1325UpperTiles
+gPlayerFrame1325UpperTiles:
 	.incbin	"baserom.gba", 0xEEBDE, 0x1C6
-	.global	gUnk_080EEDA4
-gUnk_080EEDA4:
+	.global	gPlayerFrame1326UpperTiles
+gPlayerFrame1326UpperTiles:
 	.incbin	"baserom.gba", 0xEEDA4, 0x146
-	.global	gUnk_080EEEEA
-gUnk_080EEEEA:
+	.global	gPlayerFrame1336UpperTiles
+gPlayerFrame1336UpperTiles:
 	.incbin	"baserom.gba", 0xEEEEA, 0x186
-	.global	gUnk_080EF070
-gUnk_080EF070:
+	.global	gPlayerFrame1337UpperTiles
+gPlayerFrame1337UpperTiles:
 	.incbin	"baserom.gba", 0xEF070, 0x186
-	.global	gUnk_080EF1F6
-gUnk_080EF1F6:
+	.global	gPlayerFrame1517UpperTiles
+gPlayerFrame1517UpperTiles:
 	.incbin	"baserom.gba", 0xEF1F6, 0xC6
-	.global	gUnk_080EF2BC
-gUnk_080EF2BC:
+	.global	gPlayerFrame1518UpperTiles
+gPlayerFrame1518UpperTiles:
 	.incbin	"baserom.gba", 0xEF2BC, 0xC6
-	.global	gUnk_080EF382
-gUnk_080EF382:
+	.global	gPlayerFrame1519UpperTiles
+gPlayerFrame1519UpperTiles:
 	.incbin	"baserom.gba", 0xEF382, 0xC6
-	.global	gUnk_080EF448
-gUnk_080EF448:
+	.global	gPlayerFrame1520UpperTiles
+gPlayerFrame1520UpperTiles:
 	.incbin	"baserom.gba", 0xEF448, 0xC6
-	.global	gUnk_080EF50E
-gUnk_080EF50E:
+	.global	gPlayerFrame1521UpperTiles
+gPlayerFrame1521UpperTiles:
 	.incbin	"baserom.gba", 0xEF50E, 0xC6
-	.global	gUnk_080EF5D4
-gUnk_080EF5D4:
+	.global	gPlayerFrame1522UpperTiles
+gPlayerFrame1522UpperTiles:
 	.incbin	"baserom.gba", 0xEF5D4, 0xC6
-	.global	gUnk_080EF69A
-gUnk_080EF69A:
+	.global	gPlayerFrame1524UpperTiles
+gPlayerFrame1524UpperTiles:
 	.incbin	"baserom.gba", 0xEF69A, 0xC6
-	.global	gUnk_080EF760
-gUnk_080EF760:
+	.global	gPlayerFrame1525UpperTiles
+gPlayerFrame1525UpperTiles:
 	.incbin	"baserom.gba", 0xEF760, 0xC6
-	.global	gUnk_080EF826
-gUnk_080EF826:
+	.global	gPlayerFrame1535UpperTiles
+gPlayerFrame1535UpperTiles:
 	.incbin	"baserom.gba", 0xEF826, 0x86
-	.global	gUnk_080EF8AC
-gUnk_080EF8AC:
+	.global	gPlayerFrame1686UpperTiles
+gPlayerFrame1686UpperTiles:
 	.incbin	"baserom.gba", 0xEF8AC, 0xC6
-	.global	gUnk_080EF972
-gUnk_080EF972:
+	.global	gPlayerFrame1687UpperTiles
+gPlayerFrame1687UpperTiles:
 	.incbin	"baserom.gba", 0xEF972, 0xC6
-	.global	gUnk_080EFA38
-gUnk_080EFA38:
+	.global	gPlayerFrame1688UpperTiles
+gPlayerFrame1688UpperTiles:
 	.incbin	"baserom.gba", 0xEFA38, 0xC6
-	.global	gUnk_080EFAFE
-gUnk_080EFAFE:
+	.global	gPlayerFrame1689UpperTiles
+gPlayerFrame1689UpperTiles:
 	.incbin	"baserom.gba", 0xEFAFE, 0xC6
-	.global	gUnk_080EFBC4
-gUnk_080EFBC4:
+	.global	gPlayerFrame1690UpperTiles
+gPlayerFrame1690UpperTiles:
 	.incbin	"baserom.gba", 0xEFBC4, 0xC6
-	.global	gUnk_080EFC8A
-gUnk_080EFC8A:
+	.global	gPlayerFrame1704UpperTiles
+gPlayerFrame1704UpperTiles:
 	.incbin	"baserom.gba", 0xEFC8A, 0xA6
-	.global	gUnk_080EFD30
-gUnk_080EFD30:
+	.global	gPlayerFrame2307UpperTiles
+gPlayerFrame2307UpperTiles:
 	.incbin	"baserom.gba", 0xEFD30, 0x106
-	.global	gUnk_080EFE36
-gUnk_080EFE36:
+	.global	gPlayerFrame2308UpperTiles
+gPlayerFrame2308UpperTiles:
 	.incbin	"baserom.gba", 0xEFE36, 0xE6
-	.global	gUnk_080EFF1C
-gUnk_080EFF1C:
+	.global	gPlayerFrame2309UpperTiles
+gPlayerFrame2309UpperTiles:
 	.incbin	"baserom.gba", 0xEFF1C, 0xE6
-	.global	gUnk_080F0002
-gUnk_080F0002:
+	.global	gPlayerFrame2310UpperTiles
+gPlayerFrame2310UpperTiles:
 	.incbin	"baserom.gba", 0xF0002, 0xC6
-	.global	gUnk_080F00C8
-gUnk_080F00C8:
+	.global	gPlayerFrame2311UpperTiles
+gPlayerFrame2311UpperTiles:
 	.incbin	"baserom.gba", 0xF00C8, 0xE6
-	.global	gUnk_080F01AE
-gUnk_080F01AE:
+	.global	gPlayerFrame2312UpperTiles
+gPlayerFrame2312UpperTiles:
 	.incbin	"baserom.gba", 0xF01AE, 0xE6
-	.global	gUnk_080F0294
-gUnk_080F0294:
+	.global	gPlayerFrame2313UpperTiles
+gPlayerFrame2313UpperTiles:
 	.incbin	"baserom.gba", 0xF0294, 0xE6
-	.global	gUnk_080F037A
-gUnk_080F037A:
+	.global	gPlayerFrame2314UpperTiles
+gPlayerFrame2314UpperTiles:
 	.incbin	"baserom.gba", 0xF037A, 0xE6
-	.global	gUnk_080F0460
-gUnk_080F0460:
+	.global	gPlayerFrame2315UpperTiles
+gPlayerFrame2315UpperTiles:
 	.incbin	"baserom.gba", 0xF0460, 0xE6
 	.global	gPlayerFrame2316Tiles
 gPlayerFrame2316Tiles:
@@ -4186,185 +4186,185 @@ gPlayerFrame2316Tiles:
 	.global	gPlayerFrame2325Tiles
 gPlayerFrame2325Tiles:
 	.incbin	"baserom.gba", 0xF060C, 0xC6
-	.global	gUnk_080F06D2
-gUnk_080F06D2:
+	.global	gPlayerFrame2325UpperTiles
+gPlayerFrame2325UpperTiles:
 	.incbin	"baserom.gba", 0xF06D2, 0xE6
-	.global	gUnk_080F07B8
-gUnk_080F07B8:
+	.global	gPlayerFrame2447UpperTiles
+gPlayerFrame2447UpperTiles:
 	.incbin	"baserom.gba", 0xF07B8, 0xC6
-	.global	gUnk_080F087E
-gUnk_080F087E:
+	.global	gPlayerFrame2448UpperTiles
+gPlayerFrame2448UpperTiles:
 	.incbin	"baserom.gba", 0xF087E, 0xC6
-	.global	gUnk_080F0944
-gUnk_080F0944:
+	.global	gPlayerFrame2449UpperTiles
+gPlayerFrame2449UpperTiles:
 	.incbin	"baserom.gba", 0xF0944, 0xC6
-	.global	gUnk_080F0A0A
-gUnk_080F0A0A:
+	.global	gPlayerFrame2450UpperTiles
+gPlayerFrame2450UpperTiles:
 	.incbin	"baserom.gba", 0xF0A0A, 0xC6
-	.global	gUnk_080F0AD0
-gUnk_080F0AD0:
+	.global	gPlayerFrame2451UpperTiles
+gPlayerFrame2451UpperTiles:
 	.incbin	"baserom.gba", 0xF0AD0, 0xC6
-	.global	gUnk_080F0B96
-gUnk_080F0B96:
+	.global	gPlayerFrame2452UpperTiles
+gPlayerFrame2452UpperTiles:
 	.incbin	"baserom.gba", 0xF0B96, 0xC6
-	.global	gUnk_080F0C5C
-gUnk_080F0C5C:
+	.global	gPlayerFrame2453UpperTiles
+gPlayerFrame2453UpperTiles:
 	.incbin	"baserom.gba", 0xF0C5C, 0xC6
-	.global	gUnk_080F0D22
-gUnk_080F0D22:
+	.global	gPlayerFrame2456UpperTiles
+gPlayerFrame2456UpperTiles:
 	.incbin	"baserom.gba", 0xF0D22, 0xC6
-	.global	gUnk_080F0DE8
-gUnk_080F0DE8:
+	.global	gPlayerFrame2465UpperTiles
+gPlayerFrame2465UpperTiles:
 	.incbin	"baserom.gba", 0xF0DE8, 0xA6
-	.global	gUnk_080F0E8E
-gUnk_080F0E8E:
+	.global	gPlayerFrame2587UpperTiles
+gPlayerFrame2587UpperTiles:
 	.incbin	"baserom.gba", 0xF0E8E, 0xE6
-	.global	gUnk_080F0F74
-gUnk_080F0F74:
+	.global	gPlayerFrame2588UpperTiles
+gPlayerFrame2588UpperTiles:
 	.incbin	"baserom.gba", 0xF0F74, 0x106
-	.global	gUnk_080F107A
-gUnk_080F107A:
+	.global	gPlayerFrame2589UpperTiles
+gPlayerFrame2589UpperTiles:
 	.incbin	"baserom.gba", 0xF107A, 0xC6
 	.global	gPlayerFrame2590Tiles
 gPlayerFrame2590Tiles:
 	.incbin	"baserom.gba", 0xF1140, 0x106
-	.global	gUnk_080F1246
-gUnk_080F1246:
+	.global	gPlayerFrame2590UpperTiles
+gPlayerFrame2590UpperTiles:
 	.incbin	"baserom.gba", 0xF1246, 0xC6
-	.global	gUnk_080F130C
-gUnk_080F130C:
+	.global	gPlayerFrame2591UpperTiles
+gPlayerFrame2591UpperTiles:
 	.incbin	"baserom.gba", 0xF130C, 0x106
-	.global	gUnk_080F1412
-gUnk_080F1412:
+	.global	gPlayerFrame2592UpperTiles
+gPlayerFrame2592UpperTiles:
 	.incbin	"baserom.gba", 0xF1412, 0x106
-	.global	gUnk_080F1518
-gUnk_080F1518:
+	.global	gPlayerFrame2593UpperTiles
+gPlayerFrame2593UpperTiles:
 	.incbin	"baserom.gba", 0xF1518, 0x126
-	.global	gUnk_080F163E
-gUnk_080F163E:
+	.global	gPlayerFrame2594UpperTiles
+gPlayerFrame2594UpperTiles:
 	.incbin	"baserom.gba", 0xF163E, 0x106
-	.global	gUnk_080F1744
-gUnk_080F1744:
+	.global	gPlayerFrame2595UpperTiles
+gPlayerFrame2595UpperTiles:
 	.incbin	"baserom.gba", 0xF1744, 0xE6
 	.global	gPlayerFrame2596Tiles
 gPlayerFrame2596Tiles:
 	.incbin	"baserom.gba", 0xF182A, 0x126
-	.global	gUnk_080F1950
-gUnk_080F1950:
+	.global	gPlayerFrame2596UpperTiles
+gPlayerFrame2596UpperTiles:
 	.incbin	"baserom.gba", 0xF1950, 0x106
-	.global	gUnk_080F1A56
-gUnk_080F1A56:
+	.global	gPlayerFrame2605UpperTiles
+gPlayerFrame2605UpperTiles:
 	.incbin	"baserom.gba", 0xF1A56, 0x106
-	.global	gUnk_080F1B5C
-gUnk_080F1B5C:
+	.global	gPlayerFrame2747UpperTiles
+gPlayerFrame2747UpperTiles:
 	.incbin	"baserom.gba", 0xF1B5C, 0x126
-	.global	gUnk_080F1C82
-gUnk_080F1C82:
+	.global	gPlayerFrame2748UpperTiles
+gPlayerFrame2748UpperTiles:
 	.incbin	"baserom.gba", 0xF1C82, 0x126
-	.global	gUnk_080F1DA8
-gUnk_080F1DA8:
+	.global	gPlayerFrame2749UpperTiles
+gPlayerFrame2749UpperTiles:
 	.incbin	"baserom.gba", 0xF1DA8, 0x126
-	.global	gUnk_080F1ECE
-gUnk_080F1ECE:
+	.global	gPlayerFrame2750UpperTiles
+gPlayerFrame2750UpperTiles:
 	.incbin	"baserom.gba", 0xF1ECE, 0x126
-	.global	gUnk_080F1FF4
-gUnk_080F1FF4:
+	.global	gPlayerFrame2751UpperTiles
+gPlayerFrame2751UpperTiles:
 	.incbin	"baserom.gba", 0xF1FF4, 0x126
-	.global	gUnk_080F211A
-gUnk_080F211A:
+	.global	gPlayerFrame2752UpperTiles
+gPlayerFrame2752UpperTiles:
 	.incbin	"baserom.gba", 0xF211A, 0x146
-	.global	gUnk_080F2260
-gUnk_080F2260:
+	.global	gPlayerFrame2753UpperTiles
+gPlayerFrame2753UpperTiles:
 	.incbin	"baserom.gba", 0xF2260, 0x146
-	.global	gUnk_080F23A6
-gUnk_080F23A6:
+	.global	gPlayerFrame2754UpperTiles
+gPlayerFrame2754UpperTiles:
 	.incbin	"baserom.gba", 0xF23A6, 0x126
-	.global	gUnk_080F24CC
-gUnk_080F24CC:
+	.global	gPlayerFrame2755UpperTiles
+gPlayerFrame2755UpperTiles:
 	.incbin	"baserom.gba", 0xF24CC, 0x126
-	.global	gUnk_080F25F2
-gUnk_080F25F2:
+	.global	gPlayerFrame2756UpperTiles
+gPlayerFrame2756UpperTiles:
 	.incbin	"baserom.gba", 0xF25F2, 0x126
-	.global	gUnk_080F2718
-gUnk_080F2718:
+	.global	gPlayerFrame2757UpperTiles
+gPlayerFrame2757UpperTiles:
 	.incbin	"baserom.gba", 0xF2718, 0x126
-	.global	gUnk_080F283E
-gUnk_080F283E:
+	.global	gPlayerFrame2758UpperTiles
+gPlayerFrame2758UpperTiles:
 	.incbin	"baserom.gba", 0xF283E, 0x126
 	.global	gPlayerFrame2767Tiles
 gPlayerFrame2767Tiles:
 	.incbin	"baserom.gba", 0xF2964, 0x126
-	.global	gUnk_080F2A8A
-gUnk_080F2A8A:
+	.global	gPlayerFrame2767UpperTiles
+gPlayerFrame2767UpperTiles:
 	.incbin	"baserom.gba", 0xF2A8A, 0xE6
-	.global	gUnk_080F2B70
-gUnk_080F2B70:
+	.global	gPlayerFrame2893UpperTiles
+gPlayerFrame2893UpperTiles:
 	.incbin	"baserom.gba", 0xF2B70, 0x106
-	.global	gUnk_080F2C76
-gUnk_080F2C76:
+	.global	gPlayerFrame2894UpperTiles
+gPlayerFrame2894UpperTiles:
 	.incbin	"baserom.gba", 0xF2C76, 0x106
-	.global	gUnk_080F2D7C
-gUnk_080F2D7C:
+	.global	gPlayerFrame2895UpperTiles
+gPlayerFrame2895UpperTiles:
 	.incbin	"baserom.gba", 0xF2D7C, 0x106
-	.global	gUnk_080F2E82
-gUnk_080F2E82:
+	.global	gPlayerFrame2896UpperTiles
+gPlayerFrame2896UpperTiles:
 	.incbin	"baserom.gba", 0xF2E82, 0xC6
-	.global	gUnk_080F2F48
-gUnk_080F2F48:
+	.global	gPlayerFrame2897UpperTiles
+gPlayerFrame2897UpperTiles:
 	.incbin	"baserom.gba", 0xF2F48, 0xC6
-	.global	gUnk_080F300E
-gUnk_080F300E:
+	.global	gPlayerFrame2898UpperTiles
+gPlayerFrame2898UpperTiles:
 	.incbin	"baserom.gba", 0xF300E, 0xC6
-	.global	gUnk_080F30D4
-gUnk_080F30D4:
+	.global	gPlayerFrame2899UpperTiles
+gPlayerFrame2899UpperTiles:
 	.incbin	"baserom.gba", 0xF30D4, 0xC6
-	.global	gUnk_080F319A
-gUnk_080F319A:
+	.global	gPlayerFrame2900UpperTiles
+gPlayerFrame2900UpperTiles:
 	.incbin	"baserom.gba", 0xF319A, 0xC6
-	.global	gUnk_080F3260
-gUnk_080F3260:
+	.global	gPlayerFrame2901UpperTiles
+gPlayerFrame2901UpperTiles:
 	.incbin	"baserom.gba", 0xF3260, 0xC6
-	.global	gUnk_080F3326
-gUnk_080F3326:
+	.global	gPlayerFrame2902UpperTiles
+gPlayerFrame2902UpperTiles:
 	.incbin	"baserom.gba", 0xF3326, 0xC6
-	.global	gUnk_080F33EC
-gUnk_080F33EC:
+	.global	gPlayerFrame2903UpperTiles
+gPlayerFrame2903UpperTiles:
 	.incbin	"baserom.gba", 0xF33EC, 0xC6
-	.global	gUnk_080F34B2
-gUnk_080F34B2:
+	.global	gPlayerFrame2904UpperTiles
+gPlayerFrame2904UpperTiles:
 	.incbin	"baserom.gba", 0xF34B2, 0x106
 	.global	gPlayerFrame2913Tiles
 gPlayerFrame2913Tiles:
 	.incbin	"baserom.gba", 0xF35B8, 0xE6
-	.global	gUnk_080F369E
-gUnk_080F369E:
+	.global	gPlayerFrame2913UpperTiles
+gPlayerFrame2913UpperTiles:
 	.incbin	"baserom.gba", 0xF369E, 0xC6
-	.global	gUnk_080F3764
-gUnk_080F3764:
+	.global	gPlayerFrame3024UpperTiles
+gPlayerFrame3024UpperTiles:
 	.incbin	"baserom.gba", 0xF3764, 0x106
-	.global	gUnk_080F386A
-gUnk_080F386A:
+	.global	gPlayerFrame3025UpperTiles
+gPlayerFrame3025UpperTiles:
 	.incbin	"baserom.gba", 0xF386A, 0x106
-	.global	gUnk_080F3970
-gUnk_080F3970:
+	.global	gPlayerFrame3026UpperTiles
+gPlayerFrame3026UpperTiles:
 	.incbin	"baserom.gba", 0xF3970, 0x106
-	.global	gUnk_080F3A76
-gUnk_080F3A76:
+	.global	gPlayerFrame3027UpperTiles
+gPlayerFrame3027UpperTiles:
 	.incbin	"baserom.gba", 0xF3A76, 0xE6
-	.global	gUnk_080F3B5C
-gUnk_080F3B5C:
+	.global	gPlayerFrame3028UpperTiles
+gPlayerFrame3028UpperTiles:
 	.incbin	"baserom.gba", 0xF3B5C, 0xE6
-	.global	gUnk_080F3C42
-gUnk_080F3C42:
+	.global	gPlayerFrame3029UpperTiles
+gPlayerFrame3029UpperTiles:
 	.incbin	"baserom.gba", 0xF3C42, 0xE6
-	.global	gUnk_080F3D28
-gUnk_080F3D28:
+	.global	gPlayerFrame3030UpperTiles
+gPlayerFrame3030UpperTiles:
 	.incbin	"baserom.gba", 0xF3D28, 0xC6
-	.global	gUnk_080F3DEE
-gUnk_080F3DEE:
+	.global	gPlayerFrame3031UpperTiles
+gPlayerFrame3031UpperTiles:
 	.incbin	"baserom.gba", 0xF3DEE, 0xE6
-	.global	gUnk_080F3ED4
-gUnk_080F3ED4:
+	.global	gPlayerFrame3044UpperTiles
+gPlayerFrame3044UpperTiles:
 	.incbin	"baserom.gba", 0xF3ED4, 0x106
 	.global	gPlayerFrame3167Tiles
 gPlayerFrame3167Tiles:
@@ -4399,71 +4399,71 @@ gPlayerFrame3176Tiles:
 	.global	gPlayerFrame3185Tiles
 gPlayerFrame3185Tiles:
 	.incbin	"baserom.gba", 0xF4B16, 0x126
-	.global	gUnk_080F4C3C
-gUnk_080F4C3C:
+	.global	gPlayerFrame3352UpperTiles
+gPlayerFrame3352UpperTiles:
 	.incbin	"baserom.gba", 0xF4C3C, 0x126
-	.global	gUnk_080F4D62
-gUnk_080F4D62:
+	.global	gPlayerFrame3353UpperTiles
+gPlayerFrame3353UpperTiles:
 	.incbin	"baserom.gba", 0xF4D62, 0x126
-	.global	gUnk_080F4E88
-gUnk_080F4E88:
+	.global	gPlayerFrame3354UpperTiles
+gPlayerFrame3354UpperTiles:
 	.incbin	"baserom.gba", 0xF4E88, 0x126
-	.global	gUnk_080F4FAE
-gUnk_080F4FAE:
+	.global	gPlayerFrame3355UpperTiles
+gPlayerFrame3355UpperTiles:
 	.incbin	"baserom.gba", 0xF4FAE, 0x126
-	.global	gUnk_080F50D4
-gUnk_080F50D4:
+	.global	gPlayerFrame3356UpperTiles
+gPlayerFrame3356UpperTiles:
 	.incbin	"baserom.gba", 0xF50D4, 0x126
-	.global	gUnk_080F51FA
-gUnk_080F51FA:
+	.global	gPlayerFrame3357UpperTiles
+gPlayerFrame3357UpperTiles:
 	.incbin	"baserom.gba", 0xF51FA, 0x126
-	.global	gUnk_080F5320
-gUnk_080F5320:
+	.global	gPlayerFrame3358UpperTiles
+gPlayerFrame3358UpperTiles:
 	.incbin	"baserom.gba", 0xF5320, 0x126
-	.global	gUnk_080F5446
-gUnk_080F5446:
+	.global	gPlayerFrame3359UpperTiles
+gPlayerFrame3359UpperTiles:
 	.incbin	"baserom.gba", 0xF5446, 0x126
-	.global	gUnk_080F556C
-gUnk_080F556C:
+	.global	gPlayerFrame3360UpperTiles
+gPlayerFrame3360UpperTiles:
 	.incbin	"baserom.gba", 0xF556C, 0x126
-	.global	gUnk_080F5692
-gUnk_080F5692:
+	.global	gPlayerFrame3361UpperTiles
+gPlayerFrame3361UpperTiles:
 	.incbin	"baserom.gba", 0xF5692, 0x126
-	.global	gUnk_080F57B8
-gUnk_080F57B8:
+	.global	gPlayerFrame3362UpperTiles
+gPlayerFrame3362UpperTiles:
 	.incbin	"baserom.gba", 0xF57B8, 0x126
-	.global	gUnk_080F58DE
-gUnk_080F58DE:
+	.global	gPlayerFrame3363UpperTiles
+gPlayerFrame3363UpperTiles:
 	.incbin	"baserom.gba", 0xF58DE, 0x126
-	.global	gUnk_080F5A04
-gUnk_080F5A04:
+	.global	gPlayerFrame3364UpperTiles
+gPlayerFrame3364UpperTiles:
 	.incbin	"baserom.gba", 0xF5A04, 0x126
-	.global	gUnk_080F5B2A
-gUnk_080F5B2A:
+	.global	gPlayerFrame3365UpperTiles
+gPlayerFrame3365UpperTiles:
 	.incbin	"baserom.gba", 0xF5B2A, 0x126
-	.global	gUnk_080F5C50
-gUnk_080F5C50:
+	.global	gPlayerFrame3366UpperTiles
+gPlayerFrame3366UpperTiles:
 	.incbin	"baserom.gba", 0xF5C50, 0x126
-	.global	gUnk_080F5D76
-gUnk_080F5D76:
+	.global	gPlayerFrame3367UpperTiles
+gPlayerFrame3367UpperTiles:
 	.incbin	"baserom.gba", 0xF5D76, 0x126
-	.global	gUnk_080F5E9C
-gUnk_080F5E9C:
+	.global	gPlayerFrame3368UpperTiles
+gPlayerFrame3368UpperTiles:
 	.incbin	"baserom.gba", 0xF5E9C, 0x126
-	.global	gUnk_080F5FC2
-gUnk_080F5FC2:
+	.global	gPlayerFrame3369UpperTiles
+gPlayerFrame3369UpperTiles:
 	.incbin	"baserom.gba", 0xF5FC2, 0x126
-	.global	gUnk_080F60E8
-gUnk_080F60E8:
+	.global	gPlayerFrame3370UpperTiles
+gPlayerFrame3370UpperTiles:
 	.incbin	"baserom.gba", 0xF60E8, 0x126
-	.global	gUnk_080F620E
-gUnk_080F620E:
+	.global	gPlayerFrame3371UpperTiles
+gPlayerFrame3371UpperTiles:
 	.incbin	"baserom.gba", 0xF620E, 0x126
-	.global	gUnk_080F6334
-gUnk_080F6334:
+	.global	gPlayerFrame3380UpperTiles
+gPlayerFrame3380UpperTiles:
 	.incbin	"baserom.gba", 0xF6334, 0x146
-	.global	gUnk_080F647A
-gUnk_080F647A:
+	.global	gPlayerFrame3381UpperTiles
+gPlayerFrame3381UpperTiles:
 	.incbin	"baserom.gba", 0xF647A, 0x106
 	.global	gUnk_080F6580
 gUnk_080F6580:
@@ -5125,20 +5125,20 @@ gUnk_080F9956:
 	.global	gPlayerFrame1019Palette
 gPlayerFrame1019Palette:
 	.incbin	"baserom.gba", 0xF9978, 0x22
-	.global	gUnk_080F999A
-gUnk_080F999A:
+	.global	gPlayerFrame1019NextBankPalette
+gPlayerFrame1019NextBankPalette:
 	.incbin	"baserom.gba", 0xF999A, 0x22
 	.global	gPlayerFrame1823Palette
 gPlayerFrame1823Palette:
 	.incbin	"baserom.gba", 0xF99BC, 0x22
-	.global	gUnk_080F99DE
-gUnk_080F99DE:
+	.global	gPlayerFrame1823NextBankPalette
+gPlayerFrame1823NextBankPalette:
 	.incbin	"baserom.gba", 0xF99DE, 0x22
 	.global	gUnk_080F9A00
 gUnk_080F9A00:
 	.incbin	"baserom.gba", 0xF9A00, 0x22
-	.global	gUnk_080F9A22
-gUnk_080F9A22:
+	.global	gPlayerFrame2068NextBankPalette
+gPlayerFrame2068NextBankPalette:
 	.incbin	"baserom.gba", 0xF9A22, 0x22
 	.global	gUnk_080F9A44
 gUnk_080F9A44:
@@ -5146,110 +5146,110 @@ gUnk_080F9A44:
 	.global	gUnk_080F9A66
 gUnk_080F9A66:
 	.incbin	"baserom.gba", 0xF9A66, 0x126
-	.global	gUnk_080F9B8C
-gUnk_080F9B8C:
+	.global	gPlayerFrame1019UpperTiles
+gPlayerFrame1019UpperTiles:
 	.incbin	"baserom.gba", 0xF9B8C, 0x166
-	.global	gUnk_080F9CF2
-gUnk_080F9CF2:
+	.global	gPlayerFrame1020UpperTiles
+gPlayerFrame1020UpperTiles:
 	.incbin	"baserom.gba", 0xF9CF2, 0x166
 	.global	gUnk_080F9E58
 gUnk_080F9E58:
 	.incbin	"baserom.gba", 0xF9E58, 0x126
-	.global	gUnk_080F9F7E
-gUnk_080F9F7E:
+	.global	gPlayerFrame1021UpperTiles
+gPlayerFrame1021UpperTiles:
 	.incbin	"baserom.gba", 0xF9F7E, 0x166
 	.global	gUnk_080FA0E4
 gUnk_080FA0E4:
 	.incbin	"baserom.gba", 0xFA0E4, 0x106
-	.global	gUnk_080FA1EA
-gUnk_080FA1EA:
+	.global	gPlayerFrame1022UpperTiles
+gPlayerFrame1022UpperTiles:
 	.incbin	"baserom.gba", 0xFA1EA, 0x166
 	.global	gUnk_080FA350
 gUnk_080FA350:
 	.incbin	"baserom.gba", 0xFA350, 0x106
-	.global	gUnk_080FA456
-gUnk_080FA456:
+	.global	gPlayerFrame1023UpperTiles
+gPlayerFrame1023UpperTiles:
 	.incbin	"baserom.gba", 0xFA456, 0x186
 	.global	gUnk_080FA5DC
 gUnk_080FA5DC:
 	.incbin	"baserom.gba", 0xFA5DC, 0x126
-	.global	gUnk_080FA702
-gUnk_080FA702:
+	.global	gPlayerFrame1024UpperTiles
+gPlayerFrame1024UpperTiles:
 	.incbin	"baserom.gba", 0xFA702, 0x186
 	.global	gPlayerFrame1025Tiles
 gPlayerFrame1025Tiles:
 	.incbin	"baserom.gba", 0xFA888, 0x126
-	.global	gUnk_080FA9AE
-gUnk_080FA9AE:
+	.global	gPlayerFrame1025UpperTiles
+gPlayerFrame1025UpperTiles:
 	.incbin	"baserom.gba", 0xFA9AE, 0x166
-	.global	gUnk_080FAB14
-gUnk_080FAB14:
+	.global	gPlayerFrame1026UpperTiles
+gPlayerFrame1026UpperTiles:
 	.incbin	"baserom.gba", 0xFAB14, 0x166
 	.global	gUnk_080FAC7A
 gUnk_080FAC7A:
 	.incbin	"baserom.gba", 0xFAC7A, 0x126
-	.global	gUnk_080FADA0
-gUnk_080FADA0:
+	.global	gPlayerFrame1027UpperTiles
+gPlayerFrame1027UpperTiles:
 	.incbin	"baserom.gba", 0xFADA0, 0x186
 	.global	gUnk_080FAF26
 gUnk_080FAF26:
 	.incbin	"baserom.gba", 0xFAF26, 0x106
-	.global	gUnk_080FB02C
-gUnk_080FB02C:
+	.global	gPlayerFrame1028UpperTiles
+gPlayerFrame1028UpperTiles:
 	.incbin	"baserom.gba", 0xFB02C, 0x166
 	.global	gUnk_080FB192
 gUnk_080FB192:
 	.incbin	"baserom.gba", 0xFB192, 0x106
-	.global	gUnk_080FB298
-gUnk_080FB298:
+	.global	gPlayerFrame1029UpperTiles
+gPlayerFrame1029UpperTiles:
 	.incbin	"baserom.gba", 0xFB298, 0x186
 	.global	gPlayerFrame1030Tiles
 gPlayerFrame1030Tiles:
 	.incbin	"baserom.gba", 0xFB41E, 0x106
-	.global	gUnk_080FB524
-gUnk_080FB524:
+	.global	gPlayerFrame1030UpperTiles
+gPlayerFrame1030UpperTiles:
 	.incbin	"baserom.gba", 0xFB524, 0x166
 	.global	gPlayerFrame1039Tiles
 gPlayerFrame1039Tiles:
 	.incbin	"baserom.gba", 0xFB68A, 0x126
-	.global	gUnk_080FB7B0
-gUnk_080FB7B0:
+	.global	gPlayerFrame1039UpperTiles
+gPlayerFrame1039UpperTiles:
 	.incbin	"baserom.gba", 0xFB7B0, 0x186
 	.global	gPlayerFrame1823Tiles
 gPlayerFrame1823Tiles:
 	.incbin	"baserom.gba", 0xFB936, 0x126
-	.global	gUnk_080FBA5C
-gUnk_080FBA5C:
+	.global	gPlayerFrame1823UpperTiles
+gPlayerFrame1823UpperTiles:
 	.incbin	"baserom.gba", 0xFBA5C, 0xE6
 	.global	gPlayerFrame1824Tiles
 gPlayerFrame1824Tiles:
 	.incbin	"baserom.gba", 0xFBB42, 0x126
-	.global	gUnk_080FBC68
-gUnk_080FBC68:
+	.global	gPlayerFrame1824UpperTiles
+gPlayerFrame1824UpperTiles:
 	.incbin	"baserom.gba", 0xFBC68, 0x106
 	.global	gPlayerFrame1825Tiles
 gPlayerFrame1825Tiles:
 	.incbin	"baserom.gba", 0xFBD6E, 0x106
-	.global	gUnk_080FBE74
-gUnk_080FBE74:
+	.global	gPlayerFrame1825UpperTiles
+gPlayerFrame1825UpperTiles:
 	.incbin	"baserom.gba", 0xFBE74, 0x106
 	.global	gPlayerFrame1826Tiles
 gPlayerFrame1826Tiles:
 	.incbin	"baserom.gba", 0xFBF7A, 0x106
-	.global	gUnk_080FC080
-gUnk_080FC080:
+	.global	gPlayerFrame1826UpperTiles
+gPlayerFrame1826UpperTiles:
 	.incbin	"baserom.gba", 0xFC080, 0x106
 	.global	gPlayerFrame1827Tiles
 gPlayerFrame1827Tiles:
 	.incbin	"baserom.gba", 0xFC186, 0x126
-	.global	gUnk_080FC2AC
-gUnk_080FC2AC:
+	.global	gPlayerFrame1827UpperTiles
+gPlayerFrame1827UpperTiles:
 	.incbin	"baserom.gba", 0xFC2AC, 0x106
 	.global	gPlayerFrame1828Tiles
 gPlayerFrame1828Tiles:
 	.incbin	"baserom.gba", 0xFC3B2, 0x126
-	.global	gUnk_080FC4D8
-gUnk_080FC4D8:
+	.global	gPlayerFrame1828UpperTiles
+gPlayerFrame1828UpperTiles:
 	.incbin	"baserom.gba", 0xFC4D8, 0x106
 	.global	gPlayerFrame1829Tiles
 gPlayerFrame1829Tiles:
@@ -5266,26 +5266,26 @@ gPlayerFrame1832Tiles:
 	.global	gPlayerFrame1841Tiles
 gPlayerFrame1841Tiles:
 	.incbin	"baserom.gba", 0xFCA36, 0x126
-	.global	gUnk_080FCB5C
-gUnk_080FCB5C:
+	.global	gPlayerFrame2068UpperTiles
+gPlayerFrame2068UpperTiles:
 	.incbin	"baserom.gba", 0xFCB5C, 0x126
-	.global	gUnk_080FCC82
-gUnk_080FCC82:
+	.global	gPlayerFrame2069UpperTiles
+gPlayerFrame2069UpperTiles:
 	.incbin	"baserom.gba", 0xFCC82, 0x126
-	.global	gUnk_080FCDA8
-gUnk_080FCDA8:
+	.global	gPlayerFrame2070UpperTiles
+gPlayerFrame2070UpperTiles:
 	.incbin	"baserom.gba", 0xFCDA8, 0x126
-	.global	gUnk_080FCECE
-gUnk_080FCECE:
+	.global	gPlayerFrame2071UpperTiles
+gPlayerFrame2071UpperTiles:
 	.incbin	"baserom.gba", 0xFCECE, 0x126
-	.global	gUnk_080FCFF4
-gUnk_080FCFF4:
+	.global	gPlayerFrame2072UpperTiles
+gPlayerFrame2072UpperTiles:
 	.incbin	"baserom.gba", 0xFCFF4, 0x126
-	.global	gUnk_080FD11A
-gUnk_080FD11A:
+	.global	gPlayerFrame2074UpperTiles
+gPlayerFrame2074UpperTiles:
 	.incbin	"baserom.gba", 0xFD11A, 0x126
-	.global	gUnk_080FD240
-gUnk_080FD240:
+	.global	gPlayerFrame2075UpperTiles
+gPlayerFrame2075UpperTiles:
 	.incbin	"baserom.gba", 0xFD240, 0x126
 	.global	gUnk_080FD366
 gUnk_080FD366:
@@ -5293,8 +5293,8 @@ gUnk_080FD366:
 	.global	gPlayerFrame2086Tiles
 gPlayerFrame2086Tiles:
 	.incbin	"baserom.gba", 0xFD48C, 0x146
-	.global	gUnk_080FD5D2
-gUnk_080FD5D2:
+	.global	gPlayerFrame2086UpperTiles
+gPlayerFrame2086UpperTiles:
 	.incbin	"baserom.gba", 0xFD5D2, 0x106
 	.global	gUnk_080FD6D8
 gUnk_080FD6D8:
@@ -5329,11 +5329,11 @@ gUnk_080FDFAE:
 	.global	gUnk_080FE074
 gUnk_080FE074:
 	.incbin	"baserom.gba", 0xFE074, 0x146
-	.global	gUnk_080FE1BA
-gUnk_080FE1BA:
+	.global	gPlayerFrame4097UpperTiles
+gPlayerFrame4097UpperTiles:
 	.incbin	"baserom.gba", 0xFE1BA, 0x86
-	.global	gUnk_080FE240
-gUnk_080FE240:
+	.global	gPlayerFrame4228UpperTiles
+gPlayerFrame4228UpperTiles:
 	.incbin	"baserom.gba", 0xFE240, 0x106
 	.global	gPlayerFrame1019OamTemplate
 gPlayerFrame1019OamTemplate:
@@ -5515,53 +5515,53 @@ gPlayerFrame904Palette:
 	.global	gUnk_080FF03C
 gUnk_080FF03C:
 	.incbin	"baserom.gba", 0xFF03C, 0x22
-	.global	gUnk_080FF05E
-gUnk_080FF05E:
+	.global	gPlayerFrame904NextBankPalette
+gPlayerFrame904NextBankPalette:
 	.incbin	"baserom.gba", 0xFF05E, 0x22
-	.global	gUnk_080FF080
-gUnk_080FF080:
+	.global	gPlayerFrame1328NextBankPalette
+gPlayerFrame1328NextBankPalette:
 	.incbin	"baserom.gba", 0xFF080, 0x22
-	.global	gUnk_080FF0A2
-gUnk_080FF0A2:
+	.global	gPlayerFrame1527NextBankPalette
+gPlayerFrame1527NextBankPalette:
 	.incbin	"baserom.gba", 0xFF0A2, 0x22
-	.global	gUnk_080FF0C4
-gUnk_080FF0C4:
+	.global	gPlayerFrame1696NextBankPalette
+gPlayerFrame1696NextBankPalette:
 	.incbin	"baserom.gba", 0xFF0C4, 0x22
 	.global	gPlayerFrame2317Palette
 gPlayerFrame2317Palette:
 	.incbin	"baserom.gba", 0xFF0E6, 0x22
-	.global	gUnk_080FF108
-gUnk_080FF108:
+	.global	gPlayerFrame2317NextBankPalette
+gPlayerFrame2317NextBankPalette:
 	.incbin	"baserom.gba", 0xFF108, 0x22
 	.global	gPlayerFrame2457Palette
 gPlayerFrame2457Palette:
 	.incbin	"baserom.gba", 0xFF12A, 0x22
-	.global	gUnk_080FF14C
-gUnk_080FF14C:
+	.global	gPlayerFrame2457NextBankPalette
+gPlayerFrame2457NextBankPalette:
 	.incbin	"baserom.gba", 0xFF14C, 0x22
 	.global	gPlayerFrame2597Palette
 gPlayerFrame2597Palette:
 	.incbin	"baserom.gba", 0xFF16E, 0x22
-	.global	gUnk_080FF190
-gUnk_080FF190:
+	.global	gPlayerFrame2597NextBankPalette
+gPlayerFrame2597NextBankPalette:
 	.incbin	"baserom.gba", 0xFF190, 0x22
-	.global	gUnk_080FF1B2
-gUnk_080FF1B2:
+	.global	gPlayerFrame2759NextBankPalette
+gPlayerFrame2759NextBankPalette:
 	.incbin	"baserom.gba", 0xFF1B2, 0x22
-	.global	gUnk_080FF1D4
-gUnk_080FF1D4:
+	.global	gPlayerFrame2905NextBankPalette
+gPlayerFrame2905NextBankPalette:
 	.incbin	"baserom.gba", 0xFF1D4, 0x22
 	.global	gPlayerFrame3036Palette
 gPlayerFrame3036Palette:
 	.incbin	"baserom.gba", 0xFF1F6, 0x22
-	.global	gUnk_080FF218
-gUnk_080FF218:
+	.global	gPlayerFrame3036NextBankPalette
+gPlayerFrame3036NextBankPalette:
 	.incbin	"baserom.gba", 0xFF218, 0x22
 	.global	gPlayerFrame3177Palette
 gPlayerFrame3177Palette:
 	.incbin	"baserom.gba", 0xFF23A, 0x22
-	.global	gUnk_080FF25C
-gUnk_080FF25C:
+	.global	gPlayerFrame3372NextBankPalette
+gPlayerFrame3372NextBankPalette:
 	.incbin	"baserom.gba", 0xFF25C, 0x22
 	.global	gUnk_080FF27E
 gUnk_080FF27E:
@@ -5617,233 +5617,233 @@ gPlayerFrame2324Tiles:
 	.global	gUnk_081004E0
 gUnk_081004E0:
 	.incbin	"baserom.gba", 0x1004E0, 0x106
-	.global	gUnk_081005E6
-gUnk_081005E6:
+	.global	gPlayerFrame904UpperTiles
+gPlayerFrame904UpperTiles:
 	.incbin	"baserom.gba", 0x1005E6, 0x106
-	.global	gUnk_081006EC
-gUnk_081006EC:
+	.global	gPlayerFrame905UpperTiles
+gPlayerFrame905UpperTiles:
 	.incbin	"baserom.gba", 0x1006EC, 0x106
-	.global	gUnk_081007F2
-gUnk_081007F2:
+	.global	gPlayerFrame906UpperTiles
+gPlayerFrame906UpperTiles:
 	.incbin	"baserom.gba", 0x1007F2, 0x106
-	.global	gUnk_081008F8
-gUnk_081008F8:
+	.global	gPlayerFrame907UpperTiles
+gPlayerFrame907UpperTiles:
 	.incbin	"baserom.gba", 0x1008F8, 0x106
-	.global	gUnk_081009FE
-gUnk_081009FE:
+	.global	gPlayerFrame908UpperTiles
+gPlayerFrame908UpperTiles:
 	.incbin	"baserom.gba", 0x1009FE, 0x106
-	.global	gUnk_08100B04
-gUnk_08100B04:
+	.global	gPlayerFrame1328UpperTiles
+gPlayerFrame1328UpperTiles:
 	.incbin	"baserom.gba", 0x100B04, 0x1C6
-	.global	gUnk_08100CCA
-gUnk_08100CCA:
+	.global	gPlayerFrame1329UpperTiles
+gPlayerFrame1329UpperTiles:
 	.incbin	"baserom.gba", 0x100CCA, 0x1C6
-	.global	gUnk_08100E90
-gUnk_08100E90:
+	.global	gPlayerFrame1330UpperTiles
+gPlayerFrame1330UpperTiles:
 	.incbin	"baserom.gba", 0x100E90, 0x1E6
-	.global	gUnk_08101076
-gUnk_08101076:
+	.global	gPlayerFrame1331UpperTiles
+gPlayerFrame1331UpperTiles:
 	.incbin	"baserom.gba", 0x101076, 0x1C6
-	.global	gUnk_0810123C
-gUnk_0810123C:
+	.global	gPlayerFrame1332UpperTiles
+gPlayerFrame1332UpperTiles:
 	.incbin	"baserom.gba", 0x10123C, 0x1C6
-	.global	gUnk_08101402
-gUnk_08101402:
+	.global	gPlayerFrame1333UpperTiles
+gPlayerFrame1333UpperTiles:
 	.incbin	"baserom.gba", 0x101402, 0x1C6
-	.global	gUnk_081015C8
-gUnk_081015C8:
+	.global	gPlayerFrame1335UpperTiles
+gPlayerFrame1335UpperTiles:
 	.incbin	"baserom.gba", 0x1015C8, 0x1C6
-	.global	gUnk_0810178E
-gUnk_0810178E:
+	.global	gPlayerFrame1527UpperTiles
+gPlayerFrame1527UpperTiles:
 	.incbin	"baserom.gba", 0x10178E, 0x86
-	.global	gUnk_08101814
-gUnk_08101814:
+	.global	gPlayerFrame1528UpperTiles
+gPlayerFrame1528UpperTiles:
 	.incbin	"baserom.gba", 0x101814, 0x86
-	.global	gUnk_0810189A
-gUnk_0810189A:
+	.global	gPlayerFrame1529UpperTiles
+gPlayerFrame1529UpperTiles:
 	.incbin	"baserom.gba", 0x10189A, 0x86
-	.global	gUnk_08101920
-gUnk_08101920:
+	.global	gPlayerFrame1530UpperTiles
+gPlayerFrame1530UpperTiles:
 	.incbin	"baserom.gba", 0x101920, 0x86
-	.global	gUnk_081019A6
-gUnk_081019A6:
+	.global	gPlayerFrame1531UpperTiles
+gPlayerFrame1531UpperTiles:
 	.incbin	"baserom.gba", 0x1019A6, 0x86
-	.global	gUnk_08101A2C
-gUnk_08101A2C:
+	.global	gPlayerFrame1533UpperTiles
+gPlayerFrame1533UpperTiles:
 	.incbin	"baserom.gba", 0x101A2C, 0x86
-	.global	gUnk_08101AB2
-gUnk_08101AB2:
+	.global	gPlayerFrame1696UpperTiles
+gPlayerFrame1696UpperTiles:
 	.incbin	"baserom.gba", 0x101AB2, 0xA6
-	.global	gUnk_08101B58
-gUnk_08101B58:
+	.global	gPlayerFrame1697UpperTiles
+gPlayerFrame1697UpperTiles:
 	.incbin	"baserom.gba", 0x101B58, 0xC6
-	.global	gUnk_08101C1E
-gUnk_08101C1E:
+	.global	gPlayerFrame1698UpperTiles
+gPlayerFrame1698UpperTiles:
 	.incbin	"baserom.gba", 0x101C1E, 0xC6
-	.global	gUnk_08101CE4
-gUnk_08101CE4:
+	.global	gPlayerFrame1699UpperTiles
+gPlayerFrame1699UpperTiles:
 	.incbin	"baserom.gba", 0x101CE4, 0xC6
-	.global	gUnk_08101DAA
-gUnk_08101DAA:
+	.global	gPlayerFrame1701UpperTiles
+gPlayerFrame1701UpperTiles:
 	.incbin	"baserom.gba", 0x101DAA, 0xC6
-	.global	gUnk_08101E70
-gUnk_08101E70:
+	.global	gPlayerFrame1703UpperTiles
+gPlayerFrame1703UpperTiles:
 	.incbin	"baserom.gba", 0x101E70, 0xA6
 	.global	gPlayerFrame2317Tiles
 gPlayerFrame2317Tiles:
 	.incbin	"baserom.gba", 0x101F16, 0x106
-	.global	gUnk_0810201C
-gUnk_0810201C:
+	.global	gPlayerFrame2317UpperTiles
+gPlayerFrame2317UpperTiles:
 	.incbin	"baserom.gba", 0x10201C, 0xC6
 	.global	gPlayerFrame2318Tiles
 gPlayerFrame2318Tiles:
 	.incbin	"baserom.gba", 0x1020E2, 0x106
-	.global	gUnk_081021E8
-gUnk_081021E8:
+	.global	gPlayerFrame2318UpperTiles
+gPlayerFrame2318UpperTiles:
 	.incbin	"baserom.gba", 0x1021E8, 0xC6
 	.global	gPlayerFrame2319Tiles
 gPlayerFrame2319Tiles:
 	.incbin	"baserom.gba", 0x1022AE, 0x106
-	.global	gUnk_081023B4
-gUnk_081023B4:
+	.global	gPlayerFrame2319UpperTiles
+gPlayerFrame2319UpperTiles:
 	.incbin	"baserom.gba", 0x1023B4, 0xC6
 	.global	gPlayerFrame2320Tiles
 gPlayerFrame2320Tiles:
 	.incbin	"baserom.gba", 0x10247A, 0x106
-	.global	gUnk_08102580
-gUnk_08102580:
+	.global	gPlayerFrame2320UpperTiles
+gPlayerFrame2320UpperTiles:
 	.incbin	"baserom.gba", 0x102580, 0xC6
 	.global	gPlayerFrame2321Tiles
 gPlayerFrame2321Tiles:
 	.incbin	"baserom.gba", 0x102646, 0x106
-	.global	gUnk_0810274C
-gUnk_0810274C:
+	.global	gPlayerFrame2321UpperTiles
+gPlayerFrame2321UpperTiles:
 	.incbin	"baserom.gba", 0x10274C, 0xC6
 	.global	gPlayerFrame2322Tiles
 gPlayerFrame2322Tiles:
 	.incbin	"baserom.gba", 0x102812, 0x106
-	.global	gUnk_08102918
-gUnk_08102918:
+	.global	gPlayerFrame2322UpperTiles
+gPlayerFrame2322UpperTiles:
 	.incbin	"baserom.gba", 0x102918, 0xC6
 	.global	gPlayerFrame2323Tiles
 gPlayerFrame2323Tiles:
 	.incbin	"baserom.gba", 0x1029DE, 0x106
-	.global	gUnk_08102AE4
-gUnk_08102AE4:
+	.global	gPlayerFrame2324UpperTiles
+gPlayerFrame2324UpperTiles:
 	.incbin	"baserom.gba", 0x102AE4, 0xC6
-	.global	gUnk_08102BAA
-gUnk_08102BAA:
+	.global	gPlayerFrame2457UpperTiles
+gPlayerFrame2457UpperTiles:
 	.incbin	"baserom.gba", 0x102BAA, 0xC6
-	.global	gUnk_08102C70
-gUnk_08102C70:
+	.global	gPlayerFrame2458UpperTiles
+gPlayerFrame2458UpperTiles:
 	.incbin	"baserom.gba", 0x102C70, 0xC6
-	.global	gUnk_08102D36
-gUnk_08102D36:
+	.global	gPlayerFrame2459UpperTiles
+gPlayerFrame2459UpperTiles:
 	.incbin	"baserom.gba", 0x102D36, 0xC6
-	.global	gUnk_08102DFC
-gUnk_08102DFC:
+	.global	gPlayerFrame2460UpperTiles
+gPlayerFrame2460UpperTiles:
 	.incbin	"baserom.gba", 0x102DFC, 0xC6
-	.global	gUnk_08102EC2
-gUnk_08102EC2:
+	.global	gPlayerFrame2461UpperTiles
+gPlayerFrame2461UpperTiles:
 	.incbin	"baserom.gba", 0x102EC2, 0xC6
-	.global	gUnk_08102F88
-gUnk_08102F88:
+	.global	gPlayerFrame2462UpperTiles
+gPlayerFrame2462UpperTiles:
 	.incbin	"baserom.gba", 0x102F88, 0xC6
-	.global	gUnk_0810304E
-gUnk_0810304E:
+	.global	gPlayerFrame2463UpperTiles
+gPlayerFrame2463UpperTiles:
 	.incbin	"baserom.gba", 0x10304E, 0xC6
-	.global	gUnk_08103114
-gUnk_08103114:
+	.global	gPlayerFrame2464UpperTiles
+gPlayerFrame2464UpperTiles:
 	.incbin	"baserom.gba", 0x103114, 0xC6
-	.global	gUnk_081031DA
-gUnk_081031DA:
+	.global	gPlayerFrame2597UpperTiles
+gPlayerFrame2597UpperTiles:
 	.incbin	"baserom.gba", 0x1031DA, 0xC6
-	.global	gUnk_081032A0
-gUnk_081032A0:
+	.global	gPlayerFrame2598UpperTiles
+gPlayerFrame2598UpperTiles:
 	.incbin	"baserom.gba", 0x1032A0, 0x106
-	.global	gUnk_081033A6
-gUnk_081033A6:
+	.global	gPlayerFrame2599UpperTiles
+gPlayerFrame2599UpperTiles:
 	.incbin	"baserom.gba", 0x1033A6, 0x106
-	.global	gUnk_081034AC
-gUnk_081034AC:
+	.global	gPlayerFrame2600UpperTiles
+gPlayerFrame2600UpperTiles:
 	.incbin	"baserom.gba", 0x1034AC, 0x106
-	.global	gUnk_081035B2
-gUnk_081035B2:
+	.global	gPlayerFrame2601UpperTiles
+gPlayerFrame2601UpperTiles:
 	.incbin	"baserom.gba", 0x1035B2, 0x106
-	.global	gUnk_081036B8
-gUnk_081036B8:
+	.global	gPlayerFrame2602UpperTiles
+gPlayerFrame2602UpperTiles:
 	.incbin	"baserom.gba", 0x1036B8, 0x106
-	.global	gUnk_081037BE
-gUnk_081037BE:
+	.global	gPlayerFrame2759UpperTiles
+gPlayerFrame2759UpperTiles:
 	.incbin	"baserom.gba", 0x1037BE, 0x106
-	.global	gUnk_081038C4
-gUnk_081038C4:
+	.global	gPlayerFrame2760UpperTiles
+gPlayerFrame2760UpperTiles:
 	.incbin	"baserom.gba", 0x1038C4, 0x106
-	.global	gUnk_081039CA
-gUnk_081039CA:
+	.global	gPlayerFrame2761UpperTiles
+gPlayerFrame2761UpperTiles:
 	.incbin	"baserom.gba", 0x1039CA, 0x106
-	.global	gUnk_08103AD0
-gUnk_08103AD0:
+	.global	gPlayerFrame2762UpperTiles
+gPlayerFrame2762UpperTiles:
 	.incbin	"baserom.gba", 0x103AD0, 0x106
-	.global	gUnk_08103BD6
-gUnk_08103BD6:
+	.global	gPlayerFrame2763UpperTiles
+gPlayerFrame2763UpperTiles:
 	.incbin	"baserom.gba", 0x103BD6, 0x106
-	.global	gUnk_08103CDC
-gUnk_08103CDC:
+	.global	gPlayerFrame2764UpperTiles
+gPlayerFrame2764UpperTiles:
 	.incbin	"baserom.gba", 0x103CDC, 0x106
-	.global	gUnk_08103DE2
-gUnk_08103DE2:
+	.global	gPlayerFrame2765UpperTiles
+gPlayerFrame2765UpperTiles:
 	.incbin	"baserom.gba", 0x103DE2, 0x106
-	.global	gUnk_08103EE8
-gUnk_08103EE8:
+	.global	gPlayerFrame2766UpperTiles
+gPlayerFrame2766UpperTiles:
 	.incbin	"baserom.gba", 0x103EE8, 0x106
-	.global	gUnk_08103FEE
-gUnk_08103FEE:
+	.global	gPlayerFrame2905UpperTiles
+gPlayerFrame2905UpperTiles:
 	.incbin	"baserom.gba", 0x103FEE, 0x106
-	.global	gUnk_081040F4
-gUnk_081040F4:
+	.global	gPlayerFrame2906UpperTiles
+gPlayerFrame2906UpperTiles:
 	.incbin	"baserom.gba", 0x1040F4, 0x106
-	.global	gUnk_081041FA
-gUnk_081041FA:
+	.global	gPlayerFrame2907UpperTiles
+gPlayerFrame2907UpperTiles:
 	.incbin	"baserom.gba", 0x1041FA, 0x106
-	.global	gUnk_08104300
-gUnk_08104300:
+	.global	gPlayerFrame2908UpperTiles
+gPlayerFrame2908UpperTiles:
 	.incbin	"baserom.gba", 0x104300, 0xC6
-	.global	gUnk_081043C6
-gUnk_081043C6:
+	.global	gPlayerFrame2909UpperTiles
+gPlayerFrame2909UpperTiles:
 	.incbin	"baserom.gba", 0x1043C6, 0xC6
-	.global	gUnk_0810448C
-gUnk_0810448C:
+	.global	gPlayerFrame2910UpperTiles
+gPlayerFrame2910UpperTiles:
 	.incbin	"baserom.gba", 0x10448C, 0xC6
-	.global	gUnk_08104552
-gUnk_08104552:
+	.global	gPlayerFrame2911UpperTiles
+gPlayerFrame2911UpperTiles:
 	.incbin	"baserom.gba", 0x104552, 0xC6
-	.global	gUnk_08104618
-gUnk_08104618:
+	.global	gPlayerFrame2912UpperTiles
+gPlayerFrame2912UpperTiles:
 	.incbin	"baserom.gba", 0x104618, 0x106
-	.global	gUnk_0810471E
-gUnk_0810471E:
+	.global	gPlayerFrame3036UpperTiles
+gPlayerFrame3036UpperTiles:
 	.incbin	"baserom.gba", 0x10471E, 0x146
-	.global	gUnk_08104864
-gUnk_08104864:
+	.global	gPlayerFrame3037UpperTiles
+gPlayerFrame3037UpperTiles:
 	.incbin	"baserom.gba", 0x104864, 0x146
-	.global	gUnk_081049AA
-gUnk_081049AA:
+	.global	gPlayerFrame3038UpperTiles
+gPlayerFrame3038UpperTiles:
 	.incbin	"baserom.gba", 0x1049AA, 0x126
-	.global	gUnk_08104AD0
-gUnk_08104AD0:
+	.global	gPlayerFrame3039UpperTiles
+gPlayerFrame3039UpperTiles:
 	.incbin	"baserom.gba", 0x104AD0, 0x126
-	.global	gUnk_08104BF6
-gUnk_08104BF6:
+	.global	gPlayerFrame3040UpperTiles
+gPlayerFrame3040UpperTiles:
 	.incbin	"baserom.gba", 0x104BF6, 0x126
-	.global	gUnk_08104D1C
-gUnk_08104D1C:
+	.global	gPlayerFrame3041UpperTiles
+gPlayerFrame3041UpperTiles:
 	.incbin	"baserom.gba", 0x104D1C, 0x126
-	.global	gUnk_08104E42
-gUnk_08104E42:
+	.global	gPlayerFrame3042UpperTiles
+gPlayerFrame3042UpperTiles:
 	.incbin	"baserom.gba", 0x104E42, 0x146
-	.global	gUnk_08104F88
-gUnk_08104F88:
+	.global	gPlayerFrame3043UpperTiles
+gPlayerFrame3043UpperTiles:
 	.incbin	"baserom.gba", 0x104F88, 0x146
 	.global	gPlayerFrame3177Tiles
 gPlayerFrame3177Tiles:
@@ -5869,29 +5869,29 @@ gPlayerFrame3183Tiles:
 	.global	gPlayerFrame3184Tiles
 gPlayerFrame3184Tiles:
 	.incbin	"baserom.gba", 0x1058D8, 0x126
-	.global	gUnk_081059FE
-gUnk_081059FE:
+	.global	gPlayerFrame3372UpperTiles
+gPlayerFrame3372UpperTiles:
 	.incbin	"baserom.gba", 0x1059FE, 0x126
-	.global	gUnk_08105B24
-gUnk_08105B24:
+	.global	gPlayerFrame3373UpperTiles
+gPlayerFrame3373UpperTiles:
 	.incbin	"baserom.gba", 0x105B24, 0x126
-	.global	gUnk_08105C4A
-gUnk_08105C4A:
+	.global	gPlayerFrame3374UpperTiles
+gPlayerFrame3374UpperTiles:
 	.incbin	"baserom.gba", 0x105C4A, 0x106
-	.global	gUnk_08105D50
-gUnk_08105D50:
+	.global	gPlayerFrame3375UpperTiles
+gPlayerFrame3375UpperTiles:
 	.incbin	"baserom.gba", 0x105D50, 0x106
-	.global	gUnk_08105E56
-gUnk_08105E56:
+	.global	gPlayerFrame3376UpperTiles
+gPlayerFrame3376UpperTiles:
 	.incbin	"baserom.gba", 0x105E56, 0x126
-	.global	gUnk_08105F7C
-gUnk_08105F7C:
+	.global	gPlayerFrame3377UpperTiles
+gPlayerFrame3377UpperTiles:
 	.incbin	"baserom.gba", 0x105F7C, 0x106
-	.global	gUnk_08106082
-gUnk_08106082:
+	.global	gPlayerFrame3378UpperTiles
+gPlayerFrame3378UpperTiles:
 	.incbin	"baserom.gba", 0x106082, 0x106
-	.global	gUnk_08106188
-gUnk_08106188:
+	.global	gPlayerFrame3379UpperTiles
+gPlayerFrame3379UpperTiles:
 	.incbin	"baserom.gba", 0x106188, 0x126
 	.global	gUnk_081062AE
 gUnk_081062AE:
@@ -6280,101 +6280,101 @@ gUnk_08108346:
 	.global	gPlayerFrame1031Palette
 gPlayerFrame1031Palette:
 	.incbin	"baserom.gba", 0x108360, 0x22
-	.global	gUnk_08108382
-gUnk_08108382:
+	.global	gPlayerFrame1031NextBankPalette
+gPlayerFrame1031NextBankPalette:
 	.incbin	"baserom.gba", 0x108382, 0x22
 	.global	gPlayerFrame1833Palette
 gPlayerFrame1833Palette:
 	.incbin	"baserom.gba", 0x1083A4, 0x22
-	.global	gUnk_081083C6
-gUnk_081083C6:
+	.global	gPlayerFrame1833NextBankPalette
+gPlayerFrame1833NextBankPalette:
 	.incbin	"baserom.gba", 0x1083C6, 0x22
 	.global	gPlayerFrame2078Palette
 gPlayerFrame2078Palette:
 	.incbin	"baserom.gba", 0x1083E8, 0x22
-	.global	gUnk_0810840A
-gUnk_0810840A:
+	.global	gPlayerFrame2078NextBankPalette
+gPlayerFrame2078NextBankPalette:
 	.incbin	"baserom.gba", 0x10840A, 0x22
-	.global	gUnk_0810842C
-gUnk_0810842C:
+	.global	gPlayerFrame4089NextBankPalette
+gPlayerFrame4089NextBankPalette:
 	.incbin	"baserom.gba", 0x10842C, 0x22
 	.global	gPlayerFrame1031Tiles
 gPlayerFrame1031Tiles:
 	.incbin	"baserom.gba", 0x10844E, 0x126
-	.global	gUnk_08108574
-gUnk_08108574:
+	.global	gPlayerFrame1031UpperTiles
+gPlayerFrame1031UpperTiles:
 	.incbin	"baserom.gba", 0x108574, 0x186
 	.global	gPlayerFrame1032Tiles
 gPlayerFrame1032Tiles:
 	.incbin	"baserom.gba", 0x1086FA, 0x126
-	.global	gUnk_08108820
-gUnk_08108820:
+	.global	gPlayerFrame1032UpperTiles
+gPlayerFrame1032UpperTiles:
 	.incbin	"baserom.gba", 0x108820, 0x186
 	.global	gPlayerFrame1033Tiles
 gPlayerFrame1033Tiles:
 	.incbin	"baserom.gba", 0x1089A6, 0x126
-	.global	gUnk_08108ACC
-gUnk_08108ACC:
+	.global	gPlayerFrame1033UpperTiles
+gPlayerFrame1033UpperTiles:
 	.incbin	"baserom.gba", 0x108ACC, 0x186
 	.global	gPlayerFrame1034Tiles
 gPlayerFrame1034Tiles:
 	.incbin	"baserom.gba", 0x108C52, 0x126
-	.global	gUnk_08108D78
-gUnk_08108D78:
+	.global	gPlayerFrame1034UpperTiles
+gPlayerFrame1034UpperTiles:
 	.incbin	"baserom.gba", 0x108D78, 0x186
 	.global	gPlayerFrame1035Tiles
 gPlayerFrame1035Tiles:
 	.incbin	"baserom.gba", 0x108EFE, 0x126
-	.global	gUnk_08109024
-gUnk_08109024:
+	.global	gPlayerFrame1035UpperTiles
+gPlayerFrame1035UpperTiles:
 	.incbin	"baserom.gba", 0x109024, 0x186
 	.global	gPlayerFrame1036Tiles
 gPlayerFrame1036Tiles:
 	.incbin	"baserom.gba", 0x1091AA, 0x126
-	.global	gUnk_081092D0
-gUnk_081092D0:
+	.global	gPlayerFrame1036UpperTiles
+gPlayerFrame1036UpperTiles:
 	.incbin	"baserom.gba", 0x1092D0, 0x186
 	.global	gPlayerFrame1037Tiles
 gPlayerFrame1037Tiles:
 	.incbin	"baserom.gba", 0x109456, 0x126
-	.global	gUnk_0810957C
-gUnk_0810957C:
+	.global	gPlayerFrame1037UpperTiles
+gPlayerFrame1037UpperTiles:
 	.incbin	"baserom.gba", 0x10957C, 0x186
 	.global	gPlayerFrame1038Tiles
 gPlayerFrame1038Tiles:
 	.incbin	"baserom.gba", 0x109702, 0x126
-	.global	gUnk_08109828
-gUnk_08109828:
+	.global	gPlayerFrame1038UpperTiles
+gPlayerFrame1038UpperTiles:
 	.incbin	"baserom.gba", 0x109828, 0x186
 	.global	gPlayerFrame1833Tiles
 gPlayerFrame1833Tiles:
 	.incbin	"baserom.gba", 0x1099AE, 0x126
-	.global	gUnk_08109AD4
-gUnk_08109AD4:
+	.global	gPlayerFrame1833UpperTiles
+gPlayerFrame1833UpperTiles:
 	.incbin	"baserom.gba", 0x109AD4, 0x106
 	.global	gPlayerFrame1834Tiles
 gPlayerFrame1834Tiles:
 	.incbin	"baserom.gba", 0x109BDA, 0x126
-	.global	gUnk_08109D00
-gUnk_08109D00:
+	.global	gPlayerFrame1834UpperTiles
+gPlayerFrame1834UpperTiles:
 	.incbin	"baserom.gba", 0x109D00, 0x106
 	.global	gPlayerFrame1835Tiles
 gPlayerFrame1835Tiles:
 	.incbin	"baserom.gba", 0x109E06, 0x126
-	.global	gUnk_08109F2C
-gUnk_08109F2C:
+	.global	gPlayerFrame1835UpperTiles
+gPlayerFrame1835UpperTiles:
 	.incbin	"baserom.gba", 0x109F2C, 0x106
 	.global	gPlayerFrame1836Tiles
 gPlayerFrame1836Tiles:
 	.incbin	"baserom.gba", 0x10A032, 0x126
-	.global	gUnk_0810A158
-gUnk_0810A158:
+	.global	gPlayerFrame1836UpperTiles
+gPlayerFrame1836UpperTiles:
 	.incbin	"baserom.gba", 0x10A158, 0x106
 	.global	gPlayerFrame1837Tiles
 gPlayerFrame1837Tiles:
 	.incbin	"baserom.gba", 0x10A25E, 0x126
-	.global	gUnk_0810A384
-gUnk_0810A384:
+	.global	gPlayerFrame1837UpperTiles
+gPlayerFrame1837UpperTiles:
 	.incbin	"baserom.gba", 0x10A384, 0x106
 	.global	gPlayerFrame1838Tiles
 gPlayerFrame1838Tiles:
@@ -6385,56 +6385,56 @@ gPlayerFrame1839Tiles:
 	.global	gPlayerFrame1840Tiles
 gPlayerFrame1840Tiles:
 	.incbin	"baserom.gba", 0x10A6D6, 0x126
-	.global	gUnk_0810A7FC
-gUnk_0810A7FC:
+	.global	gPlayerFrame2078UpperTiles
+gPlayerFrame2078UpperTiles:
 	.incbin	"baserom.gba", 0x10A7FC, 0x126
-	.global	gUnk_0810A922
-gUnk_0810A922:
+	.global	gPlayerFrame2080UpperTiles
+gPlayerFrame2080UpperTiles:
 	.incbin	"baserom.gba", 0x10A922, 0x126
 	.global	gPlayerFrame2081Tiles
 gPlayerFrame2081Tiles:
 	.incbin	"baserom.gba", 0x10AA48, 0x126
-	.global	gUnk_0810AB6E
-gUnk_0810AB6E:
+	.global	gPlayerFrame2081UpperTiles
+gPlayerFrame2081UpperTiles:
 	.incbin	"baserom.gba", 0x10AB6E, 0x126
-	.global	gUnk_0810AC94
-gUnk_0810AC94:
+	.global	gPlayerFrame2082UpperTiles
+gPlayerFrame2082UpperTiles:
 	.incbin	"baserom.gba", 0x10AC94, 0x126
 	.global	gPlayerFrame2083Tiles
 gPlayerFrame2083Tiles:
 	.incbin	"baserom.gba", 0x10ADBA, 0x126
-	.global	gUnk_0810AEE0
-gUnk_0810AEE0:
+	.global	gPlayerFrame2083UpperTiles
+gPlayerFrame2083UpperTiles:
 	.incbin	"baserom.gba", 0x10AEE0, 0x126
 	.global	gPlayerFrame2084Tiles
 gPlayerFrame2084Tiles:
 	.incbin	"baserom.gba", 0x10B006, 0x126
-	.global	gUnk_0810B12C
-gUnk_0810B12C:
+	.global	gPlayerFrame2084UpperTiles
+gPlayerFrame2084UpperTiles:
 	.incbin	"baserom.gba", 0x10B12C, 0x126
-	.global	gUnk_0810B252
-gUnk_0810B252:
+	.global	gPlayerFrame4089UpperTiles
+gPlayerFrame4089UpperTiles:
 	.incbin	"baserom.gba", 0x10B252, 0xC6
-	.global	gUnk_0810B318
-gUnk_0810B318:
+	.global	gPlayerFrame4220UpperTiles
+gPlayerFrame4220UpperTiles:
 	.incbin	"baserom.gba", 0x10B318, 0x146
-	.global	gUnk_0810B45E
-gUnk_0810B45E:
+	.global	gPlayerFrame4090UpperTiles
+gPlayerFrame4090UpperTiles:
 	.incbin	"baserom.gba", 0x10B45E, 0xA6
-	.global	gUnk_0810B504
-gUnk_0810B504:
+	.global	gPlayerFrame4221UpperTiles
+gPlayerFrame4221UpperTiles:
 	.incbin	"baserom.gba", 0x10B504, 0x126
-	.global	gUnk_0810B62A
-gUnk_0810B62A:
+	.global	gPlayerFrame4091UpperTiles
+gPlayerFrame4091UpperTiles:
 	.incbin	"baserom.gba", 0x10B62A, 0xA6
-	.global	gUnk_0810B6D0
-gUnk_0810B6D0:
+	.global	gPlayerFrame4222UpperTiles
+gPlayerFrame4222UpperTiles:
 	.incbin	"baserom.gba", 0x10B6D0, 0x126
-	.global	gUnk_0810B7F6
-gUnk_0810B7F6:
+	.global	gPlayerFrame4092UpperTiles
+gPlayerFrame4092UpperTiles:
 	.incbin	"baserom.gba", 0x10B7F6, 0x86
-	.global	gUnk_0810B87C
-gUnk_0810B87C:
+	.global	gPlayerFrame4223UpperTiles
+gPlayerFrame4223UpperTiles:
 	.incbin	"baserom.gba", 0x10B87C, 0x106
 	.global	gPlayerFrame1031OamTemplate
 gPlayerFrame1031OamTemplate:
@@ -6565,53 +6565,53 @@ gPlayerFrame913Palette:
 	.global	gUnk_0810C2A0
 gUnk_0810C2A0:
 	.incbin	"baserom.gba", 0x10C2A0, 0x22
-	.global	gUnk_0810C2C2
-gUnk_0810C2C2:
+	.global	gPlayerFrame913NextBankPalette
+gPlayerFrame913NextBankPalette:
 	.incbin	"baserom.gba", 0x10C2C2, 0x22
-	.global	gUnk_0810C2E4
-gUnk_0810C2E4:
+	.global	gPlayerFrame1338NextBankPalette
+gPlayerFrame1338NextBankPalette:
 	.incbin	"baserom.gba", 0x10C2E4, 0x22
-	.global	gUnk_0810C306
-gUnk_0810C306:
+	.global	gPlayerFrame1536NextBankPalette
+gPlayerFrame1536NextBankPalette:
 	.incbin	"baserom.gba", 0x10C306, 0x22
-	.global	gUnk_0810C328
-gUnk_0810C328:
+	.global	gPlayerFrame1705NextBankPalette
+gPlayerFrame1705NextBankPalette:
 	.incbin	"baserom.gba", 0x10C328, 0x22
 	.global	gPlayerFrame2326Palette
 gPlayerFrame2326Palette:
 	.incbin	"baserom.gba", 0x10C34A, 0x22
-	.global	gUnk_0810C36C
-gUnk_0810C36C:
+	.global	gPlayerFrame2326NextBankPalette
+gPlayerFrame2326NextBankPalette:
 	.incbin	"baserom.gba", 0x10C36C, 0x22
 	.global	gPlayerFrame2466Palette
 gPlayerFrame2466Palette:
 	.incbin	"baserom.gba", 0x10C38E, 0x22
-	.global	gUnk_0810C3B0
-gUnk_0810C3B0:
+	.global	gPlayerFrame2466NextBankPalette
+gPlayerFrame2466NextBankPalette:
 	.incbin	"baserom.gba", 0x10C3B0, 0x22
 	.global	gPlayerFrame2606Palette
 gPlayerFrame2606Palette:
 	.incbin	"baserom.gba", 0x10C3D2, 0x22
-	.global	gUnk_0810C3F4
-gUnk_0810C3F4:
+	.global	gPlayerFrame2606NextBankPalette
+gPlayerFrame2606NextBankPalette:
 	.incbin	"baserom.gba", 0x10C3F4, 0x22
-	.global	gUnk_0810C416
-gUnk_0810C416:
+	.global	gPlayerFrame2768NextBankPalette
+gPlayerFrame2768NextBankPalette:
 	.incbin	"baserom.gba", 0x10C416, 0x22
-	.global	gUnk_0810C438
-gUnk_0810C438:
+	.global	gPlayerFrame2914NextBankPalette
+gPlayerFrame2914NextBankPalette:
 	.incbin	"baserom.gba", 0x10C438, 0x22
 	.global	gPlayerFrame3045Palette
 gPlayerFrame3045Palette:
 	.incbin	"baserom.gba", 0x10C45A, 0x22
-	.global	gUnk_0810C47C
-gUnk_0810C47C:
+	.global	gPlayerFrame3045NextBankPalette
+gPlayerFrame3045NextBankPalette:
 	.incbin	"baserom.gba", 0x10C47C, 0x22
 	.global	gPlayerFrame3186Palette
 gPlayerFrame3186Palette:
 	.incbin	"baserom.gba", 0x10C49E, 0x22
-	.global	gUnk_0810C4C0
-gUnk_0810C4C0:
+	.global	gPlayerFrame3382NextBankPalette
+gPlayerFrame3382NextBankPalette:
 	.incbin	"baserom.gba", 0x10C4C0, 0x22
 	.global	gUnk_0810C4E2
 gUnk_0810C4E2:
@@ -6739,20 +6739,20 @@ gUnk_0810EFCE:
 	.global	gUnk_0810F0B4
 gUnk_0810F0B4:
 	.incbin	"baserom.gba", 0x10F0B4, 0x126
-	.global	gUnk_0810F1DA
-gUnk_0810F1DA:
+	.global	gPlayerFrame913UpperTiles
+gPlayerFrame913UpperTiles:
 	.incbin	"baserom.gba", 0x10F1DA, 0xE6
-	.global	gUnk_0810F2C0
-gUnk_0810F2C0:
+	.global	gPlayerFrame914UpperTiles
+gPlayerFrame914UpperTiles:
 	.incbin	"baserom.gba", 0x10F2C0, 0x126
-	.global	gUnk_0810F3E6
-gUnk_0810F3E6:
+	.global	gPlayerFrame915UpperTiles
+gPlayerFrame915UpperTiles:
 	.incbin	"baserom.gba", 0x10F3E6, 0x126
-	.global	gUnk_0810F50C
-gUnk_0810F50C:
+	.global	gPlayerFrame916UpperTiles
+gPlayerFrame916UpperTiles:
 	.incbin	"baserom.gba", 0x10F50C, 0x106
-	.global	gUnk_0810F612
-gUnk_0810F612:
+	.global	gPlayerFrame917UpperTiles
+gPlayerFrame917UpperTiles:
 	.incbin	"baserom.gba", 0x10F612, 0xC6
 	.global	gUnk_0810F6D8
 gUnk_0810F6D8:
@@ -6760,53 +6760,53 @@ gUnk_0810F6D8:
 	.global	gUnk_0810F7FE
 gUnk_0810F7FE:
 	.incbin	"baserom.gba", 0x10F7FE, 0xE6
-	.global	gUnk_0810F8E4
-gUnk_0810F8E4:
+	.global	gPlayerFrame922UpperTiles
+gPlayerFrame922UpperTiles:
 	.incbin	"baserom.gba", 0x10F8E4, 0xE6
-	.global	gUnk_0810F9CA
-gUnk_0810F9CA:
+	.global	gPlayerFrame923UpperTiles
+gPlayerFrame923UpperTiles:
 	.incbin	"baserom.gba", 0x10F9CA, 0xE6
-	.global	gUnk_0810FAB0
-gUnk_0810FAB0:
+	.global	gPlayerFrame929UpperTiles
+gPlayerFrame929UpperTiles:
 	.incbin	"baserom.gba", 0x10FAB0, 0xE6
-	.global	gUnk_0810FB96
-gUnk_0810FB96:
+	.global	gPlayerFrame920UpperTiles
+gPlayerFrame920UpperTiles:
 	.incbin	"baserom.gba", 0x10FB96, 0x106
-	.global	gUnk_0810FC9C
-gUnk_0810FC9C:
+	.global	gPlayerFrame921UpperTiles
+gPlayerFrame921UpperTiles:
 	.incbin	"baserom.gba", 0x10FC9C, 0x106
-	.global	gUnk_0810FDA2
-gUnk_0810FDA2:
+	.global	gPlayerFrame924UpperTiles
+gPlayerFrame924UpperTiles:
 	.incbin	"baserom.gba", 0x10FDA2, 0x106
-	.global	gUnk_0810FEA8
-gUnk_0810FEA8:
+	.global	gPlayerFrame925UpperTiles
+gPlayerFrame925UpperTiles:
 	.incbin	"baserom.gba", 0x10FEA8, 0xC6
-	.global	gUnk_0810FF6E
-gUnk_0810FF6E:
+	.global	gPlayerFrame926UpperTiles
+gPlayerFrame926UpperTiles:
 	.incbin	"baserom.gba", 0x10FF6E, 0xE6
-	.global	gUnk_08110054
-gUnk_08110054:
+	.global	gPlayerFrame927UpperTiles
+gPlayerFrame927UpperTiles:
 	.incbin	"baserom.gba", 0x110054, 0xE6
-	.global	gUnk_0811013A
-gUnk_0811013A:
+	.global	gPlayerFrame928UpperTiles
+gPlayerFrame928UpperTiles:
 	.incbin	"baserom.gba", 0x11013A, 0xC6
-	.global	gUnk_08110200
-gUnk_08110200:
+	.global	gPlayerFrame931UpperTiles
+gPlayerFrame931UpperTiles:
 	.incbin	"baserom.gba", 0x110200, 0x146
-	.global	gUnk_08110346
-gUnk_08110346:
+	.global	gPlayerFrame1338UpperTiles
+gPlayerFrame1338UpperTiles:
 	.incbin	"baserom.gba", 0x110346, 0x186
-	.global	gUnk_081104CC
-gUnk_081104CC:
+	.global	gPlayerFrame1340UpperTiles
+gPlayerFrame1340UpperTiles:
 	.incbin	"baserom.gba", 0x1104CC, 0x1C6
-	.global	gUnk_08110692
-gUnk_08110692:
+	.global	gPlayerFrame1341UpperTiles
+gPlayerFrame1341UpperTiles:
 	.incbin	"baserom.gba", 0x110692, 0x1C6
-	.global	gUnk_08110858
-gUnk_08110858:
+	.global	gPlayerFrame1342UpperTiles
+gPlayerFrame1342UpperTiles:
 	.incbin	"baserom.gba", 0x110858, 0x186
-	.global	gUnk_081109DE
-gUnk_081109DE:
+	.global	gPlayerFrame1343UpperTiles
+gPlayerFrame1343UpperTiles:
 	.incbin	"baserom.gba", 0x1109DE, 0x1A6
 	.global	gUnk_08110B84
 gUnk_08110B84:
@@ -6817,56 +6817,56 @@ gUnk_08110CAA:
 	.global	gUnk_08110E50
 gUnk_08110E50:
 	.incbin	"baserom.gba", 0x110E50, 0x186
-	.global	gUnk_08110FD6
-gUnk_08110FD6:
+	.global	gPlayerFrame1348UpperTiles
+gPlayerFrame1348UpperTiles:
 	.incbin	"baserom.gba", 0x110FD6, 0x186
-	.global	gUnk_0811115C
-gUnk_0811115C:
+	.global	gPlayerFrame1349UpperTiles
+gPlayerFrame1349UpperTiles:
 	.incbin	"baserom.gba", 0x11115C, 0x186
-	.global	gUnk_081112E2
-gUnk_081112E2:
+	.global	gPlayerFrame1356UpperTiles
+gPlayerFrame1356UpperTiles:
 	.incbin	"baserom.gba", 0x1112E2, 0x166
-	.global	gUnk_08111448
-gUnk_08111448:
+	.global	gPlayerFrame1346UpperTiles
+gPlayerFrame1346UpperTiles:
 	.incbin	"baserom.gba", 0x111448, 0x186
-	.global	gUnk_081115CE
-gUnk_081115CE:
+	.global	gPlayerFrame1347UpperTiles
+gPlayerFrame1347UpperTiles:
 	.incbin	"baserom.gba", 0x1115CE, 0x186
-	.global	gUnk_08111754
-gUnk_08111754:
+	.global	gPlayerFrame1350UpperTiles
+gPlayerFrame1350UpperTiles:
 	.incbin	"baserom.gba", 0x111754, 0x186
-	.global	gUnk_081118DA
-gUnk_081118DA:
+	.global	gPlayerFrame1352UpperTiles
+gPlayerFrame1352UpperTiles:
 	.incbin	"baserom.gba", 0x1118DA, 0x1C6
-	.global	gUnk_08111AA0
-gUnk_08111AA0:
+	.global	gPlayerFrame1354UpperTiles
+gPlayerFrame1354UpperTiles:
 	.incbin	"baserom.gba", 0x111AA0, 0x186
-	.global	gUnk_08111C26
-gUnk_08111C26:
+	.global	gPlayerFrame1355UpperTiles
+gPlayerFrame1355UpperTiles:
 	.incbin	"baserom.gba", 0x111C26, 0x186
-	.global	gUnk_08111DAC
-gUnk_08111DAC:
+	.global	gPlayerFrame1358UpperTiles
+gPlayerFrame1358UpperTiles:
 	.incbin	"baserom.gba", 0x111DAC, 0x186
-	.global	gUnk_08111F32
-gUnk_08111F32:
+	.global	gPlayerFrame1339UpperTiles
+gPlayerFrame1339UpperTiles:
 	.incbin	"baserom.gba", 0x111F32, 0x186
-	.global	gUnk_081120B8
-gUnk_081120B8:
+	.global	gPlayerFrame1351UpperTiles
+gPlayerFrame1351UpperTiles:
 	.incbin	"baserom.gba", 0x1120B8, 0x186
-	.global	gUnk_0811223E
-gUnk_0811223E:
+	.global	gPlayerFrame1536UpperTiles
+gPlayerFrame1536UpperTiles:
 	.incbin	"baserom.gba", 0x11223E, 0x86
-	.global	gUnk_081122C4
-gUnk_081122C4:
+	.global	gPlayerFrame1537UpperTiles
+gPlayerFrame1537UpperTiles:
 	.incbin	"baserom.gba", 0x1122C4, 0x86
-	.global	gUnk_0811234A
-gUnk_0811234A:
+	.global	gPlayerFrame1538UpperTiles
+gPlayerFrame1538UpperTiles:
 	.incbin	"baserom.gba", 0x11234A, 0x86
-	.global	gUnk_081123D0
-gUnk_081123D0:
+	.global	gPlayerFrame1539UpperTiles
+gPlayerFrame1539UpperTiles:
 	.incbin	"baserom.gba", 0x1123D0, 0x86
-	.global	gUnk_08112456
-gUnk_08112456:
+	.global	gPlayerFrame1540UpperTiles
+gPlayerFrame1540UpperTiles:
 	.incbin	"baserom.gba", 0x112456, 0x86
 	.global	gUnk_081124DC
 gUnk_081124DC:
@@ -6874,47 +6874,47 @@ gUnk_081124DC:
 	.global	gUnk_08112562
 gUnk_08112562:
 	.incbin	"baserom.gba", 0x112562, 0x86
-	.global	gUnk_081125E8
-gUnk_081125E8:
+	.global	gPlayerFrame1545UpperTiles
+gPlayerFrame1545UpperTiles:
 	.incbin	"baserom.gba", 0x1125E8, 0x86
-	.global	gUnk_0811266E
-gUnk_0811266E:
+	.global	gPlayerFrame1552UpperTiles
+gPlayerFrame1552UpperTiles:
 	.incbin	"baserom.gba", 0x11266E, 0x86
-	.global	gUnk_081126F4
-gUnk_081126F4:
+	.global	gPlayerFrame1543UpperTiles
+gPlayerFrame1543UpperTiles:
 	.incbin	"baserom.gba", 0x1126F4, 0x86
-	.global	gUnk_0811277A
-gUnk_0811277A:
+	.global	gPlayerFrame1544UpperTiles
+gPlayerFrame1544UpperTiles:
 	.incbin	"baserom.gba", 0x11277A, 0x86
-	.global	gUnk_08112800
-gUnk_08112800:
+	.global	gPlayerFrame1548UpperTiles
+gPlayerFrame1548UpperTiles:
 	.incbin	"baserom.gba", 0x112800, 0x86
-	.global	gUnk_08112886
-gUnk_08112886:
+	.global	gPlayerFrame1549UpperTiles
+gPlayerFrame1549UpperTiles:
 	.incbin	"baserom.gba", 0x112886, 0x86
-	.global	gUnk_0811290C
-gUnk_0811290C:
+	.global	gPlayerFrame1550UpperTiles
+gPlayerFrame1550UpperTiles:
 	.incbin	"baserom.gba", 0x11290C, 0x86
-	.global	gUnk_08112992
-gUnk_08112992:
+	.global	gPlayerFrame1551UpperTiles
+gPlayerFrame1551UpperTiles:
 	.incbin	"baserom.gba", 0x112992, 0x86
-	.global	gUnk_08112A18
-gUnk_08112A18:
+	.global	gPlayerFrame1554UpperTiles
+gPlayerFrame1554UpperTiles:
 	.incbin	"baserom.gba", 0x112A18, 0x86
-	.global	gUnk_08112A9E
-gUnk_08112A9E:
+	.global	gPlayerFrame1705UpperTiles
+gPlayerFrame1705UpperTiles:
 	.incbin	"baserom.gba", 0x112A9E, 0x86
-	.global	gUnk_08112B24
-gUnk_08112B24:
+	.global	gPlayerFrame1706UpperTiles
+gPlayerFrame1706UpperTiles:
 	.incbin	"baserom.gba", 0x112B24, 0xC6
-	.global	gUnk_08112BEA
-gUnk_08112BEA:
+	.global	gPlayerFrame1707UpperTiles
+gPlayerFrame1707UpperTiles:
 	.incbin	"baserom.gba", 0x112BEA, 0x106
-	.global	gUnk_08112CF0
-gUnk_08112CF0:
+	.global	gPlayerFrame1708UpperTiles
+gPlayerFrame1708UpperTiles:
 	.incbin	"baserom.gba", 0x112CF0, 0xE6
-	.global	gUnk_08112DD6
-gUnk_08112DD6:
+	.global	gPlayerFrame1709UpperTiles
+gPlayerFrame1709UpperTiles:
 	.incbin	"baserom.gba", 0x112DD6, 0xC6
 	.global	gUnk_08112E9C
 gUnk_08112E9C:
@@ -6922,62 +6922,62 @@ gUnk_08112E9C:
 	.global	gUnk_08112F62
 gUnk_08112F62:
 	.incbin	"baserom.gba", 0x112F62, 0xC6
-	.global	gUnk_08113028
-gUnk_08113028:
+	.global	gPlayerFrame1714UpperTiles
+gPlayerFrame1714UpperTiles:
 	.incbin	"baserom.gba", 0x113028, 0xC6
-	.global	gUnk_081130EE
-gUnk_081130EE:
+	.global	gPlayerFrame1715UpperTiles
+gPlayerFrame1715UpperTiles:
 	.incbin	"baserom.gba", 0x1130EE, 0xC6
-	.global	gUnk_081131B4
-gUnk_081131B4:
+	.global	gPlayerFrame1721UpperTiles
+gPlayerFrame1721UpperTiles:
 	.incbin	"baserom.gba", 0x1131B4, 0xC6
-	.global	gUnk_0811327A
-gUnk_0811327A:
+	.global	gPlayerFrame1712UpperTiles
+gPlayerFrame1712UpperTiles:
 	.incbin	"baserom.gba", 0x11327A, 0xC6
-	.global	gUnk_08113340
-gUnk_08113340:
+	.global	gPlayerFrame1713UpperTiles
+gPlayerFrame1713UpperTiles:
 	.incbin	"baserom.gba", 0x113340, 0xC6
-	.global	gUnk_08113406
-gUnk_08113406:
+	.global	gPlayerFrame1716UpperTiles
+gPlayerFrame1716UpperTiles:
 	.incbin	"baserom.gba", 0x113406, 0xC6
-	.global	gUnk_081134CC
-gUnk_081134CC:
+	.global	gPlayerFrame1717UpperTiles
+gPlayerFrame1717UpperTiles:
 	.incbin	"baserom.gba", 0x1134CC, 0x86
-	.global	gUnk_08113552
-gUnk_08113552:
+	.global	gPlayerFrame1718UpperTiles
+gPlayerFrame1718UpperTiles:
 	.incbin	"baserom.gba", 0x113552, 0xC6
-	.global	gUnk_08113618
-gUnk_08113618:
+	.global	gPlayerFrame1719UpperTiles
+gPlayerFrame1719UpperTiles:
 	.incbin	"baserom.gba", 0x113618, 0xC6
-	.global	gUnk_081136DE
-gUnk_081136DE:
+	.global	gPlayerFrame1720UpperTiles
+gPlayerFrame1720UpperTiles:
 	.incbin	"baserom.gba", 0x1136DE, 0x64
-	.global	gUnk_08113742
-gUnk_08113742:
+	.global	gPlayerFrame1723UpperTiles
+gPlayerFrame1723UpperTiles:
 	.incbin	"baserom.gba", 0x113742, 0xE6
-	.global	gUnk_08113828
-gUnk_08113828:
+	.global	gPlayerFrame2326UpperTiles
+gPlayerFrame2326UpperTiles:
 	.incbin	"baserom.gba", 0x113828, 0xE6
-	.global	gUnk_0811390E
-gUnk_0811390E:
+	.global	gPlayerFrame2327UpperTiles
+gPlayerFrame2327UpperTiles:
 	.incbin	"baserom.gba", 0x11390E, 0x106
 	.global	gPlayerFrame2328Tiles
 gPlayerFrame2328Tiles:
 	.incbin	"baserom.gba", 0x113A14, 0xE6
-	.global	gUnk_08113AFA
-gUnk_08113AFA:
+	.global	gPlayerFrame2328UpperTiles
+gPlayerFrame2328UpperTiles:
 	.incbin	"baserom.gba", 0x113AFA, 0x126
 	.global	gPlayerFrame2329Tiles
 gPlayerFrame2329Tiles:
 	.incbin	"baserom.gba", 0x113C20, 0x106
-	.global	gUnk_08113D26
-gUnk_08113D26:
+	.global	gPlayerFrame2329UpperTiles
+gPlayerFrame2329UpperTiles:
 	.incbin	"baserom.gba", 0x113D26, 0x126
 	.global	gPlayerFrame2330Tiles
 gPlayerFrame2330Tiles:
 	.incbin	"baserom.gba", 0x113E4C, 0x106
-	.global	gUnk_08113F52
-gUnk_08113F52:
+	.global	gPlayerFrame2330UpperTiles
+gPlayerFrame2330UpperTiles:
 	.incbin	"baserom.gba", 0x113F52, 0xC6
 	.global	gUnk_08114018
 gUnk_08114018:
@@ -6994,71 +6994,71 @@ gUnk_0811432A:
 	.global	gPlayerFrame2335Tiles
 gPlayerFrame2335Tiles:
 	.incbin	"baserom.gba", 0x114410, 0xE6
-	.global	gUnk_081144F6
-gUnk_081144F6:
+	.global	gPlayerFrame2335UpperTiles
+gPlayerFrame2335UpperTiles:
 	.incbin	"baserom.gba", 0x1144F6, 0xC6
 	.global	gPlayerFrame2336Tiles
 gPlayerFrame2336Tiles:
 	.incbin	"baserom.gba", 0x1145BC, 0xE6
-	.global	gUnk_081146A2
-gUnk_081146A2:
+	.global	gPlayerFrame2336UpperTiles
+gPlayerFrame2336UpperTiles:
 	.incbin	"baserom.gba", 0x1146A2, 0xC6
 	.global	gPlayerFrame2342Tiles
 gPlayerFrame2342Tiles:
 	.incbin	"baserom.gba", 0x114768, 0xE6
-	.global	gUnk_0811484E
-gUnk_0811484E:
+	.global	gPlayerFrame2342UpperTiles
+gPlayerFrame2342UpperTiles:
 	.incbin	"baserom.gba", 0x11484E, 0xE6
-	.global	gUnk_08114934
-gUnk_08114934:
+	.global	gPlayerFrame2333UpperTiles
+gPlayerFrame2333UpperTiles:
 	.incbin	"baserom.gba", 0x114934, 0x126
 	.global	gPlayerFrame2334Tiles
 gPlayerFrame2334Tiles:
 	.incbin	"baserom.gba", 0x114A5A, 0x106
-	.global	gUnk_08114B60
-gUnk_08114B60:
+	.global	gPlayerFrame2334UpperTiles
+gPlayerFrame2334UpperTiles:
 	.incbin	"baserom.gba", 0x114B60, 0x126
-	.global	gUnk_08114C86
-gUnk_08114C86:
+	.global	gPlayerFrame2337UpperTiles
+gPlayerFrame2337UpperTiles:
 	.incbin	"baserom.gba", 0x114C86, 0x126
-	.global	gUnk_08114DAC
-gUnk_08114DAC:
+	.global	gPlayerFrame2338UpperTiles
+gPlayerFrame2338UpperTiles:
 	.incbin	"baserom.gba", 0x114DAC, 0x106
 	.global	gPlayerFrame2339Tiles
 gPlayerFrame2339Tiles:
 	.incbin	"baserom.gba", 0x114EB2, 0x106
-	.global	gUnk_08114FB8
-gUnk_08114FB8:
+	.global	gPlayerFrame2339UpperTiles
+gPlayerFrame2339UpperTiles:
 	.incbin	"baserom.gba", 0x114FB8, 0x126
 	.global	gPlayerFrame2340Tiles
 gPlayerFrame2340Tiles:
 	.incbin	"baserom.gba", 0x1150DE, 0x106
-	.global	gUnk_081151E4
-gUnk_081151E4:
+	.global	gPlayerFrame2340UpperTiles
+gPlayerFrame2340UpperTiles:
 	.incbin	"baserom.gba", 0x1151E4, 0xC6
 	.global	gPlayerFrame2341Tiles
 gPlayerFrame2341Tiles:
 	.incbin	"baserom.gba", 0x1152AA, 0xE6
-	.global	gUnk_08115390
-gUnk_08115390:
+	.global	gPlayerFrame2341UpperTiles
+gPlayerFrame2341UpperTiles:
 	.incbin	"baserom.gba", 0x115390, 0xC6
-	.global	gUnk_08115456
-gUnk_08115456:
+	.global	gPlayerFrame2344UpperTiles
+gPlayerFrame2344UpperTiles:
 	.incbin	"baserom.gba", 0x115456, 0x106
-	.global	gUnk_0811555C
-gUnk_0811555C:
+	.global	gPlayerFrame2466UpperTiles
+gPlayerFrame2466UpperTiles:
 	.incbin	"baserom.gba", 0x11555C, 0xC6
-	.global	gUnk_08115622
-gUnk_08115622:
+	.global	gPlayerFrame2467UpperTiles
+gPlayerFrame2467UpperTiles:
 	.incbin	"baserom.gba", 0x115622, 0xE6
-	.global	gUnk_08115708
-gUnk_08115708:
+	.global	gPlayerFrame2468UpperTiles
+gPlayerFrame2468UpperTiles:
 	.incbin	"baserom.gba", 0x115708, 0x126
-	.global	gUnk_0811582E
-gUnk_0811582E:
+	.global	gPlayerFrame2469UpperTiles
+gPlayerFrame2469UpperTiles:
 	.incbin	"baserom.gba", 0x11582E, 0xC6
-	.global	gUnk_081158F4
-gUnk_081158F4:
+	.global	gPlayerFrame2470UpperTiles
+gPlayerFrame2470UpperTiles:
 	.incbin	"baserom.gba", 0x1158F4, 0x86
 	.global	gUnk_0811597A
 gUnk_0811597A:
@@ -7066,53 +7066,53 @@ gUnk_0811597A:
 	.global	gUnk_08115A20
 gUnk_08115A20:
 	.incbin	"baserom.gba", 0x115A20, 0xC6
-	.global	gUnk_08115AE6
-gUnk_08115AE6:
+	.global	gPlayerFrame2475UpperTiles
+gPlayerFrame2475UpperTiles:
 	.incbin	"baserom.gba", 0x115AE6, 0xA6
-	.global	gUnk_08115B8C
-gUnk_08115B8C:
+	.global	gPlayerFrame2476UpperTiles
+gPlayerFrame2476UpperTiles:
 	.incbin	"baserom.gba", 0x115B8C, 0xA6
-	.global	gUnk_08115C32
-gUnk_08115C32:
+	.global	gPlayerFrame2482UpperTiles
+gPlayerFrame2482UpperTiles:
 	.incbin	"baserom.gba", 0x115C32, 0x86
-	.global	gUnk_08115CB8
-gUnk_08115CB8:
+	.global	gPlayerFrame2474UpperTiles
+gPlayerFrame2474UpperTiles:
 	.incbin	"baserom.gba", 0x115CB8, 0x126
-	.global	gUnk_08115DDE
-gUnk_08115DDE:
+	.global	gPlayerFrame2477UpperTiles
+gPlayerFrame2477UpperTiles:
 	.incbin	"baserom.gba", 0x115DDE, 0xC6
-	.global	gUnk_08115EA4
-gUnk_08115EA4:
+	.global	gPlayerFrame2478UpperTiles
+gPlayerFrame2478UpperTiles:
 	.incbin	"baserom.gba", 0x115EA4, 0xC6
-	.global	gUnk_08115F6A
-gUnk_08115F6A:
+	.global	gPlayerFrame2479UpperTiles
+gPlayerFrame2479UpperTiles:
 	.incbin	"baserom.gba", 0x115F6A, 0x126
-	.global	gUnk_08116090
-gUnk_08116090:
+	.global	gPlayerFrame2480UpperTiles
+gPlayerFrame2480UpperTiles:
 	.incbin	"baserom.gba", 0x116090, 0xC6
-	.global	gUnk_08116156
-gUnk_08116156:
+	.global	gPlayerFrame2481UpperTiles
+gPlayerFrame2481UpperTiles:
 	.incbin	"baserom.gba", 0x116156, 0xC6
-	.global	gUnk_0811621C
-gUnk_0811621C:
+	.global	gPlayerFrame2484UpperTiles
+gPlayerFrame2484UpperTiles:
 	.incbin	"baserom.gba", 0x11621C, 0xE6
-	.global	gUnk_08116302
-gUnk_08116302:
+	.global	gPlayerFrame2606UpperTiles
+gPlayerFrame2606UpperTiles:
 	.incbin	"baserom.gba", 0x116302, 0x126
-	.global	gUnk_08116428
-gUnk_08116428:
+	.global	gPlayerFrame2607UpperTiles
+gPlayerFrame2607UpperTiles:
 	.incbin	"baserom.gba", 0x116428, 0x106
-	.global	gUnk_0811652E
-gUnk_0811652E:
+	.global	gPlayerFrame2608UpperTiles
+gPlayerFrame2608UpperTiles:
 	.incbin	"baserom.gba", 0x11652E, 0x106
 	.global	gPlayerFrame2609Tiles
 gPlayerFrame2609Tiles:
 	.incbin	"baserom.gba", 0x116634, 0xE4
-	.global	gUnk_08116718
-gUnk_08116718:
+	.global	gPlayerFrame2609UpperTiles
+gPlayerFrame2609UpperTiles:
 	.incbin	"baserom.gba", 0x116718, 0x106
-	.global	gUnk_0811681E
-gUnk_0811681E:
+	.global	gPlayerFrame2610UpperTiles
+gPlayerFrame2610UpperTiles:
 	.incbin	"baserom.gba", 0x11681E, 0xC6
 	.global	gUnk_081168E4
 gUnk_081168E4:
@@ -7126,74 +7126,74 @@ gUnk_08116A70:
 	.global	gUnk_08116B76
 gUnk_08116B76:
 	.incbin	"baserom.gba", 0x116B76, 0xE6
-	.global	gUnk_08116C5C
-gUnk_08116C5C:
+	.global	gPlayerFrame2615UpperTiles
+gPlayerFrame2615UpperTiles:
 	.incbin	"baserom.gba", 0x116C5C, 0xE6
-	.global	gUnk_08116D42
-gUnk_08116D42:
+	.global	gPlayerFrame2616UpperTiles
+gPlayerFrame2616UpperTiles:
 	.incbin	"baserom.gba", 0x116D42, 0x106
 	.global	gPlayerFrame2622Tiles
 gPlayerFrame2622Tiles:
 	.incbin	"baserom.gba", 0x116E48, 0x106
-	.global	gUnk_08116F4E
-gUnk_08116F4E:
+	.global	gPlayerFrame2622UpperTiles
+gPlayerFrame2622UpperTiles:
 	.incbin	"baserom.gba", 0x116F4E, 0xE6
 	.global	gPlayerFrame2613Tiles
 gPlayerFrame2613Tiles:
 	.incbin	"baserom.gba", 0x117034, 0x126
-	.global	gUnk_0811715A
-gUnk_0811715A:
+	.global	gPlayerFrame2613UpperTiles
+gPlayerFrame2613UpperTiles:
 	.incbin	"baserom.gba", 0x11715A, 0x106
-	.global	gUnk_08117260
-gUnk_08117260:
+	.global	gPlayerFrame2614UpperTiles
+gPlayerFrame2614UpperTiles:
 	.incbin	"baserom.gba", 0x117260, 0x126
 	.global	gPlayerFrame2617Tiles
 gPlayerFrame2617Tiles:
 	.incbin	"baserom.gba", 0x117386, 0x106
-	.global	gUnk_0811748C
-gUnk_0811748C:
+	.global	gPlayerFrame2617UpperTiles
+gPlayerFrame2617UpperTiles:
 	.incbin	"baserom.gba", 0x11748C, 0x106
 	.global	gPlayerFrame2618Tiles
 gPlayerFrame2618Tiles:
 	.incbin	"baserom.gba", 0x117592, 0xA6
-	.global	gUnk_08117638
-gUnk_08117638:
+	.global	gPlayerFrame2618UpperTiles
+gPlayerFrame2618UpperTiles:
 	.incbin	"baserom.gba", 0x117638, 0xC6
-	.global	gUnk_081176FE
-gUnk_081176FE:
+	.global	gPlayerFrame2619UpperTiles
+gPlayerFrame2619UpperTiles:
 	.incbin	"baserom.gba", 0x1176FE, 0x126
 	.global	gPlayerFrame2620Tiles
 gPlayerFrame2620Tiles:
 	.incbin	"baserom.gba", 0x117824, 0x106
-	.global	gUnk_0811792A
-gUnk_0811792A:
+	.global	gPlayerFrame2620UpperTiles
+gPlayerFrame2620UpperTiles:
 	.incbin	"baserom.gba", 0x11792A, 0xE6
 	.global	gPlayerFrame2621Tiles
 gPlayerFrame2621Tiles:
 	.incbin	"baserom.gba", 0x117A10, 0x106
-	.global	gUnk_08117B16
-gUnk_08117B16:
+	.global	gPlayerFrame2621UpperTiles
+gPlayerFrame2621UpperTiles:
 	.incbin	"baserom.gba", 0x117B16, 0xC6
 	.global	gPlayerFrame2624Tiles
 gPlayerFrame2624Tiles:
 	.incbin	"baserom.gba", 0x117BDC, 0x106
-	.global	gUnk_08117CE2
-gUnk_08117CE2:
+	.global	gPlayerFrame2624UpperTiles
+gPlayerFrame2624UpperTiles:
 	.incbin	"baserom.gba", 0x117CE2, 0x106
-	.global	gUnk_08117DE8
-gUnk_08117DE8:
+	.global	gPlayerFrame2768UpperTiles
+gPlayerFrame2768UpperTiles:
 	.incbin	"baserom.gba", 0x117DE8, 0xE6
-	.global	gUnk_08117ECE
-gUnk_08117ECE:
+	.global	gPlayerFrame2770UpperTiles
+gPlayerFrame2770UpperTiles:
 	.incbin	"baserom.gba", 0x117ECE, 0xC6
-	.global	gUnk_08117F94
-gUnk_08117F94:
+	.global	gPlayerFrame2771UpperTiles
+gPlayerFrame2771UpperTiles:
 	.incbin	"baserom.gba", 0x117F94, 0x106
-	.global	gUnk_0811809A
-gUnk_0811809A:
+	.global	gPlayerFrame2772UpperTiles
+gPlayerFrame2772UpperTiles:
 	.incbin	"baserom.gba", 0x11809A, 0x106
-	.global	gUnk_081181A0
-gUnk_081181A0:
+	.global	gPlayerFrame2773UpperTiles
+gPlayerFrame2773UpperTiles:
 	.incbin	"baserom.gba", 0x1181A0, 0x126
 	.global	gUnk_081182C6
 gUnk_081182C6:
@@ -7201,59 +7201,59 @@ gUnk_081182C6:
 	.global	gUnk_081183EC
 gUnk_081183EC:
 	.incbin	"baserom.gba", 0x1183EC, 0x106
-	.global	gUnk_081184F2
-gUnk_081184F2:
+	.global	gPlayerFrame2778UpperTiles
+gPlayerFrame2778UpperTiles:
 	.incbin	"baserom.gba", 0x1184F2, 0x126
-	.global	gUnk_08118618
-gUnk_08118618:
+	.global	gPlayerFrame2779UpperTiles
+gPlayerFrame2779UpperTiles:
 	.incbin	"baserom.gba", 0x118618, 0x126
-	.global	gUnk_0811873E
-gUnk_0811873E:
+	.global	gPlayerFrame2786UpperTiles
+gPlayerFrame2786UpperTiles:
 	.incbin	"baserom.gba", 0x11873E, 0x126
-	.global	gUnk_08118864
-gUnk_08118864:
+	.global	gPlayerFrame2776UpperTiles
+gPlayerFrame2776UpperTiles:
 	.incbin	"baserom.gba", 0x118864, 0x1A6
-	.global	gUnk_08118A0A
-gUnk_08118A0A:
+	.global	gPlayerFrame2777UpperTiles
+gPlayerFrame2777UpperTiles:
 	.incbin	"baserom.gba", 0x118A0A, 0x1A6
-	.global	gUnk_08118BB0
-gUnk_08118BB0:
+	.global	gPlayerFrame2780UpperTiles
+gPlayerFrame2780UpperTiles:
 	.incbin	"baserom.gba", 0x118BB0, 0x126
-	.global	gUnk_08118CD6
-gUnk_08118CD6:
+	.global	gPlayerFrame2782UpperTiles
+gPlayerFrame2782UpperTiles:
 	.incbin	"baserom.gba", 0x118CD6, 0xC6
-	.global	gUnk_08118D9C
-gUnk_08118D9C:
+	.global	gPlayerFrame2783UpperTiles
+gPlayerFrame2783UpperTiles:
 	.incbin	"baserom.gba", 0x118D9C, 0x106
-	.global	gUnk_08118EA2
-gUnk_08118EA2:
+	.global	gPlayerFrame2784UpperTiles
+gPlayerFrame2784UpperTiles:
 	.incbin	"baserom.gba", 0x118EA2, 0xC6
-	.global	gUnk_08118F68
-gUnk_08118F68:
+	.global	gPlayerFrame2785UpperTiles
+gPlayerFrame2785UpperTiles:
 	.incbin	"baserom.gba", 0x118F68, 0x106
-	.global	gUnk_0811906E
-gUnk_0811906E:
+	.global	gPlayerFrame2788UpperTiles
+gPlayerFrame2788UpperTiles:
 	.incbin	"baserom.gba", 0x11906E, 0xC6
-	.global	gUnk_08119134
-gUnk_08119134:
+	.global	gPlayerFrame2769UpperTiles
+gPlayerFrame2769UpperTiles:
 	.incbin	"baserom.gba", 0x119134, 0xE6
-	.global	gUnk_0811921A
-gUnk_0811921A:
+	.global	gPlayerFrame2781UpperTiles
+gPlayerFrame2781UpperTiles:
 	.incbin	"baserom.gba", 0x11921A, 0x126
-	.global	gUnk_08119340
-gUnk_08119340:
+	.global	gPlayerFrame2914UpperTiles
+gPlayerFrame2914UpperTiles:
 	.incbin	"baserom.gba", 0x119340, 0xE6
-	.global	gUnk_08119426
-gUnk_08119426:
+	.global	gPlayerFrame2916UpperTiles
+gPlayerFrame2916UpperTiles:
 	.incbin	"baserom.gba", 0x119426, 0x126
-	.global	gUnk_0811954C
-gUnk_0811954C:
+	.global	gPlayerFrame2917UpperTiles
+gPlayerFrame2917UpperTiles:
 	.incbin	"baserom.gba", 0x11954C, 0x126
-	.global	gUnk_08119672
-gUnk_08119672:
+	.global	gPlayerFrame2918UpperTiles
+gPlayerFrame2918UpperTiles:
 	.incbin	"baserom.gba", 0x119672, 0x126
-	.global	gUnk_08119798
-gUnk_08119798:
+	.global	gPlayerFrame2919UpperTiles
+gPlayerFrame2919UpperTiles:
 	.incbin	"baserom.gba", 0x119798, 0xC6
 	.global	gUnk_0811985E
 gUnk_0811985E:
@@ -7261,65 +7261,65 @@ gUnk_0811985E:
 	.global	gUnk_08119964
 gUnk_08119964:
 	.incbin	"baserom.gba", 0x119964, 0xC6
-	.global	gUnk_08119A2A
-gUnk_08119A2A:
+	.global	gPlayerFrame2924UpperTiles
+gPlayerFrame2924UpperTiles:
 	.incbin	"baserom.gba", 0x119A2A, 0x126
-	.global	gUnk_08119B50
-gUnk_08119B50:
+	.global	gPlayerFrame2925UpperTiles
+gPlayerFrame2925UpperTiles:
 	.incbin	"baserom.gba", 0x119B50, 0x126
-	.global	gUnk_08119C76
-gUnk_08119C76:
+	.global	gPlayerFrame2932UpperTiles
+gPlayerFrame2932UpperTiles:
 	.incbin	"baserom.gba", 0x119C76, 0x106
-	.global	gUnk_08119D7C
-gUnk_08119D7C:
+	.global	gPlayerFrame2922UpperTiles
+gPlayerFrame2922UpperTiles:
 	.incbin	"baserom.gba", 0x119D7C, 0x106
 	.global	gPlayerFrame2923Tiles
 gPlayerFrame2923Tiles:
 	.incbin	"baserom.gba", 0x119E82, 0x126
-	.global	gUnk_08119FA8
-gUnk_08119FA8:
+	.global	gPlayerFrame2923UpperTiles
+gPlayerFrame2923UpperTiles:
 	.incbin	"baserom.gba", 0x119FA8, 0x126
-	.global	gUnk_0811A0CE
-gUnk_0811A0CE:
+	.global	gPlayerFrame2926UpperTiles
+gPlayerFrame2926UpperTiles:
 	.incbin	"baserom.gba", 0x11A0CE, 0x126
-	.global	gUnk_0811A1F4
-gUnk_0811A1F4:
+	.global	gPlayerFrame2928UpperTiles
+gPlayerFrame2928UpperTiles:
 	.incbin	"baserom.gba", 0x11A1F4, 0x126
-	.global	gUnk_0811A31A
-gUnk_0811A31A:
+	.global	gPlayerFrame2929UpperTiles
+gPlayerFrame2929UpperTiles:
 	.incbin	"baserom.gba", 0x11A31A, 0xC6
 	.global	gPlayerFrame2930Tiles
 gPlayerFrame2930Tiles:
 	.incbin	"baserom.gba", 0x11A3E0, 0x126
-	.global	gUnk_0811A506
-gUnk_0811A506:
+	.global	gPlayerFrame2930UpperTiles
+gPlayerFrame2930UpperTiles:
 	.incbin	"baserom.gba", 0x11A506, 0xC6
-	.global	gUnk_0811A5CC
-gUnk_0811A5CC:
+	.global	gPlayerFrame2931UpperTiles
+gPlayerFrame2931UpperTiles:
 	.incbin	"baserom.gba", 0x11A5CC, 0xC6
-	.global	gUnk_0811A692
-gUnk_0811A692:
+	.global	gPlayerFrame2934UpperTiles
+gPlayerFrame2934UpperTiles:
 	.incbin	"baserom.gba", 0x11A692, 0x106
-	.global	gUnk_0811A798
-gUnk_0811A798:
+	.global	gPlayerFrame2915UpperTiles
+gPlayerFrame2915UpperTiles:
 	.incbin	"baserom.gba", 0x11A798, 0xE6
-	.global	gUnk_0811A87E
-gUnk_0811A87E:
+	.global	gPlayerFrame2927UpperTiles
+gPlayerFrame2927UpperTiles:
 	.incbin	"baserom.gba", 0x11A87E, 0x126
-	.global	gUnk_0811A9A4
-gUnk_0811A9A4:
+	.global	gPlayerFrame3045UpperTiles
+gPlayerFrame3045UpperTiles:
 	.incbin	"baserom.gba", 0x11A9A4, 0x106
-	.global	gUnk_0811AAAA
-gUnk_0811AAAA:
+	.global	gPlayerFrame3047UpperTiles
+gPlayerFrame3047UpperTiles:
 	.incbin	"baserom.gba", 0x11AAAA, 0x106
-	.global	gUnk_0811ABB0
-gUnk_0811ABB0:
+	.global	gPlayerFrame3048UpperTiles
+gPlayerFrame3048UpperTiles:
 	.incbin	"baserom.gba", 0x11ABB0, 0x126
-	.global	gUnk_0811ACD6
-gUnk_0811ACD6:
+	.global	gPlayerFrame3049UpperTiles
+gPlayerFrame3049UpperTiles:
 	.incbin	"baserom.gba", 0x11ACD6, 0x126
-	.global	gUnk_0811ADFC
-gUnk_0811ADFC:
+	.global	gPlayerFrame3050UpperTiles
+gPlayerFrame3050UpperTiles:
 	.incbin	"baserom.gba", 0x11ADFC, 0x106
 	.global	gUnk_0811AF02
 gUnk_0811AF02:
@@ -7327,44 +7327,44 @@ gUnk_0811AF02:
 	.global	gUnk_0811B008
 gUnk_0811B008:
 	.incbin	"baserom.gba", 0x11B008, 0xE6
-	.global	gUnk_0811B0EE
-gUnk_0811B0EE:
+	.global	gPlayerFrame3055UpperTiles
+gPlayerFrame3055UpperTiles:
 	.incbin	"baserom.gba", 0x11B0EE, 0x146
-	.global	gUnk_0811B234
-gUnk_0811B234:
+	.global	gPlayerFrame3056UpperTiles
+gPlayerFrame3056UpperTiles:
 	.incbin	"baserom.gba", 0x11B234, 0x146
-	.global	gUnk_0811B37A
-gUnk_0811B37A:
+	.global	gPlayerFrame3063UpperTiles
+gPlayerFrame3063UpperTiles:
 	.incbin	"baserom.gba", 0x11B37A, 0x126
-	.global	gUnk_0811B4A0
-gUnk_0811B4A0:
+	.global	gPlayerFrame3053UpperTiles
+gPlayerFrame3053UpperTiles:
 	.incbin	"baserom.gba", 0x11B4A0, 0x106
-	.global	gUnk_0811B5A6
-gUnk_0811B5A6:
+	.global	gPlayerFrame3054UpperTiles
+gPlayerFrame3054UpperTiles:
 	.incbin	"baserom.gba", 0x11B5A6, 0x126
-	.global	gUnk_0811B6CC
-gUnk_0811B6CC:
+	.global	gPlayerFrame3057UpperTiles
+gPlayerFrame3057UpperTiles:
 	.incbin	"baserom.gba", 0x11B6CC, 0x106
-	.global	gUnk_0811B7D2
-gUnk_0811B7D2:
+	.global	gPlayerFrame3059UpperTiles
+gPlayerFrame3059UpperTiles:
 	.incbin	"baserom.gba", 0x11B7D2, 0xE6
-	.global	gUnk_0811B8B8
-gUnk_0811B8B8:
+	.global	gPlayerFrame3060UpperTiles
+gPlayerFrame3060UpperTiles:
 	.incbin	"baserom.gba", 0x11B8B8, 0x126
-	.global	gUnk_0811B9DE
-gUnk_0811B9DE:
+	.global	gPlayerFrame3061UpperTiles
+gPlayerFrame3061UpperTiles:
 	.incbin	"baserom.gba", 0x11B9DE, 0x126
-	.global	gUnk_0811BB04
-gUnk_0811BB04:
+	.global	gPlayerFrame3062UpperTiles
+gPlayerFrame3062UpperTiles:
 	.incbin	"baserom.gba", 0x11BB04, 0x126
-	.global	gUnk_0811BC2A
-gUnk_0811BC2A:
+	.global	gPlayerFrame3065UpperTiles
+gPlayerFrame3065UpperTiles:
 	.incbin	"baserom.gba", 0x11BC2A, 0x106
-	.global	gUnk_0811BD30
-gUnk_0811BD30:
+	.global	gPlayerFrame3046UpperTiles
+gPlayerFrame3046UpperTiles:
 	.incbin	"baserom.gba", 0x11BD30, 0x106
-	.global	gUnk_0811BE36
-gUnk_0811BE36:
+	.global	gPlayerFrame3058UpperTiles
+gPlayerFrame3058UpperTiles:
 	.incbin	"baserom.gba", 0x11BE36, 0x106
 	.global	gPlayerFrame3186Tiles
 gPlayerFrame3186Tiles:
@@ -7420,23 +7420,23 @@ gPlayerFrame3201Tiles:
 	.global	gPlayerFrame3204Tiles
 gPlayerFrame3204Tiles:
 	.incbin	"baserom.gba", 0x11D262, 0x126
-	.global	gUnk_0811D388
-gUnk_0811D388:
+	.global	gPlayerFrame3382UpperTiles
+gPlayerFrame3382UpperTiles:
 	.incbin	"baserom.gba", 0x11D388, 0xC6
-	.global	gUnk_0811D44E
-gUnk_0811D44E:
+	.global	gPlayerFrame3384UpperTiles
+gPlayerFrame3384UpperTiles:
 	.incbin	"baserom.gba", 0x11D44E, 0xE6
-	.global	gUnk_0811D534
-gUnk_0811D534:
+	.global	gPlayerFrame3385UpperTiles
+gPlayerFrame3385UpperTiles:
 	.incbin	"baserom.gba", 0x11D534, 0x126
 	.global	gPlayerFrame3386Tiles
 gPlayerFrame3386Tiles:
 	.incbin	"baserom.gba", 0x11D65A, 0x126
-	.global	gUnk_0811D780
-gUnk_0811D780:
+	.global	gPlayerFrame3386UpperTiles
+gPlayerFrame3386UpperTiles:
 	.incbin	"baserom.gba", 0x11D780, 0x126
-	.global	gUnk_0811D8A6
-gUnk_0811D8A6:
+	.global	gPlayerFrame3387UpperTiles
+gPlayerFrame3387UpperTiles:
 	.incbin	"baserom.gba", 0x11D8A6, 0xC6
 	.global	gUnk_0811D96C
 gUnk_0811D96C:
@@ -7444,41 +7444,41 @@ gUnk_0811D96C:
 	.global	gUnk_0811DA92
 gUnk_0811DA92:
 	.incbin	"baserom.gba", 0x11DA92, 0xE6
-	.global	gUnk_0811DB78
-gUnk_0811DB78:
+	.global	gPlayerFrame3392UpperTiles
+gPlayerFrame3392UpperTiles:
 	.incbin	"baserom.gba", 0x11DB78, 0x126
-	.global	gUnk_0811DC9E
-gUnk_0811DC9E:
+	.global	gPlayerFrame3393UpperTiles
+gPlayerFrame3393UpperTiles:
 	.incbin	"baserom.gba", 0x11DC9E, 0x126
-	.global	gUnk_0811DDC4
-gUnk_0811DDC4:
+	.global	gPlayerFrame3400UpperTiles
+gPlayerFrame3400UpperTiles:
 	.incbin	"baserom.gba", 0x11DDC4, 0x126
-	.global	gUnk_0811DEEA
-gUnk_0811DEEA:
+	.global	gPlayerFrame3390UpperTiles
+gPlayerFrame3390UpperTiles:
 	.incbin	"baserom.gba", 0x11DEEA, 0x126
-	.global	gUnk_0811E010
-gUnk_0811E010:
+	.global	gPlayerFrame3391UpperTiles
+gPlayerFrame3391UpperTiles:
 	.incbin	"baserom.gba", 0x11E010, 0x146
-	.global	gUnk_0811E156
-gUnk_0811E156:
+	.global	gPlayerFrame3396UpperTiles
+gPlayerFrame3396UpperTiles:
 	.incbin	"baserom.gba", 0x11E156, 0x126
-	.global	gUnk_0811E27C
-gUnk_0811E27C:
+	.global	gPlayerFrame3397UpperTiles
+gPlayerFrame3397UpperTiles:
 	.incbin	"baserom.gba", 0x11E27C, 0x126
-	.global	gUnk_0811E3A2
-gUnk_0811E3A2:
+	.global	gPlayerFrame3398UpperTiles
+gPlayerFrame3398UpperTiles:
 	.incbin	"baserom.gba", 0x11E3A2, 0xC6
-	.global	gUnk_0811E468
-gUnk_0811E468:
+	.global	gPlayerFrame3399UpperTiles
+gPlayerFrame3399UpperTiles:
 	.incbin	"baserom.gba", 0x11E468, 0xC6
-	.global	gUnk_0811E52E
-gUnk_0811E52E:
+	.global	gPlayerFrame3402UpperTiles
+gPlayerFrame3402UpperTiles:
 	.incbin	"baserom.gba", 0x11E52E, 0x106
-	.global	gUnk_0811E634
-gUnk_0811E634:
+	.global	gPlayerFrame3383UpperTiles
+gPlayerFrame3383UpperTiles:
 	.incbin	"baserom.gba", 0x11E634, 0xC6
-	.global	gUnk_0811E6FA
-gUnk_0811E6FA:
+	.global	gPlayerFrame3395UpperTiles
+gPlayerFrame3395UpperTiles:
 	.incbin	"baserom.gba", 0x11E6FA, 0x126
 	.global	gUnk_0811E820
 gUnk_0811E820:
@@ -8395,20 +8395,20 @@ gUnk_081235E0:
 	.global	gPlayerFrame1040Palette
 gPlayerFrame1040Palette:
 	.incbin	"baserom.gba", 0x123600, 0x22
-	.global	gUnk_08123622
-gUnk_08123622:
+	.global	gPlayerFrame1040NextBankPalette
+gPlayerFrame1040NextBankPalette:
 	.incbin	"baserom.gba", 0x123622, 0x22
 	.global	gPlayerFrame1842Palette
 gPlayerFrame1842Palette:
 	.incbin	"baserom.gba", 0x123644, 0x22
-	.global	gUnk_08123666
-gUnk_08123666:
+	.global	gPlayerFrame1842NextBankPalette
+gPlayerFrame1842NextBankPalette:
 	.incbin	"baserom.gba", 0x123666, 0x22
 	.global	gUnk_08123688
 gUnk_08123688:
 	.incbin	"baserom.gba", 0x123688, 0x22
-	.global	gUnk_081236AA
-gUnk_081236AA:
+	.global	gPlayerFrame2087NextBankPalette
+gPlayerFrame2087NextBankPalette:
 	.incbin	"baserom.gba", 0x1236AA, 0x22
 	.global	gUnk_081236CC
 gUnk_081236CC:
@@ -8416,50 +8416,50 @@ gUnk_081236CC:
 	.global	gUnk_081236EE
 gUnk_081236EE:
 	.incbin	"baserom.gba", 0x1236EE, 0x126
-	.global	gUnk_08123814
-gUnk_08123814:
+	.global	gPlayerFrame1040UpperTiles
+gPlayerFrame1040UpperTiles:
 	.incbin	"baserom.gba", 0x123814, 0x1A6
 	.global	gUnk_081239BA
 gUnk_081239BA:
 	.incbin	"baserom.gba", 0x1239BA, 0x126
-	.global	gUnk_08123AE0
-gUnk_08123AE0:
+	.global	gPlayerFrame1042UpperTiles
+gPlayerFrame1042UpperTiles:
 	.incbin	"baserom.gba", 0x123AE0, 0x186
 	.global	gUnk_08123C66
 gUnk_08123C66:
 	.incbin	"baserom.gba", 0x123C66, 0x126
-	.global	gUnk_08123D8C
-gUnk_08123D8C:
+	.global	gPlayerFrame1045UpperTiles
+gPlayerFrame1045UpperTiles:
 	.incbin	"baserom.gba", 0x123D8C, 0x186
 	.global	gUnk_08123F12
 gUnk_08123F12:
 	.incbin	"baserom.gba", 0x123F12, 0x126
-	.global	gUnk_08124038
-gUnk_08124038:
+	.global	gPlayerFrame1046UpperTiles
+gPlayerFrame1046UpperTiles:
 	.incbin	"baserom.gba", 0x124038, 0x186
 	.global	gUnk_081241BE
 gUnk_081241BE:
 	.incbin	"baserom.gba", 0x1241BE, 0x126
-	.global	gUnk_081242E4
-gUnk_081242E4:
+	.global	gPlayerFrame1043UpperTiles
+gPlayerFrame1043UpperTiles:
 	.incbin	"baserom.gba", 0x1242E4, 0x146
 	.global	gUnk_0812442A
 gUnk_0812442A:
 	.incbin	"baserom.gba", 0x12442A, 0x126
-	.global	gUnk_08124550
-gUnk_08124550:
+	.global	gPlayerFrame1044UpperTiles
+gPlayerFrame1044UpperTiles:
 	.incbin	"baserom.gba", 0x124550, 0x146
 	.global	gUnk_08124696
 gUnk_08124696:
 	.incbin	"baserom.gba", 0x124696, 0x126
-	.global	gUnk_081247BC
-gUnk_081247BC:
+	.global	gPlayerFrame1047UpperTiles
+gPlayerFrame1047UpperTiles:
 	.incbin	"baserom.gba", 0x1247BC, 0x186
 	.global	gUnk_08124942
 gUnk_08124942:
 	.incbin	"baserom.gba", 0x124942, 0xC6
-	.global	gUnk_08124A08
-gUnk_08124A08:
+	.global	gPlayerFrame1048UpperTiles
+gPlayerFrame1048UpperTiles:
 	.incbin	"baserom.gba", 0x124A08, 0x166
 	.global	gUnk_08124B6E
 gUnk_08124B6E:
@@ -8467,59 +8467,59 @@ gUnk_08124B6E:
 	.global	gUnk_08124C94
 gUnk_08124C94:
 	.incbin	"baserom.gba", 0x124C94, 0x126
-	.global	gUnk_08124DBA
-gUnk_08124DBA:
+	.global	gPlayerFrame1050UpperTiles
+gPlayerFrame1050UpperTiles:
 	.incbin	"baserom.gba", 0x124DBA, 0x1A6
 	.global	gUnk_08124F60
 gUnk_08124F60:
 	.incbin	"baserom.gba", 0x124F60, 0x126
-	.global	gUnk_08125086
-gUnk_08125086:
+	.global	gPlayerFrame1051UpperTiles
+gPlayerFrame1051UpperTiles:
 	.incbin	"baserom.gba", 0x125086, 0x186
 	.global	gUnk_0812520C
 gUnk_0812520C:
 	.incbin	"baserom.gba", 0x12520C, 0x126
-	.global	gUnk_08125332
-gUnk_08125332:
+	.global	gPlayerFrame1052UpperTiles
+gPlayerFrame1052UpperTiles:
 	.incbin	"baserom.gba", 0x125332, 0x166
 	.global	gUnk_08125498
 gUnk_08125498:
 	.incbin	"baserom.gba", 0x125498, 0x126
-	.global	gUnk_081255BE
-gUnk_081255BE:
+	.global	gPlayerFrame1053UpperTiles
+gPlayerFrame1053UpperTiles:
 	.incbin	"baserom.gba", 0x1255BE, 0x186
 	.global	gPlayerFrame1054Tiles
 gPlayerFrame1054Tiles:
 	.incbin	"baserom.gba", 0x125744, 0x126
-	.global	gUnk_0812586A
-gUnk_0812586A:
+	.global	gPlayerFrame1054UpperTiles
+gPlayerFrame1054UpperTiles:
 	.incbin	"baserom.gba", 0x12586A, 0x166
 	.global	gUnk_081259D0
 gUnk_081259D0:
 	.incbin	"baserom.gba", 0x1259D0, 0x126
-	.global	gUnk_08125AF6
-gUnk_08125AF6:
+	.global	gPlayerFrame1055UpperTiles
+gPlayerFrame1055UpperTiles:
 	.incbin	"baserom.gba", 0x125AF6, 0x1A6
-	.global	gUnk_08125C9C
-gUnk_08125C9C:
+	.global	gPlayerFrame1041UpperTiles
+gPlayerFrame1041UpperTiles:
 	.incbin	"baserom.gba", 0x125C9C, 0x1A6
 	.global	gPlayerFrame1842Tiles
 gPlayerFrame1842Tiles:
 	.incbin	"baserom.gba", 0x125E42, 0x126
-	.global	gUnk_08125F68
-gUnk_08125F68:
+	.global	gPlayerFrame1842UpperTiles
+gPlayerFrame1842UpperTiles:
 	.incbin	"baserom.gba", 0x125F68, 0xC6
 	.global	gPlayerFrame1844Tiles
 gPlayerFrame1844Tiles:
 	.incbin	"baserom.gba", 0x12602E, 0x126
-	.global	gUnk_08126154
-gUnk_08126154:
+	.global	gPlayerFrame1844UpperTiles
+gPlayerFrame1844UpperTiles:
 	.incbin	"baserom.gba", 0x126154, 0xA6
 	.global	gPlayerFrame1847Tiles
 gPlayerFrame1847Tiles:
 	.incbin	"baserom.gba", 0x1261FA, 0x126
-	.global	gUnk_08126320
-gUnk_08126320:
+	.global	gPlayerFrame1847UpperTiles
+gPlayerFrame1847UpperTiles:
 	.incbin	"baserom.gba", 0x126320, 0xE6
 	.global	gPlayerFrame1848Tiles
 gPlayerFrame1848Tiles:
@@ -8527,20 +8527,20 @@ gPlayerFrame1848Tiles:
 	.global	gPlayerFrame1845Tiles
 gPlayerFrame1845Tiles:
 	.incbin	"baserom.gba", 0x12652C, 0x126
-	.global	gUnk_08126652
-gUnk_08126652:
+	.global	gPlayerFrame1845UpperTiles
+gPlayerFrame1845UpperTiles:
 	.incbin	"baserom.gba", 0x126652, 0xC6
 	.global	gPlayerFrame1846Tiles
 gPlayerFrame1846Tiles:
 	.incbin	"baserom.gba", 0x126718, 0x126
-	.global	gUnk_0812683E
-gUnk_0812683E:
+	.global	gPlayerFrame1846UpperTiles
+gPlayerFrame1846UpperTiles:
 	.incbin	"baserom.gba", 0x12683E, 0x86
 	.global	gPlayerFrame1849Tiles
 gPlayerFrame1849Tiles:
 	.incbin	"baserom.gba", 0x1268C4, 0x126
-	.global	gUnk_081269EA
-gUnk_081269EA:
+	.global	gPlayerFrame1849UpperTiles
+gPlayerFrame1849UpperTiles:
 	.incbin	"baserom.gba", 0x1269EA, 0xC6
 	.global	gPlayerFrame1850Tiles
 gPlayerFrame1850Tiles:
@@ -8551,68 +8551,68 @@ gPlayerFrame1851Tiles:
 	.global	gPlayerFrame1852Tiles
 gPlayerFrame1852Tiles:
 	.incbin	"baserom.gba", 0x126C9C, 0x126
-	.global	gUnk_08126DC2
-gUnk_08126DC2:
+	.global	gPlayerFrame1852UpperTiles
+gPlayerFrame1852UpperTiles:
 	.incbin	"baserom.gba", 0x126DC2, 0xE6
 	.global	gPlayerFrame1853Tiles
 gPlayerFrame1853Tiles:
 	.incbin	"baserom.gba", 0x126EA8, 0x126
-	.global	gUnk_08126FCE
-gUnk_08126FCE:
+	.global	gPlayerFrame1853UpperTiles
+gPlayerFrame1853UpperTiles:
 	.incbin	"baserom.gba", 0x126FCE, 0xC6
 	.global	gPlayerFrame1854Tiles
 gPlayerFrame1854Tiles:
 	.incbin	"baserom.gba", 0x127094, 0x126
-	.global	gUnk_081271BA
-gUnk_081271BA:
+	.global	gPlayerFrame1854UpperTiles
+gPlayerFrame1854UpperTiles:
 	.incbin	"baserom.gba", 0x1271BA, 0xC6
 	.global	gPlayerFrame1855Tiles
 gPlayerFrame1855Tiles:
 	.incbin	"baserom.gba", 0x127280, 0x126
-	.global	gUnk_081273A6
-gUnk_081273A6:
+	.global	gPlayerFrame1855UpperTiles
+gPlayerFrame1855UpperTiles:
 	.incbin	"baserom.gba", 0x1273A6, 0xA6
 	.global	gPlayerFrame1856Tiles
 gPlayerFrame1856Tiles:
 	.incbin	"baserom.gba", 0x12744C, 0x126
-	.global	gUnk_08127572
-gUnk_08127572:
+	.global	gPlayerFrame1856UpperTiles
+gPlayerFrame1856UpperTiles:
 	.incbin	"baserom.gba", 0x127572, 0x86
 	.global	gPlayerFrame1857Tiles
 gPlayerFrame1857Tiles:
 	.incbin	"baserom.gba", 0x1275F8, 0x126
-	.global	gUnk_0812771E
-gUnk_0812771E:
+	.global	gPlayerFrame1857UpperTiles
+gPlayerFrame1857UpperTiles:
 	.incbin	"baserom.gba", 0x12771E, 0xA6
-	.global	gUnk_081277C4
-gUnk_081277C4:
+	.global	gPlayerFrame2087UpperTiles
+gPlayerFrame2087UpperTiles:
 	.incbin	"baserom.gba", 0x1277C4, 0xC6
-	.global	gUnk_0812788A
-gUnk_0812788A:
+	.global	gPlayerFrame2089UpperTiles
+gPlayerFrame2089UpperTiles:
 	.incbin	"baserom.gba", 0x12788A, 0xC6
-	.global	gUnk_08127950
-gUnk_08127950:
+	.global	gPlayerFrame2113UpperTiles
+gPlayerFrame2113UpperTiles:
 	.incbin	"baserom.gba", 0x127950, 0x126
-	.global	gUnk_08127A76
-gUnk_08127A76:
+	.global	gPlayerFrame2114UpperTiles
+gPlayerFrame2114UpperTiles:
 	.incbin	"baserom.gba", 0x127A76, 0x126
 	.global	gPlayerFrame2090Tiles
 gPlayerFrame2090Tiles:
 	.incbin	"baserom.gba", 0x127B9C, 0x126
-	.global	gUnk_08127CC2
-gUnk_08127CC2:
+	.global	gPlayerFrame2090UpperTiles
+gPlayerFrame2090UpperTiles:
 	.incbin	"baserom.gba", 0x127CC2, 0x126
-	.global	gUnk_08127DE8
-gUnk_08127DE8:
+	.global	gPlayerFrame2091UpperTiles
+gPlayerFrame2091UpperTiles:
 	.incbin	"baserom.gba", 0x127DE8, 0x106
-	.global	gUnk_08127EEE
-gUnk_08127EEE:
+	.global	gPlayerFrame2095UpperTiles
+gPlayerFrame2095UpperTiles:
 	.incbin	"baserom.gba", 0x127EEE, 0xC6
-	.global	gUnk_08127FB4
-gUnk_08127FB4:
+	.global	gPlayerFrame2097UpperTiles
+gPlayerFrame2097UpperTiles:
 	.incbin	"baserom.gba", 0x127FB4, 0x106
-	.global	gUnk_081280BA
-gUnk_081280BA:
+	.global	gPlayerFrame2098UpperTiles
+gPlayerFrame2098UpperTiles:
 	.incbin	"baserom.gba", 0x1280BA, 0xC6
 	.global	gUnk_08128180
 gUnk_08128180:
@@ -8926,53 +8926,53 @@ gPlayerFrame933Palette:
 	.global	gUnk_0812A71C
 gUnk_0812A71C:
 	.incbin	"baserom.gba", 0x12A71C, 0x22
-	.global	gUnk_0812A73E
-gUnk_0812A73E:
+	.global	gPlayerFrame933NextBankPalette
+gPlayerFrame933NextBankPalette:
 	.incbin	"baserom.gba", 0x12A73E, 0x22
-	.global	gUnk_0812A760
-gUnk_0812A760:
+	.global	gPlayerFrame1360NextBankPalette
+gPlayerFrame1360NextBankPalette:
 	.incbin	"baserom.gba", 0x12A760, 0x22
-	.global	gUnk_0812A782
-gUnk_0812A782:
+	.global	gPlayerFrame1556NextBankPalette
+gPlayerFrame1556NextBankPalette:
 	.incbin	"baserom.gba", 0x12A782, 0x22
-	.global	gUnk_0812A7A4
-gUnk_0812A7A4:
+	.global	gPlayerFrame1725NextBankPalette
+gPlayerFrame1725NextBankPalette:
 	.incbin	"baserom.gba", 0x12A7A4, 0x22
 	.global	gPlayerFrame2346Palette
 gPlayerFrame2346Palette:
 	.incbin	"baserom.gba", 0x12A7C6, 0x22
-	.global	gUnk_0812A7E8
-gUnk_0812A7E8:
+	.global	gPlayerFrame2346NextBankPalette
+gPlayerFrame2346NextBankPalette:
 	.incbin	"baserom.gba", 0x12A7E8, 0x22
 	.global	gPlayerFrame2486Palette
 gPlayerFrame2486Palette:
 	.incbin	"baserom.gba", 0x12A80A, 0x22
-	.global	gUnk_0812A82C
-gUnk_0812A82C:
+	.global	gPlayerFrame2486NextBankPalette
+gPlayerFrame2486NextBankPalette:
 	.incbin	"baserom.gba", 0x12A82C, 0x22
 	.global	gPlayerFrame2626Palette
 gPlayerFrame2626Palette:
 	.incbin	"baserom.gba", 0x12A84E, 0x22
-	.global	gUnk_0812A870
-gUnk_0812A870:
+	.global	gPlayerFrame2626NextBankPalette
+gPlayerFrame2626NextBankPalette:
 	.incbin	"baserom.gba", 0x12A870, 0x22
-	.global	gUnk_0812A892
-gUnk_0812A892:
+	.global	gPlayerFrame2790NextBankPalette
+gPlayerFrame2790NextBankPalette:
 	.incbin	"baserom.gba", 0x12A892, 0x22
-	.global	gUnk_0812A8B4
-gUnk_0812A8B4:
+	.global	gPlayerFrame2936NextBankPalette
+gPlayerFrame2936NextBankPalette:
 	.incbin	"baserom.gba", 0x12A8B4, 0x22
 	.global	gPlayerFrame3067Palette
 gPlayerFrame3067Palette:
 	.incbin	"baserom.gba", 0x12A8D6, 0x22
-	.global	gUnk_0812A8F8
-gUnk_0812A8F8:
+	.global	gPlayerFrame3067NextBankPalette
+gPlayerFrame3067NextBankPalette:
 	.incbin	"baserom.gba", 0x12A8F8, 0x22
 	.global	gPlayerFrame3206Palette
 gPlayerFrame3206Palette:
 	.incbin	"baserom.gba", 0x12A91A, 0x22
-	.global	gUnk_0812A93C
-gUnk_0812A93C:
+	.global	gPlayerFrame3404NextBankPalette
+gPlayerFrame3404NextBankPalette:
 	.incbin	"baserom.gba", 0x12A93C, 0x22
 	.global	gUnk_0812A95E
 gUnk_0812A95E:
@@ -9058,347 +9058,347 @@ gPlayerFrame943Tiles:
 	.global	gUnk_0812C63C
 gUnk_0812C63C:
 	.incbin	"baserom.gba", 0x12C63C, 0xC6
-	.global	gUnk_0812C702
-gUnk_0812C702:
+	.global	gPlayerFrame933UpperTiles
+gPlayerFrame933UpperTiles:
 	.incbin	"baserom.gba", 0x12C702, 0x106
-	.global	gUnk_0812C808
-gUnk_0812C808:
+	.global	gPlayerFrame934UpperTiles
+gPlayerFrame934UpperTiles:
 	.incbin	"baserom.gba", 0x12C808, 0x106
-	.global	gUnk_0812C90E
-gUnk_0812C90E:
+	.global	gPlayerFrame935UpperTiles
+gPlayerFrame935UpperTiles:
 	.incbin	"baserom.gba", 0x12C90E, 0xC6
-	.global	gUnk_0812C9D4
-gUnk_0812C9D4:
+	.global	gPlayerFrame936UpperTiles
+gPlayerFrame936UpperTiles:
 	.incbin	"baserom.gba", 0x12C9D4, 0x106
-	.global	gUnk_0812CADA
-gUnk_0812CADA:
+	.global	gPlayerFrame937UpperTiles
+gPlayerFrame937UpperTiles:
 	.incbin	"baserom.gba", 0x12CADA, 0x106
-	.global	gUnk_0812CBE0
-gUnk_0812CBE0:
+	.global	gPlayerFrame938UpperTiles
+gPlayerFrame938UpperTiles:
 	.incbin	"baserom.gba", 0x12CBE0, 0x106
-	.global	gUnk_0812CCE6
-gUnk_0812CCE6:
+	.global	gPlayerFrame939UpperTiles
+gPlayerFrame939UpperTiles:
 	.incbin	"baserom.gba", 0x12CCE6, 0xE6
-	.global	gUnk_0812CDCC
-gUnk_0812CDCC:
+	.global	gPlayerFrame940UpperTiles
+gPlayerFrame940UpperTiles:
 	.incbin	"baserom.gba", 0x12CDCC, 0x126
-	.global	gUnk_0812CEF2
-gUnk_0812CEF2:
+	.global	gPlayerFrame941UpperTiles
+gPlayerFrame941UpperTiles:
 	.incbin	"baserom.gba", 0x12CEF2, 0xE6
-	.global	gUnk_0812CFD8
-gUnk_0812CFD8:
+	.global	gPlayerFrame942UpperTiles
+gPlayerFrame942UpperTiles:
 	.incbin	"baserom.gba", 0x12CFD8, 0xC6
-	.global	gUnk_0812D09E
-gUnk_0812D09E:
+	.global	gPlayerFrame943UpperTiles
+gPlayerFrame943UpperTiles:
 	.incbin	"baserom.gba", 0x12D09E, 0xC6
-	.global	gUnk_0812D164
-gUnk_0812D164:
+	.global	gPlayerFrame1360UpperTiles
+gPlayerFrame1360UpperTiles:
 	.incbin	"baserom.gba", 0x12D164, 0x1A6
-	.global	gUnk_0812D30A
-gUnk_0812D30A:
+	.global	gPlayerFrame1361UpperTiles
+gPlayerFrame1361UpperTiles:
 	.incbin	"baserom.gba", 0x12D30A, 0x1A6
-	.global	gUnk_0812D4B0
-gUnk_0812D4B0:
+	.global	gPlayerFrame1362UpperTiles
+gPlayerFrame1362UpperTiles:
 	.incbin	"baserom.gba", 0x12D4B0, 0x1A6
-	.global	gUnk_0812D656
-gUnk_0812D656:
+	.global	gPlayerFrame1363UpperTiles
+gPlayerFrame1363UpperTiles:
 	.incbin	"baserom.gba", 0x12D656, 0x1A6
-	.global	gUnk_0812D7FC
-gUnk_0812D7FC:
+	.global	gPlayerFrame1364UpperTiles
+gPlayerFrame1364UpperTiles:
 	.incbin	"baserom.gba", 0x12D7FC, 0x1A6
-	.global	gUnk_0812D9A2
-gUnk_0812D9A2:
+	.global	gPlayerFrame1365UpperTiles
+gPlayerFrame1365UpperTiles:
 	.incbin	"baserom.gba", 0x12D9A2, 0x1A6
-	.global	gUnk_0812DB48
-gUnk_0812DB48:
+	.global	gPlayerFrame1366UpperTiles
+gPlayerFrame1366UpperTiles:
 	.incbin	"baserom.gba", 0x12DB48, 0x1A6
-	.global	gUnk_0812DCEE
-gUnk_0812DCEE:
+	.global	gPlayerFrame1367UpperTiles
+gPlayerFrame1367UpperTiles:
 	.incbin	"baserom.gba", 0x12DCEE, 0x1A6
-	.global	gUnk_0812DE94
-gUnk_0812DE94:
+	.global	gPlayerFrame1368UpperTiles
+gPlayerFrame1368UpperTiles:
 	.incbin	"baserom.gba", 0x12DE94, 0x1A6
-	.global	gUnk_0812E03A
-gUnk_0812E03A:
+	.global	gPlayerFrame1369UpperTiles
+gPlayerFrame1369UpperTiles:
 	.incbin	"baserom.gba", 0x12E03A, 0x1A6
-	.global	gUnk_0812E1E0
-gUnk_0812E1E0:
+	.global	gPlayerFrame1370UpperTiles
+gPlayerFrame1370UpperTiles:
 	.incbin	"baserom.gba", 0x12E1E0, 0x1A6
-	.global	gUnk_0812E386
-gUnk_0812E386:
+	.global	gPlayerFrame1371UpperTiles
+gPlayerFrame1371UpperTiles:
 	.incbin	"baserom.gba", 0x12E386, 0x1A6
-	.global	gUnk_0812E52C
-gUnk_0812E52C:
+	.global	gPlayerFrame1372UpperTiles
+gPlayerFrame1372UpperTiles:
 	.incbin	"baserom.gba", 0x12E52C, 0x1A6
-	.global	gUnk_0812E6D2
-gUnk_0812E6D2:
+	.global	gPlayerFrame1373UpperTiles
+gPlayerFrame1373UpperTiles:
 	.incbin	"baserom.gba", 0x12E6D2, 0x186
-	.global	gUnk_0812E858
-gUnk_0812E858:
+	.global	gPlayerFrame1374UpperTiles
+gPlayerFrame1374UpperTiles:
 	.incbin	"baserom.gba", 0x12E858, 0x146
-	.global	gUnk_0812E99E
-gUnk_0812E99E:
+	.global	gPlayerFrame1375UpperTiles
+gPlayerFrame1375UpperTiles:
 	.incbin	"baserom.gba", 0x12E99E, 0x146
-	.global	gUnk_0812EAE4
-gUnk_0812EAE4:
+	.global	gPlayerFrame1556UpperTiles
+gPlayerFrame1556UpperTiles:
 	.incbin	"baserom.gba", 0x12EAE4, 0x86
-	.global	gUnk_0812EB6A
-gUnk_0812EB6A:
+	.global	gPlayerFrame1557UpperTiles
+gPlayerFrame1557UpperTiles:
 	.incbin	"baserom.gba", 0x12EB6A, 0x86
-	.global	gUnk_0812EBF0
-gUnk_0812EBF0:
+	.global	gPlayerFrame1558UpperTiles
+gPlayerFrame1558UpperTiles:
 	.incbin	"baserom.gba", 0x12EBF0, 0x86
-	.global	gUnk_0812EC76
-gUnk_0812EC76:
+	.global	gPlayerFrame1559UpperTiles
+gPlayerFrame1559UpperTiles:
 	.incbin	"baserom.gba", 0x12EC76, 0x86
-	.global	gUnk_0812ECFC
-gUnk_0812ECFC:
+	.global	gPlayerFrame1560UpperTiles
+gPlayerFrame1560UpperTiles:
 	.incbin	"baserom.gba", 0x12ECFC, 0x86
-	.global	gUnk_0812ED82
-gUnk_0812ED82:
+	.global	gPlayerFrame1561UpperTiles
+gPlayerFrame1561UpperTiles:
 	.incbin	"baserom.gba", 0x12ED82, 0x86
-	.global	gUnk_0812EE08
-gUnk_0812EE08:
+	.global	gPlayerFrame1562UpperTiles
+gPlayerFrame1562UpperTiles:
 	.incbin	"baserom.gba", 0x12EE08, 0x86
-	.global	gUnk_0812EE8E
-gUnk_0812EE8E:
+	.global	gPlayerFrame1563UpperTiles
+gPlayerFrame1563UpperTiles:
 	.incbin	"baserom.gba", 0x12EE8E, 0x86
-	.global	gUnk_0812EF14
-gUnk_0812EF14:
+	.global	gPlayerFrame1564UpperTiles
+gPlayerFrame1564UpperTiles:
 	.incbin	"baserom.gba", 0x12EF14, 0x86
-	.global	gUnk_0812EF9A
-gUnk_0812EF9A:
+	.global	gPlayerFrame1565UpperTiles
+gPlayerFrame1565UpperTiles:
 	.incbin	"baserom.gba", 0x12EF9A, 0x86
-	.global	gUnk_0812F020
-gUnk_0812F020:
+	.global	gPlayerFrame1566UpperTiles
+gPlayerFrame1566UpperTiles:
 	.incbin	"baserom.gba", 0x12F020, 0x86
-	.global	gUnk_0812F0A6
-gUnk_0812F0A6:
+	.global	gPlayerFrame1725UpperTiles
+gPlayerFrame1725UpperTiles:
 	.incbin	"baserom.gba", 0x12F0A6, 0xA6
-	.global	gUnk_0812F14C
-gUnk_0812F14C:
+	.global	gPlayerFrame1726UpperTiles
+gPlayerFrame1726UpperTiles:
 	.incbin	"baserom.gba", 0x12F14C, 0xA6
-	.global	gUnk_0812F1F2
-gUnk_0812F1F2:
+	.global	gPlayerFrame1727UpperTiles
+gPlayerFrame1727UpperTiles:
 	.incbin	"baserom.gba", 0x12F1F2, 0xA6
-	.global	gUnk_0812F298
-gUnk_0812F298:
+	.global	gPlayerFrame1728UpperTiles
+gPlayerFrame1728UpperTiles:
 	.incbin	"baserom.gba", 0x12F298, 0xA6
-	.global	gUnk_0812F33E
-gUnk_0812F33E:
+	.global	gPlayerFrame1729UpperTiles
+gPlayerFrame1729UpperTiles:
 	.incbin	"baserom.gba", 0x12F33E, 0xA6
-	.global	gUnk_0812F3E4
-gUnk_0812F3E4:
+	.global	gPlayerFrame1731UpperTiles
+gPlayerFrame1731UpperTiles:
 	.incbin	"baserom.gba", 0x12F3E4, 0xA6
-	.global	gUnk_0812F48A
-gUnk_0812F48A:
+	.global	gPlayerFrame1732UpperTiles
+gPlayerFrame1732UpperTiles:
 	.incbin	"baserom.gba", 0x12F48A, 0xA6
-	.global	gUnk_0812F530
-gUnk_0812F530:
+	.global	gPlayerFrame1733UpperTiles
+gPlayerFrame1733UpperTiles:
 	.incbin	"baserom.gba", 0x12F530, 0xA6
-	.global	gUnk_0812F5D6
-gUnk_0812F5D6:
+	.global	gPlayerFrame1734UpperTiles
+gPlayerFrame1734UpperTiles:
 	.incbin	"baserom.gba", 0x12F5D6, 0xC6
-	.global	gUnk_0812F69C
-gUnk_0812F69C:
+	.global	gPlayerFrame1735UpperTiles
+gPlayerFrame1735UpperTiles:
 	.incbin	"baserom.gba", 0x12F69C, 0xA6
-	.global	gUnk_0812F742
-gUnk_0812F742:
+	.global	gPlayerFrame2346UpperTiles
+gPlayerFrame2346UpperTiles:
 	.incbin	"baserom.gba", 0x12F742, 0xC6
-	.global	gUnk_0812F808
-gUnk_0812F808:
+	.global	gPlayerFrame2347UpperTiles
+gPlayerFrame2347UpperTiles:
 	.incbin	"baserom.gba", 0x12F808, 0xC6
-	.global	gUnk_0812F8CE
-gUnk_0812F8CE:
+	.global	gPlayerFrame2348UpperTiles
+gPlayerFrame2348UpperTiles:
 	.incbin	"baserom.gba", 0x12F8CE, 0xC6
-	.global	gUnk_0812F994
-gUnk_0812F994:
+	.global	gPlayerFrame2349UpperTiles
+gPlayerFrame2349UpperTiles:
 	.incbin	"baserom.gba", 0x12F994, 0xC6
-	.global	gUnk_0812FA5A
-gUnk_0812FA5A:
+	.global	gPlayerFrame2350UpperTiles
+gPlayerFrame2350UpperTiles:
 	.incbin	"baserom.gba", 0x12FA5A, 0xC6
-	.global	gUnk_0812FB20
-gUnk_0812FB20:
+	.global	gPlayerFrame2351UpperTiles
+gPlayerFrame2351UpperTiles:
 	.incbin	"baserom.gba", 0x12FB20, 0xC6
-	.global	gUnk_0812FBE6
-gUnk_0812FBE6:
+	.global	gPlayerFrame2352UpperTiles
+gPlayerFrame2352UpperTiles:
 	.incbin	"baserom.gba", 0x12FBE6, 0xC6
-	.global	gUnk_0812FCAC
-gUnk_0812FCAC:
+	.global	gPlayerFrame2353UpperTiles
+gPlayerFrame2353UpperTiles:
 	.incbin	"baserom.gba", 0x12FCAC, 0xC6
-	.global	gUnk_0812FD72
-gUnk_0812FD72:
+	.global	gPlayerFrame2354UpperTiles
+gPlayerFrame2354UpperTiles:
 	.incbin	"baserom.gba", 0x12FD72, 0xE6
-	.global	gUnk_0812FE58
-gUnk_0812FE58:
+	.global	gPlayerFrame2355UpperTiles
+gPlayerFrame2355UpperTiles:
 	.incbin	"baserom.gba", 0x12FE58, 0xC6
-	.global	gUnk_0812FF1E
-gUnk_0812FF1E:
+	.global	gPlayerFrame2356UpperTiles
+gPlayerFrame2356UpperTiles:
 	.incbin	"baserom.gba", 0x12FF1E, 0xE6
-	.global	gUnk_08130004
-gUnk_08130004:
+	.global	gPlayerFrame2486UpperTiles
+gPlayerFrame2486UpperTiles:
 	.incbin	"baserom.gba", 0x130004, 0xC6
-	.global	gUnk_081300CA
-gUnk_081300CA:
+	.global	gPlayerFrame2487UpperTiles
+gPlayerFrame2487UpperTiles:
 	.incbin	"baserom.gba", 0x1300CA, 0xC6
-	.global	gUnk_08130190
-gUnk_08130190:
+	.global	gPlayerFrame2488UpperTiles
+gPlayerFrame2488UpperTiles:
 	.incbin	"baserom.gba", 0x130190, 0xC6
-	.global	gUnk_08130256
-gUnk_08130256:
+	.global	gPlayerFrame2489UpperTiles
+gPlayerFrame2489UpperTiles:
 	.incbin	"baserom.gba", 0x130256, 0xC6
-	.global	gUnk_0813031C
-gUnk_0813031C:
+	.global	gPlayerFrame2490UpperTiles
+gPlayerFrame2490UpperTiles:
 	.incbin	"baserom.gba", 0x13031C, 0xC6
-	.global	gUnk_081303E2
-gUnk_081303E2:
+	.global	gPlayerFrame2491UpperTiles
+gPlayerFrame2491UpperTiles:
 	.incbin	"baserom.gba", 0x1303E2, 0xC6
-	.global	gUnk_081304A8
-gUnk_081304A8:
+	.global	gPlayerFrame2492UpperTiles
+gPlayerFrame2492UpperTiles:
 	.incbin	"baserom.gba", 0x1304A8, 0xC6
-	.global	gUnk_0813056E
-gUnk_0813056E:
+	.global	gPlayerFrame2493UpperTiles
+gPlayerFrame2493UpperTiles:
 	.incbin	"baserom.gba", 0x13056E, 0xC6
-	.global	gUnk_08130634
-gUnk_08130634:
+	.global	gPlayerFrame2494UpperTiles
+gPlayerFrame2494UpperTiles:
 	.incbin	"baserom.gba", 0x130634, 0xC6
-	.global	gUnk_081306FA
-gUnk_081306FA:
+	.global	gPlayerFrame2495UpperTiles
+gPlayerFrame2495UpperTiles:
 	.incbin	"baserom.gba", 0x1306FA, 0xE6
-	.global	gUnk_081307E0
-gUnk_081307E0:
+	.global	gPlayerFrame2496UpperTiles
+gPlayerFrame2496UpperTiles:
 	.incbin	"baserom.gba", 0x1307E0, 0xA6
-	.global	gUnk_08130886
-gUnk_08130886:
+	.global	gPlayerFrame2626UpperTiles
+gPlayerFrame2626UpperTiles:
 	.incbin	"baserom.gba", 0x130886, 0x186
-	.global	gUnk_08130A0C
-gUnk_08130A0C:
+	.global	gPlayerFrame2627UpperTiles
+gPlayerFrame2627UpperTiles:
 	.incbin	"baserom.gba", 0x130A0C, 0x186
-	.global	gUnk_08130B92
-gUnk_08130B92:
+	.global	gPlayerFrame2628UpperTiles
+gPlayerFrame2628UpperTiles:
 	.incbin	"baserom.gba", 0x130B92, 0x186
-	.global	gUnk_08130D18
-gUnk_08130D18:
+	.global	gPlayerFrame2629UpperTiles
+gPlayerFrame2629UpperTiles:
 	.incbin	"baserom.gba", 0x130D18, 0x1A6
-	.global	gUnk_08130EBE
-gUnk_08130EBE:
+	.global	gPlayerFrame2630UpperTiles
+gPlayerFrame2630UpperTiles:
 	.incbin	"baserom.gba", 0x130EBE, 0x186
-	.global	gUnk_08131044
-gUnk_08131044:
+	.global	gPlayerFrame2631UpperTiles
+gPlayerFrame2631UpperTiles:
 	.incbin	"baserom.gba", 0x131044, 0x186
-	.global	gUnk_081311CA
-gUnk_081311CA:
+	.global	gPlayerFrame2632UpperTiles
+gPlayerFrame2632UpperTiles:
 	.incbin	"baserom.gba", 0x1311CA, 0x126
-	.global	gUnk_081312F0
-gUnk_081312F0:
+	.global	gPlayerFrame2633UpperTiles
+gPlayerFrame2633UpperTiles:
 	.incbin	"baserom.gba", 0x1312F0, 0x126
-	.global	gUnk_08131416
-gUnk_08131416:
+	.global	gPlayerFrame2634UpperTiles
+gPlayerFrame2634UpperTiles:
 	.incbin	"baserom.gba", 0x131416, 0x106
-	.global	gUnk_0813151C
-gUnk_0813151C:
+	.global	gPlayerFrame2635UpperTiles
+gPlayerFrame2635UpperTiles:
 	.incbin	"baserom.gba", 0x13151C, 0x126
-	.global	gUnk_08131642
-gUnk_08131642:
+	.global	gPlayerFrame2636UpperTiles
+gPlayerFrame2636UpperTiles:
 	.incbin	"baserom.gba", 0x131642, 0x126
-	.global	gUnk_08131768
-gUnk_08131768:
+	.global	gPlayerFrame2790UpperTiles
+gPlayerFrame2790UpperTiles:
 	.incbin	"baserom.gba", 0x131768, 0xC6
-	.global	gUnk_0813182E
-gUnk_0813182E:
+	.global	gPlayerFrame2791UpperTiles
+gPlayerFrame2791UpperTiles:
 	.incbin	"baserom.gba", 0x13182E, 0xC6
-	.global	gUnk_081318F4
-gUnk_081318F4:
+	.global	gPlayerFrame2792UpperTiles
+gPlayerFrame2792UpperTiles:
 	.incbin	"baserom.gba", 0x1318F4, 0xC6
-	.global	gUnk_081319BA
-gUnk_081319BA:
+	.global	gPlayerFrame2793UpperTiles
+gPlayerFrame2793UpperTiles:
 	.incbin	"baserom.gba", 0x1319BA, 0x126
-	.global	gUnk_08131AE0
-gUnk_08131AE0:
+	.global	gPlayerFrame2794UpperTiles
+gPlayerFrame2794UpperTiles:
 	.incbin	"baserom.gba", 0x131AE0, 0xC6
-	.global	gUnk_08131BA6
-gUnk_08131BA6:
+	.global	gPlayerFrame2795UpperTiles
+gPlayerFrame2795UpperTiles:
 	.incbin	"baserom.gba", 0x131BA6, 0xC6
-	.global	gUnk_08131C6C
-gUnk_08131C6C:
+	.global	gPlayerFrame2796UpperTiles
+gPlayerFrame2796UpperTiles:
 	.incbin	"baserom.gba", 0x131C6C, 0x106
-	.global	gUnk_08131D72
-gUnk_08131D72:
+	.global	gPlayerFrame2797UpperTiles
+gPlayerFrame2797UpperTiles:
 	.incbin	"baserom.gba", 0x131D72, 0xA6
-	.global	gUnk_08131E18
-gUnk_08131E18:
+	.global	gPlayerFrame2798UpperTiles
+gPlayerFrame2798UpperTiles:
 	.incbin	"baserom.gba", 0x131E18, 0xE6
-	.global	gUnk_08131EFE
-gUnk_08131EFE:
+	.global	gPlayerFrame2799UpperTiles
+gPlayerFrame2799UpperTiles:
 	.incbin	"baserom.gba", 0x131EFE, 0x106
-	.global	gUnk_08132004
-gUnk_08132004:
+	.global	gPlayerFrame2800UpperTiles
+gPlayerFrame2800UpperTiles:
 	.incbin	"baserom.gba", 0x132004, 0x46
-	.global	gUnk_0813204A
-gUnk_0813204A:
+	.global	gPlayerFrame2936UpperTiles
+gPlayerFrame2936UpperTiles:
 	.incbin	"baserom.gba", 0x13204A, 0xC6
-	.global	gUnk_08132110
-gUnk_08132110:
+	.global	gPlayerFrame2937UpperTiles
+gPlayerFrame2937UpperTiles:
 	.incbin	"baserom.gba", 0x132110, 0xC6
-	.global	gUnk_081321D6
-gUnk_081321D6:
+	.global	gPlayerFrame2938UpperTiles
+gPlayerFrame2938UpperTiles:
 	.incbin	"baserom.gba", 0x1321D6, 0xC6
-	.global	gUnk_0813229C
-gUnk_0813229C:
+	.global	gPlayerFrame2939UpperTiles
+gPlayerFrame2939UpperTiles:
 	.incbin	"baserom.gba", 0x13229C, 0xC6
-	.global	gUnk_08132362
-gUnk_08132362:
+	.global	gPlayerFrame2940UpperTiles
+gPlayerFrame2940UpperTiles:
 	.incbin	"baserom.gba", 0x132362, 0xC6
-	.global	gUnk_08132428
-gUnk_08132428:
+	.global	gPlayerFrame2941UpperTiles
+gPlayerFrame2941UpperTiles:
 	.incbin	"baserom.gba", 0x132428, 0xC6
-	.global	gUnk_081324EE
-gUnk_081324EE:
+	.global	gPlayerFrame2942UpperTiles
+gPlayerFrame2942UpperTiles:
 	.incbin	"baserom.gba", 0x1324EE, 0xC6
-	.global	gUnk_081325B4
-gUnk_081325B4:
+	.global	gPlayerFrame2943UpperTiles
+gPlayerFrame2943UpperTiles:
 	.incbin	"baserom.gba", 0x1325B4, 0xC6
-	.global	gUnk_0813267A
-gUnk_0813267A:
+	.global	gPlayerFrame2944UpperTiles
+gPlayerFrame2944UpperTiles:
 	.incbin	"baserom.gba", 0x13267A, 0xC6
-	.global	gUnk_08132740
-gUnk_08132740:
+	.global	gPlayerFrame2945UpperTiles
+gPlayerFrame2945UpperTiles:
 	.incbin	"baserom.gba", 0x132740, 0xE6
-	.global	gUnk_08132826
-gUnk_08132826:
+	.global	gPlayerFrame2946UpperTiles
+gPlayerFrame2946UpperTiles:
 	.incbin	"baserom.gba", 0x132826, 0xA6
-	.global	gUnk_081328CC
-gUnk_081328CC:
+	.global	gPlayerFrame3067UpperTiles
+gPlayerFrame3067UpperTiles:
 	.incbin	"baserom.gba", 0x1328CC, 0xC6
-	.global	gUnk_08132992
-gUnk_08132992:
+	.global	gPlayerFrame3068UpperTiles
+gPlayerFrame3068UpperTiles:
 	.incbin	"baserom.gba", 0x132992, 0xE6
-	.global	gUnk_08132A78
-gUnk_08132A78:
+	.global	gPlayerFrame3069UpperTiles
+gPlayerFrame3069UpperTiles:
 	.incbin	"baserom.gba", 0x132A78, 0xE6
-	.global	gUnk_08132B5E
-gUnk_08132B5E:
+	.global	gPlayerFrame3070UpperTiles
+gPlayerFrame3070UpperTiles:
 	.incbin	"baserom.gba", 0x132B5E, 0xE6
-	.global	gUnk_08132C44
-gUnk_08132C44:
+	.global	gPlayerFrame3071UpperTiles
+gPlayerFrame3071UpperTiles:
 	.incbin	"baserom.gba", 0x132C44, 0xE6
-	.global	gUnk_08132D2A
-gUnk_08132D2A:
+	.global	gPlayerFrame3072UpperTiles
+gPlayerFrame3072UpperTiles:
 	.incbin	"baserom.gba", 0x132D2A, 0xE6
-	.global	gUnk_08132E10
-gUnk_08132E10:
+	.global	gPlayerFrame3073UpperTiles
+gPlayerFrame3073UpperTiles:
 	.incbin	"baserom.gba", 0x132E10, 0xC6
-	.global	gUnk_08132ED6
-gUnk_08132ED6:
+	.global	gPlayerFrame3074UpperTiles
+gPlayerFrame3074UpperTiles:
 	.incbin	"baserom.gba", 0x132ED6, 0xC6
-	.global	gUnk_08132F9C
-gUnk_08132F9C:
+	.global	gPlayerFrame3075UpperTiles
+gPlayerFrame3075UpperTiles:
 	.incbin	"baserom.gba", 0x132F9C, 0x106
-	.global	gUnk_081330A2
-gUnk_081330A2:
+	.global	gPlayerFrame3076UpperTiles
+gPlayerFrame3076UpperTiles:
 	.incbin	"baserom.gba", 0x1330A2, 0xC6
-	.global	gUnk_08133168
-gUnk_08133168:
+	.global	gPlayerFrame3077UpperTiles
+gPlayerFrame3077UpperTiles:
 	.incbin	"baserom.gba", 0x133168, 0xC6
 	.global	gPlayerFrame3206Tiles
 gPlayerFrame3206Tiles:
@@ -9433,53 +9433,53 @@ gPlayerFrame3215Tiles:
 	.global	gPlayerFrame3216Tiles
 gPlayerFrame3216Tiles:
 	.incbin	"baserom.gba", 0x133E0A, 0x126
-	.global	gUnk_08133F30
-gUnk_08133F30:
+	.global	gPlayerFrame3404UpperTiles
+gPlayerFrame3404UpperTiles:
 	.incbin	"baserom.gba", 0x133F30, 0x126
-	.global	gUnk_08134056
-gUnk_08134056:
+	.global	gPlayerFrame3405UpperTiles
+gPlayerFrame3405UpperTiles:
 	.incbin	"baserom.gba", 0x134056, 0x126
-	.global	gUnk_0813417C
-gUnk_0813417C:
+	.global	gPlayerFrame3406UpperTiles
+gPlayerFrame3406UpperTiles:
 	.incbin	"baserom.gba", 0x13417C, 0x126
-	.global	gUnk_081342A2
-gUnk_081342A2:
+	.global	gPlayerFrame3407UpperTiles
+gPlayerFrame3407UpperTiles:
 	.incbin	"baserom.gba", 0x1342A2, 0x106
-	.global	gUnk_081343A8
-gUnk_081343A8:
+	.global	gPlayerFrame3408UpperTiles
+gPlayerFrame3408UpperTiles:
 	.incbin	"baserom.gba", 0x1343A8, 0x126
-	.global	gUnk_081344CE
-gUnk_081344CE:
+	.global	gPlayerFrame3409UpperTiles
+gPlayerFrame3409UpperTiles:
 	.incbin	"baserom.gba", 0x1344CE, 0x106
-	.global	gUnk_081345D4
-gUnk_081345D4:
+	.global	gPlayerFrame3410UpperTiles
+gPlayerFrame3410UpperTiles:
 	.incbin	"baserom.gba", 0x1345D4, 0x126
-	.global	gUnk_081346FA
-gUnk_081346FA:
+	.global	gPlayerFrame3411UpperTiles
+gPlayerFrame3411UpperTiles:
 	.incbin	"baserom.gba", 0x1346FA, 0x106
-	.global	gUnk_08134800
-gUnk_08134800:
+	.global	gPlayerFrame3412UpperTiles
+gPlayerFrame3412UpperTiles:
 	.incbin	"baserom.gba", 0x134800, 0x106
-	.global	gUnk_08134906
-gUnk_08134906:
+	.global	gPlayerFrame3413UpperTiles
+gPlayerFrame3413UpperTiles:
 	.incbin	"baserom.gba", 0x134906, 0x106
-	.global	gUnk_08134A0C
-gUnk_08134A0C:
+	.global	gPlayerFrame3414UpperTiles
+gPlayerFrame3414UpperTiles:
 	.incbin	"baserom.gba", 0x134A0C, 0x126
-	.global	gUnk_08134B32
-gUnk_08134B32:
+	.global	gPlayerFrame3415UpperTiles
+gPlayerFrame3415UpperTiles:
 	.incbin	"baserom.gba", 0x134B32, 0x126
-	.global	gUnk_08134C58
-gUnk_08134C58:
+	.global	gPlayerFrame3416UpperTiles
+gPlayerFrame3416UpperTiles:
 	.incbin	"baserom.gba", 0x134C58, 0x126
-	.global	gUnk_08134D7E
-gUnk_08134D7E:
+	.global	gPlayerFrame3417UpperTiles
+gPlayerFrame3417UpperTiles:
 	.incbin	"baserom.gba", 0x134D7E, 0xC6
-	.global	gUnk_08134E44
-gUnk_08134E44:
+	.global	gPlayerFrame3418UpperTiles
+gPlayerFrame3418UpperTiles:
 	.incbin	"baserom.gba", 0x134E44, 0xE6
-	.global	gUnk_08134F2A
-gUnk_08134F2A:
+	.global	gPlayerFrame3419UpperTiles
+gPlayerFrame3419UpperTiles:
 	.incbin	"baserom.gba", 0x134F2A, 0xC6
 	.global	gUnk_08134FF0
 gUnk_08134FF0:
@@ -10042,47 +10042,47 @@ gUnk_08137F5A:
 	.global	gPlayerFrame1056Palette
 gPlayerFrame1056Palette:
 	.incbin	"baserom.gba", 0x137F7C, 0x22
-	.global	gUnk_08137F9E
-gUnk_08137F9E:
+	.global	gPlayerFrame1056NextBankPalette
+gPlayerFrame1056NextBankPalette:
 	.incbin	"baserom.gba", 0x137F9E, 0x22
 	.global	gPlayerFrame1858Palette
 gPlayerFrame1858Palette:
 	.incbin	"baserom.gba", 0x137FC0, 0x22
-	.global	gUnk_08137FE2
-gUnk_08137FE2:
+	.global	gPlayerFrame1858NextBankPalette
+gPlayerFrame1858NextBankPalette:
 	.incbin	"baserom.gba", 0x137FE2, 0x22
 	.global	gPlayerFrame2115Palette
 gPlayerFrame2115Palette:
 	.incbin	"baserom.gba", 0x138004, 0x22
-	.global	gUnk_08138026
-gUnk_08138026:
+	.global	gPlayerFrame2115NextBankPalette
+gPlayerFrame2115NextBankPalette:
 	.incbin	"baserom.gba", 0x138026, 0x22
-	.global	gUnk_08138048
-gUnk_08138048:
+	.global	gPlayerFrame4114NextBankPalette
+gPlayerFrame4114NextBankPalette:
 	.incbin	"baserom.gba", 0x138048, 0x22
 	.global	gPlayerFrame1056Tiles
 gPlayerFrame1056Tiles:
 	.incbin	"baserom.gba", 0x13806A, 0x166
-	.global	gUnk_081381D0
-gUnk_081381D0:
+	.global	gPlayerFrame1056UpperTiles
+gPlayerFrame1056UpperTiles:
 	.incbin	"baserom.gba", 0x1381D0, 0x1C6
 	.global	gPlayerFrame1057Tiles
 gPlayerFrame1057Tiles:
 	.incbin	"baserom.gba", 0x138396, 0x166
-	.global	gUnk_081384FC
-gUnk_081384FC:
+	.global	gPlayerFrame1057UpperTiles
+gPlayerFrame1057UpperTiles:
 	.incbin	"baserom.gba", 0x1384FC, 0x1C6
 	.global	gPlayerFrame1058Tiles
 gPlayerFrame1058Tiles:
 	.incbin	"baserom.gba", 0x1386C2, 0x166
-	.global	gUnk_08138828
-gUnk_08138828:
+	.global	gPlayerFrame1058UpperTiles
+gPlayerFrame1058UpperTiles:
 	.incbin	"baserom.gba", 0x138828, 0x1C6
 	.global	gPlayerFrame1059Tiles
 gPlayerFrame1059Tiles:
 	.incbin	"baserom.gba", 0x1389EE, 0x126
-	.global	gUnk_08138B14
-gUnk_08138B14:
+	.global	gPlayerFrame1059UpperTiles
+gPlayerFrame1059UpperTiles:
 	.incbin	"baserom.gba", 0x138B14, 0x1C6
 	.global	gPlayerFrame1060Tiles
 gPlayerFrame1060Tiles:
@@ -10090,44 +10090,44 @@ gPlayerFrame1060Tiles:
 	.global	gPlayerFrame1061Tiles
 gPlayerFrame1061Tiles:
 	.incbin	"baserom.gba", 0x138E00, 0x166
-	.global	gUnk_08138F66
-gUnk_08138F66:
+	.global	gPlayerFrame1061UpperTiles
+gPlayerFrame1061UpperTiles:
 	.incbin	"baserom.gba", 0x138F66, 0x1C6
 	.global	gPlayerFrame1062Tiles
 gPlayerFrame1062Tiles:
 	.incbin	"baserom.gba", 0x13912C, 0x126
-	.global	gUnk_08139252
-gUnk_08139252:
+	.global	gPlayerFrame1062UpperTiles
+gPlayerFrame1062UpperTiles:
 	.incbin	"baserom.gba", 0x139252, 0x186
 	.global	gPlayerFrame1063Tiles
 gPlayerFrame1063Tiles:
 	.incbin	"baserom.gba", 0x1393D8, 0xC6
-	.global	gUnk_0813949E
-gUnk_0813949E:
+	.global	gPlayerFrame1063UpperTiles
+gPlayerFrame1063UpperTiles:
 	.incbin	"baserom.gba", 0x13949E, 0x1A6
 	.global	gPlayerFrame1064Tiles
 gPlayerFrame1064Tiles:
 	.incbin	"baserom.gba", 0x139644, 0x126
-	.global	gUnk_0813976A
-gUnk_0813976A:
+	.global	gPlayerFrame1064UpperTiles
+gPlayerFrame1064UpperTiles:
 	.incbin	"baserom.gba", 0x13976A, 0x166
 	.global	gPlayerFrame1065Tiles
 gPlayerFrame1065Tiles:
 	.incbin	"baserom.gba", 0x1398D0, 0x126
-	.global	gUnk_081399F6
-gUnk_081399F6:
+	.global	gPlayerFrame1065UpperTiles
+gPlayerFrame1065UpperTiles:
 	.incbin	"baserom.gba", 0x1399F6, 0x126
 	.global	gPlayerFrame1066Tiles
 gPlayerFrame1066Tiles:
 	.incbin	"baserom.gba", 0x139B1C, 0x126
-	.global	gUnk_08139C42
-gUnk_08139C42:
+	.global	gPlayerFrame1066UpperTiles
+gPlayerFrame1066UpperTiles:
 	.incbin	"baserom.gba", 0x139C42, 0x146
 	.global	gPlayerFrame1858Tiles
 gPlayerFrame1858Tiles:
 	.incbin	"baserom.gba", 0x139D88, 0x166
-	.global	gUnk_08139EEE
-gUnk_08139EEE:
+	.global	gPlayerFrame1858UpperTiles
+gPlayerFrame1858UpperTiles:
 	.incbin	"baserom.gba", 0x139EEE, 0xE6
 	.global	gPlayerFrame1859Tiles
 gPlayerFrame1859Tiles:
@@ -10156,32 +10156,32 @@ gPlayerFrame1866Tiles:
 	.global	gPlayerFrame1867Tiles
 gPlayerFrame1867Tiles:
 	.incbin	"baserom.gba", 0x13A964, 0x126
-	.global	gUnk_0813AA8A
-gUnk_0813AA8A:
+	.global	gPlayerFrame2115UpperTiles
+gPlayerFrame2115UpperTiles:
 	.incbin	"baserom.gba", 0x13AA8A, 0x126
-	.global	gUnk_0813ABB0
-gUnk_0813ABB0:
+	.global	gPlayerFrame2123UpperTiles
+gPlayerFrame2123UpperTiles:
 	.incbin	"baserom.gba", 0x13ABB0, 0x126
-	.global	gUnk_0813ACD6
-gUnk_0813ACD6:
+	.global	gPlayerFrame2124UpperTiles
+gPlayerFrame2124UpperTiles:
 	.incbin	"baserom.gba", 0x13ACD6, 0x126
-	.global	gUnk_0813ADFC
-gUnk_0813ADFC:
+	.global	gPlayerFrame4114UpperTiles
+gPlayerFrame4114UpperTiles:
 	.incbin	"baserom.gba", 0x13ADFC, 0xC6
-	.global	gUnk_0813AEC2
-gUnk_0813AEC2:
+	.global	gPlayerFrame4245UpperTiles
+gPlayerFrame4245UpperTiles:
 	.incbin	"baserom.gba", 0x13AEC2, 0x146
-	.global	gUnk_0813B008
-gUnk_0813B008:
+	.global	gPlayerFrame4120UpperTiles
+gPlayerFrame4120UpperTiles:
 	.incbin	"baserom.gba", 0x13B008, 0xA6
-	.global	gUnk_0813B0AE
-gUnk_0813B0AE:
+	.global	gPlayerFrame4251UpperTiles
+gPlayerFrame4251UpperTiles:
 	.incbin	"baserom.gba", 0x13B0AE, 0x126
-	.global	gUnk_0813B1D4
-gUnk_0813B1D4:
+	.global	gPlayerFrame4124UpperTiles
+gPlayerFrame4124UpperTiles:
 	.incbin	"baserom.gba", 0x13B1D4, 0x86
-	.global	gUnk_0813B25A
-gUnk_0813B25A:
+	.global	gPlayerFrame4255UpperTiles
+gPlayerFrame4255UpperTiles:
 	.incbin	"baserom.gba", 0x13B25A, 0x106
 	.global	gPlayerFrame1056OamTemplate
 gPlayerFrame1056OamTemplate:
@@ -10357,53 +10357,53 @@ gPlayerFrame944Palette:
 	.global	gUnk_0813BF84
 gUnk_0813BF84:
 	.incbin	"baserom.gba", 0x13BF84, 0x22
-	.global	gUnk_0813BFA6
-gUnk_0813BFA6:
+	.global	gPlayerFrame944NextBankPalette
+gPlayerFrame944NextBankPalette:
 	.incbin	"baserom.gba", 0x13BFA6, 0x22
-	.global	gUnk_0813BFC8
-gUnk_0813BFC8:
+	.global	gPlayerFrame1376NextBankPalette
+gPlayerFrame1376NextBankPalette:
 	.incbin	"baserom.gba", 0x13BFC8, 0x22
-	.global	gUnk_0813BFEA
-gUnk_0813BFEA:
+	.global	gPlayerFrame1567NextBankPalette
+gPlayerFrame1567NextBankPalette:
 	.incbin	"baserom.gba", 0x13BFEA, 0x22
-	.global	gUnk_0813C00C
-gUnk_0813C00C:
+	.global	gPlayerFrame1736NextBankPalette
+gPlayerFrame1736NextBankPalette:
 	.incbin	"baserom.gba", 0x13C00C, 0x22
 	.global	gPlayerFrame2357Palette
 gPlayerFrame2357Palette:
 	.incbin	"baserom.gba", 0x13C02E, 0x22
-	.global	gUnk_0813C050
-gUnk_0813C050:
+	.global	gPlayerFrame2357NextBankPalette
+gPlayerFrame2357NextBankPalette:
 	.incbin	"baserom.gba", 0x13C050, 0x22
 	.global	gPlayerFrame2497Palette
 gPlayerFrame2497Palette:
 	.incbin	"baserom.gba", 0x13C072, 0x22
-	.global	gUnk_0813C094
-gUnk_0813C094:
+	.global	gPlayerFrame2497NextBankPalette
+gPlayerFrame2497NextBankPalette:
 	.incbin	"baserom.gba", 0x13C094, 0x22
 	.global	gPlayerFrame2637Palette
 gPlayerFrame2637Palette:
 	.incbin	"baserom.gba", 0x13C0B6, 0x22
-	.global	gUnk_0813C0D8
-gUnk_0813C0D8:
+	.global	gPlayerFrame2637NextBankPalette
+gPlayerFrame2637NextBankPalette:
 	.incbin	"baserom.gba", 0x13C0D8, 0x22
-	.global	gUnk_0813C0FA
-gUnk_0813C0FA:
+	.global	gPlayerFrame2801NextBankPalette
+gPlayerFrame2801NextBankPalette:
 	.incbin	"baserom.gba", 0x13C0FA, 0x22
-	.global	gUnk_0813C11C
-gUnk_0813C11C:
+	.global	gPlayerFrame2947NextBankPalette
+gPlayerFrame2947NextBankPalette:
 	.incbin	"baserom.gba", 0x13C11C, 0x22
 	.global	gPlayerFrame3078Palette
 gPlayerFrame3078Palette:
 	.incbin	"baserom.gba", 0x13C13E, 0x22
-	.global	gUnk_0813C160
-gUnk_0813C160:
+	.global	gPlayerFrame3078NextBankPalette
+gPlayerFrame3078NextBankPalette:
 	.incbin	"baserom.gba", 0x13C160, 0x22
 	.global	gPlayerFrame3217Palette
 gPlayerFrame3217Palette:
 	.incbin	"baserom.gba", 0x13C182, 0x22
-	.global	gUnk_0813C1A4
-gUnk_0813C1A4:
+	.global	gPlayerFrame3420NextBankPalette
+gPlayerFrame3420NextBankPalette:
 	.incbin	"baserom.gba", 0x13C1A4, 0x22
 	.global	gUnk_0813C1C6
 gUnk_0813C1C6:
@@ -10444,320 +10444,320 @@ gUnk_0813CD64:
 	.global	gUnk_0813CE4A
 gUnk_0813CE4A:
 	.incbin	"baserom.gba", 0x13CE4A, 0x126
-	.global	gUnk_0813CF70
-gUnk_0813CF70:
+	.global	gPlayerFrame944UpperTiles
+gPlayerFrame944UpperTiles:
 	.incbin	"baserom.gba", 0x13CF70, 0x126
-	.global	gUnk_0813D096
-gUnk_0813D096:
+	.global	gPlayerFrame945UpperTiles
+gPlayerFrame945UpperTiles:
 	.incbin	"baserom.gba", 0x13D096, 0x126
-	.global	gUnk_0813D1BC
-gUnk_0813D1BC:
+	.global	gPlayerFrame946UpperTiles
+gPlayerFrame946UpperTiles:
 	.incbin	"baserom.gba", 0x13D1BC, 0xE6
-	.global	gUnk_0813D2A2
-gUnk_0813D2A2:
+	.global	gPlayerFrame948UpperTiles
+gPlayerFrame948UpperTiles:
 	.incbin	"baserom.gba", 0x13D2A2, 0x126
-	.global	gUnk_0813D3C8
-gUnk_0813D3C8:
+	.global	gPlayerFrame954UpperTiles
+gPlayerFrame954UpperTiles:
 	.incbin	"baserom.gba", 0x13D3C8, 0xE6
-	.global	gUnk_0813D4AE
-gUnk_0813D4AE:
+	.global	gPlayerFrame955UpperTiles
+gPlayerFrame955UpperTiles:
 	.incbin	"baserom.gba", 0x13D4AE, 0xE6
-	.global	gUnk_0813D594
-gUnk_0813D594:
+	.global	gPlayerFrame956UpperTiles
+gPlayerFrame956UpperTiles:
 	.incbin	"baserom.gba", 0x13D594, 0x126
-	.global	gUnk_0813D6BA
-gUnk_0813D6BA:
+	.global	gPlayerFrame1376UpperTiles
+gPlayerFrame1376UpperTiles:
 	.incbin	"baserom.gba", 0x13D6BA, 0x186
-	.global	gUnk_0813D840
-gUnk_0813D840:
+	.global	gPlayerFrame1378UpperTiles
+gPlayerFrame1378UpperTiles:
 	.incbin	"baserom.gba", 0x13D840, 0x186
-	.global	gUnk_0813D9C6
-gUnk_0813D9C6:
+	.global	gPlayerFrame1380UpperTiles
+gPlayerFrame1380UpperTiles:
 	.incbin	"baserom.gba", 0x13D9C6, 0x186
-	.global	gUnk_0813DB4C
-gUnk_0813DB4C:
+	.global	gPlayerFrame1382UpperTiles
+gPlayerFrame1382UpperTiles:
 	.incbin	"baserom.gba", 0x13DB4C, 0x186
-	.global	gUnk_0813DCD2
-gUnk_0813DCD2:
+	.global	gPlayerFrame1384UpperTiles
+gPlayerFrame1384UpperTiles:
 	.incbin	"baserom.gba", 0x13DCD2, 0x186
 	.global	gPlayerFrame1386Tiles
 gPlayerFrame1386Tiles:
 	.incbin	"baserom.gba", 0x13DE58, 0x126
-	.global	gUnk_0813DF7E
-gUnk_0813DF7E:
+	.global	gPlayerFrame1386UpperTiles
+gPlayerFrame1386UpperTiles:
 	.incbin	"baserom.gba", 0x13DF7E, 0x186
-	.global	gUnk_0813E104
-gUnk_0813E104:
+	.global	gPlayerFrame1387UpperTiles
+gPlayerFrame1387UpperTiles:
 	.incbin	"baserom.gba", 0x13E104, 0x186
-	.global	gUnk_0813E28A
-gUnk_0813E28A:
+	.global	gPlayerFrame1388UpperTiles
+gPlayerFrame1388UpperTiles:
 	.incbin	"baserom.gba", 0x13E28A, 0x186
-	.global	gUnk_0813E410
-gUnk_0813E410:
+	.global	gPlayerFrame1389UpperTiles
+gPlayerFrame1389UpperTiles:
 	.incbin	"baserom.gba", 0x13E410, 0x186
-	.global	gUnk_0813E596
-gUnk_0813E596:
+	.global	gPlayerFrame1391UpperTiles
+gPlayerFrame1391UpperTiles:
 	.incbin	"baserom.gba", 0x13E596, 0x186
-	.global	gUnk_0813E71C
-gUnk_0813E71C:
+	.global	gPlayerFrame1393UpperTiles
+gPlayerFrame1393UpperTiles:
 	.incbin	"baserom.gba", 0x13E71C, 0x186
-	.global	gUnk_0813E8A2
-gUnk_0813E8A2:
+	.global	gPlayerFrame1395UpperTiles
+gPlayerFrame1395UpperTiles:
 	.incbin	"baserom.gba", 0x13E8A2, 0x186
-	.global	gUnk_0813EA28
-gUnk_0813EA28:
+	.global	gPlayerFrame1397UpperTiles
+gPlayerFrame1397UpperTiles:
 	.incbin	"baserom.gba", 0x13EA28, 0x186
-	.global	gUnk_0813EBAE
-gUnk_0813EBAE:
+	.global	gPlayerFrame1399UpperTiles
+gPlayerFrame1399UpperTiles:
 	.incbin	"baserom.gba", 0x13EBAE, 0x186
-	.global	gUnk_0813ED34
-gUnk_0813ED34:
+	.global	gPlayerFrame1402UpperTiles
+gPlayerFrame1402UpperTiles:
 	.incbin	"baserom.gba", 0x13ED34, 0x186
-	.global	gUnk_0813EEBA
-gUnk_0813EEBA:
+	.global	gPlayerFrame1404UpperTiles
+gPlayerFrame1404UpperTiles:
 	.incbin	"baserom.gba", 0x13EEBA, 0x186
-	.global	gUnk_0813F040
-gUnk_0813F040:
+	.global	gPlayerFrame1406UpperTiles
+gPlayerFrame1406UpperTiles:
 	.incbin	"baserom.gba", 0x13F040, 0x186
-	.global	gUnk_0813F1C6
-gUnk_0813F1C6:
+	.global	gPlayerFrame1408UpperTiles
+gPlayerFrame1408UpperTiles:
 	.incbin	"baserom.gba", 0x13F1C6, 0x186
-	.global	gUnk_0813F34C
-gUnk_0813F34C:
+	.global	gPlayerFrame1410UpperTiles
+gPlayerFrame1410UpperTiles:
 	.incbin	"baserom.gba", 0x13F34C, 0x186
-	.global	gUnk_0813F4D2
-gUnk_0813F4D2:
+	.global	gPlayerFrame1415UpperTiles
+gPlayerFrame1415UpperTiles:
 	.incbin	"baserom.gba", 0x13F4D2, 0x186
-	.global	gUnk_0813F658
-gUnk_0813F658:
+	.global	gPlayerFrame1417UpperTiles
+gPlayerFrame1417UpperTiles:
 	.incbin	"baserom.gba", 0x13F658, 0x186
-	.global	gUnk_0813F7DE
-gUnk_0813F7DE:
+	.global	gPlayerFrame1419UpperTiles
+gPlayerFrame1419UpperTiles:
 	.incbin	"baserom.gba", 0x13F7DE, 0x186
-	.global	gUnk_0813F964
-gUnk_0813F964:
+	.global	gPlayerFrame1421UpperTiles
+gPlayerFrame1421UpperTiles:
 	.incbin	"baserom.gba", 0x13F964, 0x186
-	.global	gUnk_0813FAEA
-gUnk_0813FAEA:
+	.global	gPlayerFrame1423UpperTiles
+gPlayerFrame1423UpperTiles:
 	.incbin	"baserom.gba", 0x13FAEA, 0x186
-	.global	gUnk_0813FC70
-gUnk_0813FC70:
+	.global	gPlayerFrame1567UpperTiles
+gPlayerFrame1567UpperTiles:
 	.incbin	"baserom.gba", 0x13FC70, 0x86
-	.global	gUnk_0813FCF6
-gUnk_0813FCF6:
+	.global	gPlayerFrame1568UpperTiles
+gPlayerFrame1568UpperTiles:
 	.incbin	"baserom.gba", 0x13FCF6, 0x86
-	.global	gUnk_0813FD7C
-gUnk_0813FD7C:
+	.global	gPlayerFrame1569UpperTiles
+gPlayerFrame1569UpperTiles:
 	.incbin	"baserom.gba", 0x13FD7C, 0x86
-	.global	gUnk_0813FE02
-gUnk_0813FE02:
+	.global	gPlayerFrame1570UpperTiles
+gPlayerFrame1570UpperTiles:
 	.incbin	"baserom.gba", 0x13FE02, 0x86
-	.global	gUnk_0813FE88
-gUnk_0813FE88:
+	.global	gPlayerFrame1571UpperTiles
+gPlayerFrame1571UpperTiles:
 	.incbin	"baserom.gba", 0x13FE88, 0x86
-	.global	gUnk_0813FF0E
-gUnk_0813FF0E:
+	.global	gPlayerFrame1572UpperTiles
+gPlayerFrame1572UpperTiles:
 	.incbin	"baserom.gba", 0x13FF0E, 0x86
-	.global	gUnk_0813FF94
-gUnk_0813FF94:
+	.global	gPlayerFrame1573UpperTiles
+gPlayerFrame1573UpperTiles:
 	.incbin	"baserom.gba", 0x13FF94, 0x86
-	.global	gUnk_0814001A
-gUnk_0814001A:
+	.global	gPlayerFrame1574UpperTiles
+gPlayerFrame1574UpperTiles:
 	.incbin	"baserom.gba", 0x14001A, 0x86
-	.global	gUnk_081400A0
-gUnk_081400A0:
+	.global	gPlayerFrame1575UpperTiles
+gPlayerFrame1575UpperTiles:
 	.incbin	"baserom.gba", 0x1400A0, 0x86
-	.global	gUnk_08140126
-gUnk_08140126:
+	.global	gPlayerFrame1576UpperTiles
+gPlayerFrame1576UpperTiles:
 	.incbin	"baserom.gba", 0x140126, 0x86
-	.global	gUnk_081401AC
-gUnk_081401AC:
+	.global	gPlayerFrame1577UpperTiles
+gPlayerFrame1577UpperTiles:
 	.incbin	"baserom.gba", 0x1401AC, 0x86
-	.global	gUnk_08140232
-gUnk_08140232:
+	.global	gPlayerFrame1578UpperTiles
+gPlayerFrame1578UpperTiles:
 	.incbin	"baserom.gba", 0x140232, 0x86
-	.global	gUnk_081402B8
-gUnk_081402B8:
+	.global	gPlayerFrame1579UpperTiles
+gPlayerFrame1579UpperTiles:
 	.incbin	"baserom.gba", 0x1402B8, 0x86
-	.global	gUnk_0814033E
-gUnk_0814033E:
+	.global	gPlayerFrame1736UpperTiles
+gPlayerFrame1736UpperTiles:
 	.incbin	"baserom.gba", 0x14033E, 0x106
-	.global	gUnk_08140444
-gUnk_08140444:
+	.global	gPlayerFrame1737UpperTiles
+gPlayerFrame1737UpperTiles:
 	.incbin	"baserom.gba", 0x140444, 0xC6
-	.global	gUnk_0814050A
-gUnk_0814050A:
+	.global	gPlayerFrame1738UpperTiles
+gPlayerFrame1738UpperTiles:
 	.incbin	"baserom.gba", 0x14050A, 0xC6
-	.global	gUnk_081405D0
-gUnk_081405D0:
+	.global	gPlayerFrame1740UpperTiles
+gPlayerFrame1740UpperTiles:
 	.incbin	"baserom.gba", 0x1405D0, 0x106
-	.global	gUnk_081406D6
-gUnk_081406D6:
+	.global	gPlayerFrame1746UpperTiles
+gPlayerFrame1746UpperTiles:
 	.incbin	"baserom.gba", 0x1406D6, 0xC6
-	.global	gUnk_0814079C
-gUnk_0814079C:
+	.global	gPlayerFrame1747UpperTiles
+gPlayerFrame1747UpperTiles:
 	.incbin	"baserom.gba", 0x14079C, 0xC6
 	.global	gPlayerFrame1748Tiles
 gPlayerFrame1748Tiles:
 	.incbin	"baserom.gba", 0x140862, 0xC6
-	.global	gUnk_08140928
-gUnk_08140928:
+	.global	gPlayerFrame2357UpperTiles
+gPlayerFrame2357UpperTiles:
 	.incbin	"baserom.gba", 0x140928, 0x126
-	.global	gUnk_08140A4E
-gUnk_08140A4E:
+	.global	gPlayerFrame2358UpperTiles
+gPlayerFrame2358UpperTiles:
 	.incbin	"baserom.gba", 0x140A4E, 0x126
-	.global	gUnk_08140B74
-gUnk_08140B74:
+	.global	gPlayerFrame2359UpperTiles
+gPlayerFrame2359UpperTiles:
 	.incbin	"baserom.gba", 0x140B74, 0x126
-	.global	gUnk_08140C9A
-gUnk_08140C9A:
+	.global	gPlayerFrame2361UpperTiles
+gPlayerFrame2361UpperTiles:
 	.incbin	"baserom.gba", 0x140C9A, 0x126
 	.global	gPlayerFrame2367Tiles
 gPlayerFrame2367Tiles:
 	.incbin	"baserom.gba", 0x140DC0, 0x106
-	.global	gUnk_08140EC6
-gUnk_08140EC6:
+	.global	gPlayerFrame2367UpperTiles
+gPlayerFrame2367UpperTiles:
 	.incbin	"baserom.gba", 0x140EC6, 0x126
-	.global	gUnk_08140FEC
-gUnk_08140FEC:
+	.global	gPlayerFrame2368UpperTiles
+gPlayerFrame2368UpperTiles:
 	.incbin	"baserom.gba", 0x140FEC, 0x126
-	.global	gUnk_08141112
-gUnk_08141112:
+	.global	gPlayerFrame2369UpperTiles
+gPlayerFrame2369UpperTiles:
 	.incbin	"baserom.gba", 0x141112, 0x126
-	.global	gUnk_08141238
-gUnk_08141238:
+	.global	gPlayerFrame2497UpperTiles
+gPlayerFrame2497UpperTiles:
 	.incbin	"baserom.gba", 0x141238, 0x86
-	.global	gUnk_081412BE
-gUnk_081412BE:
+	.global	gPlayerFrame2498UpperTiles
+gPlayerFrame2498UpperTiles:
 	.incbin	"baserom.gba", 0x1412BE, 0xC6
-	.global	gUnk_08141384
-gUnk_08141384:
+	.global	gPlayerFrame2499UpperTiles
+gPlayerFrame2499UpperTiles:
 	.incbin	"baserom.gba", 0x141384, 0xC6
-	.global	gUnk_0814144A
-gUnk_0814144A:
+	.global	gPlayerFrame2507UpperTiles
+gPlayerFrame2507UpperTiles:
 	.incbin	"baserom.gba", 0x14144A, 0x126
-	.global	gUnk_08141570
-gUnk_08141570:
+	.global	gPlayerFrame2508UpperTiles
+gPlayerFrame2508UpperTiles:
 	.incbin	"baserom.gba", 0x141570, 0x126
-	.global	gUnk_08141696
-gUnk_08141696:
+	.global	gPlayerFrame2637UpperTiles
+gPlayerFrame2637UpperTiles:
 	.incbin	"baserom.gba", 0x141696, 0xC6
 	.global	gPlayerFrame2638Tiles
 gPlayerFrame2638Tiles:
 	.incbin	"baserom.gba", 0x14175C, 0x146
-	.global	gUnk_081418A2
-gUnk_081418A2:
+	.global	gPlayerFrame2638UpperTiles
+gPlayerFrame2638UpperTiles:
 	.incbin	"baserom.gba", 0x1418A2, 0xA6
 	.global	gPlayerFrame2639Tiles
 gPlayerFrame2639Tiles:
 	.incbin	"baserom.gba", 0x141948, 0x146
-	.global	gUnk_08141A8E
-gUnk_08141A8E:
+	.global	gPlayerFrame2640UpperTiles
+gPlayerFrame2640UpperTiles:
 	.incbin	"baserom.gba", 0x141A8E, 0xA6
-	.global	gUnk_08141B34
-gUnk_08141B34:
+	.global	gPlayerFrame2641UpperTiles
+gPlayerFrame2641UpperTiles:
 	.incbin	"baserom.gba", 0x141B34, 0xC6
-	.global	gUnk_08141BFA
-gUnk_08141BFA:
+	.global	gPlayerFrame2647UpperTiles
+gPlayerFrame2647UpperTiles:
 	.incbin	"baserom.gba", 0x141BFA, 0xC6
-	.global	gUnk_08141CC0
-gUnk_08141CC0:
+	.global	gPlayerFrame2648UpperTiles
+gPlayerFrame2648UpperTiles:
 	.incbin	"baserom.gba", 0x141CC0, 0x86
-	.global	gUnk_08141D46
-gUnk_08141D46:
+	.global	gPlayerFrame2649UpperTiles
+gPlayerFrame2649UpperTiles:
 	.incbin	"baserom.gba", 0x141D46, 0xC6
-	.global	gUnk_08141E0C
-gUnk_08141E0C:
+	.global	gPlayerFrame2801UpperTiles
+gPlayerFrame2801UpperTiles:
 	.incbin	"baserom.gba", 0x141E0C, 0x146
-	.global	gUnk_08141F52
-gUnk_08141F52:
+	.global	gPlayerFrame2802UpperTiles
+gPlayerFrame2802UpperTiles:
 	.incbin	"baserom.gba", 0x141F52, 0x146
-	.global	gUnk_08142098
-gUnk_08142098:
+	.global	gPlayerFrame2803UpperTiles
+gPlayerFrame2803UpperTiles:
 	.incbin	"baserom.gba", 0x142098, 0x126
 	.global	gPlayerFrame2804Tiles
 gPlayerFrame2804Tiles:
 	.incbin	"baserom.gba", 0x1421BE, 0x146
-	.global	gUnk_08142304
-gUnk_08142304:
+	.global	gPlayerFrame2804UpperTiles
+gPlayerFrame2804UpperTiles:
 	.incbin	"baserom.gba", 0x142304, 0x126
-	.global	gUnk_0814242A
-gUnk_0814242A:
+	.global	gPlayerFrame2805UpperTiles
+gPlayerFrame2805UpperTiles:
 	.incbin	"baserom.gba", 0x14242A, 0x166
-	.global	gUnk_08142590
-gUnk_08142590:
+	.global	gPlayerFrame2806UpperTiles
+gPlayerFrame2806UpperTiles:
 	.incbin	"baserom.gba", 0x142590, 0x126
-	.global	gUnk_081426B6
-gUnk_081426B6:
+	.global	gPlayerFrame2811UpperTiles
+gPlayerFrame2811UpperTiles:
 	.incbin	"baserom.gba", 0x1426B6, 0x126
-	.global	gUnk_081427DC
-gUnk_081427DC:
+	.global	gPlayerFrame2812UpperTiles
+gPlayerFrame2812UpperTiles:
 	.incbin	"baserom.gba", 0x1427DC, 0x126
-	.global	gUnk_08142902
-gUnk_08142902:
+	.global	gPlayerFrame2813UpperTiles
+gPlayerFrame2813UpperTiles:
 	.incbin	"baserom.gba", 0x142902, 0x126
-	.global	gUnk_08142A28
-gUnk_08142A28:
+	.global	gPlayerFrame2947UpperTiles
+gPlayerFrame2947UpperTiles:
 	.incbin	"baserom.gba", 0x142A28, 0xE6
-	.global	gUnk_08142B0E
-gUnk_08142B0E:
+	.global	gPlayerFrame2948UpperTiles
+gPlayerFrame2948UpperTiles:
 	.incbin	"baserom.gba", 0x142B0E, 0xE6
-	.global	gUnk_08142BF4
-gUnk_08142BF4:
+	.global	gPlayerFrame2949UpperTiles
+gPlayerFrame2949UpperTiles:
 	.incbin	"baserom.gba", 0x142BF4, 0xC6
-	.global	gUnk_08142CBA
-gUnk_08142CBA:
+	.global	gPlayerFrame2950UpperTiles
+gPlayerFrame2950UpperTiles:
 	.incbin	"baserom.gba", 0x142CBA, 0xC6
-	.global	gUnk_08142D80
-gUnk_08142D80:
+	.global	gPlayerFrame2951UpperTiles
+gPlayerFrame2951UpperTiles:
 	.incbin	"baserom.gba", 0x142D80, 0xE6
-	.global	gUnk_08142E66
-gUnk_08142E66:
+	.global	gPlayerFrame2952UpperTiles
+gPlayerFrame2952UpperTiles:
 	.incbin	"baserom.gba", 0x142E66, 0xE6
-	.global	gUnk_08142F4C
-gUnk_08142F4C:
+	.global	gPlayerFrame2953UpperTiles
+gPlayerFrame2953UpperTiles:
 	.incbin	"baserom.gba", 0x142F4C, 0xE6
-	.global	gUnk_08143032
-gUnk_08143032:
+	.global	gPlayerFrame2954UpperTiles
+gPlayerFrame2954UpperTiles:
 	.incbin	"baserom.gba", 0x143032, 0xC6
-	.global	gUnk_081430F8
-gUnk_081430F8:
+	.global	gPlayerFrame2955UpperTiles
+gPlayerFrame2955UpperTiles:
 	.incbin	"baserom.gba", 0x1430F8, 0xC6
-	.global	gUnk_081431BE
-gUnk_081431BE:
+	.global	gPlayerFrame2956UpperTiles
+gPlayerFrame2956UpperTiles:
 	.incbin	"baserom.gba", 0x1431BE, 0xE6
-	.global	gUnk_081432A4
-gUnk_081432A4:
+	.global	gPlayerFrame2957UpperTiles
+gPlayerFrame2957UpperTiles:
 	.incbin	"baserom.gba", 0x1432A4, 0xC6
-	.global	gUnk_0814336A
-gUnk_0814336A:
+	.global	gPlayerFrame2958UpperTiles
+gPlayerFrame2958UpperTiles:
 	.incbin	"baserom.gba", 0x14336A, 0xC6
-	.global	gUnk_08143430
-gUnk_08143430:
+	.global	gPlayerFrame2959UpperTiles
+gPlayerFrame2959UpperTiles:
 	.incbin	"baserom.gba", 0x143430, 0xC6
-	.global	gUnk_081434F6
-gUnk_081434F6:
+	.global	gPlayerFrame3078UpperTiles
+gPlayerFrame3078UpperTiles:
 	.incbin	"baserom.gba", 0x1434F6, 0x126
-	.global	gUnk_0814361C
-gUnk_0814361C:
+	.global	gPlayerFrame3079UpperTiles
+gPlayerFrame3079UpperTiles:
 	.incbin	"baserom.gba", 0x14361C, 0x126
-	.global	gUnk_08143742
-gUnk_08143742:
+	.global	gPlayerFrame3080UpperTiles
+gPlayerFrame3080UpperTiles:
 	.incbin	"baserom.gba", 0x143742, 0x126
-	.global	gUnk_08143868
-gUnk_08143868:
+	.global	gPlayerFrame3081UpperTiles
+gPlayerFrame3081UpperTiles:
 	.incbin	"baserom.gba", 0x143868, 0x126
-	.global	gUnk_0814398E
-gUnk_0814398E:
+	.global	gPlayerFrame3082UpperTiles
+gPlayerFrame3082UpperTiles:
 	.incbin	"baserom.gba", 0x14398E, 0x126
-	.global	gUnk_08143AB4
-gUnk_08143AB4:
+	.global	gPlayerFrame3088UpperTiles
+gPlayerFrame3088UpperTiles:
 	.incbin	"baserom.gba", 0x143AB4, 0x126
-	.global	gUnk_08143BDA
-gUnk_08143BDA:
+	.global	gPlayerFrame3089UpperTiles
+gPlayerFrame3089UpperTiles:
 	.incbin	"baserom.gba", 0x143BDA, 0x126
-	.global	gUnk_08143D00
-gUnk_08143D00:
+	.global	gPlayerFrame3090UpperTiles
+gPlayerFrame3090UpperTiles:
 	.incbin	"baserom.gba", 0x143D00, 0x126
 	.global	gPlayerFrame3217Tiles
 gPlayerFrame3217Tiles:
@@ -10783,17 +10783,17 @@ gPlayerFrame3228Tiles:
 	.global	gPlayerFrame3229Tiles
 gPlayerFrame3229Tiles:
 	.incbin	"baserom.gba", 0x144630, 0x126
-	.global	gUnk_08144756
-gUnk_08144756:
+	.global	gPlayerFrame3420UpperTiles
+gPlayerFrame3420UpperTiles:
 	.incbin	"baserom.gba", 0x144756, 0x126
-	.global	gUnk_0814487C
-gUnk_0814487C:
+	.global	gPlayerFrame3422UpperTiles
+gPlayerFrame3422UpperTiles:
 	.incbin	"baserom.gba", 0x14487C, 0x106
-	.global	gUnk_08144982
-gUnk_08144982:
+	.global	gPlayerFrame3424UpperTiles
+gPlayerFrame3424UpperTiles:
 	.incbin	"baserom.gba", 0x144982, 0xE6
-	.global	gUnk_08144A68
-gUnk_08144A68:
+	.global	gPlayerFrame3426UpperTiles
+gPlayerFrame3426UpperTiles:
 	.incbin	"baserom.gba", 0x144A68, 0x126
 	.global	gUnk_08144B8E
 gUnk_08144B8E:
@@ -11758,122 +11758,122 @@ gUnk_0814970E:
 	.global	gPlayerFrame1067Palette
 gPlayerFrame1067Palette:
 	.incbin	"baserom.gba", 0x149730, 0x22
-	.global	gUnk_08149752
-gUnk_08149752:
+	.global	gPlayerFrame1067NextBankPalette
+gPlayerFrame1067NextBankPalette:
 	.incbin	"baserom.gba", 0x149752, 0x22
 	.global	gPlayerFrame1869Palette
 gPlayerFrame1869Palette:
 	.incbin	"baserom.gba", 0x149774, 0x22
-	.global	gUnk_08149796
-gUnk_08149796:
+	.global	gPlayerFrame1869NextBankPalette
+gPlayerFrame1869NextBankPalette:
 	.incbin	"baserom.gba", 0x149796, 0x22
-	.global	gUnk_081497B8
-gUnk_081497B8:
+	.global	gPlayerFrame2126NextBankPalette
+gPlayerFrame2126NextBankPalette:
 	.incbin	"baserom.gba", 0x1497B8, 0x22
 	.global	gPlayerFrame1067Tiles
 gPlayerFrame1067Tiles:
 	.incbin	"baserom.gba", 0x1497DA, 0x126
-	.global	gUnk_08149900
-gUnk_08149900:
+	.global	gPlayerFrame1067UpperTiles
+gPlayerFrame1067UpperTiles:
 	.incbin	"baserom.gba", 0x149900, 0x1C6
 	.global	gPlayerFrame1068Tiles
 gPlayerFrame1068Tiles:
 	.incbin	"baserom.gba", 0x149AC6, 0x126
-	.global	gUnk_08149BEC
-gUnk_08149BEC:
+	.global	gPlayerFrame1068UpperTiles
+gPlayerFrame1068UpperTiles:
 	.incbin	"baserom.gba", 0x149BEC, 0x1C6
 	.global	gPlayerFrame1069Tiles
 gPlayerFrame1069Tiles:
 	.incbin	"baserom.gba", 0x149DB2, 0x126
-	.global	gUnk_08149ED8
-gUnk_08149ED8:
+	.global	gPlayerFrame1069UpperTiles
+gPlayerFrame1069UpperTiles:
 	.incbin	"baserom.gba", 0x149ED8, 0x1A6
 	.global	gPlayerFrame1070Tiles
 gPlayerFrame1070Tiles:
 	.incbin	"baserom.gba", 0x14A07E, 0x126
-	.global	gUnk_0814A1A4
-gUnk_0814A1A4:
+	.global	gPlayerFrame1070UpperTiles
+gPlayerFrame1070UpperTiles:
 	.incbin	"baserom.gba", 0x14A1A4, 0x1C6
 	.global	gPlayerFrame1071Tiles
 gPlayerFrame1071Tiles:
 	.incbin	"baserom.gba", 0x14A36A, 0x126
-	.global	gUnk_0814A490
-gUnk_0814A490:
+	.global	gPlayerFrame1071UpperTiles
+gPlayerFrame1071UpperTiles:
 	.incbin	"baserom.gba", 0x14A490, 0x1C6
-	.global	gUnk_0814A656
-gUnk_0814A656:
+	.global	gPlayerFrame1072UpperTiles
+gPlayerFrame1072UpperTiles:
 	.incbin	"baserom.gba", 0x14A656, 0x1C6
-	.global	gUnk_0814A81C
-gUnk_0814A81C:
+	.global	gPlayerFrame1073UpperTiles
+gPlayerFrame1073UpperTiles:
 	.incbin	"baserom.gba", 0x14A81C, 0x1A6
-	.global	gUnk_0814A9C2
-gUnk_0814A9C2:
+	.global	gPlayerFrame1074UpperTiles
+gPlayerFrame1074UpperTiles:
 	.incbin	"baserom.gba", 0x14A9C2, 0x1A6
-	.global	gUnk_0814AB68
-gUnk_0814AB68:
+	.global	gPlayerFrame1075UpperTiles
+gPlayerFrame1075UpperTiles:
 	.incbin	"baserom.gba", 0x14AB68, 0x1C6
-	.global	gUnk_0814AD2E
-gUnk_0814AD2E:
+	.global	gPlayerFrame1076UpperTiles
+gPlayerFrame1076UpperTiles:
 	.incbin	"baserom.gba", 0x14AD2E, 0x1C6
 	.global	gPlayerFrame1077Tiles
 gPlayerFrame1077Tiles:
 	.incbin	"baserom.gba", 0x14AEF4, 0x126
-	.global	gUnk_0814B01A
-gUnk_0814B01A:
+	.global	gPlayerFrame1077UpperTiles
+gPlayerFrame1077UpperTiles:
 	.incbin	"baserom.gba", 0x14B01A, 0x1E6
 	.global	gPlayerFrame1078Tiles
 gPlayerFrame1078Tiles:
 	.incbin	"baserom.gba", 0x14B200, 0x126
-	.global	gUnk_0814B326
-gUnk_0814B326:
+	.global	gPlayerFrame1078UpperTiles
+gPlayerFrame1078UpperTiles:
 	.incbin	"baserom.gba", 0x14B326, 0x1C6
 	.global	gPlayerFrame1079Tiles
 gPlayerFrame1079Tiles:
 	.incbin	"baserom.gba", 0x14B4EC, 0x126
-	.global	gUnk_0814B612
-gUnk_0814B612:
+	.global	gPlayerFrame1079UpperTiles
+gPlayerFrame1079UpperTiles:
 	.incbin	"baserom.gba", 0x14B612, 0x1C6
-	.global	gUnk_0814B7D8
-gUnk_0814B7D8:
+	.global	gPlayerFrame1869UpperTiles
+gPlayerFrame1869UpperTiles:
 	.incbin	"baserom.gba", 0x14B7D8, 0xE6
-	.global	gUnk_0814B8BE
-gUnk_0814B8BE:
+	.global	gPlayerFrame1870UpperTiles
+gPlayerFrame1870UpperTiles:
 	.incbin	"baserom.gba", 0x14B8BE, 0xE6
-	.global	gUnk_0814B9A4
-gUnk_0814B9A4:
+	.global	gPlayerFrame1871UpperTiles
+gPlayerFrame1871UpperTiles:
 	.incbin	"baserom.gba", 0x14B9A4, 0x106
-	.global	gUnk_0814BAAA
-gUnk_0814BAAA:
+	.global	gPlayerFrame1872UpperTiles
+gPlayerFrame1872UpperTiles:
 	.incbin	"baserom.gba", 0x14BAAA, 0x126
-	.global	gUnk_0814BBD0
-gUnk_0814BBD0:
+	.global	gPlayerFrame1873UpperTiles
+gPlayerFrame1873UpperTiles:
 	.incbin	"baserom.gba", 0x14BBD0, 0xE6
-	.global	gUnk_0814BCB6
-gUnk_0814BCB6:
+	.global	gPlayerFrame1874UpperTiles
+gPlayerFrame1874UpperTiles:
 	.incbin	"baserom.gba", 0x14BCB6, 0xE6
-	.global	gUnk_0814BD9C
-gUnk_0814BD9C:
+	.global	gPlayerFrame1878UpperTiles
+gPlayerFrame1878UpperTiles:
 	.incbin	"baserom.gba", 0x14BD9C, 0xE6
-	.global	gUnk_0814BE82
-gUnk_0814BE82:
+	.global	gPlayerFrame2126UpperTiles
+gPlayerFrame2126UpperTiles:
 	.incbin	"baserom.gba", 0x14BE82, 0x126
-	.global	gUnk_0814BFA8
-gUnk_0814BFA8:
+	.global	gPlayerFrame2128UpperTiles
+gPlayerFrame2128UpperTiles:
 	.incbin	"baserom.gba", 0x14BFA8, 0x126
-	.global	gUnk_0814C0CE
-gUnk_0814C0CE:
+	.global	gPlayerFrame2129UpperTiles
+gPlayerFrame2129UpperTiles:
 	.incbin	"baserom.gba", 0x14C0CE, 0x126
-	.global	gUnk_0814C1F4
-gUnk_0814C1F4:
+	.global	gPlayerFrame2135UpperTiles
+gPlayerFrame2135UpperTiles:
 	.incbin	"baserom.gba", 0x14C1F4, 0x126
-	.global	gUnk_0814C31A
-gUnk_0814C31A:
+	.global	gPlayerFrame2136UpperTiles
+gPlayerFrame2136UpperTiles:
 	.incbin	"baserom.gba", 0x14C31A, 0x126
-	.global	gUnk_0814C440
-gUnk_0814C440:
+	.global	gPlayerFrame2137UpperTiles
+gPlayerFrame2137UpperTiles:
 	.incbin	"baserom.gba", 0x14C440, 0x126
-	.global	gUnk_0814C566
-gUnk_0814C566:
+	.global	gPlayerFrame2138UpperTiles
+gPlayerFrame2138UpperTiles:
 	.incbin	"baserom.gba", 0x14C566, 0x126
 	.global	gPlayerFrame1067OamTemplate
 gPlayerFrame1067OamTemplate:
@@ -12001,53 +12001,53 @@ gPlayerFrame957Palette:
 	.global	gUnk_0814D0B8
 gUnk_0814D0B8:
 	.incbin	"baserom.gba", 0x14D0B8, 0x22
-	.global	gUnk_0814D0DA
-gUnk_0814D0DA:
+	.global	gPlayerFrame957NextBankPalette
+gPlayerFrame957NextBankPalette:
 	.incbin	"baserom.gba", 0x14D0DA, 0x22
-	.global	gUnk_0814D0FC
-gUnk_0814D0FC:
+	.global	gPlayerFrame1428NextBankPalette
+gPlayerFrame1428NextBankPalette:
 	.incbin	"baserom.gba", 0x14D0FC, 0x22
-	.global	gUnk_0814D11E
-gUnk_0814D11E:
+	.global	gPlayerFrame1580NextBankPalette
+gPlayerFrame1580NextBankPalette:
 	.incbin	"baserom.gba", 0x14D11E, 0x22
-	.global	gUnk_0814D140
-gUnk_0814D140:
+	.global	gPlayerFrame1749NextBankPalette
+gPlayerFrame1749NextBankPalette:
 	.incbin	"baserom.gba", 0x14D140, 0x22
 	.global	gPlayerFrame2370Palette
 gPlayerFrame2370Palette:
 	.incbin	"baserom.gba", 0x14D162, 0x22
-	.global	gUnk_0814D184
-gUnk_0814D184:
+	.global	gPlayerFrame2370NextBankPalette
+gPlayerFrame2370NextBankPalette:
 	.incbin	"baserom.gba", 0x14D184, 0x22
 	.global	gPlayerFrame2510Palette
 gPlayerFrame2510Palette:
 	.incbin	"baserom.gba", 0x14D1A6, 0x22
-	.global	gUnk_0814D1C8
-gUnk_0814D1C8:
+	.global	gPlayerFrame2510NextBankPalette
+gPlayerFrame2510NextBankPalette:
 	.incbin	"baserom.gba", 0x14D1C8, 0x22
 	.global	gPlayerFrame2650Palette
 gPlayerFrame2650Palette:
 	.incbin	"baserom.gba", 0x14D1EA, 0x22
-	.global	gUnk_0814D20C
-gUnk_0814D20C:
+	.global	gPlayerFrame2650NextBankPalette
+gPlayerFrame2650NextBankPalette:
 	.incbin	"baserom.gba", 0x14D20C, 0x22
-	.global	gUnk_0814D22E
-gUnk_0814D22E:
+	.global	gPlayerFrame2814NextBankPalette
+gPlayerFrame2814NextBankPalette:
 	.incbin	"baserom.gba", 0x14D22E, 0x22
-	.global	gUnk_0814D250
-gUnk_0814D250:
+	.global	gPlayerFrame2960NextBankPalette
+gPlayerFrame2960NextBankPalette:
 	.incbin	"baserom.gba", 0x14D250, 0x22
 	.global	gPlayerFrame3091Palette
 gPlayerFrame3091Palette:
 	.incbin	"baserom.gba", 0x14D272, 0x22
-	.global	gUnk_0814D294
-gUnk_0814D294:
+	.global	gPlayerFrame3091NextBankPalette
+gPlayerFrame3091NextBankPalette:
 	.incbin	"baserom.gba", 0x14D294, 0x22
 	.global	gPlayerFrame3230Palette
 gPlayerFrame3230Palette:
 	.incbin	"baserom.gba", 0x14D2B6, 0x22
-	.global	gUnk_0814D2D8
-gUnk_0814D2D8:
+	.global	gPlayerFrame3472NextBankPalette
+gPlayerFrame3472NextBankPalette:
 	.incbin	"baserom.gba", 0x14D2D8, 0x22
 	.global	gUnk_0814D2FA
 gUnk_0814D2FA:
@@ -12076,89 +12076,89 @@ gUnk_0814D8E0:
 	.global	gUnk_0814D9E6
 gUnk_0814D9E6:
 	.incbin	"baserom.gba", 0x14D9E6, 0x106
-	.global	gUnk_0814DAEC
-gUnk_0814DAEC:
+	.global	gPlayerFrame957UpperTiles
+gPlayerFrame957UpperTiles:
 	.incbin	"baserom.gba", 0x14DAEC, 0x126
-	.global	gUnk_0814DC12
-gUnk_0814DC12:
+	.global	gPlayerFrame958UpperTiles
+gPlayerFrame958UpperTiles:
 	.incbin	"baserom.gba", 0x14DC12, 0x106
-	.global	gUnk_0814DD18
-gUnk_0814DD18:
+	.global	gPlayerFrame1428UpperTiles
+gPlayerFrame1428UpperTiles:
 	.incbin	"baserom.gba", 0x14DD18, 0x186
-	.global	gUnk_0814DE9E
-gUnk_0814DE9E:
+	.global	gPlayerFrame1429UpperTiles
+gPlayerFrame1429UpperTiles:
 	.incbin	"baserom.gba", 0x14DE9E, 0x186
-	.global	gUnk_0814E024
-gUnk_0814E024:
+	.global	gPlayerFrame1430UpperTiles
+gPlayerFrame1430UpperTiles:
 	.incbin	"baserom.gba", 0x14E024, 0x186
-	.global	gUnk_0814E1AA
-gUnk_0814E1AA:
+	.global	gPlayerFrame1431UpperTiles
+gPlayerFrame1431UpperTiles:
 	.incbin	"baserom.gba", 0x14E1AA, 0x186
-	.global	gUnk_0814E330
-gUnk_0814E330:
+	.global	gPlayerFrame1432UpperTiles
+gPlayerFrame1432UpperTiles:
 	.incbin	"baserom.gba", 0x14E330, 0x1A6
-	.global	gUnk_0814E4D6
-gUnk_0814E4D6:
+	.global	gPlayerFrame1580UpperTiles
+gPlayerFrame1580UpperTiles:
 	.incbin	"baserom.gba", 0x14E4D6, 0x86
-	.global	gUnk_0814E55C
-gUnk_0814E55C:
+	.global	gPlayerFrame1581UpperTiles
+gPlayerFrame1581UpperTiles:
 	.incbin	"baserom.gba", 0x14E55C, 0x86
-	.global	gUnk_0814E5E2
-gUnk_0814E5E2:
+	.global	gPlayerFrame1749UpperTiles
+gPlayerFrame1749UpperTiles:
 	.incbin	"baserom.gba", 0x14E5E2, 0xA6
-	.global	gUnk_0814E688
-gUnk_0814E688:
+	.global	gPlayerFrame1750UpperTiles
+gPlayerFrame1750UpperTiles:
 	.incbin	"baserom.gba", 0x14E688, 0xA6
-	.global	gUnk_0814E72E
-gUnk_0814E72E:
+	.global	gPlayerFrame2370UpperTiles
+gPlayerFrame2370UpperTiles:
 	.incbin	"baserom.gba", 0x14E72E, 0xC6
 	.global	gPlayerFrame2371Tiles
 gPlayerFrame2371Tiles:
 	.incbin	"baserom.gba", 0x14E7F4, 0xA6
-	.global	gUnk_0814E89A
-gUnk_0814E89A:
+	.global	gPlayerFrame2371UpperTiles
+gPlayerFrame2371UpperTiles:
 	.incbin	"baserom.gba", 0x14E89A, 0xA6
-	.global	gUnk_0814E940
-gUnk_0814E940:
+	.global	gPlayerFrame2510UpperTiles
+gPlayerFrame2510UpperTiles:
 	.incbin	"baserom.gba", 0x14E940, 0xC6
 	.global	gPlayerFrame2511Tiles
 gPlayerFrame2511Tiles:
 	.incbin	"baserom.gba", 0x14EA06, 0xE6
-	.global	gUnk_0814EAEC
-gUnk_0814EAEC:
+	.global	gPlayerFrame2511UpperTiles
+gPlayerFrame2511UpperTiles:
 	.incbin	"baserom.gba", 0x14EAEC, 0xC6
-	.global	gUnk_0814EBB2
-gUnk_0814EBB2:
+	.global	gPlayerFrame2650UpperTiles
+gPlayerFrame2650UpperTiles:
 	.incbin	"baserom.gba", 0x14EBB2, 0xE6
-	.global	gUnk_0814EC98
-gUnk_0814EC98:
+	.global	gPlayerFrame2651UpperTiles
+gPlayerFrame2651UpperTiles:
 	.incbin	"baserom.gba", 0x14EC98, 0xE6
-	.global	gUnk_0814ED7E
-gUnk_0814ED7E:
+	.global	gPlayerFrame2814UpperTiles
+gPlayerFrame2814UpperTiles:
 	.incbin	"baserom.gba", 0x14ED7E, 0x106
-	.global	gUnk_0814EE84
-gUnk_0814EE84:
+	.global	gPlayerFrame2816UpperTiles
+gPlayerFrame2816UpperTiles:
 	.incbin	"baserom.gba", 0x14EE84, 0x106
-	.global	gUnk_0814EF8A
-gUnk_0814EF8A:
+	.global	gPlayerFrame2815UpperTiles
+gPlayerFrame2815UpperTiles:
 	.incbin	"baserom.gba", 0x14EF8A, 0x106
-	.global	gUnk_0814F090
-gUnk_0814F090:
+	.global	gPlayerFrame2960UpperTiles
+gPlayerFrame2960UpperTiles:
 	.incbin	"baserom.gba", 0x14F090, 0x106
-	.global	gUnk_0814F196
-gUnk_0814F196:
+	.global	gPlayerFrame2962UpperTiles
+gPlayerFrame2962UpperTiles:
 	.incbin	"baserom.gba", 0x14F196, 0x106
-	.global	gUnk_0814F29C
-gUnk_0814F29C:
+	.global	gPlayerFrame2961UpperTiles
+gPlayerFrame2961UpperTiles:
 	.incbin	"baserom.gba", 0x14F29C, 0x106
-	.global	gUnk_0814F3A2
-gUnk_0814F3A2:
+	.global	gPlayerFrame3091UpperTiles
+gPlayerFrame3091UpperTiles:
 	.incbin	"baserom.gba", 0x14F3A2, 0x146
-	.global	gUnk_0814F4E8
-gUnk_0814F4E8:
+	.global	gPlayerFrame3093UpperTiles
+gPlayerFrame3093UpperTiles:
 	.incbin	"baserom.gba", 0x14F4E8, 0xE6
-	.global	gUnk_0814F5CE
-gUnk_0814F5CE:
+	.global	gPlayerFrame3092UpperTiles
+gPlayerFrame3092UpperTiles:
 	.incbin	"baserom.gba", 0x14F5CE, 0x146
 	.global	gPlayerFrame3230Tiles
 gPlayerFrame3230Tiles:
@@ -12166,14 +12166,14 @@ gPlayerFrame3230Tiles:
 	.global	gPlayerFrame3231Tiles
 gPlayerFrame3231Tiles:
 	.incbin	"baserom.gba", 0x14F81A, 0xC6
-	.global	gUnk_0814F8E0
-gUnk_0814F8E0:
+	.global	gPlayerFrame3472UpperTiles
+gPlayerFrame3472UpperTiles:
 	.incbin	"baserom.gba", 0x14F8E0, 0x106
-	.global	gUnk_0814F9E6
-gUnk_0814F9E6:
+	.global	gPlayerFrame3474UpperTiles
+gPlayerFrame3474UpperTiles:
 	.incbin	"baserom.gba", 0x14F9E6, 0x106
-	.global	gUnk_0814FAEC
-gUnk_0814FAEC:
+	.global	gPlayerFrame3473UpperTiles
+gPlayerFrame3473UpperTiles:
 	.incbin	"baserom.gba", 0x14FAEC, 0x106
 	.global	gUnk_0814FBF2
 gUnk_0814FBF2:
@@ -12310,74 +12310,74 @@ gUnk_08150314:
 	.global	gPlayerFrame1080Palette
 gPlayerFrame1080Palette:
 	.incbin	"baserom.gba", 0x15031C, 0x22
-	.global	gUnk_0815033E
-gUnk_0815033E:
+	.global	gPlayerFrame1080NextBankPalette
+gPlayerFrame1080NextBankPalette:
 	.incbin	"baserom.gba", 0x15033E, 0x22
 	.global	gPlayerFrame1882Palette
 gPlayerFrame1882Palette:
 	.incbin	"baserom.gba", 0x150360, 0x22
-	.global	gUnk_08150382
-gUnk_08150382:
+	.global	gPlayerFrame1882NextBankPalette
+gPlayerFrame1882NextBankPalette:
 	.incbin	"baserom.gba", 0x150382, 0x22
 	.global	gPlayerFrame2139Palette
 gPlayerFrame2139Palette:
 	.incbin	"baserom.gba", 0x1503A4, 0x22
-	.global	gUnk_081503C6
-gUnk_081503C6:
+	.global	gPlayerFrame2139NextBankPalette
+gPlayerFrame2139NextBankPalette:
 	.incbin	"baserom.gba", 0x1503C6, 0x22
-	.global	gUnk_081503E8
-gUnk_081503E8:
+	.global	gPlayerFrame4125NextBankPalette
+gPlayerFrame4125NextBankPalette:
 	.incbin	"baserom.gba", 0x1503E8, 0x22
 	.global	gPlayerFrame1080Tiles
 gPlayerFrame1080Tiles:
 	.incbin	"baserom.gba", 0x15040A, 0x106
-	.global	gUnk_08150510
-gUnk_08150510:
+	.global	gPlayerFrame1080UpperTiles
+gPlayerFrame1080UpperTiles:
 	.incbin	"baserom.gba", 0x150510, 0x206
 	.global	gPlayerFrame1082Tiles
 gPlayerFrame1082Tiles:
 	.incbin	"baserom.gba", 0x150716, 0xE6
-	.global	gUnk_081507FC
-gUnk_081507FC:
+	.global	gPlayerFrame1082UpperTiles
+gPlayerFrame1082UpperTiles:
 	.incbin	"baserom.gba", 0x1507FC, 0x146
-	.global	gUnk_08150942
-gUnk_08150942:
+	.global	gPlayerFrame1081UpperTiles
+gPlayerFrame1081UpperTiles:
 	.incbin	"baserom.gba", 0x150942, 0x206
 	.global	gPlayerFrame1882Tiles
 gPlayerFrame1882Tiles:
 	.incbin	"baserom.gba", 0x150B48, 0xE6
-	.global	gUnk_08150C2E
-gUnk_08150C2E:
+	.global	gPlayerFrame1882UpperTiles
+gPlayerFrame1882UpperTiles:
 	.incbin	"baserom.gba", 0x150C2E, 0xE6
 	.global	gPlayerFrame1883Tiles
 gPlayerFrame1883Tiles:
 	.incbin	"baserom.gba", 0x150D14, 0xC6
-	.global	gUnk_08150DDA
-gUnk_08150DDA:
+	.global	gPlayerFrame1883UpperTiles
+gPlayerFrame1883UpperTiles:
 	.incbin	"baserom.gba", 0x150DDA, 0x106
 	.global	gPlayerFrame2139Tiles
 gPlayerFrame2139Tiles:
 	.incbin	"baserom.gba", 0x150EE0, 0xE6
-	.global	gUnk_08150FC6
-gUnk_08150FC6:
+	.global	gPlayerFrame2139UpperTiles
+gPlayerFrame2139UpperTiles:
 	.incbin	"baserom.gba", 0x150FC6, 0x126
 	.global	gPlayerFrame2140Tiles
 gPlayerFrame2140Tiles:
 	.incbin	"baserom.gba", 0x1510EC, 0xC6
-	.global	gUnk_081511B2
-gUnk_081511B2:
+	.global	gPlayerFrame2140UpperTiles
+gPlayerFrame2140UpperTiles:
 	.incbin	"baserom.gba", 0x1511B2, 0x126
-	.global	gUnk_081512D8
-gUnk_081512D8:
+	.global	gPlayerFrame4125UpperTiles
+gPlayerFrame4125UpperTiles:
 	.incbin	"baserom.gba", 0x1512D8, 0xA6
-	.global	gUnk_0815137E
-gUnk_0815137E:
+	.global	gPlayerFrame4256UpperTiles
+gPlayerFrame4256UpperTiles:
 	.incbin	"baserom.gba", 0x15137E, 0x126
-	.global	gUnk_081514A4
-gUnk_081514A4:
+	.global	gPlayerFrame4126UpperTiles
+gPlayerFrame4126UpperTiles:
 	.incbin	"baserom.gba", 0x1514A4, 0x86
-	.global	gUnk_0815152A
-gUnk_0815152A:
+	.global	gPlayerFrame4257UpperTiles
+gPlayerFrame4257UpperTiles:
 	.incbin	"baserom.gba", 0x15152A, 0x106
 	.global	gPlayerFrame1080OamTemplate
 gPlayerFrame1080OamTemplate:
@@ -12421,53 +12421,53 @@ gPlayerFrame959Palette:
 	.global	gUnk_08151824
 gUnk_08151824:
 	.incbin	"baserom.gba", 0x151824, 0x44
-	.global	gUnk_08151868
-gUnk_08151868:
+	.global	gPlayerFrame959NextBankPalette
+gPlayerFrame959NextBankPalette:
 	.incbin	"baserom.gba", 0x151868, 0x22
-	.global	gUnk_0815188A
-gUnk_0815188A:
+	.global	gPlayerFrame1433NextBankPalette
+gPlayerFrame1433NextBankPalette:
 	.incbin	"baserom.gba", 0x15188A, 0x22
-	.global	gUnk_081518AC
-gUnk_081518AC:
+	.global	gPlayerFrame1582NextBankPalette
+gPlayerFrame1582NextBankPalette:
 	.incbin	"baserom.gba", 0x1518AC, 0x22
-	.global	gUnk_081518CE
-gUnk_081518CE:
+	.global	gPlayerFrame1751NextBankPalette
+gPlayerFrame1751NextBankPalette:
 	.incbin	"baserom.gba", 0x1518CE, 0x22
 	.global	gPlayerFrame2372Palette
 gPlayerFrame2372Palette:
 	.incbin	"baserom.gba", 0x1518F0, 0x22
-	.global	gUnk_08151912
-gUnk_08151912:
+	.global	gPlayerFrame2372NextBankPalette
+gPlayerFrame2372NextBankPalette:
 	.incbin	"baserom.gba", 0x151912, 0x22
 	.global	gPlayerFrame2512Palette
 gPlayerFrame2512Palette:
 	.incbin	"baserom.gba", 0x151934, 0x22
-	.global	gUnk_08151956
-gUnk_08151956:
+	.global	gPlayerFrame2512NextBankPalette
+gPlayerFrame2512NextBankPalette:
 	.incbin	"baserom.gba", 0x151956, 0x22
 	.global	gPlayerFrame2652Palette
 gPlayerFrame2652Palette:
 	.incbin	"baserom.gba", 0x151978, 0x22
-	.global	gUnk_0815199A
-gUnk_0815199A:
+	.global	gPlayerFrame2652NextBankPalette
+gPlayerFrame2652NextBankPalette:
 	.incbin	"baserom.gba", 0x15199A, 0x22
-	.global	gUnk_081519BC
-gUnk_081519BC:
+	.global	gPlayerFrame2817NextBankPalette
+gPlayerFrame2817NextBankPalette:
 	.incbin	"baserom.gba", 0x1519BC, 0x22
-	.global	gUnk_081519DE
-gUnk_081519DE:
+	.global	gPlayerFrame2963NextBankPalette
+gPlayerFrame2963NextBankPalette:
 	.incbin	"baserom.gba", 0x1519DE, 0x22
 	.global	gPlayerFrame3094Palette
 gPlayerFrame3094Palette:
 	.incbin	"baserom.gba", 0x151A00, 0x22
-	.global	gUnk_08151A22
-gUnk_08151A22:
+	.global	gPlayerFrame3094NextBankPalette
+gPlayerFrame3094NextBankPalette:
 	.incbin	"baserom.gba", 0x151A22, 0x22
 	.global	gPlayerFrame3232Palette
 gPlayerFrame3232Palette:
 	.incbin	"baserom.gba", 0x151A44, 0x22
-	.global	gUnk_08151A66
-gUnk_08151A66:
+	.global	gPlayerFrame3475NextBankPalette
+gPlayerFrame3475NextBankPalette:
 	.incbin	"baserom.gba", 0x151A66, 0x22
 	.global	gUnk_08151A88
 gUnk_08151A88:
@@ -12484,68 +12484,68 @@ gUnk_08151C36:
 	.global	gUnk_08151CFC
 gUnk_08151CFC:
 	.incbin	"baserom.gba", 0x151CFC, 0xC6
-	.global	gUnk_08151DC2
-gUnk_08151DC2:
+	.global	gPlayerFrame960UpperTiles
+gPlayerFrame960UpperTiles:
 	.incbin	"baserom.gba", 0x151DC2, 0xA6
-	.global	gUnk_08151E68
-gUnk_08151E68:
+	.global	gPlayerFrame959UpperTiles
+gPlayerFrame959UpperTiles:
 	.incbin	"baserom.gba", 0x151E68, 0x106
-	.global	gUnk_08151F6E
-gUnk_08151F6E:
+	.global	gPlayerFrame1434UpperTiles
+gPlayerFrame1434UpperTiles:
 	.incbin	"baserom.gba", 0x151F6E, 0x186
-	.global	gUnk_081520F4
-gUnk_081520F4:
+	.global	gPlayerFrame1433UpperTiles
+gPlayerFrame1433UpperTiles:
 	.incbin	"baserom.gba", 0x1520F4, 0x186
-	.global	gUnk_0815227A
-gUnk_0815227A:
+	.global	gPlayerFrame1583UpperTiles
+gPlayerFrame1583UpperTiles:
 	.incbin	"baserom.gba", 0x15227A, 0x86
-	.global	gUnk_08152300
-gUnk_08152300:
+	.global	gPlayerFrame1582UpperTiles
+gPlayerFrame1582UpperTiles:
 	.incbin	"baserom.gba", 0x152300, 0x86
-	.global	gUnk_08152386
-gUnk_08152386:
+	.global	gPlayerFrame1752UpperTiles
+gPlayerFrame1752UpperTiles:
 	.incbin	"baserom.gba", 0x152386, 0x86
-	.global	gUnk_0815240C
-gUnk_0815240C:
+	.global	gPlayerFrame1751UpperTiles
+gPlayerFrame1751UpperTiles:
 	.incbin	"baserom.gba", 0x15240C, 0xA6
 	.global	gPlayerFrame2373Tiles
 gPlayerFrame2373Tiles:
 	.incbin	"baserom.gba", 0x1524B2, 0x86
-	.global	gUnk_08152538
-gUnk_08152538:
+	.global	gPlayerFrame2373UpperTiles
+gPlayerFrame2373UpperTiles:
 	.incbin	"baserom.gba", 0x152538, 0xA6
-	.global	gUnk_081525DE
-gUnk_081525DE:
+	.global	gPlayerFrame2372UpperTiles
+gPlayerFrame2372UpperTiles:
 	.incbin	"baserom.gba", 0x1525DE, 0x106
-	.global	gUnk_081526E4
-gUnk_081526E4:
+	.global	gPlayerFrame2513UpperTiles
+gPlayerFrame2513UpperTiles:
 	.incbin	"baserom.gba", 0x1526E4, 0x86
-	.global	gUnk_0815276A
-gUnk_0815276A:
+	.global	gPlayerFrame2512UpperTiles
+gPlayerFrame2512UpperTiles:
 	.incbin	"baserom.gba", 0x15276A, 0xC6
-	.global	gUnk_08152830
-gUnk_08152830:
+	.global	gPlayerFrame2653UpperTiles
+gPlayerFrame2653UpperTiles:
 	.incbin	"baserom.gba", 0x152830, 0xC6
-	.global	gUnk_081528F6
-gUnk_081528F6:
+	.global	gPlayerFrame2652UpperTiles
+gPlayerFrame2652UpperTiles:
 	.incbin	"baserom.gba", 0x1528F6, 0x106
-	.global	gUnk_081529FC
-gUnk_081529FC:
+	.global	gPlayerFrame2818UpperTiles
+gPlayerFrame2818UpperTiles:
 	.incbin	"baserom.gba", 0x1529FC, 0xA6
-	.global	gUnk_08152AA2
-gUnk_08152AA2:
+	.global	gPlayerFrame2817UpperTiles
+gPlayerFrame2817UpperTiles:
 	.incbin	"baserom.gba", 0x152AA2, 0xA6
-	.global	gUnk_08152B48
-gUnk_08152B48:
+	.global	gPlayerFrame2964UpperTiles
+gPlayerFrame2964UpperTiles:
 	.incbin	"baserom.gba", 0x152B48, 0xC6
-	.global	gUnk_08152C0E
-gUnk_08152C0E:
+	.global	gPlayerFrame2963UpperTiles
+gPlayerFrame2963UpperTiles:
 	.incbin	"baserom.gba", 0x152C0E, 0xC6
-	.global	gUnk_08152CD4
-gUnk_08152CD4:
+	.global	gPlayerFrame3095UpperTiles
+gPlayerFrame3095UpperTiles:
 	.incbin	"baserom.gba", 0x152CD4, 0xA6
-	.global	gUnk_08152D7A
-gUnk_08152D7A:
+	.global	gPlayerFrame3094UpperTiles
+gPlayerFrame3094UpperTiles:
 	.incbin	"baserom.gba", 0x152D7A, 0xC6
 	.global	gPlayerFrame3233Tiles
 gPlayerFrame3233Tiles:
@@ -12553,11 +12553,11 @@ gPlayerFrame3233Tiles:
 	.global	gPlayerFrame3232Tiles
 gPlayerFrame3232Tiles:
 	.incbin	"baserom.gba", 0x152F06, 0xC6
-	.global	gUnk_08152FCC
-gUnk_08152FCC:
+	.global	gPlayerFrame3476UpperTiles
+gPlayerFrame3476UpperTiles:
 	.incbin	"baserom.gba", 0x152FCC, 0xC6
-	.global	gUnk_08153092
-gUnk_08153092:
+	.global	gPlayerFrame3475UpperTiles
+gPlayerFrame3475UpperTiles:
 	.incbin	"baserom.gba", 0x153092, 0xC6
 	.global	gUnk_08153158
 gUnk_08153158:
@@ -12703,50 +12703,50 @@ gUnk_081537FC:
 	.global	gPlayerFrame1083Palette
 gPlayerFrame1083Palette:
 	.incbin	"baserom.gba", 0x15380C, 0x22
-	.global	gUnk_0815382E
-gUnk_0815382E:
+	.global	gPlayerFrame1083NextBankPalette
+gPlayerFrame1083NextBankPalette:
 	.incbin	"baserom.gba", 0x15382E, 0x22
 	.global	gPlayerFrame1884Palette
 gPlayerFrame1884Palette:
 	.incbin	"baserom.gba", 0x153850, 0x22
-	.global	gUnk_08153872
-gUnk_08153872:
+	.global	gPlayerFrame1884NextBankPalette
+gPlayerFrame1884NextBankPalette:
 	.incbin	"baserom.gba", 0x153872, 0x22
 	.global	gPlayerFrame2141Palette
 gPlayerFrame2141Palette:
 	.incbin	"baserom.gba", 0x153894, 0x22
-	.global	gUnk_081538B6
-gUnk_081538B6:
+	.global	gPlayerFrame2141NextBankPalette
+gPlayerFrame2141NextBankPalette:
 	.incbin	"baserom.gba", 0x1538B6, 0x22
 	.global	gPlayerFrame1084Tiles
 gPlayerFrame1084Tiles:
 	.incbin	"baserom.gba", 0x1538D8, 0xC6
-	.global	gUnk_0815399E
-gUnk_0815399E:
+	.global	gPlayerFrame1084UpperTiles
+gPlayerFrame1084UpperTiles:
 	.incbin	"baserom.gba", 0x15399E, 0x146
 	.global	gPlayerFrame1083Tiles
 gPlayerFrame1083Tiles:
 	.incbin	"baserom.gba", 0x153AE4, 0xC6
-	.global	gUnk_08153BAA
-gUnk_08153BAA:
+	.global	gPlayerFrame1083UpperTiles
+gPlayerFrame1083UpperTiles:
 	.incbin	"baserom.gba", 0x153BAA, 0x1C6
 	.global	gPlayerFrame1885Tiles
 gPlayerFrame1885Tiles:
 	.incbin	"baserom.gba", 0x153D70, 0xC6
-	.global	gUnk_08153E36
-gUnk_08153E36:
+	.global	gPlayerFrame1885UpperTiles
+gPlayerFrame1885UpperTiles:
 	.incbin	"baserom.gba", 0x153E36, 0xE6
 	.global	gPlayerFrame1884Tiles
 gPlayerFrame1884Tiles:
 	.incbin	"baserom.gba", 0x153F1C, 0xC6
-	.global	gUnk_08153FE2
-gUnk_08153FE2:
+	.global	gPlayerFrame1884UpperTiles
+gPlayerFrame1884UpperTiles:
 	.incbin	"baserom.gba", 0x153FE2, 0xE6
-	.global	gUnk_081540C8
-gUnk_081540C8:
+	.global	gPlayerFrame2142UpperTiles
+gPlayerFrame2142UpperTiles:
 	.incbin	"baserom.gba", 0x1540C8, 0xC6
-	.global	gUnk_0815418E
-gUnk_0815418E:
+	.global	gPlayerFrame2141UpperTiles
+gPlayerFrame2141UpperTiles:
 	.incbin	"baserom.gba", 0x15418E, 0x106
 	.global	gPlayerFrame1084OamTemplate
 gPlayerFrame1084OamTemplate:
@@ -12784,50 +12784,50 @@ gPlayerFrame1436Palette:
 	.global	gUnk_08154420
 gUnk_08154420:
 	.incbin	"baserom.gba", 0x154420, 0x22
-	.global	gUnk_08154442
-gUnk_08154442:
+	.global	gPlayerFrame962NextBankPalette
+gPlayerFrame962NextBankPalette:
 	.incbin	"baserom.gba", 0x154442, 0x22
-	.global	gUnk_08154464
-gUnk_08154464:
+	.global	gPlayerFrame1436NextBankPalette
+gPlayerFrame1436NextBankPalette:
 	.incbin	"baserom.gba", 0x154464, 0x22
-	.global	gUnk_08154486
-gUnk_08154486:
+	.global	gPlayerFrame1585NextBankPalette
+gPlayerFrame1585NextBankPalette:
 	.incbin	"baserom.gba", 0x154486, 0x22
-	.global	gUnk_081544A8
-gUnk_081544A8:
+	.global	gPlayerFrame1754NextBankPalette
+gPlayerFrame1754NextBankPalette:
 	.incbin	"baserom.gba", 0x1544A8, 0x22
 	.global	gPlayerFrame2375Palette
 gPlayerFrame2375Palette:
 	.incbin	"baserom.gba", 0x1544CA, 0x22
-	.global	gUnk_081544EC
-gUnk_081544EC:
+	.global	gPlayerFrame2375NextBankPalette
+gPlayerFrame2375NextBankPalette:
 	.incbin	"baserom.gba", 0x1544EC, 0x22
 	.global	gPlayerFrame2515Palette
 gPlayerFrame2515Palette:
 	.incbin	"baserom.gba", 0x15450E, 0x22
-	.global	gUnk_08154530
-gUnk_08154530:
+	.global	gPlayerFrame2515NextBankPalette
+gPlayerFrame2515NextBankPalette:
 	.incbin	"baserom.gba", 0x154530, 0x22
-	.global	gUnk_08154552
-gUnk_08154552:
+	.global	gPlayerFrame2655NextBankPalette
+gPlayerFrame2655NextBankPalette:
 	.incbin	"baserom.gba", 0x154552, 0x22
-	.global	gUnk_08154574
-gUnk_08154574:
+	.global	gPlayerFrame2820NextBankPalette
+gPlayerFrame2820NextBankPalette:
 	.incbin	"baserom.gba", 0x154574, 0x22
-	.global	gUnk_08154596
-gUnk_08154596:
+	.global	gPlayerFrame2966NextBankPalette
+gPlayerFrame2966NextBankPalette:
 	.incbin	"baserom.gba", 0x154596, 0x22
 	.global	gPlayerFrame3097Palette
 gPlayerFrame3097Palette:
 	.incbin	"baserom.gba", 0x1545B8, 0x22
-	.global	gUnk_081545DA
-gUnk_081545DA:
+	.global	gPlayerFrame3097NextBankPalette
+gPlayerFrame3097NextBankPalette:
 	.incbin	"baserom.gba", 0x1545DA, 0x22
 	.global	gPlayerFrame3235Palette
 gPlayerFrame3235Palette:
 	.incbin	"baserom.gba", 0x1545FC, 0x22
-	.global	gUnk_0815461E
-gUnk_0815461E:
+	.global	gPlayerFrame3478NextBankPalette
+gPlayerFrame3478NextBankPalette:
 	.incbin	"baserom.gba", 0x15461E, 0x22
 	.global	gUnk_08154640
 gUnk_08154640:
@@ -12895,296 +12895,296 @@ gUnk_08155814:
 	.global	gUnk_081558DA
 gUnk_081558DA:
 	.incbin	"baserom.gba", 0x1558DA, 0xE6
-	.global	gUnk_081559C0
-gUnk_081559C0:
+	.global	gPlayerFrame962UpperTiles
+gPlayerFrame962UpperTiles:
 	.incbin	"baserom.gba", 0x1559C0, 0xE6
-	.global	gUnk_08155AA6
-gUnk_08155AA6:
+	.global	gPlayerFrame963UpperTiles
+gPlayerFrame963UpperTiles:
 	.incbin	"baserom.gba", 0x155AA6, 0xE6
-	.global	gUnk_08155B8C
-gUnk_08155B8C:
+	.global	gPlayerFrame964UpperTiles
+gPlayerFrame964UpperTiles:
 	.incbin	"baserom.gba", 0x155B8C, 0xE6
-	.global	gUnk_08155C72
-gUnk_08155C72:
+	.global	gPlayerFrame965UpperTiles
+gPlayerFrame965UpperTiles:
 	.incbin	"baserom.gba", 0x155C72, 0xE6
-	.global	gUnk_08155D58
-gUnk_08155D58:
+	.global	gPlayerFrame970UpperTiles
+gPlayerFrame970UpperTiles:
 	.incbin	"baserom.gba", 0x155D58, 0xC6
-	.global	gUnk_08155E1E
-gUnk_08155E1E:
+	.global	gPlayerFrame971UpperTiles
+gPlayerFrame971UpperTiles:
 	.incbin	"baserom.gba", 0x155E1E, 0xA6
-	.global	gUnk_08155EC4
-gUnk_08155EC4:
+	.global	gPlayerFrame972UpperTiles
+gPlayerFrame972UpperTiles:
 	.incbin	"baserom.gba", 0x155EC4, 0x86
-	.global	gUnk_08155F4A
-gUnk_08155F4A:
+	.global	gPlayerFrame973UpperTiles
+gPlayerFrame973UpperTiles:
 	.incbin	"baserom.gba", 0x155F4A, 0x86
-	.global	gUnk_08155FD0
-gUnk_08155FD0:
+	.global	gPlayerFrame974UpperTiles
+gPlayerFrame974UpperTiles:
 	.incbin	"baserom.gba", 0x155FD0, 0x86
-	.global	gUnk_08156056
-gUnk_08156056:
+	.global	gPlayerFrame1436UpperTiles
+gPlayerFrame1436UpperTiles:
 	.incbin	"baserom.gba", 0x156056, 0x126
-	.global	gUnk_0815617C
-gUnk_0815617C:
+	.global	gPlayerFrame1437UpperTiles
+gPlayerFrame1437UpperTiles:
 	.incbin	"baserom.gba", 0x15617C, 0x1A6
-	.global	gUnk_08156322
-gUnk_08156322:
+	.global	gPlayerFrame1438UpperTiles
+gPlayerFrame1438UpperTiles:
 	.incbin	"baserom.gba", 0x156322, 0x1A6
-	.global	gUnk_081564C8
-gUnk_081564C8:
+	.global	gPlayerFrame1439UpperTiles
+gPlayerFrame1439UpperTiles:
 	.incbin	"baserom.gba", 0x1564C8, 0x186
-	.global	gUnk_0815664E
-gUnk_0815664E:
+	.global	gPlayerFrame1444UpperTiles
+gPlayerFrame1444UpperTiles:
 	.incbin	"baserom.gba", 0x15664E, 0x1A6
-	.global	gUnk_081567F4
-gUnk_081567F4:
+	.global	gPlayerFrame1445UpperTiles
+gPlayerFrame1445UpperTiles:
 	.incbin	"baserom.gba", 0x1567F4, 0x186
-	.global	gUnk_0815697A
-gUnk_0815697A:
+	.global	gPlayerFrame1446UpperTiles
+gPlayerFrame1446UpperTiles:
 	.incbin	"baserom.gba", 0x15697A, 0x86
-	.global	gUnk_08156A00
-gUnk_08156A00:
+	.global	gPlayerFrame1447UpperTiles
+gPlayerFrame1447UpperTiles:
 	.incbin	"baserom.gba", 0x156A00, 0x106
-	.global	gUnk_08156B06
-gUnk_08156B06:
+	.global	gPlayerFrame1448UpperTiles
+gPlayerFrame1448UpperTiles:
 	.incbin	"baserom.gba", 0x156B06, 0x106
-	.global	gUnk_08156C0C
-gUnk_08156C0C:
+	.global	gPlayerFrame1449UpperTiles
+gPlayerFrame1449UpperTiles:
 	.incbin	"baserom.gba", 0x156C0C, 0x106
-	.global	gUnk_08156D12
-gUnk_08156D12:
+	.global	gPlayerFrame1450UpperTiles
+gPlayerFrame1450UpperTiles:
 	.incbin	"baserom.gba", 0x156D12, 0x106
-	.global	gUnk_08156E18
-gUnk_08156E18:
+	.global	gPlayerFrame1451UpperTiles
+gPlayerFrame1451UpperTiles:
 	.incbin	"baserom.gba", 0x156E18, 0x186
-	.global	gUnk_08156F9E
-gUnk_08156F9E:
+	.global	gPlayerFrame1585UpperTiles
+gPlayerFrame1585UpperTiles:
 	.incbin	"baserom.gba", 0x156F9E, 0xA6
-	.global	gUnk_08157044
-gUnk_08157044:
+	.global	gPlayerFrame1586UpperTiles
+gPlayerFrame1586UpperTiles:
 	.incbin	"baserom.gba", 0x157044, 0xA6
-	.global	gUnk_081570EA
-gUnk_081570EA:
+	.global	gPlayerFrame1587UpperTiles
+gPlayerFrame1587UpperTiles:
 	.incbin	"baserom.gba", 0x1570EA, 0x86
-	.global	gUnk_08157170
-gUnk_08157170:
+	.global	gPlayerFrame1588UpperTiles
+gPlayerFrame1588UpperTiles:
 	.incbin	"baserom.gba", 0x157170, 0xC6
-	.global	gUnk_08157236
-gUnk_08157236:
+	.global	gPlayerFrame1593UpperTiles
+gPlayerFrame1593UpperTiles:
 	.incbin	"baserom.gba", 0x157236, 0x86
-	.global	gUnk_081572BC
-gUnk_081572BC:
+	.global	gPlayerFrame1594UpperTiles
+gPlayerFrame1594UpperTiles:
 	.incbin	"baserom.gba", 0x1572BC, 0x86
-	.global	gUnk_08157342
-gUnk_08157342:
+	.global	gPlayerFrame1595UpperTiles
+gPlayerFrame1595UpperTiles:
 	.incbin	"baserom.gba", 0x157342, 0x86
-	.global	gUnk_081573C8
-gUnk_081573C8:
+	.global	gPlayerFrame1596UpperTiles
+gPlayerFrame1596UpperTiles:
 	.incbin	"baserom.gba", 0x1573C8, 0x86
-	.global	gUnk_0815744E
-gUnk_0815744E:
+	.global	gPlayerFrame1597UpperTiles
+gPlayerFrame1597UpperTiles:
 	.incbin	"baserom.gba", 0x15744E, 0x86
-	.global	gUnk_081574D4
-gUnk_081574D4:
+	.global	gPlayerFrame1598UpperTiles
+gPlayerFrame1598UpperTiles:
 	.incbin	"baserom.gba", 0x1574D4, 0x86
-	.global	gUnk_0815755A
-gUnk_0815755A:
+	.global	gPlayerFrame1754UpperTiles
+gPlayerFrame1754UpperTiles:
 	.incbin	"baserom.gba", 0x15755A, 0xA6
-	.global	gUnk_08157600
-gUnk_08157600:
+	.global	gPlayerFrame1755UpperTiles
+gPlayerFrame1755UpperTiles:
 	.incbin	"baserom.gba", 0x157600, 0xC6
-	.global	gUnk_081576C6
-gUnk_081576C6:
+	.global	gPlayerFrame1756UpperTiles
+gPlayerFrame1756UpperTiles:
 	.incbin	"baserom.gba", 0x1576C6, 0xA6
-	.global	gUnk_0815776C
-gUnk_0815776C:
+	.global	gPlayerFrame1757UpperTiles
+gPlayerFrame1757UpperTiles:
 	.incbin	"baserom.gba", 0x15776C, 0xA6
-	.global	gUnk_08157812
-gUnk_08157812:
+	.global	gPlayerFrame1762UpperTiles
+gPlayerFrame1762UpperTiles:
 	.incbin	"baserom.gba", 0x157812, 0x86
-	.global	gUnk_08157898
-gUnk_08157898:
+	.global	gPlayerFrame1763UpperTiles
+gPlayerFrame1763UpperTiles:
 	.incbin	"baserom.gba", 0x157898, 0x86
-	.global	gUnk_0815791E
-gUnk_0815791E:
+	.global	gPlayerFrame1764UpperTiles
+gPlayerFrame1764UpperTiles:
 	.incbin	"baserom.gba", 0x15791E, 0x86
-	.global	gUnk_081579A4
-gUnk_081579A4:
+	.global	gPlayerFrame1765UpperTiles
+gPlayerFrame1765UpperTiles:
 	.incbin	"baserom.gba", 0x1579A4, 0x86
-	.global	gUnk_08157A2A
-gUnk_08157A2A:
+	.global	gPlayerFrame1766UpperTiles
+gPlayerFrame1766UpperTiles:
 	.incbin	"baserom.gba", 0x157A2A, 0x86
-	.global	gUnk_08157AB0
-gUnk_08157AB0:
+	.global	gPlayerFrame1767UpperTiles
+gPlayerFrame1767UpperTiles:
 	.incbin	"baserom.gba", 0x157AB0, 0x86
-	.global	gUnk_08157B36
-gUnk_08157B36:
+	.global	gPlayerFrame2375UpperTiles
+gPlayerFrame2375UpperTiles:
 	.incbin	"baserom.gba", 0x157B36, 0x106
-	.global	gUnk_08157C3C
-gUnk_08157C3C:
+	.global	gPlayerFrame2376UpperTiles
+gPlayerFrame2376UpperTiles:
 	.incbin	"baserom.gba", 0x157C3C, 0x106
-	.global	gUnk_08157D42
-gUnk_08157D42:
+	.global	gPlayerFrame2377UpperTiles
+gPlayerFrame2377UpperTiles:
 	.incbin	"baserom.gba", 0x157D42, 0x106
-	.global	gUnk_08157E48
-gUnk_08157E48:
+	.global	gPlayerFrame2378UpperTiles
+gPlayerFrame2378UpperTiles:
 	.incbin	"baserom.gba", 0x157E48, 0x106
-	.global	gUnk_08157F4E
-gUnk_08157F4E:
+	.global	gPlayerFrame2383UpperTiles
+gPlayerFrame2383UpperTiles:
 	.incbin	"baserom.gba", 0x157F4E, 0xE6
-	.global	gUnk_08158034
-gUnk_08158034:
+	.global	gPlayerFrame2384UpperTiles
+gPlayerFrame2384UpperTiles:
 	.incbin	"baserom.gba", 0x158034, 0xE6
-	.global	gUnk_0815811A
-gUnk_0815811A:
+	.global	gPlayerFrame2385UpperTiles
+gPlayerFrame2385UpperTiles:
 	.incbin	"baserom.gba", 0x15811A, 0xA6
-	.global	gUnk_081581C0
-gUnk_081581C0:
+	.global	gPlayerFrame2386UpperTiles
+gPlayerFrame2386UpperTiles:
 	.incbin	"baserom.gba", 0x1581C0, 0xA6
-	.global	gUnk_08158266
-gUnk_08158266:
+	.global	gPlayerFrame2387UpperTiles
+gPlayerFrame2387UpperTiles:
 	.incbin	"baserom.gba", 0x158266, 0xA6
-	.global	gUnk_0815830C
-gUnk_0815830C:
+	.global	gPlayerFrame2388UpperTiles
+gPlayerFrame2388UpperTiles:
 	.incbin	"baserom.gba", 0x15830C, 0xC6
-	.global	gUnk_081583D2
-gUnk_081583D2:
+	.global	gPlayerFrame2515UpperTiles
+gPlayerFrame2515UpperTiles:
 	.incbin	"baserom.gba", 0x1583D2, 0xC6
-	.global	gUnk_08158498
-gUnk_08158498:
+	.global	gPlayerFrame2516UpperTiles
+gPlayerFrame2516UpperTiles:
 	.incbin	"baserom.gba", 0x158498, 0xC6
-	.global	gUnk_0815855E
-gUnk_0815855E:
+	.global	gPlayerFrame2517UpperTiles
+gPlayerFrame2517UpperTiles:
 	.incbin	"baserom.gba", 0x15855E, 0xC6
-	.global	gUnk_08158624
-gUnk_08158624:
+	.global	gPlayerFrame2518UpperTiles
+gPlayerFrame2518UpperTiles:
 	.incbin	"baserom.gba", 0x158624, 0xC6
-	.global	gUnk_081586EA
-gUnk_081586EA:
+	.global	gPlayerFrame2523UpperTiles
+gPlayerFrame2523UpperTiles:
 	.incbin	"baserom.gba", 0x1586EA, 0xC6
-	.global	gUnk_081587B0
-gUnk_081587B0:
+	.global	gPlayerFrame2525UpperTiles
+gPlayerFrame2525UpperTiles:
 	.incbin	"baserom.gba", 0x1587B0, 0x86
-	.global	gUnk_08158836
-gUnk_08158836:
+	.global	gPlayerFrame2526UpperTiles
+gPlayerFrame2526UpperTiles:
 	.incbin	"baserom.gba", 0x158836, 0x86
-	.global	gUnk_081588BC
-gUnk_081588BC:
+	.global	gPlayerFrame2527UpperTiles
+gPlayerFrame2527UpperTiles:
 	.incbin	"baserom.gba", 0x1588BC, 0x86
-	.global	gUnk_08158942
-gUnk_08158942:
+	.global	gPlayerFrame2655UpperTiles
+gPlayerFrame2655UpperTiles:
 	.incbin	"baserom.gba", 0x158942, 0xE6
-	.global	gUnk_08158A28
-gUnk_08158A28:
+	.global	gPlayerFrame2656UpperTiles
+gPlayerFrame2656UpperTiles:
 	.incbin	"baserom.gba", 0x158A28, 0xE6
-	.global	gUnk_08158B0E
-gUnk_08158B0E:
+	.global	gPlayerFrame2657UpperTiles
+gPlayerFrame2657UpperTiles:
 	.incbin	"baserom.gba", 0x158B0E, 0x106
-	.global	gUnk_08158C14
-gUnk_08158C14:
+	.global	gPlayerFrame2658UpperTiles
+gPlayerFrame2658UpperTiles:
 	.incbin	"baserom.gba", 0x158C14, 0xE6
-	.global	gUnk_08158CFA
-gUnk_08158CFA:
+	.global	gPlayerFrame2663UpperTiles
+gPlayerFrame2663UpperTiles:
 	.incbin	"baserom.gba", 0x158CFA, 0x106
-	.global	gUnk_08158E00
-gUnk_08158E00:
+	.global	gPlayerFrame2664UpperTiles
+gPlayerFrame2664UpperTiles:
 	.incbin	"baserom.gba", 0x158E00, 0x106
-	.global	gUnk_08158F06
-gUnk_08158F06:
+	.global	gPlayerFrame2665UpperTiles
+gPlayerFrame2665UpperTiles:
 	.incbin	"baserom.gba", 0x158F06, 0x46
-	.global	gUnk_08158F4C
-gUnk_08158F4C:
+	.global	gPlayerFrame2666UpperTiles
+gPlayerFrame2666UpperTiles:
 	.incbin	"baserom.gba", 0x158F4C, 0x86
-	.global	gUnk_08158FD2
-gUnk_08158FD2:
+	.global	gPlayerFrame2667UpperTiles
+gPlayerFrame2667UpperTiles:
 	.incbin	"baserom.gba", 0x158FD2, 0x86
-	.global	gUnk_08159058
-gUnk_08159058:
+	.global	gPlayerFrame2668UpperTiles
+gPlayerFrame2668UpperTiles:
 	.incbin	"baserom.gba", 0x159058, 0x86
-	.global	gUnk_081590DE
-gUnk_081590DE:
+	.global	gPlayerFrame2820UpperTiles
+gPlayerFrame2820UpperTiles:
 	.incbin	"baserom.gba", 0x1590DE, 0xE6
-	.global	gUnk_081591C4
-gUnk_081591C4:
+	.global	gPlayerFrame2821UpperTiles
+gPlayerFrame2821UpperTiles:
 	.incbin	"baserom.gba", 0x1591C4, 0x126
-	.global	gUnk_081592EA
-gUnk_081592EA:
+	.global	gPlayerFrame2822UpperTiles
+gPlayerFrame2822UpperTiles:
 	.incbin	"baserom.gba", 0x1592EA, 0x126
-	.global	gUnk_08159410
-gUnk_08159410:
+	.global	gPlayerFrame2823UpperTiles
+gPlayerFrame2823UpperTiles:
 	.incbin	"baserom.gba", 0x159410, 0x126
-	.global	gUnk_08159536
-gUnk_08159536:
+	.global	gPlayerFrame2828UpperTiles
+gPlayerFrame2828UpperTiles:
 	.incbin	"baserom.gba", 0x159536, 0x146
-	.global	gUnk_0815967C
-gUnk_0815967C:
+	.global	gPlayerFrame2829UpperTiles
+gPlayerFrame2829UpperTiles:
 	.incbin	"baserom.gba", 0x15967C, 0x126
-	.global	gUnk_081597A2
-gUnk_081597A2:
+	.global	gPlayerFrame2830UpperTiles
+gPlayerFrame2830UpperTiles:
 	.incbin	"baserom.gba", 0x1597A2, 0x44
-	.global	gUnk_081597E6
-gUnk_081597E6:
+	.global	gPlayerFrame2831UpperTiles
+gPlayerFrame2831UpperTiles:
 	.incbin	"baserom.gba", 0x1597E6, 0x86
-	.global	gUnk_0815986C
-gUnk_0815986C:
+	.global	gPlayerFrame2832UpperTiles
+gPlayerFrame2832UpperTiles:
 	.incbin	"baserom.gba", 0x15986C, 0x86
-	.global	gUnk_081598F2
-gUnk_081598F2:
+	.global	gPlayerFrame2966UpperTiles
+gPlayerFrame2966UpperTiles:
 	.incbin	"baserom.gba", 0x1598F2, 0x106
-	.global	gUnk_081599F8
-gUnk_081599F8:
+	.global	gPlayerFrame2967UpperTiles
+gPlayerFrame2967UpperTiles:
 	.incbin	"baserom.gba", 0x1599F8, 0x106
-	.global	gUnk_08159AFE
-gUnk_08159AFE:
+	.global	gPlayerFrame2968UpperTiles
+gPlayerFrame2968UpperTiles:
 	.incbin	"baserom.gba", 0x159AFE, 0x106
-	.global	gUnk_08159C04
-gUnk_08159C04:
+	.global	gPlayerFrame2969UpperTiles
+gPlayerFrame2969UpperTiles:
 	.incbin	"baserom.gba", 0x159C04, 0xC6
-	.global	gUnk_08159CCA
-gUnk_08159CCA:
+	.global	gPlayerFrame2974UpperTiles
+gPlayerFrame2974UpperTiles:
 	.incbin	"baserom.gba", 0x159CCA, 0xC6
-	.global	gUnk_08159D90
-gUnk_08159D90:
+	.global	gPlayerFrame2975UpperTiles
+gPlayerFrame2975UpperTiles:
 	.incbin	"baserom.gba", 0x159D90, 0xC6
-	.global	gUnk_08159E56
-gUnk_08159E56:
+	.global	gPlayerFrame2976UpperTiles
+gPlayerFrame2976UpperTiles:
 	.incbin	"baserom.gba", 0x159E56, 0xC6
-	.global	gUnk_08159F1C
-gUnk_08159F1C:
+	.global	gPlayerFrame2977UpperTiles
+gPlayerFrame2977UpperTiles:
 	.incbin	"baserom.gba", 0x159F1C, 0xC6
-	.global	gUnk_08159FE2
-gUnk_08159FE2:
+	.global	gPlayerFrame2978UpperTiles
+gPlayerFrame2978UpperTiles:
 	.incbin	"baserom.gba", 0x159FE2, 0x106
-	.global	gUnk_0815A0E8
-gUnk_0815A0E8:
+	.global	gPlayerFrame3097UpperTiles
+gPlayerFrame3097UpperTiles:
 	.incbin	"baserom.gba", 0x15A0E8, 0x106
-	.global	gUnk_0815A1EE
-gUnk_0815A1EE:
+	.global	gPlayerFrame3098UpperTiles
+gPlayerFrame3098UpperTiles:
 	.incbin	"baserom.gba", 0x15A1EE, 0x106
-	.global	gUnk_0815A2F4
-gUnk_0815A2F4:
+	.global	gPlayerFrame3099UpperTiles
+gPlayerFrame3099UpperTiles:
 	.incbin	"baserom.gba", 0x15A2F4, 0x106
-	.global	gUnk_0815A3FA
-gUnk_0815A3FA:
+	.global	gPlayerFrame3100UpperTiles
+gPlayerFrame3100UpperTiles:
 	.incbin	"baserom.gba", 0x15A3FA, 0xE6
-	.global	gUnk_0815A4E0
-gUnk_0815A4E0:
+	.global	gPlayerFrame3105UpperTiles
+gPlayerFrame3105UpperTiles:
 	.incbin	"baserom.gba", 0x15A4E0, 0xC6
-	.global	gUnk_0815A5A6
-gUnk_0815A5A6:
+	.global	gPlayerFrame3106UpperTiles
+gPlayerFrame3106UpperTiles:
 	.incbin	"baserom.gba", 0x15A5A6, 0xE6
-	.global	gUnk_0815A68C
-gUnk_0815A68C:
+	.global	gPlayerFrame3107UpperTiles
+gPlayerFrame3107UpperTiles:
 	.incbin	"baserom.gba", 0x15A68C, 0xA6
-	.global	gUnk_0815A732
-gUnk_0815A732:
+	.global	gPlayerFrame3108UpperTiles
+gPlayerFrame3108UpperTiles:
 	.incbin	"baserom.gba", 0x15A732, 0xA6
-	.global	gUnk_0815A7D8
-gUnk_0815A7D8:
+	.global	gPlayerFrame3109UpperTiles
+gPlayerFrame3109UpperTiles:
 	.incbin	"baserom.gba", 0x15A7D8, 0xA6
-	.global	gUnk_0815A87E
-gUnk_0815A87E:
+	.global	gPlayerFrame3110UpperTiles
+gPlayerFrame3110UpperTiles:
 	.incbin	"baserom.gba", 0x15A87E, 0xA6
 	.global	gPlayerFrame3235Tiles
 gPlayerFrame3235Tiles:
@@ -13216,41 +13216,41 @@ gPlayerFrame3247Tiles:
 	.global	gPlayerFrame3248Tiles
 gPlayerFrame3248Tiles:
 	.incbin	"baserom.gba", 0x15B1FA, 0xC6
-	.global	gUnk_0815B2C0
-gUnk_0815B2C0:
+	.global	gPlayerFrame3478UpperTiles
+gPlayerFrame3478UpperTiles:
 	.incbin	"baserom.gba", 0x15B2C0, 0x126
-	.global	gUnk_0815B3E6
-gUnk_0815B3E6:
+	.global	gPlayerFrame3479UpperTiles
+gPlayerFrame3479UpperTiles:
 	.incbin	"baserom.gba", 0x15B3E6, 0x126
-	.global	gUnk_0815B50C
-gUnk_0815B50C:
+	.global	gPlayerFrame3480UpperTiles
+gPlayerFrame3480UpperTiles:
 	.incbin	"baserom.gba", 0x15B50C, 0x126
-	.global	gUnk_0815B632
-gUnk_0815B632:
+	.global	gPlayerFrame3481UpperTiles
+gPlayerFrame3481UpperTiles:
 	.incbin	"baserom.gba", 0x15B632, 0x166
-	.global	gUnk_0815B798
-gUnk_0815B798:
+	.global	gPlayerFrame3486UpperTiles
+gPlayerFrame3486UpperTiles:
 	.incbin	"baserom.gba", 0x15B798, 0x126
-	.global	gUnk_0815B8BE
-gUnk_0815B8BE:
+	.global	gPlayerFrame3487UpperTiles
+gPlayerFrame3487UpperTiles:
 	.incbin	"baserom.gba", 0x15B8BE, 0x106
-	.global	gUnk_0815B9C4
-gUnk_0815B9C4:
+	.global	gPlayerFrame3488UpperTiles
+gPlayerFrame3488UpperTiles:
 	.incbin	"baserom.gba", 0x15B9C4, 0xA6
-	.global	gUnk_0815BA6A
-gUnk_0815BA6A:
+	.global	gPlayerFrame3489UpperTiles
+gPlayerFrame3489UpperTiles:
 	.incbin	"baserom.gba", 0x15BA6A, 0xC6
-	.global	gUnk_0815BB30
-gUnk_0815BB30:
+	.global	gPlayerFrame3490UpperTiles
+gPlayerFrame3490UpperTiles:
 	.incbin	"baserom.gba", 0x15BB30, 0xE6
-	.global	gUnk_0815BC16
-gUnk_0815BC16:
+	.global	gPlayerFrame3491UpperTiles
+gPlayerFrame3491UpperTiles:
 	.incbin	"baserom.gba", 0x15BC16, 0xE6
-	.global	gUnk_0815BCFC
-gUnk_0815BCFC:
+	.global	gPlayerFrame3492UpperTiles
+gPlayerFrame3492UpperTiles:
 	.incbin	"baserom.gba", 0x15BCFC, 0xE6
-	.global	gUnk_0815BDE2
-gUnk_0815BDE2:
+	.global	gPlayerFrame3493UpperTiles
+gPlayerFrame3493UpperTiles:
 	.incbin	"baserom.gba", 0x15BDE2, 0x106
 	.global	gUnk_0815BEE8
 gUnk_0815BEE8:
@@ -13939,44 +13939,44 @@ gUnk_0815EC9C:
 	.global	gPlayerFrame1086Palette
 gPlayerFrame1086Palette:
 	.incbin	"baserom.gba", 0x15ECDC, 0x22
-	.global	gUnk_0815ECFE
-gUnk_0815ECFE:
+	.global	gPlayerFrame1086NextBankPalette
+gPlayerFrame1086NextBankPalette:
 	.incbin	"baserom.gba", 0x15ECFE, 0x22
 	.global	gPlayerFrame1887Palette
 gPlayerFrame1887Palette:
 	.incbin	"baserom.gba", 0x15ED20, 0x22
-	.global	gUnk_0815ED42
-gUnk_0815ED42:
+	.global	gPlayerFrame1887NextBankPalette
+gPlayerFrame1887NextBankPalette:
 	.incbin	"baserom.gba", 0x15ED42, 0x22
 	.global	gPlayerFrame2144Palette
 gPlayerFrame2144Palette:
 	.incbin	"baserom.gba", 0x15ED64, 0x22
-	.global	gUnk_0815ED86
-gUnk_0815ED86:
+	.global	gPlayerFrame2144NextBankPalette
+gPlayerFrame2144NextBankPalette:
 	.incbin	"baserom.gba", 0x15ED86, 0x22
 	.global	gPlayerFrame1086Tiles
 gPlayerFrame1086Tiles:
 	.incbin	"baserom.gba", 0x15EDA8, 0x126
-	.global	gUnk_0815EECE
-gUnk_0815EECE:
+	.global	gPlayerFrame1086UpperTiles
+gPlayerFrame1086UpperTiles:
 	.incbin	"baserom.gba", 0x15EECE, 0x166
 	.global	gPlayerFrame1087Tiles
 gPlayerFrame1087Tiles:
 	.incbin	"baserom.gba", 0x15F034, 0x126
-	.global	gUnk_0815F15A
-gUnk_0815F15A:
+	.global	gPlayerFrame1087UpperTiles
+gPlayerFrame1087UpperTiles:
 	.incbin	"baserom.gba", 0x15F15A, 0x146
 	.global	gPlayerFrame1088Tiles
 gPlayerFrame1088Tiles:
 	.incbin	"baserom.gba", 0x15F2A0, 0x126
-	.global	gUnk_0815F3C6
-gUnk_0815F3C6:
+	.global	gPlayerFrame1088UpperTiles
+gPlayerFrame1088UpperTiles:
 	.incbin	"baserom.gba", 0x15F3C6, 0x126
 	.global	gPlayerFrame1089Tiles
 gPlayerFrame1089Tiles:
 	.incbin	"baserom.gba", 0x15F4EC, 0x126
-	.global	gUnk_0815F612
-gUnk_0815F612:
+	.global	gPlayerFrame1089UpperTiles
+gPlayerFrame1089UpperTiles:
 	.incbin	"baserom.gba", 0x15F612, 0xE6
 	.global	gPlayerFrame1090Tiles
 gPlayerFrame1090Tiles:
@@ -13984,80 +13984,80 @@ gPlayerFrame1090Tiles:
 	.global	gPlayerFrame1091Tiles
 gPlayerFrame1091Tiles:
 	.incbin	"baserom.gba", 0x15F81E, 0x126
-	.global	gUnk_0815F944
-gUnk_0815F944:
+	.global	gPlayerFrame1091UpperTiles
+gPlayerFrame1091UpperTiles:
 	.incbin	"baserom.gba", 0x15F944, 0x126
 	.global	gPlayerFrame1092Tiles
 gPlayerFrame1092Tiles:
 	.incbin	"baserom.gba", 0x15FA6A, 0x126
-	.global	gUnk_0815FB90
-gUnk_0815FB90:
+	.global	gPlayerFrame1092UpperTiles
+gPlayerFrame1092UpperTiles:
 	.incbin	"baserom.gba", 0x15FB90, 0x166
 	.global	gPlayerFrame1093Tiles
 gPlayerFrame1093Tiles:
 	.incbin	"baserom.gba", 0x15FCF6, 0x126
-	.global	gUnk_0815FE1C
-gUnk_0815FE1C:
+	.global	gPlayerFrame1093UpperTiles
+gPlayerFrame1093UpperTiles:
 	.incbin	"baserom.gba", 0x15FE1C, 0x166
 	.global	gPlayerFrame1094Tiles
 gPlayerFrame1094Tiles:
 	.incbin	"baserom.gba", 0x15FF82, 0x106
-	.global	gUnk_08160088
-gUnk_08160088:
+	.global	gPlayerFrame1094UpperTiles
+gPlayerFrame1094UpperTiles:
 	.incbin	"baserom.gba", 0x160088, 0x166
 	.global	gPlayerFrame1095Tiles
 gPlayerFrame1095Tiles:
 	.incbin	"baserom.gba", 0x1601EE, 0x126
-	.global	gUnk_08160314
-gUnk_08160314:
+	.global	gPlayerFrame1095UpperTiles
+gPlayerFrame1095UpperTiles:
 	.incbin	"baserom.gba", 0x160314, 0x106
 	.global	gPlayerFrame1096Tiles
 gPlayerFrame1096Tiles:
 	.incbin	"baserom.gba", 0x16041A, 0x66
-	.global	gUnk_08160480
-gUnk_08160480:
+	.global	gPlayerFrame1096UpperTiles
+gPlayerFrame1096UpperTiles:
 	.incbin	"baserom.gba", 0x160480, 0x46
 	.global	gPlayerFrame1097Tiles
 gPlayerFrame1097Tiles:
 	.incbin	"baserom.gba", 0x1604C6, 0xC6
-	.global	gUnk_0816058C
-gUnk_0816058C:
+	.global	gPlayerFrame1097UpperTiles
+gPlayerFrame1097UpperTiles:
 	.incbin	"baserom.gba", 0x16058C, 0x86
 	.global	gPlayerFrame1098Tiles
 gPlayerFrame1098Tiles:
 	.incbin	"baserom.gba", 0x160612, 0xC6
-	.global	gUnk_081606D8
-gUnk_081606D8:
+	.global	gPlayerFrame1098UpperTiles
+gPlayerFrame1098UpperTiles:
 	.incbin	"baserom.gba", 0x1606D8, 0x86
 	.global	gPlayerFrame1099Tiles
 gPlayerFrame1099Tiles:
 	.incbin	"baserom.gba", 0x16075E, 0xC6
-	.global	gUnk_08160824
-gUnk_08160824:
+	.global	gPlayerFrame1099UpperTiles
+gPlayerFrame1099UpperTiles:
 	.incbin	"baserom.gba", 0x160824, 0x86
 	.global	gPlayerFrame1887Tiles
 gPlayerFrame1887Tiles:
 	.incbin	"baserom.gba", 0x1608AA, 0x126
-	.global	gUnk_081609D0
-gUnk_081609D0:
+	.global	gPlayerFrame1887UpperTiles
+gPlayerFrame1887UpperTiles:
 	.incbin	"baserom.gba", 0x1609D0, 0xC6
 	.global	gPlayerFrame1888Tiles
 gPlayerFrame1888Tiles:
 	.incbin	"baserom.gba", 0x160A96, 0x126
-	.global	gUnk_08160BBC
-gUnk_08160BBC:
+	.global	gPlayerFrame1888UpperTiles
+gPlayerFrame1888UpperTiles:
 	.incbin	"baserom.gba", 0x160BBC, 0xE6
 	.global	gPlayerFrame1889Tiles
 gPlayerFrame1889Tiles:
 	.incbin	"baserom.gba", 0x160CA2, 0x126
-	.global	gUnk_08160DC8
-gUnk_08160DC8:
+	.global	gPlayerFrame1889UpperTiles
+gPlayerFrame1889UpperTiles:
 	.incbin	"baserom.gba", 0x160DC8, 0xA6
 	.global	gPlayerFrame1890Tiles
 gPlayerFrame1890Tiles:
 	.incbin	"baserom.gba", 0x160E6E, 0x126
-	.global	gUnk_08160F94
-gUnk_08160F94:
+	.global	gPlayerFrame1890UpperTiles
+gPlayerFrame1890UpperTiles:
 	.incbin	"baserom.gba", 0x160F94, 0xA6
 	.global	gPlayerFrame1891Tiles
 gPlayerFrame1891Tiles:
@@ -14089,14 +14089,14 @@ gPlayerFrame1899Tiles:
 	.global	gPlayerFrame1900Tiles
 gPlayerFrame1900Tiles:
 	.incbin	"baserom.gba", 0x16192E, 0xE6
-	.global	gUnk_08161A14
-gUnk_08161A14:
+	.global	gPlayerFrame2144UpperTiles
+gPlayerFrame2144UpperTiles:
 	.incbin	"baserom.gba", 0x161A14, 0x126
-	.global	gUnk_08161B3A
-gUnk_08161B3A:
+	.global	gPlayerFrame2145UpperTiles
+gPlayerFrame2145UpperTiles:
 	.incbin	"baserom.gba", 0x161B3A, 0x126
-	.global	gUnk_08161C60
-gUnk_08161C60:
+	.global	gPlayerFrame2149UpperTiles
+gPlayerFrame2149UpperTiles:
 	.incbin	"baserom.gba", 0x161C60, 0x126
 	.global	gPlayerFrame2152Tiles
 gPlayerFrame2152Tiles:
@@ -14233,68 +14233,68 @@ gPlayerFrame11Palette:
 	.global	gPlayerFrame1018Palette
 gPlayerFrame1018Palette:
 	.incbin	"baserom.gba", 0x162696, 0x22
-	.global	gUnk_081626B8
-gUnk_081626B8:
+	.global	gPlayerFrame1018NextBankPalette
+gPlayerFrame1018NextBankPalette:
 	.incbin	"baserom.gba", 0x1626B8, 0x22
-	.global	gUnk_081626DA
-gUnk_081626DA:
+	.global	gPlayerFrame1822NextBankPalette
+gPlayerFrame1822NextBankPalette:
 	.incbin	"baserom.gba", 0x1626DA, 0x22
-	.global	gUnk_081626FC
-gUnk_081626FC:
+	.global	gPlayerFrame2067NextBankPalette
+gPlayerFrame2067NextBankPalette:
 	.incbin	"baserom.gba", 0x1626FC, 0x22
 	.global	gPlayerFrame124Tiles
 gPlayerFrame124Tiles:
 	.incbin	"baserom.gba", 0x16271E, 0x126
-	.global	gUnk_08162844
-gUnk_08162844:
+	.global	gPlayerFrame124UpperTiles
+gPlayerFrame124UpperTiles:
 	.incbin	"baserom.gba", 0x162844, 0xA6
 	.global	gPlayerFrame125Tiles
 gPlayerFrame125Tiles:
 	.incbin	"baserom.gba", 0x1628EA, 0x126
-	.global	gUnk_08162A10
-gUnk_08162A10:
+	.global	gPlayerFrame125UpperTiles
+gPlayerFrame125UpperTiles:
 	.incbin	"baserom.gba", 0x162A10, 0x86
 	.global	gPlayerFrame126Tiles
 gPlayerFrame126Tiles:
 	.incbin	"baserom.gba", 0x162A96, 0x126
-	.global	gUnk_08162BBC
-gUnk_08162BBC:
+	.global	gPlayerFrame126UpperTiles
+gPlayerFrame126UpperTiles:
 	.incbin	"baserom.gba", 0x162BBC, 0x44
 	.global	gPlayerFrame127Tiles
 gPlayerFrame127Tiles:
 	.incbin	"baserom.gba", 0x162C00, 0x126
-	.global	gUnk_08162D26
-gUnk_08162D26:
+	.global	gPlayerFrame127UpperTiles
+gPlayerFrame127UpperTiles:
 	.incbin	"baserom.gba", 0x162D26, 0x44
 	.global	gPlayerFrame132Tiles
 gPlayerFrame132Tiles:
 	.incbin	"baserom.gba", 0x162D6A, 0x126
-	.global	gUnk_08162E90
-gUnk_08162E90:
+	.global	gPlayerFrame132UpperTiles
+gPlayerFrame132UpperTiles:
 	.incbin	"baserom.gba", 0x162E90, 0x86
 	.global	gPlayerFrame133Tiles
 gPlayerFrame133Tiles:
 	.incbin	"baserom.gba", 0x162F16, 0x126
-	.global	gUnk_0816303C
-gUnk_0816303C:
+	.global	gPlayerFrame133UpperTiles
+gPlayerFrame133UpperTiles:
 	.incbin	"baserom.gba", 0x16303C, 0x86
 	.global	gPlayerFrame134Tiles
 gPlayerFrame134Tiles:
 	.incbin	"baserom.gba", 0x1630C2, 0x46
-	.global	gUnk_08163108
-gUnk_08163108:
+	.global	gPlayerFrame134UpperTiles
+gPlayerFrame134UpperTiles:
 	.incbin	"baserom.gba", 0x163108, 0x86
 	.global	gPlayerFrame135Tiles
 gPlayerFrame135Tiles:
 	.incbin	"baserom.gba", 0x16318E, 0xC6
-	.global	gUnk_08163254
-gUnk_08163254:
+	.global	gPlayerFrame135UpperTiles
+gPlayerFrame135UpperTiles:
 	.incbin	"baserom.gba", 0x163254, 0x86
 	.global	gPlayerFrame136Tiles
 gPlayerFrame136Tiles:
 	.incbin	"baserom.gba", 0x1632DA, 0xC6
-	.global	gUnk_081633A0
-gUnk_081633A0:
+	.global	gPlayerFrame136UpperTiles
+gPlayerFrame136UpperTiles:
 	.incbin	"baserom.gba", 0x1633A0, 0x86
 	.global	gPlayerFrame137Tiles
 gPlayerFrame137Tiles:
@@ -14302,107 +14302,107 @@ gPlayerFrame137Tiles:
 	.global	gPlayerFrame11Tiles
 gPlayerFrame11Tiles:
 	.incbin	"baserom.gba", 0x1634EC, 0x126
-	.global	gUnk_08163612
-gUnk_08163612:
+	.global	gPlayerFrame11UpperTiles
+gPlayerFrame11UpperTiles:
 	.incbin	"baserom.gba", 0x163612, 0x86
 	.global	gPlayerFrame1108Tiles
 gPlayerFrame1108Tiles:
 	.incbin	"baserom.gba", 0x163698, 0x126
-	.global	gUnk_081637BE
-gUnk_081637BE:
+	.global	gPlayerFrame1108UpperTiles
+gPlayerFrame1108UpperTiles:
 	.incbin	"baserom.gba", 0x1637BE, 0x166
 	.global	gPlayerFrame1109Tiles
 gPlayerFrame1109Tiles:
 	.incbin	"baserom.gba", 0x163924, 0x126
-	.global	gUnk_08163A4A
-gUnk_08163A4A:
+	.global	gPlayerFrame1109UpperTiles
+gPlayerFrame1109UpperTiles:
 	.incbin	"baserom.gba", 0x163A4A, 0x126
-	.global	gUnk_08163B70
-gUnk_08163B70:
+	.global	gPlayerFrame1110UpperTiles
+gPlayerFrame1110UpperTiles:
 	.incbin	"baserom.gba", 0x163B70, 0xE6
-	.global	gUnk_08163C56
-gUnk_08163C56:
+	.global	gPlayerFrame1111UpperTiles
+gPlayerFrame1111UpperTiles:
 	.incbin	"baserom.gba", 0x163C56, 0xA6
 	.global	gPlayerFrame1115Tiles
 gPlayerFrame1115Tiles:
 	.incbin	"baserom.gba", 0x163CFC, 0x106
-	.global	gUnk_08163E02
-gUnk_08163E02:
+	.global	gPlayerFrame1115UpperTiles
+gPlayerFrame1115UpperTiles:
 	.incbin	"baserom.gba", 0x163E02, 0x166
 	.global	gPlayerFrame1116Tiles
 gPlayerFrame1116Tiles:
 	.incbin	"baserom.gba", 0x163F68, 0x126
-	.global	gUnk_0816408E
-gUnk_0816408E:
+	.global	gPlayerFrame1116UpperTiles
+gPlayerFrame1116UpperTiles:
 	.incbin	"baserom.gba", 0x16408E, 0x146
-	.global	gUnk_081641D4
-gUnk_081641D4:
+	.global	gPlayerFrame1117UpperTiles
+gPlayerFrame1117UpperTiles:
 	.incbin	"baserom.gba", 0x1641D4, 0x126
-	.global	gUnk_081642FA
-gUnk_081642FA:
+	.global	gPlayerFrame1018UpperTiles
+gPlayerFrame1018UpperTiles:
 	.incbin	"baserom.gba", 0x1642FA, 0x146
-	.global	gUnk_08164440
-gUnk_08164440:
+	.global	gPlayerFrame1909UpperTiles
+gPlayerFrame1909UpperTiles:
 	.incbin	"baserom.gba", 0x164440, 0x166
-	.global	gUnk_081645A6
-gUnk_081645A6:
+	.global	gPlayerFrame1910UpperTiles
+gPlayerFrame1910UpperTiles:
 	.incbin	"baserom.gba", 0x1645A6, 0x146
-	.global	gUnk_081646EC
-gUnk_081646EC:
+	.global	gPlayerFrame1911UpperTiles
+gPlayerFrame1911UpperTiles:
 	.incbin	"baserom.gba", 0x1646EC, 0x106
-	.global	gUnk_081647F2
-gUnk_081647F2:
+	.global	gPlayerFrame1912UpperTiles
+gPlayerFrame1912UpperTiles:
 	.incbin	"baserom.gba", 0x1647F2, 0x106
-	.global	gUnk_081648F8
-gUnk_081648F8:
+	.global	gPlayerFrame1913UpperTiles
+gPlayerFrame1913UpperTiles:
 	.incbin	"baserom.gba", 0x1648F8, 0xE6
-	.global	gUnk_081649DE
-gUnk_081649DE:
+	.global	gPlayerFrame1914UpperTiles
+gPlayerFrame1914UpperTiles:
 	.incbin	"baserom.gba", 0x1649DE, 0xE6
-	.global	gUnk_08164AC4
-gUnk_08164AC4:
+	.global	gPlayerFrame1916UpperTiles
+gPlayerFrame1916UpperTiles:
 	.incbin	"baserom.gba", 0x164AC4, 0x166
-	.global	gUnk_08164C2A
-gUnk_08164C2A:
+	.global	gPlayerFrame1917UpperTiles
+gPlayerFrame1917UpperTiles:
 	.incbin	"baserom.gba", 0x164C2A, 0x146
 	.global	gPlayerFrame1918Tiles
 gPlayerFrame1918Tiles:
 	.incbin	"baserom.gba", 0x164D70, 0x126
-	.global	gUnk_08164E96
-gUnk_08164E96:
+	.global	gPlayerFrame1918UpperTiles
+gPlayerFrame1918UpperTiles:
 	.incbin	"baserom.gba", 0x164E96, 0x146
-	.global	gUnk_08164FDC
-gUnk_08164FDC:
+	.global	gPlayerFrame1822UpperTiles
+gPlayerFrame1822UpperTiles:
 	.incbin	"baserom.gba", 0x164FDC, 0x186
-	.global	gUnk_08165162
-gUnk_08165162:
+	.global	gPlayerFrame2166UpperTiles
+gPlayerFrame2166UpperTiles:
 	.incbin	"baserom.gba", 0x165162, 0x1C6
-	.global	gUnk_08165328
-gUnk_08165328:
+	.global	gPlayerFrame2167UpperTiles
+gPlayerFrame2167UpperTiles:
 	.incbin	"baserom.gba", 0x165328, 0x1A6
-	.global	gUnk_081654CE
-gUnk_081654CE:
+	.global	gPlayerFrame2168UpperTiles
+gPlayerFrame2168UpperTiles:
 	.incbin	"baserom.gba", 0x1654CE, 0x166
-	.global	gUnk_08165634
-gUnk_08165634:
+	.global	gPlayerFrame2169UpperTiles
+gPlayerFrame2169UpperTiles:
 	.incbin	"baserom.gba", 0x165634, 0x166
-	.global	gUnk_0816579A
-gUnk_0816579A:
+	.global	gPlayerFrame2170UpperTiles
+gPlayerFrame2170UpperTiles:
 	.incbin	"baserom.gba", 0x16579A, 0x166
-	.global	gUnk_08165900
-gUnk_08165900:
+	.global	gPlayerFrame2172UpperTiles
+gPlayerFrame2172UpperTiles:
 	.incbin	"baserom.gba", 0x165900, 0x1A6
-	.global	gUnk_08165AA6
-gUnk_08165AA6:
+	.global	gPlayerFrame2173UpperTiles
+gPlayerFrame2173UpperTiles:
 	.incbin	"baserom.gba", 0x165AA6, 0x1C6
-	.global	gUnk_08165C6C
-gUnk_08165C6C:
+	.global	gPlayerFrame2174UpperTiles
+gPlayerFrame2174UpperTiles:
 	.incbin	"baserom.gba", 0x165C6C, 0x1A6
-	.global	gUnk_08165E12
-gUnk_08165E12:
+	.global	gPlayerFrame2175UpperTiles
+gPlayerFrame2175UpperTiles:
 	.incbin	"baserom.gba", 0x165E12, 0x1A6
-	.global	gUnk_08165FB8
-gUnk_08165FB8:
+	.global	gPlayerFrame2067UpperTiles
+gPlayerFrame2067UpperTiles:
 	.incbin	"baserom.gba", 0x165FB8, 0x1A6
 	.global	gPlayerFrame124OamTemplate
 gPlayerFrame124OamTemplate:
@@ -14593,50 +14593,50 @@ gPlayerFrame1452Palette:
 	.global	gUnk_08166D24
 gUnk_08166D24:
 	.incbin	"baserom.gba", 0x166D24, 0x22
-	.global	gUnk_08166D46
-gUnk_08166D46:
+	.global	gPlayerFrame976NextBankPalette
+gPlayerFrame976NextBankPalette:
 	.incbin	"baserom.gba", 0x166D46, 0x22
-	.global	gUnk_08166D68
-gUnk_08166D68:
+	.global	gPlayerFrame1452NextBankPalette
+gPlayerFrame1452NextBankPalette:
 	.incbin	"baserom.gba", 0x166D68, 0x22
-	.global	gUnk_08166D8A
-gUnk_08166D8A:
+	.global	gPlayerFrame1599NextBankPalette
+gPlayerFrame1599NextBankPalette:
 	.incbin	"baserom.gba", 0x166D8A, 0x22
-	.global	gUnk_08166DAC
-gUnk_08166DAC:
+	.global	gPlayerFrame1768NextBankPalette
+gPlayerFrame1768NextBankPalette:
 	.incbin	"baserom.gba", 0x166DAC, 0x22
 	.global	gPlayerFrame2389Palette
 gPlayerFrame2389Palette:
 	.incbin	"baserom.gba", 0x166DCE, 0x22
-	.global	gUnk_08166DF0
-gUnk_08166DF0:
+	.global	gPlayerFrame2389NextBankPalette
+gPlayerFrame2389NextBankPalette:
 	.incbin	"baserom.gba", 0x166DF0, 0x22
 	.global	gPlayerFrame2529Palette
 gPlayerFrame2529Palette:
 	.incbin	"baserom.gba", 0x166E12, 0x22
-	.global	gUnk_08166E34
-gUnk_08166E34:
+	.global	gPlayerFrame2529NextBankPalette
+gPlayerFrame2529NextBankPalette:
 	.incbin	"baserom.gba", 0x166E34, 0x22
-	.global	gUnk_08166E56
-gUnk_08166E56:
+	.global	gPlayerFrame2669NextBankPalette
+gPlayerFrame2669NextBankPalette:
 	.incbin	"baserom.gba", 0x166E56, 0x22
-	.global	gUnk_08166E78
-gUnk_08166E78:
+	.global	gPlayerFrame2834NextBankPalette
+gPlayerFrame2834NextBankPalette:
 	.incbin	"baserom.gba", 0x166E78, 0x22
-	.global	gUnk_08166E9A
-gUnk_08166E9A:
+	.global	gPlayerFrame2980NextBankPalette
+gPlayerFrame2980NextBankPalette:
 	.incbin	"baserom.gba", 0x166E9A, 0x22
 	.global	gPlayerFrame3111Palette
 gPlayerFrame3111Palette:
 	.incbin	"baserom.gba", 0x166EBC, 0x22
-	.global	gUnk_08166EDE
-gUnk_08166EDE:
+	.global	gPlayerFrame3111NextBankPalette
+gPlayerFrame3111NextBankPalette:
 	.incbin	"baserom.gba", 0x166EDE, 0x22
 	.global	gPlayerFrame3249Palette
 gPlayerFrame3249Palette:
 	.incbin	"baserom.gba", 0x166F00, 0x22
-	.global	gUnk_08166F22
-gUnk_08166F22:
+	.global	gPlayerFrame3494NextBankPalette
+gPlayerFrame3494NextBankPalette:
 	.incbin	"baserom.gba", 0x166F22, 0x22
 	.global	gUnk_08166F44
 gUnk_08166F44:
@@ -14692,215 +14692,215 @@ gUnk_08167F00:
 	.global	gUnk_08168006
 gUnk_08168006:
 	.incbin	"baserom.gba", 0x168006, 0x126
-	.global	gUnk_0816812C
-gUnk_0816812C:
+	.global	gPlayerFrame976UpperTiles
+gPlayerFrame976UpperTiles:
 	.incbin	"baserom.gba", 0x16812C, 0xC6
-	.global	gUnk_081681F2
-gUnk_081681F2:
+	.global	gPlayerFrame977UpperTiles
+gPlayerFrame977UpperTiles:
 	.incbin	"baserom.gba", 0x1681F2, 0xA6
-	.global	gUnk_08168298
-gUnk_08168298:
+	.global	gPlayerFrame978UpperTiles
+gPlayerFrame978UpperTiles:
 	.incbin	"baserom.gba", 0x168298, 0xE6
-	.global	gUnk_0816837E
-gUnk_0816837E:
+	.global	gPlayerFrame980UpperTiles
+gPlayerFrame980UpperTiles:
 	.incbin	"baserom.gba", 0x16837E, 0xC6
-	.global	gUnk_08168444
-gUnk_08168444:
+	.global	gPlayerFrame981UpperTiles
+gPlayerFrame981UpperTiles:
 	.incbin	"baserom.gba", 0x168444, 0xC6
-	.global	gUnk_0816850A
-gUnk_0816850A:
+	.global	gPlayerFrame983UpperTiles
+gPlayerFrame983UpperTiles:
 	.incbin	"baserom.gba", 0x16850A, 0xC6
-	.global	gUnk_081685D0
-gUnk_081685D0:
+	.global	gPlayerFrame1452UpperTiles
+gPlayerFrame1452UpperTiles:
 	.incbin	"baserom.gba", 0x1685D0, 0x1A6
-	.global	gUnk_08168776
-gUnk_08168776:
+	.global	gPlayerFrame1454UpperTiles
+gPlayerFrame1454UpperTiles:
 	.incbin	"baserom.gba", 0x168776, 0x186
-	.global	gUnk_081688FC
-gUnk_081688FC:
+	.global	gPlayerFrame1456UpperTiles
+gPlayerFrame1456UpperTiles:
 	.incbin	"baserom.gba", 0x1688FC, 0x186
-	.global	gUnk_08168A82
-gUnk_08168A82:
+	.global	gPlayerFrame1457UpperTiles
+gPlayerFrame1457UpperTiles:
 	.incbin	"baserom.gba", 0x168A82, 0x186
-	.global	gUnk_08168C08
-gUnk_08168C08:
+	.global	gPlayerFrame1458UpperTiles
+gPlayerFrame1458UpperTiles:
 	.incbin	"baserom.gba", 0x168C08, 0x186
-	.global	gUnk_08168D8E
-gUnk_08168D8E:
+	.global	gPlayerFrame1459UpperTiles
+gPlayerFrame1459UpperTiles:
 	.incbin	"baserom.gba", 0x168D8E, 0x186
-	.global	gUnk_08168F14
-gUnk_08168F14:
+	.global	gPlayerFrame1460UpperTiles
+gPlayerFrame1460UpperTiles:
 	.incbin	"baserom.gba", 0x168F14, 0x186
-	.global	gUnk_0816909A
-gUnk_0816909A:
+	.global	gPlayerFrame1461UpperTiles
+gPlayerFrame1461UpperTiles:
 	.incbin	"baserom.gba", 0x16909A, 0x1C6
-	.global	gUnk_08169260
-gUnk_08169260:
+	.global	gPlayerFrame1453UpperTiles
+gPlayerFrame1453UpperTiles:
 	.incbin	"baserom.gba", 0x169260, 0x1A6
-	.global	gUnk_08169406
-gUnk_08169406:
+	.global	gPlayerFrame1455UpperTiles
+gPlayerFrame1455UpperTiles:
 	.incbin	"baserom.gba", 0x169406, 0x186
-	.global	gUnk_0816958C
-gUnk_0816958C:
+	.global	gPlayerFrame1462UpperTiles
+gPlayerFrame1462UpperTiles:
 	.incbin	"baserom.gba", 0x16958C, 0x1C6
-	.global	gUnk_08169752
-gUnk_08169752:
+	.global	gPlayerFrame1599UpperTiles
+gPlayerFrame1599UpperTiles:
 	.incbin	"baserom.gba", 0x169752, 0x86
-	.global	gUnk_081697D8
-gUnk_081697D8:
+	.global	gPlayerFrame1600UpperTiles
+gPlayerFrame1600UpperTiles:
 	.incbin	"baserom.gba", 0x1697D8, 0x86
-	.global	gUnk_0816985E
-gUnk_0816985E:
+	.global	gPlayerFrame1601UpperTiles
+gPlayerFrame1601UpperTiles:
 	.incbin	"baserom.gba", 0x16985E, 0x86
-	.global	gUnk_081698E4
-gUnk_081698E4:
+	.global	gPlayerFrame1603UpperTiles
+gPlayerFrame1603UpperTiles:
 	.incbin	"baserom.gba", 0x1698E4, 0x86
-	.global	gUnk_0816996A
-gUnk_0816996A:
+	.global	gPlayerFrame1604UpperTiles
+gPlayerFrame1604UpperTiles:
 	.incbin	"baserom.gba", 0x16996A, 0x86
-	.global	gUnk_081699F0
-gUnk_081699F0:
+	.global	gPlayerFrame1606UpperTiles
+gPlayerFrame1606UpperTiles:
 	.incbin	"baserom.gba", 0x1699F0, 0x86
-	.global	gUnk_08169A76
-gUnk_08169A76:
+	.global	gPlayerFrame1768UpperTiles
+gPlayerFrame1768UpperTiles:
 	.incbin	"baserom.gba", 0x169A76, 0x86
-	.global	gUnk_08169AFC
-gUnk_08169AFC:
+	.global	gPlayerFrame1770UpperTiles
+gPlayerFrame1770UpperTiles:
 	.incbin	"baserom.gba", 0x169AFC, 0x86
-	.global	gUnk_08169B82
-gUnk_08169B82:
+	.global	gPlayerFrame1772UpperTiles
+gPlayerFrame1772UpperTiles:
 	.incbin	"baserom.gba", 0x169B82, 0xA6
-	.global	gUnk_08169C28
-gUnk_08169C28:
+	.global	gPlayerFrame1773UpperTiles
+gPlayerFrame1773UpperTiles:
 	.incbin	"baserom.gba", 0x169C28, 0xA6
-	.global	gUnk_08169CCE
-gUnk_08169CCE:
+	.global	gPlayerFrame1775UpperTiles
+gPlayerFrame1775UpperTiles:
 	.incbin	"baserom.gba", 0x169CCE, 0xC6
-	.global	gUnk_08169D94
-gUnk_08169D94:
+	.global	gPlayerFrame2389UpperTiles
+gPlayerFrame2389UpperTiles:
 	.incbin	"baserom.gba", 0x169D94, 0xE6
-	.global	gUnk_08169E7A
-gUnk_08169E7A:
+	.global	gPlayerFrame2390UpperTiles
+gPlayerFrame2390UpperTiles:
 	.incbin	"baserom.gba", 0x169E7A, 0xE6
-	.global	gUnk_08169F60
-gUnk_08169F60:
+	.global	gPlayerFrame2391UpperTiles
+gPlayerFrame2391UpperTiles:
 	.incbin	"baserom.gba", 0x169F60, 0xE6
-	.global	gUnk_0816A046
-gUnk_0816A046:
+	.global	gPlayerFrame2392UpperTiles
+gPlayerFrame2392UpperTiles:
 	.incbin	"baserom.gba", 0x16A046, 0xE6
-	.global	gUnk_0816A12C
-gUnk_0816A12C:
+	.global	gPlayerFrame2393UpperTiles
+gPlayerFrame2393UpperTiles:
 	.incbin	"baserom.gba", 0x16A12C, 0xC6
-	.global	gUnk_0816A1F2
-gUnk_0816A1F2:
+	.global	gPlayerFrame2394UpperTiles
+gPlayerFrame2394UpperTiles:
 	.incbin	"baserom.gba", 0x16A1F2, 0xE6
 	.global	gPlayerFrame2396Tiles
 gPlayerFrame2396Tiles:
 	.incbin	"baserom.gba", 0x16A2D8, 0x146
-	.global	gUnk_0816A41E
-gUnk_0816A41E:
+	.global	gPlayerFrame2396UpperTiles
+gPlayerFrame2396UpperTiles:
 	.incbin	"baserom.gba", 0x16A41E, 0x106
-	.global	gUnk_0816A524
-gUnk_0816A524:
+	.global	gPlayerFrame2529UpperTiles
+gPlayerFrame2529UpperTiles:
 	.incbin	"baserom.gba", 0x16A524, 0xC6
-	.global	gUnk_0816A5EA
-gUnk_0816A5EA:
+	.global	gPlayerFrame2531UpperTiles
+gPlayerFrame2531UpperTiles:
 	.incbin	"baserom.gba", 0x16A5EA, 0xC6
-	.global	gUnk_0816A6B0
-gUnk_0816A6B0:
+	.global	gPlayerFrame2533UpperTiles
+gPlayerFrame2533UpperTiles:
 	.incbin	"baserom.gba", 0x16A6B0, 0xC6
-	.global	gUnk_0816A776
-gUnk_0816A776:
+	.global	gPlayerFrame2534UpperTiles
+gPlayerFrame2534UpperTiles:
 	.incbin	"baserom.gba", 0x16A776, 0xC6
-	.global	gUnk_0816A83C
-gUnk_0816A83C:
+	.global	gPlayerFrame2536UpperTiles
+gPlayerFrame2536UpperTiles:
 	.incbin	"baserom.gba", 0x16A83C, 0xE6
-	.global	gUnk_0816A922
-gUnk_0816A922:
+	.global	gPlayerFrame2669UpperTiles
+gPlayerFrame2669UpperTiles:
 	.incbin	"baserom.gba", 0x16A922, 0x106
-	.global	gUnk_0816AA28
-gUnk_0816AA28:
+	.global	gPlayerFrame2670UpperTiles
+gPlayerFrame2670UpperTiles:
 	.incbin	"baserom.gba", 0x16AA28, 0x106
-	.global	gUnk_0816AB2E
-gUnk_0816AB2E:
+	.global	gPlayerFrame2671UpperTiles
+gPlayerFrame2671UpperTiles:
 	.incbin	"baserom.gba", 0x16AB2E, 0x126
-	.global	gUnk_0816AC54
-gUnk_0816AC54:
+	.global	gPlayerFrame2673UpperTiles
+gPlayerFrame2673UpperTiles:
 	.incbin	"baserom.gba", 0x16AC54, 0x106
-	.global	gUnk_0816AD5A
-gUnk_0816AD5A:
+	.global	gPlayerFrame2674UpperTiles
+gPlayerFrame2674UpperTiles:
 	.incbin	"baserom.gba", 0x16AD5A, 0xE6
-	.global	gUnk_0816AE40
-gUnk_0816AE40:
+	.global	gPlayerFrame2676UpperTiles
+gPlayerFrame2676UpperTiles:
 	.incbin	"baserom.gba", 0x16AE40, 0x106
-	.global	gUnk_0816AF46
-gUnk_0816AF46:
+	.global	gPlayerFrame2834UpperTiles
+gPlayerFrame2834UpperTiles:
 	.incbin	"baserom.gba", 0x16AF46, 0x146
-	.global	gUnk_0816B08C
-gUnk_0816B08C:
+	.global	gPlayerFrame2835UpperTiles
+gPlayerFrame2835UpperTiles:
 	.incbin	"baserom.gba", 0x16B08C, 0x146
-	.global	gUnk_0816B1D2
-gUnk_0816B1D2:
+	.global	gPlayerFrame2836UpperTiles
+gPlayerFrame2836UpperTiles:
 	.incbin	"baserom.gba", 0x16B1D2, 0x106
-	.global	gUnk_0816B2D8
-gUnk_0816B2D8:
+	.global	gPlayerFrame2837UpperTiles
+gPlayerFrame2837UpperTiles:
 	.incbin	"baserom.gba", 0x16B2D8, 0x106
-	.global	gUnk_0816B3DE
-gUnk_0816B3DE:
+	.global	gPlayerFrame2838UpperTiles
+gPlayerFrame2838UpperTiles:
 	.incbin	"baserom.gba", 0x16B3DE, 0x106
-	.global	gUnk_0816B4E4
-gUnk_0816B4E4:
+	.global	gPlayerFrame2839UpperTiles
+gPlayerFrame2839UpperTiles:
 	.incbin	"baserom.gba", 0x16B4E4, 0x126
-	.global	gUnk_0816B60A
-gUnk_0816B60A:
+	.global	gPlayerFrame2840UpperTiles
+gPlayerFrame2840UpperTiles:
 	.incbin	"baserom.gba", 0x16B60A, 0x126
-	.global	gUnk_0816B730
-gUnk_0816B730:
+	.global	gPlayerFrame2841UpperTiles
+gPlayerFrame2841UpperTiles:
 	.incbin	"baserom.gba", 0x16B730, 0x106
-	.global	gUnk_0816B836
-gUnk_0816B836:
+	.global	gPlayerFrame2980UpperTiles
+gPlayerFrame2980UpperTiles:
 	.incbin	"baserom.gba", 0x16B836, 0xC6
-	.global	gUnk_0816B8FC
-gUnk_0816B8FC:
+	.global	gPlayerFrame2981UpperTiles
+gPlayerFrame2981UpperTiles:
 	.incbin	"baserom.gba", 0x16B8FC, 0xC6
-	.global	gUnk_0816B9C2
-gUnk_0816B9C2:
+	.global	gPlayerFrame2982UpperTiles
+gPlayerFrame2982UpperTiles:
 	.incbin	"baserom.gba", 0x16B9C2, 0xE6
-	.global	gUnk_0816BAA8
-gUnk_0816BAA8:
+	.global	gPlayerFrame2983UpperTiles
+gPlayerFrame2983UpperTiles:
 	.incbin	"baserom.gba", 0x16BAA8, 0xE6
-	.global	gUnk_0816BB8E
-gUnk_0816BB8E:
+	.global	gPlayerFrame2984UpperTiles
+gPlayerFrame2984UpperTiles:
 	.incbin	"baserom.gba", 0x16BB8E, 0xC6
-	.global	gUnk_0816BC54
-gUnk_0816BC54:
+	.global	gPlayerFrame2985UpperTiles
+gPlayerFrame2985UpperTiles:
 	.incbin	"baserom.gba", 0x16BC54, 0x126
-	.global	gUnk_0816BD7A
-gUnk_0816BD7A:
+	.global	gPlayerFrame2986UpperTiles
+gPlayerFrame2986UpperTiles:
 	.incbin	"baserom.gba", 0x16BD7A, 0x126
-	.global	gUnk_0816BEA0
-gUnk_0816BEA0:
+	.global	gPlayerFrame2987UpperTiles
+gPlayerFrame2987UpperTiles:
 	.incbin	"baserom.gba", 0x16BEA0, 0x106
-	.global	gUnk_0816BFA6
-gUnk_0816BFA6:
+	.global	gPlayerFrame3111UpperTiles
+gPlayerFrame3111UpperTiles:
 	.incbin	"baserom.gba", 0x16BFA6, 0xC6
-	.global	gUnk_0816C06C
-gUnk_0816C06C:
+	.global	gPlayerFrame3112UpperTiles
+gPlayerFrame3112UpperTiles:
 	.incbin	"baserom.gba", 0x16C06C, 0xE6
-	.global	gUnk_0816C152
-gUnk_0816C152:
+	.global	gPlayerFrame3113UpperTiles
+gPlayerFrame3113UpperTiles:
 	.incbin	"baserom.gba", 0x16C152, 0x106
-	.global	gUnk_0816C258
-gUnk_0816C258:
+	.global	gPlayerFrame3115UpperTiles
+gPlayerFrame3115UpperTiles:
 	.incbin	"baserom.gba", 0x16C258, 0x106
-	.global	gUnk_0816C35E
-gUnk_0816C35E:
+	.global	gPlayerFrame3116UpperTiles
+gPlayerFrame3116UpperTiles:
 	.incbin	"baserom.gba", 0x16C35E, 0x106
-	.global	gUnk_0816C464
-gUnk_0816C464:
+	.global	gPlayerFrame3117UpperTiles
+gPlayerFrame3117UpperTiles:
 	.incbin	"baserom.gba", 0x16C464, 0x106
-	.global	gUnk_0816C56A
-gUnk_0816C56A:
+	.global	gPlayerFrame3118UpperTiles
+gPlayerFrame3118UpperTiles:
 	.incbin	"baserom.gba", 0x16C56A, 0x106
 	.global	gPlayerFrame3249Tiles
 gPlayerFrame3249Tiles:
@@ -14920,38 +14920,38 @@ gPlayerFrame3254Tiles:
 	.global	gPlayerFrame3256Tiles
 gPlayerFrame3256Tiles:
 	.incbin	"baserom.gba", 0x16CC2E, 0x126
-	.global	gUnk_0816CD54
-gUnk_0816CD54:
+	.global	gPlayerFrame3494UpperTiles
+gPlayerFrame3494UpperTiles:
 	.incbin	"baserom.gba", 0x16CD54, 0x126
-	.global	gUnk_0816CE7A
-gUnk_0816CE7A:
+	.global	gPlayerFrame3496UpperTiles
+gPlayerFrame3496UpperTiles:
 	.incbin	"baserom.gba", 0x16CE7A, 0x146
-	.global	gUnk_0816CFC0
-gUnk_0816CFC0:
+	.global	gPlayerFrame3498UpperTiles
+gPlayerFrame3498UpperTiles:
 	.incbin	"baserom.gba", 0x16CFC0, 0xC6
-	.global	gUnk_0816D086
-gUnk_0816D086:
+	.global	gPlayerFrame3499UpperTiles
+gPlayerFrame3499UpperTiles:
 	.incbin	"baserom.gba", 0x16D086, 0xC6
-	.global	gUnk_0816D14C
-gUnk_0816D14C:
+	.global	gPlayerFrame3500UpperTiles
+gPlayerFrame3500UpperTiles:
 	.incbin	"baserom.gba", 0x16D14C, 0xC6
-	.global	gUnk_0816D212
-gUnk_0816D212:
+	.global	gPlayerFrame3501UpperTiles
+gPlayerFrame3501UpperTiles:
 	.incbin	"baserom.gba", 0x16D212, 0x126
-	.global	gUnk_0816D338
-gUnk_0816D338:
+	.global	gPlayerFrame3502UpperTiles
+gPlayerFrame3502UpperTiles:
 	.incbin	"baserom.gba", 0x16D338, 0x126
-	.global	gUnk_0816D45E
-gUnk_0816D45E:
+	.global	gPlayerFrame3503UpperTiles
+gPlayerFrame3503UpperTiles:
 	.incbin	"baserom.gba", 0x16D45E, 0x126
-	.global	gUnk_0816D584
-gUnk_0816D584:
+	.global	gPlayerFrame3495UpperTiles
+gPlayerFrame3495UpperTiles:
 	.incbin	"baserom.gba", 0x16D584, 0x126
-	.global	gUnk_0816D6AA
-gUnk_0816D6AA:
+	.global	gPlayerFrame3497UpperTiles
+gPlayerFrame3497UpperTiles:
 	.incbin	"baserom.gba", 0x16D6AA, 0x106
-	.global	gUnk_0816D7B0
-gUnk_0816D7B0:
+	.global	gPlayerFrame3504UpperTiles
+gPlayerFrame3504UpperTiles:
 	.incbin	"baserom.gba", 0x16D7B0, 0x126
 	.global	gUnk_0816D8D6
 gUnk_0816D8D6:
@@ -15379,68 +15379,68 @@ gUnk_0816FCC4:
 	.global	gPlayerFrame1100Palette
 gPlayerFrame1100Palette:
 	.incbin	"baserom.gba", 0x16FCEC, 0x22
-	.global	gUnk_0816FD0E
-gUnk_0816FD0E:
+	.global	gPlayerFrame1100NextBankPalette
+gPlayerFrame1100NextBankPalette:
 	.incbin	"baserom.gba", 0x16FD0E, 0x22
 	.global	gPlayerFrame1901Palette
 gPlayerFrame1901Palette:
 	.incbin	"baserom.gba", 0x16FD30, 0x22
-	.global	gUnk_0816FD52
-gUnk_0816FD52:
+	.global	gPlayerFrame1901NextBankPalette
+gPlayerFrame1901NextBankPalette:
 	.incbin	"baserom.gba", 0x16FD52, 0x22
 	.global	gPlayerFrame2158Palette
 gPlayerFrame2158Palette:
 	.incbin	"baserom.gba", 0x16FD74, 0x22
-	.global	gUnk_0816FD96
-gUnk_0816FD96:
+	.global	gPlayerFrame2158NextBankPalette
+gPlayerFrame2158NextBankPalette:
 	.incbin	"baserom.gba", 0x16FD96, 0x22
 	.global	gPlayerFrame1100Tiles
 gPlayerFrame1100Tiles:
 	.incbin	"baserom.gba", 0x16FDB8, 0x126
-	.global	gUnk_0816FEDE
-gUnk_0816FEDE:
+	.global	gPlayerFrame1100UpperTiles
+gPlayerFrame1100UpperTiles:
 	.incbin	"baserom.gba", 0x16FEDE, 0x186
 	.global	gPlayerFrame1101Tiles
 gPlayerFrame1101Tiles:
 	.incbin	"baserom.gba", 0x170064, 0x126
-	.global	gUnk_0817018A
-gUnk_0817018A:
+	.global	gPlayerFrame1101UpperTiles
+gPlayerFrame1101UpperTiles:
 	.incbin	"baserom.gba", 0x17018A, 0x146
 	.global	gPlayerFrame1102Tiles
 gPlayerFrame1102Tiles:
 	.incbin	"baserom.gba", 0x1702D0, 0x126
-	.global	gUnk_081703F6
-gUnk_081703F6:
+	.global	gPlayerFrame1102UpperTiles
+gPlayerFrame1102UpperTiles:
 	.incbin	"baserom.gba", 0x1703F6, 0x1A6
-	.global	gUnk_0817059C
-gUnk_0817059C:
+	.global	gPlayerFrame1103UpperTiles
+gPlayerFrame1103UpperTiles:
 	.incbin	"baserom.gba", 0x17059C, 0x186
 	.global	gPlayerFrame1104Tiles
 gPlayerFrame1104Tiles:
 	.incbin	"baserom.gba", 0x170722, 0x126
-	.global	gUnk_08170848
-gUnk_08170848:
+	.global	gPlayerFrame1104UpperTiles
+gPlayerFrame1104UpperTiles:
 	.incbin	"baserom.gba", 0x170848, 0x186
 	.global	gPlayerFrame1105Tiles
 gPlayerFrame1105Tiles:
 	.incbin	"baserom.gba", 0x1709CE, 0x126
-	.global	gUnk_08170AF4
-gUnk_08170AF4:
+	.global	gPlayerFrame1105UpperTiles
+gPlayerFrame1105UpperTiles:
 	.incbin	"baserom.gba", 0x170AF4, 0x166
-	.global	gUnk_08170C5A
-gUnk_08170C5A:
+	.global	gPlayerFrame1106UpperTiles
+gPlayerFrame1106UpperTiles:
 	.incbin	"baserom.gba", 0x170C5A, 0x166
 	.global	gPlayerFrame1107Tiles
 gPlayerFrame1107Tiles:
 	.incbin	"baserom.gba", 0x170DC0, 0x126
-	.global	gUnk_08170EE6
-gUnk_08170EE6:
+	.global	gPlayerFrame1107UpperTiles
+gPlayerFrame1107UpperTiles:
 	.incbin	"baserom.gba", 0x170EE6, 0x166
 	.global	gPlayerFrame1901Tiles
 gPlayerFrame1901Tiles:
 	.incbin	"baserom.gba", 0x17104C, 0x126
-	.global	gUnk_08171172
-gUnk_08171172:
+	.global	gPlayerFrame1901UpperTiles
+gPlayerFrame1901UpperTiles:
 	.incbin	"baserom.gba", 0x171172, 0xE6
 	.global	gPlayerFrame1902Tiles
 gPlayerFrame1902Tiles:
@@ -15448,14 +15448,14 @@ gPlayerFrame1902Tiles:
 	.global	gPlayerFrame1903Tiles
 gPlayerFrame1903Tiles:
 	.incbin	"baserom.gba", 0x17137E, 0x126
-	.global	gUnk_081714A4
-gUnk_081714A4:
+	.global	gPlayerFrame1903UpperTiles
+gPlayerFrame1903UpperTiles:
 	.incbin	"baserom.gba", 0x1714A4, 0x106
 	.global	gPlayerFrame1905Tiles
 gPlayerFrame1905Tiles:
 	.incbin	"baserom.gba", 0x1715AA, 0x126
-	.global	gUnk_081716D0
-gUnk_081716D0:
+	.global	gPlayerFrame1905UpperTiles
+gPlayerFrame1905UpperTiles:
 	.incbin	"baserom.gba", 0x1716D0, 0xE6
 	.global	gPlayerFrame1906Tiles
 gPlayerFrame1906Tiles:
@@ -15466,14 +15466,14 @@ gPlayerFrame1908Tiles:
 	.global	gPlayerFrame2158Tiles
 gPlayerFrame2158Tiles:
 	.incbin	"baserom.gba", 0x171A02, 0x126
-	.global	gUnk_08171B28
-gUnk_08171B28:
+	.global	gPlayerFrame2158UpperTiles
+gPlayerFrame2158UpperTiles:
 	.incbin	"baserom.gba", 0x171B28, 0x126
-	.global	gUnk_08171C4E
-gUnk_08171C4E:
+	.global	gPlayerFrame2160UpperTiles
+gPlayerFrame2160UpperTiles:
 	.incbin	"baserom.gba", 0x171C4E, 0x106
-	.global	gUnk_08171D54
-gUnk_08171D54:
+	.global	gPlayerFrame2162UpperTiles
+gPlayerFrame2162UpperTiles:
 	.incbin	"baserom.gba", 0x171D54, 0x126
 	.global	gPlayerFrame1100OamTemplate
 gPlayerFrame1100OamTemplate:
@@ -15553,113 +15553,113 @@ gPlayerFrame138Palette:
 	.global	gPlayerFrame1122Palette
 gPlayerFrame1122Palette:
 	.incbin	"baserom.gba", 0x172466, 0x22
-	.global	gUnk_08172488
-gUnk_08172488:
+	.global	gPlayerFrame1122NextBankPalette
+gPlayerFrame1122NextBankPalette:
 	.incbin	"baserom.gba", 0x172488, 0x22
-	.global	gUnk_081724AA
-gUnk_081724AA:
+	.global	gPlayerFrame1923NextBankPalette
+gPlayerFrame1923NextBankPalette:
 	.incbin	"baserom.gba", 0x1724AA, 0x22
-	.global	gUnk_081724CC
-gUnk_081724CC:
+	.global	gPlayerFrame2180NextBankPalette
+gPlayerFrame2180NextBankPalette:
 	.incbin	"baserom.gba", 0x1724CC, 0x22
 	.global	gPlayerFrame138Tiles
 gPlayerFrame138Tiles:
 	.incbin	"baserom.gba", 0x1724EE, 0x126
-	.global	gUnk_08172614
-gUnk_08172614:
+	.global	gPlayerFrame138UpperTiles
+gPlayerFrame138UpperTiles:
 	.incbin	"baserom.gba", 0x172614, 0x86
 	.global	gPlayerFrame139Tiles
 gPlayerFrame139Tiles:
 	.incbin	"baserom.gba", 0x17269A, 0x126
-	.global	gUnk_081727C0
-gUnk_081727C0:
+	.global	gPlayerFrame139UpperTiles
+gPlayerFrame139UpperTiles:
 	.incbin	"baserom.gba", 0x1727C0, 0x86
 	.global	gPlayerFrame140Tiles
 gPlayerFrame140Tiles:
 	.incbin	"baserom.gba", 0x172846, 0x126
-	.global	gUnk_0817296C
-gUnk_0817296C:
+	.global	gPlayerFrame140UpperTiles
+gPlayerFrame140UpperTiles:
 	.incbin	"baserom.gba", 0x17296C, 0x86
 	.global	gPlayerFrame142Tiles
 gPlayerFrame142Tiles:
 	.incbin	"baserom.gba", 0x1729F2, 0x126
-	.global	gUnk_08172B18
-gUnk_08172B18:
+	.global	gPlayerFrame142UpperTiles
+gPlayerFrame142UpperTiles:
 	.incbin	"baserom.gba", 0x172B18, 0x86
 	.global	gPlayerFrame143Tiles
 gPlayerFrame143Tiles:
 	.incbin	"baserom.gba", 0x172B9E, 0x126
-	.global	gUnk_08172CC4
-gUnk_08172CC4:
+	.global	gPlayerFrame143UpperTiles
+gPlayerFrame143UpperTiles:
 	.incbin	"baserom.gba", 0x172CC4, 0x86
 	.global	gPlayerFrame145Tiles
 gPlayerFrame145Tiles:
 	.incbin	"baserom.gba", 0x172D4A, 0x126
-	.global	gUnk_08172E70
-gUnk_08172E70:
+	.global	gPlayerFrame145UpperTiles
+gPlayerFrame145UpperTiles:
 	.incbin	"baserom.gba", 0x172E70, 0x86
 	.global	gPlayerFrame1122Tiles
 gPlayerFrame1122Tiles:
 	.incbin	"baserom.gba", 0x172EF6, 0x126
-	.global	gUnk_0817301C
-gUnk_0817301C:
+	.global	gPlayerFrame1122UpperTiles
+gPlayerFrame1122UpperTiles:
 	.incbin	"baserom.gba", 0x17301C, 0x146
 	.global	gPlayerFrame1123Tiles
 gPlayerFrame1123Tiles:
 	.incbin	"baserom.gba", 0x173162, 0x126
-	.global	gUnk_08173288
-gUnk_08173288:
+	.global	gPlayerFrame1123UpperTiles
+gPlayerFrame1123UpperTiles:
 	.incbin	"baserom.gba", 0x173288, 0x126
-	.global	gUnk_081733AE
-gUnk_081733AE:
+	.global	gPlayerFrame1124UpperTiles
+gPlayerFrame1124UpperTiles:
 	.incbin	"baserom.gba", 0x1733AE, 0x146
-	.global	gUnk_081734F4
-gUnk_081734F4:
+	.global	gPlayerFrame1126UpperTiles
+gPlayerFrame1126UpperTiles:
 	.incbin	"baserom.gba", 0x1734F4, 0x146
-	.global	gUnk_0817363A
-gUnk_0817363A:
+	.global	gPlayerFrame1127UpperTiles
+gPlayerFrame1127UpperTiles:
 	.incbin	"baserom.gba", 0x17363A, 0x126
-	.global	gUnk_08173760
-gUnk_08173760:
+	.global	gPlayerFrame1129UpperTiles
+gPlayerFrame1129UpperTiles:
 	.incbin	"baserom.gba", 0x173760, 0x126
-	.global	gUnk_08173886
-gUnk_08173886:
+	.global	gPlayerFrame1923UpperTiles
+gPlayerFrame1923UpperTiles:
 	.incbin	"baserom.gba", 0x173886, 0x166
-	.global	gUnk_081739EC
-gUnk_081739EC:
+	.global	gPlayerFrame1924UpperTiles
+gPlayerFrame1924UpperTiles:
 	.incbin	"baserom.gba", 0x1739EC, 0x166
-	.global	gUnk_08173B52
-gUnk_08173B52:
+	.global	gPlayerFrame1925UpperTiles
+gPlayerFrame1925UpperTiles:
 	.incbin	"baserom.gba", 0x173B52, 0x186
-	.global	gUnk_08173CD8
-gUnk_08173CD8:
+	.global	gPlayerFrame1927UpperTiles
+gPlayerFrame1927UpperTiles:
 	.incbin	"baserom.gba", 0x173CD8, 0x146
-	.global	gUnk_08173E1E
-gUnk_08173E1E:
+	.global	gPlayerFrame1928UpperTiles
+gPlayerFrame1928UpperTiles:
 	.incbin	"baserom.gba", 0x173E1E, 0x106
-	.global	gUnk_08173F24
-gUnk_08173F24:
+	.global	gPlayerFrame1930UpperTiles
+gPlayerFrame1930UpperTiles:
 	.incbin	"baserom.gba", 0x173F24, 0x146
-	.global	gUnk_0817406A
-gUnk_0817406A:
+	.global	gPlayerFrame2180UpperTiles
+gPlayerFrame2180UpperTiles:
 	.incbin	"baserom.gba", 0x17406A, 0x1A6
-	.global	gUnk_08174210
-gUnk_08174210:
+	.global	gPlayerFrame2181UpperTiles
+gPlayerFrame2181UpperTiles:
 	.incbin	"baserom.gba", 0x174210, 0x1A6
-	.global	gUnk_081743B6
-gUnk_081743B6:
+	.global	gPlayerFrame2182UpperTiles
+gPlayerFrame2182UpperTiles:
 	.incbin	"baserom.gba", 0x1743B6, 0x146
-	.global	gUnk_081744FC
-gUnk_081744FC:
+	.global	gPlayerFrame2183UpperTiles
+gPlayerFrame2183UpperTiles:
 	.incbin	"baserom.gba", 0x1744FC, 0x186
-	.global	gUnk_08174682
-gUnk_08174682:
+	.global	gPlayerFrame2184UpperTiles
+gPlayerFrame2184UpperTiles:
 	.incbin	"baserom.gba", 0x174682, 0x186
-	.global	gUnk_08174808
-gUnk_08174808:
+	.global	gPlayerFrame2185UpperTiles
+gPlayerFrame2185UpperTiles:
 	.incbin	"baserom.gba", 0x174808, 0x146
-	.global	gUnk_0817494E
-gUnk_0817494E:
+	.global	gPlayerFrame2187UpperTiles
+gPlayerFrame2187UpperTiles:
 	.incbin	"baserom.gba", 0x17494E, 0x186
 	.global	gPlayerFrame138OamTemplate
 gPlayerFrame138OamTemplate:
@@ -15766,53 +15766,53 @@ gPlayerFrame985Palette:
 	.global	gUnk_081751E0
 gUnk_081751E0:
 	.incbin	"baserom.gba", 0x1751E0, 0x22
-	.global	gUnk_08175202
-gUnk_08175202:
+	.global	gPlayerFrame985NextBankPalette
+gPlayerFrame985NextBankPalette:
 	.incbin	"baserom.gba", 0x175202, 0x22
-	.global	gUnk_08175224
-gUnk_08175224:
+	.global	gPlayerFrame1467NextBankPalette
+gPlayerFrame1467NextBankPalette:
 	.incbin	"baserom.gba", 0x175224, 0x22
-	.global	gUnk_08175246
-gUnk_08175246:
+	.global	gPlayerFrame1608NextBankPalette
+gPlayerFrame1608NextBankPalette:
 	.incbin	"baserom.gba", 0x175246, 0x22
-	.global	gUnk_08175268
-gUnk_08175268:
+	.global	gPlayerFrame1777NextBankPalette
+gPlayerFrame1777NextBankPalette:
 	.incbin	"baserom.gba", 0x175268, 0x22
 	.global	gPlayerFrame2398Palette
 gPlayerFrame2398Palette:
 	.incbin	"baserom.gba", 0x17528A, 0x22
-	.global	gUnk_081752AC
-gUnk_081752AC:
+	.global	gPlayerFrame2398NextBankPalette
+gPlayerFrame2398NextBankPalette:
 	.incbin	"baserom.gba", 0x1752AC, 0x22
 	.global	gPlayerFrame2538Palette
 gPlayerFrame2538Palette:
 	.incbin	"baserom.gba", 0x1752CE, 0x22
-	.global	gUnk_081752F0
-gUnk_081752F0:
+	.global	gPlayerFrame2538NextBankPalette
+gPlayerFrame2538NextBankPalette:
 	.incbin	"baserom.gba", 0x1752F0, 0x22
 	.global	gPlayerFrame2678Palette
 gPlayerFrame2678Palette:
 	.incbin	"baserom.gba", 0x175312, 0x22
-	.global	gUnk_08175334
-gUnk_08175334:
+	.global	gPlayerFrame2678NextBankPalette
+gPlayerFrame2678NextBankPalette:
 	.incbin	"baserom.gba", 0x175334, 0x22
-	.global	gUnk_08175356
-gUnk_08175356:
+	.global	gPlayerFrame2843NextBankPalette
+gPlayerFrame2843NextBankPalette:
 	.incbin	"baserom.gba", 0x175356, 0x22
-	.global	gUnk_08175378
-gUnk_08175378:
+	.global	gPlayerFrame2989NextBankPalette
+gPlayerFrame2989NextBankPalette:
 	.incbin	"baserom.gba", 0x175378, 0x22
 	.global	gPlayerFrame3120Palette
 gPlayerFrame3120Palette:
 	.incbin	"baserom.gba", 0x17539A, 0x22
-	.global	gUnk_081753BC
-gUnk_081753BC:
+	.global	gPlayerFrame3120NextBankPalette
+gPlayerFrame3120NextBankPalette:
 	.incbin	"baserom.gba", 0x1753BC, 0x22
 	.global	gPlayerFrame3258Palette
 gPlayerFrame3258Palette:
 	.incbin	"baserom.gba", 0x1753DE, 0x22
-	.global	gUnk_08175400
-gUnk_08175400:
+	.global	gPlayerFrame3509NextBankPalette
+gPlayerFrame3509NextBankPalette:
 	.incbin	"baserom.gba", 0x175400, 0x22
 	.global	gUnk_08175422
 gUnk_08175422:
@@ -15847,176 +15847,176 @@ gUnk_08175C14:
 	.global	gUnk_08175CDA
 gUnk_08175CDA:
 	.incbin	"baserom.gba", 0x175CDA, 0xC6
-	.global	gUnk_08175DA0
-gUnk_08175DA0:
+	.global	gPlayerFrame988UpperTiles
+gPlayerFrame988UpperTiles:
 	.incbin	"baserom.gba", 0x175DA0, 0x86
-	.global	gUnk_08175E26
-gUnk_08175E26:
+	.global	gPlayerFrame986UpperTiles
+gPlayerFrame986UpperTiles:
 	.incbin	"baserom.gba", 0x175E26, 0x86
-	.global	gUnk_08175EAC
-gUnk_08175EAC:
+	.global	gPlayerFrame985UpperTiles
+gPlayerFrame985UpperTiles:
 	.incbin	"baserom.gba", 0x175EAC, 0x86
-	.global	gUnk_08175F32
-gUnk_08175F32:
+	.global	gPlayerFrame989UpperTiles
+gPlayerFrame989UpperTiles:
 	.incbin	"baserom.gba", 0x175F32, 0x86
-	.global	gUnk_08175FB8
-gUnk_08175FB8:
+	.global	gPlayerFrame990UpperTiles
+gPlayerFrame990UpperTiles:
 	.incbin	"baserom.gba", 0x175FB8, 0x86
-	.global	gUnk_0817603E
-gUnk_0817603E:
+	.global	gPlayerFrame1470UpperTiles
+gPlayerFrame1470UpperTiles:
 	.incbin	"baserom.gba", 0x17603E, 0x186
-	.global	gUnk_081761C4
-gUnk_081761C4:
+	.global	gPlayerFrame1468UpperTiles
+gPlayerFrame1468UpperTiles:
 	.incbin	"baserom.gba", 0x1761C4, 0x186
-	.global	gUnk_0817634A
-gUnk_0817634A:
+	.global	gPlayerFrame1467UpperTiles
+gPlayerFrame1467UpperTiles:
 	.incbin	"baserom.gba", 0x17634A, 0x186
-	.global	gUnk_081764D0
-gUnk_081764D0:
+	.global	gPlayerFrame1471UpperTiles
+gPlayerFrame1471UpperTiles:
 	.incbin	"baserom.gba", 0x1764D0, 0x186
-	.global	gUnk_08176656
-gUnk_08176656:
+	.global	gPlayerFrame1472UpperTiles
+gPlayerFrame1472UpperTiles:
 	.incbin	"baserom.gba", 0x176656, 0x186
-	.global	gUnk_081767DC
-gUnk_081767DC:
+	.global	gPlayerFrame1615UpperTiles
+gPlayerFrame1615UpperTiles:
 	.incbin	"baserom.gba", 0x1767DC, 0x86
-	.global	gUnk_08176862
-gUnk_08176862:
+	.global	gPlayerFrame1611UpperTiles
+gPlayerFrame1611UpperTiles:
 	.incbin	"baserom.gba", 0x176862, 0x86
-	.global	gUnk_081768E8
-gUnk_081768E8:
+	.global	gPlayerFrame1609UpperTiles
+gPlayerFrame1609UpperTiles:
 	.incbin	"baserom.gba", 0x1768E8, 0x86
-	.global	gUnk_0817696E
-gUnk_0817696E:
+	.global	gPlayerFrame1610UpperTiles
+gPlayerFrame1610UpperTiles:
 	.incbin	"baserom.gba", 0x17696E, 0x86
-	.global	gUnk_081769F4
-gUnk_081769F4:
+	.global	gPlayerFrame1608UpperTiles
+gPlayerFrame1608UpperTiles:
 	.incbin	"baserom.gba", 0x1769F4, 0x86
-	.global	gUnk_08176A7A
-gUnk_08176A7A:
+	.global	gPlayerFrame1612UpperTiles
+gPlayerFrame1612UpperTiles:
 	.incbin	"baserom.gba", 0x176A7A, 0x86
-	.global	gUnk_08176B00
-gUnk_08176B00:
+	.global	gPlayerFrame1614UpperTiles
+gPlayerFrame1614UpperTiles:
 	.incbin	"baserom.gba", 0x176B00, 0x86
-	.global	gUnk_08176B86
-gUnk_08176B86:
+	.global	gPlayerFrame1613UpperTiles
+gPlayerFrame1613UpperTiles:
 	.incbin	"baserom.gba", 0x176B86, 0x86
-	.global	gUnk_08176C0C
-gUnk_08176C0C:
+	.global	gPlayerFrame1780UpperTiles
+gPlayerFrame1780UpperTiles:
 	.incbin	"baserom.gba", 0x176C0C, 0x86
 	.global	gPlayerFrame1778Tiles
 gPlayerFrame1778Tiles:
 	.incbin	"baserom.gba", 0x176C92, 0x146
-	.global	gUnk_08176DD8
-gUnk_08176DD8:
+	.global	gPlayerFrame1778UpperTiles
+gPlayerFrame1778UpperTiles:
 	.incbin	"baserom.gba", 0x176DD8, 0x86
-	.global	gUnk_08176E5E
-gUnk_08176E5E:
+	.global	gPlayerFrame1777UpperTiles
+gPlayerFrame1777UpperTiles:
 	.incbin	"baserom.gba", 0x176E5E, 0xA6
-	.global	gUnk_08176F04
-gUnk_08176F04:
+	.global	gPlayerFrame1781UpperTiles
+gPlayerFrame1781UpperTiles:
 	.incbin	"baserom.gba", 0x176F04, 0xA6
-	.global	gUnk_08176FAA
-gUnk_08176FAA:
+	.global	gPlayerFrame1782UpperTiles
+gPlayerFrame1782UpperTiles:
 	.incbin	"baserom.gba", 0x176FAA, 0xA6
-	.global	gUnk_08177050
-gUnk_08177050:
+	.global	gPlayerFrame2401UpperTiles
+gPlayerFrame2401UpperTiles:
 	.incbin	"baserom.gba", 0x177050, 0xC6
-	.global	gUnk_08177116
-gUnk_08177116:
+	.global	gPlayerFrame2399UpperTiles
+gPlayerFrame2399UpperTiles:
 	.incbin	"baserom.gba", 0x177116, 0xC6
-	.global	gUnk_081771DC
-gUnk_081771DC:
+	.global	gPlayerFrame2398UpperTiles
+gPlayerFrame2398UpperTiles:
 	.incbin	"baserom.gba", 0x1771DC, 0xC6
-	.global	gUnk_081772A2
-gUnk_081772A2:
+	.global	gPlayerFrame2402UpperTiles
+gPlayerFrame2402UpperTiles:
 	.incbin	"baserom.gba", 0x1772A2, 0xC6
-	.global	gUnk_08177368
-gUnk_08177368:
+	.global	gPlayerFrame2403UpperTiles
+gPlayerFrame2403UpperTiles:
 	.incbin	"baserom.gba", 0x177368, 0xC6
-	.global	gUnk_0817742E
-gUnk_0817742E:
+	.global	gPlayerFrame2541UpperTiles
+gPlayerFrame2541UpperTiles:
 	.incbin	"baserom.gba", 0x17742E, 0x86
-	.global	gUnk_081774B4
-gUnk_081774B4:
+	.global	gPlayerFrame2539UpperTiles
+gPlayerFrame2539UpperTiles:
 	.incbin	"baserom.gba", 0x1774B4, 0xC6
-	.global	gUnk_0817757A
-gUnk_0817757A:
+	.global	gPlayerFrame2538UpperTiles
+gPlayerFrame2538UpperTiles:
 	.incbin	"baserom.gba", 0x17757A, 0xC6
-	.global	gUnk_08177640
-gUnk_08177640:
+	.global	gPlayerFrame2542UpperTiles
+gPlayerFrame2542UpperTiles:
 	.incbin	"baserom.gba", 0x177640, 0xC6
-	.global	gUnk_08177706
-gUnk_08177706:
+	.global	gPlayerFrame2543UpperTiles
+gPlayerFrame2543UpperTiles:
 	.incbin	"baserom.gba", 0x177706, 0xC6
-	.global	gUnk_081777CC
-gUnk_081777CC:
+	.global	gPlayerFrame2681UpperTiles
+gPlayerFrame2681UpperTiles:
 	.incbin	"baserom.gba", 0x1777CC, 0x86
-	.global	gUnk_08177852
-gUnk_08177852:
+	.global	gPlayerFrame2679UpperTiles
+gPlayerFrame2679UpperTiles:
 	.incbin	"baserom.gba", 0x177852, 0xE6
-	.global	gUnk_08177938
-gUnk_08177938:
+	.global	gPlayerFrame2678UpperTiles
+gPlayerFrame2678UpperTiles:
 	.incbin	"baserom.gba", 0x177938, 0x106
-	.global	gUnk_08177A3E
-gUnk_08177A3E:
+	.global	gPlayerFrame2682UpperTiles
+gPlayerFrame2682UpperTiles:
 	.incbin	"baserom.gba", 0x177A3E, 0x106
-	.global	gUnk_08177B44
-gUnk_08177B44:
+	.global	gPlayerFrame2683UpperTiles
+gPlayerFrame2683UpperTiles:
 	.incbin	"baserom.gba", 0x177B44, 0xE6
-	.global	gUnk_08177C2A
-gUnk_08177C2A:
+	.global	gPlayerFrame2846UpperTiles
+gPlayerFrame2846UpperTiles:
 	.incbin	"baserom.gba", 0x177C2A, 0xC6
-	.global	gUnk_08177CF0
-gUnk_08177CF0:
+	.global	gPlayerFrame2844UpperTiles
+gPlayerFrame2844UpperTiles:
 	.incbin	"baserom.gba", 0x177CF0, 0x86
-	.global	gUnk_08177D76
-gUnk_08177D76:
+	.global	gPlayerFrame2843UpperTiles
+gPlayerFrame2843UpperTiles:
 	.incbin	"baserom.gba", 0x177D76, 0xC6
-	.global	gUnk_08177E3C
-gUnk_08177E3C:
+	.global	gPlayerFrame2847UpperTiles
+gPlayerFrame2847UpperTiles:
 	.incbin	"baserom.gba", 0x177E3C, 0xC6
-	.global	gUnk_08177F02
-gUnk_08177F02:
+	.global	gPlayerFrame2848UpperTiles
+gPlayerFrame2848UpperTiles:
 	.incbin	"baserom.gba", 0x177F02, 0x84
-	.global	gUnk_08177F86
-gUnk_08177F86:
+	.global	gPlayerFrame2996UpperTiles
+gPlayerFrame2996UpperTiles:
 	.incbin	"baserom.gba", 0x177F86, 0xC6
-	.global	gUnk_0817804C
-gUnk_0817804C:
+	.global	gPlayerFrame2992UpperTiles
+gPlayerFrame2992UpperTiles:
 	.incbin	"baserom.gba", 0x17804C, 0xC6
-	.global	gUnk_08178112
-gUnk_08178112:
+	.global	gPlayerFrame2990UpperTiles
+gPlayerFrame2990UpperTiles:
 	.incbin	"baserom.gba", 0x178112, 0xC6
-	.global	gUnk_081781D8
-gUnk_081781D8:
+	.global	gPlayerFrame2991UpperTiles
+gPlayerFrame2991UpperTiles:
 	.incbin	"baserom.gba", 0x1781D8, 0xC6
-	.global	gUnk_0817829E
-gUnk_0817829E:
+	.global	gPlayerFrame2989UpperTiles
+gPlayerFrame2989UpperTiles:
 	.incbin	"baserom.gba", 0x17829E, 0xC6
-	.global	gUnk_08178364
-gUnk_08178364:
+	.global	gPlayerFrame2993UpperTiles
+gPlayerFrame2993UpperTiles:
 	.incbin	"baserom.gba", 0x178364, 0xC6
-	.global	gUnk_0817842A
-gUnk_0817842A:
+	.global	gPlayerFrame2995UpperTiles
+gPlayerFrame2995UpperTiles:
 	.incbin	"baserom.gba", 0x17842A, 0xC6
-	.global	gUnk_081784F0
-gUnk_081784F0:
+	.global	gPlayerFrame2994UpperTiles
+gPlayerFrame2994UpperTiles:
 	.incbin	"baserom.gba", 0x1784F0, 0xC6
-	.global	gUnk_081785B6
-gUnk_081785B6:
+	.global	gPlayerFrame3123UpperTiles
+gPlayerFrame3123UpperTiles:
 	.incbin	"baserom.gba", 0x1785B6, 0xC6
-	.global	gUnk_0817867C
-gUnk_0817867C:
+	.global	gPlayerFrame3121UpperTiles
+gPlayerFrame3121UpperTiles:
 	.incbin	"baserom.gba", 0x17867C, 0xC6
-	.global	gUnk_08178742
-gUnk_08178742:
+	.global	gPlayerFrame3120UpperTiles
+gPlayerFrame3120UpperTiles:
 	.incbin	"baserom.gba", 0x178742, 0xC6
-	.global	gUnk_08178808
-gUnk_08178808:
+	.global	gPlayerFrame3124UpperTiles
+gPlayerFrame3124UpperTiles:
 	.incbin	"baserom.gba", 0x178808, 0xC6
-	.global	gUnk_081788CE
-gUnk_081788CE:
+	.global	gPlayerFrame3125UpperTiles
+gPlayerFrame3125UpperTiles:
 	.incbin	"baserom.gba", 0x1788CE, 0xC6
 	.global	gPlayerFrame3261Tiles
 gPlayerFrame3261Tiles:
@@ -16033,20 +16033,20 @@ gPlayerFrame3262Tiles:
 	.global	gPlayerFrame3263Tiles
 gPlayerFrame3263Tiles:
 	.incbin	"baserom.gba", 0x178E2C, 0x126
-	.global	gUnk_08178F52
-gUnk_08178F52:
+	.global	gPlayerFrame3512UpperTiles
+gPlayerFrame3512UpperTiles:
 	.incbin	"baserom.gba", 0x178F52, 0xE6
-	.global	gUnk_08179038
-gUnk_08179038:
+	.global	gPlayerFrame3510UpperTiles
+gPlayerFrame3510UpperTiles:
 	.incbin	"baserom.gba", 0x179038, 0xC6
-	.global	gUnk_081790FE
-gUnk_081790FE:
+	.global	gPlayerFrame3509UpperTiles
+gPlayerFrame3509UpperTiles:
 	.incbin	"baserom.gba", 0x1790FE, 0xC6
-	.global	gUnk_081791C4
-gUnk_081791C4:
+	.global	gPlayerFrame3513UpperTiles
+gPlayerFrame3513UpperTiles:
 	.incbin	"baserom.gba", 0x1791C4, 0xC6
-	.global	gUnk_0817928A
-gUnk_0817928A:
+	.global	gPlayerFrame3514UpperTiles
+gPlayerFrame3514UpperTiles:
 	.incbin	"baserom.gba", 0x17928A, 0xC6
 	.global	gUnk_08179350
 gUnk_08179350:
@@ -16789,17 +16789,17 @@ gUnk_0817C3BE:
 	.global	gUnk_0817C3E0
 gUnk_0817C3E0:
 	.incbin	"baserom.gba", 0x17C3E0, 0x22
-	.global	gUnk_0817C402
-gUnk_0817C402:
+	.global	gPlayerFrame1194NextBankPalette
+gPlayerFrame1194NextBankPalette:
 	.incbin	"baserom.gba", 0x17C402, 0x22
 	.global	gPlayerFrame1986Palette
 gPlayerFrame1986Palette:
 	.incbin	"baserom.gba", 0x17C424, 0x22
-	.global	gUnk_0817C446
-gUnk_0817C446:
+	.global	gPlayerFrame1986NextBankPalette
+gPlayerFrame1986NextBankPalette:
 	.incbin	"baserom.gba", 0x17C446, 0x22
-	.global	gUnk_0817C468
-gUnk_0817C468:
+	.global	gPlayerFrame2242NextBankPalette
+gPlayerFrame2242NextBankPalette:
 	.incbin	"baserom.gba", 0x17C468, 0x22
 	.global	gUnk_0817C48A
 gUnk_0817C48A:
@@ -16807,50 +16807,50 @@ gUnk_0817C48A:
 	.global	gUnk_0817C4AC
 gUnk_0817C4AC:
 	.incbin	"baserom.gba", 0x17C4AC, 0x126
-	.global	gUnk_0817C5D2
-gUnk_0817C5D2:
+	.global	gPlayerFrame1201UpperTiles
+gPlayerFrame1201UpperTiles:
 	.incbin	"baserom.gba", 0x17C5D2, 0x146
-	.global	gUnk_0817C718
-gUnk_0817C718:
+	.global	gPlayerFrame1197UpperTiles
+gPlayerFrame1197UpperTiles:
 	.incbin	"baserom.gba", 0x17C718, 0x126
 	.global	gUnk_0817C83E
 gUnk_0817C83E:
 	.incbin	"baserom.gba", 0x17C83E, 0x126
-	.global	gUnk_0817C964
-gUnk_0817C964:
+	.global	gPlayerFrame1195UpperTiles
+gPlayerFrame1195UpperTiles:
 	.incbin	"baserom.gba", 0x17C964, 0x146
 	.global	gUnk_0817CAAA
 gUnk_0817CAAA:
 	.incbin	"baserom.gba", 0x17CAAA, 0x126
-	.global	gUnk_0817CBD0
-gUnk_0817CBD0:
+	.global	gPlayerFrame1196UpperTiles
+gPlayerFrame1196UpperTiles:
 	.incbin	"baserom.gba", 0x17CBD0, 0x146
-	.global	gUnk_0817CD16
-gUnk_0817CD16:
+	.global	gPlayerFrame1194UpperTiles
+gPlayerFrame1194UpperTiles:
 	.incbin	"baserom.gba", 0x17CD16, 0x146
 	.global	gUnk_0817CE5C
 gUnk_0817CE5C:
 	.incbin	"baserom.gba", 0x17CE5C, 0x126
-	.global	gUnk_0817CF82
-gUnk_0817CF82:
+	.global	gPlayerFrame1198UpperTiles
+gPlayerFrame1198UpperTiles:
 	.incbin	"baserom.gba", 0x17CF82, 0x146
-	.global	gUnk_0817D0C8
-gUnk_0817D0C8:
+	.global	gPlayerFrame1200UpperTiles
+gPlayerFrame1200UpperTiles:
 	.incbin	"baserom.gba", 0x17D0C8, 0x146
 	.global	gUnk_0817D20E
 gUnk_0817D20E:
 	.incbin	"baserom.gba", 0x17D20E, 0x126
-	.global	gUnk_0817D334
-gUnk_0817D334:
+	.global	gPlayerFrame1199UpperTiles
+gPlayerFrame1199UpperTiles:
 	.incbin	"baserom.gba", 0x17D334, 0x146
 	.global	gPlayerFrame1989Tiles
 gPlayerFrame1989Tiles:
 	.incbin	"baserom.gba", 0x17D47A, 0x126
-	.global	gUnk_0817D5A0
-gUnk_0817D5A0:
+	.global	gPlayerFrame1991UpperTiles
+gPlayerFrame1991UpperTiles:
 	.incbin	"baserom.gba", 0x17D5A0, 0xE6
-	.global	gUnk_0817D686
-gUnk_0817D686:
+	.global	gPlayerFrame1987UpperTiles
+gPlayerFrame1987UpperTiles:
 	.incbin	"baserom.gba", 0x17D686, 0x106
 	.global	gPlayerFrame1987Tiles
 gPlayerFrame1987Tiles:
@@ -16858,44 +16858,44 @@ gPlayerFrame1987Tiles:
 	.global	gPlayerFrame1986Tiles
 gPlayerFrame1986Tiles:
 	.incbin	"baserom.gba", 0x17D8B2, 0x126
-	.global	gUnk_0817D9D8
-gUnk_0817D9D8:
+	.global	gPlayerFrame1988UpperTiles
+gPlayerFrame1988UpperTiles:
 	.incbin	"baserom.gba", 0x17D9D8, 0xC6
-	.global	gUnk_0817DA9E
-gUnk_0817DA9E:
+	.global	gPlayerFrame1994UpperTiles
+gPlayerFrame1994UpperTiles:
 	.incbin	"baserom.gba", 0x17DA9E, 0x106
-	.global	gUnk_0817DBA4
-gUnk_0817DBA4:
+	.global	gPlayerFrame1986UpperTiles
+gPlayerFrame1986UpperTiles:
 	.incbin	"baserom.gba", 0x17DBA4, 0x106
 	.global	gPlayerFrame1990Tiles
 gPlayerFrame1990Tiles:
 	.incbin	"baserom.gba", 0x17DCAA, 0x126
-	.global	gUnk_0817DDD0
-gUnk_0817DDD0:
+	.global	gPlayerFrame1992UpperTiles
+gPlayerFrame1992UpperTiles:
 	.incbin	"baserom.gba", 0x17DDD0, 0xC6
 	.global	gPlayerFrame1991Tiles
 gPlayerFrame1991Tiles:
 	.incbin	"baserom.gba", 0x17DE96, 0x126
-	.global	gUnk_0817DFBC
-gUnk_0817DFBC:
+	.global	gPlayerFrame2247UpperTiles
+gPlayerFrame2247UpperTiles:
 	.incbin	"baserom.gba", 0x17DFBC, 0xC6
-	.global	gUnk_0817E082
-gUnk_0817E082:
+	.global	gPlayerFrame2245UpperTiles
+gPlayerFrame2245UpperTiles:
 	.incbin	"baserom.gba", 0x17E082, 0xC6
-	.global	gUnk_0817E148
-gUnk_0817E148:
+	.global	gPlayerFrame2243UpperTiles
+gPlayerFrame2243UpperTiles:
 	.incbin	"baserom.gba", 0x17E148, 0xC6
-	.global	gUnk_0817E20E
-gUnk_0817E20E:
+	.global	gPlayerFrame2244UpperTiles
+gPlayerFrame2244UpperTiles:
 	.incbin	"baserom.gba", 0x17E20E, 0xC6
-	.global	gUnk_0817E2D4
-gUnk_0817E2D4:
+	.global	gPlayerFrame2242UpperTiles
+gPlayerFrame2242UpperTiles:
 	.incbin	"baserom.gba", 0x17E2D4, 0xE6
-	.global	gUnk_0817E3BA
-gUnk_0817E3BA:
+	.global	gPlayerFrame2246UpperTiles
+gPlayerFrame2246UpperTiles:
 	.incbin	"baserom.gba", 0x17E3BA, 0xE6
-	.global	gUnk_0817E4A0
-gUnk_0817E4A0:
+	.global	gPlayerFrame2248UpperTiles
+gPlayerFrame2248UpperTiles:
 	.incbin	"baserom.gba", 0x17E4A0, 0xC6
 	.global	gUnk_0817E566
 gUnk_0817E566:
@@ -17182,53 +17182,53 @@ gPlayerFrame1463Palette:
 	.global	gUnk_08180224
 gUnk_08180224:
 	.incbin	"baserom.gba", 0x180224, 0x22
-	.global	gUnk_08180246
-gUnk_08180246:
+	.global	gPlayerFrame984NextBankPalette
+gPlayerFrame984NextBankPalette:
 	.incbin	"baserom.gba", 0x180246, 0x22
-	.global	gUnk_08180268
-gUnk_08180268:
+	.global	gPlayerFrame1463NextBankPalette
+gPlayerFrame1463NextBankPalette:
 	.incbin	"baserom.gba", 0x180268, 0x22
-	.global	gUnk_0818028A
-gUnk_0818028A:
+	.global	gPlayerFrame1607NextBankPalette
+gPlayerFrame1607NextBankPalette:
 	.incbin	"baserom.gba", 0x18028A, 0x22
-	.global	gUnk_081802AC
-gUnk_081802AC:
+	.global	gPlayerFrame1776NextBankPalette
+gPlayerFrame1776NextBankPalette:
 	.incbin	"baserom.gba", 0x1802AC, 0x22
 	.global	gPlayerFrame2397Palette
 gPlayerFrame2397Palette:
 	.incbin	"baserom.gba", 0x1802CE, 0x22
-	.global	gUnk_081802F0
-gUnk_081802F0:
+	.global	gPlayerFrame2397NextBankPalette
+gPlayerFrame2397NextBankPalette:
 	.incbin	"baserom.gba", 0x1802F0, 0x22
 	.global	gPlayerFrame2537Palette
 gPlayerFrame2537Palette:
 	.incbin	"baserom.gba", 0x180312, 0x22
-	.global	gUnk_08180334
-gUnk_08180334:
+	.global	gPlayerFrame2537NextBankPalette
+gPlayerFrame2537NextBankPalette:
 	.incbin	"baserom.gba", 0x180334, 0x22
 	.global	gPlayerFrame2677Palette
 gPlayerFrame2677Palette:
 	.incbin	"baserom.gba", 0x180356, 0x22
-	.global	gUnk_08180378
-gUnk_08180378:
+	.global	gPlayerFrame2677NextBankPalette
+gPlayerFrame2677NextBankPalette:
 	.incbin	"baserom.gba", 0x180378, 0x22
-	.global	gUnk_0818039A
-gUnk_0818039A:
+	.global	gPlayerFrame2842NextBankPalette
+gPlayerFrame2842NextBankPalette:
 	.incbin	"baserom.gba", 0x18039A, 0x22
-	.global	gUnk_081803BC
-gUnk_081803BC:
+	.global	gPlayerFrame2988NextBankPalette
+gPlayerFrame2988NextBankPalette:
 	.incbin	"baserom.gba", 0x1803BC, 0x22
 	.global	gPlayerFrame3119Palette
 gPlayerFrame3119Palette:
 	.incbin	"baserom.gba", 0x1803DE, 0x22
-	.global	gUnk_08180400
-gUnk_08180400:
+	.global	gPlayerFrame3119NextBankPalette
+gPlayerFrame3119NextBankPalette:
 	.incbin	"baserom.gba", 0x180400, 0x22
 	.global	gPlayerFrame3257Palette
 gPlayerFrame3257Palette:
 	.incbin	"baserom.gba", 0x180422, 0x22
-	.global	gUnk_08180444
-gUnk_08180444:
+	.global	gPlayerFrame3505NextBankPalette
+gPlayerFrame3505NextBankPalette:
 	.incbin	"baserom.gba", 0x180444, 0x22
 	.global	gUnk_08180466
 gUnk_08180466:
@@ -17323,59 +17323,59 @@ gUnk_08182150:
 	.global	gUnk_08182276
 gUnk_08182276:
 	.incbin	"baserom.gba", 0x182276, 0x106
-	.global	gUnk_0818237C
-gUnk_0818237C:
+	.global	gPlayerFrame984UpperTiles
+gPlayerFrame984UpperTiles:
 	.incbin	"baserom.gba", 0x18237C, 0xA6
-	.global	gUnk_08182422
-gUnk_08182422:
+	.global	gPlayerFrame1463UpperTiles
+gPlayerFrame1463UpperTiles:
 	.incbin	"baserom.gba", 0x182422, 0x186
-	.global	gUnk_081825A8
-gUnk_081825A8:
+	.global	gPlayerFrame1464UpperTiles
+gPlayerFrame1464UpperTiles:
 	.incbin	"baserom.gba", 0x1825A8, 0x186
-	.global	gUnk_0818272E
-gUnk_0818272E:
+	.global	gPlayerFrame1465UpperTiles
+gPlayerFrame1465UpperTiles:
 	.incbin	"baserom.gba", 0x18272E, 0x186
-	.global	gUnk_081828B4
-gUnk_081828B4:
+	.global	gPlayerFrame1466UpperTiles
+gPlayerFrame1466UpperTiles:
 	.incbin	"baserom.gba", 0x1828B4, 0x186
-	.global	gUnk_08182A3A
-gUnk_08182A3A:
+	.global	gPlayerFrame1607UpperTiles
+gPlayerFrame1607UpperTiles:
 	.incbin	"baserom.gba", 0x182A3A, 0x86
-	.global	gUnk_08182AC0
-gUnk_08182AC0:
+	.global	gPlayerFrame1776UpperTiles
+gPlayerFrame1776UpperTiles:
 	.incbin	"baserom.gba", 0x182AC0, 0x86
-	.global	gUnk_08182B46
-gUnk_08182B46:
+	.global	gPlayerFrame2397UpperTiles
+gPlayerFrame2397UpperTiles:
 	.incbin	"baserom.gba", 0x182B46, 0xC6
-	.global	gUnk_08182C0C
-gUnk_08182C0C:
+	.global	gPlayerFrame2537UpperTiles
+gPlayerFrame2537UpperTiles:
 	.incbin	"baserom.gba", 0x182C0C, 0xC6
-	.global	gUnk_08182CD2
-gUnk_08182CD2:
+	.global	gPlayerFrame2677UpperTiles
+gPlayerFrame2677UpperTiles:
 	.incbin	"baserom.gba", 0x182CD2, 0x106
-	.global	gUnk_08182DD8
-gUnk_08182DD8:
+	.global	gPlayerFrame2842UpperTiles
+gPlayerFrame2842UpperTiles:
 	.incbin	"baserom.gba", 0x182DD8, 0x166
-	.global	gUnk_08182F3E
-gUnk_08182F3E:
+	.global	gPlayerFrame2988UpperTiles
+gPlayerFrame2988UpperTiles:
 	.incbin	"baserom.gba", 0x182F3E, 0xC6
-	.global	gUnk_08183004
-gUnk_08183004:
+	.global	gPlayerFrame3119UpperTiles
+gPlayerFrame3119UpperTiles:
 	.incbin	"baserom.gba", 0x183004, 0xC6
 	.global	gPlayerFrame3257Tiles
 gPlayerFrame3257Tiles:
 	.incbin	"baserom.gba", 0x1830CA, 0x126
-	.global	gUnk_081831F0
-gUnk_081831F0:
+	.global	gPlayerFrame3505UpperTiles
+gPlayerFrame3505UpperTiles:
 	.incbin	"baserom.gba", 0x1831F0, 0x126
-	.global	gUnk_08183316
-gUnk_08183316:
+	.global	gPlayerFrame3506UpperTiles
+gPlayerFrame3506UpperTiles:
 	.incbin	"baserom.gba", 0x183316, 0x126
-	.global	gUnk_0818343C
-gUnk_0818343C:
+	.global	gPlayerFrame3507UpperTiles
+gPlayerFrame3507UpperTiles:
 	.incbin	"baserom.gba", 0x18343C, 0x126
-	.global	gUnk_08183562
-gUnk_08183562:
+	.global	gPlayerFrame3508UpperTiles
+gPlayerFrame3508UpperTiles:
 	.incbin	"baserom.gba", 0x183562, 0x126
 	.global	gUnk_08183688
 gUnk_08183688:
@@ -17530,35 +17530,35 @@ gUnk_08183F0E:
 	.global	gPlayerFrame1135Palette
 gPlayerFrame1135Palette:
 	.incbin	"baserom.gba", 0x183F30, 0x22
-	.global	gUnk_08183F52
-gUnk_08183F52:
+	.global	gPlayerFrame1135NextBankPalette
+gPlayerFrame1135NextBankPalette:
 	.incbin	"baserom.gba", 0x183F52, 0x22
 	.global	gPlayerFrame1936Palette
 gPlayerFrame1936Palette:
 	.incbin	"baserom.gba", 0x183F74, 0x22
-	.global	gUnk_08183F96
-gUnk_08183F96:
+	.global	gPlayerFrame1936NextBankPalette
+gPlayerFrame1936NextBankPalette:
 	.incbin	"baserom.gba", 0x183F96, 0x22
 	.global	gPlayerFrame2192Palette
 gPlayerFrame2192Palette:
 	.incbin	"baserom.gba", 0x183FB8, 0x22
-	.global	gUnk_08183FDA
-gUnk_08183FDA:
+	.global	gPlayerFrame2192NextBankPalette
+gPlayerFrame2192NextBankPalette:
 	.incbin	"baserom.gba", 0x183FDA, 0x22
 	.global	gPlayerFrame1135Tiles
 gPlayerFrame1135Tiles:
 	.incbin	"baserom.gba", 0x183FFC, 0x126
-	.global	gUnk_08184122
-gUnk_08184122:
+	.global	gPlayerFrame1135UpperTiles
+gPlayerFrame1135UpperTiles:
 	.incbin	"baserom.gba", 0x184122, 0x126
 	.global	gPlayerFrame1936Tiles
 gPlayerFrame1936Tiles:
 	.incbin	"baserom.gba", 0x184248, 0x126
-	.global	gUnk_0818436E
-gUnk_0818436E:
+	.global	gPlayerFrame1936UpperTiles
+gPlayerFrame1936UpperTiles:
 	.incbin	"baserom.gba", 0x18436E, 0xA6
-	.global	gUnk_08184414
-gUnk_08184414:
+	.global	gPlayerFrame2192UpperTiles
+gPlayerFrame2192UpperTiles:
 	.incbin	"baserom.gba", 0x184414, 0x126
 	.global	gPlayerFrame1135OamTemplate
 gPlayerFrame1135OamTemplate:
@@ -17575,20 +17575,20 @@ gPlayerFrame146Palette:
 	.global	gUnk_08184606
 gUnk_08184606:
 	.incbin	"baserom.gba", 0x184606, 0x22
-	.global	gUnk_08184628
-gUnk_08184628:
+	.global	gPlayerFrame1130NextBankPalette
+gPlayerFrame1130NextBankPalette:
 	.incbin	"baserom.gba", 0x184628, 0x22
 	.global	gPlayerFrame1931Palette
 gPlayerFrame1931Palette:
 	.incbin	"baserom.gba", 0x18464A, 0x22
-	.global	gUnk_0818466C
-gUnk_0818466C:
+	.global	gPlayerFrame1931NextBankPalette
+gPlayerFrame1931NextBankPalette:
 	.incbin	"baserom.gba", 0x18466C, 0x22
 	.global	gPlayerFrame2188Palette
 gPlayerFrame2188Palette:
 	.incbin	"baserom.gba", 0x18468E, 0x22
-	.global	gUnk_081846B0
-gUnk_081846B0:
+	.global	gPlayerFrame2188NextBankPalette
+gPlayerFrame2188NextBankPalette:
 	.incbin	"baserom.gba", 0x1846B0, 0x22
 	.global	gUnk_081846D2
 gUnk_081846D2:
@@ -17599,47 +17599,47 @@ gUnk_081846F4:
 	.global	gUnk_0818481A
 gUnk_0818481A:
 	.incbin	"baserom.gba", 0x18481A, 0x126
-	.global	gUnk_08184940
-gUnk_08184940:
+	.global	gPlayerFrame1130UpperTiles
+gPlayerFrame1130UpperTiles:
 	.incbin	"baserom.gba", 0x184940, 0x1E6
 	.global	gUnk_08184B26
 gUnk_08184B26:
 	.incbin	"baserom.gba", 0x184B26, 0x126
-	.global	gUnk_08184C4C
-gUnk_08184C4C:
+	.global	gPlayerFrame1131UpperTiles
+gPlayerFrame1131UpperTiles:
 	.incbin	"baserom.gba", 0x184C4C, 0x226
 	.global	gPlayerFrame1132Tiles
 gPlayerFrame1132Tiles:
 	.incbin	"baserom.gba", 0x184E72, 0x106
-	.global	gUnk_08184F78
-gUnk_08184F78:
+	.global	gPlayerFrame1132UpperTiles
+gPlayerFrame1132UpperTiles:
 	.incbin	"baserom.gba", 0x184F78, 0x1C6
 	.global	gUnk_0818513E
 gUnk_0818513E:
 	.incbin	"baserom.gba", 0x18513E, 0x126
-	.global	gUnk_08185264
-gUnk_08185264:
+	.global	gPlayerFrame1133UpperTiles
+gPlayerFrame1133UpperTiles:
 	.incbin	"baserom.gba", 0x185264, 0x2C6
-	.global	gUnk_0818552A
-gUnk_0818552A:
+	.global	gPlayerFrame1134UpperTiles
+gPlayerFrame1134UpperTiles:
 	.incbin	"baserom.gba", 0x18552A, 0x146
 	.global	gPlayerFrame1931Tiles
 gPlayerFrame1931Tiles:
 	.incbin	"baserom.gba", 0x185670, 0x126
-	.global	gUnk_08185796
-gUnk_08185796:
+	.global	gPlayerFrame1931UpperTiles
+gPlayerFrame1931UpperTiles:
 	.incbin	"baserom.gba", 0x185796, 0xA6
-	.global	gUnk_0818583C
-gUnk_0818583C:
+	.global	gPlayerFrame1932UpperTiles
+gPlayerFrame1932UpperTiles:
 	.incbin	"baserom.gba", 0x18583C, 0xE6
-	.global	gUnk_08185922
-gUnk_08185922:
+	.global	gPlayerFrame1933UpperTiles
+gPlayerFrame1933UpperTiles:
 	.incbin	"baserom.gba", 0x185922, 0xA6
-	.global	gUnk_081859C8
-gUnk_081859C8:
+	.global	gPlayerFrame2188UpperTiles
+gPlayerFrame2188UpperTiles:
 	.incbin	"baserom.gba", 0x1859C8, 0x126
-	.global	gUnk_08185AEE
-gUnk_08185AEE:
+	.global	gPlayerFrame2189UpperTiles
+gPlayerFrame2189UpperTiles:
 	.incbin	"baserom.gba", 0x185AEE, 0x126
 	.global	gUnk_08185C14
 gUnk_08185C14:
@@ -17731,11 +17731,11 @@ gPlayerFrame243Palette:
 	.global	gPlayerFrame1185Palette
 gPlayerFrame1185Palette:
 	.incbin	"baserom.gba", 0x186C9A, 0x22
-	.global	gUnk_08186CBC
-gUnk_08186CBC:
+	.global	gPlayerFrame1185NextBankPalette
+gPlayerFrame1185NextBankPalette:
 	.incbin	"baserom.gba", 0x186CBC, 0x22
-	.global	gUnk_08186CDE
-gUnk_08186CDE:
+	.global	gPlayerFrame4150NextBankPalette
+gPlayerFrame4150NextBankPalette:
 	.incbin	"baserom.gba", 0x186CDE, 0x22
 	.global	gPlayerFrame243Tiles
 gPlayerFrame243Tiles:
@@ -17764,74 +17764,74 @@ gPlayerFrame250Tiles:
 	.global	gPlayerFrame251Tiles
 gPlayerFrame251Tiles:
 	.incbin	"baserom.gba", 0x187570, 0x126
-	.global	gUnk_08187696
-gUnk_08187696:
+	.global	gPlayerFrame1185UpperTiles
+gPlayerFrame1185UpperTiles:
 	.incbin	"baserom.gba", 0x187696, 0x126
-	.global	gUnk_081877BC
-gUnk_081877BC:
+	.global	gPlayerFrame1186UpperTiles
+gPlayerFrame1186UpperTiles:
 	.incbin	"baserom.gba", 0x1877BC, 0x126
-	.global	gUnk_081878E2
-gUnk_081878E2:
+	.global	gPlayerFrame1187UpperTiles
+gPlayerFrame1187UpperTiles:
 	.incbin	"baserom.gba", 0x1878E2, 0x1A6
-	.global	gUnk_08187A88
-gUnk_08187A88:
+	.global	gPlayerFrame1188UpperTiles
+gPlayerFrame1188UpperTiles:
 	.incbin	"baserom.gba", 0x187A88, 0x186
-	.global	gUnk_08187C0E
-gUnk_08187C0E:
+	.global	gPlayerFrame1189UpperTiles
+gPlayerFrame1189UpperTiles:
 	.incbin	"baserom.gba", 0x187C0E, 0x146
-	.global	gUnk_08187D54
-gUnk_08187D54:
+	.global	gPlayerFrame1190UpperTiles
+gPlayerFrame1190UpperTiles:
 	.incbin	"baserom.gba", 0x187D54, 0x186
-	.global	gUnk_08187EDA
-gUnk_08187EDA:
+	.global	gPlayerFrame1191UpperTiles
+gPlayerFrame1191UpperTiles:
 	.incbin	"baserom.gba", 0x187EDA, 0x186
-	.global	gUnk_08188060
-gUnk_08188060:
+	.global	gPlayerFrame1192UpperTiles
+gPlayerFrame1192UpperTiles:
 	.incbin	"baserom.gba", 0x188060, 0x166
-	.global	gUnk_081881C6
-gUnk_081881C6:
+	.global	gPlayerFrame1193UpperTiles
+gPlayerFrame1193UpperTiles:
 	.incbin	"baserom.gba", 0x1881C6, 0x126
-	.global	gUnk_081882EC
-gUnk_081882EC:
+	.global	gPlayerFrame4150UpperTiles
+gPlayerFrame4150UpperTiles:
 	.incbin	"baserom.gba", 0x1882EC, 0xC6
-	.global	gUnk_081883B2
-gUnk_081883B2:
+	.global	gPlayerFrame4281UpperTiles
+gPlayerFrame4281UpperTiles:
 	.incbin	"baserom.gba", 0x1883B2, 0x146
-	.global	gUnk_081884F8
-gUnk_081884F8:
+	.global	gPlayerFrame4151UpperTiles
+gPlayerFrame4151UpperTiles:
 	.incbin	"baserom.gba", 0x1884F8, 0xA6
-	.global	gUnk_0818859E
-gUnk_0818859E:
+	.global	gPlayerFrame4282UpperTiles
+gPlayerFrame4282UpperTiles:
 	.incbin	"baserom.gba", 0x18859E, 0x126
-	.global	gUnk_081886C4
-gUnk_081886C4:
+	.global	gPlayerFrame4152UpperTiles
+gPlayerFrame4152UpperTiles:
 	.incbin	"baserom.gba", 0x1886C4, 0x86
-	.global	gUnk_0818874A
-gUnk_0818874A:
+	.global	gPlayerFrame4283UpperTiles
+gPlayerFrame4283UpperTiles:
 	.incbin	"baserom.gba", 0x18874A, 0x106
-	.global	gUnk_08188850
-gUnk_08188850:
+	.global	gPlayerFrame4153UpperTiles
+gPlayerFrame4153UpperTiles:
 	.incbin	"baserom.gba", 0x188850, 0xA6
-	.global	gUnk_081888F6
-gUnk_081888F6:
+	.global	gPlayerFrame4284UpperTiles
+gPlayerFrame4284UpperTiles:
 	.incbin	"baserom.gba", 0x1888F6, 0x126
-	.global	gUnk_08188A1C
-gUnk_08188A1C:
+	.global	gPlayerFrame4155UpperTiles
+gPlayerFrame4155UpperTiles:
 	.incbin	"baserom.gba", 0x188A1C, 0xA6
-	.global	gUnk_08188AC2
-gUnk_08188AC2:
+	.global	gPlayerFrame4286UpperTiles
+gPlayerFrame4286UpperTiles:
 	.incbin	"baserom.gba", 0x188AC2, 0x126
 	.global	gPlayerFrame4156Tiles
 gPlayerFrame4156Tiles:
 	.incbin	"baserom.gba", 0x188BE8, 0x126
-	.global	gUnk_08188D0E
-gUnk_08188D0E:
+	.global	gPlayerFrame4156UpperTiles
+gPlayerFrame4156UpperTiles:
 	.incbin	"baserom.gba", 0x188D0E, 0x86
 	.global	gPlayerFrame4287Tiles
 gPlayerFrame4287Tiles:
 	.incbin	"baserom.gba", 0x188D94, 0x126
-	.global	gUnk_08188EBA
-gUnk_08188EBA:
+	.global	gPlayerFrame4287UpperTiles
+gPlayerFrame4287UpperTiles:
 	.incbin	"baserom.gba", 0x188EBA, 0x106
 	.global	gPlayerFrame243OamTemplate
 gPlayerFrame243OamTemplate:
@@ -17947,128 +17947,128 @@ gPlayerFrame173Palette:
 	.global	gPlayerFrame1136Palette
 gPlayerFrame1136Palette:
 	.incbin	"baserom.gba", 0x189732, 0x22
-	.global	gUnk_08189754
-gUnk_08189754:
+	.global	gPlayerFrame1136NextBankPalette
+gPlayerFrame1136NextBankPalette:
 	.incbin	"baserom.gba", 0x189754, 0x22
-	.global	gUnk_08189776
-gUnk_08189776:
+	.global	gPlayerFrame1937NextBankPalette
+gPlayerFrame1937NextBankPalette:
 	.incbin	"baserom.gba", 0x189776, 0x22
-	.global	gUnk_08189798
-gUnk_08189798:
+	.global	gPlayerFrame2193NextBankPalette
+gPlayerFrame2193NextBankPalette:
 	.incbin	"baserom.gba", 0x189798, 0x22
 	.global	gPlayerFrame173Tiles
 gPlayerFrame173Tiles:
 	.incbin	"baserom.gba", 0x1897BA, 0x126
-	.global	gUnk_081898E0
-gUnk_081898E0:
+	.global	gPlayerFrame173UpperTiles
+gPlayerFrame173UpperTiles:
 	.incbin	"baserom.gba", 0x1898E0, 0xC6
 	.global	gPlayerFrame174Tiles
 gPlayerFrame174Tiles:
 	.incbin	"baserom.gba", 0x1899A6, 0x126
-	.global	gUnk_08189ACC
-gUnk_08189ACC:
+	.global	gPlayerFrame174UpperTiles
+gPlayerFrame174UpperTiles:
 	.incbin	"baserom.gba", 0x189ACC, 0xC6
 	.global	gPlayerFrame175Tiles
 gPlayerFrame175Tiles:
 	.incbin	"baserom.gba", 0x189B92, 0x126
-	.global	gUnk_08189CB8
-gUnk_08189CB8:
+	.global	gPlayerFrame175UpperTiles
+gPlayerFrame175UpperTiles:
 	.incbin	"baserom.gba", 0x189CB8, 0xC6
 	.global	gPlayerFrame176Tiles
 gPlayerFrame176Tiles:
 	.incbin	"baserom.gba", 0x189D7E, 0x126
-	.global	gUnk_08189EA4
-gUnk_08189EA4:
+	.global	gPlayerFrame176UpperTiles
+gPlayerFrame176UpperTiles:
 	.incbin	"baserom.gba", 0x189EA4, 0xC6
 	.global	gPlayerFrame177Tiles
 gPlayerFrame177Tiles:
 	.incbin	"baserom.gba", 0x189F6A, 0x106
-	.global	gUnk_0818A070
-gUnk_0818A070:
+	.global	gPlayerFrame177UpperTiles
+gPlayerFrame177UpperTiles:
 	.incbin	"baserom.gba", 0x18A070, 0xC6
 	.global	gPlayerFrame178Tiles
 gPlayerFrame178Tiles:
 	.incbin	"baserom.gba", 0x18A136, 0x126
-	.global	gUnk_0818A25C
-gUnk_0818A25C:
+	.global	gPlayerFrame178UpperTiles
+gPlayerFrame178UpperTiles:
 	.incbin	"baserom.gba", 0x18A25C, 0xC6
 	.global	gPlayerFrame179Tiles
 gPlayerFrame179Tiles:
 	.incbin	"baserom.gba", 0x18A322, 0x126
-	.global	gUnk_0818A448
-gUnk_0818A448:
+	.global	gPlayerFrame179UpperTiles
+gPlayerFrame179UpperTiles:
 	.incbin	"baserom.gba", 0x18A448, 0xC6
 	.global	gPlayerFrame180Tiles
 gPlayerFrame180Tiles:
 	.incbin	"baserom.gba", 0x18A50E, 0x126
-	.global	gUnk_0818A634
-gUnk_0818A634:
+	.global	gPlayerFrame180UpperTiles
+gPlayerFrame180UpperTiles:
 	.incbin	"baserom.gba", 0x18A634, 0xC6
 	.global	gPlayerFrame181Tiles
 gPlayerFrame181Tiles:
 	.incbin	"baserom.gba", 0x18A6FA, 0x126
-	.global	gUnk_0818A820
-gUnk_0818A820:
+	.global	gPlayerFrame181UpperTiles
+gPlayerFrame181UpperTiles:
 	.incbin	"baserom.gba", 0x18A820, 0xA6
 	.global	gPlayerFrame182Tiles
 gPlayerFrame182Tiles:
 	.incbin	"baserom.gba", 0x18A8C6, 0x126
-	.global	gUnk_0818A9EC
-gUnk_0818A9EC:
+	.global	gPlayerFrame182UpperTiles
+gPlayerFrame182UpperTiles:
 	.incbin	"baserom.gba", 0x18A9EC, 0xC6
 	.global	gPlayerFrame183Tiles
 gPlayerFrame183Tiles:
 	.incbin	"baserom.gba", 0x18AAB2, 0x126
-	.global	gUnk_0818ABD8
-gUnk_0818ABD8:
+	.global	gPlayerFrame183UpperTiles
+gPlayerFrame183UpperTiles:
 	.incbin	"baserom.gba", 0x18ABD8, 0xC6
 	.global	gPlayerFrame184Tiles
 gPlayerFrame184Tiles:
 	.incbin	"baserom.gba", 0x18AC9E, 0x126
-	.global	gUnk_0818ADC4
-gUnk_0818ADC4:
+	.global	gPlayerFrame184UpperTiles
+gPlayerFrame184UpperTiles:
 	.incbin	"baserom.gba", 0x18ADC4, 0xC6
 	.global	gPlayerFrame185Tiles
 gPlayerFrame185Tiles:
 	.incbin	"baserom.gba", 0x18AE8A, 0x126
-	.global	gUnk_0818AFB0
-gUnk_0818AFB0:
+	.global	gPlayerFrame185UpperTiles
+gPlayerFrame185UpperTiles:
 	.incbin	"baserom.gba", 0x18AFB0, 0xC6
 	.global	gPlayerFrame186Tiles
 gPlayerFrame186Tiles:
 	.incbin	"baserom.gba", 0x18B076, 0x126
-	.global	gUnk_0818B19C
-gUnk_0818B19C:
+	.global	gPlayerFrame186UpperTiles
+gPlayerFrame186UpperTiles:
 	.incbin	"baserom.gba", 0x18B19C, 0xC6
 	.global	gPlayerFrame187Tiles
 gPlayerFrame187Tiles:
 	.incbin	"baserom.gba", 0x18B262, 0x126
-	.global	gUnk_0818B388
-gUnk_0818B388:
+	.global	gPlayerFrame187UpperTiles
+gPlayerFrame187UpperTiles:
 	.incbin	"baserom.gba", 0x18B388, 0xC6
 	.global	gPlayerFrame188Tiles
 gPlayerFrame188Tiles:
 	.incbin	"baserom.gba", 0x18B44E, 0x126
-	.global	gUnk_0818B574
-gUnk_0818B574:
+	.global	gPlayerFrame188UpperTiles
+gPlayerFrame188UpperTiles:
 	.incbin	"baserom.gba", 0x18B574, 0xC6
 	.global	gPlayerFrame189Tiles
 gPlayerFrame189Tiles:
 	.incbin	"baserom.gba", 0x18B63A, 0x126
-	.global	gUnk_0818B760
-gUnk_0818B760:
+	.global	gPlayerFrame189UpperTiles
+gPlayerFrame189UpperTiles:
 	.incbin	"baserom.gba", 0x18B760, 0x86
 	.global	gPlayerFrame190Tiles
 gPlayerFrame190Tiles:
 	.incbin	"baserom.gba", 0x18B7E6, 0x126
-	.global	gUnk_0818B90C
-gUnk_0818B90C:
+	.global	gPlayerFrame190UpperTiles
+gPlayerFrame190UpperTiles:
 	.incbin	"baserom.gba", 0x18B90C, 0x86
 	.global	gPlayerFrame191Tiles
 gPlayerFrame191Tiles:
 	.incbin	"baserom.gba", 0x18B992, 0x126
-	.global	gUnk_0818BAB8
-gUnk_0818BAB8:
+	.global	gPlayerFrame191UpperTiles
+gPlayerFrame191UpperTiles:
 	.incbin	"baserom.gba", 0x18BAB8, 0x86
 	.global	gPlayerFrame192Tiles
 gPlayerFrame192Tiles:
@@ -18079,158 +18079,158 @@ gPlayerFrame193Tiles:
 	.global	gPlayerFrame194Tiles
 gPlayerFrame194Tiles:
 	.incbin	"baserom.gba", 0x18BD8A, 0x126
-	.global	gUnk_0818BEB0
-gUnk_0818BEB0:
+	.global	gPlayerFrame194UpperTiles
+gPlayerFrame194UpperTiles:
 	.incbin	"baserom.gba", 0x18BEB0, 0x86
 	.global	gPlayerFrame195Tiles
 gPlayerFrame195Tiles:
 	.incbin	"baserom.gba", 0x18BF36, 0x126
-	.global	gUnk_0818C05C
-gUnk_0818C05C:
+	.global	gPlayerFrame195UpperTiles
+gPlayerFrame195UpperTiles:
 	.incbin	"baserom.gba", 0x18C05C, 0x86
 	.global	gPlayerFrame196Tiles
 gPlayerFrame196Tiles:
 	.incbin	"baserom.gba", 0x18C0E2, 0x126
-	.global	gUnk_0818C208
-gUnk_0818C208:
+	.global	gPlayerFrame196UpperTiles
+gPlayerFrame196UpperTiles:
 	.incbin	"baserom.gba", 0x18C208, 0x86
 	.global	gPlayerFrame197Tiles
 gPlayerFrame197Tiles:
 	.incbin	"baserom.gba", 0x18C28E, 0x126
-	.global	gUnk_0818C3B4
-gUnk_0818C3B4:
+	.global	gPlayerFrame197UpperTiles
+gPlayerFrame197UpperTiles:
 	.incbin	"baserom.gba", 0x18C3B4, 0xC6
 	.global	gPlayerFrame198Tiles
 gPlayerFrame198Tiles:
 	.incbin	"baserom.gba", 0x18C47A, 0x146
-	.global	gUnk_0818C5C0
-gUnk_0818C5C0:
+	.global	gPlayerFrame198UpperTiles
+gPlayerFrame198UpperTiles:
 	.incbin	"baserom.gba", 0x18C5C0, 0x86
 	.global	gPlayerFrame199Tiles
 gPlayerFrame199Tiles:
 	.incbin	"baserom.gba", 0x18C646, 0x126
-	.global	gUnk_0818C76C
-gUnk_0818C76C:
+	.global	gPlayerFrame199UpperTiles
+gPlayerFrame199UpperTiles:
 	.incbin	"baserom.gba", 0x18C76C, 0xC6
 	.global	gPlayerFrame200Tiles
 gPlayerFrame200Tiles:
 	.incbin	"baserom.gba", 0x18C832, 0x126
-	.global	gUnk_0818C958
-gUnk_0818C958:
+	.global	gPlayerFrame200UpperTiles
+gPlayerFrame200UpperTiles:
 	.incbin	"baserom.gba", 0x18C958, 0x86
 	.global	gPlayerFrame1136Tiles
 gPlayerFrame1136Tiles:
 	.incbin	"baserom.gba", 0x18C9DE, 0x126
-	.global	gUnk_0818CB04
-gUnk_0818CB04:
+	.global	gPlayerFrame1136UpperTiles
+gPlayerFrame1136UpperTiles:
 	.incbin	"baserom.gba", 0x18CB04, 0x166
 	.global	gPlayerFrame1137Tiles
 gPlayerFrame1137Tiles:
 	.incbin	"baserom.gba", 0x18CC6A, 0x126
-	.global	gUnk_0818CD90
-gUnk_0818CD90:
+	.global	gPlayerFrame1137UpperTiles
+gPlayerFrame1137UpperTiles:
 	.incbin	"baserom.gba", 0x18CD90, 0x166
 	.global	gPlayerFrame1138Tiles
 gPlayerFrame1138Tiles:
 	.incbin	"baserom.gba", 0x18CEF6, 0x126
-	.global	gUnk_0818D01C
-gUnk_0818D01C:
+	.global	gPlayerFrame1138UpperTiles
+gPlayerFrame1138UpperTiles:
 	.incbin	"baserom.gba", 0x18D01C, 0x166
 	.global	gPlayerFrame1139Tiles
 gPlayerFrame1139Tiles:
 	.incbin	"baserom.gba", 0x18D182, 0x126
-	.global	gUnk_0818D2A8
-gUnk_0818D2A8:
+	.global	gPlayerFrame1139UpperTiles
+gPlayerFrame1139UpperTiles:
 	.incbin	"baserom.gba", 0x18D2A8, 0x166
 	.global	gPlayerFrame1140Tiles
 gPlayerFrame1140Tiles:
 	.incbin	"baserom.gba", 0x18D40E, 0x106
-	.global	gUnk_0818D514
-gUnk_0818D514:
+	.global	gPlayerFrame1140UpperTiles
+gPlayerFrame1140UpperTiles:
 	.incbin	"baserom.gba", 0x18D514, 0x166
 	.global	gPlayerFrame1141Tiles
 gPlayerFrame1141Tiles:
 	.incbin	"baserom.gba", 0x18D67A, 0x126
-	.global	gUnk_0818D7A0
-gUnk_0818D7A0:
+	.global	gPlayerFrame1141UpperTiles
+gPlayerFrame1141UpperTiles:
 	.incbin	"baserom.gba", 0x18D7A0, 0x166
 	.global	gPlayerFrame1142Tiles
 gPlayerFrame1142Tiles:
 	.incbin	"baserom.gba", 0x18D906, 0x126
-	.global	gUnk_0818DA2C
-gUnk_0818DA2C:
+	.global	gPlayerFrame1142UpperTiles
+gPlayerFrame1142UpperTiles:
 	.incbin	"baserom.gba", 0x18DA2C, 0x166
 	.global	gPlayerFrame1143Tiles
 gPlayerFrame1143Tiles:
 	.incbin	"baserom.gba", 0x18DB92, 0x126
-	.global	gUnk_0818DCB8
-gUnk_0818DCB8:
+	.global	gPlayerFrame1143UpperTiles
+gPlayerFrame1143UpperTiles:
 	.incbin	"baserom.gba", 0x18DCB8, 0x166
 	.global	gPlayerFrame1144Tiles
 gPlayerFrame1144Tiles:
 	.incbin	"baserom.gba", 0x18DE1E, 0x126
-	.global	gUnk_0818DF44
-gUnk_0818DF44:
+	.global	gPlayerFrame1144UpperTiles
+gPlayerFrame1144UpperTiles:
 	.incbin	"baserom.gba", 0x18DF44, 0x166
 	.global	gPlayerFrame1145Tiles
 gPlayerFrame1145Tiles:
 	.incbin	"baserom.gba", 0x18E0AA, 0x126
-	.global	gUnk_0818E1D0
-gUnk_0818E1D0:
+	.global	gPlayerFrame1145UpperTiles
+gPlayerFrame1145UpperTiles:
 	.incbin	"baserom.gba", 0x18E1D0, 0x146
 	.global	gPlayerFrame1146Tiles
 gPlayerFrame1146Tiles:
 	.incbin	"baserom.gba", 0x18E316, 0x126
-	.global	gUnk_0818E43C
-gUnk_0818E43C:
+	.global	gPlayerFrame1146UpperTiles
+gPlayerFrame1146UpperTiles:
 	.incbin	"baserom.gba", 0x18E43C, 0x146
 	.global	gPlayerFrame1147Tiles
 gPlayerFrame1147Tiles:
 	.incbin	"baserom.gba", 0x18E582, 0x126
-	.global	gUnk_0818E6A8
-gUnk_0818E6A8:
+	.global	gPlayerFrame1147UpperTiles
+gPlayerFrame1147UpperTiles:
 	.incbin	"baserom.gba", 0x18E6A8, 0x146
 	.global	gPlayerFrame1148Tiles
 gPlayerFrame1148Tiles:
 	.incbin	"baserom.gba", 0x18E7EE, 0x126
-	.global	gUnk_0818E914
-gUnk_0818E914:
+	.global	gPlayerFrame1148UpperTiles
+gPlayerFrame1148UpperTiles:
 	.incbin	"baserom.gba", 0x18E914, 0x166
 	.global	gPlayerFrame1149Tiles
 gPlayerFrame1149Tiles:
 	.incbin	"baserom.gba", 0x18EA7A, 0x126
-	.global	gUnk_0818EBA0
-gUnk_0818EBA0:
+	.global	gPlayerFrame1149UpperTiles
+gPlayerFrame1149UpperTiles:
 	.incbin	"baserom.gba", 0x18EBA0, 0x146
 	.global	gPlayerFrame1150Tiles
 gPlayerFrame1150Tiles:
 	.incbin	"baserom.gba", 0x18ECE6, 0x126
-	.global	gUnk_0818EE0C
-gUnk_0818EE0C:
+	.global	gPlayerFrame1150UpperTiles
+gPlayerFrame1150UpperTiles:
 	.incbin	"baserom.gba", 0x18EE0C, 0x146
 	.global	gPlayerFrame1151Tiles
 gPlayerFrame1151Tiles:
 	.incbin	"baserom.gba", 0x18EF52, 0x126
-	.global	gUnk_0818F078
-gUnk_0818F078:
+	.global	gPlayerFrame1151UpperTiles
+gPlayerFrame1151UpperTiles:
 	.incbin	"baserom.gba", 0x18F078, 0x166
 	.global	gPlayerFrame1152Tiles
 gPlayerFrame1152Tiles:
 	.incbin	"baserom.gba", 0x18F1DE, 0x126
-	.global	gUnk_0818F304
-gUnk_0818F304:
+	.global	gPlayerFrame1152UpperTiles
+gPlayerFrame1152UpperTiles:
 	.incbin	"baserom.gba", 0x18F304, 0x126
 	.global	gPlayerFrame1153Tiles
 gPlayerFrame1153Tiles:
 	.incbin	"baserom.gba", 0x18F42A, 0x126
-	.global	gUnk_0818F550
-gUnk_0818F550:
+	.global	gPlayerFrame1153UpperTiles
+gPlayerFrame1153UpperTiles:
 	.incbin	"baserom.gba", 0x18F550, 0x126
 	.global	gPlayerFrame1154Tiles
 gPlayerFrame1154Tiles:
 	.incbin	"baserom.gba", 0x18F676, 0x126
-	.global	gUnk_0818F79C
-gUnk_0818F79C:
+	.global	gPlayerFrame1154UpperTiles
+gPlayerFrame1154UpperTiles:
 	.incbin	"baserom.gba", 0x18F79C, 0x126
 	.global	gPlayerFrame1155Tiles
 gPlayerFrame1155Tiles:
@@ -18241,200 +18241,200 @@ gPlayerFrame1156Tiles:
 	.global	gPlayerFrame1157Tiles
 gPlayerFrame1157Tiles:
 	.incbin	"baserom.gba", 0x18FB0E, 0x126
-	.global	gUnk_0818FC34
-gUnk_0818FC34:
+	.global	gPlayerFrame1157UpperTiles
+gPlayerFrame1157UpperTiles:
 	.incbin	"baserom.gba", 0x18FC34, 0x126
 	.global	gPlayerFrame1158Tiles
 gPlayerFrame1158Tiles:
 	.incbin	"baserom.gba", 0x18FD5A, 0x126
-	.global	gUnk_0818FE80
-gUnk_0818FE80:
+	.global	gPlayerFrame1158UpperTiles
+gPlayerFrame1158UpperTiles:
 	.incbin	"baserom.gba", 0x18FE80, 0x126
 	.global	gPlayerFrame1159Tiles
 gPlayerFrame1159Tiles:
 	.incbin	"baserom.gba", 0x18FFA6, 0x126
-	.global	gUnk_081900CC
-gUnk_081900CC:
+	.global	gPlayerFrame1159UpperTiles
+gPlayerFrame1159UpperTiles:
 	.incbin	"baserom.gba", 0x1900CC, 0x126
 	.global	gPlayerFrame1160Tiles
 gPlayerFrame1160Tiles:
 	.incbin	"baserom.gba", 0x1901F2, 0x126
-	.global	gUnk_08190318
-gUnk_08190318:
+	.global	gPlayerFrame1160UpperTiles
+gPlayerFrame1160UpperTiles:
 	.incbin	"baserom.gba", 0x190318, 0x166
 	.global	gPlayerFrame1161Tiles
 gPlayerFrame1161Tiles:
 	.incbin	"baserom.gba", 0x19047E, 0x146
-	.global	gUnk_081905C4
-gUnk_081905C4:
+	.global	gPlayerFrame1161UpperTiles
+gPlayerFrame1161UpperTiles:
 	.incbin	"baserom.gba", 0x1905C4, 0x126
 	.global	gPlayerFrame1162Tiles
 gPlayerFrame1162Tiles:
 	.incbin	"baserom.gba", 0x1906EA, 0x126
-	.global	gUnk_08190810
-gUnk_08190810:
+	.global	gPlayerFrame1162UpperTiles
+gPlayerFrame1162UpperTiles:
 	.incbin	"baserom.gba", 0x190810, 0x166
 	.global	gPlayerFrame1163Tiles
 gPlayerFrame1163Tiles:
 	.incbin	"baserom.gba", 0x190976, 0x126
-	.global	gUnk_08190A9C
-gUnk_08190A9C:
+	.global	gPlayerFrame1163UpperTiles
+gPlayerFrame1163UpperTiles:
 	.incbin	"baserom.gba", 0x190A9C, 0x126
-	.global	gUnk_08190BC2
-gUnk_08190BC2:
+	.global	gPlayerFrame1937UpperTiles
+gPlayerFrame1937UpperTiles:
 	.incbin	"baserom.gba", 0x190BC2, 0x166
-	.global	gUnk_08190D28
-gUnk_08190D28:
+	.global	gPlayerFrame1938UpperTiles
+gPlayerFrame1938UpperTiles:
 	.incbin	"baserom.gba", 0x190D28, 0x166
-	.global	gUnk_08190E8E
-gUnk_08190E8E:
+	.global	gPlayerFrame1939UpperTiles
+gPlayerFrame1939UpperTiles:
 	.incbin	"baserom.gba", 0x190E8E, 0x166
-	.global	gUnk_08190FF4
-gUnk_08190FF4:
+	.global	gPlayerFrame1940UpperTiles
+gPlayerFrame1940UpperTiles:
 	.incbin	"baserom.gba", 0x190FF4, 0x166
-	.global	gUnk_0819115A
-gUnk_0819115A:
+	.global	gPlayerFrame1941UpperTiles
+gPlayerFrame1941UpperTiles:
 	.incbin	"baserom.gba", 0x19115A, 0x186
-	.global	gUnk_081912E0
-gUnk_081912E0:
+	.global	gPlayerFrame1942UpperTiles
+gPlayerFrame1942UpperTiles:
 	.incbin	"baserom.gba", 0x1912E0, 0x186
-	.global	gUnk_08191466
-gUnk_08191466:
+	.global	gPlayerFrame1943UpperTiles
+gPlayerFrame1943UpperTiles:
 	.incbin	"baserom.gba", 0x191466, 0x1A6
-	.global	gUnk_0819160C
-gUnk_0819160C:
+	.global	gPlayerFrame1944UpperTiles
+gPlayerFrame1944UpperTiles:
 	.incbin	"baserom.gba", 0x19160C, 0x186
-	.global	gUnk_08191792
-gUnk_08191792:
+	.global	gPlayerFrame1945UpperTiles
+gPlayerFrame1945UpperTiles:
 	.incbin	"baserom.gba", 0x191792, 0x1A6
-	.global	gUnk_08191938
-gUnk_08191938:
+	.global	gPlayerFrame1946UpperTiles
+gPlayerFrame1946UpperTiles:
 	.incbin	"baserom.gba", 0x191938, 0x166
-	.global	gUnk_08191A9E
-gUnk_08191A9E:
+	.global	gPlayerFrame1947UpperTiles
+gPlayerFrame1947UpperTiles:
 	.incbin	"baserom.gba", 0x191A9E, 0x166
-	.global	gUnk_08191C04
-gUnk_08191C04:
+	.global	gPlayerFrame1948UpperTiles
+gPlayerFrame1948UpperTiles:
 	.incbin	"baserom.gba", 0x191C04, 0x166
-	.global	gUnk_08191D6A
-gUnk_08191D6A:
+	.global	gPlayerFrame1949UpperTiles
+gPlayerFrame1949UpperTiles:
 	.incbin	"baserom.gba", 0x191D6A, 0x166
-	.global	gUnk_08191ED0
-gUnk_08191ED0:
+	.global	gPlayerFrame1950UpperTiles
+gPlayerFrame1950UpperTiles:
 	.incbin	"baserom.gba", 0x191ED0, 0x166
-	.global	gUnk_08192036
-gUnk_08192036:
+	.global	gPlayerFrame1951UpperTiles
+gPlayerFrame1951UpperTiles:
 	.incbin	"baserom.gba", 0x192036, 0x166
-	.global	gUnk_0819219C
-gUnk_0819219C:
+	.global	gPlayerFrame1952UpperTiles
+gPlayerFrame1952UpperTiles:
 	.incbin	"baserom.gba", 0x19219C, 0x166
-	.global	gUnk_08192302
-gUnk_08192302:
+	.global	gPlayerFrame1953UpperTiles
+gPlayerFrame1953UpperTiles:
 	.incbin	"baserom.gba", 0x192302, 0x146
-	.global	gUnk_08192448
-gUnk_08192448:
+	.global	gPlayerFrame1954UpperTiles
+gPlayerFrame1954UpperTiles:
 	.incbin	"baserom.gba", 0x192448, 0x146
-	.global	gUnk_0819258E
-gUnk_0819258E:
+	.global	gPlayerFrame1955UpperTiles
+gPlayerFrame1955UpperTiles:
 	.incbin	"baserom.gba", 0x19258E, 0x146
-	.global	gUnk_081926D4
-gUnk_081926D4:
+	.global	gPlayerFrame1958UpperTiles
+gPlayerFrame1958UpperTiles:
 	.incbin	"baserom.gba", 0x1926D4, 0x146
-	.global	gUnk_0819281A
-gUnk_0819281A:
+	.global	gPlayerFrame1959UpperTiles
+gPlayerFrame1959UpperTiles:
 	.incbin	"baserom.gba", 0x19281A, 0x146
-	.global	gUnk_08192960
-gUnk_08192960:
+	.global	gPlayerFrame1960UpperTiles
+gPlayerFrame1960UpperTiles:
 	.incbin	"baserom.gba", 0x192960, 0x146
-	.global	gUnk_08192AA6
-gUnk_08192AA6:
+	.global	gPlayerFrame1961UpperTiles
+gPlayerFrame1961UpperTiles:
 	.incbin	"baserom.gba", 0x192AA6, 0x146
-	.global	gUnk_08192BEC
-gUnk_08192BEC:
+	.global	gPlayerFrame1962UpperTiles
+gPlayerFrame1962UpperTiles:
 	.incbin	"baserom.gba", 0x192BEC, 0x146
-	.global	gUnk_08192D32
-gUnk_08192D32:
+	.global	gPlayerFrame1963UpperTiles
+gPlayerFrame1963UpperTiles:
 	.incbin	"baserom.gba", 0x192D32, 0x146
-	.global	gUnk_08192E78
-gUnk_08192E78:
+	.global	gPlayerFrame1964UpperTiles
+gPlayerFrame1964UpperTiles:
 	.incbin	"baserom.gba", 0x192E78, 0x146
-	.global	gUnk_08192FBE
-gUnk_08192FBE:
+	.global	gPlayerFrame2193UpperTiles
+gPlayerFrame2193UpperTiles:
 	.incbin	"baserom.gba", 0x192FBE, 0x186
-	.global	gUnk_08193144
-gUnk_08193144:
+	.global	gPlayerFrame2194UpperTiles
+gPlayerFrame2194UpperTiles:
 	.incbin	"baserom.gba", 0x193144, 0x186
-	.global	gUnk_081932CA
-gUnk_081932CA:
+	.global	gPlayerFrame2195UpperTiles
+gPlayerFrame2195UpperTiles:
 	.incbin	"baserom.gba", 0x1932CA, 0x186
-	.global	gUnk_08193450
-gUnk_08193450:
+	.global	gPlayerFrame2196UpperTiles
+gPlayerFrame2196UpperTiles:
 	.incbin	"baserom.gba", 0x193450, 0x186
-	.global	gUnk_081935D6
-gUnk_081935D6:
+	.global	gPlayerFrame2197UpperTiles
+gPlayerFrame2197UpperTiles:
 	.incbin	"baserom.gba", 0x1935D6, 0x186
-	.global	gUnk_0819375C
-gUnk_0819375C:
+	.global	gPlayerFrame2198UpperTiles
+gPlayerFrame2198UpperTiles:
 	.incbin	"baserom.gba", 0x19375C, 0x186
-	.global	gUnk_081938E2
-gUnk_081938E2:
+	.global	gPlayerFrame2199UpperTiles
+gPlayerFrame2199UpperTiles:
 	.incbin	"baserom.gba", 0x1938E2, 0x186
-	.global	gUnk_08193A68
-gUnk_08193A68:
+	.global	gPlayerFrame2200UpperTiles
+gPlayerFrame2200UpperTiles:
 	.incbin	"baserom.gba", 0x193A68, 0x186
-	.global	gUnk_08193BEE
-gUnk_08193BEE:
+	.global	gPlayerFrame2201UpperTiles
+gPlayerFrame2201UpperTiles:
 	.incbin	"baserom.gba", 0x193BEE, 0x186
-	.global	gUnk_08193D74
-gUnk_08193D74:
+	.global	gPlayerFrame2202UpperTiles
+gPlayerFrame2202UpperTiles:
 	.incbin	"baserom.gba", 0x193D74, 0x166
-	.global	gUnk_08193EDA
-gUnk_08193EDA:
+	.global	gPlayerFrame2203UpperTiles
+gPlayerFrame2203UpperTiles:
 	.incbin	"baserom.gba", 0x193EDA, 0x166
-	.global	gUnk_08194040
-gUnk_08194040:
+	.global	gPlayerFrame2204UpperTiles
+gPlayerFrame2204UpperTiles:
 	.incbin	"baserom.gba", 0x194040, 0x186
-	.global	gUnk_081941C6
-gUnk_081941C6:
+	.global	gPlayerFrame2205UpperTiles
+gPlayerFrame2205UpperTiles:
 	.incbin	"baserom.gba", 0x1941C6, 0x166
-	.global	gUnk_0819432C
-gUnk_0819432C:
+	.global	gPlayerFrame2206UpperTiles
+gPlayerFrame2206UpperTiles:
 	.incbin	"baserom.gba", 0x19432C, 0x186
-	.global	gUnk_081944B2
-gUnk_081944B2:
+	.global	gPlayerFrame2207UpperTiles
+gPlayerFrame2207UpperTiles:
 	.incbin	"baserom.gba", 0x1944B2, 0x166
-	.global	gUnk_08194618
-gUnk_08194618:
+	.global	gPlayerFrame2208UpperTiles
+gPlayerFrame2208UpperTiles:
 	.incbin	"baserom.gba", 0x194618, 0x186
-	.global	gUnk_0819479E
-gUnk_0819479E:
+	.global	gPlayerFrame2209UpperTiles
+gPlayerFrame2209UpperTiles:
 	.incbin	"baserom.gba", 0x19479E, 0x146
-	.global	gUnk_081948E4
-gUnk_081948E4:
+	.global	gPlayerFrame2210UpperTiles
+gPlayerFrame2210UpperTiles:
 	.incbin	"baserom.gba", 0x1948E4, 0x146
-	.global	gUnk_08194A2A
-gUnk_08194A2A:
+	.global	gPlayerFrame2211UpperTiles
+gPlayerFrame2211UpperTiles:
 	.incbin	"baserom.gba", 0x194A2A, 0x146
-	.global	gUnk_08194B70
-gUnk_08194B70:
+	.global	gPlayerFrame2214UpperTiles
+gPlayerFrame2214UpperTiles:
 	.incbin	"baserom.gba", 0x194B70, 0x146
-	.global	gUnk_08194CB6
-gUnk_08194CB6:
+	.global	gPlayerFrame2215UpperTiles
+gPlayerFrame2215UpperTiles:
 	.incbin	"baserom.gba", 0x194CB6, 0x146
-	.global	gUnk_08194DFC
-gUnk_08194DFC:
+	.global	gPlayerFrame2216UpperTiles
+gPlayerFrame2216UpperTiles:
 	.incbin	"baserom.gba", 0x194DFC, 0x146
-	.global	gUnk_08194F42
-gUnk_08194F42:
+	.global	gPlayerFrame2217UpperTiles
+gPlayerFrame2217UpperTiles:
 	.incbin	"baserom.gba", 0x194F42, 0x186
-	.global	gUnk_081950C8
-gUnk_081950C8:
+	.global	gPlayerFrame2218UpperTiles
+gPlayerFrame2218UpperTiles:
 	.incbin	"baserom.gba", 0x1950C8, 0x146
-	.global	gUnk_0819520E
-gUnk_0819520E:
+	.global	gPlayerFrame2219UpperTiles
+gPlayerFrame2219UpperTiles:
 	.incbin	"baserom.gba", 0x19520E, 0x186
-	.global	gUnk_08195394
-gUnk_08195394:
+	.global	gPlayerFrame2220UpperTiles
+gPlayerFrame2220UpperTiles:
 	.incbin	"baserom.gba", 0x195394, 0x146
 	.global	gPlayerFrame173OamTemplate
 gPlayerFrame173OamTemplate:
@@ -18778,377 +18778,377 @@ gPlayerFrame201Palette:
 	.global	gPlayerFrame1164Palette
 gPlayerFrame1164Palette:
 	.incbin	"baserom.gba", 0x196E66, 0x22
-	.global	gUnk_08196E88
-gUnk_08196E88:
+	.global	gPlayerFrame1164NextBankPalette
+gPlayerFrame1164NextBankPalette:
 	.incbin	"baserom.gba", 0x196E88, 0x22
-	.global	gUnk_08196EAA
-gUnk_08196EAA:
+	.global	gPlayerFrame1965NextBankPalette
+gPlayerFrame1965NextBankPalette:
 	.incbin	"baserom.gba", 0x196EAA, 0x22
-	.global	gUnk_08196ECC
-gUnk_08196ECC:
+	.global	gPlayerFrame2221NextBankPalette
+gPlayerFrame2221NextBankPalette:
 	.incbin	"baserom.gba", 0x196ECC, 0x22
 	.global	gPlayerFrame201Tiles
 gPlayerFrame201Tiles:
 	.incbin	"baserom.gba", 0x196EEE, 0x126
-	.global	gUnk_08197014
-gUnk_08197014:
+	.global	gPlayerFrame201UpperTiles
+gPlayerFrame201UpperTiles:
 	.incbin	"baserom.gba", 0x197014, 0xC6
 	.global	gPlayerFrame202Tiles
 gPlayerFrame202Tiles:
 	.incbin	"baserom.gba", 0x1970DA, 0x126
-	.global	gUnk_08197200
-gUnk_08197200:
+	.global	gPlayerFrame202UpperTiles
+gPlayerFrame202UpperTiles:
 	.incbin	"baserom.gba", 0x197200, 0xC6
 	.global	gPlayerFrame203Tiles
 gPlayerFrame203Tiles:
 	.incbin	"baserom.gba", 0x1972C6, 0x126
-	.global	gUnk_081973EC
-gUnk_081973EC:
+	.global	gPlayerFrame203UpperTiles
+gPlayerFrame203UpperTiles:
 	.incbin	"baserom.gba", 0x1973EC, 0xC6
 	.global	gPlayerFrame204Tiles
 gPlayerFrame204Tiles:
 	.incbin	"baserom.gba", 0x1974B2, 0xE6
-	.global	gUnk_08197598
-gUnk_08197598:
+	.global	gPlayerFrame204UpperTiles
+gPlayerFrame204UpperTiles:
 	.incbin	"baserom.gba", 0x197598, 0xC6
 	.global	gPlayerFrame205Tiles
 gPlayerFrame205Tiles:
 	.incbin	"baserom.gba", 0x19765E, 0xC6
-	.global	gUnk_08197724
-gUnk_08197724:
+	.global	gPlayerFrame205UpperTiles
+gPlayerFrame205UpperTiles:
 	.incbin	"baserom.gba", 0x197724, 0xC6
 	.global	gPlayerFrame206Tiles
 gPlayerFrame206Tiles:
 	.incbin	"baserom.gba", 0x1977EA, 0xE6
-	.global	gUnk_081978D0
-gUnk_081978D0:
+	.global	gPlayerFrame206UpperTiles
+gPlayerFrame206UpperTiles:
 	.incbin	"baserom.gba", 0x1978D0, 0xC6
 	.global	gPlayerFrame207Tiles
 gPlayerFrame207Tiles:
 	.incbin	"baserom.gba", 0x197996, 0x126
-	.global	gUnk_08197ABC
-gUnk_08197ABC:
+	.global	gPlayerFrame207UpperTiles
+gPlayerFrame207UpperTiles:
 	.incbin	"baserom.gba", 0x197ABC, 0xC6
 	.global	gPlayerFrame208Tiles
 gPlayerFrame208Tiles:
 	.incbin	"baserom.gba", 0x197B82, 0x126
-	.global	gUnk_08197CA8
-gUnk_08197CA8:
+	.global	gPlayerFrame208UpperTiles
+gPlayerFrame208UpperTiles:
 	.incbin	"baserom.gba", 0x197CA8, 0xC6
 	.global	gPlayerFrame209Tiles
 gPlayerFrame209Tiles:
 	.incbin	"baserom.gba", 0x197D6E, 0x126
-	.global	gUnk_08197E94
-gUnk_08197E94:
+	.global	gPlayerFrame209UpperTiles
+gPlayerFrame209UpperTiles:
 	.incbin	"baserom.gba", 0x197E94, 0xA6
 	.global	gPlayerFrame210Tiles
 gPlayerFrame210Tiles:
 	.incbin	"baserom.gba", 0x197F3A, 0x126
-	.global	gUnk_08198060
-gUnk_08198060:
+	.global	gPlayerFrame210UpperTiles
+gPlayerFrame210UpperTiles:
 	.incbin	"baserom.gba", 0x198060, 0xC6
 	.global	gPlayerFrame211Tiles
 gPlayerFrame211Tiles:
 	.incbin	"baserom.gba", 0x198126, 0x126
-	.global	gUnk_0819824C
-gUnk_0819824C:
+	.global	gPlayerFrame211UpperTiles
+gPlayerFrame211UpperTiles:
 	.incbin	"baserom.gba", 0x19824C, 0xC6
 	.global	gPlayerFrame212Tiles
 gPlayerFrame212Tiles:
 	.incbin	"baserom.gba", 0x198312, 0xE6
-	.global	gUnk_081983F8
-gUnk_081983F8:
+	.global	gPlayerFrame212UpperTiles
+gPlayerFrame212UpperTiles:
 	.incbin	"baserom.gba", 0x1983F8, 0xC6
 	.global	gPlayerFrame213Tiles
 gPlayerFrame213Tiles:
 	.incbin	"baserom.gba", 0x1984BE, 0xC6
-	.global	gUnk_08198584
-gUnk_08198584:
+	.global	gPlayerFrame213UpperTiles
+gPlayerFrame213UpperTiles:
 	.incbin	"baserom.gba", 0x198584, 0xC6
 	.global	gPlayerFrame214Tiles
 gPlayerFrame214Tiles:
 	.incbin	"baserom.gba", 0x19864A, 0xE6
-	.global	gUnk_08198730
-gUnk_08198730:
+	.global	gPlayerFrame214UpperTiles
+gPlayerFrame214UpperTiles:
 	.incbin	"baserom.gba", 0x198730, 0xC6
 	.global	gPlayerFrame215Tiles
 gPlayerFrame215Tiles:
 	.incbin	"baserom.gba", 0x1987F6, 0x126
-	.global	gUnk_0819891C
-gUnk_0819891C:
+	.global	gPlayerFrame215UpperTiles
+gPlayerFrame215UpperTiles:
 	.incbin	"baserom.gba", 0x19891C, 0xC6
 	.global	gPlayerFrame216Tiles
 gPlayerFrame216Tiles:
 	.incbin	"baserom.gba", 0x1989E2, 0x126
-	.global	gUnk_08198B08
-gUnk_08198B08:
+	.global	gPlayerFrame216UpperTiles
+gPlayerFrame216UpperTiles:
 	.incbin	"baserom.gba", 0x198B08, 0xC6
 	.global	gPlayerFrame217Tiles
 gPlayerFrame217Tiles:
 	.incbin	"baserom.gba", 0x198BCE, 0x126
-	.global	gUnk_08198CF4
-gUnk_08198CF4:
+	.global	gPlayerFrame217UpperTiles
+gPlayerFrame217UpperTiles:
 	.incbin	"baserom.gba", 0x198CF4, 0x86
 	.global	gPlayerFrame220Tiles
 gPlayerFrame220Tiles:
 	.incbin	"baserom.gba", 0x198D7A, 0x126
-	.global	gUnk_08198EA0
-gUnk_08198EA0:
+	.global	gPlayerFrame220UpperTiles
+gPlayerFrame220UpperTiles:
 	.incbin	"baserom.gba", 0x198EA0, 0x86
 	.global	gPlayerFrame221Tiles
 gPlayerFrame221Tiles:
 	.incbin	"baserom.gba", 0x198F26, 0x126
-	.global	gUnk_0819904C
-gUnk_0819904C:
+	.global	gPlayerFrame221UpperTiles
+gPlayerFrame221UpperTiles:
 	.incbin	"baserom.gba", 0x19904C, 0xC6
 	.global	gPlayerFrame218Tiles
 gPlayerFrame218Tiles:
 	.incbin	"baserom.gba", 0x199112, 0x126
-	.global	gUnk_08199238
-gUnk_08199238:
+	.global	gPlayerFrame218UpperTiles
+gPlayerFrame218UpperTiles:
 	.incbin	"baserom.gba", 0x199238, 0x86
 	.global	gPlayerFrame219Tiles
 gPlayerFrame219Tiles:
 	.incbin	"baserom.gba", 0x1992BE, 0x126
-	.global	gUnk_081993E4
-gUnk_081993E4:
+	.global	gPlayerFrame219UpperTiles
+gPlayerFrame219UpperTiles:
 	.incbin	"baserom.gba", 0x1993E4, 0x86
 	.global	gPlayerFrame1164Tiles
 gPlayerFrame1164Tiles:
 	.incbin	"baserom.gba", 0x19946A, 0x126
-	.global	gUnk_08199590
-gUnk_08199590:
+	.global	gPlayerFrame1164UpperTiles
+gPlayerFrame1164UpperTiles:
 	.incbin	"baserom.gba", 0x199590, 0x186
 	.global	gPlayerFrame1165Tiles
 gPlayerFrame1165Tiles:
 	.incbin	"baserom.gba", 0x199716, 0x126
-	.global	gUnk_0819983C
-gUnk_0819983C:
+	.global	gPlayerFrame1165UpperTiles
+gPlayerFrame1165UpperTiles:
 	.incbin	"baserom.gba", 0x19983C, 0x186
 	.global	gPlayerFrame1166Tiles
 gPlayerFrame1166Tiles:
 	.incbin	"baserom.gba", 0x1999C2, 0x126
-	.global	gUnk_08199AE8
-gUnk_08199AE8:
+	.global	gPlayerFrame1166UpperTiles
+gPlayerFrame1166UpperTiles:
 	.incbin	"baserom.gba", 0x199AE8, 0x186
 	.global	gPlayerFrame1167Tiles
 gPlayerFrame1167Tiles:
 	.incbin	"baserom.gba", 0x199C6E, 0x106
-	.global	gUnk_08199D74
-gUnk_08199D74:
+	.global	gPlayerFrame1167UpperTiles
+gPlayerFrame1167UpperTiles:
 	.incbin	"baserom.gba", 0x199D74, 0x186
 	.global	gPlayerFrame1168Tiles
 gPlayerFrame1168Tiles:
 	.incbin	"baserom.gba", 0x199EFA, 0xE6
-	.global	gUnk_08199FE0
-gUnk_08199FE0:
+	.global	gPlayerFrame1168UpperTiles
+gPlayerFrame1168UpperTiles:
 	.incbin	"baserom.gba", 0x199FE0, 0x186
 	.global	gPlayerFrame1169Tiles
 gPlayerFrame1169Tiles:
 	.incbin	"baserom.gba", 0x19A166, 0x106
-	.global	gUnk_0819A26C
-gUnk_0819A26C:
+	.global	gPlayerFrame1169UpperTiles
+gPlayerFrame1169UpperTiles:
 	.incbin	"baserom.gba", 0x19A26C, 0x186
 	.global	gPlayerFrame1170Tiles
 gPlayerFrame1170Tiles:
 	.incbin	"baserom.gba", 0x19A3F2, 0x126
-	.global	gUnk_0819A518
-gUnk_0819A518:
+	.global	gPlayerFrame1170UpperTiles
+gPlayerFrame1170UpperTiles:
 	.incbin	"baserom.gba", 0x19A518, 0x166
 	.global	gPlayerFrame1171Tiles
 gPlayerFrame1171Tiles:
 	.incbin	"baserom.gba", 0x19A67E, 0x126
-	.global	gUnk_0819A7A4
-gUnk_0819A7A4:
+	.global	gPlayerFrame1171UpperTiles
+gPlayerFrame1171UpperTiles:
 	.incbin	"baserom.gba", 0x19A7A4, 0x186
 	.global	gPlayerFrame1172Tiles
 gPlayerFrame1172Tiles:
 	.incbin	"baserom.gba", 0x19A92A, 0x126
-	.global	gUnk_0819AA50
-gUnk_0819AA50:
+	.global	gPlayerFrame1172UpperTiles
+gPlayerFrame1172UpperTiles:
 	.incbin	"baserom.gba", 0x19AA50, 0x146
 	.global	gPlayerFrame1173Tiles
 gPlayerFrame1173Tiles:
 	.incbin	"baserom.gba", 0x19AB96, 0x126
-	.global	gUnk_0819ACBC
-gUnk_0819ACBC:
+	.global	gPlayerFrame1173UpperTiles
+gPlayerFrame1173UpperTiles:
 	.incbin	"baserom.gba", 0x19ACBC, 0x166
 	.global	gPlayerFrame1174Tiles
 gPlayerFrame1174Tiles:
 	.incbin	"baserom.gba", 0x19AE22, 0x126
-	.global	gUnk_0819AF48
-gUnk_0819AF48:
+	.global	gPlayerFrame1174UpperTiles
+gPlayerFrame1174UpperTiles:
 	.incbin	"baserom.gba", 0x19AF48, 0x186
 	.global	gPlayerFrame1175Tiles
 gPlayerFrame1175Tiles:
 	.incbin	"baserom.gba", 0x19B0CE, 0x106
-	.global	gUnk_0819B1D4
-gUnk_0819B1D4:
+	.global	gPlayerFrame1175UpperTiles
+gPlayerFrame1175UpperTiles:
 	.incbin	"baserom.gba", 0x19B1D4, 0x186
 	.global	gPlayerFrame1176Tiles
 gPlayerFrame1176Tiles:
 	.incbin	"baserom.gba", 0x19B35A, 0x106
-	.global	gUnk_0819B460
-gUnk_0819B460:
+	.global	gPlayerFrame1176UpperTiles
+gPlayerFrame1176UpperTiles:
 	.incbin	"baserom.gba", 0x19B460, 0x186
 	.global	gPlayerFrame1177Tiles
 gPlayerFrame1177Tiles:
 	.incbin	"baserom.gba", 0x19B5E6, 0x106
-	.global	gUnk_0819B6EC
-gUnk_0819B6EC:
+	.global	gPlayerFrame1177UpperTiles
+gPlayerFrame1177UpperTiles:
 	.incbin	"baserom.gba", 0x19B6EC, 0x186
 	.global	gPlayerFrame1178Tiles
 gPlayerFrame1178Tiles:
 	.incbin	"baserom.gba", 0x19B872, 0x126
-	.global	gUnk_0819B998
-gUnk_0819B998:
+	.global	gPlayerFrame1178UpperTiles
+gPlayerFrame1178UpperTiles:
 	.incbin	"baserom.gba", 0x19B998, 0x186
 	.global	gPlayerFrame1179Tiles
 gPlayerFrame1179Tiles:
 	.incbin	"baserom.gba", 0x19BB1E, 0x126
-	.global	gUnk_0819BC44
-gUnk_0819BC44:
+	.global	gPlayerFrame1179UpperTiles
+gPlayerFrame1179UpperTiles:
 	.incbin	"baserom.gba", 0x19BC44, 0x186
-	.global	gUnk_0819BDCA
-gUnk_0819BDCA:
+	.global	gPlayerFrame1180UpperTiles
+gPlayerFrame1180UpperTiles:
 	.incbin	"baserom.gba", 0x19BDCA, 0x146
-	.global	gUnk_0819BF10
-gUnk_0819BF10:
+	.global	gPlayerFrame1183UpperTiles
+gPlayerFrame1183UpperTiles:
 	.incbin	"baserom.gba", 0x19BF10, 0x126
 	.global	gPlayerFrame1184Tiles
 gPlayerFrame1184Tiles:
 	.incbin	"baserom.gba", 0x19C036, 0x126
-	.global	gUnk_0819C15C
-gUnk_0819C15C:
+	.global	gPlayerFrame1184UpperTiles
+gPlayerFrame1184UpperTiles:
 	.incbin	"baserom.gba", 0x19C15C, 0x186
-	.global	gUnk_0819C2E2
-gUnk_0819C2E2:
+	.global	gPlayerFrame1181UpperTiles
+gPlayerFrame1181UpperTiles:
 	.incbin	"baserom.gba", 0x19C2E2, 0x146
-	.global	gUnk_0819C428
-gUnk_0819C428:
+	.global	gPlayerFrame1182UpperTiles
+gPlayerFrame1182UpperTiles:
 	.incbin	"baserom.gba", 0x19C428, 0x126
-	.global	gUnk_0819C54E
-gUnk_0819C54E:
+	.global	gPlayerFrame1965UpperTiles
+gPlayerFrame1965UpperTiles:
 	.incbin	"baserom.gba", 0x19C54E, 0x1A6
-	.global	gUnk_0819C6F4
-gUnk_0819C6F4:
+	.global	gPlayerFrame1966UpperTiles
+gPlayerFrame1966UpperTiles:
 	.incbin	"baserom.gba", 0x19C6F4, 0x1C6
 	.global	gPlayerFrame1967Tiles
 gPlayerFrame1967Tiles:
 	.incbin	"baserom.gba", 0x19C8BA, 0x126
-	.global	gUnk_0819C9E0
-gUnk_0819C9E0:
+	.global	gPlayerFrame1967UpperTiles
+gPlayerFrame1967UpperTiles:
 	.incbin	"baserom.gba", 0x19C9E0, 0x1C6
-	.global	gUnk_0819CBA6
-gUnk_0819CBA6:
+	.global	gPlayerFrame1968UpperTiles
+gPlayerFrame1968UpperTiles:
 	.incbin	"baserom.gba", 0x19CBA6, 0x1C6
-	.global	gUnk_0819CD6C
-gUnk_0819CD6C:
+	.global	gPlayerFrame1969UpperTiles
+gPlayerFrame1969UpperTiles:
 	.incbin	"baserom.gba", 0x19CD6C, 0x1C6
-	.global	gUnk_0819CF32
-gUnk_0819CF32:
+	.global	gPlayerFrame1970UpperTiles
+gPlayerFrame1970UpperTiles:
 	.incbin	"baserom.gba", 0x19CF32, 0x1C6
-	.global	gUnk_0819D0F8
-gUnk_0819D0F8:
+	.global	gPlayerFrame1971UpperTiles
+gPlayerFrame1971UpperTiles:
 	.incbin	"baserom.gba", 0x19D0F8, 0x1A6
-	.global	gUnk_0819D29E
-gUnk_0819D29E:
+	.global	gPlayerFrame1972UpperTiles
+gPlayerFrame1972UpperTiles:
 	.incbin	"baserom.gba", 0x19D29E, 0x1C6
-	.global	gUnk_0819D464
-gUnk_0819D464:
+	.global	gPlayerFrame1973UpperTiles
+gPlayerFrame1973UpperTiles:
 	.incbin	"baserom.gba", 0x19D464, 0x1A6
-	.global	gUnk_0819D60A
-gUnk_0819D60A:
+	.global	gPlayerFrame1974UpperTiles
+gPlayerFrame1974UpperTiles:
 	.incbin	"baserom.gba", 0x19D60A, 0x1C6
-	.global	gUnk_0819D7D0
-gUnk_0819D7D0:
+	.global	gPlayerFrame1975UpperTiles
+gPlayerFrame1975UpperTiles:
 	.incbin	"baserom.gba", 0x19D7D0, 0x1C6
-	.global	gUnk_0819D996
-gUnk_0819D996:
+	.global	gPlayerFrame1976UpperTiles
+gPlayerFrame1976UpperTiles:
 	.incbin	"baserom.gba", 0x19D996, 0x1C6
-	.global	gUnk_0819DB5C
-gUnk_0819DB5C:
+	.global	gPlayerFrame1977UpperTiles
+gPlayerFrame1977UpperTiles:
 	.incbin	"baserom.gba", 0x19DB5C, 0x1C6
-	.global	gUnk_0819DD22
-gUnk_0819DD22:
+	.global	gPlayerFrame1978UpperTiles
+gPlayerFrame1978UpperTiles:
 	.incbin	"baserom.gba", 0x19DD22, 0x1C6
-	.global	gUnk_0819DEE8
-gUnk_0819DEE8:
+	.global	gPlayerFrame1979UpperTiles
+gPlayerFrame1979UpperTiles:
 	.incbin	"baserom.gba", 0x19DEE8, 0x1C6
-	.global	gUnk_0819E0AE
-gUnk_0819E0AE:
+	.global	gPlayerFrame1980UpperTiles
+gPlayerFrame1980UpperTiles:
 	.incbin	"baserom.gba", 0x19E0AE, 0x1A6
-	.global	gUnk_0819E254
-gUnk_0819E254:
+	.global	gPlayerFrame1981UpperTiles
+gPlayerFrame1981UpperTiles:
 	.incbin	"baserom.gba", 0x19E254, 0x166
-	.global	gUnk_0819E3BA
-gUnk_0819E3BA:
+	.global	gPlayerFrame1984UpperTiles
+gPlayerFrame1984UpperTiles:
 	.incbin	"baserom.gba", 0x19E3BA, 0x146
-	.global	gUnk_0819E500
-gUnk_0819E500:
+	.global	gPlayerFrame1985UpperTiles
+gPlayerFrame1985UpperTiles:
 	.incbin	"baserom.gba", 0x19E500, 0x1C6
-	.global	gUnk_0819E6C6
-gUnk_0819E6C6:
+	.global	gPlayerFrame1982UpperTiles
+gPlayerFrame1982UpperTiles:
 	.incbin	"baserom.gba", 0x19E6C6, 0x146
-	.global	gUnk_0819E80C
-gUnk_0819E80C:
+	.global	gPlayerFrame1983UpperTiles
+gPlayerFrame1983UpperTiles:
 	.incbin	"baserom.gba", 0x19E80C, 0x106
-	.global	gUnk_0819E912
-gUnk_0819E912:
+	.global	gPlayerFrame2221UpperTiles
+gPlayerFrame2221UpperTiles:
 	.incbin	"baserom.gba", 0x19E912, 0x186
-	.global	gUnk_0819EA98
-gUnk_0819EA98:
+	.global	gPlayerFrame2222UpperTiles
+gPlayerFrame2222UpperTiles:
 	.incbin	"baserom.gba", 0x19EA98, 0x186
-	.global	gUnk_0819EC1E
-gUnk_0819EC1E:
+	.global	gPlayerFrame2223UpperTiles
+gPlayerFrame2223UpperTiles:
 	.incbin	"baserom.gba", 0x19EC1E, 0x186
-	.global	gUnk_0819EDA4
-gUnk_0819EDA4:
+	.global	gPlayerFrame2224UpperTiles
+gPlayerFrame2224UpperTiles:
 	.incbin	"baserom.gba", 0x19EDA4, 0x186
-	.global	gUnk_0819EF2A
-gUnk_0819EF2A:
+	.global	gPlayerFrame2225UpperTiles
+gPlayerFrame2225UpperTiles:
 	.incbin	"baserom.gba", 0x19EF2A, 0x186
-	.global	gUnk_0819F0B0
-gUnk_0819F0B0:
+	.global	gPlayerFrame2226UpperTiles
+gPlayerFrame2226UpperTiles:
 	.incbin	"baserom.gba", 0x19F0B0, 0x186
-	.global	gUnk_0819F236
-gUnk_0819F236:
+	.global	gPlayerFrame2229UpperTiles
+gPlayerFrame2229UpperTiles:
 	.incbin	"baserom.gba", 0x19F236, 0x166
-	.global	gUnk_0819F39C
-gUnk_0819F39C:
+	.global	gPlayerFrame2230UpperTiles
+gPlayerFrame2230UpperTiles:
 	.incbin	"baserom.gba", 0x19F39C, 0x186
-	.global	gUnk_0819F522
-gUnk_0819F522:
+	.global	gPlayerFrame2231UpperTiles
+gPlayerFrame2231UpperTiles:
 	.incbin	"baserom.gba", 0x19F522, 0x186
-	.global	gUnk_0819F6A8
-gUnk_0819F6A8:
+	.global	gPlayerFrame2232UpperTiles
+gPlayerFrame2232UpperTiles:
 	.incbin	"baserom.gba", 0x19F6A8, 0x186
-	.global	gUnk_0819F82E
-gUnk_0819F82E:
+	.global	gPlayerFrame2233UpperTiles
+gPlayerFrame2233UpperTiles:
 	.incbin	"baserom.gba", 0x19F82E, 0x186
-	.global	gUnk_0819F9B4
-gUnk_0819F9B4:
+	.global	gPlayerFrame2234UpperTiles
+gPlayerFrame2234UpperTiles:
 	.incbin	"baserom.gba", 0x19F9B4, 0x186
-	.global	gUnk_0819FB3A
-gUnk_0819FB3A:
+	.global	gPlayerFrame2235UpperTiles
+gPlayerFrame2235UpperTiles:
 	.incbin	"baserom.gba", 0x19FB3A, 0x186
-	.global	gUnk_0819FCC0
-gUnk_0819FCC0:
+	.global	gPlayerFrame2236UpperTiles
+gPlayerFrame2236UpperTiles:
 	.incbin	"baserom.gba", 0x19FCC0, 0x186
-	.global	gUnk_0819FE46
-gUnk_0819FE46:
+	.global	gPlayerFrame2237UpperTiles
+gPlayerFrame2237UpperTiles:
 	.incbin	"baserom.gba", 0x19FE46, 0x146
-	.global	gUnk_0819FF8C
-gUnk_0819FF8C:
+	.global	gPlayerFrame2240UpperTiles
+gPlayerFrame2240UpperTiles:
 	.incbin	"baserom.gba", 0x19FF8C, 0x186
-	.global	gUnk_081A0112
-gUnk_081A0112:
+	.global	gPlayerFrame2241UpperTiles
+gPlayerFrame2241UpperTiles:
 	.incbin	"baserom.gba", 0x1A0112, 0x186
-	.global	gUnk_081A0298
-gUnk_081A0298:
+	.global	gPlayerFrame2238UpperTiles
+gPlayerFrame2238UpperTiles:
 	.incbin	"baserom.gba", 0x1A0298, 0x186
-	.global	gUnk_081A041E
-gUnk_081A041E:
+	.global	gPlayerFrame2239UpperTiles
+gPlayerFrame2239UpperTiles:
 	.incbin	"baserom.gba", 0x1A041E, 0x146
 	.global	gPlayerFrame201OamTemplate
 gPlayerFrame201OamTemplate:
@@ -34329,53 +34329,53 @@ gPlayerFrame4339Palette:
 	.global	gUnk_0823F852
 gUnk_0823F852:
 	.incbin	"baserom.gba", 0x23F852, 0x22
-	.global	gUnk_0823F874
-gUnk_0823F874:
+	.global	gPlayerFrame4393NextBankPalette
+gPlayerFrame4393NextBankPalette:
 	.incbin	"baserom.gba", 0x23F874, 0x22
-	.global	gUnk_0823F896
-gUnk_0823F896:
+	.global	gPlayerFrame4405NextBankPalette
+gPlayerFrame4405NextBankPalette:
 	.incbin	"baserom.gba", 0x23F896, 0x22
-	.global	gUnk_0823F8B8
-gUnk_0823F8B8:
+	.global	gPlayerFrame4429NextBankPalette
+gPlayerFrame4429NextBankPalette:
 	.incbin	"baserom.gba", 0x23F8B8, 0x22
-	.global	gUnk_0823F8DA
-gUnk_0823F8DA:
+	.global	gPlayerFrame4435NextBankPalette
+gPlayerFrame4435NextBankPalette:
 	.incbin	"baserom.gba", 0x23F8DA, 0x22
 	.global	gPlayerFrame4453Palette
 gPlayerFrame4453Palette:
 	.incbin	"baserom.gba", 0x23F8FC, 0x22
-	.global	gUnk_0823F91E
-gUnk_0823F91E:
+	.global	gPlayerFrame4453NextBankPalette
+gPlayerFrame4453NextBankPalette:
 	.incbin	"baserom.gba", 0x23F91E, 0x22
 	.global	gPlayerFrame4459Palette
 gPlayerFrame4459Palette:
 	.incbin	"baserom.gba", 0x23F940, 0x22
-	.global	gUnk_0823F962
-gUnk_0823F962:
+	.global	gPlayerFrame4459NextBankPalette
+gPlayerFrame4459NextBankPalette:
 	.incbin	"baserom.gba", 0x23F962, 0x22
 	.global	gPlayerFrame4465Palette
 gPlayerFrame4465Palette:
 	.incbin	"baserom.gba", 0x23F984, 0x22
-	.global	gUnk_0823F9A6
-gUnk_0823F9A6:
+	.global	gPlayerFrame4465NextBankPalette
+gPlayerFrame4465NextBankPalette:
 	.incbin	"baserom.gba", 0x23F9A6, 0x22
-	.global	gUnk_0823F9C8
-gUnk_0823F9C8:
+	.global	gPlayerFrame4471NextBankPalette
+gPlayerFrame4471NextBankPalette:
 	.incbin	"baserom.gba", 0x23F9C8, 0x22
-	.global	gUnk_0823F9EA
-gUnk_0823F9EA:
+	.global	gPlayerFrame4477NextBankPalette
+gPlayerFrame4477NextBankPalette:
 	.incbin	"baserom.gba", 0x23F9EA, 0x22
 	.global	gPlayerFrame4483Palette
 gPlayerFrame4483Palette:
 	.incbin	"baserom.gba", 0x23FA0C, 0x22
-	.global	gUnk_0823FA2E
-gUnk_0823FA2E:
+	.global	gPlayerFrame4483NextBankPalette
+gPlayerFrame4483NextBankPalette:
 	.incbin	"baserom.gba", 0x23FA2E, 0x22
 	.global	gPlayerFrame4489Palette
 gPlayerFrame4489Palette:
 	.incbin	"baserom.gba", 0x23FA50, 0x22
-	.global	gUnk_0823FA72
-gUnk_0823FA72:
+	.global	gPlayerFrame4495NextBankPalette
+gPlayerFrame4495NextBankPalette:
 	.incbin	"baserom.gba", 0x23FA72, 0x22
 	.global	gUnk_0823FA94
 gUnk_0823FA94:
@@ -34449,176 +34449,176 @@ gUnk_08240E94:
 	.global	gUnk_08240F9A
 gUnk_08240F9A:
 	.incbin	"baserom.gba", 0x240F9A, 0x106
-	.global	gUnk_082410A0
-gUnk_082410A0:
+	.global	gPlayerFrame4393UpperTiles
+gPlayerFrame4393UpperTiles:
 	.incbin	"baserom.gba", 0x2410A0, 0x106
-	.global	gUnk_082411A6
-gUnk_082411A6:
+	.global	gPlayerFrame4394UpperTiles
+gPlayerFrame4394UpperTiles:
 	.incbin	"baserom.gba", 0x2411A6, 0x106
-	.global	gUnk_082412AC
-gUnk_082412AC:
+	.global	gPlayerFrame4395UpperTiles
+gPlayerFrame4395UpperTiles:
 	.incbin	"baserom.gba", 0x2412AC, 0xE6
-	.global	gUnk_08241392
-gUnk_08241392:
+	.global	gPlayerFrame4396UpperTiles
+gPlayerFrame4396UpperTiles:
 	.incbin	"baserom.gba", 0x241392, 0x106
-	.global	gUnk_08241498
-gUnk_08241498:
+	.global	gPlayerFrame4398UpperTiles
+gPlayerFrame4398UpperTiles:
 	.incbin	"baserom.gba", 0x241498, 0xC6
-	.global	gUnk_0824155E
-gUnk_0824155E:
+	.global	gPlayerFrame4405UpperTiles
+gPlayerFrame4405UpperTiles:
 	.incbin	"baserom.gba", 0x24155E, 0x126
-	.global	gUnk_08241684
-gUnk_08241684:
+	.global	gPlayerFrame4406UpperTiles
+gPlayerFrame4406UpperTiles:
 	.incbin	"baserom.gba", 0x241684, 0x126
-	.global	gUnk_082417AA
-gUnk_082417AA:
+	.global	gPlayerFrame4407UpperTiles
+gPlayerFrame4407UpperTiles:
 	.incbin	"baserom.gba", 0x2417AA, 0x126
-	.global	gUnk_082418D0
-gUnk_082418D0:
+	.global	gPlayerFrame4408UpperTiles
+gPlayerFrame4408UpperTiles:
 	.incbin	"baserom.gba", 0x2418D0, 0x126
-	.global	gUnk_082419F6
-gUnk_082419F6:
+	.global	gPlayerFrame4409UpperTiles
+gPlayerFrame4409UpperTiles:
 	.incbin	"baserom.gba", 0x2419F6, 0x126
-	.global	gUnk_08241B1C
-gUnk_08241B1C:
+	.global	gPlayerFrame4410UpperTiles
+gPlayerFrame4410UpperTiles:
 	.incbin	"baserom.gba", 0x241B1C, 0x126
-	.global	gUnk_08241C42
-gUnk_08241C42:
+	.global	gPlayerFrame4411UpperTiles
+gPlayerFrame4411UpperTiles:
 	.incbin	"baserom.gba", 0x241C42, 0x126
-	.global	gUnk_08241D68
-gUnk_08241D68:
+	.global	gPlayerFrame4412UpperTiles
+gPlayerFrame4412UpperTiles:
 	.incbin	"baserom.gba", 0x241D68, 0x126
-	.global	gUnk_08241E8E
-gUnk_08241E8E:
+	.global	gPlayerFrame4413UpperTiles
+gPlayerFrame4413UpperTiles:
 	.incbin	"baserom.gba", 0x241E8E, 0x186
-	.global	gUnk_08242014
-gUnk_08242014:
+	.global	gPlayerFrame4414UpperTiles
+gPlayerFrame4414UpperTiles:
 	.incbin	"baserom.gba", 0x242014, 0x186
-	.global	gUnk_0824219A
-gUnk_0824219A:
+	.global	gPlayerFrame4415UpperTiles
+gPlayerFrame4415UpperTiles:
 	.incbin	"baserom.gba", 0x24219A, 0x186
-	.global	gUnk_08242320
-gUnk_08242320:
+	.global	gPlayerFrame4416UpperTiles
+gPlayerFrame4416UpperTiles:
 	.incbin	"baserom.gba", 0x242320, 0x186
-	.global	gUnk_082424A6
-gUnk_082424A6:
+	.global	gPlayerFrame4429UpperTiles
+gPlayerFrame4429UpperTiles:
 	.incbin	"baserom.gba", 0x2424A6, 0xA6
-	.global	gUnk_0824254C
-gUnk_0824254C:
+	.global	gPlayerFrame4430UpperTiles
+gPlayerFrame4430UpperTiles:
 	.incbin	"baserom.gba", 0x24254C, 0xA6
-	.global	gUnk_082425F2
-gUnk_082425F2:
+	.global	gPlayerFrame4431UpperTiles
+gPlayerFrame4431UpperTiles:
 	.incbin	"baserom.gba", 0x2425F2, 0x86
-	.global	gUnk_08242678
-gUnk_08242678:
+	.global	gPlayerFrame4434UpperTiles
+gPlayerFrame4434UpperTiles:
 	.incbin	"baserom.gba", 0x242678, 0x86
-	.global	gUnk_082426FE
-gUnk_082426FE:
+	.global	gPlayerFrame4435UpperTiles
+gPlayerFrame4435UpperTiles:
 	.incbin	"baserom.gba", 0x2426FE, 0xC6
-	.global	gUnk_082427C4
-gUnk_082427C4:
+	.global	gPlayerFrame4436UpperTiles
+gPlayerFrame4436UpperTiles:
 	.incbin	"baserom.gba", 0x2427C4, 0xC6
-	.global	gUnk_0824288A
-gUnk_0824288A:
+	.global	gPlayerFrame4437UpperTiles
+gPlayerFrame4437UpperTiles:
 	.incbin	"baserom.gba", 0x24288A, 0xC6
-	.global	gUnk_08242950
-gUnk_08242950:
+	.global	gPlayerFrame4438UpperTiles
+gPlayerFrame4438UpperTiles:
 	.incbin	"baserom.gba", 0x242950, 0xC6
-	.global	gUnk_08242A16
-gUnk_08242A16:
+	.global	gPlayerFrame4440UpperTiles
+gPlayerFrame4440UpperTiles:
 	.incbin	"baserom.gba", 0x242A16, 0x86
-	.global	gUnk_08242A9C
-gUnk_08242A9C:
+	.global	gPlayerFrame4453UpperTiles
+gPlayerFrame4453UpperTiles:
 	.incbin	"baserom.gba", 0x242A9C, 0xC6
-	.global	gUnk_08242B62
-gUnk_08242B62:
+	.global	gPlayerFrame4454UpperTiles
+gPlayerFrame4454UpperTiles:
 	.incbin	"baserom.gba", 0x242B62, 0xC6
 	.global	gPlayerFrame4455Tiles
 gPlayerFrame4455Tiles:
 	.incbin	"baserom.gba", 0x242C28, 0x106
-	.global	gUnk_08242D2E
-gUnk_08242D2E:
+	.global	gPlayerFrame4455UpperTiles
+gPlayerFrame4455UpperTiles:
 	.incbin	"baserom.gba", 0x242D2E, 0x126
-	.global	gUnk_08242E54
-gUnk_08242E54:
+	.global	gPlayerFrame4456UpperTiles
+gPlayerFrame4456UpperTiles:
 	.incbin	"baserom.gba", 0x242E54, 0xC6
-	.global	gUnk_08242F1A
-gUnk_08242F1A:
+	.global	gPlayerFrame4458UpperTiles
+gPlayerFrame4458UpperTiles:
 	.incbin	"baserom.gba", 0x242F1A, 0xA6
-	.global	gUnk_08242FC0
-gUnk_08242FC0:
+	.global	gPlayerFrame4459UpperTiles
+gPlayerFrame4459UpperTiles:
 	.incbin	"baserom.gba", 0x242FC0, 0xC6
-	.global	gUnk_08243086
-gUnk_08243086:
+	.global	gPlayerFrame4460UpperTiles
+gPlayerFrame4460UpperTiles:
 	.incbin	"baserom.gba", 0x243086, 0xC6
-	.global	gUnk_0824314C
-gUnk_0824314C:
+	.global	gPlayerFrame4461UpperTiles
+gPlayerFrame4461UpperTiles:
 	.incbin	"baserom.gba", 0x24314C, 0x126
 	.global	gPlayerFrame4464Tiles
 gPlayerFrame4464Tiles:
 	.incbin	"baserom.gba", 0x243272, 0xC6
-	.global	gUnk_08243338
-gUnk_08243338:
+	.global	gPlayerFrame4464UpperTiles
+gPlayerFrame4464UpperTiles:
 	.incbin	"baserom.gba", 0x243338, 0xA6
-	.global	gUnk_082433DE
-gUnk_082433DE:
+	.global	gPlayerFrame4465UpperTiles
+gPlayerFrame4465UpperTiles:
 	.incbin	"baserom.gba", 0x2433DE, 0x106
-	.global	gUnk_082434E4
-gUnk_082434E4:
+	.global	gPlayerFrame4466UpperTiles
+gPlayerFrame4466UpperTiles:
 	.incbin	"baserom.gba", 0x2434E4, 0x106
-	.global	gUnk_082435EA
-gUnk_082435EA:
+	.global	gPlayerFrame4467UpperTiles
+gPlayerFrame4467UpperTiles:
 	.incbin	"baserom.gba", 0x2435EA, 0xC6
-	.global	gUnk_082436B0
-gUnk_082436B0:
+	.global	gPlayerFrame4468UpperTiles
+gPlayerFrame4468UpperTiles:
 	.incbin	"baserom.gba", 0x2436B0, 0xC6
-	.global	gUnk_08243776
-gUnk_08243776:
+	.global	gPlayerFrame4469UpperTiles
+gPlayerFrame4469UpperTiles:
 	.incbin	"baserom.gba", 0x243776, 0x106
-	.global	gUnk_0824387C
-gUnk_0824387C:
+	.global	gPlayerFrame4470UpperTiles
+gPlayerFrame4470UpperTiles:
 	.incbin	"baserom.gba", 0x24387C, 0xC6
-	.global	gUnk_08243942
-gUnk_08243942:
+	.global	gPlayerFrame4471UpperTiles
+gPlayerFrame4471UpperTiles:
 	.incbin	"baserom.gba", 0x243942, 0xC6
-	.global	gUnk_08243A08
-gUnk_08243A08:
+	.global	gPlayerFrame4472UpperTiles
+gPlayerFrame4472UpperTiles:
 	.incbin	"baserom.gba", 0x243A08, 0x106
-	.global	gUnk_08243B0E
-gUnk_08243B0E:
+	.global	gPlayerFrame4473UpperTiles
+gPlayerFrame4473UpperTiles:
 	.incbin	"baserom.gba", 0x243B0E, 0x126
-	.global	gUnk_08243C34
-gUnk_08243C34:
+	.global	gPlayerFrame4475UpperTiles
+gPlayerFrame4475UpperTiles:
 	.incbin	"baserom.gba", 0x243C34, 0xC6
-	.global	gUnk_08243CFA
-gUnk_08243CFA:
+	.global	gPlayerFrame4476UpperTiles
+gPlayerFrame4476UpperTiles:
 	.incbin	"baserom.gba", 0x243CFA, 0xA6
-	.global	gUnk_08243DA0
-gUnk_08243DA0:
+	.global	gPlayerFrame4477UpperTiles
+gPlayerFrame4477UpperTiles:
 	.incbin	"baserom.gba", 0x243DA0, 0xC6
-	.global	gUnk_08243E66
-gUnk_08243E66:
+	.global	gPlayerFrame4478UpperTiles
+gPlayerFrame4478UpperTiles:
 	.incbin	"baserom.gba", 0x243E66, 0xC6
-	.global	gUnk_08243F2C
-gUnk_08243F2C:
+	.global	gPlayerFrame4479UpperTiles
+gPlayerFrame4479UpperTiles:
 	.incbin	"baserom.gba", 0x243F2C, 0xC6
-	.global	gUnk_08243FF2
-gUnk_08243FF2:
+	.global	gPlayerFrame4482UpperTiles
+gPlayerFrame4482UpperTiles:
 	.incbin	"baserom.gba", 0x243FF2, 0xC6
-	.global	gUnk_082440B8
-gUnk_082440B8:
+	.global	gPlayerFrame4483UpperTiles
+gPlayerFrame4483UpperTiles:
 	.incbin	"baserom.gba", 0x2440B8, 0xE6
-	.global	gUnk_0824419E
-gUnk_0824419E:
+	.global	gPlayerFrame4484UpperTiles
+gPlayerFrame4484UpperTiles:
 	.incbin	"baserom.gba", 0x24419E, 0xE6
-	.global	gUnk_08244284
-gUnk_08244284:
+	.global	gPlayerFrame4485UpperTiles
+gPlayerFrame4485UpperTiles:
 	.incbin	"baserom.gba", 0x244284, 0x126
-	.global	gUnk_082443AA
-gUnk_082443AA:
+	.global	gPlayerFrame4486UpperTiles
+gPlayerFrame4486UpperTiles:
 	.incbin	"baserom.gba", 0x2443AA, 0xC6
-	.global	gUnk_08244470
-gUnk_08244470:
+	.global	gPlayerFrame4488UpperTiles
+gPlayerFrame4488UpperTiles:
 	.incbin	"baserom.gba", 0x244470, 0xA6
 	.global	gPlayerFrame4489Tiles
 gPlayerFrame4489Tiles:
@@ -34638,56 +34638,56 @@ gPlayerFrame4493Tiles:
 	.global	gPlayerFrame4494Tiles
 gPlayerFrame4494Tiles:
 	.incbin	"baserom.gba", 0x2448D4, 0xC6
-	.global	gUnk_0824499A
-gUnk_0824499A:
+	.global	gPlayerFrame4495UpperTiles
+gPlayerFrame4495UpperTiles:
 	.incbin	"baserom.gba", 0x24499A, 0x126
-	.global	gUnk_08244AC0
-gUnk_08244AC0:
+	.global	gPlayerFrame4496UpperTiles
+gPlayerFrame4496UpperTiles:
 	.incbin	"baserom.gba", 0x244AC0, 0x106
-	.global	gUnk_08244BC6
-gUnk_08244BC6:
+	.global	gPlayerFrame4497UpperTiles
+gPlayerFrame4497UpperTiles:
 	.incbin	"baserom.gba", 0x244BC6, 0x106
-	.global	gUnk_08244CCC
-gUnk_08244CCC:
+	.global	gPlayerFrame4498UpperTiles
+gPlayerFrame4498UpperTiles:
 	.incbin	"baserom.gba", 0x244CCC, 0x126
-	.global	gUnk_08244DF2
-gUnk_08244DF2:
+	.global	gPlayerFrame4499UpperTiles
+gPlayerFrame4499UpperTiles:
 	.incbin	"baserom.gba", 0x244DF2, 0x126
-	.global	gUnk_08244F18
-gUnk_08244F18:
+	.global	gPlayerFrame4500UpperTiles
+gPlayerFrame4500UpperTiles:
 	.incbin	"baserom.gba", 0x244F18, 0x106
-	.global	gUnk_0824501E
-gUnk_0824501E:
+	.global	gPlayerFrame4501UpperTiles
+gPlayerFrame4501UpperTiles:
 	.incbin	"baserom.gba", 0x24501E, 0x106
-	.global	gUnk_08245124
-gUnk_08245124:
+	.global	gPlayerFrame4502UpperTiles
+gPlayerFrame4502UpperTiles:
 	.incbin	"baserom.gba", 0x245124, 0x126
-	.global	gUnk_0824524A
-gUnk_0824524A:
+	.global	gPlayerFrame4503UpperTiles
+gPlayerFrame4503UpperTiles:
 	.incbin	"baserom.gba", 0x24524A, 0x126
-	.global	gUnk_08245370
-gUnk_08245370:
+	.global	gPlayerFrame4504UpperTiles
+gPlayerFrame4504UpperTiles:
 	.incbin	"baserom.gba", 0x245370, 0x126
-	.global	gUnk_08245496
-gUnk_08245496:
+	.global	gPlayerFrame4505UpperTiles
+gPlayerFrame4505UpperTiles:
 	.incbin	"baserom.gba", 0x245496, 0xE6
-	.global	gUnk_0824557C
-gUnk_0824557C:
+	.global	gPlayerFrame4506UpperTiles
+gPlayerFrame4506UpperTiles:
 	.incbin	"baserom.gba", 0x24557C, 0x106
-	.global	gUnk_08245682
-gUnk_08245682:
+	.global	gPlayerFrame4508UpperTiles
+gPlayerFrame4508UpperTiles:
 	.incbin	"baserom.gba", 0x245682, 0x126
-	.global	gUnk_082457A8
-gUnk_082457A8:
+	.global	gPlayerFrame4515UpperTiles
+gPlayerFrame4515UpperTiles:
 	.incbin	"baserom.gba", 0x2457A8, 0x106
-	.global	gUnk_082458AE
-gUnk_082458AE:
+	.global	gPlayerFrame4516UpperTiles
+gPlayerFrame4516UpperTiles:
 	.incbin	"baserom.gba", 0x2458AE, 0x126
-	.global	gUnk_082459D4
-gUnk_082459D4:
+	.global	gPlayerFrame4517UpperTiles
+gPlayerFrame4517UpperTiles:
 	.incbin	"baserom.gba", 0x2459D4, 0x106
-	.global	gUnk_08245ADA
-gUnk_08245ADA:
+	.global	gPlayerFrame4518UpperTiles
+gPlayerFrame4518UpperTiles:
 	.incbin	"baserom.gba", 0x245ADA, 0x126
 	.global	gUnk_08245C00
 gUnk_08245C00:
@@ -35142,44 +35142,44 @@ gUnk_0824768C:
 	.global	gPlayerFrame4399Palette
 gPlayerFrame4399Palette:
 	.incbin	"baserom.gba", 0x24769C, 0x22
-	.global	gUnk_082476BE
-gUnk_082476BE:
+	.global	gPlayerFrame4399NextBankPalette
+gPlayerFrame4399NextBankPalette:
 	.incbin	"baserom.gba", 0x2476BE, 0x22
 	.global	gPlayerFrame4441Palette
 gPlayerFrame4441Palette:
 	.incbin	"baserom.gba", 0x2476E0, 0x22
-	.global	gUnk_08247702
-gUnk_08247702:
+	.global	gPlayerFrame4441NextBankPalette
+gPlayerFrame4441NextBankPalette:
 	.incbin	"baserom.gba", 0x247702, 0x22
-	.global	gUnk_08247724
-gUnk_08247724:
+	.global	gPlayerFrame4447NextBankPalette
+gPlayerFrame4447NextBankPalette:
 	.incbin	"baserom.gba", 0x247724, 0x22
-	.global	gUnk_08247746
-gUnk_08247746:
+	.global	gPlayerFrame4531NextBankPalette
+gPlayerFrame4531NextBankPalette:
 	.incbin	"baserom.gba", 0x247746, 0x22
 	.global	gPlayerFrame4399Tiles
 gPlayerFrame4399Tiles:
 	.incbin	"baserom.gba", 0x247768, 0x86
-	.global	gUnk_082477EE
-gUnk_082477EE:
+	.global	gPlayerFrame4399UpperTiles
+gPlayerFrame4399UpperTiles:
 	.incbin	"baserom.gba", 0x2477EE, 0x166
 	.global	gPlayerFrame4400Tiles
 gPlayerFrame4400Tiles:
 	.incbin	"baserom.gba", 0x247954, 0x86
-	.global	gUnk_082479DA
-gUnk_082479DA:
+	.global	gPlayerFrame4400UpperTiles
+gPlayerFrame4400UpperTiles:
 	.incbin	"baserom.gba", 0x2479DA, 0x146
 	.global	gPlayerFrame4401Tiles
 gPlayerFrame4401Tiles:
 	.incbin	"baserom.gba", 0x247B20, 0x126
-	.global	gUnk_08247C46
-gUnk_08247C46:
+	.global	gPlayerFrame4401UpperTiles
+gPlayerFrame4401UpperTiles:
 	.incbin	"baserom.gba", 0x247C46, 0x166
 	.global	gPlayerFrame4402Tiles
 gPlayerFrame4402Tiles:
 	.incbin	"baserom.gba", 0x247DAC, 0x86
-	.global	gUnk_08247E32
-gUnk_08247E32:
+	.global	gPlayerFrame4402UpperTiles
+gPlayerFrame4402UpperTiles:
 	.incbin	"baserom.gba", 0x247E32, 0x146
 	.global	gPlayerFrame4403Tiles
 gPlayerFrame4403Tiles:
@@ -35187,80 +35187,80 @@ gPlayerFrame4403Tiles:
 	.global	gPlayerFrame4404Tiles
 gPlayerFrame4404Tiles:
 	.incbin	"baserom.gba", 0x24807E, 0xC6
-	.global	gUnk_08248144
-gUnk_08248144:
+	.global	gPlayerFrame4404UpperTiles
+gPlayerFrame4404UpperTiles:
 	.incbin	"baserom.gba", 0x248144, 0x86
 	.global	gPlayerFrame4441Tiles
 gPlayerFrame4441Tiles:
 	.incbin	"baserom.gba", 0x2481CA, 0x86
-	.global	gUnk_08248250
-gUnk_08248250:
+	.global	gPlayerFrame4441UpperTiles
+gPlayerFrame4441UpperTiles:
 	.incbin	"baserom.gba", 0x248250, 0xC6
 	.global	gPlayerFrame4442Tiles
 gPlayerFrame4442Tiles:
 	.incbin	"baserom.gba", 0x248316, 0x86
-	.global	gUnk_0824839C
-gUnk_0824839C:
+	.global	gPlayerFrame4442UpperTiles
+gPlayerFrame4442UpperTiles:
 	.incbin	"baserom.gba", 0x24839C, 0xE6
-	.global	gUnk_08248482
-gUnk_08248482:
+	.global	gPlayerFrame4443UpperTiles
+gPlayerFrame4443UpperTiles:
 	.incbin	"baserom.gba", 0x248482, 0xE6
 	.global	gPlayerFrame4444Tiles
 gPlayerFrame4444Tiles:
 	.incbin	"baserom.gba", 0x248568, 0x86
-	.global	gUnk_082485EE
-gUnk_082485EE:
+	.global	gPlayerFrame4444UpperTiles
+gPlayerFrame4444UpperTiles:
 	.incbin	"baserom.gba", 0x2485EE, 0xE6
-	.global	gUnk_082486D4
-gUnk_082486D4:
+	.global	gPlayerFrame4445UpperTiles
+gPlayerFrame4445UpperTiles:
 	.incbin	"baserom.gba", 0x2486D4, 0xE6
 	.global	gPlayerFrame4446Tiles
 gPlayerFrame4446Tiles:
 	.incbin	"baserom.gba", 0x2487BA, 0xC6
-	.global	gUnk_08248880
-gUnk_08248880:
+	.global	gPlayerFrame4446UpperTiles
+gPlayerFrame4446UpperTiles:
 	.incbin	"baserom.gba", 0x248880, 0xC6
-	.global	gUnk_08248946
-gUnk_08248946:
+	.global	gPlayerFrame4447UpperTiles
+gPlayerFrame4447UpperTiles:
 	.incbin	"baserom.gba", 0x248946, 0x126
-	.global	gUnk_08248A6C
-gUnk_08248A6C:
+	.global	gPlayerFrame4448UpperTiles
+gPlayerFrame4448UpperTiles:
 	.incbin	"baserom.gba", 0x248A6C, 0x126
-	.global	gUnk_08248B92
-gUnk_08248B92:
+	.global	gPlayerFrame4449UpperTiles
+gPlayerFrame4449UpperTiles:
 	.incbin	"baserom.gba", 0x248B92, 0x126
-	.global	gUnk_08248CB8
-gUnk_08248CB8:
+	.global	gPlayerFrame4450UpperTiles
+gPlayerFrame4450UpperTiles:
 	.incbin	"baserom.gba", 0x248CB8, 0x126
-	.global	gUnk_08248DDE
-gUnk_08248DDE:
+	.global	gPlayerFrame4451UpperTiles
+gPlayerFrame4451UpperTiles:
 	.incbin	"baserom.gba", 0x248DDE, 0x126
-	.global	gUnk_08248F04
-gUnk_08248F04:
+	.global	gPlayerFrame4452UpperTiles
+gPlayerFrame4452UpperTiles:
 	.incbin	"baserom.gba", 0x248F04, 0x126
-	.global	gUnk_0824902A
-gUnk_0824902A:
+	.global	gPlayerFrame4531UpperTiles
+gPlayerFrame4531UpperTiles:
 	.incbin	"baserom.gba", 0x24902A, 0x86
-	.global	gUnk_082490B0
-gUnk_082490B0:
+	.global	gPlayerFrame4532UpperTiles
+gPlayerFrame4532UpperTiles:
 	.incbin	"baserom.gba", 0x2490B0, 0x106
-	.global	gUnk_082491B6
-gUnk_082491B6:
+	.global	gPlayerFrame4533UpperTiles
+gPlayerFrame4533UpperTiles:
 	.incbin	"baserom.gba", 0x2491B6, 0x86
-	.global	gUnk_0824923C
-gUnk_0824923C:
+	.global	gPlayerFrame4534UpperTiles
+gPlayerFrame4534UpperTiles:
 	.incbin	"baserom.gba", 0x24923C, 0x106
-	.global	gUnk_08249342
-gUnk_08249342:
+	.global	gPlayerFrame4535UpperTiles
+gPlayerFrame4535UpperTiles:
 	.incbin	"baserom.gba", 0x249342, 0xA6
-	.global	gUnk_082493E8
-gUnk_082493E8:
+	.global	gPlayerFrame4536UpperTiles
+gPlayerFrame4536UpperTiles:
 	.incbin	"baserom.gba", 0x2493E8, 0x126
-	.global	gUnk_0824950E
-gUnk_0824950E:
+	.global	gPlayerFrame4537UpperTiles
+gPlayerFrame4537UpperTiles:
 	.incbin	"baserom.gba", 0x24950E, 0xC6
-	.global	gUnk_082495D4
-gUnk_082495D4:
+	.global	gPlayerFrame4538UpperTiles
+gPlayerFrame4538UpperTiles:
 	.incbin	"baserom.gba", 0x2495D4, 0x146
 	.global	gPlayerFrame4399OamTemplate
 gPlayerFrame4399OamTemplate:
